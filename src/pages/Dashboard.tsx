@@ -12,6 +12,7 @@ import { getDiscordGuildChannelsApi, subscribeDiscordChannelsApi } from "../api/
 import { startGamingServerApi, stopGamingServerApi } from "../api/serversApi";
 import AdminActionBar from "../components/AdminActionBar";
 import ServersDashboard from "../components/AllServersComponent";
+import PortForwardingCard from "../components/PortForwardingCard";
 import DiscordChannelsCard from "../components/DiscordChannelsCard";
 import { useAuthStore } from "../stores/authStore";
 import { useServersStore } from "../stores/serversStore";
@@ -168,6 +169,8 @@ function DashboardPage() {
             onStopServer={onStopServer}
             pendingServerIdentifier={pendingServerIdentifier}
           />
+
+          {isAdmin && accessToken && <PortForwardingCard token={accessToken} />}
         </Stack>
       </Container>
     </Box>
