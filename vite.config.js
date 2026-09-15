@@ -10,9 +10,20 @@ import react from "@vitejs/plugin-react";
 // (http://localhost:18082) comme dans la stack de dev (http://dev-schub-bff:8080).
 const apiProxyTarget = process.env.API_PROXY_TARGET ?? "http://localhost:18082";
 
+// Vite refuse par défaut les requêtes dont l'en-tête Host lui est inconnu (403
+// « Blocked request »). En dev, le serveur est joint par deux noms qui ne sont ni
+// localhost ni une IP : le nom de service sur le réseau Docker, et le domaine public
+// servi par le tunnel Cloudflare. Les deux doivent être déclarés, sinon le tunnel
+// reçoit un 403 et la page ne s'affiche jamais.
+const allowedHosts = (process.env.DEV_ALLOWED_HOSTS ?? "dev-schub-front,dev.schultz-thomas.fr")
+  .split(",")
+  .map((host) => host.trim())
+  .filter(Boolean);
+
 export default defineConfig({
   plugins: [react()],
   server: {
+    allowedHosts,
     proxy: {
       "/api": {
         target: apiProxyTarget,
