@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import {
   Alert,
+  Autocomplete,
   Box,
+  Button,
   Card,
   CardContent,
   Container,
@@ -9,6 +11,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate, useParams } from "react-router-dom";
 import FormActionButton from "../components/FormActionButton";
 import {
@@ -16,7 +19,10 @@ import {
   getGamingServerByIdApi,
   updateGamingServerApi,
 } from "../api/serversApi";
+import { getPortainerStacksApi } from "../api/portainerApi";
 import { useAuthStore } from "../stores/authStore";
+import type { PortainerStackDto } from "../types/portainer";
+import { identifierFromStackName } from "../types/portainer";
 import type { GameServerFormMode, GamingServerPortDto, UpsertGamingServerPayload } from "../types/server";
 
 interface GameServerFormValues {
@@ -124,8 +130,40 @@ function GameServerFormPage() {
   const [globalError, setGlobalError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [stacks, setStacks] = useState<PortainerStackDto[]>([]);
+  const [stacksError, setStacksError] = useState<string>("");
 
   const mode = useMemo(() => resolveMode(window.location.pathname), []);
+
+  // Le catalogue Portainer sert à lier la fiche à sa stack sans la saisir. En consultation,
+  // le champ est figé : inutile d'interroger Portainer pour une liste qu'on ne peut pas ouvrir.
+  useEffect(() => {
+    if (!accessToken || mode === "visualisation") {
+      return;
+    }
+
+    let active = true;
+    void (async () => {
+      try {
+        const payload = await getPortainerStacksApi(accessToken);
+        if (active) {
+          setStacks(payload);
+          setStacksError("");
+        }
+      } catch (error) {
+        if (active) {
+          // Non bloquant : la fiche reste remplissable, seule la liste manque.
+          setStacksError(
+            error instanceof Error ? error.message : "Impossible de lire les stacks Portainer",
+          );
+        }
+      }
+    })();
+
+    return () => {
+      active = false;
+    };
+  }, [accessToken, mode]);
   const isReadOnly = mode === "visualisation";
   const pageTitle =
     mode === "creation"
@@ -199,6 +237,33 @@ function GameServerFormPage() {
     setGlobalError("");
   };
 
+  /**
+   * Lier la fiche à une stack renseigne les deux champs d'un coup.
+   *
+   * L'identifiant n'est dérivé qu'à la création. En édition il reste tel quel : c'est la clé
+   * d'unicité de la fiche, le propriétaire de ses règles de ports et l'argument des commandes
+   * Discord. Le recalculer parce qu'on rebranche une stack orphelinerait les redirections
+   * existantes et casserait les commandes déjà connues des utilisateurs.
+   */
+  // La fiche stocke l'identifiant de la stack, pas la stack : on la retrouve dans le catalogue.
+  // Null tant que le catalogue n'est pas chargé, ou si la stack liée a disparu de Portainer —
+  // auquel cas le champ apparaît vide, ce qui est la vérité à afficher.
+  const selectedStack = useMemo(
+    () => stacks.find((stack) => String(stack.id) === values.portainerStackId) ?? null,
+    [stacks, values.portainerStackId],
+  );
+
+  const onStackChange = (stack: PortainerStackDto | null) => {
+    setValues((current) => ({
+      ...current,
+      portainerStackId: stack ? String(stack.id) : "",
+      identifier:
+        mode === "creation" && stack ? identifierFromStackName(stack.name) : current.identifier,
+    }));
+    setErrors((current) => ({ ...current, portainerStackId: "", identifier: "" }));
+    setGlobalError("");
+  };
+
   const validate = (): boolean => {
     const nextErrors: Record<string, string> = {};
 
@@ -207,6 +272,12 @@ function GameServerFormPage() {
         nextErrors[field] = "Ce champ est obligatoire.";
       }
     });
+
+    // L'identifiant n'est plus saisi : il vient de la stack choisie. Le message doit donc
+    // désigner le geste manquant, pas un champ que l'utilisateur ne voit plus.
+    if (nextErrors.identifier) {
+      nextErrors.identifier = "Choisissez la stack Portainer à lier : elle renseigne l'identifiant.";
+    }
 
     if (values.playersMax.trim()) {
       const asNumber = Number(values.playersMax.trim());
@@ -279,21 +350,51 @@ function GameServerFormPage() {
         <Card>
           <CardContent sx={{ p: { xs: 3, md: 4 } }}>
             <Stack spacing={3} component="form" onSubmit={onSubmit}>
-              <Typography variant="h4" fontWeight={700}>
-                {pageTitle}
-              </Typography>
+              <Stack direction="row" alignItems="center" spacing={2}>
+                <Button
+                  startIcon={<ArrowBackIcon />}
+                  onClick={() => navigate("/dashboard")}
+                  color="inherit"
+                >
+                  Retour
+                </Button>
+                <Typography variant="h4" fontWeight={700}>
+                  {pageTitle}
+                </Typography>
+              </Stack>
 
               {globalError && <Alert severity="error">{globalError}</Alert>}
 
+              {stacksError && (
+                <Alert severity="warning">
+                  Catalogue Portainer indisponible : {stacksError}. La fiche reste modifiable, mais
+                  la stack ne peut pas être choisie dans la liste.
+                </Alert>
+              )}
+
               <Stack direction={{ xs: "column", md: "row" }} spacing={2}>
-                <TextField
-                  label="Identifiant *"
-                  value={values.identifier}
-                  onChange={(event) => onFieldChange("identifier", event.target.value)}
-                  disabled={fieldDisabled}
-                  error={Boolean(errors.identifier)}
-                  helperText={errors.identifier}
+                <Autocomplete
+                  options={stacks}
+                  value={selectedStack}
+                  onChange={(_event, stack) => onStackChange(stack)}
+                  getOptionLabel={(stack) => `${stack.name}  (#${stack.id})`}
+                  isOptionEqualToValue={(option, selected) => option.id === selected.id}
+                  disabled={fieldDisabled || (mode !== "visualisation" && stacks.length === 0)}
                   fullWidth
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Stack Portainer *"
+                      error={Boolean(errors.portainerStackId || errors.identifier)}
+                      helperText={
+                        errors.portainerStackId ||
+                        errors.identifier ||
+                        (values.identifier
+                          ? `Identifiant de la fiche : ${values.identifier}`
+                          : "Lie la fiche à sa stack et en dérive l'identifiant")
+                      }
+                    />
+                  )}
                 />
                 <TextField
                   label="Nom *"
@@ -305,18 +406,7 @@ function GameServerFormPage() {
                   fullWidth
                 />
               </Stack>
-
               <Stack direction={{ xs: "column", md: "row" }} spacing={2}>
-                <TextField
-                  label="ID Portainer Stack"
-                  value={values.portainerStackId}
-                  onChange={(event) => onFieldChange("portainerStackId", event.target.value)}
-                  disabled={fieldDisabled}
-                  error={Boolean(errors.portainerStackId)}
-                  helperText={errors.portainerStackId || "ID numérique visible dans l'URL Portainer"}
-                  inputProps={{ inputMode: "numeric" }}
-                  fullWidth
-                />
                 <TextField
                   label="Jeu"
                   value={values.gameName}
