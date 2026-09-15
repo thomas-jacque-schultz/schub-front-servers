@@ -10,6 +10,17 @@ export interface DisplayedServer {
   lastStatusCheckAt?: string; // ISO-8601, null = never checked
 }
 
+export interface GamingServerPortDto {
+  /** "tcp" ou "udp" */
+  proto: string;
+  /** port ouvert sur la Freebox */
+  wanPort: number;
+  /** port visé sur le LAN ; absent = identique à wanPort */
+  lanPort?: number;
+  /** IP LAN visée ; absent = valeur par défaut du back */
+  lanIp?: string;
+}
+
 export interface GamingServerDto {
   id?: string;
   identifier?: string;
@@ -22,6 +33,7 @@ export interface GamingServerDto {
   version?: string;
   description?: string;
   admins?: string[];
+  ports?: GamingServerPortDto[];
   status?: string;
   lastStatusCheckAt?: string;
 }
@@ -43,4 +55,6 @@ export interface UpsertGamingServerPayload {
   version?: string;
   description?: string;
   admins: string[];
+  /** omis = ports inchangés côté back */
+  ports?: GamingServerPortDto[];
 }
