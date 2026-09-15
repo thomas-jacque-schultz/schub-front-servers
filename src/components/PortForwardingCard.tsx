@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   Alert,
   Box,
@@ -26,17 +26,17 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import RefreshIcon from "@mui/icons-material/Refresh";
-import {
-  createStaticPortRuleApi,
-  deleteStaticPortRuleApi,
-  getPortRulesApi,
-  getStaticPortRulesApi,
-} from "../api/portForwardingApi";
 import type { PortRuleDto, StaticPortRuleDto } from "../types/portForwarding";
 import { originOf, staticNameOf } from "../types/portForwarding";
 
 interface PortForwardingCardProps {
-  token: string;
+  routerRules: PortRuleDto[];
+  staticRules: StaticPortRuleDto[];
+  isLoading: boolean;
+  error: string;
+  onRefresh: () => Promise<void>;
+  onCreate: (rule: StaticPortRuleDto) => Promise<void>;
+  onDelete: (id: string) => Promise<void>;
 }
 
 /**
@@ -72,40 +72,25 @@ const emptyDraft = (): StaticPortRuleDto => ({
 const portRange = (start: number, end: number) =>
   start === end ? String(start) : `${start}-${end}`;
 
-function PortForwardingCard({ token }: PortForwardingCardProps) {
-  const [routerRules, setRouterRules] = useState<PortRuleDto[]>([]);
-  const [staticRules, setStaticRules] = useState<StaticPortRuleDto[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string>("");
+function PortForwardingCard({
+  routerRules,
+  staticRules,
+  isLoading,
+  error,
+  onRefresh,
+  onCreate,
+  onDelete,
+}: PortForwardingCardProps) {
+  // Seul l'état d'interface vit ici : la boîte de dialogue, le brouillon en cours de saisie
+  // et les messages consécutifs à une action. Les redirections, elles, appartiennent au store.
   const [notice, setNotice] = useState<string>("");
+  const [actionError, setActionError] = useState<string>("");
 
   const [isDialogOpen, setDialogOpen] = useState<boolean>(false);
   const [draft, setDraft] = useState<StaticPortRuleDto>(emptyDraft());
   const [isSaving, setSaving] = useState<boolean>(false);
   const [formError, setFormError] = useState<string>("");
   const [deletingId, setDeletingId] = useState<string>("");
-
-  const load = useCallback(async () => {
-    setError("");
-    try {
-      // Les deux listes disent des choses différentes : l'une l'état du routeur, l'autre ce
-      // que l'application détient. Il faut les deux pour savoir quoi afficher et quoi permettre.
-      const [rules, statics] = await Promise.all([
-        getPortRulesApi(token).catch(() => [] as PortRuleDto[]),
-        getStaticPortRulesApi(token),
-      ]);
-      setRouterRules(rules);
-      setStaticRules(statics);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Impossible de lire les redirections");
-    } finally {
-      setIsLoading(false);
-    }
-  }, [token]);
-
-  useEffect(() => {
-    void load();
-  }, [load]);
 
   const rows = useMemo<DisplayRow[]>(() => {
     const staticByName = new Map(staticRules.map((rule) => [rule.name, rule]));
@@ -171,7 +156,7 @@ function PortForwardingCard({ token }: PortForwardingCardProps) {
 
     setSaving(true);
     try {
-      await createStaticPortRuleApi(token, {
+      await onCreate({
         ...draft,
         name: draft.name.trim(),
         lanIp: draft.lanIp?.trim() ? draft.lanIp.trim() : null,
@@ -179,7 +164,6 @@ function PortForwardingCard({ token }: PortForwardingCardProps) {
       setDialogOpen(false);
       setDraft(emptyDraft());
       setNotice("Règle ajoutée. Le routeur est réaligné dans la foulée.");
-      await load();
     } catch (e) {
       setFormError(e instanceof Error ? e.message : "L'ajout a échoué");
     } finally {
@@ -190,13 +174,12 @@ function PortForwardingCard({ token }: PortForwardingCardProps) {
   const handleDelete = async (row: DisplayRow) => {
     if (!row.staticId) return;
     setDeletingId(row.staticId);
-    setError("");
+    setActionError("");
     try {
-      await deleteStaticPortRuleApi(token, row.staticId);
+      await onDelete(row.staticId);
       setNotice(`Règle « ${row.label} » supprimée.`);
-      await load();
     } catch (e) {
-      setError(e instanceof Error ? e.message : "La suppression a échoué");
+      setActionError(e instanceof Error ? e.message : "La suppression a échoué");
     } finally {
       setDeletingId("");
     }
@@ -215,7 +198,7 @@ function PortForwardingCard({ token }: PortForwardingCardProps) {
           </Box>
           <Stack direction="row" spacing={1}>
             <Tooltip title="Relire l'état du routeur">
-              <IconButton onClick={() => void load()} disabled={isLoading}>
+              <IconButton onClick={() => void onRefresh()} disabled={isLoading}>
                 <RefreshIcon />
               </IconButton>
             </Tooltip>
@@ -233,7 +216,8 @@ function PortForwardingCard({ token }: PortForwardingCardProps) {
           </Stack>
         </Stack>
 
-        {error && <Alert severity="error" sx={{ mb: 2 }} onClose={() => setError("")}>{error}</Alert>}
+        {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+        {actionError && <Alert severity="error" sx={{ mb: 2 }} onClose={() => setActionError("")}>{actionError}</Alert>}
         {notice && <Alert severity="success" sx={{ mb: 2 }} onClose={() => setNotice("")}>{notice}</Alert>}
 
         {isLoading ? (

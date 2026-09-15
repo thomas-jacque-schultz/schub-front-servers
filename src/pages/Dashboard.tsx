@@ -13,6 +13,7 @@ import { startGamingServerApi, stopGamingServerApi } from "../api/serversApi";
 import AdminActionBar from "../components/AdminActionBar";
 import ServersDashboard from "../components/AllServersComponent";
 import PortForwardingCard from "../components/PortForwardingCard";
+import { usePortForwardingStore } from "../stores/portForwardingStore";
 import DiscordChannelsCard from "../components/DiscordChannelsCard";
 import { useAuthStore } from "../stores/authStore";
 import { useServersStore } from "../stores/serversStore";
@@ -23,6 +24,16 @@ const REFRESH_INTERVAL_MS = 30_000;
 function DashboardPage() {
   const navigate = useNavigate();
   const { accessToken, profile, isAdmin, logout } = useAuthStore();
+  const {
+    routerRules,
+    staticRules,
+    isLoading: isLoadingPortForwarding,
+    error: portForwardingError,
+    loadPortForwarding,
+    createStaticRule,
+    deleteStaticRule,
+    resetPortForwarding,
+  } = usePortForwardingStore();
   const { servers, isLoading, error: serversError, lastRefreshedAt, loadServers, resetServers } =
     useServersStore();
   const [guilds, setGuilds] = useState<DiscordGuildChannelsDto[]>([]);
@@ -37,11 +48,17 @@ function DashboardPage() {
   useEffect(() => {
     if (!accessToken || !profile) {
       resetServers();
+      resetPortForwarding();
       setGuilds([]);
       setGuildsError("");
       return;
     }
     void loadServers(accessToken);
+    // Réservé aux administrateurs, comme la carte elle-même : inutile d'interroger le back
+    // pour un utilisateur qui ne verra jamais le résultat.
+    if (isAdmin) {
+      void loadPortForwarding(accessToken);
+    }
     void (async () => {
       setIsLoadingGuilds(true);
       setGuildsError("");
@@ -58,7 +75,7 @@ function DashboardPage() {
 
     const interval = setInterval(refresh, REFRESH_INTERVAL_MS);
     return () => clearInterval(interval);
-  }, [accessToken, profile, loadServers, resetServers, refresh]);
+  }, [accessToken, profile, isAdmin, loadServers, resetServers, refresh, loadPortForwarding, resetPortForwarding]);
 
   const onSubmitDiscordChannelSelection = async (selection: DiscordChannelSelection[]) => {
     if (!accessToken) {
@@ -170,7 +187,17 @@ function DashboardPage() {
             pendingServerIdentifier={pendingServerIdentifier}
           />
 
-          {isAdmin && accessToken && <PortForwardingCard token={accessToken} />}
+          {isAdmin && accessToken && (
+            <PortForwardingCard
+              routerRules={routerRules}
+              staticRules={staticRules}
+              isLoading={isLoadingPortForwarding}
+              error={portForwardingError}
+              onRefresh={() => loadPortForwarding(accessToken)}
+              onCreate={(rule) => createStaticRule(accessToken, rule)}
+              onDelete={(id) => deleteStaticRule(accessToken, id)}
+            />
+          )}
         </Stack>
       </Container>
     </Box>
