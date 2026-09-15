@@ -17,7 +17,7 @@ import {
   updateGamingServerApi,
 } from "../api/serversApi";
 import { useAuthStore } from "../stores/authStore";
-import type { GameServerFormMode, UpsertGamingServerPayload } from "../types/server";
+import type { GameServerFormMode, GamingServerPortDto, UpsertGamingServerPayload } from "../types/server";
 
 interface GameServerFormValues {
   identifier: string;
@@ -30,6 +30,7 @@ interface GameServerFormValues {
   version: string;
   description: string;
   admins: string;
+  ports: string;
 }
 
 const DEFAULT_VALUES: GameServerFormValues = {
@@ -43,9 +44,48 @@ const DEFAULT_VALUES: GameServerFormValues = {
   version: "",
   description: "",
   admins: "",
+  ports: "",
 };
 
 const REQUIRED_FIELDS: Array<keyof GameServerFormValues> = ["identifier", "name"];
+
+const PORT_ENTRY_PATTERN = /^(tcp|udp):(\d{1,5})(?::(\d{1,5}))?$/i;
+
+const isValidPort = (port: number) => Number.isInteger(port) && port >= 1 && port <= 65535;
+
+/**
+ * Parse "tcp:15007, udp:8211" en redirections Freebox.
+ * Chaque entrée est proto:portWan[:portLan] ; portLan vaut portWan par défaut.
+ * Le port indiqué est celui publié sur le nœud Swarm, pas le port interne au conteneur.
+ * Renvoie null dès qu'une entrée est mal formée, pour que le formulaire puisse le signaler.
+ */
+const parsePorts = (raw: string): GamingServerPortDto[] | null => {
+  const parsed: GamingServerPortDto[] = [];
+
+  for (const entry of raw.split(",").map((item) => item.trim()).filter(Boolean)) {
+    const match = PORT_ENTRY_PATTERN.exec(entry);
+    if (!match) {
+      return null;
+    }
+    const wanPort = Number(match[2]);
+    const lanPort = match[3] ? Number(match[3]) : wanPort;
+    if (!isValidPort(wanPort) || !isValidPort(lanPort)) {
+      return null;
+    }
+    parsed.push({ proto: match[1].toLowerCase(), wanPort, lanPort });
+  }
+
+  return parsed;
+};
+
+const formatPorts = (ports?: GamingServerPortDto[]): string =>
+  (ports || [])
+    .map((port) =>
+      port.lanPort && port.lanPort !== port.wanPort
+        ? `${port.proto}:${port.wanPort}:${port.lanPort}`
+        : `${port.proto}:${port.wanPort}`,
+    )
+    .join(", ");
 
 const toPayload = (values: GameServerFormValues): UpsertGamingServerPayload => ({
   identifier: values.identifier.trim(),
@@ -61,6 +101,8 @@ const toPayload = (values: GameServerFormValues): UpsertGamingServerPayload => (
     .split(",")
     .map((item) => item.trim())
     .filter(Boolean),
+  // champ vidé = toutes les redirections du serveur sont retirées
+  ports: parsePorts(values.ports) || [],
 });
 
 const resolveMode = (pathname: string): GameServerFormMode => {
@@ -130,6 +172,7 @@ function GameServerFormPage() {
           version: server.version || "",
           description: server.description || "",
           admins: (server.admins || []).join(", "),
+          ports: formatPorts(server.ports),
         });
       } catch (error) {
         if (!active) {
@@ -170,6 +213,10 @@ function GameServerFormPage() {
       if (!Number.isFinite(asNumber) || asNumber < 0) {
         nextErrors.playersMax = "Le nombre de joueurs doit etre un entier positif.";
       }
+    }
+
+    if (parsePorts(values.ports) === null) {
+      nextErrors.ports = "Format attendu : tcp:25565, udp:8211:8211";
     }
 
     setErrors(nextErrors);
@@ -312,6 +359,19 @@ function GameServerFormPage() {
                   fullWidth
                 />
               </Stack>
+
+              <TextField
+                label="Ports Freebox"
+                value={values.ports}
+                onChange={(event) => onFieldChange("ports", event.target.value)}
+                disabled={fieldDisabled}
+                error={Boolean(errors.ports)}
+                helperText={
+                  errors.ports ||
+                  "Ouverts pendant que le serveur tourne, refermés à l'arrêt. Format : tcp:25565, udp:8211"
+                }
+                fullWidth
+              />
 
               <TextField
                 label="Admins (separes par des virgules)"
