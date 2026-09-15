@@ -53,6 +53,13 @@ const DEFAULT_VALUES: GameServerFormValues = {
   ports: "",
 };
 
+/**
+ * Les stacks de jeu suivent toutes la convention de nommage `gaming-*` dans Portainer.
+ * Le filtre est volontairement côté client : le connecteur, lui, liste tout sans savoir
+ * lesquelles sont des serveurs de jeu — c est au consommateur de trier (plan §6).
+ */
+const GAME_STACK_MARKER = "gaming";
+
 const REQUIRED_FIELDS: Array<keyof GameServerFormValues> = ["identifier", "name"];
 
 const PORT_ENTRY_PATTERN = /^(tcp|udp):(\d{1,5})(?::(\d{1,5}))?$/i;
@@ -253,6 +260,18 @@ function GameServerFormPage() {
     [stacks, values.portainerStackId],
   );
 
+  // La stack déjà liée reste proposée même si elle ne porte pas le marqueur : une fiche
+  // existante ne doit pas voir son champ se vider parce que la convention a changé.
+  const stackOptions = useMemo(() => {
+    const games = stacks.filter((stack) =>
+      stack.name.toLowerCase().includes(GAME_STACK_MARKER),
+    );
+    if (selectedStack && !games.some((stack) => stack.id === selectedStack.id)) {
+      return [selectedStack, ...games];
+    }
+    return games;
+  }, [stacks, selectedStack]);
+
   const onStackChange = (stack: PortainerStackDto | null) => {
     setValues((current) => ({
       ...current,
@@ -374,12 +393,12 @@ function GameServerFormPage() {
 
               <Stack direction={{ xs: "column", md: "row" }} spacing={2}>
                 <Autocomplete
-                  options={stacks}
+                  options={stackOptions}
                   value={selectedStack}
                   onChange={(_event, stack) => onStackChange(stack)}
                   getOptionLabel={(stack) => `${stack.name}  (#${stack.id})`}
                   isOptionEqualToValue={(option, selected) => option.id === selected.id}
-                  disabled={fieldDisabled || (mode !== "visualisation" && stacks.length === 0)}
+                  disabled={fieldDisabled || (mode !== "visualisation" && stackOptions.length === 0)}
                   fullWidth
                   renderInput={(params) => (
                     <TextField
