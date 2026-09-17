@@ -15,22 +15,22 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate, useParams } from "react-router-dom";
 import FormActionButton from "../components/FormActionButton";
 import {
-  createGamingServerApi,
-  getGamingServerByIdApi,
-  updateGamingServerApi,
+  createGameServerApi,
+  getGameServerByIdApi,
+  updateGameServerApi,
 } from "../api/serversApi";
-import { getPortainerStacksApi } from "../api/portainerApi";
+import { getDeploymentsApi } from "../api/deploymentsApi";
 import { useAuthStore } from "../stores/authStore";
-import type { PortainerStackDto } from "../types/portainer";
-import { identifierFromStackName } from "../types/portainer";
-import type { GameServerFormMode, GamingServerPortDto, UpsertGamingServerPayload } from "../types/server";
+import type { DeploymentDto } from "../types/deployment";
+import { slugFromDeploymentName } from "../types/deployment";
+import type { GameServerFormMode, GameServerPortDto, UpsertGameServerPayload } from "../types/server";
 
 interface GameServerFormValues {
-  identifier: string;
-  portainerStackId: string;
+  slug: string;
+  deploymentId: string;
   name: string;
   urlConnection: string;
-  gameName: string;
+  game: string;
   playersMax: string;
   installation: string;
   version: string;
@@ -40,11 +40,11 @@ interface GameServerFormValues {
 }
 
 const DEFAULT_VALUES: GameServerFormValues = {
-  identifier: "",
-  portainerStackId: "",
+  slug: "",
+  deploymentId: "",
   name: "",
   urlConnection: "",
-  gameName: "",
+  game: "",
   playersMax: "",
   installation: "",
   version: "",
@@ -54,13 +54,13 @@ const DEFAULT_VALUES: GameServerFormValues = {
 };
 
 /**
- * Les stacks de jeu suivent toutes la convention de nommage `gaming-*` dans Portainer.
+ * Les déploiements de jeu suivent tous la convention de nommage `gaming-*`.
  * Le filtre est volontairement côté client : le connecteur, lui, liste tout sans savoir
  * lesquelles sont des serveurs de jeu — c est au consommateur de trier (plan §6).
  */
-const GAME_STACK_MARKER = "gaming";
+const GAME_DEPLOYMENT_MARKER = "gaming";
 
-const REQUIRED_FIELDS: Array<keyof GameServerFormValues> = ["identifier", "name"];
+const REQUIRED_FIELDS: Array<keyof GameServerFormValues> = ["slug", "name"];
 
 const PORT_ENTRY_PATTERN = /^(tcp|udp):(\d{1,5})(?::(\d{1,5}))?$/i;
 
@@ -72,8 +72,8 @@ const isValidPort = (port: number) => Number.isInteger(port) && port >= 1 && por
  * Le port indiqué est celui publié sur le nœud Swarm, pas le port interne au conteneur.
  * Renvoie null dès qu'une entrée est mal formée, pour que le formulaire puisse le signaler.
  */
-const parsePorts = (raw: string): GamingServerPortDto[] | null => {
-  const parsed: GamingServerPortDto[] = [];
+const parsePorts = (raw: string): GameServerPortDto[] | null => {
+  const parsed: GameServerPortDto[] = [];
 
   for (const entry of raw.split(",").map((item) => item.trim()).filter(Boolean)) {
     const match = PORT_ENTRY_PATTERN.exec(entry);
@@ -91,7 +91,7 @@ const parsePorts = (raw: string): GamingServerPortDto[] | null => {
   return parsed;
 };
 
-const formatPorts = (ports?: GamingServerPortDto[]): string =>
+const formatPorts = (ports?: GameServerPortDto[]): string =>
   (ports || [])
     .map((port) =>
       port.lanPort && port.lanPort !== port.wanPort
@@ -100,12 +100,12 @@ const formatPorts = (ports?: GamingServerPortDto[]): string =>
     )
     .join(", ");
 
-const toPayload = (values: GameServerFormValues): UpsertGamingServerPayload => ({
-  identifier: values.identifier.trim(),
-  portainerStackId: values.portainerStackId.trim() ? Number(values.portainerStackId.trim()) : undefined,
+const toPayload = (values: GameServerFormValues): UpsertGameServerPayload => ({
+  slug: values.slug.trim(),
+  deploymentId: values.deploymentId.trim() ? Number(values.deploymentId.trim()) : undefined,
   name: values.name.trim(),
   urlConnection: values.urlConnection.trim() || undefined,
-  gameName: values.gameName.trim() || undefined,
+  game: values.game.trim() || undefined,
   playersMax: values.playersMax.trim() ? Number(values.playersMax.trim()) : undefined,
   installation: values.installation.trim() || undefined,
   version: values.version.trim() || undefined,
@@ -137,13 +137,13 @@ function GameServerFormPage() {
   const [globalError, setGlobalError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [stacks, setStacks] = useState<PortainerStackDto[]>([]);
-  const [stacksError, setStacksError] = useState<string>("");
+  const [deployments, setDeployments] = useState<DeploymentDto[]>([]);
+  const [deploymentsError, setDeploymentsError] = useState<string>("");
 
   const mode = useMemo(() => resolveMode(window.location.pathname), []);
 
-  // Le catalogue Portainer sert à lier la fiche à sa stack sans la saisir. En consultation,
-  // le champ est figé : inutile d'interroger Portainer pour une liste qu'on ne peut pas ouvrir.
+  // Le catalogue des déploiements sert à lier la fiche au sien sans le saisir. En consultation,
+  // le champ est figé : inutile d'interroger le cœur pour une liste qu'on ne peut pas ouvrir.
   useEffect(() => {
     if (!accessToken || mode === "visualisation") {
       return;
@@ -152,16 +152,16 @@ function GameServerFormPage() {
     let active = true;
     void (async () => {
       try {
-        const payload = await getPortainerStacksApi(accessToken);
+        const payload = await getDeploymentsApi(accessToken);
         if (active) {
-          setStacks(payload);
-          setStacksError("");
+          setDeployments(payload);
+          setDeploymentsError("");
         }
       } catch (error) {
         if (active) {
           // Non bloquant : la fiche reste remplissable, seule la liste manque.
-          setStacksError(
-            error instanceof Error ? error.message : "Impossible de lire les stacks Portainer",
+          setDeploymentsError(
+            error instanceof Error ? error.message : "Impossible de lire les déploiements",
           );
         }
       }
@@ -195,7 +195,7 @@ function GameServerFormPage() {
       setGlobalError("");
 
       try {
-        const server = await getGamingServerByIdApi(accessToken, id);
+        const server = await getGameServerByIdApi(accessToken, id);
         if (!active) {
           return;
         }
@@ -206,11 +206,11 @@ function GameServerFormPage() {
         }
 
         setValues({
-          identifier: server.identifier || "",
-          portainerStackId: typeof server.portainerStackId === "number" ? String(server.portainerStackId) : "",
+          slug: server.slug || "",
+          deploymentId: typeof server.deploymentId === "number" ? String(server.deploymentId) : "",
           name: server.name || "",
           urlConnection: server.urlConnection || "",
-          gameName: server.gameName || "",
+          game: server.game || "",
           playersMax:
             typeof server.playersMax === "number" ? String(server.playersMax) : "",
           installation: server.installation || "",
@@ -245,41 +245,41 @@ function GameServerFormPage() {
   };
 
   /**
-   * Lier la fiche à une stack renseigne les deux champs d'un coup.
+   * Lier la fiche à un déploiement renseigne les deux champs d'un coup.
    *
    * L'identifiant n'est dérivé qu'à la création. En édition il reste tel quel : c'est la clé
    * d'unicité de la fiche, le propriétaire de ses règles de ports et l'argument des commandes
-   * Discord. Le recalculer parce qu'on rebranche une stack orphelinerait les redirections
+   * Discord. Le recalculer parce qu'on rebranche un déploiement orphelinerait les redirections
    * existantes et casserait les commandes déjà connues des utilisateurs.
    */
-  // La fiche stocke l'identifiant de la stack, pas la stack : on la retrouve dans le catalogue.
-  // Null tant que le catalogue n'est pas chargé, ou si la stack liée a disparu de Portainer —
+  // La fiche stocke l'identifiant du déploiement, pas le déploiement : on le retrouve dans le catalogue.
+  // Null tant que le catalogue n'est pas chargé, ou si le déploiement lié a disparu du cœur —
   // auquel cas le champ apparaît vide, ce qui est la vérité à afficher.
-  const selectedStack = useMemo(
-    () => stacks.find((stack) => String(stack.id) === values.portainerStackId) ?? null,
-    [stacks, values.portainerStackId],
+  const selectedDeployment = useMemo(
+    () => deployments.find((deployment) => String(deployment.id) === values.deploymentId) ?? null,
+    [deployments, values.deploymentId],
   );
 
-  // La stack déjà liée reste proposée même si elle ne porte pas le marqueur : une fiche
+  // Le déploiement déjà lié reste proposé même s'il ne porte pas le marqueur : une fiche
   // existante ne doit pas voir son champ se vider parce que la convention a changé.
-  const stackOptions = useMemo(() => {
-    const games = stacks.filter((stack) =>
-      stack.name.toLowerCase().includes(GAME_STACK_MARKER),
+  const deploymentOptions = useMemo(() => {
+    const games = deployments.filter((deployment) =>
+      deployment.name.toLowerCase().includes(GAME_DEPLOYMENT_MARKER),
     );
-    if (selectedStack && !games.some((stack) => stack.id === selectedStack.id)) {
-      return [selectedStack, ...games];
+    if (selectedDeployment && !games.some((deployment) => deployment.id === selectedDeployment.id)) {
+      return [selectedDeployment, ...games];
     }
     return games;
-  }, [stacks, selectedStack]);
+  }, [deployments, selectedDeployment]);
 
-  const onStackChange = (stack: PortainerStackDto | null) => {
+  const onDeploymentChange = (deployment: DeploymentDto | null) => {
     setValues((current) => ({
       ...current,
-      portainerStackId: stack ? String(stack.id) : "",
-      identifier:
-        mode === "creation" && stack ? identifierFromStackName(stack.name) : current.identifier,
+      deploymentId: deployment ? String(deployment.id) : "",
+      slug:
+        mode === "creation" && deployment ? slugFromDeploymentName(deployment.name) : current.slug,
     }));
-    setErrors((current) => ({ ...current, portainerStackId: "", identifier: "" }));
+    setErrors((current) => ({ ...current, deploymentId: "", slug: "" }));
     setGlobalError("");
   };
 
@@ -292,10 +292,10 @@ function GameServerFormPage() {
       }
     });
 
-    // L'identifiant n'est plus saisi : il vient de la stack choisie. Le message doit donc
+    // Le slug n'est plus saisi : il vient du déploiement choisi. Le message doit donc
     // désigner le geste manquant, pas un champ que l'utilisateur ne voit plus.
-    if (nextErrors.identifier) {
-      nextErrors.identifier = "Choisissez la stack Portainer à lier : elle renseigne l'identifiant.";
+    if (nextErrors.slug) {
+      nextErrors.slug = "Choisissez le déploiement à lier : il renseigne le slug.";
     }
 
     if (values.playersMax.trim()) {
@@ -337,9 +337,9 @@ function GameServerFormPage() {
 
     try {
       if (mode === "creation") {
-        await createGamingServerApi(accessToken, payload);
+        await createGameServerApi(accessToken, payload);
       } else if (mode === "edition" && id) {
-        await updateGamingServerApi(accessToken, id, payload);
+        await updateGameServerApi(accessToken, id, payload);
       }
 
       navigate("/dashboard", { replace: true });
@@ -384,33 +384,33 @@ function GameServerFormPage() {
 
               {globalError && <Alert severity="error">{globalError}</Alert>}
 
-              {stacksError && (
+              {deploymentsError && (
                 <Alert severity="warning">
-                  Catalogue Portainer indisponible : {stacksError}. La fiche reste modifiable, mais
-                  la stack ne peut pas être choisie dans la liste.
+                  Catalogue des déploiements indisponible : {deploymentsError}. La fiche reste modifiable, mais
+                  le déploiement ne peut pas être choisi dans la liste.
                 </Alert>
               )}
 
               <Stack direction={{ xs: "column", md: "row" }} spacing={2}>
                 <Autocomplete
-                  options={stackOptions}
-                  value={selectedStack}
-                  onChange={(_event, stack) => onStackChange(stack)}
-                  getOptionLabel={(stack) => `${stack.name}  (#${stack.id})`}
+                  options={deploymentOptions}
+                  value={selectedDeployment}
+                  onChange={(_event, deployment) => onDeploymentChange(deployment)}
+                  getOptionLabel={(deployment) => `${deployment.name}  (#${deployment.id})`}
                   isOptionEqualToValue={(option, selected) => option.id === selected.id}
-                  disabled={fieldDisabled || (mode !== "visualisation" && stackOptions.length === 0)}
+                  disabled={fieldDisabled || (mode !== "visualisation" && deploymentOptions.length === 0)}
                   fullWidth
                   renderInput={(params) => (
                     <TextField
                       {...params}
-                      label="Stack Portainer *"
-                      error={Boolean(errors.portainerStackId || errors.identifier)}
+                      label="Déploiement *"
+                      error={Boolean(errors.deploymentId || errors.slug)}
                       helperText={
-                        errors.portainerStackId ||
-                        errors.identifier ||
-                        (values.identifier
-                          ? `Identifiant de la fiche : ${values.identifier}`
-                          : "Lie la fiche à sa stack et en dérive l'identifiant")
+                        errors.deploymentId ||
+                        errors.slug ||
+                        (values.slug
+                          ? `Identifiant de la fiche : ${values.slug}`
+                          : "Lie la fiche à sa deployment et en dérive l'identifiant")
                       }
                     />
                   )}
@@ -428,8 +428,8 @@ function GameServerFormPage() {
               <Stack direction={{ xs: "column", md: "row" }} spacing={2}>
                 <TextField
                   label="Jeu"
-                  value={values.gameName}
-                  onChange={(event) => onFieldChange("gameName", event.target.value)}
+                  value={values.game}
+                  onChange={(event) => onFieldChange("game", event.target.value)}
                   disabled={fieldDisabled}
                   fullWidth
                 />

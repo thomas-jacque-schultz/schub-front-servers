@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { getDiscordGuildChannelsApi, subscribeDiscordChannelsApi } from "../api/discordApi";
-import { startGamingServerApi, stopGamingServerApi } from "../api/serversApi";
+import { startGameServerApi, stopGameServerApi } from "../api/serversApi";
 import AdminActionBar from "../components/AdminActionBar";
 import ServersDashboard from "../components/AllServersComponent";
 import PortForwardingCard from "../components/PortForwardingCard";
@@ -39,7 +39,7 @@ function DashboardPage() {
   const [guilds, setGuilds] = useState<DiscordGuildChannelsDto[]>([]);
   const [isLoadingGuilds, setIsLoadingGuilds] = useState<boolean>(false);
   const [guildsError, setGuildsError] = useState<string>("");
-  const [pendingServerIdentifier, setPendingServerIdentifier] = useState<string | null>(null);
+  const [pendingServerSlug, setPendingServerIdentifier] = useState<string | null>(null);
 
   const refresh = useCallback(() => {
     if (accessToken && profile) void loadServers(accessToken);
@@ -104,28 +104,28 @@ function DashboardPage() {
     navigate(`/gameServeur/${serverId}/edit`);
   };
 
-  const onStartServer = async (serverIdentifier: string) => {
+  const onStartServer = async (serverSlug: string) => {
     if (!accessToken) {
       return;
     }
 
-    setPendingServerIdentifier(serverIdentifier);
+    setPendingServerIdentifier(serverSlug);
     try {
-      await startGamingServerApi(accessToken, serverIdentifier);
+      await startGameServerApi(accessToken, serverSlug);
       await loadServers(accessToken);
     } finally {
       setPendingServerIdentifier(null);
     }
   };
 
-  const onStopServer = async (serverIdentifier: string) => {
+  const onStopServer = async (serverSlug: string) => {
     if (!accessToken) {
       return;
     }
 
-    setPendingServerIdentifier(serverIdentifier);
+    setPendingServerIdentifier(serverSlug);
     try {
-      await stopGamingServerApi(accessToken, serverIdentifier);
+      await stopGameServerApi(accessToken, serverSlug);
       await loadServers(accessToken);
     } finally {
       setPendingServerIdentifier(null);
@@ -184,7 +184,7 @@ function DashboardPage() {
             onEditServer={onEditServer}
             onStartServer={onStartServer}
             onStopServer={onStopServer}
-            pendingServerIdentifier={pendingServerIdentifier}
+            pendingServerSlug={pendingServerSlug}
           />
 
           {isAdmin && accessToken && (

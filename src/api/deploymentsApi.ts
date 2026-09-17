@@ -1,14 +1,14 @@
 import { requestJson } from "./httpClient";
-import type { PortainerStackDto } from "../types/portainer";
+import type { DeploymentDto } from "../types/deployment";
 
 /**
- * Le catalogue des stacks Portainer, pour lier un serveur sans saisie manuelle.
+ * Le catalogue des déploiements, pour lier un serveur sans saisie manuelle.
  *
- * `portainerStackId` est une clé de liaison : une faute de frappe ne se voit qu'au premier
+ * `deploymentId` est une clé de liaison : une faute de frappe ne se voit qu'au premier
  * démarrage raté, longtemps après la saisie.
  */
-export const getPortainerStacksApi = async (token: string): Promise<PortainerStackDto[]> =>
-  requestJson<PortainerStackDto[]>("/bot/portainer/stacks", {
+export const getDeploymentsApi = async (token: string): Promise<DeploymentDto[]> =>
+  requestJson<DeploymentDto[]>("/deployments", {
     method: "GET",
     headers: { Authorization: `Bearer ${token}` },
   });

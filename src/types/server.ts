@@ -4,13 +4,14 @@ export type GameServerFormMode = "creation" | "edition" | "visualisation";
 
 export interface DisplayedServer {
   id?: string;
-  identifier?: string;
+  /** Identifiant humain stable. Anciennement `identifier` (§2 du plan). */
+  slug?: string;
   name: string;
   status: ServerStatus;
   lastStatusCheckAt?: string; // ISO-8601, null = never checked
 }
 
-export interface GamingServerPortDto {
+export interface GameServerPortDto {
   /** "tcp" ou "udp" */
   proto: string;
   /** port ouvert sur la Freebox */
@@ -21,40 +22,56 @@ export interface GamingServerPortDto {
   lanIp?: string;
 }
 
-export interface GamingServerDto {
+/**
+ * Un serveur tel que le cœur l'expose, depuis la phase 4.
+ *
+ * <p>Vocabulaire du §2 : `slug` remplace `identifier`, `deploymentId` remplace
+ * `portainerStackId`, `game` remplace `gameName`. Le front ne nomme plus la marque de l'outil
+ * qui réalise le serveur.</p>
+ */
+export interface GameServerDto {
   id?: string;
-  identifier?: string;
-  portainerStackId?: number;
+  slug?: string;
+  /** le déploiement qui réalise ce serveur */
+  deploymentId?: number;
   name?: string;
   urlConnection?: string;
-  gameName?: string;
+  game?: string;
+  /** libellé et icône dérivés du jeu, servis par le cœur : ne pas dupliquer le catalogue ici */
+  gameLabel?: string;
+  gameIconUrl?: string;
   playersMax?: number;
   installation?: string;
   version?: string;
   description?: string;
   admins?: string[];
-  ports?: GamingServerPortDto[];
+  ports?: GameServerPortDto[];
   status?: string;
   lastStatusCheckAt?: string;
+  lastStatusChangeAt?: string;
 }
 
+/**
+ * Vue publique. Le cœur y retire délibérément tout ce qui révèle l'infrastructure : pas de
+ * déploiement, pas de ports, pas d'admins — et pas de date d'observation.
+ */
 export interface PublicServerStatusDto {
   name?: string;
+  game?: string;
   status?: string;
-  lastStatusCheckAt?: string;
 }
 
-export interface UpsertGamingServerPayload {
-  identifier: string;
-  portainerStackId?: number;
+export interface UpsertGameServerPayload {
+  slug: string;
+  deploymentId?: number;
   name: string;
   urlConnection?: string;
-  gameName?: string;
+  game?: string;
   playersMax?: number;
   installation?: string;
   version?: string;
   description?: string;
   admins: string[];
-  /** omis = ports inchangés côté back */
-  ports?: GamingServerPortDto[];
+  /** omis = ports inchangés côté cœur */
+  ports?: GameServerPortDto[];
 }

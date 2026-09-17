@@ -16,9 +16,9 @@ interface ServersDashboardProps {
   onRefresh?: () => void;
   onViewServer?: (serverId: string) => void;
   onEditServer?: (serverId: string) => void;
-  onStartServer?: (serverIdentifier: string) => void;
-  onStopServer?: (serverIdentifier: string) => void;
-  pendingServerIdentifier?: string | null;
+  onStartServer?: (serverSlug: string) => void;
+  onStopServer?: (serverSlug: string) => void;
+  pendingServerSlug?: string | null;
 }
 
 function ServersDashboard({
@@ -34,7 +34,7 @@ function ServersDashboard({
   onEditServer,
   onStartServer,
   onStopServer,
-  pendingServerIdentifier,
+  pendingServerSlug,
 }: ServersDashboardProps) {
   const onlineCount = servers.filter((server) => server.status === "online").length;
 
@@ -116,16 +116,16 @@ function ServersDashboard({
                 />
               </Stack>
 
-              {(server.id || server.identifier) && (
+              {(server.id || server.slug) && (
                 <Stack direction="row" spacing={1} justifyContent="flex-end">
-                  {canControl && server.identifier && (
+                  {canControl && server.slug && (
                     <>
                       <Button
                         size="small"
                         variant="outlined"
                         startIcon={<PlayArrowIcon />}
-                        onClick={() => onStartServer?.(server.identifier || "")}
-                        disabled={pendingServerIdentifier === server.identifier}
+                        onClick={() => onStartServer?.(server.slug || "")}
+                        disabled={pendingServerSlug === server.slug}
                       >
                         Start
                       </Button>
@@ -133,8 +133,8 @@ function ServersDashboard({
                         size="small"
                         variant="outlined"
                         startIcon={<PauseIcon />}
-                        onClick={() => onStopServer?.(server.identifier || "")}
-                        disabled={pendingServerIdentifier === server.identifier}
+                        onClick={() => onStopServer?.(server.slug || "")}
+                        disabled={pendingServerSlug === server.slug}
                       >
                         Stop
                       </Button>
@@ -144,7 +144,7 @@ function ServersDashboard({
                     <Button
                       size="small"
                       variant="outlined"
-                      onClick={() => onViewServer(server.id || server.identifier || "")}
+                      onClick={() => onViewServer(server.id || server.slug || "")}
                     >
                       Voir
                     </Button>
@@ -153,7 +153,7 @@ function ServersDashboard({
                     <Button
                       size="small"
                       variant="contained"
-                      onClick={() => onEditServer?.(server.id || server.identifier || "")}
+                      onClick={() => onEditServer?.(server.id || server.slug || "")}
                     >
                       Modifier
                     </Button>
