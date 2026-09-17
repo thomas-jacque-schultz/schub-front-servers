@@ -9,14 +9,14 @@ const authHeader = (token: string) => ({ Authorization: `Bearer ${token}` });
  * *veut*, celles-là ce que le routeur *porte*.
  */
 export const getPortRulesApi = async (token: string): Promise<PortRuleDto[]> =>
-  requestJson<PortRuleDto[]>("/bot/port-forwarding/rules", {
+  requestJson<PortRuleDto[]>("/port-forwarding/rules", {
     method: "GET",
     headers: authHeader(token),
   });
 
 /** Les règles permanentes détenues par l'application — les seules qu'elle sait supprimer. */
 export const getStaticPortRulesApi = async (token: string): Promise<StaticPortRuleDto[]> =>
-  requestJson<StaticPortRuleDto[]>("/bot/port-forwarding/static-rules", {
+  requestJson<StaticPortRuleDto[]>("/port-forwarding/static-rules", {
     method: "GET",
     headers: authHeader(token),
   });
@@ -25,14 +25,14 @@ export const createStaticPortRuleApi = async (
   token: string,
   rule: StaticPortRuleDto,
 ): Promise<StaticPortRuleDto> =>
-  requestJson<StaticPortRuleDto>("/bot/port-forwarding/static-rules", {
+  requestJson<StaticPortRuleDto>("/port-forwarding/static-rules", {
     method: "POST",
     headers: authHeader(token),
     body: JSON.stringify(rule),
   });
 
 export const deleteStaticPortRuleApi = async (token: string, id: string): Promise<void> => {
-  await requestJson<unknown>(`/bot/port-forwarding/static-rules/${id}`, {
+  await requestJson<unknown>(`/port-forwarding/static-rules/${id}`, {
     method: "DELETE",
     headers: authHeader(token),
   });

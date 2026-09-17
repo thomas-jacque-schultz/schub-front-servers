@@ -1,10 +1,10 @@
 import { ApiError, requestJson } from "./httpClient";
 import type {
   DisplayedServer,
-  GamingServerDto,
+  GameServerDto,
   PublicServerStatusDto,
   ServerStatus,
-  UpsertGamingServerPayload,
+  UpsertGameServerPayload,
 } from "../types/server";
 
 const fallbackServers: DisplayedServer[] = [
@@ -32,10 +32,10 @@ const normalizeStatus = (rawStatus?: string): ServerStatus => {
   return "unknown";
 };
 
-const toDisplayedServer = (server: GamingServerDto): DisplayedServer => ({
+const toDisplayedServer = (server: GameServerDto): DisplayedServer => ({
   id: server.id,
-  identifier: server.identifier,
-  name: server.name || server.identifier || "Serveur inconnu",
+  slug: server.slug,
+  name: server.name || server.slug || "Serveur inconnu",
   status: normalizeStatus(server.status),
   lastStatusCheckAt: server.lastStatusCheckAt,
 });
@@ -43,11 +43,10 @@ const toDisplayedServer = (server: GamingServerDto): DisplayedServer => ({
 const toPublicDisplayedServer = (server: PublicServerStatusDto): DisplayedServer => ({
   name: server.name || "Serveur inconnu",
   status: normalizeStatus(server.status),
-  lastStatusCheckAt: server.lastStatusCheckAt,
 });
 
-export const getGamingServersApi = async (token?: string): Promise<GamingServerDto[]> => {
-  return requestJson<GamingServerDto[]>("/bot/gaming-server", {
+export const getGameServersApi = async (token?: string): Promise<GameServerDto[]> => {
+  return requestJson<GameServerDto[]>("/game-servers", {
     method: "GET",
     headers: token
       ? {
@@ -57,19 +56,27 @@ export const getGamingServersApi = async (token?: string): Promise<GamingServerD
   });
 };
 
-export const getGamingServerByIdApi = async (
+/**
+ * Cherche par identifiant Mongo OU par slug.
+ *
+ * Le cœur expose `GET /game-servers/{id}`, mais il ne résout que l'identifiant Mongo. Les
+ * appelants d'ici passent parfois un slug, d'où cette recherche côté client — conservée telle
+ * quelle en phase 4 pour ne pas changer un comportement au passage. À reprendre quand le cœur
+ * saura résoudre les deux (phase 6).
+ */
+export const getGameServerByIdApi = async (
   token: string,
   id: string,
-): Promise<GamingServerDto | null> => {
-  const servers = await getGamingServersApi(token);
-  return servers.find((server) => server.id === id || server.identifier === id) || null;
+): Promise<GameServerDto | null> => {
+  const servers = await getGameServersApi(token);
+  return servers.find((server) => server.id === id || server.slug === id) || null;
 };
 
-export const createGamingServerApi = async (
+export const createGameServerApi = async (
   token: string,
-  payload: UpsertGamingServerPayload,
-): Promise<GamingServerDto> => {
-  return requestJson<GamingServerDto>("/bot/gaming-server", {
+  payload: UpsertGameServerPayload,
+): Promise<GameServerDto> => {
+  return requestJson<GameServerDto>("/game-servers", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -78,12 +85,12 @@ export const createGamingServerApi = async (
   });
 };
 
-export const updateGamingServerApi = async (
+export const updateGameServerApi = async (
   token: string,
   id: string,
-  payload: UpsertGamingServerPayload,
-): Promise<GamingServerDto> => {
-  return requestJson<GamingServerDto>(`/bot/gaming-server/${id}`, {
+  payload: UpsertGameServerPayload,
+): Promise<GameServerDto> => {
+  return requestJson<GameServerDto>(`/game-servers/${id}`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -96,7 +103,7 @@ export const getDisplayedServersApi = async (
   token?: string,
 ): Promise<DisplayedServer[]> => {
   try {
-    const response = await getGamingServersApi(token);
+    const response = await getGameServersApi(token);
 
     return response.map(toDisplayedServer);
   } catch (error) {
@@ -110,7 +117,7 @@ export const getDisplayedServersApi = async (
 
 export const getPublicDisplayedServersApi = async (): Promise<DisplayedServer[]> => {
   try {
-    const response = await requestJson<PublicServerStatusDto[]>("/bot/gaming-server/public-status", {
+    const response = await requestJson<PublicServerStatusDto[]>("/game-servers/public-status", {
       method: "GET",
     });
 
@@ -124,28 +131,27 @@ export const getPublicDisplayedServersApi = async (): Promise<DisplayedServer[]>
   }
 };
 
-export const startGamingServerApi = async (
-  token: string,
-  identifier: string,
-): Promise<void> => {
-  await requestJson<{ status: string; message: string }>("/bot/gaming-server/command/start", {
+/**
+ * Démarrage et arrêt, par slug.
+ *
+ * Avant la phase 4, le front passait par `/gaming-server/command/{start|pause}` du connecteur
+ * Discord, avec l'identifiant en corps de requête. Démarrer un serveur est une action de
+ * domaine : elle appartient au cœur. Le cœur répond 204, sans corps.
+ */
+export const startGameServerApi = async (token: string, slug: string): Promise<void> => {
+  await requestJson<void>(`/game-servers/${slug}/start`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(identifier),
   });
 };
 
-export const stopGamingServerApi = async (
-  token: string,
-  identifier: string,
-): Promise<void> => {
-  await requestJson<{ status: string; message: string }>("/bot/gaming-server/command/pause", {
+export const stopGameServerApi = async (token: string, slug: string): Promise<void> => {
+  await requestJson<void>(`/game-servers/${slug}/stop`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(identifier),
   });
 };
