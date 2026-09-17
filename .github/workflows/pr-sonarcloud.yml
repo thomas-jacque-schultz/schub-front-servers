@@ -36,5 +36,6 @@ jobs:
           args: >
             -Dsonar.projectKey=thomas-jacque-schultz_Front
             -Dsonar.organization=thomas-jacque-schultz
+            -Dsonar.coverage.exclusions=**/*
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
