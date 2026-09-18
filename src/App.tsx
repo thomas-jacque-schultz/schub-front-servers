@@ -1,10 +1,15 @@
 import { type ReactNode } from "react";
-import { Box, Card, CardContent, Container, LinearProgress, Stack, Typography } from "@mui/material";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Container, LinearProgress, Stack } from "@mui/material";
+import { Route, Routes } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import DashboardPage from "./pages/Dashboard";
 import GameServerFormPage from "./pages/GameServerFormPage";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/Login";
+import { Card, PageBackdrop } from "./design-system";
+import type { AppLanguage } from "./i18n/config";
+import { LocalizedNavigate } from "./i18n/LocalizedNavigate";
+import { LocalizedRoot } from "./i18n/LocalizedRoot";
 import { useAuthStore } from "./stores/authStore";
 
 interface GuardProps {
@@ -13,57 +18,57 @@ interface GuardProps {
 
 function RequireAuth({ children }: GuardProps) {
   const { connected } = useAuthStore();
-  return connected ? <>{children}</> : <Navigate to="/login" replace />;
+  return connected ? <>{children}</> : <LocalizedNavigate to="/login" replace />;
 }
 
 function RequireAdmin({ children }: GuardProps) {
   const { connected, isAdmin } = useAuthStore();
   if (!connected) {
-    return <Navigate to="/login" replace />;
+    return <LocalizedNavigate to="/login" replace />;
   }
 
-  return isAdmin ? <>{children}</> : <Navigate to="/dashboard" replace />;
+  return isAdmin ? <>{children}</> : <LocalizedNavigate to="/dashboard" replace />;
 }
 
 function RedirectIfAuthenticated({ children }: GuardProps) {
   const { connected } = useAuthStore();
-  return connected ? <Navigate to="/dashboard" replace /> : <>{children}</>;
+  return connected ? <LocalizedNavigate to="/dashboard" replace /> : <>{children}</>;
 }
 
-function App() {
+function SessionCheckScreen() {
+  const { t } = useTranslation("auth");
+
+  return (
+    <PageBackdrop centered>
+      <Container maxWidth="sm">
+        <Card title={t("session.checking")}>
+          <Stack spacing={2}>
+            <LinearProgress />
+          </Stack>
+        </Card>
+      </Container>
+    </PageBackdrop>
+  );
+}
+
+/**
+ * Les écrans, une fois la langue connue.
+ *
+ * <p>Les chemins sont **relatifs** : c'est ce qui permet au même arbre de routes de servir `/`
+ * en français et `/en/…` en anglais sans dupliquer une seule déclaration.</p>
+ */
+function LocalizedRoutes() {
   const { isCheckingSession } = useAuthStore();
 
   if (isCheckingSession) {
-    return (
-      <Box
-        sx={{
-          minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          background:
-            "radial-gradient(circle at 20% 30%, #0d47a1 0%, transparent 40%), radial-gradient(circle at 80% 70%, #1b5e20 0%, transparent 35%), #071019",
-        }}
-      >
-        <Container maxWidth="sm">
-          <Card>
-            <CardContent sx={{ p: 4 }}>
-              <Stack spacing={2}>
-                <Typography variant="h6">Validation de session...</Typography>
-                <LinearProgress />
-              </Stack>
-            </CardContent>
-          </Card>
-        </Container>
-      </Box>
-    );
+    return <SessionCheckScreen />;
   }
 
   return (
     <Routes>
-      <Route path="/" element={<LandingPage />} />
+      <Route index element={<LandingPage />} />
       <Route
-        path="/login"
+        path="login"
         element={
           <RedirectIfAuthenticated>
             <LoginPage />
@@ -71,7 +76,7 @@ function App() {
         }
       />
       <Route
-        path="/dashboard"
+        path="dashboard"
         element={
           <RequireAuth>
             <DashboardPage />
@@ -79,7 +84,7 @@ function App() {
         }
       />
       <Route
-        path="/gameServeur/create"
+        path="gameServeur/create"
         element={
           <RequireAdmin>
             <GameServerFormPage />
@@ -87,7 +92,7 @@ function App() {
         }
       />
       <Route
-        path="/gameServeur/:id/edit"
+        path="gameServeur/:id/edit"
         element={
           <RequireAdmin>
             <GameServerFormPage />
@@ -95,14 +100,38 @@ function App() {
         }
       />
       <Route
-        path="/gameServeur/:id/view"
+        path="gameServeur/:id/view"
         element={
           <RequireAuth>
             <GameServerFormPage />
           </RequireAuth>
         }
       />
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="*" element={<LocalizedNavigate to="/" replace />} />
+    </Routes>
+  );
+}
+
+function LanguageBranch({ language }: { language: AppLanguage }) {
+  return (
+    <LocalizedRoot language={language}>
+      <LocalizedRoutes />
+    </LocalizedRoot>
+  );
+}
+
+/**
+ * Le routage de premier niveau : une branche par langue.
+ *
+ * <p>« Une URL par langue » se décide ici et nulle part ailleurs. Le français occupe la racine
+ * parce que c'est la langue de rédaction du site ; l'anglais vit sous `/en`, ce qui le rend
+ * indexable au lieu de le cacher derrière un état d'interface.</p>
+ */
+function App() {
+  return (
+    <Routes>
+      <Route path="/en/*" element={<LanguageBranch language="en" />} />
+      <Route path="/*" element={<LanguageBranch language="fr" />} />
     </Routes>
   );
 }

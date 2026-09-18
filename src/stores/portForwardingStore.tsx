@@ -12,6 +12,7 @@ import {
   getPortRulesApi,
   getStaticPortRulesApi,
 } from "../api/portForwardingApi";
+import i18n from "../i18n";
 import type { PortRuleDto, StaticPortRuleDto } from "../types/portForwarding";
 
 interface PortForwardingStoreValue {
@@ -59,7 +60,7 @@ export const PortForwardingStoreProvider = ({ children }: { children: ReactNode 
       const message =
         portForwardingError instanceof Error
           ? portForwardingError.message
-          : "Impossible de lire les redirections";
+          : i18n.t("errors.loadFailed", { ns: "ports" });
       setError(message);
     } finally {
       setIsLoading(false);

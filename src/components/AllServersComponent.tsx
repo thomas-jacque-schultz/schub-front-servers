@@ -1,8 +1,11 @@
-import { Alert, Button, Card, CardContent, Chip, LinearProgress, Stack, Tooltip, Typography } from "@mui/material";
+import { Alert, Card, CardContent, Chip, LinearProgress, Stack, Tooltip, Typography } from "@mui/material";
 import MemoryIcon from "@mui/icons-material/Memory";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
+import { useTranslation } from "react-i18next";
+import { Button, EmptyState, StatusChip } from "../design-system";
+import { useLocaleFormat } from "../i18n/format";
 import type { DisplayedServer } from "../types/server";
 
 interface ServersDashboardProps {
@@ -36,35 +39,37 @@ function ServersDashboard({
   onStopServer,
   pendingServerSlug,
 }: ServersDashboardProps) {
+  const { t } = useTranslation("servers");
+  const { formatTime } = useLocaleFormat();
   const onlineCount = servers.filter((server) => server.status === "online").length;
 
   const refreshLabel = lastRefreshedAt
-    ? `Mis à jour ${lastRefreshedAt.toLocaleTimeString()}`
-    : "Jamais mis à jour";
+    ? t("list.lastRefresh", { time: formatTime(lastRefreshedAt) })
+    : t("list.neverRefreshed");
 
   return (
     <Stack spacing={2}>
       <Stack direction="row" justifyContent="space-between" alignItems="center">
-        <Typography variant="h5" fontWeight={700} color="grey.100">
-          Etat des serveurs
+        <Typography variant="h5" fontWeight={700}>
+          {t("list.title")}
         </Typography>
         <Stack direction="row" spacing={1} alignItems="center">
           <Chip
             icon={<MemoryIcon />}
             color="success"
-            label={`${onlineCount}/${servers.length} en ligne`}
+            label={t("list.onlineCount", { online: onlineCount, total: servers.length })}
           />
           {connected && onRefresh && (
             <Tooltip title={refreshLabel}>
               <span>
                 <Button
                   size="small"
-                  variant="outlined"
+                  variant="secondary"
                   startIcon={<RefreshIcon />}
                   onClick={onRefresh}
                   disabled={isLoading}
                 >
-                  Actualiser
+                  {t("actions.refresh", { ns: "common" })}
                 </Button>
               </span>
             </Tooltip>
@@ -72,11 +77,7 @@ function ServersDashboard({
         </Stack>
       </Stack>
 
-      {!connected && (
-        <Alert severity="info">
-          Connecte-toi pour charger les donnees des serveurs.
-        </Alert>
-      )}
+      {!connected && <Alert severity="info">{t("list.notConnected")}</Alert>}
 
       {error && connected && <Alert severity="warning">{error}</Alert>}
 
@@ -85,7 +86,7 @@ function ServersDashboard({
       {!isLoading && connected && servers.length === 0 && (
         <Card>
           <CardContent>
-            <Typography variant="body1">Aucun serveur a afficher.</Typography>
+            <EmptyState title={t("list.emptyTitle")} description={t("list.emptyDescription")} />
           </CardContent>
         </Card>
       )}
@@ -96,24 +97,7 @@ function ServersDashboard({
             <Stack spacing={1.5}>
               <Stack direction="row" justifyContent="space-between" alignItems="center">
                 <Typography variant="h6">{server.name}</Typography>
-                <Chip
-                  label={
-                    server.status === "online"
-                      ? "En ligne"
-                      : server.status === "offline"
-                        ? "Hors ligne"
-                        : server.status === "unreachable"
-                          ? "Inaccessible"
-                          : "Inconnu"
-                  }
-                  color={
-                    server.status === "online"
-                      ? "success"
-                      : server.status === "unreachable"
-                        ? "error"
-                        : "default"
-                  }
-                />
+                <StatusChip status={server.status} />
               </Stack>
 
               {(server.id || server.slug) && (
@@ -122,40 +106,36 @@ function ServersDashboard({
                     <>
                       <Button
                         size="small"
-                        variant="outlined"
+                        variant="secondary"
                         startIcon={<PlayArrowIcon />}
                         onClick={() => onStartServer?.(server.slug || "")}
                         disabled={pendingServerSlug === server.slug}
                       >
-                        Start
+                        {t("list.actions.start")}
                       </Button>
                       <Button
                         size="small"
-                        variant="outlined"
+                        variant="secondary"
                         startIcon={<PauseIcon />}
                         onClick={() => onStopServer?.(server.slug || "")}
                         disabled={pendingServerSlug === server.slug}
                       >
-                        Stop
+                        {t("list.actions.stop")}
                       </Button>
                     </>
                   )}
                   {onViewServer && (
                     <Button
                       size="small"
-                      variant="outlined"
+                      variant="secondary"
                       onClick={() => onViewServer(server.id || server.slug || "")}
                     >
-                      Voir
+                      {t("list.actions.view")}
                     </Button>
                   )}
                   {canEdit && (
-                    <Button
-                      size="small"
-                      variant="contained"
-                      onClick={() => onEditServer?.(server.id || server.slug || "")}
-                    >
-                      Modifier
+                    <Button size="small" onClick={() => onEditServer?.(server.id || server.slug || "")}>
+                      {t("list.actions.edit")}
                     </Button>
                   )}
                 </Stack>

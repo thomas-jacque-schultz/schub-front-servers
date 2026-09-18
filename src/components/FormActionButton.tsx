@@ -1,4 +1,6 @@
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
+import { useTranslation } from "react-i18next";
+import { Button } from "../design-system";
 import type { GameServerFormMode } from "../types/server";
 
 interface FormActionButtonProps {
@@ -8,19 +10,18 @@ interface FormActionButtonProps {
 }
 
 function FormActionButton({ mode, isSubmitting = false, onBack }: FormActionButtonProps) {
-  const label =
-    mode === "creation" ? "Creer" : mode === "edition" ? "Sauvegarder" : "Retour";
+  const { t } = useTranslation();
 
-  const type = mode === "visualisation" ? "button" : "submit";
-  const variant = mode === "visualisation" ? "outlined" : "contained";
+  const label =
+    mode === "creation" ? t("actions.create") : mode === "edition" ? t("actions.save") : t("actions.back");
 
   return (
     <Box sx={{ position: "fixed", right: 24, bottom: 24, zIndex: 1300 }}>
       <Button
-        type={type}
-        variant={variant}
+        type={mode === "visualisation" ? "button" : "submit"}
+        variant={mode === "visualisation" ? "secondary" : "primary"}
         size="large"
-        disabled={isSubmitting}
+        loading={isSubmitting}
         onClick={mode === "visualisation" ? onBack : undefined}
       >
         {label}

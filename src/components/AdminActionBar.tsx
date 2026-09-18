@@ -1,10 +1,14 @@
-import { Button, Card, CardContent, Stack, Typography } from "@mui/material";
+import { Card, CardContent, Stack, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
+import { Button } from "../design-system";
 
 interface AdminActionBarProps {
   onCreateServer: () => void;
 }
 
 function AdminActionBar({ onCreateServer }: AdminActionBarProps) {
+  const { t } = useTranslation("servers");
+
   return (
     <Card>
       <CardContent>
@@ -16,14 +20,14 @@ function AdminActionBar({ onCreateServer }: AdminActionBarProps) {
         >
           <Stack spacing={0.5}>
             <Typography variant="h6" fontWeight={700}>
-              Actions administrateur
+              {t("admin.title")}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Gere les fiches serveurs affichees aux joueurs et dans les messages Discord.
+              {t("admin.description")}
             </Typography>
           </Stack>
-          <Button variant="contained" size="large" onClick={onCreateServer}>
-            Ajouter un nouveau serveur
+          <Button size="large" onClick={onCreateServer}>
+            {t("admin.createServer")}
           </Button>
         </Stack>
       </CardContent>

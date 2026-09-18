@@ -1,3 +1,4 @@
+import i18n from "../i18n";
 import { ApiError, requestJson } from "./httpClient";
 import type {
   DisplayedServer,
@@ -35,13 +36,13 @@ const normalizeStatus = (rawStatus?: string): ServerStatus => {
 const toDisplayedServer = (server: GameServerDto): DisplayedServer => ({
   id: server.id,
   slug: server.slug,
-  name: server.name || server.slug || "Serveur inconnu",
+  name: server.name || server.slug || i18n.t("errors.unnamed", { ns: "servers" }),
   status: normalizeStatus(server.status),
   lastStatusCheckAt: server.lastStatusCheckAt,
 });
 
 const toPublicDisplayedServer = (server: PublicServerStatusDto): DisplayedServer => ({
-  name: server.name || "Serveur inconnu",
+  name: server.name || i18n.t("errors.unnamed", { ns: "servers" }),
   status: normalizeStatus(server.status),
 });
 

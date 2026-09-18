@@ -1,21 +1,29 @@
-import { Alert, Box, Button, Card, CardContent, Container, Stack, TextField, Typography } from "@mui/material";
+import { Alert, Box, Card, CardContent, Container, Stack, TextField, Typography } from "@mui/material";
 import SecurityIcon from "@mui/icons-material/Security";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { z } from "zod";
+import { Button, PageBackdrop } from "../design-system";
+import { useLocalizedNavigate } from "../i18n/navigation";
 import { useAuthStore } from "../stores/authStore";
 
+/**
+ * Le schéma ne porte pas de message : chaque champ n'a qu'une règle, et son libellé est
+ * traduit à l'affichage. Un message figé dans le schéma resterait dans la langue du premier
+ * rendu, puisque le résolveur n'est pas reconstruit à chaque bascule.
+ */
 const loginSchema = z.object({
-  username: z.string().min(1, "Le nom d'utilisateur est requis"),
-  password: z.string().min(1, "Le mot de passe est requis"),
+  username: z.string().min(1),
+  password: z.string().min(1),
 });
 
 type LoginFormValues = z.infer<typeof loginSchema>;
 
 function LoginPage() {
   const { isSubmitting, error, login, clearError } = useAuthStore();
-  const navigate = useNavigate();
+  const navigate = useLocalizedNavigate();
+  const { t } = useTranslation("auth");
 
   const {
     register,
@@ -36,16 +44,7 @@ function LoginPage() {
   });
 
   return (
-    <Box
-      sx={{
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        background:
-          "radial-gradient(circle at 20% 30%, #0d47a1 0%, transparent 40%), radial-gradient(circle at 80% 70%, #1b5e20 0%, transparent 35%), #071019",
-        py: 3,
-      }}
-    >
+    <PageBackdrop centered>
       <Container maxWidth="sm">
         <Card>
           <CardContent sx={{ p: 4 }}>
@@ -53,47 +52,40 @@ function LoginPage() {
               <Stack direction="row" spacing={1} alignItems="center">
                 <SecurityIcon color="primary" />
                 <Typography variant="h5" fontWeight={700}>
-                  Login administrateur
+                  {t("login.title")}
                 </Typography>
               </Stack>
 
-              <Typography color="text.secondary">
-                Connexion securisee via JWT.
-              </Typography>
+              <Typography color="text.secondary">{t("login.subtitle")}</Typography>
 
               <Box component="form" onSubmit={onLogin}>
                 <Stack spacing={2}>
                   <TextField
-                    label="Nom d'utilisateur"
+                    label={t("login.username")}
                     autoFocus
                     fullWidth
                     {...register("username")}
                     error={Boolean(errors.username)}
-                    helperText={errors.username?.message}
+                    helperText={errors.username ? t("validation.usernameRequired") : undefined}
                   />
 
                   <TextField
-                    label="Mot de passe"
+                    label={t("login.password")}
                     type="password"
                     fullWidth
                     {...register("password")}
                     error={Boolean(errors.password)}
-                    helperText={errors.password?.message}
+                    helperText={errors.password ? t("validation.passwordRequired") : undefined}
                   />
 
                   {error && <Alert severity="error">{error}</Alert>}
 
                   <Stack direction="row" spacing={2}>
-                    <Button variant="outlined" onClick={() => navigate("/")}>
-                      Retour
+                    <Button variant="secondary" onClick={() => navigate("/")}>
+                      {t("actions.back", { ns: "common" })}
                     </Button>
-                    <Button
-                      type="submit"
-                      variant="contained"
-                      size="large"
-                      disabled={isSubmitting}
-                    >
-                      Se connecter
+                    <Button type="submit" size="large" loading={isSubmitting}>
+                      {t("login.submit")}
                     </Button>
                   </Stack>
                 </Stack>
@@ -102,7 +94,7 @@ function LoginPage() {
           </CardContent>
         </Card>
       </Container>
-    </Box>
+    </PageBackdrop>
   );
 }
 
