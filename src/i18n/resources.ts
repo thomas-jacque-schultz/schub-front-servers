@@ -1,0 +1,41 @@
+import enAuth from "../locales/en/auth.json";
+import enCommon from "../locales/en/common.json";
+import enDiscord from "../locales/en/discord.json";
+import enPorts from "../locales/en/ports.json";
+import enServers from "../locales/en/servers.json";
+import frAuth from "../locales/fr/auth.json";
+import frCommon from "../locales/fr/common.json";
+import frDiscord from "../locales/fr/discord.json";
+import frPorts from "../locales/fr/ports.json";
+import frServers from "../locales/fr/servers.json";
+
+/**
+ * Les catalogues, **un fichier par langue et par domaine**.
+ *
+ * <p>Ce découpage n'est pas cosmétique : deux fenêtres de travail qui touchent des écrans
+ * différents modifient des fichiers différents et ne se marchent pas dessus. Ajouter un domaine,
+ * c'est ajouter deux fichiers et deux lignes ici.</p>
+ */
+export const resources = {
+  fr: {
+    common: frCommon,
+    auth: frAuth,
+    servers: frServers,
+    ports: frPorts,
+    discord: frDiscord,
+  },
+  en: {
+    common: enCommon,
+    auth: enAuth,
+    servers: enServers,
+    ports: enPorts,
+    discord: enDiscord,
+  },
+} as const;
+
+/** Le domaine implicite : `t("actions.back")` sans préfixe lit `common`. */
+export const defaultNS = "common" as const;
+
+export const namespaces = ["common", "auth", "servers", "ports", "discord"] as const;
+
+export type Namespace = (typeof namespaces)[number];

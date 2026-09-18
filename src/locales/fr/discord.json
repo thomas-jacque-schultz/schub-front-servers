@@ -1,0 +1,14 @@
+{
+  "channels": {
+    "title": "Canaux Discord de statut",
+    "selectionCount": "{{count}} sélection(s)",
+    "description": "Sélectionne les canaux par serveur Discord. En validant, le bot applique la même logique que la commande /subscribe et met à jour les messages d'état.",
+    "accordion": "Liste des canaux Discord ({{count}} serveur(s))",
+    "submit": "Valider la sélection",
+    "success": "Canaux de statut mis à jour et notifications poussées.",
+    "errors": {
+      "load": "Impossible de charger les canaux Discord",
+      "save": "Impossible de sauvegarder la sélection"
+    }
+  }
+}
