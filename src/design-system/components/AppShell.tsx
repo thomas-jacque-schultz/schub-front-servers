@@ -13,6 +13,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { Link as RouterLink, useLocation } from "react-router-dom";
+import { backdropSx } from "../theme";
 import { Button } from "./Button";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { ThemeModeToggle } from "./ThemeModeToggle";
@@ -102,7 +103,17 @@ export function AppShell({
   };
 
   return (
-    <Box sx={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+    <Box
+      sx={{
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        // Le fond de marque est porté par la coquille, plus par chaque écran : c'était
+        // exactement le défaut que les tokens ont corrigé, et le remettre dans les pages le
+        // ferait revenir par la fenêtre.
+        ...backdropSx.page,
+      }}
+    >
       <AppBar position="sticky" color="transparent" elevation={0} sx={{ backdropFilter: "blur(8px)" }}>
         <Container maxWidth={maxWidth}>
           <Toolbar disableGutters sx={{ flexWrap: "wrap", gap: 1, py: 1 }}>

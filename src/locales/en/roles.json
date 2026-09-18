@@ -1,0 +1,44 @@
+{
+  "eyebrow": "Configuration",
+  "title": "Roles",
+  "subtitle": "A role is a name and a set of permissions. Permissions themselves are frozen in code: a permission nothing reads would be a false promise.",
+  "table": {
+    "caption": "Role and permission matrix",
+    "permission": "Permission"
+  },
+  "emptyTitle": "No role",
+  "emptyDescription": "Roles are seeded when the core starts.",
+  "systemRole": "system role",
+  "reserved": {
+    "title": "Two things are absent from this matrix",
+    "body": "The role-management permission is assignable to nobody, and the {{role}} role cannot be edited. That is what makes \"reserved to me alone\" true by construction rather than by convention."
+  },
+  "actions": {
+    "save": "Save the matrix",
+    "reset": "Discard changes"
+  },
+  "dirty": "{{count}} unsaved change(s).",
+  "feedback": {
+    "saved": "Matrix saved.",
+    "saveFailed": "Saving failed"
+  },
+  "errors": {
+    "loadFailed": "Could not load roles",
+    "forbidden": "This screen requires the role-management permission."
+  },
+  "permissions": {
+    "SERVER_VIEW": "View a server",
+    "SERVER_INFRA_VIEW": "View ports, deployment and admins",
+    "SERVER_START": "Start a server",
+    "SERVER_STOP": "Stop a server",
+    "SERVER_CREATE": "Create a server record",
+    "SERVER_EDIT": "Edit a server record",
+    "SERVER_DELETE": "Delete a server record",
+    "PORT_VIEW": "View port forwarding",
+    "PORT_RULE_EDIT": "Edit port forwarding",
+    "DISCORD_CHANNEL_MANAGE": "Manage Discord channels",
+    "USER_VIEW": "View accounts",
+    "USER_ROLE_ASSIGN": "Assign a role",
+    "ROLE_MANAGE": "Manage roles"
+  }
+}

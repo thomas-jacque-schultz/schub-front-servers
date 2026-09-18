@@ -1,0 +1,39 @@
+{
+  "eyebrow": "Configuration",
+  "title": "Users",
+  "subtitle": "An account is created on first Discord sign-in. Its role decides what it may do.",
+  "table": {
+    "caption": "Account list",
+    "account": "Account",
+    "role": "Role",
+    "riot": "Riot account",
+    "lastLogin": "Last sign-in",
+    "actions": "Actions"
+  },
+  "emptyTitle": "No account",
+  "emptyDescription": "Accounts show up on their first Discord sign-in.",
+  "noRole": "No role",
+  "riotNone": "Not linked",
+  "never": "Never",
+  "you": "you",
+  "changeRole": "Change role",
+  "dialog": {
+    "title": "Change {{user}}'s role",
+    "description": "A role decides what this account may do everywhere. Being a server admin is separate: it only grants starting and stopping that one server.",
+    "field": "Assignable role",
+    "confirm": "Assign",
+    "helper": "Only roles whose permissions are a subset of yours are offered."
+  },
+  "guards": {
+    "self": "You cannot change your own role: demoting yourself is the easiest mistake to make and the most painful to undo.",
+    "lastOwner": "The last {{role}} cannot be demoted: nobody would be left to manage roles.",
+    "noAssignableRole": "No role is assignable by you: you may only assign a role whose permissions are a subset of your own."
+  },
+  "feedback": {
+    "roleAssigned": "{{user}}'s role changed to {{role}}.",
+    "roleFailed": "Assignment failed"
+  },
+  "errors": {
+    "loadFailed": "Could not load accounts"
+  }
+}

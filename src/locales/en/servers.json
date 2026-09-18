@@ -20,7 +20,8 @@
       "stop": "Stop",
       "view": "View",
       "edit": "Edit"
-    }
+    },
+    "memberView": "Member view: infrastructure details are hidden for your role."
   },
   "admin": {
     "title": "Administrator actions",
@@ -42,13 +43,15 @@
       "installation": "Installation",
       "version": "Version",
       "ports": "Freebox ports",
-      "admins": "Admins (comma separated)",
+      "admins": "Administrators",
       "description": "Description"
     },
     "helpers": {
       "deploymentEmpty": "Links the entry to its deployment and derives its identifier",
       "deploymentLinked": "Entry identifier: {{slug}}",
-      "ports": "Opened while the server runs, closed when it stops. Format: tcp:25565, udp:8211"
+      "ports": "Opened while the server runs, closed when it stops. Format: tcp:25565, udp:8211",
+      "admins": "They may start and stop THIS server, nothing more: neither editing the record nor touching ports.",
+      "adminsUnavailable": "Listing accounts requires the account-view permission. Administrators already set remain displayed."
     },
     "errors": {
       "required": "This field is required.",
@@ -59,11 +62,22 @@
       "loadFailed": "Loading failed.",
       "saveFailed": "The server entry could not be saved.",
       "deploymentsUnavailable": "Deployments could not be read",
-      "deploymentsCatalog": "Deployment catalogue unavailable: {{reason}}. The entry stays editable, but the deployment cannot be picked from the list."
-    }
+      "deploymentsCatalog": "Deployment catalogue unavailable: {{reason}}. The entry stays editable, but the deployment cannot be picked from the list.",
+      "usersUnavailable": "Could not load accounts"
+    },
+    "infraHidden": "Ports, deployment and administrators are only visible with the infrastructure permission. Your role does not carry it: these fields stay empty and will not be saved."
   },
   "errors": {
     "loadFailed": "Servers could not be loaded",
     "unnamed": "Unnamed server"
+  },
+  "config": {
+    "eyebrow": "Configuration",
+    "serversTitle": "Servers",
+    "serversSubtitle": "The records shown to players and in Discord messages.",
+    "portsTitle": "Port forwarding",
+    "portsSubtitle": "What the router exposes to the Internet.",
+    "discordTitle": "Discord channels",
+    "discordSubtitle": "The channels that receive server status changes."
   }
 }

@@ -1,0 +1,44 @@
+{
+  "eyebrow": "Configuration",
+  "title": "Rôles",
+  "subtitle": "Un rôle est un nom et un jeu de permissions. Les permissions, elles, sont figées dans le code : une permission que rien ne lit serait une promesse fausse.",
+  "table": {
+    "caption": "Matrice des rôles et des permissions",
+    "permission": "Permission"
+  },
+  "emptyTitle": "Aucun rôle",
+  "emptyDescription": "Les rôles sont semés au démarrage du cœur.",
+  "systemRole": "rôle système",
+  "reserved": {
+    "title": "Deux choses n'apparaissent pas dans cette matrice",
+    "body": "La permission d'administration des rôles n'est attribuable à personne, et le rôle {{role}} n'est pas modifiable. C'est ce qui rend « réservé à moi seul » vrai par construction plutôt que par convention."
+  },
+  "actions": {
+    "save": "Enregistrer la matrice",
+    "reset": "Annuler les modifications"
+  },
+  "dirty": "{{count}} modification(s) non enregistrée(s).",
+  "feedback": {
+    "saved": "Matrice enregistrée.",
+    "saveFailed": "L'enregistrement a échoué"
+  },
+  "errors": {
+    "loadFailed": "Impossible de charger les rôles",
+    "forbidden": "Cet écran demande la permission d'administration des rôles."
+  },
+  "permissions": {
+    "SERVER_VIEW": "Voir un serveur",
+    "SERVER_INFRA_VIEW": "Voir ports, déploiement et admins",
+    "SERVER_START": "Démarrer un serveur",
+    "SERVER_STOP": "Arrêter un serveur",
+    "SERVER_CREATE": "Créer une fiche serveur",
+    "SERVER_EDIT": "Modifier une fiche serveur",
+    "SERVER_DELETE": "Supprimer une fiche serveur",
+    "PORT_VIEW": "Voir les redirections de ports",
+    "PORT_RULE_EDIT": "Modifier les redirections de ports",
+    "DISCORD_CHANNEL_MANAGE": "Gérer les salons Discord",
+    "USER_VIEW": "Voir les comptes",
+    "USER_ROLE_ASSIGN": "Attribuer un rôle",
+    "ROLE_MANAGE": "Administrer les rôles"
+  }
+}

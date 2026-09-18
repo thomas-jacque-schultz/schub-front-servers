@@ -12,7 +12,9 @@
     "delete": "Supprimer",
     "refresh": "Actualiser",
     "save": "Sauvegarder",
-    "validate": "Valider"
+    "validate": "Valider",
+    "confirm": "Confirmer",
+    "close": "Fermer"
   },
   "serverStatus": {
     "online": "En ligne",
@@ -33,5 +35,21 @@
     "en": "English",
     "switchTo": "Afficher le site en {{language}}"
   },
-  "loading": "Chargement…"
+  "loading": "Chargement…",
+  "shell": {
+    "home": "Accueil",
+    "servers": "Serveurs",
+    "configuration": "Configuration",
+    "configServers": "Serveurs",
+    "configPorts": "Ports",
+    "configUsers": "Utilisateurs",
+    "configRoles": "Rôles",
+    "configDiscord": "Salons Discord",
+    "storybook": "Design system",
+    "linkedin": "LinkedIn",
+    "discord": "Discord",
+    "github": "GitHub",
+    "toComplete": "adresse à fournir",
+    "footerNote": "Schub — pilotage de serveurs de jeu"
+  }
 }
