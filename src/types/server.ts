@@ -23,16 +23,40 @@ export interface GameServerPortDto {
 }
 
 /**
- * Un serveur tel que le cœur l'expose, depuis la phase 4.
+ * Un administrateur de serveur, résolu par le cœur pour l'affichage.
  *
- * <p>Vocabulaire du §2 : `slug` remplace `identifier`, `deploymentId` remplace
- * `portainerStackId`, `game` remplace `gameName`. Le front ne nomme plus la marque de l'outil
- * qui réalise le serveur.</p>
+ * <p>Depuis le 18-09 la liste `admins` porte des **identifiants internes de comptes**, plus des
+ * pseudos libres (§A.4). Le cœur résout le pseudo et l'avatar en une fois, côté serveur : le
+ * front affiche qui c'est sans faire N appels.</p>
+ *
+ * <p>`discordUsername` et `avatarUrl` peuvent être nuls — c'est un identifiant qui ne désigne
+ * plus personne, et le cœur le renvoie exprès plutôt que de l'omettre, pour qu'il se voie.</p>
+ */
+export interface ServerAdminDto {
+  userId: string;
+  discordUsername?: string | null;
+  avatarUrl?: string | null;
+}
+
+/**
+ * Un serveur tel que le cœur l'expose.
+ *
+ * <p><strong>Trois projections, une seule forme ici.</strong> Depuis le lot A.1, le cœur choisit
+ * ce qu'il envoie selon les permissions de l'acteur :</p>
+ * <ul>
+ *   <li>sans compte — `PublicServerStatusDto` : nom, jeu, statut ;</li>
+ *   <li>avec `SERVER_VIEW` — la projection « membre » : de quoi rejoindre et suivre ;</li>
+ *   <li>avec `SERVER_INFRA_VIEW` — en plus : `deploymentId`, `ports`, `admins`.</li>
+ * </ul>
+ *
+ * <p>Les trois champs d'infrastructure sont donc **normalement absents** pour un membre. Ce
+ * n'est pas une erreur de chargement et l'interface ne doit pas les afficher en creux :
+ * {@link hasInfrastructureView} dit si on les a reçus.</p>
  */
 export interface GameServerDto {
   id?: string;
   slug?: string;
-  /** le déploiement qui réalise ce serveur */
+  /** le déploiement qui réalise ce serveur — projection infra seulement */
   deploymentId?: number;
   name?: string;
   urlConnection?: string;
@@ -44,12 +68,30 @@ export interface GameServerDto {
   installation?: string;
   version?: string;
   description?: string;
-  admins?: string[];
+  /** projection infra seulement */
+  admins?: ServerAdminDto[];
+  /** projection infra seulement */
   ports?: GameServerPortDto[];
   status?: string;
   lastStatusCheckAt?: string;
   lastStatusChangeAt?: string;
+  statusHistory?: GameServerStatusHistoryEntryDto[];
 }
+
+export interface GameServerStatusHistoryEntryDto {
+  status?: string;
+  observedAt?: string;
+}
+
+/**
+ * Vrai si cette réponse porte la projection infra.
+ *
+ * <p>Le test porte sur `ports`, et non sur `admins` : un serveur sans administrateur déclaré est
+ * normal, un serveur sans tableau de ports du tout ne l'est que si le cœur l'a retiré. La
+ * projection infra renvoie toujours les deux tableaux, fussent-ils vides.</p>
+ */
+export const hasInfrastructureView = (server: GameServerDto): boolean =>
+  Array.isArray(server.ports) || Array.isArray(server.admins);
 
 /**
  * Vue publique. Le cœur y retire délibérément tout ce qui révèle l'infrastructure : pas de
@@ -71,7 +113,12 @@ export interface UpsertGameServerPayload {
   installation?: string;
   version?: string;
   description?: string;
-  admins: string[];
+  /**
+   * Les administrateurs, **en objets porteurs d'un `userId`** et non en chaînes : c'est la même
+   * forme en entrée qu'en sortie, et le cœur n'y lit que `userId`. Omettre le champ laisse la
+   * liste inchangée côté cœur ; l'envoyer vide la vide.
+   */
+  admins?: ServerAdminDto[];
   /** omis = ports inchangés côté cœur */
   ports?: GameServerPortDto[];
 }
