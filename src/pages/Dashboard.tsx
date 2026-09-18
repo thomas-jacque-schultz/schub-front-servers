@@ -1,13 +1,6 @@
 import { useEffect, useCallback, useState } from "react";
-import {
-  Box,
-  Button,
-  Chip,
-  Container,
-  Stack,
-  Typography,
-} from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Chip, Container, Stack, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import { getDiscordGuildChannelsApi, subscribeDiscordChannelsApi } from "../api/discordApi";
 import { startGameServerApi, stopGameServerApi } from "../api/serversApi";
 import AdminActionBar from "../components/AdminActionBar";
@@ -17,12 +10,15 @@ import { usePortForwardingStore } from "../stores/portForwardingStore";
 import DiscordChannelsCard from "../components/DiscordChannelsCard";
 import { useAuthStore } from "../stores/authStore";
 import { useServersStore } from "../stores/serversStore";
+import { Button, LanguageSwitcher, PageBackdrop, ThemeModeToggle } from "../design-system";
+import { useLocalizedNavigate } from "../i18n/navigation";
 import type { DiscordChannelSelection, DiscordGuildChannelsDto } from "../types/discord";
 
 const REFRESH_INTERVAL_MS = 30_000;
 
 function DashboardPage() {
-  const navigate = useNavigate();
+  const navigate = useLocalizedNavigate();
+  const { t } = useTranslation("servers");
   const { accessToken, profile, isAdmin, logout } = useAuthStore();
   const {
     routerRules,
@@ -67,7 +63,9 @@ function DashboardPage() {
         const payload = await getDiscordGuildChannelsApi(accessToken);
         setGuilds(payload);
       } catch (error) {
-        setGuildsError(error instanceof Error ? error.message : "Impossible de charger les canaux Discord");
+        setGuildsError(
+          error instanceof Error ? error.message : t("channels.errors.load", { ns: "discord" }),
+        );
       } finally {
         setIsLoadingGuilds(false);
       }
@@ -75,7 +73,7 @@ function DashboardPage() {
 
     const interval = setInterval(refresh, REFRESH_INTERVAL_MS);
     return () => clearInterval(interval);
-  }, [accessToken, profile, isAdmin, loadServers, resetServers, refresh, loadPortForwarding, resetPortForwarding]);
+  }, [accessToken, profile, isAdmin, loadServers, resetServers, refresh, loadPortForwarding, resetPortForwarding, t]);
 
   const onSubmitDiscordChannelSelection = async (selection: DiscordChannelSelection[]) => {
     if (!accessToken) {
@@ -133,27 +131,25 @@ function DashboardPage() {
   };
 
   return (
-    <Box
-      sx={{
-        minHeight: "100vh",
-        background:
-          "linear-gradient(180deg, rgba(7,16,25,1) 0%, rgba(10,22,34,1) 100%)",
-        py: 4,
-      }}
-    >
+    <PageBackdrop variant="panel">
       <Container maxWidth="md">
         <Stack spacing={3}>
           <Stack
             direction={{ xs: "column", sm: "row" }}
             justifyContent="space-between"
           >
-            <Typography variant="h4" color="white" fontWeight={700}>
-              Pilotage des serveurs
+            <Typography variant="h4" fontWeight={700}>
+              {t("dashboard.title")}
             </Typography>
             <Stack direction="row" spacing={1} alignItems="center">
-              <Chip color="primary" label={`Connecte: ${profile?.username ?? "-"}`} />
-              <Button variant="outlined" color="inherit" onClick={onLogout}>
-                Deconnexion
+              <ThemeModeToggle />
+              <LanguageSwitcher />
+              <Chip
+                color="primary"
+                label={t("connectedAs", { ns: "auth", username: profile?.username ?? "-" })}
+              />
+              <Button variant="secondary" onClick={onLogout}>
+                {t("logout", { ns: "auth" })}
               </Button>
             </Stack>
           </Stack>
@@ -200,7 +196,7 @@ function DashboardPage() {
           )}
         </Stack>
       </Container>
-    </Box>
+    </PageBackdrop>
   );
 }
 

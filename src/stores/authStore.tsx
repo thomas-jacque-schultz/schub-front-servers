@@ -7,6 +7,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import i18n from "../i18n";
 import { getMeApi, loginApi } from "../api/authApi";
 import type { AuthenticatedUser } from "../types/auth";
 
@@ -59,7 +60,7 @@ export const AuthStoreProvider = ({ children }: { children: ReactNode }) => {
       setProfile(me);
     } catch (loginError) {
       const message =
-        loginError instanceof Error ? loginError.message : "Connexion impossible";
+        loginError instanceof Error ? loginError.message : i18n.t("errors.loginFailed", { ns: "auth" });
       setError(message);
       throw loginError;
     } finally {

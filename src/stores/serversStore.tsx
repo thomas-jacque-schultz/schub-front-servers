@@ -6,6 +6,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import i18n from "../i18n";
 import { getDisplayedServersApi, getPublicDisplayedServersApi } from "../api/serversApi";
 import type { DisplayedServer } from "../types/server";
 
@@ -39,7 +40,7 @@ export const ServersStoreProvider = ({ children }: { children: ReactNode }) => {
       const message =
         serversError instanceof Error
           ? serversError.message
-          : "Impossible de charger les serveurs";
+          : i18n.t("errors.loadFailed", { ns: "servers" });
       setError(message);
       setServers([]);
     } finally {
@@ -59,7 +60,7 @@ export const ServersStoreProvider = ({ children }: { children: ReactNode }) => {
       const message =
         serversError instanceof Error
           ? serversError.message
-          : "Impossible de charger les serveurs";
+          : i18n.t("errors.loadFailed", { ns: "servers" });
       setError(message);
       setServers([]);
     } finally {

@@ -5,7 +5,6 @@ import {
   AccordionSummary,
   Alert,
   Box,
-  Button,
   Card,
   CardContent,
   Checkbox,
@@ -17,6 +16,8 @@ import {
   Typography,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { useTranslation } from "react-i18next";
+import { Button } from "../design-system";
 import type {
   DiscordChannelSelection,
   DiscordGuildChannelsDto,
@@ -37,6 +38,7 @@ function DiscordChannelsCard({
   error,
   onSubmitSelection,
 }: DiscordChannelsCardProps) {
+  const { t } = useTranslation("discord");
   const [selected, setSelected] = useState<Record<string, DiscordChannelSelection>>({});
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [submitError, setSubmitError] = useState<string>("");
@@ -100,12 +102,12 @@ function DiscordChannelsCard({
 
     try {
       await onSubmitSelection(effectiveSelection);
-      setSuccessMessage("Canaux de statut mis a jour et notifications poussees.");
+      setSuccessMessage(t("channels.success"));
     } catch (submitException) {
       setSubmitError(
         submitException instanceof Error
           ? submitException.message
-          : "Impossible de sauvegarder la selection",
+          : t("channels.errors.save"),
       );
     } finally {
       setIsSubmitting(false);
@@ -122,17 +124,16 @@ function DiscordChannelsCard({
             alignItems={{ xs: "flex-start", sm: "center" }}
             spacing={1}
           >
-            <Typography variant="h6">Canaux Discord de statut</Typography>
+            <Typography variant="h6">{t("channels.title")}</Typography>
             <Chip
               size="small"
               color="primary"
-              label={`${effectiveSelection.length} selection(s)`}
+              label={t("channels.selectionCount", { count: effectiveSelection.length })}
             />
           </Stack>
 
           <Typography variant="body2" color="text.secondary">
-            Selectionne les canaux par serveur Discord. En validant, le bot applique la meme logique
-            que la commande /subscribe et met a jour les messages d'etat.
+            {t("channels.description")}
           </Typography>
 
           {error && <Alert severity="error">{error}</Alert>}
@@ -147,7 +148,7 @@ function DiscordChannelsCard({
           >
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
               <Typography variant="subtitle1" fontWeight={600}>
-                Liste des canaux Discord ({guilds.length} serveur(s))
+                {t("channels.accordion", { count: guilds.length })}
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
@@ -196,11 +197,11 @@ function DiscordChannelsCard({
 
           <Stack direction="row" justifyContent="flex-end">
             <Button
-              variant="contained"
               onClick={onSubmit}
-              disabled={isSubmitting || isLoading || effectiveSelection.length === 0}
+              loading={isSubmitting}
+              disabled={isLoading || effectiveSelection.length === 0}
             >
-              Valider la selection
+              {t("channels.submit")}
             </Button>
           </Stack>
         </Stack>

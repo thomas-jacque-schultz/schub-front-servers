@@ -2,8 +2,6 @@ import { useEffect, useMemo, useState } from "react";
 import {
   Alert,
   Autocomplete,
-  Box,
-  Button,
   Card,
   CardContent,
   Container,
@@ -12,8 +10,11 @@ import {
   Typography,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import FormActionButton from "../components/FormActionButton";
+import { Button, PageBackdrop } from "../design-system";
+import { useLocalizedNavigate } from "../i18n/navigation";
 import {
   createGameServerApi,
   getGameServerByIdApi,
@@ -129,7 +130,8 @@ const resolveMode = (pathname: string): GameServerFormMode => {
 };
 
 function GameServerFormPage() {
-  const navigate = useNavigate();
+  const navigate = useLocalizedNavigate();
+  const { t } = useTranslation("servers");
   const { id } = useParams();
   const { accessToken } = useAuthStore();
   const [values, setValues] = useState<GameServerFormValues>(DEFAULT_VALUES);
@@ -161,7 +163,7 @@ function GameServerFormPage() {
         if (active) {
           // Non bloquant : la fiche reste remplissable, seule la liste manque.
           setDeploymentsError(
-            error instanceof Error ? error.message : "Impossible de lire les déploiements",
+            error instanceof Error ? error.message : t("form.errors.deploymentsUnavailable"),
           );
         }
       }
@@ -170,14 +172,9 @@ function GameServerFormPage() {
     return () => {
       active = false;
     };
-  }, [accessToken, mode]);
+  }, [accessToken, mode, t]);
   const isReadOnly = mode === "visualisation";
-  const pageTitle =
-    mode === "creation"
-      ? "Creer une fiche serveur"
-      : mode === "edition"
-        ? "Editer une fiche serveur"
-        : "Afficher une fiche serveur";
+  const pageTitle = t(`form.title.${mode}`);
 
   useEffect(() => {
     if (!id || mode === "creation") {
@@ -201,7 +198,7 @@ function GameServerFormPage() {
         }
 
         if (!server) {
-          setGlobalError("Serveur introuvable.");
+          setGlobalError(t("form.errors.notFound"));
           return;
         }
 
@@ -223,7 +220,7 @@ function GameServerFormPage() {
         if (!active) {
           return;
         }
-        setGlobalError(error instanceof Error ? error.message : "Erreur de chargement.");
+        setGlobalError(error instanceof Error ? error.message : t("form.errors.loadFailed"));
       } finally {
         if (active) {
           setIsLoading(false);
@@ -236,7 +233,7 @@ function GameServerFormPage() {
     return () => {
       active = false;
     };
-  }, [accessToken, id, mode]);
+  }, [accessToken, id, mode, t]);
 
   const onFieldChange = (field: keyof GameServerFormValues, value: string) => {
     setValues((current) => ({ ...current, [field]: value }));
@@ -288,25 +285,25 @@ function GameServerFormPage() {
 
     REQUIRED_FIELDS.forEach((field) => {
       if (!values[field].trim()) {
-        nextErrors[field] = "Ce champ est obligatoire.";
+        nextErrors[field] = t("form.errors.required");
       }
     });
 
     // Le slug n'est plus saisi : il vient du déploiement choisi. Le message doit donc
     // désigner le geste manquant, pas un champ que l'utilisateur ne voit plus.
     if (nextErrors.slug) {
-      nextErrors.slug = "Choisissez le déploiement à lier : il renseigne le slug.";
+      nextErrors.slug = t("form.errors.deploymentRequired");
     }
 
     if (values.playersMax.trim()) {
       const asNumber = Number(values.playersMax.trim());
       if (!Number.isFinite(asNumber) || asNumber < 0) {
-        nextErrors.playersMax = "Le nombre de joueurs doit etre un entier positif.";
+        nextErrors.playersMax = t("form.errors.playersMax");
       }
     }
 
     if (parsePorts(values.ports) === null) {
-      nextErrors.ports = "Format attendu : tcp:25565, udp:8211:8211";
+      nextErrors.ports = t("form.errors.portsFormat");
     }
 
     setErrors(nextErrors);
@@ -322,7 +319,7 @@ function GameServerFormPage() {
     }
 
     if (!accessToken) {
-      setGlobalError("Session invalide.");
+      setGlobalError(t("errors.invalidSession", { ns: "auth" }));
       return;
     }
 
@@ -347,7 +344,7 @@ function GameServerFormPage() {
       const message =
         error instanceof Error
           ? error.message
-          : "Impossible d'enregistrer la fiche serveur.";
+          : t("form.errors.saveFailed");
       setGlobalError(message);
     } finally {
       setIsSubmitting(false);
@@ -357,25 +354,14 @@ function GameServerFormPage() {
   const fieldDisabled = isReadOnly || isLoading;
 
   return (
-    <Box
-      sx={{
-        minHeight: "100vh",
-        background:
-          "linear-gradient(180deg, rgba(7,16,25,1) 0%, rgba(10,22,34,1) 100%)",
-        py: 4,
-      }}
-    >
+    <PageBackdrop variant="panel">
       <Container maxWidth="md">
         <Card>
           <CardContent sx={{ p: { xs: 3, md: 4 } }}>
             <Stack spacing={3} component="form" onSubmit={onSubmit}>
               <Stack direction="row" alignItems="center" spacing={2}>
-                <Button
-                  startIcon={<ArrowBackIcon />}
-                  onClick={() => navigate("/dashboard")}
-                  color="inherit"
-                >
-                  Retour
+                <Button variant="ghost" startIcon={<ArrowBackIcon />} onClick={() => navigate("/dashboard")}>
+                  {t("actions.back", { ns: "common" })}
                 </Button>
                 <Typography variant="h4" fontWeight={700}>
                   {pageTitle}
@@ -386,8 +372,7 @@ function GameServerFormPage() {
 
               {deploymentsError && (
                 <Alert severity="warning">
-                  Catalogue des déploiements indisponible : {deploymentsError}. La fiche reste modifiable, mais
-                  le déploiement ne peut pas être choisi dans la liste.
+                  {t("form.errors.deploymentsCatalog", { reason: deploymentsError })}
                 </Alert>
               )}
 
@@ -398,25 +383,27 @@ function GameServerFormPage() {
                   onChange={(_event, deployment) => onDeploymentChange(deployment)}
                   getOptionLabel={(deployment) => `${deployment.name}  (#${deployment.id})`}
                   isOptionEqualToValue={(option, selected) => option.id === selected.id}
-                  disabled={fieldDisabled || (mode !== "visualisation" && deploymentOptions.length === 0)}
+                  // En consultation, fieldDisabled vaut déjà vrai : tester le mode en plus serait
+                  // une condition morte, que TypeScript signale.
+                  disabled={fieldDisabled || deploymentOptions.length === 0}
                   fullWidth
                   renderInput={(params) => (
                     <TextField
                       {...params}
-                      label="Déploiement *"
+                      label={t("form.fields.deployment")}
                       error={Boolean(errors.deploymentId || errors.slug)}
                       helperText={
                         errors.deploymentId ||
                         errors.slug ||
                         (values.slug
-                          ? `Identifiant de la fiche : ${values.slug}`
-                          : "Lie la fiche à sa deployment et en dérive l'identifiant")
+                          ? t("form.helpers.deploymentLinked", { slug: values.slug })
+                          : t("form.helpers.deploymentEmpty"))
                       }
                     />
                   )}
                 />
                 <TextField
-                  label="Nom *"
+                  label={t("form.fields.name")}
                   value={values.name}
                   onChange={(event) => onFieldChange("name", event.target.value)}
                   disabled={fieldDisabled}
@@ -427,14 +414,14 @@ function GameServerFormPage() {
               </Stack>
               <Stack direction={{ xs: "column", md: "row" }} spacing={2}>
                 <TextField
-                  label="Jeu"
+                  label={t("form.fields.game")}
                   value={values.game}
                   onChange={(event) => onFieldChange("game", event.target.value)}
                   disabled={fieldDisabled}
                   fullWidth
                 />
                 <TextField
-                  label="Joueurs max"
+                  label={t("form.fields.playersMax")}
                   value={values.playersMax}
                   onChange={(event) => onFieldChange("playersMax", event.target.value)}
                   disabled={fieldDisabled}
@@ -445,7 +432,7 @@ function GameServerFormPage() {
               </Stack>
 
               <TextField
-                label="URL de connexion"
+                label={t("form.fields.urlConnection")}
                 value={values.urlConnection}
                 onChange={(event) => onFieldChange("urlConnection", event.target.value)}
                 disabled={fieldDisabled}
@@ -454,14 +441,14 @@ function GameServerFormPage() {
 
               <Stack direction={{ xs: "column", md: "row" }} spacing={2}>
                 <TextField
-                  label="Installation"
+                  label={t("form.fields.installation")}
                   value={values.installation}
                   onChange={(event) => onFieldChange("installation", event.target.value)}
                   disabled={fieldDisabled}
                   fullWidth
                 />
                 <TextField
-                  label="Version"
+                  label={t("form.fields.version")}
                   value={values.version}
                   onChange={(event) => onFieldChange("version", event.target.value)}
                   disabled={fieldDisabled}
@@ -470,20 +457,20 @@ function GameServerFormPage() {
               </Stack>
 
               <TextField
-                label="Ports Freebox"
+                label={t("form.fields.ports")}
                 value={values.ports}
                 onChange={(event) => onFieldChange("ports", event.target.value)}
                 disabled={fieldDisabled}
                 error={Boolean(errors.ports)}
                 helperText={
                   errors.ports ||
-                  "Ouverts pendant que le serveur tourne, refermés à l'arrêt. Format : tcp:25565, udp:8211"
+                  t("form.helpers.ports")
                 }
                 fullWidth
               />
 
               <TextField
-                label="Admins (separes par des virgules)"
+                label={t("form.fields.admins")}
                 value={values.admins}
                 onChange={(event) => onFieldChange("admins", event.target.value)}
                 disabled={fieldDisabled}
@@ -491,7 +478,7 @@ function GameServerFormPage() {
               />
 
               <TextField
-                label="Description"
+                label={t("form.fields.description")}
                 value={values.description}
                 onChange={(event) => onFieldChange("description", event.target.value)}
                 disabled={fieldDisabled}
@@ -509,7 +496,7 @@ function GameServerFormPage() {
           </CardContent>
         </Card>
       </Container>
-    </Box>
+    </PageBackdrop>
   );
 }
 
