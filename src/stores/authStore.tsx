@@ -9,7 +9,9 @@ import {
 } from "react";
 import i18n from "../i18n";
 import { getMeApi, loginApi } from "../api/authApi";
+import { configureSessionListeners } from "../api/httpClient";
 import type { AuthenticatedUser } from "../types/auth";
+import type { Permission } from "../types/permission";
 
 const TOKEN_STORAGE_KEY = "botfront_access_token";
 
@@ -17,7 +19,18 @@ interface AuthStoreValue {
   accessToken: string;
   profile: AuthenticatedUser | null;
   connected: boolean;
-  isAdmin: boolean;
+  /** Les permissions du rôle de l'acteur, telles que le jeton les porte. */
+  permissions: Permission[];
+  /**
+   * Le test de droit de l'interface.
+   *
+   * <p>Il remplace l'ancien `isAdmin`, qui comparait une chaîne de rôle : un rôle est éditable
+   * en base depuis le lot A.1, donc son nom ne dit plus rien de ce qu'il permet. Une seule
+   * fonction, à un seul endroit, plutôt qu'une comparaison recopiée dans chaque composant.</p>
+   */
+  can: (permission: Permission) => boolean;
+  /** Vrai si l'acteur détient **au moins une** des permissions — pour une entrée de menu. */
+  canAny: (...permissions: Permission[]) => boolean;
   isCheckingSession: boolean;
   isSubmitting: boolean;
   error: string;
@@ -68,6 +81,28 @@ export const AuthStoreProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
+  /**
+   * Les deux réactions au transport : le jeton reposé par le BFF, et le refus.
+   *
+   * <p>Un 401 ferme la session au lieu de laisser l'écran en place : sans ça, un jeton expiré
+   * produit une page qui s'affiche normalement et dont chaque bouton échoue — l'état mort que le
+   * raccourcissement du jeton à quinze minutes rendrait quotidien.</p>
+   */
+  useEffect(() => {
+    return configureSessionListeners({
+      onTokenRenewed: (token) => {
+        localStorage.setItem(TOKEN_STORAGE_KEY, token);
+        setAccessToken((current) => (current === token ? current : token));
+      },
+      onUnauthorized: () => {
+        localStorage.removeItem(TOKEN_STORAGE_KEY);
+        setAccessToken("");
+        setProfile(null);
+        setError(i18n.t("errors.sessionExpired", { ns: "auth" }));
+      },
+    });
+  }, []);
+
   useEffect(() => {
     let active = true;
 
@@ -98,19 +133,33 @@ export const AuthStoreProvider = ({ children }: { children: ReactNode }) => {
       }
     };
 
-    checkSession();
+    void checkSession();
 
     return () => {
       active = false;
     };
   }, [accessToken]);
 
+  const permissions = useMemo<Permission[]>(() => profile?.permissions ?? [], [profile]);
+
+  const can = useCallback(
+    (permission: Permission) => permissions.includes(permission),
+    [permissions],
+  );
+
+  const canAny = useCallback(
+    (...candidates: Permission[]) => candidates.some((candidate) => permissions.includes(candidate)),
+    [permissions],
+  );
+
   const value = useMemo<AuthStoreValue>(
     () => ({
       accessToken,
       profile,
       connected: Boolean(accessToken && profile),
-      isAdmin: Boolean(profile?.roles?.some((role) => role === "ROLE_ADMIN" || role === "ADMIN")),
+      permissions,
+      can,
+      canAny,
       isCheckingSession,
       isSubmitting,
       error,
@@ -118,7 +167,19 @@ export const AuthStoreProvider = ({ children }: { children: ReactNode }) => {
       logout,
       clearError,
     }),
-    [accessToken, profile, isCheckingSession, isSubmitting, error, login, logout, clearError],
+    [
+      accessToken,
+      profile,
+      permissions,
+      can,
+      canAny,
+      isCheckingSession,
+      isSubmitting,
+      error,
+      login,
+      logout,
+      clearError,
+    ],
   );
 
   return (

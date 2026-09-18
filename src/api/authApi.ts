@@ -1,4 +1,6 @@
 import { requestJson } from "./httpClient";
+import { isPermission } from "../types/permission";
+import type { Permission } from "../types/permission";
 import type {
   AuthMeResponse,
   AuthenticatedUser,
@@ -21,6 +23,16 @@ const normalizeRoles = (roles: AuthMeResponse["roles"]): string[] =>
     })
     .filter(Boolean);
 
+/**
+ * Les permissions servies par le BFF, filtrées sur celles que ce front connaît.
+ *
+ * <p>Une permission inconnue est ignorée plutôt que propagée : le cœur peut en ajouter une avant
+ * que le front sache quoi en faire (les `SCRIM_*` du chantier D, par exemple), et la garder ne
+ * ferait qu'introduire une valeur que rien ici ne teste.</p>
+ */
+const normalizePermissions = (permissions?: string[]): Permission[] =>
+  (permissions ?? []).filter(isPermission);
+
 export const loginApi = async (payload: LoginRequest): Promise<LoginResponse> =>
   requestJson<LoginResponse>("/auth/login", {
     method: "POST",
@@ -36,7 +48,9 @@ export const getMeApi = async (token: string): Promise<AuthenticatedUser> => {
   });
 
   return {
+    actorId: response.actorId,
     username: response.username,
     roles: normalizeRoles(response.roles || []),
+    permissions: normalizePermissions(response.permissions),
   };
 };
