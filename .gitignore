@@ -128,3 +128,6 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Storybook statique : construit à la demande, jamais versionné ni embarqué dans l'image du front
+storybook-static
