@@ -1,0 +1,37 @@
+{
+  "app": {
+    "name": "Schub",
+    "tagline": "Game server control"
+  },
+  "actions": {
+    "add": "Add",
+    "adding": "Adding…",
+    "back": "Back",
+    "cancel": "Cancel",
+    "create": "Create",
+    "delete": "Delete",
+    "refresh": "Refresh",
+    "save": "Save",
+    "validate": "Confirm"
+  },
+  "serverStatus": {
+    "online": "Online",
+    "offline": "Offline",
+    "unknown": "Unknown",
+    "unreachable": "Unreachable"
+  },
+  "theme": {
+    "label": "Theme",
+    "dark": "Dark",
+    "light": "Light",
+    "switchToDark": "Switch to dark theme",
+    "switchToLight": "Switch to light theme"
+  },
+  "language": {
+    "label": "Language",
+    "fr": "Français",
+    "en": "English",
+    "switchTo": "View this site in {{language}}"
+  },
+  "loading": "Loading…"
+}

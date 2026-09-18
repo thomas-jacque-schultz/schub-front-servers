@@ -1,0 +1,61 @@
+{
+  "card": {
+    "title": "Port forwarding",
+    "description": "What the router exposes to the Internet. A game server's forwardings follow its start-up and are edited from its entry.",
+    "refresh": "Re-read the router state",
+    "emptyTitle": "No forwarding",
+    "emptyDescription": "The router exposes nothing, or it cannot be reached."
+  },
+  "table": {
+    "origin": "Origin",
+    "label": "Label",
+    "wanPort": "Public port",
+    "target": "To",
+    "state": "State"
+  },
+  "origin": {
+    "static": "Permanent",
+    "server": "Server",
+    "manual": "Manual",
+    "manualLabel": "created by hand on the router"
+  },
+  "state": {
+    "open": "open",
+    "closed": "closed",
+    "notOnRouter": "not applied to the router yet"
+  },
+  "row": {
+    "deleteStatic": "Delete this permanent rule",
+    "deleteFromServer": "Derived from server \"{{label}}\": remove it from that server's entry.",
+    "deleteManual": "Created by hand on the router. The application watches it without touching it."
+  },
+  "dialog": {
+    "title": "New permanent forwarding",
+    "description": "A permanent rule stays open at all times, independently of any game server. For a port that should only open while a server runs, declare it on the server entry.",
+    "fields": {
+      "label": "Label",
+      "proto": "Protocol",
+      "wanPort": "Public port",
+      "wanPortEnd": "Range end",
+      "lanIp": "LAN IP",
+      "lanPort": "LAN port"
+    },
+    "helpers": {
+      "label": "Identifies the rule on the router, for example \"wireguard\"",
+      "optional": "optional",
+      "lanIp": "empty = the server's default value",
+      "lanPort": "empty = same as the public port"
+    }
+  },
+  "feedback": {
+    "labelRequired": "The label is required: it is what identifies the rule on the router.",
+    "wanPortInvalid": "Invalid WAN port: expected between 1 and 65535.",
+    "created": "Rule added. The router is realigned right away.",
+    "createFailed": "The rule could not be added",
+    "deleted": "Rule \"{{label}}\" deleted.",
+    "deleteFailed": "The rule could not be deleted"
+  },
+  "errors": {
+    "loadFailed": "Port forwardings could not be read"
+  }
+}

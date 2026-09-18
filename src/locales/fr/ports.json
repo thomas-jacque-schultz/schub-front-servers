@@ -1,0 +1,61 @@
+{
+  "card": {
+    "title": "Redirections de ports",
+    "description": "Ce que le routeur expose sur Internet. Les redirections d'un serveur de jeu suivent son allumage et se modifient depuis sa fiche.",
+    "refresh": "Relire l'état du routeur",
+    "emptyTitle": "Aucune redirection",
+    "emptyDescription": "Le routeur n'expose rien, ou il est injoignable."
+  },
+  "table": {
+    "origin": "Origine",
+    "label": "Libellé",
+    "wanPort": "Port public",
+    "target": "Vers",
+    "state": "État"
+  },
+  "origin": {
+    "static": "Permanente",
+    "server": "Serveur",
+    "manual": "Manuelle",
+    "manualLabel": "créée à la main sur la box"
+  },
+  "state": {
+    "open": "ouvert",
+    "closed": "fermé",
+    "notOnRouter": "pas encore posée sur le routeur"
+  },
+  "row": {
+    "deleteStatic": "Supprimer cette règle permanente",
+    "deleteFromServer": "Dérivée du serveur « {{label}} » : elle se retire depuis sa fiche.",
+    "deleteManual": "Créée à la main sur la box. L'application l'observe sans y toucher."
+  },
+  "dialog": {
+    "title": "Nouvelle redirection permanente",
+    "description": "Une règle permanente reste ouverte en permanence, indépendamment de tout serveur de jeu. Pour un port qui ne doit s'ouvrir que pendant qu'un serveur tourne, déclarez-le sur la fiche du serveur.",
+    "fields": {
+      "label": "Libellé",
+      "proto": "Protocole",
+      "wanPort": "Port public",
+      "wanPortEnd": "Fin de plage",
+      "lanIp": "IP LAN",
+      "lanPort": "Port LAN"
+    },
+    "helpers": {
+      "label": "Identifie la règle sur le routeur, par exemple « wireguard »",
+      "optional": "facultatif",
+      "lanIp": "vide = valeur par défaut du serveur",
+      "lanPort": "vide = identique au port public"
+    }
+  },
+  "feedback": {
+    "labelRequired": "Le libellé est obligatoire : c'est lui qui identifie la règle sur le routeur.",
+    "wanPortInvalid": "Port WAN invalide : attendu entre 1 et 65535.",
+    "created": "Règle ajoutée. Le routeur est réaligné dans la foulée.",
+    "createFailed": "L'ajout a échoué",
+    "deleted": "Règle « {{label}} » supprimée.",
+    "deleteFailed": "La suppression a échoué"
+  },
+  "errors": {
+    "loadFailed": "Impossible de lire les redirections"
+  }
+}

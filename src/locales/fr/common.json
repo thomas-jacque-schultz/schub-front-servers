@@ -1,0 +1,37 @@
+{
+  "app": {
+    "name": "Schub",
+    "tagline": "Pilotage de serveurs de jeu"
+  },
+  "actions": {
+    "add": "Ajouter",
+    "adding": "Ajout…",
+    "back": "Retour",
+    "cancel": "Annuler",
+    "create": "Créer",
+    "delete": "Supprimer",
+    "refresh": "Actualiser",
+    "save": "Sauvegarder",
+    "validate": "Valider"
+  },
+  "serverStatus": {
+    "online": "En ligne",
+    "offline": "Hors ligne",
+    "unknown": "Inconnu",
+    "unreachable": "Inaccessible"
+  },
+  "theme": {
+    "label": "Thème",
+    "dark": "Sombre",
+    "light": "Clair",
+    "switchToDark": "Passer au thème sombre",
+    "switchToLight": "Passer au thème clair"
+  },
+  "language": {
+    "label": "Langue",
+    "fr": "Français",
+    "en": "English",
+    "switchTo": "Afficher le site en {{language}}"
+  },
+  "loading": "Chargement…"
+}

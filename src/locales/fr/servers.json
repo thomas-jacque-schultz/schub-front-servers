@@ -1,0 +1,69 @@
+{
+  "landing": {
+    "eyebrow": "Schub bot front",
+    "title": "Pilote tes serveurs de jeu",
+    "description": "Interface web pour superviser tes instances, suivre leur statut et lancer les actions bot depuis un point d'accès unique."
+  },
+  "dashboard": {
+    "title": "Pilotage des serveurs"
+  },
+  "list": {
+    "title": "État des serveurs",
+    "onlineCount": "{{online}}/{{total}} en ligne",
+    "lastRefresh": "Mis à jour {{time}}",
+    "neverRefreshed": "Jamais mis à jour",
+    "notConnected": "Connecte-toi pour charger les données des serveurs.",
+    "emptyTitle": "Aucun serveur à afficher.",
+    "emptyDescription": "Les fiches créées depuis la configuration apparaîtront ici.",
+    "actions": {
+      "start": "Démarrer",
+      "stop": "Arrêter",
+      "view": "Voir",
+      "edit": "Modifier"
+    }
+  },
+  "admin": {
+    "title": "Actions administrateur",
+    "description": "Gère les fiches serveurs affichées aux joueurs et dans les messages Discord.",
+    "createServer": "Ajouter un nouveau serveur"
+  },
+  "form": {
+    "title": {
+      "creation": "Créer une fiche serveur",
+      "edition": "Éditer une fiche serveur",
+      "visualisation": "Afficher une fiche serveur"
+    },
+    "fields": {
+      "deployment": "Déploiement *",
+      "name": "Nom *",
+      "game": "Jeu",
+      "playersMax": "Joueurs max",
+      "urlConnection": "URL de connexion",
+      "installation": "Installation",
+      "version": "Version",
+      "ports": "Ports Freebox",
+      "admins": "Admins (séparés par des virgules)",
+      "description": "Description"
+    },
+    "helpers": {
+      "deploymentEmpty": "Lie la fiche à son déploiement et en dérive l'identifiant",
+      "deploymentLinked": "Identifiant de la fiche : {{slug}}",
+      "ports": "Ouverts pendant que le serveur tourne, refermés à l'arrêt. Format : tcp:25565, udp:8211"
+    },
+    "errors": {
+      "required": "Ce champ est obligatoire.",
+      "deploymentRequired": "Choisissez le déploiement à lier : il renseigne le slug.",
+      "playersMax": "Le nombre de joueurs doit être un entier positif.",
+      "portsFormat": "Format attendu : tcp:25565, udp:8211:8211",
+      "notFound": "Serveur introuvable.",
+      "loadFailed": "Erreur de chargement.",
+      "saveFailed": "Impossible d'enregistrer la fiche serveur.",
+      "deploymentsUnavailable": "Impossible de lire les déploiements",
+      "deploymentsCatalog": "Catalogue des déploiements indisponible : {{reason}}. La fiche reste modifiable, mais le déploiement ne peut pas être choisi dans la liste."
+    }
+  },
+  "errors": {
+    "loadFailed": "Impossible de charger les serveurs",
+    "unnamed": "Serveur sans nom"
+  }
+}

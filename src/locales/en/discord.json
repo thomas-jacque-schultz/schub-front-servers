@@ -1,0 +1,14 @@
+{
+  "channels": {
+    "title": "Discord status channels",
+    "selectionCount": "{{count}} selected",
+    "description": "Pick the channels for each Discord server. On confirmation the bot applies the same logic as the /subscribe command and refreshes the status messages.",
+    "accordion": "Discord channel list ({{count}} server(s))",
+    "submit": "Confirm selection",
+    "success": "Status channels updated and notifications pushed.",
+    "errors": {
+      "load": "Discord channels could not be loaded",
+      "save": "The selection could not be saved"
+    }
+  }
+}

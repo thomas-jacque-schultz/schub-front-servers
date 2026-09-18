@@ -1,0 +1,69 @@
+{
+  "landing": {
+    "eyebrow": "Schub bot front",
+    "title": "Run your game servers",
+    "description": "A web console to supervise your instances, follow their status and trigger bot actions from a single place."
+  },
+  "dashboard": {
+    "title": "Server control"
+  },
+  "list": {
+    "title": "Server status",
+    "onlineCount": "{{online}}/{{total}} online",
+    "lastRefresh": "Updated {{time}}",
+    "neverRefreshed": "Never updated",
+    "notConnected": "Sign in to load server data.",
+    "emptyTitle": "No server to display.",
+    "emptyDescription": "Servers created from the configuration screens will show up here.",
+    "actions": {
+      "start": "Start",
+      "stop": "Stop",
+      "view": "View",
+      "edit": "Edit"
+    }
+  },
+  "admin": {
+    "title": "Administrator actions",
+    "description": "Manage the server entries shown to players and in Discord messages.",
+    "createServer": "Add a new server"
+  },
+  "form": {
+    "title": {
+      "creation": "Create a server entry",
+      "edition": "Edit a server entry",
+      "visualisation": "View a server entry"
+    },
+    "fields": {
+      "deployment": "Deployment *",
+      "name": "Name *",
+      "game": "Game",
+      "playersMax": "Max players",
+      "urlConnection": "Connection URL",
+      "installation": "Installation",
+      "version": "Version",
+      "ports": "Freebox ports",
+      "admins": "Admins (comma separated)",
+      "description": "Description"
+    },
+    "helpers": {
+      "deploymentEmpty": "Links the entry to its deployment and derives its identifier",
+      "deploymentLinked": "Entry identifier: {{slug}}",
+      "ports": "Opened while the server runs, closed when it stops. Format: tcp:25565, udp:8211"
+    },
+    "errors": {
+      "required": "This field is required.",
+      "deploymentRequired": "Pick the deployment to link: it fills in the slug.",
+      "playersMax": "The player count must be a positive integer.",
+      "portsFormat": "Expected format: tcp:25565, udp:8211:8211",
+      "notFound": "Server not found.",
+      "loadFailed": "Loading failed.",
+      "saveFailed": "The server entry could not be saved.",
+      "deploymentsUnavailable": "Deployments could not be read",
+      "deploymentsCatalog": "Deployment catalogue unavailable: {{reason}}. The entry stays editable, but the deployment cannot be picked from the list."
+    }
+  },
+  "errors": {
+    "loadFailed": "Servers could not be loaded",
+    "unnamed": "Unnamed server"
+  }
+}
