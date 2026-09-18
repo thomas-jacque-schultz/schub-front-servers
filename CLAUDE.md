@@ -40,10 +40,34 @@ jamais s'allonger. Un fichier neuf n'y entre pas.
 | `npm run storybook` | Storybook sur http://localhost:6006 |
 | `npm run build-storybook` | Storybook statique dans `storybook-static/` |
 
+## Les droits, dans l'interface
+
+- **`useAuthStore().can("PERMISSION")`, jamais une comparaison de nom de rôle.** Un rôle est
+  éditable en base : son nom ne dit plus rien de ce qu'il permet. `isAdmin` n'existe plus.
+- **Une entrée de menu n'apparaît que si sa permission est présente**, et la route porte la même
+  condition — une URL se tape à la main. La liste vit dans `src/components/AppLayout.tsx`, à un
+  seul endroit.
+- **L'IHM ne propose pas ce que le serveur refusera** : les rôles attribuables sont filtrés par la
+  règle du sous-ensemble, on ne modifie pas son propre rôle et on ne rétrograde pas le dernier
+  `OWNER`. C'est le cœur qui tranche ; l'écran évite d'avoir à découvrir le refus.
+- **L'absence n'est pas une panne** : sans `SERVER_INFRA_VIEW`, le cœur sert la projection
+  membre — ni ports, ni déploiement, ni admins. On le dit à l'écran, et on **omet** ces champs du
+  corps envoyé plutôt que de les poster vides.
+
+## La coquille
+
+`AppShell` (design system) porte l'en-tête, le menu *Configuration*, le pied de page et le fond de
+marque. Un écran ne repose ni `ThemeModeToggle`, ni `LanguageSwitcher`, ni `PageBackdrop` :
+il rend un titre et du contenu. `AppShell` ne teste aucune permission — c'est `AppLayout` qui
+décide de ce qu'elle reçoit.
+
 ## Ce qui n'existe pas encore, et qu'il ne faut pas improviser
 
-- **Pas d'`AppShell`, pas de header ni de footer définitifs** : ils dépendent de
-  l'authentification Discord (chantier A). En attendant, `ThemeModeToggle` et `LanguageSwitcher`
-  sont posés à la main sur les écrans qui en ont besoin.
+- **Le portfolio de la racine** : chantier C. `/` sert encore l'état public des serveurs.
+- **Le cookie `httpOnly`** : lot A.3. Le jeton reste en `Authorization: Bearer` et en
+  `localStorage`. Le BFF le réémet dans `X-Auth-Token`, que `httpClient` lit ; un 401 ferme
+  la session.
+- **La connexion par Discord** : le BFF n'expose pas encore `/auth/discord`, l'écran de connexion
+  reste le formulaire local.
 - **Storybook est destiné à être public.** Aucune donnée réelle dans une story : pas de pseudo
   Discord, pas d'IP, pas de numéro de port réel.
