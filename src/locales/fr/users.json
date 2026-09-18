@@ -1,0 +1,39 @@
+{
+  "eyebrow": "Configuration",
+  "title": "Utilisateurs",
+  "subtitle": "Un compte est créé à la première connexion Discord. C'est son rôle qui dit ce qu'il peut faire.",
+  "table": {
+    "caption": "Liste des comptes",
+    "account": "Compte",
+    "role": "Rôle",
+    "riot": "Compte Riot",
+    "lastLogin": "Dernière connexion",
+    "actions": "Actions"
+  },
+  "emptyTitle": "Aucun compte",
+  "emptyDescription": "Les comptes apparaissent à leur première connexion Discord.",
+  "noRole": "Sans rôle",
+  "riotNone": "Non lié",
+  "never": "Jamais",
+  "you": "vous",
+  "changeRole": "Changer le rôle",
+  "dialog": {
+    "title": "Changer le rôle de {{user}}",
+    "description": "Le rôle décide de ce que ce compte peut faire partout. Être administrateur d'un serveur reste à part : ça ne donne que le démarrage et l'arrêt de ce serveur-là.",
+    "field": "Rôle attribuable",
+    "confirm": "Attribuer",
+    "helper": "Seuls les rôles dont les permissions sont incluses dans les vôtres sont proposés."
+  },
+  "guards": {
+    "self": "On ne modifie pas son propre rôle : se rétrograder soi-même est l'erreur la plus facile à commettre et la plus pénible à réparer.",
+    "lastOwner": "Le dernier {{role}} ne peut pas être rétrogradé : plus personne ne pourrait administrer les rôles.",
+    "noAssignableRole": "Aucun rôle ne vous est attribuable : on n'attribue qu'un rôle dont les permissions sont incluses dans les siennes."
+  },
+  "feedback": {
+    "roleAssigned": "Rôle de {{user}} changé en {{role}}.",
+    "roleFailed": "L'attribution a échoué"
+  },
+  "errors": {
+    "loadFailed": "Impossible de charger les comptes"
+  }
+}

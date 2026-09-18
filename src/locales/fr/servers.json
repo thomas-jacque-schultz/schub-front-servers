@@ -20,7 +20,8 @@
       "stop": "Arrêter",
       "view": "Voir",
       "edit": "Modifier"
-    }
+    },
+    "memberView": "Vue membre : les détails d'infrastructure sont masqués pour ton rôle."
   },
   "admin": {
     "title": "Actions administrateur",
@@ -42,13 +43,15 @@
       "installation": "Installation",
       "version": "Version",
       "ports": "Ports Freebox",
-      "admins": "Admins (séparés par des virgules)",
+      "admins": "Administrateurs",
       "description": "Description"
     },
     "helpers": {
       "deploymentEmpty": "Lie la fiche à son déploiement et en dérive l'identifiant",
       "deploymentLinked": "Identifiant de la fiche : {{slug}}",
-      "ports": "Ouverts pendant que le serveur tourne, refermés à l'arrêt. Format : tcp:25565, udp:8211"
+      "ports": "Ouverts pendant que le serveur tourne, refermés à l'arrêt. Format : tcp:25565, udp:8211",
+      "admins": "Ils peuvent démarrer et arrêter CE serveur, rien de plus : ni modifier la fiche, ni toucher aux ports.",
+      "adminsUnavailable": "La liste des comptes demande la permission de consultation des comptes. Les administrateurs déjà en place restent affichés."
     },
     "errors": {
       "required": "Ce champ est obligatoire.",
@@ -59,11 +62,22 @@
       "loadFailed": "Erreur de chargement.",
       "saveFailed": "Impossible d'enregistrer la fiche serveur.",
       "deploymentsUnavailable": "Impossible de lire les déploiements",
-      "deploymentsCatalog": "Catalogue des déploiements indisponible : {{reason}}. La fiche reste modifiable, mais le déploiement ne peut pas être choisi dans la liste."
-    }
+      "deploymentsCatalog": "Catalogue des déploiements indisponible : {{reason}}. La fiche reste modifiable, mais le déploiement ne peut pas être choisi dans la liste.",
+      "usersUnavailable": "Impossible de charger les comptes"
+    },
+    "infraHidden": "Ports, déploiement et administrateurs ne sont visibles qu'avec la permission d'infrastructure. Ton rôle ne la porte pas : ces champs restent vides et ne seront pas enregistrés."
   },
   "errors": {
     "loadFailed": "Impossible de charger les serveurs",
     "unnamed": "Serveur sans nom"
+  },
+  "config": {
+    "eyebrow": "Configuration",
+    "serversTitle": "Serveurs",
+    "serversSubtitle": "Les fiches affichées aux joueurs et dans les messages Discord.",
+    "portsTitle": "Redirections de ports",
+    "portsSubtitle": "Ce que le routeur expose sur Internet.",
+    "discordTitle": "Salons Discord",
+    "discordSubtitle": "Les salons qui reçoivent les changements d'état des serveurs."
   }
 }

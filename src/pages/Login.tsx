@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { z } from "zod";
-import { Button, PageBackdrop } from "../design-system";
+import { Button } from "../design-system";
 import { useLocalizedNavigate } from "../i18n/navigation";
 import { useAuthStore } from "../stores/authStore";
 
@@ -44,8 +44,7 @@ function LoginPage() {
   });
 
   return (
-    <PageBackdrop centered>
-      <Container maxWidth="sm">
+    <Container maxWidth="sm">
         <Card>
           <CardContent sx={{ p: 4 }}>
             <Stack spacing={3}>
@@ -93,8 +92,7 @@ function LoginPage() {
             </Stack>
           </CardContent>
         </Card>
-      </Container>
-    </PageBackdrop>
+    </Container>
   );
 }
 

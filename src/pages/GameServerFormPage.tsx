@@ -1,19 +1,18 @@
 import { useEffect, useMemo, useState } from "react";
-import {
-  Alert,
-  Autocomplete,
-  Card,
-  CardContent,
-  Container,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import FormActionButton from "../components/FormActionButton";
-import { Button, PageBackdrop } from "../design-system";
+import {
+  Alert,
+  Button,
+  Card,
+  MultiSelect,
+  type MultiSelectOption,
+  PageHeader,
+  ProgressBar,
+  SelectField,
+  Stack,
+  TextField,
+} from "../design-system";
 import { useLocalizedNavigate } from "../i18n/navigation";
 import {
   createGameServerApi,
@@ -21,10 +20,18 @@ import {
   updateGameServerApi,
 } from "../api/serversApi";
 import { getDeploymentsApi } from "../api/deploymentsApi";
+import { getUsersApi } from "../api/usersApi";
 import { useAuthStore } from "../stores/authStore";
 import type { DeploymentDto } from "../types/deployment";
 import { slugFromDeploymentName } from "../types/deployment";
-import type { GameServerFormMode, GameServerPortDto, UpsertGameServerPayload } from "../types/server";
+import { userLabelOf, type UserDto } from "../types/user";
+import type {
+  GameServerFormMode,
+  GameServerPortDto,
+  ServerAdminDto,
+  UpsertGameServerPayload,
+} from "../types/server";
+import { hasInfrastructureView } from "../types/server";
 
 interface GameServerFormValues {
   slug: string;
@@ -36,7 +43,6 @@ interface GameServerFormValues {
   installation: string;
   version: string;
   description: string;
-  admins: string;
   ports: string;
 }
 
@@ -50,7 +56,6 @@ const DEFAULT_VALUES: GameServerFormValues = {
   installation: "",
   version: "",
   description: "",
-  admins: "",
   ports: "",
 };
 
@@ -101,7 +106,19 @@ const formatPorts = (ports?: GameServerPortDto[]): string =>
     )
     .join(", ");
 
-const toPayload = (values: GameServerFormValues): UpsertGameServerPayload => ({
+/**
+ * Le corps de la requête.
+ *
+ * <p>`admins` et `ports` sont **omis** quand l'acteur ne voit pas l'infrastructure : le cœur
+ * laisse alors les listes existantes intactes. Les envoyer vides — ce qu'un formulaire qui ne
+ * les a jamais reçues ferait naturellement — effacerait à la première sauvegarde des
+ * administrateurs et des redirections que l'acteur n'avait même pas le droit de lire.</p>
+ */
+const toPayload = (
+  values: GameServerFormValues,
+  adminIds: string[],
+  seesInfrastructure: boolean,
+): UpsertGameServerPayload => ({
   slug: values.slug.trim(),
   deploymentId: values.deploymentId.trim() ? Number(values.deploymentId.trim()) : undefined,
   name: values.name.trim(),
@@ -111,12 +128,10 @@ const toPayload = (values: GameServerFormValues): UpsertGameServerPayload => ({
   installation: values.installation.trim() || undefined,
   version: values.version.trim() || undefined,
   description: values.description.trim() || undefined,
-  admins: values.admins
-    .split(",")
-    .map((item) => item.trim())
-    .filter(Boolean),
+  // Le cœur ne lit que `userId` en entrée ; le reste de la forme n'est renseigné qu'en sortie.
+  admins: seesInfrastructure ? adminIds.map((userId) => ({ userId })) : undefined,
   // champ vidé = toutes les redirections du serveur sont retirées
-  ports: parsePorts(values.ports) || [],
+  ports: seesInfrastructure ? parsePorts(values.ports) || [] : undefined,
 });
 
 const resolveMode = (pathname: string): GameServerFormMode => {
@@ -129,25 +144,44 @@ const resolveMode = (pathname: string): GameServerFormMode => {
   return "creation";
 };
 
+/**
+ * La fiche d'un serveur.
+ *
+ * <p>Deux nouveautés du lot A.5 s'y voient : le champ `admins` est devenu un sélecteur de
+ * comptes, avec portrait et pseudo ; et la fiche sait être servie **amputée**. Un acteur sans
+ * `SERVER_INFRA_VIEW` reçoit la projection membre — ni ports, ni déploiement, ni
+ * administrateurs. Ce n'est pas une erreur de chargement, et la fiche le dit au lieu d'afficher
+ * des champs vides qui laisseraient croire à des données perdues.</p>
+ */
 function GameServerFormPage() {
   const navigate = useLocalizedNavigate();
   const { t } = useTranslation("servers");
   const { id } = useParams();
-  const { accessToken } = useAuthStore();
+  const { accessToken, can } = useAuthStore();
   const [values, setValues] = useState<GameServerFormValues>(DEFAULT_VALUES);
+  const [adminIds, setAdminIds] = useState<string[]>([]);
+  const [knownAdmins, setKnownAdmins] = useState<ServerAdminDto[]>([]);
+  const [users, setUsers] = useState<UserDto[]>([]);
+  const [usersError, setUsersError] = useState<string>("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [globalError, setGlobalError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [deployments, setDeployments] = useState<DeploymentDto[]>([]);
   const [deploymentsError, setDeploymentsError] = useState<string>("");
+  /** Ce que **cette fiche** a livré : une création part du principe qu'on voit tout. */
+  const [seesInfrastructure, setSeesInfrastructure] = useState<boolean>(
+    can("SERVER_INFRA_VIEW"),
+  );
 
   const mode = useMemo(() => resolveMode(window.location.pathname), []);
+  const isReadOnly = mode === "visualisation";
+  const pageTitle = t(`form.title.${mode}`);
 
   // Le catalogue des déploiements sert à lier la fiche au sien sans le saisir. En consultation,
   // le champ est figé : inutile d'interroger le cœur pour une liste qu'on ne peut pas ouvrir.
   useEffect(() => {
-    if (!accessToken || mode === "visualisation") {
+    if (!accessToken || mode === "visualisation" || !can("SERVER_INFRA_VIEW")) {
       return;
     }
 
@@ -172,16 +206,44 @@ function GameServerFormPage() {
     return () => {
       active = false;
     };
-  }, [accessToken, mode, t]);
-  const isReadOnly = mode === "visualisation";
-  const pageTitle = t(`form.title.${mode}`);
+  }, [accessToken, mode, can, t]);
 
+  /**
+   * Le catalogue des comptes, pour le sélecteur d'administrateurs.
+   *
+   * <p>Il demande `USER_VIEW`, que `SERVER_EDIT` n'implique pas. Sans lui, le champ reste
+   * lisible — les administrateurs déjà en place viennent de la fiche elle-même — mais figé :
+   * proposer une liste vide ferait croire qu'il n'existe aucun compte.</p>
+   */
   useEffect(() => {
-    if (!id || mode === "creation") {
+    if (!accessToken || !can("USER_VIEW")) {
       return;
     }
 
-    if (!accessToken) {
+    let active = true;
+    void (async () => {
+      try {
+        const payload = await getUsersApi(accessToken);
+        if (active) {
+          setUsers(payload);
+          setUsersError("");
+        }
+      } catch (error) {
+        if (active) {
+          setUsersError(
+            error instanceof Error ? error.message : t("form.errors.usersUnavailable"),
+          );
+        }
+      }
+    })();
+
+    return () => {
+      active = false;
+    };
+  }, [accessToken, can, t]);
+
+  useEffect(() => {
+    if (!id || mode === "creation" || !accessToken) {
       return;
     }
 
@@ -202,6 +264,7 @@ function GameServerFormPage() {
           return;
         }
 
+        setSeesInfrastructure(hasInfrastructureView(server));
         setValues({
           slug: server.slug || "",
           deploymentId: typeof server.deploymentId === "number" ? String(server.deploymentId) : "",
@@ -213,9 +276,10 @@ function GameServerFormPage() {
           installation: server.installation || "",
           version: server.version || "",
           description: server.description || "",
-          admins: (server.admins || []).join(", "),
           ports: formatPorts(server.ports),
         });
+        setKnownAdmins(server.admins ?? []);
+        setAdminIds((server.admins ?? []).map((admin) => admin.userId));
       } catch (error) {
         if (!active) {
           return;
@@ -241,16 +305,8 @@ function GameServerFormPage() {
     setGlobalError("");
   };
 
-  /**
-   * Lier la fiche à un déploiement renseigne les deux champs d'un coup.
-   *
-   * L'identifiant n'est dérivé qu'à la création. En édition il reste tel quel : c'est la clé
-   * d'unicité de la fiche, le propriétaire de ses règles de ports et l'argument des commandes
-   * Discord. Le recalculer parce qu'on rebranche un déploiement orphelinerait les redirections
-   * existantes et casserait les commandes déjà connues des utilisateurs.
-   */
-  // La fiche stocke l'identifiant du déploiement, pas le déploiement : on le retrouve dans le catalogue.
-  // Null tant que le catalogue n'est pas chargé, ou si le déploiement lié a disparu du cœur —
+  // La fiche stocke l'identifiant du déploiement, pas le déploiement : on le retrouve dans le
+  // catalogue. Null tant qu'il n'est pas chargé, ou si le déploiement lié a disparu du cœur —
   // auquel cas le champ apparaît vide, ce qui est la vérité à afficher.
   const selectedDeployment = useMemo(
     () => deployments.find((deployment) => String(deployment.id) === values.deploymentId) ?? null,
@@ -269,12 +325,39 @@ function GameServerFormPage() {
     return games;
   }, [deployments, selectedDeployment]);
 
-  const onDeploymentChange = (deployment: DeploymentDto | null) => {
+  /**
+   * Les comptes proposés comme administrateurs.
+   *
+   * <p>Les administrateurs déjà posés sur la fiche sont fusionnés au catalogue : sans eux, un
+   * compte retiré de la liste des comptes visibles disparaîtrait du sélecteur et se ferait
+   * effacer à la sauvegarde suivante.</p>
+   */
+  const adminOptions = useMemo<MultiSelectOption[]>(() => {
+    const fromUsers = users.map((user) => ({
+      value: user.id,
+      label: userLabelOf(user),
+      avatarUrl: user.avatarUrl,
+      description: user.roleName,
+    }));
+    const missing = knownAdmins
+      .filter((admin) => !users.some((user) => user.id === admin.userId))
+      .map((admin) => ({
+        value: admin.userId,
+        label: admin.discordUsername || admin.userId,
+        avatarUrl: admin.avatarUrl,
+      }));
+    return [...fromUsers, ...missing];
+  }, [users, knownAdmins]);
+
+  const onDeploymentChange = (deploymentId: string) => {
+    const deployment = deployments.find((candidate) => String(candidate.id) === deploymentId) ?? null;
     setValues((current) => ({
       ...current,
-      deploymentId: deployment ? String(deployment.id) : "",
-      slug:
-        mode === "creation" && deployment ? slugFromDeploymentName(deployment.name) : current.slug,
+      deploymentId,
+      // L'identifiant n'est dérivé qu'à la création. En édition il reste tel quel : c'est la clé
+      // d'unicité de la fiche, le propriétaire de ses règles de ports et l'argument des commandes
+      // Discord. Le recalculer orphelinerait les redirections et casserait les commandes connues.
+      slug: mode === "creation" && deployment ? slugFromDeploymentName(deployment.name) : current.slug,
     }));
     setErrors((current) => ({ ...current, deploymentId: "", slug: "" }));
     setGlobalError("");
@@ -302,7 +385,7 @@ function GameServerFormPage() {
       }
     }
 
-    if (parsePorts(values.ports) === null) {
+    if (seesInfrastructure && parsePorts(values.ports) === null) {
       nextErrors.ports = t("form.errors.portsFormat");
     }
 
@@ -314,7 +397,7 @@ function GameServerFormPage() {
     event.preventDefault();
 
     if (isReadOnly) {
-      navigate("/dashboard");
+      navigate("/config/servers");
       return;
     }
 
@@ -330,7 +413,7 @@ function GameServerFormPage() {
     setIsSubmitting(true);
     setGlobalError("");
 
-    const payload = toPayload(values);
+    const payload = toPayload(values, adminIds, seesInfrastructure);
 
     try {
       if (mode === "creation") {
@@ -339,164 +422,155 @@ function GameServerFormPage() {
         await updateGameServerApi(accessToken, id, payload);
       }
 
-      navigate("/dashboard", { replace: true });
+      navigate("/config/servers", { replace: true });
     } catch (error) {
-      const message =
-        error instanceof Error
-          ? error.message
-          : t("form.errors.saveFailed");
-      setGlobalError(message);
+      setGlobalError(error instanceof Error ? error.message : t("form.errors.saveFailed"));
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const fieldDisabled = isReadOnly || isLoading;
+  const infraDisabled = fieldDisabled || !seesInfrastructure;
 
   return (
-    <PageBackdrop variant="panel">
-      <Container maxWidth="md">
-        <Card>
-          <CardContent sx={{ p: { xs: 3, md: 4 } }}>
-            <Stack spacing={3} component="form" onSubmit={onSubmit}>
-              <Stack direction="row" alignItems="center" spacing={2}>
-                <Button variant="ghost" startIcon={<ArrowBackIcon />} onClick={() => navigate("/dashboard")}>
-                  {t("actions.back", { ns: "common" })}
-                </Button>
-                <Typography variant="h4" fontWeight={700}>
-                  {pageTitle}
-                </Typography>
-              </Stack>
+    <Stack spacing={3} component="form" onSubmit={onSubmit}>
+      <PageHeader
+        eyebrow={t("config.eyebrow")}
+        title={pageTitle}
+        actions={
+          <>
+            <Button variant="ghost" onClick={() => navigate("/config/servers")}>
+              {t("actions.back", { ns: "common" })}
+            </Button>
+            {!isReadOnly && (
+              <Button type="submit" loading={isSubmitting}>
+                {mode === "creation"
+                  ? t("actions.create", { ns: "common" })
+                  : t("actions.save", { ns: "common" })}
+              </Button>
+            )}
+          </>
+        }
+      />
 
-              {globalError && <Alert severity="error">{globalError}</Alert>}
+      {isLoading && <ProgressBar label={pageTitle} />}
+      {globalError && <Alert severity="error">{globalError}</Alert>}
 
-              {deploymentsError && (
-                <Alert severity="warning">
-                  {t("form.errors.deploymentsCatalog", { reason: deploymentsError })}
-                </Alert>
-              )}
+      {/* Une absence attendue, pas une panne : on le dit, plutôt que d'afficher des trous. */}
+      {!seesInfrastructure && <Alert severity="info">{t("form.infraHidden")}</Alert>}
 
-              <Stack direction={{ xs: "column", md: "row" }} spacing={2}>
-                <Autocomplete
-                  options={deploymentOptions}
-                  value={selectedDeployment}
-                  onChange={(_event, deployment) => onDeploymentChange(deployment)}
-                  getOptionLabel={(deployment) => `${deployment.name}  (#${deployment.id})`}
-                  isOptionEqualToValue={(option, selected) => option.id === selected.id}
-                  // En consultation, fieldDisabled vaut déjà vrai : tester le mode en plus serait
-                  // une condition morte, que TypeScript signale.
-                  disabled={fieldDisabled || deploymentOptions.length === 0}
-                  fullWidth
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label={t("form.fields.deployment")}
-                      error={Boolean(errors.deploymentId || errors.slug)}
-                      helperText={
-                        errors.deploymentId ||
-                        errors.slug ||
-                        (values.slug
-                          ? t("form.helpers.deploymentLinked", { slug: values.slug })
-                          : t("form.helpers.deploymentEmpty"))
-                      }
-                    />
-                  )}
-                />
-                <TextField
-                  label={t("form.fields.name")}
-                  value={values.name}
-                  onChange={(event) => onFieldChange("name", event.target.value)}
-                  disabled={fieldDisabled}
-                  error={Boolean(errors.name)}
-                  helperText={errors.name}
-                  fullWidth
-                />
-              </Stack>
-              <Stack direction={{ xs: "column", md: "row" }} spacing={2}>
-                <TextField
-                  label={t("form.fields.game")}
-                  value={values.game}
-                  onChange={(event) => onFieldChange("game", event.target.value)}
-                  disabled={fieldDisabled}
-                  fullWidth
-                />
-                <TextField
-                  label={t("form.fields.playersMax")}
-                  value={values.playersMax}
-                  onChange={(event) => onFieldChange("playersMax", event.target.value)}
-                  disabled={fieldDisabled}
-                  error={Boolean(errors.playersMax)}
-                  helperText={errors.playersMax}
-                  fullWidth
-                />
-              </Stack>
+      {deploymentsError && (
+        <Alert severity="warning">
+          {t("form.errors.deploymentsCatalog", { reason: deploymentsError })}
+        </Alert>
+      )}
 
-              <TextField
-                label={t("form.fields.urlConnection")}
-                value={values.urlConnection}
-                onChange={(event) => onFieldChange("urlConnection", event.target.value)}
-                disabled={fieldDisabled}
-                fullWidth
-              />
+      <Card>
+        <Stack spacing={3}>
+          <Stack direction="responsive" spacing={2}>
+            <SelectField
+              label={t("form.fields.deployment")}
+              value={values.deploymentId}
+              onChange={onDeploymentChange}
+              options={deploymentOptions.map((deployment) => ({
+                value: String(deployment.id),
+                label: `${deployment.name} (#${deployment.id})`,
+              }))}
+              disabled={infraDisabled || deploymentOptions.length === 0}
+              error={Boolean(errors.deploymentId || errors.slug)}
+              helperText={
+                errors.deploymentId ||
+                errors.slug ||
+                (values.slug
+                  ? t("form.helpers.deploymentLinked", { slug: values.slug })
+                  : t("form.helpers.deploymentEmpty"))
+              }
+            />
+            <TextField
+              label={t("form.fields.name")}
+              value={values.name}
+              onChange={(value) => onFieldChange("name", value)}
+              disabled={fieldDisabled}
+              error={Boolean(errors.name)}
+              helperText={errors.name}
+            />
+          </Stack>
 
-              <Stack direction={{ xs: "column", md: "row" }} spacing={2}>
-                <TextField
-                  label={t("form.fields.installation")}
-                  value={values.installation}
-                  onChange={(event) => onFieldChange("installation", event.target.value)}
-                  disabled={fieldDisabled}
-                  fullWidth
-                />
-                <TextField
-                  label={t("form.fields.version")}
-                  value={values.version}
-                  onChange={(event) => onFieldChange("version", event.target.value)}
-                  disabled={fieldDisabled}
-                  fullWidth
-                />
-              </Stack>
+          <Stack direction="responsive" spacing={2}>
+            <TextField
+              label={t("form.fields.game")}
+              value={values.game}
+              onChange={(value) => onFieldChange("game", value)}
+              disabled={fieldDisabled}
+            />
+            <TextField
+              label={t("form.fields.playersMax")}
+              value={values.playersMax}
+              onChange={(value) => onFieldChange("playersMax", value)}
+              disabled={fieldDisabled}
+              error={Boolean(errors.playersMax)}
+              helperText={errors.playersMax}
+            />
+          </Stack>
 
-              <TextField
-                label={t("form.fields.ports")}
-                value={values.ports}
-                onChange={(event) => onFieldChange("ports", event.target.value)}
-                disabled={fieldDisabled}
-                error={Boolean(errors.ports)}
-                helperText={
-                  errors.ports ||
-                  t("form.helpers.ports")
-                }
-                fullWidth
-              />
+          <TextField
+            label={t("form.fields.urlConnection")}
+            value={values.urlConnection}
+            onChange={(value) => onFieldChange("urlConnection", value)}
+            disabled={fieldDisabled}
+          />
 
-              <TextField
-                label={t("form.fields.admins")}
-                value={values.admins}
-                onChange={(event) => onFieldChange("admins", event.target.value)}
-                disabled={fieldDisabled}
-                fullWidth
-              />
+          <Stack direction="responsive" spacing={2}>
+            <TextField
+              label={t("form.fields.installation")}
+              value={values.installation}
+              onChange={(value) => onFieldChange("installation", value)}
+              disabled={fieldDisabled}
+            />
+            <TextField
+              label={t("form.fields.version")}
+              value={values.version}
+              onChange={(value) => onFieldChange("version", value)}
+              disabled={fieldDisabled}
+            />
+          </Stack>
 
-              <TextField
-                label={t("form.fields.description")}
-                value={values.description}
-                onChange={(event) => onFieldChange("description", event.target.value)}
-                disabled={fieldDisabled}
-                multiline
-                minRows={4}
-                fullWidth
-              />
+          <TextField
+            label={t("form.fields.ports")}
+            value={values.ports}
+            onChange={(value) => onFieldChange("ports", value)}
+            disabled={infraDisabled}
+            error={Boolean(errors.ports)}
+            helperText={errors.ports || t("form.helpers.ports")}
+          />
 
-              <FormActionButton
-                mode={mode}
-                isSubmitting={isSubmitting}
-                onBack={() => navigate("/dashboard")}
-              />
-            </Stack>
-          </CardContent>
-        </Card>
-      </Container>
-    </PageBackdrop>
+          <MultiSelect
+            label={t("form.fields.admins")}
+            values={adminIds}
+            onChange={setAdminIds}
+            options={adminOptions}
+            disabled={infraDisabled || (!can("USER_VIEW") && adminOptions.length === 0)}
+            error={Boolean(usersError)}
+            helperText={
+              usersError ||
+              (can("USER_VIEW")
+                ? t("form.helpers.admins")
+                : t("form.helpers.adminsUnavailable"))
+            }
+          />
+
+          <TextField
+            label={t("form.fields.description")}
+            value={values.description}
+            onChange={(value) => onFieldChange("description", value)}
+            disabled={fieldDisabled}
+            multiline
+            minRows={4}
+          />
+        </Stack>
+      </Card>
+    </Stack>
   );
 }
 

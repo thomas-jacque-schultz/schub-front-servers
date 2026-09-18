@@ -37,15 +37,9 @@ const RESTRICTED_UI_IMPORTS = {
  * cette liste : un écran écrit aujourd'hui s'écrit avec les primitives.</p>
  */
 const DESIGN_SYSTEM_DEBT = [
-  "src/App.tsx",
-  "src/components/AdminActionBar.tsx",
   "src/components/AllServersComponent.tsx",
   "src/components/DiscordChannelsCard.tsx",
-  "src/components/FormActionButton.tsx",
   "src/components/PortForwardingCard.tsx",
-  "src/pages/Dashboard.tsx",
-  "src/pages/GameServerFormPage.tsx",
-  "src/pages/LandingPage.tsx",
   "src/pages/Login.tsx",
 ];
 

@@ -1,18 +1,23 @@
-import { useEffect, useCallback } from "react";
-import { Box, Card, CardContent, Container, Stack, Typography } from "@mui/material";
+import { useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import ServersDashboard from "../components/AllServersComponent";
-import { Button, LanguageSwitcher, PageBackdrop, ThemeModeToggle } from "../design-system";
-import { useLocalizedNavigate } from "../i18n/navigation";
-import { useAuthStore } from "../stores/authStore";
+import { Card, PageHeader, Stack } from "../design-system";
 import { useServersStore } from "../stores/serversStore";
 
 const REFRESH_INTERVAL_MS = 30_000;
 
+/**
+ * L'accueil : l'état public des serveurs.
+ *
+ * <p>Elle n'habille plus rien elle-même — ni fond, ni bascule de thème, ni sélecteur de langue.
+ * Tout cela appartient à la coquille depuis qu'elle existe. La page redevient ce qu'elle doit
+ * être : un titre et une liste.</p>
+ *
+ * <p>Au chantier C, elle se déplacera sous `/servers` et la racine deviendra le portfolio. Rien
+ * ici ne s'y oppose : la page ne sait pas à quelle adresse elle est servie.</p>
+ */
 function LandingPage() {
-  const navigate = useLocalizedNavigate();
   const { t } = useTranslation("servers");
-  const { connected } = useAuthStore();
   const { servers, isLoading, error, lastRefreshedAt, loadPublicServers } = useServersStore();
 
   const refresh = useCallback(() => {
@@ -20,54 +25,30 @@ function LandingPage() {
   }, [loadPublicServers]);
 
   useEffect(() => {
-    void loadPublicServers();
+    refresh();
     const interval = setInterval(refresh, REFRESH_INTERVAL_MS);
     return () => clearInterval(interval);
-  }, [loadPublicServers, refresh]);
+  }, [refresh]);
 
   return (
-    <PageBackdrop centered>
-      {/* Les deux bascules vivent ici en attendant l'en-tête applicatif, qui dépend de
-          l'authentification (chantier A) et n'est donc pas encore dessiné. */}
-      <Box sx={{ position: "absolute", top: 24, right: 24 }}>
-        <Stack direction="row" spacing={1} alignItems="center">
-          <ThemeModeToggle />
-          <LanguageSwitcher />
-          {!connected && (
-            <Button size="large" onClick={() => navigate("/login")}>
-              {t("signIn", { ns: "auth" })}
-            </Button>
-          )}
-        </Stack>
-      </Box>
+    <Stack spacing={3}>
+      <PageHeader
+        eyebrow={t("landing.eyebrow")}
+        title={t("landing.title")}
+        subtitle={t("landing.description")}
+      />
 
-      <Container maxWidth="md">
-        <Card>
-          <CardContent sx={{ p: { xs: 3, md: 5 } }}>
-            <Stack spacing={3}>
-              <Typography variant="overline" color="primary" fontWeight={700}>
-                {t("landing.eyebrow")}
-              </Typography>
-              <Typography variant="h3" fontWeight={800}>
-                {t("landing.title")}
-              </Typography>
-              <Typography color="text.secondary" sx={{ maxWidth: 700 }}>
-                {t("landing.description")}
-              </Typography>
-
-              <ServersDashboard
-                servers={servers}
-                isLoading={isLoading}
-                error={error}
-                connected
-                lastRefreshedAt={lastRefreshedAt}
-                onRefresh={refresh}
-              />
-            </Stack>
-          </CardContent>
-        </Card>
-      </Container>
-    </PageBackdrop>
+      <Card>
+        <ServersDashboard
+          servers={servers}
+          isLoading={isLoading}
+          error={error}
+          connected
+          lastRefreshedAt={lastRefreshedAt}
+          onRefresh={refresh}
+        />
+      </Card>
+    </Stack>
   );
 }
 

@@ -2,12 +2,16 @@ import enAuth from "../locales/en/auth.json";
 import enCommon from "../locales/en/common.json";
 import enDiscord from "../locales/en/discord.json";
 import enPorts from "../locales/en/ports.json";
+import enRoles from "../locales/en/roles.json";
 import enServers from "../locales/en/servers.json";
+import enUsers from "../locales/en/users.json";
 import frAuth from "../locales/fr/auth.json";
 import frCommon from "../locales/fr/common.json";
 import frDiscord from "../locales/fr/discord.json";
 import frPorts from "../locales/fr/ports.json";
+import frRoles from "../locales/fr/roles.json";
 import frServers from "../locales/fr/servers.json";
+import frUsers from "../locales/fr/users.json";
 
 /**
  * Les catalogues, **un fichier par langue et par domaine**.
@@ -23,6 +27,8 @@ export const resources = {
     servers: frServers,
     ports: frPorts,
     discord: frDiscord,
+    users: frUsers,
+    roles: frRoles,
   },
   en: {
     common: enCommon,
@@ -30,12 +36,14 @@ export const resources = {
     servers: enServers,
     ports: enPorts,
     discord: enDiscord,
+    users: enUsers,
+    roles: enRoles,
   },
 } as const;
 
 /** Le domaine implicite : `t("actions.back")` sans préfixe lit `common`. */
 export const defaultNS = "common" as const;
 
-export const namespaces = ["common", "auth", "servers", "ports", "discord"] as const;
+export const namespaces = ["common", "auth", "servers", "ports", "discord", "users", "roles"] as const;
 
 export type Namespace = (typeof namespaces)[number];

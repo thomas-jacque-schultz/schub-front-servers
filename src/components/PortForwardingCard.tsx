@@ -38,6 +38,14 @@ interface PortForwardingCardProps {
   onRefresh: () => Promise<void>;
   onCreate: (rule: StaticPortRuleDto) => Promise<void>;
   onDelete: (id: string) => Promise<void>;
+  /**
+   * Faux pour `PORT_VIEW` sans `PORT_RULE_EDIT` : la carte se lit, elle ne s'écrit pas.
+   *
+   * <p>Les deux permissions sont distinctes côté cœur, et modifier une redirection est un
+   * pouvoir global — c'est écrire dans la table du routeur. Montrer les boutons à qui n'a que
+   * la lecture ne ferait que produire des 403 en série.</p>
+   */
+  canEdit?: boolean;
 }
 
 /**
@@ -81,6 +89,7 @@ function PortForwardingCard({
   onRefresh,
   onCreate,
   onDelete,
+  canEdit = true,
 }: PortForwardingCardProps) {
   const { t } = useTranslation("ports");
 
@@ -204,16 +213,18 @@ function PortForwardingCard({
                 <RefreshIcon />
               </IconButton>
             </Tooltip>
-            <Button
-              startIcon={<AddIcon />}
-              onClick={() => {
-                setDraft(emptyDraft());
-                setFormError("");
-                setDialogOpen(true);
-              }}
-            >
-              {t("actions.add", { ns: "common" })}
-            </Button>
+            {canEdit && (
+              <Button
+                startIcon={<AddIcon />}
+                onClick={() => {
+                  setDraft(emptyDraft());
+                  setFormError("");
+                  setDialogOpen(true);
+                }}
+              >
+                {t("actions.add", { ns: "common" })}
+              </Button>
+            )}
           </Stack>
         </Stack>
 
@@ -264,7 +275,7 @@ function PortForwardingCard({
                     />
                   </TableCell>
                   <TableCell align="right">
-                    {row.origin === "static" && row.staticId ? (
+                    {canEdit && row.origin === "static" && row.staticId ? (
                       <Tooltip title={t("row.deleteStatic")}>
                         <span>
                           <IconButton
