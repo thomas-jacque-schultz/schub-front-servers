@@ -9,7 +9,7 @@ export interface TextProps {
   /** L'intention, pas la taille : `section` est un titre de bloc, `caption` une mention. */
   variant?: TextVariant;
   tone?: TextTone;
-  /** La balise réellement rendue, quand elle doit différer du niveau visuel. */
+  /** La balise réellement rendue, quand elle doit différer du niveau retenu par défaut. */
   component?: ElementType;
   /** Coupe le texte à une ligne avec des points de suspension — pour une cellule étroite. */
   truncate?: boolean;
@@ -23,6 +23,22 @@ const VARIANT = {
   caption: "body2",
   overline: "overline",
 } as const;
+
+/**
+ * La balise par défaut de chaque intention.
+ *
+ * <p>Le titre d'écran est un `h2` et non un `h1` : le `h1` appartient à `PageHeader`, et un écran
+ * n'a qu'un titre de premier niveau. Deux `h1` sur une page désorientent la navigation par
+ * titres autant que zéro.</p>
+ */
+const COMPONENT: Record<TextVariant, ElementType> = {
+  title: "h2",
+  section: "h3",
+  subtitle: "p",
+  body: "p",
+  caption: "p",
+  overline: "span",
+};
 
 const TONE = {
   default: "text.primary",
@@ -48,7 +64,7 @@ export function Text({
   return (
     <Typography
       variant={VARIANT[variant]}
-      component={component ?? undefined}
+      component={component ?? COMPONENT[variant]}
       color={TONE[tone]}
       noWrap={truncate}
     >
