@@ -50,6 +50,7 @@
     "discord": "Discord",
     "github": "GitHub",
     "toComplete": "URL to be provided",
-    "footerNote": "Schub — game server control"
+    "footerNote": "Schub — game server control",
+    "contact": "Contact"
   }
 }

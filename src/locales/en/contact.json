@@ -1,0 +1,36 @@
+{
+  "eyebrow": "Contact",
+  "title": "Write to me",
+  "subtitle": "Your message reaches me directly on Discord. No mailing list, no tracking.",
+  "meta": {
+    "title": "Contact — Thomas Schultz",
+    "description": "Write to Thomas Schultz, full stack engineer. The form delivers your message directly, with no email address published."
+  },
+  "fields": {
+    "name": "Your name",
+    "email": "Your email address",
+    "message": "Your message",
+    "honeypot": "Do not fill in this field"
+  },
+  "helpers": {
+    "email": "Only so I can reply. It is neither stored nor passed on.",
+    "message": "Tell me what brings you here — a few lines are enough."
+  },
+  "submit": "Send",
+  "sending": "Sending…",
+  "success": {
+    "title": "Message delivered",
+    "body": "It arrived. I usually reply within a few days."
+  },
+  "errors": {
+    "nameRequired": "A name, even a first name, so I know who I am replying to.",
+    "emailRequired": "Without an address I cannot reply to you.",
+    "emailInvalid": "That address does not look valid.",
+    "messageRequired": "The message is empty.",
+    "messageTooShort": "A few more words, so I can understand the request.",
+    "rateLimited": "Too many messages from this address. Try again in a few minutes.",
+    "rejected": "The message was refused. If you are human, reload the page and try again.",
+    "failed": "Sending failed. Try again, or reach me on Discord from the footer."
+  },
+  "privacy": "No email address is published on this site: this form exists in its place."
+}

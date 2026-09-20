@@ -1,6 +1,7 @@
 import { type ReactNode, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { AppShell, type AppShellFooterLink, type AppShellMenu } from "../design-system";
+import { PORTFOLIO } from "../content/portfolio";
 import { useLocalizedNavigate, useLocalizedPath } from "../i18n/navigation";
 import { useAuthStore } from "../stores/authStore";
 import type { Permission } from "../types/permission";
@@ -8,11 +9,18 @@ import type { Permission } from "../types/permission";
 /**
  * L'URL du profil LinkedIn — la seule fournie à ce jour.
  *
- * <p>Discord et GitHub sont <strong>délibérément laissés vides</strong> : le pied de page les
+ * <p>Discord reste <strong>délibérément vide</strong> : le pied de page l'
  * affiche inertes et signalés comme à compléter, en attendant les adresses. Les retirer les
  * ferait oublier ; les inventer serait pire.</p>
  */
 const LINKEDIN_URL = "https://www.linkedin.com/in/thomas-schultz-abab10181/";
+
+/**
+ * Le dépôt public, repris du contenu du portfolio — où il est **déduit** de l'origine Git et
+ * signalé comme tel. Une seule source pour les deux endroits : le pied de page et la fiche
+ * projet ne peuvent pas diverger.
+ */
+const GITHUB_URL = PORTFOLIO.fr.repositoryUrl;
 
 /** Le Storybook est servi en statique par le nginx du front, hors du routeur React. */
 const STORYBOOK_PATH = "/storybook";
@@ -71,7 +79,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
       { key: "storybook", label: t("shell.storybook"), href: STORYBOOK_PATH, external: false },
       { key: "linkedin", label: t("shell.linkedin"), href: LINKEDIN_URL },
       { key: "discord", label: t("shell.discord"), href: null, pendingLabel: t("shell.toComplete") },
-      { key: "github", label: t("shell.github"), href: null, pendingLabel: t("shell.toComplete") },
+      { key: "github", label: t("shell.github"), href: GITHUB_URL },
     ],
     [t],
   );
@@ -81,7 +89,11 @@ export function AppLayout({ children }: { children: ReactNode }) {
       brand={t("app.name")}
       brandTo={localize("/")}
       brandTagline={t("app.tagline")}
-      navItems={[{ key: "servers", label: t("shell.servers"), to: localize("/") }]}
+      navItems={[
+        { key: "home", label: t("shell.home"), to: localize("/") },
+        { key: "servers", label: t("shell.servers"), to: localize("/servers") },
+        { key: "contact", label: t("shell.contact"), to: localize("/contact") },
+      ]}
       menus={menus}
       connected={connected}
       username={profile?.username}
