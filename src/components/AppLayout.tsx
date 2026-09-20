@@ -103,9 +103,12 @@ export function AppLayout({ children }: { children: ReactNode }) {
       signInLabel={t("signIn", { ns: "auth" })}
       signOutLabel={t("logout", { ns: "auth" })}
       onSignIn={() => navigate("/login")}
+      // La déconnexion attend la réponse du BFF avant de quitter l'écran : c'est lui qui efface
+      // le cookie `httpOnly`, et naviguer avant sa réponse rendrait l'utilisateur à l'accueil
+      // encore authentifié. `logout` vide l'état local même en cas d'échec, donc on n'attend
+      // jamais pour rien.
       onSignOut={() => {
-        logout();
-        navigate("/", { replace: true });
+        void logout().then(() => navigate("/", { replace: true }));
       }}
       footerLinks={footerLinks}
       footerNote={t("shell.footerNote")}

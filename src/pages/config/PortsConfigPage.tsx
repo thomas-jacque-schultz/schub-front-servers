@@ -8,7 +8,7 @@ import { usePortForwardingStore } from "../../stores/portForwardingStore";
 /** Les redirections du routeur. `PORT_VIEW` pour lire, `PORT_RULE_EDIT` pour écrire. */
 function PortsConfigPage() {
   const { t } = useTranslation("servers");
-  const { accessToken, can } = useAuthStore();
+  const { can } = useAuthStore();
   const {
     routerRules,
     staticRules,
@@ -20,10 +20,8 @@ function PortsConfigPage() {
   } = usePortForwardingStore();
 
   useEffect(() => {
-    if (accessToken) {
-      void loadPortForwarding(accessToken);
-    }
-  }, [accessToken, loadPortForwarding]);
+    void loadPortForwarding();
+  }, [loadPortForwarding]);
 
   return (
     <Stack spacing={3}>
@@ -38,9 +36,9 @@ function PortsConfigPage() {
         isLoading={isLoading}
         error={error}
         canEdit={can("PORT_RULE_EDIT")}
-        onRefresh={() => loadPortForwarding(accessToken)}
-        onCreate={(rule) => createStaticRule(accessToken, rule)}
-        onDelete={(id) => deleteStaticRule(accessToken, id)}
+        onRefresh={() => loadPortForwarding()}
+        onCreate={(rule) => createStaticRule(rule)}
+        onDelete={(id) => deleteStaticRule(id)}
       />
     </Stack>
   );

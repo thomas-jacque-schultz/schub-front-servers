@@ -15,7 +15,7 @@ interface ServersStoreValue {
   isLoading: boolean;
   error: string;
   lastRefreshedAt: Date | null;
-  loadServers: (token?: string) => Promise<void>;
+  loadServers: () => Promise<void>;
   loadPublicServers: () => Promise<void>;
   resetServers: () => void;
 }
@@ -28,12 +28,12 @@ export const ServersStoreProvider = ({ children }: { children: ReactNode }) => {
   const [error, setError] = useState<string>("");
   const [lastRefreshedAt, setLastRefreshedAt] = useState<Date | null>(null);
 
-  const loadServers = useCallback(async (token?: string) => {
+  const loadServers = useCallback(async () => {
     setIsLoading(true);
     setError("");
 
     try {
-      const payload = await getDisplayedServersApi(token);
+      const payload = await getDisplayedServersApi();
       setServers(payload);
       setLastRefreshedAt(new Date());
     } catch (serversError) {

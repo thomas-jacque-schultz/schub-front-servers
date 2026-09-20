@@ -14,7 +14,6 @@ import {
   Text,
   Toast,
 } from "../../design-system";
-import { useAuthStore } from "../../stores/authStore";
 import {
   ASSIGNABLE_PERMISSIONS,
   OWNER_ROLE_NAME,
@@ -47,7 +46,6 @@ const sameSet = (left: Permission[], right: Permission[]): boolean =>
  */
 function RolesPage() {
   const { t } = useTranslation("roles");
-  const { accessToken } = useAuthStore();
 
   const [roles, setRoles] = useState<RoleDto[]>([]);
   const [draft, setDraft] = useState<Record<string, Permission[]>>({});
@@ -57,13 +55,10 @@ function RolesPage() {
   const [toast, setToast] = useState<string>("");
 
   const load = useCallback(async () => {
-    if (!accessToken) {
-      return;
-    }
     setIsLoading(true);
     setError("");
     try {
-      const loaded = await getRolesApi(accessToken);
+      const loaded = await getRolesApi();
       setRoles(loaded);
       setDraft(Object.fromEntries(loaded.map((role) => [role.id, [...role.permissions]])));
     } catch (loadError) {
@@ -71,7 +66,7 @@ function RolesPage() {
     } finally {
       setIsLoading(false);
     }
-  }, [accessToken, t]);
+  }, [t]);
 
   useEffect(() => {
     void load();
@@ -101,7 +96,7 @@ function RolesPage() {
   };
 
   const onSave = async () => {
-    if (!accessToken || changedRoles.length === 0) {
+    if (changedRoles.length === 0) {
       return;
     }
     setIsSaving(true);
@@ -111,7 +106,7 @@ function RolesPage() {
       // pour trois rôles coûterait plus que les trois requêtes.
       const saved = await Promise.all(
         changedRoles.map((role) =>
-          updateRoleApi(accessToken, role.id, {
+          updateRoleApi(role.id, {
             name: role.name,
             permissions: draft[role.id] ?? [],
           }),

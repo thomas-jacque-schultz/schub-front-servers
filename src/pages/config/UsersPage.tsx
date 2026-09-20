@@ -37,7 +37,7 @@ import { riotAccountOf, userLabelOf, type RoleDto, type UserDto } from "../../ty
 function UsersPage() {
   const { t } = useTranslation("users");
   const { formatDateTime } = useLocaleFormat();
-  const { accessToken, profile, permissions, can } = useAuthStore();
+  const { profile, permissions, can } = useAuthStore();
 
   const [users, setUsers] = useState<UserDto[]>([]);
   const [roles, setRoles] = useState<RoleDto[]>([]);
@@ -51,16 +51,10 @@ function UsersPage() {
   const canAssign = can("USER_ROLE_ASSIGN");
 
   const load = useCallback(async () => {
-    if (!accessToken) {
-      return;
-    }
     setIsLoading(true);
     setError("");
     try {
-      const [loadedUsers, loadedRoles] = await Promise.all([
-        getUsersApi(accessToken),
-        getRolesApi(accessToken),
-      ]);
+      const [loadedUsers, loadedRoles] = await Promise.all([getUsersApi(), getRolesApi()]);
       setUsers(loadedUsers);
       setRoles(loadedRoles);
     } catch (loadError) {
@@ -68,7 +62,7 @@ function UsersPage() {
     } finally {
       setIsLoading(false);
     }
-  }, [accessToken, t]);
+  }, [t]);
 
   useEffect(() => {
     void load();
@@ -119,13 +113,13 @@ function UsersPage() {
   );
 
   const onConfirm = async () => {
-    if (!accessToken || !target || !chosenRoleId) {
+    if (!target || !chosenRoleId) {
       return;
     }
     setIsSaving(true);
     setError("");
     try {
-      const updated = await assignUserRoleApi(accessToken, target.id, chosenRoleId);
+      const updated = await assignUserRoleApi(target.id, chosenRoleId);
       setUsers((current) => current.map((user) => (user.id === updated.id ? updated : user)));
       setToast(
         t("feedback.roleAssigned", {

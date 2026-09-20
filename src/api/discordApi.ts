@@ -8,16 +8,8 @@ import type {
  * Ce qui est réellement Discord. Depuis la phase 3, le connecteur ne détient plus aucun
  * domaine : il ne sait parler que de guildes, de salons et de messages.
  */
-export const getDiscordGuildChannelsApi = async (
-  token: string,
-): Promise<DiscordGuildChannelsDto[]> => {
-  return requestJson<DiscordGuildChannelsDto[]>("/discord/guilds/channels", {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-};
+export const getDiscordGuildChannelsApi = async (): Promise<DiscordGuildChannelsDto[]> =>
+  requestJson<DiscordGuildChannelsDto[]>("/discord/guilds/channels", { method: "GET" });
 
 /**
  * Choisit les salons qui reçoivent les notifications de serveurs.
@@ -28,14 +20,10 @@ export const getDiscordGuildChannelsApi = async (
  * de jeu.
  */
 export const subscribeDiscordChannelsApi = async (
-  token: string,
   channels: DiscordChannelSelection[],
 ): Promise<void> => {
   await requestJson<void>("/discord/channels/subscribe", {
     method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
     body: JSON.stringify({ channels }),
   });
 };

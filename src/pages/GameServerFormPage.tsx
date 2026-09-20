@@ -157,7 +157,7 @@ function GameServerFormPage() {
   const navigate = useLocalizedNavigate();
   const { t } = useTranslation("servers");
   const { id } = useParams();
-  const { accessToken, can } = useAuthStore();
+  const { can } = useAuthStore();
   const [values, setValues] = useState<GameServerFormValues>(DEFAULT_VALUES);
   const [adminIds, setAdminIds] = useState<string[]>([]);
   const [knownAdmins, setKnownAdmins] = useState<ServerAdminDto[]>([]);
@@ -181,14 +181,14 @@ function GameServerFormPage() {
   // Le catalogue des déploiements sert à lier la fiche au sien sans le saisir. En consultation,
   // le champ est figé : inutile d'interroger le cœur pour une liste qu'on ne peut pas ouvrir.
   useEffect(() => {
-    if (!accessToken || mode === "visualisation" || !can("SERVER_INFRA_VIEW")) {
+    if (mode === "visualisation" || !can("SERVER_INFRA_VIEW")) {
       return;
     }
 
     let active = true;
     void (async () => {
       try {
-        const payload = await getDeploymentsApi(accessToken);
+        const payload = await getDeploymentsApi();
         if (active) {
           setDeployments(payload);
           setDeploymentsError("");
@@ -206,7 +206,7 @@ function GameServerFormPage() {
     return () => {
       active = false;
     };
-  }, [accessToken, mode, can, t]);
+  }, [mode, can, t]);
 
   /**
    * Le catalogue des comptes, pour le sélecteur d'administrateurs.
@@ -216,14 +216,14 @@ function GameServerFormPage() {
    * proposer une liste vide ferait croire qu'il n'existe aucun compte.</p>
    */
   useEffect(() => {
-    if (!accessToken || !can("USER_VIEW")) {
+    if (!can("USER_VIEW")) {
       return;
     }
 
     let active = true;
     void (async () => {
       try {
-        const payload = await getUsersApi(accessToken);
+        const payload = await getUsersApi();
         if (active) {
           setUsers(payload);
           setUsersError("");
@@ -240,10 +240,10 @@ function GameServerFormPage() {
     return () => {
       active = false;
     };
-  }, [accessToken, can, t]);
+  }, [can, t]);
 
   useEffect(() => {
-    if (!id || mode === "creation" || !accessToken) {
+    if (!id || mode === "creation") {
       return;
     }
 
@@ -254,7 +254,7 @@ function GameServerFormPage() {
       setGlobalError("");
 
       try {
-        const server = await getGameServerByIdApi(accessToken, id);
+        const server = await getGameServerByIdApi(id);
         if (!active) {
           return;
         }
@@ -297,7 +297,7 @@ function GameServerFormPage() {
     return () => {
       active = false;
     };
-  }, [accessToken, id, mode, t]);
+  }, [id, mode, t]);
 
   const onFieldChange = (field: keyof GameServerFormValues, value: string) => {
     setValues((current) => ({ ...current, [field]: value }));
@@ -401,11 +401,6 @@ function GameServerFormPage() {
       return;
     }
 
-    if (!accessToken) {
-      setGlobalError(t("errors.invalidSession", { ns: "auth" }));
-      return;
-    }
-
     if (!validate()) {
       return;
     }
@@ -417,9 +412,9 @@ function GameServerFormPage() {
 
     try {
       if (mode === "creation") {
-        await createGameServerApi(accessToken, payload);
+        await createGameServerApi(payload);
       } else if (mode === "edition" && id) {
-        await updateGameServerApi(accessToken, id, payload);
+        await updateGameServerApi(id, payload);
       }
 
       navigate("/config/servers", { replace: true });
