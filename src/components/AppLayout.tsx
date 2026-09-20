@@ -1,6 +1,7 @@
 import { type ReactNode, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { AppShell, type AppShellFooterLink, type AppShellMenu } from "../design-system";
+import { Alert, AppShell, Stack } from "../design-system";
+import type { AppShellFooterLink, AppShellMenu } from "../design-system";
 import { PORTFOLIO } from "../content/portfolio";
 import { useLocalizedNavigate, useLocalizedPath } from "../i18n/navigation";
 import { useAuthStore } from "../stores/authStore";
@@ -40,7 +41,8 @@ const STORYBOOK_PATH = "/storybook";
  */
 export function AppLayout({ children }: { children: ReactNode }) {
   const { t } = useTranslation();
-  const { connected, profile, canAny, logout } = useAuthStore();
+  const { connected, profile, canAny, logout, discordLoginFailed, dismissDiscordLoginFailure } =
+    useAuthStore();
   const localize = useLocalizedPath();
   const navigate = useLocalizedNavigate();
 
@@ -113,7 +115,20 @@ export function AppLayout({ children }: { children: ReactNode }) {
       footerLinks={footerLinks}
       footerNote={t("shell.footerNote")}
     >
-      {children}
+      {/* L'échec de la connexion Discord s'annonce ici, et pas sur l'écran de connexion : le BFF
+          renvoie le navigateur sur la page d'accueil (`DISCORD_OAUTH_POST_LOGIN_REDIRECT`, `/`
+          par défaut), pas sur `/login`. Le message doit donc survivre à l'endroit où l'on
+          atterrit, et la coquille est le seul endroit qui les couvre tous. */}
+      {discordLoginFailed ? (
+        <Stack spacing={3}>
+          <Alert severity="warning" onClose={dismissDiscordLoginFailure}>
+            {t("errors.discordAborted", { ns: "auth" })}
+          </Alert>
+          {children}
+        </Stack>
+      ) : (
+        children
+      )}
     </AppShell>
   );
 }
