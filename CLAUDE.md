@@ -97,10 +97,37 @@ se retire sans en ajouter une autre.**
 
 ## Ce qui n'existe pas encore, et qu'il ne faut pas improviser
 
-- **Le cookie `httpOnly`** : lot A.3. Le jeton reste en `Authorization: Bearer` et en
-  `localStorage`. Le BFF le réémet dans `X-Auth-Token`, que `httpClient` lit ; un 401 ferme
-  la session.
-- **La connexion par Discord** : le BFF n'expose pas encore `/auth/discord`, l'écran de connexion
-  reste le formulaire local.
+- **Le retrait du compte local** : lot A.6. `POST /auth/login` et le formulaire mot de passe
+  existent encore, volontairement — c'est la porte de service, et elle ne se démonte qu'une
+  fois la connexion Discord vérifiée EN PROD.
 - **Storybook est destiné à être public.** Aucune donnée réelle dans une story : pas de pseudo
   Discord, pas d'IP, pas de numéro de port réel.
+
+## La session
+
+**Le front ne voit pas le jeton, ne le stocke pas et ne l'envoie pas.** Il vit dans un cookie
+`httpOnly` posé par le BFF (décision n°4 du 18-09). Ce qui en découle, et qu'il ne faut pas
+défaire :
+
+- `httpClient` passe `credentials: "include"` et ne pose **aucun** en-tête `Authorization`.
+  Ajouter un `Bearer` quelque part « pour que ça marche » marcherait — le BFF l'accepte encore le
+  temps de la transition — et rouvrirait exactement ce que la décision ferme.
+- L'état connecté vient **uniquement** de `GET /auth/me`. Il n'y a pas de second endroit à
+  consulter, et aucun `accessToken` dans `authStore`.
+- La **déconnexion est une requête** : `POST /auth/logout`. Un cookie `httpOnly` est ineffaçable
+  depuis le front ; vider l'état local ne déconnecte personne.
+- La **réémission glissante** (décision n°3) est invisible ici : le serveur repose le cookie de
+  lui-même. Il n'y a rien à lire, ni `X-Auth-Token`, ni autre chose.
+- Un **401 ferme la session** — mais seulement si une session était ouverte : le premier
+  `/auth/me` d'un visiteur anonyme répond 401, et c'est la réponse normale.
+
+La connexion Discord (`GET /auth/discord`) est une **navigation de navigateur**, jamais un
+`fetch` : la route répond une 302 vers discord.com. Le formulaire mot de passe reste en place
+jusqu'au lot A.6.
+
+## Les droits liés à un serveur
+
+`viewerIsAdmin` est servi par le cœur sur les deux projections connectées et dit au lecteur s'il
+est administrateur de **ce** serveur-là. Démarrer et arrêter se proposent donc serveur par
+serveur : rôle portant `SERVER_START` *et* `SERVER_STOP`, **ou** `viewerIsAdmin` (décision n°11).
+Un booléen global serait faux dans les deux sens.
