@@ -9,9 +9,9 @@ import type {
 } from "../types/server";
 
 const fallbackServers: DisplayedServer[] = [
-  { name: "Minecraft - HolyCube", status: "online" },
-  { name: "Palworld - Miam", status: "offline" },
-  { name: "Satisfactory", status: "online" },
+  { name: "Minecraft - HolyCube", status: "online", viewerIsAdmin: false },
+  { name: "Palworld - Miam", status: "offline", viewerIsAdmin: false },
+  { name: "Satisfactory", status: "online", viewerIsAdmin: false },
 ];
 
 const normalizeStatus = (rawStatus?: string): ServerStatus => {
@@ -39,23 +39,21 @@ const toDisplayedServer = (server: GameServerDto): DisplayedServer => ({
   name: server.name || server.slug || i18n.t("errors.unnamed", { ns: "servers" }),
   status: normalizeStatus(server.status),
   lastStatusCheckAt: server.lastStatusCheckAt,
+  // Le booléen suit le serveur jusqu'à la liste affichée : c'est lui qui décide si démarrer et
+  // arrêter sont proposés sur *cette* carte (décision n°11). Absent des deux projections
+  // anciennes, il vaut `false` par défaut plutôt que `undefined` — ce qui n'a pas été affirmé
+  // n'est pas accordé.
+  viewerIsAdmin: server.viewerIsAdmin === true,
 });
 
 const toPublicDisplayedServer = (server: PublicServerStatusDto): DisplayedServer => ({
   name: server.name || i18n.t("errors.unnamed", { ns: "servers" }),
   status: normalizeStatus(server.status),
+  viewerIsAdmin: false,
 });
 
-export const getGameServersApi = async (token?: string): Promise<GameServerDto[]> => {
-  return requestJson<GameServerDto[]>("/game-servers", {
-    method: "GET",
-    headers: token
-      ? {
-          Authorization: `Bearer ${token}`,
-        }
-      : undefined,
-  });
-};
+export const getGameServersApi = async (): Promise<GameServerDto[]> =>
+  requestJson<GameServerDto[]>("/game-servers", { method: "GET" });
 
 /**
  * Cherche par identifiant Mongo OU par slug.
@@ -65,46 +63,31 @@ export const getGameServersApi = async (token?: string): Promise<GameServerDto[]
  * quelle en phase 4 pour ne pas changer un comportement au passage. À reprendre quand le cœur
  * saura résoudre les deux (phase 6).
  */
-export const getGameServerByIdApi = async (
-  token: string,
-  id: string,
-): Promise<GameServerDto | null> => {
-  const servers = await getGameServersApi(token);
+export const getGameServerByIdApi = async (id: string): Promise<GameServerDto | null> => {
+  const servers = await getGameServersApi();
   return servers.find((server) => server.id === id || server.slug === id) || null;
 };
 
 export const createGameServerApi = async (
-  token: string,
   payload: UpsertGameServerPayload,
-): Promise<GameServerDto> => {
-  return requestJson<GameServerDto>("/game-servers", {
+): Promise<GameServerDto> =>
+  requestJson<GameServerDto>("/game-servers", {
     method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
     body: JSON.stringify(payload),
   });
-};
 
 export const updateGameServerApi = async (
-  token: string,
   id: string,
   payload: UpsertGameServerPayload,
-): Promise<GameServerDto> => {
-  return requestJson<GameServerDto>(`/game-servers/${id}`, {
+): Promise<GameServerDto> =>
+  requestJson<GameServerDto>(`/game-servers/${id}`, {
     method: "PUT",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
     body: JSON.stringify(payload),
   });
-};
 
-export const getDisplayedServersApi = async (
-  token?: string,
-): Promise<DisplayedServer[]> => {
+export const getDisplayedServersApi = async (): Promise<DisplayedServer[]> => {
   try {
-    const response = await getGameServersApi(token);
+    const response = await getGameServersApi();
 
     return response.map(toDisplayedServer);
   } catch (error) {
@@ -139,20 +122,10 @@ export const getPublicDisplayedServersApi = async (): Promise<DisplayedServer[]>
  * Discord, avec l'identifiant en corps de requête. Démarrer un serveur est une action de
  * domaine : elle appartient au cœur. Le cœur répond 204, sans corps.
  */
-export const startGameServerApi = async (token: string, slug: string): Promise<void> => {
-  await requestJson<void>(`/game-servers/${slug}/start`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export const startGameServerApi = async (slug: string): Promise<void> => {
+  await requestJson<void>(`/game-servers/${slug}/start`, { method: "POST" });
 };
 
-export const stopGameServerApi = async (token: string, slug: string): Promise<void> => {
-  await requestJson<void>(`/game-servers/${slug}/stop`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export const stopGameServerApi = async (slug: string): Promise<void> => {
+  await requestJson<void>(`/game-servers/${slug}/stop`, { method: "POST" });
 };

@@ -3,25 +3,20 @@ import { useTranslation } from "react-i18next";
 import { getDiscordGuildChannelsApi, subscribeDiscordChannelsApi } from "../../api/discordApi";
 import DiscordChannelsCard from "../../components/DiscordChannelsCard";
 import { PageHeader, Stack } from "../../design-system";
-import { useAuthStore } from "../../stores/authStore";
 import type { DiscordChannelSelection, DiscordGuildChannelsDto } from "../../types/discord";
 
 /** Les salons qui reçoivent les changements d'état. Réservé à `DISCORD_CHANNEL_MANAGE`. */
 function DiscordConfigPage() {
   const { t } = useTranslation("servers");
-  const { accessToken } = useAuthStore();
   const [guilds, setGuilds] = useState<DiscordGuildChannelsDto[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
   const load = useCallback(async () => {
-    if (!accessToken) {
-      return;
-    }
     setIsLoading(true);
     setError("");
     try {
-      setGuilds(await getDiscordGuildChannelsApi(accessToken));
+      setGuilds(await getDiscordGuildChannelsApi());
     } catch (loadError) {
       setError(
         loadError instanceof Error
@@ -31,7 +26,7 @@ function DiscordConfigPage() {
     } finally {
       setIsLoading(false);
     }
-  }, [accessToken, t]);
+  }, [t]);
 
   useEffect(() => {
     void load();
@@ -49,7 +44,7 @@ function DiscordConfigPage() {
         isLoading={isLoading}
         error={error}
         onSubmitSelection={async (selection: DiscordChannelSelection[]) => {
-          await subscribeDiscordChannelsApi(accessToken, selection);
+          await subscribeDiscordChannelsApi(selection);
           await load();
         }}
       />

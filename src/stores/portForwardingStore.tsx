@@ -23,9 +23,9 @@ interface PortForwardingStoreValue {
   isLoading: boolean;
   error: string;
   lastRefreshedAt: Date | null;
-  loadPortForwarding: (token: string) => Promise<void>;
-  createStaticRule: (token: string, rule: StaticPortRuleDto) => Promise<void>;
-  deleteStaticRule: (token: string, id: string) => Promise<void>;
+  loadPortForwarding: () => Promise<void>;
+  createStaticRule: (rule: StaticPortRuleDto) => Promise<void>;
+  deleteStaticRule: (id: string) => Promise<void>;
   resetPortForwarding: () => void;
 }
 
@@ -38,7 +38,7 @@ export const PortForwardingStoreProvider = ({ children }: { children: ReactNode 
   const [error, setError] = useState<string>("");
   const [lastRefreshedAt, setLastRefreshedAt] = useState<Date | null>(null);
 
-  const loadPortForwarding = useCallback(async (token: string) => {
+  const loadPortForwarding = useCallback(async () => {
     setIsLoading(true);
     setError("");
 
@@ -50,8 +50,8 @@ export const PortForwardingStoreProvider = ({ children }: { children: ReactNode 
       // échoue si la box est injoignable. Les règles permanentes, elles, restent lisibles —
       // perdre toute la vue parce que le routeur se tait serait disproportionné.
       const [rules, statics] = await Promise.all([
-        getPortRulesApi(token).catch(() => [] as PortRuleDto[]),
-        getStaticPortRulesApi(token),
+        getPortRulesApi().catch(() => [] as PortRuleDto[]),
+        getStaticPortRulesApi(),
       ]);
       setRouterRules(rules);
       setStaticRules(statics);
@@ -70,17 +70,17 @@ export const PortForwardingStoreProvider = ({ children }: { children: ReactNode 
   // Les mutations relisent l'état plutôt que de le deviner : le back réconcilie dans la
   // foulée, et lui seul sait ce que le routeur a réellement accepté.
   const createStaticRule = useCallback(
-    async (token: string, rule: StaticPortRuleDto) => {
-      await createStaticPortRuleApi(token, rule);
-      await loadPortForwarding(token);
+    async (rule: StaticPortRuleDto) => {
+      await createStaticPortRuleApi(rule);
+      await loadPortForwarding();
     },
     [loadPortForwarding],
   );
 
   const deleteStaticRule = useCallback(
-    async (token: string, id: string) => {
-      await deleteStaticPortRuleApi(token, id);
-      await loadPortForwarding(token);
+    async (id: string) => {
+      await deleteStaticPortRuleApi(id);
+      await loadPortForwarding();
     },
     [loadPortForwarding],
   );

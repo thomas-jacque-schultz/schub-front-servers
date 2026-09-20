@@ -20,7 +20,8 @@ interface ServersDashboardProps {
   isLoading: boolean;
   error: string;
   connected: boolean;
-  canControl?: boolean;
+  /** Prédicat par serveur : un rôle global OU `viewerIsAdmin` sur CE serveur (décision n°11). */
+  canControlServer?: (server: DisplayedServer) => boolean;
   canEdit?: boolean;
   lastRefreshedAt?: Date | null;
   onRefresh?: () => void;
@@ -44,7 +45,7 @@ function ServersDashboard({
   isLoading,
   error,
   connected,
-  canControl = false,
+  canControlServer,
   canEdit = false,
   lastRefreshedAt,
   onRefresh,
@@ -110,7 +111,7 @@ function ServersDashboard({
 
             {(server.id || server.slug) && (
               <Stack direction="row" spacing={1} justify="end">
-                {canControl && server.slug && (
+                {server.slug && canControlServer?.(server) && (
                   <>
                     <Button
                       size="small"

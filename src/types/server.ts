@@ -9,6 +9,15 @@ export interface DisplayedServer {
   name: string;
   status: ServerStatus;
   lastStatusCheckAt?: string; // ISO-8601, null = never checked
+  /**
+   * Le lecteur est-il administrateur de **ce** serveur ?
+   *
+   * <p>Recopié tel quel de la projection servie par le cœur. Obligatoire ici, contrairement au
+   * DTO : une liste affichée se construit toujours à partir d'une réponse connue, et laisser le
+   * champ facultatif jusque dans l'IHM ferait confondre « pas admin » et « on n'a pas regardé ».
+   * La vue publique le pose à `false`.</p>
+   */
+  viewerIsAdmin: boolean;
 }
 
 export interface GameServerPortDto {
@@ -76,6 +85,18 @@ export interface GameServerDto {
   lastStatusCheckAt?: string;
   lastStatusChangeAt?: string;
   statusHistory?: GameServerStatusHistoryEntryDto[];
+  /**
+   * L'acteur de la requête figure-t-il dans les `admins` de **ce** serveur ?
+   *
+   * <p>Présent sur les **deux** projections connectées — infra et membre — et c'est tout le
+   * point : un compte sans `SERVER_INFRA_VIEW` ne voit pas qui administre un serveur, mais peut
+   * parfaitement l'administrer lui-même (décision n°11 du 18-09). Ce booléen est la seule chose
+   * qui le lui dise, et il ne nomme personne d'autre.</p>
+   *
+   * <p>Facultatif ici parce que la vue publique ne le porte pas — pas parce qu'il serait
+   * douteux : là où le cœur l'envoie, il fait foi.</p>
+   */
+  viewerIsAdmin?: boolean;
 }
 
 export interface GameServerStatusHistoryEntryDto {
