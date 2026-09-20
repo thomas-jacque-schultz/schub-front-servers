@@ -12,7 +12,9 @@ un import direct.
 
 `eslint.config.js` contient un bloc nommé **« dette à résorber »** qui liste les écrans écrits
 avant le design system. Cette liste doit **rétrécir** au fil des migrations (lot B.5) et ne
-jamais s'allonger. Un fichier neuf n'y entre pas.
+jamais s'allonger. Un fichier neuf n'y entre pas. Au 20-09 il n'y reste que `Login.tsx`, que la
+PR de la connexion Discord retire de son côté : **le bloc, et la constante avec lui, disparaissent
+à la fusion.**
 
 ## Les deux autres habitudes à ne pas perdre
 
@@ -61,9 +63,40 @@ marque. Un écran ne repose ni `ThemeModeToggle`, ni `LanguageSwitcher`, ni `Pag
 il rend un titre et du contenu. `AppShell` ne teste aucune permission — c'est `AppLayout` qui
 décide de ce qu'elle reçoit.
 
+## Les routes, et ce que chacune coûte à charger
+
+| Route | Contenu | Accès |
+|---|---|---|
+| `/` | le portfolio | public, **chargé d'emblée** |
+| `/servers` | l'état public des serveurs | public, à la demande |
+| `/contact` | le formulaire | public, à la demande |
+| `/storybook` | le design system | public, **hors du routeur React** (nginx) |
+| `/config/*` | l'administration | connecté + permission, à la demande |
+
+**Seule la racine est dans le fichier JavaScript initial.** Tout le reste passe par
+`React.lazy` dans `App.tsx`. Un écran neuf s'ajoute de la même façon : une visite sur `/` ne doit
+embarquer ni formulaire d'administration, ni sa validation.
+
+## Le contenu du portfolio
+
+Il vit dans **`src/content/portfolio.ts`, en données**, pas en JSX — c'est ce qui garde le
+pré-rendu de la racine possible plus tard sans réécrire la page. Les deux langues y sont côte à
+côte. `PortfolioPage.tsx` ne contient aucune phrase.
+
+Ce qui manque y est **visible**, pas masqué : le paragraphe sur le poste actuel s'affiche en
+alerte avec un texte entre crochets, et la page ne se publie pas tant qu'elle est là.
+L'adresse e-mail n'est **pas** publiée : le formulaire de contact existe pour la remplacer.
+
+## La route publique de contact
+
+`POST /contact` est la seule route publique qui déclenche une écriture. Trois couches, dont deux
+côté front : le champ leurre (`HoneypotField`) et Turnstile **si** `VITE_TURNSTILE_SITE_KEY` est
+défini — sans clé, le widget ne rend rien et le formulaire fonctionne. La troisième, la
+limitation de débit par IP, est au BFF, où elle ne se contourne pas. **Aucune de ces couches ne
+se retire sans en ajouter une autre.**
+
 ## Ce qui n'existe pas encore, et qu'il ne faut pas improviser
 
-- **Le portfolio de la racine** : chantier C. `/` sert encore l'état public des serveurs.
 - **Le cookie `httpOnly`** : lot A.3. Le jeton reste en `Authorization: Bearer` et en
   `localStorage`. Le BFF le réémet dans `X-Auth-Token`, que `httpClient` lit ; un 401 ferme
   la session.
