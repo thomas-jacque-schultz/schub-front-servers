@@ -43,7 +43,10 @@ const RESTRICTED_UI_IMPORTS = {
  * Le bloc est donc vide à la fusion des deux PR, et cette constante disparaît avec sa dernière
  * ligne.</p>
  */
-const DESIGN_SYSTEM_DEBT = ["src/pages/Login.tsx"];
+// Vide depuis le 2026-09-21 : les trois écrans restants sont sortis au lot B.5, et Login.tsx
+// a été réécrit par le lot A.3. Le chantier B est clos — cette liste ne doit plus jamais
+// grossir : un écran qui a besoin de MUI a besoin d'une primitive, pas d'une dérogation.
+const DESIGN_SYSTEM_DEBT = [];
 
 export default tseslint.config(
   {

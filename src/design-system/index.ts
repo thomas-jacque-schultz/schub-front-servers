@@ -36,6 +36,8 @@ export { Disclosure } from "./components/Disclosure";
 export type { DisclosureProps } from "./components/Disclosure";
 export { Divider } from "./components/Divider";
 export type { DividerProps } from "./components/Divider";
+export { DiscordIcon } from "./components/DiscordIcon";
+export type { DiscordIconProps } from "./components/DiscordIcon";
 export { EmptyState } from "./components/EmptyState";
 export type { EmptyStateProps } from "./components/EmptyState";
 export { HoneypotField } from "./components/HoneypotField";
