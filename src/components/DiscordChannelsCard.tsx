@@ -1,27 +1,18 @@
 import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
   Alert,
-  Box,
+  Button,
   Card,
-  CardContent,
   Checkbox,
   Chip,
-  CircularProgress,
+  Disclosure,
   Divider,
-  FormControlLabel,
+  Spinner,
   Stack,
-  Typography,
-} from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { useTranslation } from "react-i18next";
-import { Button } from "../design-system";
-import type {
-  DiscordChannelSelection,
-  DiscordGuildChannelsDto,
-} from "../types/discord";
+  Text,
+} from "../design-system";
+import type { DiscordChannelSelection, DiscordGuildChannelsDto } from "../types/discord";
 
 interface DiscordChannelsCardProps {
   guilds: DiscordGuildChannelsDto[];
@@ -32,6 +23,13 @@ interface DiscordChannelsCardProps {
 
 const channelKey = (guildId: string, channelId: string) => `${guildId}:${channelId}`;
 
+/**
+ * L'abonnement des salons Discord.
+ *
+ * <p>Migrée vers les primitives au lot B.5. L'accordéon devient {@link Disclosure}, dont
+ * l'ouverture est contrôlée par l'écran — le composant ne garde plus son propre état
+ * d'ouverture caché.</p>
+ */
 function DiscordChannelsCard({
   guilds,
   isLoading,
@@ -90,10 +88,8 @@ function DiscordChannelsCard({
     });
   };
 
-  const isChecked = (guildId: string, channelId: string): boolean => {
-    const key = channelKey(guildId, channelId);
-    return Boolean(selected[key]);
-  };
+  const isChecked = (guildId: string, channelId: string): boolean =>
+    Boolean(selected[channelKey(guildId, channelId)]);
 
   const onSubmit = async () => {
     setIsSubmitting(true);
@@ -105,9 +101,7 @@ function DiscordChannelsCard({
       setSuccessMessage(t("channels.success"));
     } catch (submitException) {
       setSubmitError(
-        submitException instanceof Error
-          ? submitException.message
-          : t("channels.errors.save"),
+        submitException instanceof Error ? submitException.message : t("channels.errors.save"),
       );
     } finally {
       setIsSubmitting(false);
@@ -115,97 +109,64 @@ function DiscordChannelsCard({
   };
 
   return (
-    <Card>
-      <CardContent>
-        <Stack spacing={2}>
-          <Stack
-            direction={{ xs: "column", sm: "row" }}
-            justifyContent="space-between"
-            alignItems={{ xs: "flex-start", sm: "center" }}
-            spacing={1}
-          >
-            <Typography variant="h6">{t("channels.title")}</Typography>
-            <Chip
-              size="small"
-              color="primary"
-              label={t("channels.selectionCount", { count: effectiveSelection.length })}
-            />
-          </Stack>
+    <Card
+      title={t("channels.title")}
+      description={t("channels.description")}
+      actions={
+        <Chip
+          tone="primary"
+          label={t("channels.selectionCount", { count: effectiveSelection.length })}
+        />
+      }
+    >
+      <Stack spacing={2}>
+        {error && <Alert severity="error">{error}</Alert>}
+        {submitError && <Alert severity="error">{submitError}</Alert>}
+        {successMessage && <Alert severity="success">{successMessage}</Alert>}
 
-          <Typography variant="body2" color="text.secondary">
-            {t("channels.description")}
-          </Typography>
-
-          {error && <Alert severity="error">{error}</Alert>}
-          {submitError && <Alert severity="error">{submitError}</Alert>}
-          {successMessage && <Alert severity="success">{successMessage}</Alert>}
-
-          <Accordion
-            disableGutters
-            expanded={channelsExpanded}
-            onChange={(_, expanded) => setChannelsExpanded(expanded)}
-            sx={{ boxShadow: "none", border: "1px solid", borderColor: "divider", borderRadius: "10px" }}
-          >
-            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography variant="subtitle1" fontWeight={600}>
-                {t("channels.accordion", { count: guilds.length })}
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              {isLoading ? (
-                <Box sx={{ py: 2, display: "flex", justifyContent: "center" }}>
-                  <CircularProgress size={26} />
-                </Box>
-              ) : (
-                <Stack spacing={2}>
-                  {guilds.map((guild) => (
-                    <Box key={guild.guildId}>
-                      <Typography variant="subtitle1" fontWeight={600}>
-                        {guild.guildName}
-                      </Typography>
-                      <Stack sx={{ mt: 1 }}>
-                        {guild.channels.map((channel) => (
-                          <FormControlLabel
-                            key={channel.id}
-                            control={
-                              <Checkbox
-                                checked={isChecked(
-                                  guild.guildId,
-                                  channel.id,
-                                )}
-                                onChange={(event) =>
-                                  onToggleChannel(
-                                    guild.guildId,
-                                    channel.id,
-                                    channel.name,
-                                    event.target.checked,
-                                  )
-                                }
-                              />
-                            }
-                            label={`#${channel.name}`}
-                          />
-                        ))}
-                      </Stack>
-                      <Divider sx={{ mt: 1 }} />
-                    </Box>
-                  ))}
+        <Disclosure
+          title={t("channels.accordion", { count: guilds.length })}
+          open={channelsExpanded}
+          onToggle={setChannelsExpanded}
+        >
+          {isLoading ? (
+            <Stack align="center">
+              <Spinner label={t("channels.title")} />
+            </Stack>
+          ) : (
+            <Stack spacing={2}>
+              {guilds.map((guild) => (
+                <Stack key={guild.guildId} spacing={1}>
+                  <Text variant="subtitle">{guild.guildName}</Text>
+                  <Stack spacing={0}>
+                    {guild.channels.map((channel) => (
+                      <Checkbox
+                        key={channel.id}
+                        checked={isChecked(guild.guildId, channel.id)}
+                        onChange={(checked) =>
+                          onToggleChannel(guild.guildId, channel.id, channel.name, checked)
+                        }
+                        label={`#${channel.name}`}
+                      />
+                    ))}
+                  </Stack>
+                  <Divider />
                 </Stack>
-              )}
-            </AccordionDetails>
-          </Accordion>
+              ))}
+            </Stack>
+          )}
+        </Disclosure>
 
-          <Stack direction="row" justifyContent="flex-end">
-            <Button
-              onClick={onSubmit}
-              loading={isSubmitting}
-              disabled={isLoading || effectiveSelection.length === 0}
-            >
-              {t("channels.submit")}
-            </Button>
-          </Stack>
+        <Stack direction="row" justify="end">
+          <Button
+            onClick={() => void onSubmit()}
+            loading={isSubmitting}
+            disabled={isLoading || effectiveSelection.length === 0}
+          >
+            {t("channels.submit")}
+          </Button>
         </Stack>
-      </CardContent>
+      </Stack>
     </Card>
   );
 }

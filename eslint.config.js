@@ -28,20 +28,22 @@ const RESTRICTED_UI_IMPORTS = {
 /**
  * ⚠️ DETTE À RÉSORBER — la liste doit se vider, pas grandir.
  *
- * <p>Ces fichiers existaient avant le design system et importent MUI directement. Les faire
- * échouer d'un coup aurait rendu le lint rouge dès le premier jour, donc inutile ; les exclure
- * nommément garde la règle active partout ailleurs.</p>
+ * <p>Ces fichiers existaient avant le design system et importent MUI directement. Chaque écran
+ * migré vers les primitives (lot B.5) **retire sa ligne d'ici**. Une liste qui rétrécit est un
+ * plan ; une règle désactivée est un abandon.</p>
  *
- * <p>Chaque écran migré vers les primitives (lot B.5) **retire sa ligne d'ici**. Une liste qui
- * rétrécit est un plan ; une règle désactivée est un abandon. Aucun fichier neuf ne s'ajoute à
- * cette liste : un écran écrit aujourd'hui s'écrit avec les primitives.</p>
+ * <p>Au 20-09, il n'en reste qu'un. `AllServersComponent`, `DiscordChannelsCard` et
+ * `PortForwardingCard` sont sortis avec le chantier C : les primitives qui leur manquaient —
+ * `Icon`, `Tooltip`, `Chip`, `IconButton`, `Spinner`, `Divider`, `Disclosure` — ont été ajoutées
+ * au design system plutôt que de reconduire la dérogation.</p>
+ *
+ * <p>`Login.tsx` reste ici pour une raison de coordination, pas de technique : la PR de la
+ * connexion Discord le réécrit entièrement **et retire déjà cette ligne**. Le migrer en
+ * parallèle produirait un conflit sur un fichier que deux branches réécrivent au même moment.
+ * Le bloc est donc vide à la fusion des deux PR, et cette constante disparaît avec sa dernière
+ * ligne.</p>
  */
-const DESIGN_SYSTEM_DEBT = [
-  "src/components/AllServersComponent.tsx",
-  "src/components/DiscordChannelsCard.tsx",
-  "src/components/PortForwardingCard.tsx",
-  "src/pages/Login.tsx",
-];
+const DESIGN_SYSTEM_DEBT = ["src/pages/Login.tsx"];
 
 export default tseslint.config(
   {

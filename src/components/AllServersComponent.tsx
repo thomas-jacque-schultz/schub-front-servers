@@ -1,10 +1,17 @@
-import { Alert, Card, CardContent, Chip, LinearProgress, Stack, Tooltip, Typography } from "@mui/material";
-import MemoryIcon from "@mui/icons-material/Memory";
-import RefreshIcon from "@mui/icons-material/Refresh";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import PauseIcon from "@mui/icons-material/Pause";
 import { useTranslation } from "react-i18next";
-import { Button, EmptyState, StatusChip } from "../design-system";
+import {
+  Alert,
+  Button,
+  Card,
+  Chip,
+  EmptyState,
+  Icon,
+  ProgressBar,
+  Stack,
+  StatusChip,
+  Text,
+  Tooltip,
+} from "../design-system";
 import { useLocaleFormat } from "../i18n/format";
 import type { DisplayedServer } from "../types/server";
 
@@ -24,6 +31,14 @@ interface ServersDashboardProps {
   pendingServerSlug?: string | null;
 }
 
+/**
+ * La liste des serveurs, telle qu'elle s'affiche sur `/servers` et dans les écrans
+ * d'administration.
+ *
+ * <p>Migrée vers les primitives au lot B.5 : elle n'importe plus MUI et sort donc du bloc
+ * « dette à résorber » d'ESLint. Le rendu est inchangé — c'est la porte qui a bougé, pas la
+ * page.</p>
+ */
 function ServersDashboard({
   servers,
   isLoading,
@@ -49,29 +64,25 @@ function ServersDashboard({
 
   return (
     <Stack spacing={2}>
-      <Stack direction="row" justifyContent="space-between" alignItems="center">
-        <Typography variant="h5" fontWeight={700}>
-          {t("list.title")}
-        </Typography>
-        <Stack direction="row" spacing={1} alignItems="center">
+      <Stack direction="row" justify="between" align="center">
+        <Text variant="section">{t("list.title")}</Text>
+        <Stack direction="row" spacing={1} align="center">
           <Chip
-            icon={<MemoryIcon />}
-            color="success"
+            tone="success"
+            icon={<Icon name="memory" size="small" />}
             label={t("list.onlineCount", { online: onlineCount, total: servers.length })}
           />
           {connected && onRefresh && (
             <Tooltip title={refreshLabel}>
-              <span>
-                <Button
-                  size="small"
-                  variant="secondary"
-                  startIcon={<RefreshIcon />}
-                  onClick={onRefresh}
-                  disabled={isLoading}
-                >
-                  {t("actions.refresh", { ns: "common" })}
-                </Button>
-              </span>
+              <Button
+                size="small"
+                variant="secondary"
+                startIcon={<Icon name="refresh" size="small" />}
+                onClick={onRefresh}
+                disabled={isLoading}
+              >
+                {t("actions.refresh", { ns: "common" })}
+              </Button>
             </Tooltip>
           )}
         </Stack>
@@ -81,67 +92,63 @@ function ServersDashboard({
 
       {error && connected && <Alert severity="warning">{error}</Alert>}
 
-      {isLoading && <LinearProgress />}
+      {isLoading && <ProgressBar label={t("list.title")} />}
 
       {!isLoading && connected && servers.length === 0 && (
         <Card>
-          <CardContent>
-            <EmptyState title={t("list.emptyTitle")} description={t("list.emptyDescription")} />
-          </CardContent>
+          <EmptyState title={t("list.emptyTitle")} description={t("list.emptyDescription")} />
         </Card>
       )}
 
       {servers.map((server) => (
         <Card key={server.name}>
-          <CardContent>
-            <Stack spacing={1.5}>
-              <Stack direction="row" justifyContent="space-between" alignItems="center">
-                <Typography variant="h6">{server.name}</Typography>
-                <StatusChip status={server.status} />
-              </Stack>
+          <Stack spacing={2}>
+            <Stack direction="row" justify="between" align="center">
+              <Text variant="subtitle">{server.name}</Text>
+              <StatusChip status={server.status} />
+            </Stack>
 
-              {(server.id || server.slug) && (
-                <Stack direction="row" spacing={1} justifyContent="flex-end">
-                  {canControl && server.slug && (
-                    <>
-                      <Button
-                        size="small"
-                        variant="secondary"
-                        startIcon={<PlayArrowIcon />}
-                        onClick={() => onStartServer?.(server.slug || "")}
-                        disabled={pendingServerSlug === server.slug}
-                      >
-                        {t("list.actions.start")}
-                      </Button>
-                      <Button
-                        size="small"
-                        variant="secondary"
-                        startIcon={<PauseIcon />}
-                        onClick={() => onStopServer?.(server.slug || "")}
-                        disabled={pendingServerSlug === server.slug}
-                      >
-                        {t("list.actions.stop")}
-                      </Button>
-                    </>
-                  )}
-                  {onViewServer && (
+            {(server.id || server.slug) && (
+              <Stack direction="row" spacing={1} justify="end">
+                {canControl && server.slug && (
+                  <>
                     <Button
                       size="small"
                       variant="secondary"
-                      onClick={() => onViewServer(server.id || server.slug || "")}
+                      startIcon={<Icon name="play" size="small" />}
+                      onClick={() => onStartServer?.(server.slug || "")}
+                      disabled={pendingServerSlug === server.slug}
                     >
-                      {t("list.actions.view")}
+                      {t("list.actions.start")}
                     </Button>
-                  )}
-                  {canEdit && (
-                    <Button size="small" onClick={() => onEditServer?.(server.id || server.slug || "")}>
-                      {t("list.actions.edit")}
+                    <Button
+                      size="small"
+                      variant="secondary"
+                      startIcon={<Icon name="pause" size="small" />}
+                      onClick={() => onStopServer?.(server.slug || "")}
+                      disabled={pendingServerSlug === server.slug}
+                    >
+                      {t("list.actions.stop")}
                     </Button>
-                  )}
-                </Stack>
-              )}
-            </Stack>
-          </CardContent>
+                  </>
+                )}
+                {onViewServer && (
+                  <Button
+                    size="small"
+                    variant="secondary"
+                    onClick={() => onViewServer(server.id || server.slug || "")}
+                  >
+                    {t("list.actions.view")}
+                  </Button>
+                )}
+                {canEdit && (
+                  <Button size="small" onClick={() => onEditServer?.(server.id || server.slug || "")}>
+                    {t("list.actions.edit")}
+                  </Button>
+                )}
+              </Stack>
+            )}
+          </Stack>
         </Card>
       ))}
     </Stack>
