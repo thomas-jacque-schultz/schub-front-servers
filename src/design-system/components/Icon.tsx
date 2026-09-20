@@ -1,0 +1,73 @@
+import CodeIcon from "@mui/icons-material/Code";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import EmailIcon from "@mui/icons-material/AlternateEmail";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import HubIcon from "@mui/icons-material/Hub";
+import LaunchIcon from "@mui/icons-material/Launch";
+import MemoryIcon from "@mui/icons-material/Memory";
+import PauseIcon from "@mui/icons-material/Pause";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import SchoolIcon from "@mui/icons-material/School";
+import SendIcon from "@mui/icons-material/Send";
+import StorageIcon from "@mui/icons-material/Storage";
+import TranslateIcon from "@mui/icons-material/Translate";
+import WorkIcon from "@mui/icons-material/WorkOutline";
+import AddIcon from "@mui/icons-material/Add";
+
+/**
+ * Le répertoire des icônes — **fermé, et c'est le but**.
+ *
+ * <p>`@mui/icons-material` expose plus de deux mille dessins. Laisser un écran piocher dedans
+ * rouvrirait exactement la porte que le design system ferme : deux écrans choisiraient deux
+ * icônes différentes pour la même action. Ici, une action a une icône, décidée une fois.</p>
+ *
+ * <p>Ajouter une entrée est normal ; l'important est que ça se fasse dans ce fichier, où l'on
+ * voit d'un coup d'œil ce qui existe déjà.</p>
+ */
+const ICONS = {
+  add: AddIcon,
+  code: CodeIcon,
+  delete: DeleteOutlineIcon,
+  email: EmailIcon,
+  expand: ExpandMoreIcon,
+  external: LaunchIcon,
+  infrastructure: HubIcon,
+  languages: TranslateIcon,
+  memory: MemoryIcon,
+  pause: PauseIcon,
+  play: PlayArrowIcon,
+  refresh: RefreshIcon,
+  school: SchoolIcon,
+  send: SendIcon,
+  storage: StorageIcon,
+  work: WorkIcon,
+} as const;
+
+export type IconName = keyof typeof ICONS;
+
+export interface IconProps {
+  name: IconName;
+  size?: "small" | "medium";
+  /**
+   * L'alternative textuelle. Absente, l'icône est déclarée décorative et masquée aux lecteurs
+   * d'écran — ce qui est le bon comportement à côté d'un libellé qui dit déjà la même chose.
+   */
+  label?: string;
+}
+
+/** Une icône du répertoire. Les écrans ne connaissent que des noms, jamais des imports MUI. */
+export function Icon({ name, size = "medium", label }: IconProps) {
+  const Component = ICONS[name];
+  return (
+    <Component
+      fontSize={size}
+      titleAccess={label}
+      aria-hidden={label ? undefined : true}
+      role={label ? "img" : undefined}
+    />
+  );
+}
+
+/** La liste des noms disponibles — utilisée par la story, et pratique à la revue. */
+export const ICON_NAMES = Object.keys(ICONS) as IconName[];
