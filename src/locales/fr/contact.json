@@ -1,0 +1,36 @@
+{
+  "eyebrow": "Contact",
+  "title": "M'écrire",
+  "subtitle": "Le message m'arrive directement sur Discord. Pas de liste de diffusion, pas de suivi.",
+  "meta": {
+    "title": "Contact — Thomas Schultz",
+    "description": "Écrire à Thomas Schultz, ingénieur full stack. Le formulaire transmet le message directement, sans adresse e-mail publiée."
+  },
+  "fields": {
+    "name": "Votre nom",
+    "email": "Votre adresse e-mail",
+    "message": "Votre message",
+    "honeypot": "Ne remplissez pas ce champ"
+  },
+  "helpers": {
+    "email": "Uniquement pour vous répondre. Elle n'est ni stockée ni transmise ailleurs.",
+    "message": "Dites-moi ce qui vous amène — quelques lignes suffisent."
+  },
+  "submit": "Envoyer",
+  "sending": "Envoi…",
+  "success": {
+    "title": "Message transmis",
+    "body": "Il est arrivé. Je réponds en général sous quelques jours."
+  },
+  "errors": {
+    "nameRequired": "Un nom, même un prénom seul, pour savoir à qui je réponds.",
+    "emailRequired": "Sans adresse, je ne peux pas vous répondre.",
+    "emailInvalid": "Cette adresse ne semble pas valide.",
+    "messageRequired": "Le message est vide.",
+    "messageTooShort": "Quelques mots de plus, pour que je comprenne la demande.",
+    "rateLimited": "Trop de messages envoyés depuis cette adresse. Réessayez dans quelques minutes.",
+    "rejected": "Le message a été refusé. Si vous êtes bien humain, réessayez en rechargeant la page.",
+    "failed": "L'envoi a échoué. Réessayez, ou passez par Discord depuis le pied de page."
+  },
+  "privacy": "Aucune adresse e-mail n'est publiée sur ce site : ce formulaire existe pour la remplacer."
+}

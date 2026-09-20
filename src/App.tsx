@@ -1,21 +1,36 @@
-import { type ReactNode } from "react";
+import { type ReactNode, Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { AppLayout } from "./components/AppLayout";
-import GameServerFormPage from "./pages/GameServerFormPage";
-import LandingPage from "./pages/LandingPage";
-import LoginPage from "./pages/Login";
-import DiscordConfigPage from "./pages/config/DiscordConfigPage";
-import PortsConfigPage from "./pages/config/PortsConfigPage";
-import RolesPage from "./pages/config/RolesPage";
-import ServersConfigPage from "./pages/config/ServersConfigPage";
-import UsersPage from "./pages/config/UsersPage";
+import PortfolioPage from "./pages/PortfolioPage";
 import { Card, ProgressBar, Stack } from "./design-system";
 import type { AppLanguage } from "./i18n/config";
 import { LocalizedNavigate } from "./i18n/LocalizedNavigate";
 import { LocalizedRoot } from "./i18n/LocalizedRoot";
 import { useAuthStore } from "./stores/authStore";
 import type { Permission } from "./types/permission";
+
+/**
+ * Le découpage du chargement — **la racine d'abord**.
+ *
+ * <p>Avant le chantier C, l'application tenait en un seul fichier JavaScript : ouvrir la page
+ * d'accueil téléchargeait les cinq écrans d'administration, leurs formulaires et leur
+ * validation. C'était sans conséquence tant que la racine servait un tableau de bord derrière
+ * une authentification. Ça n'en est plus une quand elle est la racine d'un domaine personnel,
+ * destinée à être indexée et partagée — y compris depuis un téléphone sur un réseau lent.</p>
+ *
+ * <p>Seul le portfolio est chargé d'emblée. Tout le reste arrive à la demande, y compris
+ * l'état des serveurs : l'ancienne page d'accueil est devenue une section comme une autre.</p>
+ */
+const ContactPage = lazy(() => import("./pages/ContactPage"));
+const GameServerFormPage = lazy(() => import("./pages/GameServerFormPage"));
+const LandingPage = lazy(() => import("./pages/LandingPage"));
+const LoginPage = lazy(() => import("./pages/Login"));
+const DiscordConfigPage = lazy(() => import("./pages/config/DiscordConfigPage"));
+const PortsConfigPage = lazy(() => import("./pages/config/PortsConfigPage"));
+const RolesPage = lazy(() => import("./pages/config/RolesPage"));
+const ServersConfigPage = lazy(() => import("./pages/config/ServersConfigPage"));
+const UsersPage = lazy(() => import("./pages/config/UsersPage"));
 
 interface GuardProps {
   children: ReactNode;
@@ -64,13 +79,26 @@ function SessionCheckScreen() {
   );
 }
 
+/** L'attente d'un écran chargé à la demande. Même forme que la vérification de session. */
+function RouteLoadingScreen() {
+  const { t } = useTranslation();
+
+  return (
+    <Stack spacing={2}>
+      <Card>
+        <ProgressBar label={t("loading")} />
+      </Card>
+    </Stack>
+  );
+}
+
 /**
  * Les écrans, une fois la langue connue.
  *
- * <p>Les chemins sont **relatifs** : c'est ce qui permet au même arbre de routes de servir `/`
- * en français et `/en/…` en anglais sans dupliquer une seule déclaration.</p>
+ * <p>Les chemins sont **relatifs** : c'est ce qui permet au même arbre de routes de servir la
+ * racine en français et `/en/…` en anglais sans dupliquer une seule déclaration.</p>
  *
- * <p>Tout passe désormais par {@link AppLayout} : l'en-tête et le pied de page sont le cadre de
+ * <p>Tout passe par {@link AppLayout} : l'en-tête et le pied de page sont le cadre de
  * l'application, pas un morceau recopié dans chaque page.</p>
  */
 function LocalizedRoutes() {
@@ -81,90 +109,99 @@ function LocalizedRoutes() {
       {isCheckingSession ? (
         <SessionCheckScreen />
       ) : (
-        <Routes>
-          <Route index element={<LandingPage />} />
-          <Route
-            path="login"
-            element={
-              <RedirectIfAuthenticated>
-                <LoginPage />
-              </RedirectIfAuthenticated>
-            }
-          />
+        <Suspense fallback={<RouteLoadingScreen />}>
+          <Routes>
+            {/* La racine est le portfolio depuis le chantier C. */}
+            <Route index element={<PortfolioPage />} />
 
-          {/* L'ancien tableau de bord est devenu le menu Configuration : on garde l'adresse
-              vivante pour les liens et les favoris déjà posés. */}
-          <Route path="dashboard" element={<LocalizedNavigate to="/config/servers" replace />} />
-          <Route path="config" element={<LocalizedNavigate to="/config/servers" replace />} />
+            {/* L'état des serveurs : c'était la racine jusqu'ici, c'est une section désormais.
+                La page elle-même n'a pas bougé — elle ne sait pas à quelle adresse on la sert. */}
+            <Route path="servers" element={<LandingPage />} />
+            <Route path="contact" element={<ContactPage />} />
 
-          <Route
-            path="config/servers"
-            element={
-              <RequirePermission anyOf={["SERVER_CREATE", "SERVER_EDIT", "SERVER_INFRA_VIEW"]}>
-                <ServersConfigPage />
-              </RequirePermission>
-            }
-          />
-          <Route
-            path="config/ports"
-            element={
-              <RequirePermission anyOf={["PORT_VIEW"]}>
-                <PortsConfigPage />
-              </RequirePermission>
-            }
-          />
-          <Route
-            path="config/users"
-            element={
-              <RequirePermission anyOf={["USER_VIEW"]}>
-                <UsersPage />
-              </RequirePermission>
-            }
-          />
-          <Route
-            path="config/roles"
-            element={
-              <RequirePermission anyOf={["ROLE_MANAGE"]}>
-                <RolesPage />
-              </RequirePermission>
-            }
-          />
-          <Route
-            path="config/discord"
-            element={
-              <RequirePermission anyOf={["DISCORD_CHANNEL_MANAGE"]}>
-                <DiscordConfigPage />
-              </RequirePermission>
-            }
-          />
+            <Route
+              path="login"
+              element={
+                <RedirectIfAuthenticated>
+                  <LoginPage />
+                </RedirectIfAuthenticated>
+              }
+            />
 
-          <Route
-            path="gameServeur/create"
-            element={
-              <RequirePermission anyOf={["SERVER_CREATE"]}>
-                <GameServerFormPage />
-              </RequirePermission>
-            }
-          />
-          <Route
-            path="gameServeur/:id/edit"
-            element={
-              <RequirePermission anyOf={["SERVER_EDIT"]}>
-                <GameServerFormPage />
-              </RequirePermission>
-            }
-          />
-          <Route
-            path="gameServeur/:id/view"
-            element={
-              <RequireAuth>
-                <GameServerFormPage />
-              </RequireAuth>
-            }
-          />
+            {/* L'ancien tableau de bord est devenu le menu Configuration : on garde l'adresse
+                vivante pour les liens et les favoris déjà posés. */}
+            <Route path="dashboard" element={<LocalizedNavigate to="/config/servers" replace />} />
+            <Route path="config" element={<LocalizedNavigate to="/config/servers" replace />} />
 
-          <Route path="*" element={<LocalizedNavigate to="/" replace />} />
-        </Routes>
+            <Route
+              path="config/servers"
+              element={
+                <RequirePermission anyOf={["SERVER_CREATE", "SERVER_EDIT", "SERVER_INFRA_VIEW"]}>
+                  <ServersConfigPage />
+                </RequirePermission>
+              }
+            />
+            <Route
+              path="config/ports"
+              element={
+                <RequirePermission anyOf={["PORT_VIEW"]}>
+                  <PortsConfigPage />
+                </RequirePermission>
+              }
+            />
+            <Route
+              path="config/users"
+              element={
+                <RequirePermission anyOf={["USER_VIEW"]}>
+                  <UsersPage />
+                </RequirePermission>
+              }
+            />
+            <Route
+              path="config/roles"
+              element={
+                <RequirePermission anyOf={["ROLE_MANAGE"]}>
+                  <RolesPage />
+                </RequirePermission>
+              }
+            />
+            <Route
+              path="config/discord"
+              element={
+                <RequirePermission anyOf={["DISCORD_CHANNEL_MANAGE"]}>
+                  <DiscordConfigPage />
+                </RequirePermission>
+              }
+            />
+
+            <Route
+              path="gameServeur/create"
+              element={
+                <RequirePermission anyOf={["SERVER_CREATE"]}>
+                  <GameServerFormPage />
+                </RequirePermission>
+              }
+            />
+            <Route
+              path="gameServeur/:id/edit"
+              element={
+                <RequirePermission anyOf={["SERVER_EDIT"]}>
+                  <GameServerFormPage />
+                </RequirePermission>
+              }
+            />
+            <Route
+              path="gameServeur/:id/view"
+              element={
+                <RequireAuth>
+                  <GameServerFormPage />
+                </RequireAuth>
+              }
+            />
+
+            <Route path="*" element={<LocalizedNavigate to="/" replace />} />
+          </Routes>
+        </Suspense>
       )}
     </AppLayout>
   );
