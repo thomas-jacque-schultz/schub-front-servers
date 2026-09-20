@@ -1,0 +1,13 @@
+# schultz-thomas.fr
+
+User-agent: *
+Allow: /
+
+# L'administration n'a rien à faire dans un index : elle exige une session, et ses URL
+# indexées ne produiraient que des redirections vers l'écran de connexion.
+Disallow: /config/
+Disallow: /en/config/
+Disallow: /login
+Disallow: /en/login
+
+Sitemap: https://schultz-thomas.fr/sitemap.xml

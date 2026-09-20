@@ -22,6 +22,16 @@ const config: StorybookConfig = {
     disableTelemetry: true,
   },
   staticDirs: ["../public"],
+
+  /**
+   * Le Storybook est publié SOUS UN SOUS-CHEMIN : `https://schultz-thomas.fr/storybook`.
+   *
+   * <p>Sans cette base, les fichiers construits sont référencés depuis la racine du domaine —
+   * le navigateur demanderait `/assets/…` au lieu de `/storybook/assets/…`, et tomberait sur
+   * l'application React, qui répond son `index.html` pour tout ce qu'elle ne connaît pas. On
+   * obtient alors une page blanche sans la moindre erreur 404 pour l'expliquer.</p>
+   */
+  viteFinal: async (config) => ({ ...config, base: "/storybook/" }),
 };
 
 export default config;

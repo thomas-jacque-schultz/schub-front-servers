@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  La source de la vignette de partage, aux dimensions attendues par OpenGraph (1200 × 630).
+
+  Elle n'est PAS référencée par `index.html` : Discord, LinkedIn et X ne lisent pas le SVG comme
+  `og:image`. Il faut en produire un PNG — ce dépôt n'embarque aucun outil d'image, la
+  conversion se fait donc à la main :
+
+      rsvg-convert -w 1200 -h 630 public/og-card.svg -o public/og-card.png
+
+  puis déclarer `og:image` sur https://schultz-thomas.fr/og-card.png dans `index.html`.
+
+  Les couleurs viennent des tokens du design system (`brand.abyss`, `brand.tealBright`).
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="fond" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d47a1" stop-opacity="0.55" />
+      <stop offset="55%" stop-color="#004d40" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#071019" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#071019" />
+  <rect width="1200" height="630" fill="url(#fond)" />
+  <rect x="80" y="250" width="72" height="6" rx="3" fill="#2fa08f" />
+  <text x="80" y="200" font-family="Helvetica, Arial, sans-serif" font-size="34" fill="#9fb2c1"
+    letter-spacing="6">INGÉNIEUR FULL STACK</text>
+  <text x="80" y="330" font-family="Helvetica, Arial, sans-serif" font-size="82" font-weight="bold"
+    fill="#e7eef4">Thomas Schultz</text>
+  <text x="80" y="410" font-family="Helvetica, Arial, sans-serif" font-size="38" fill="#9fb2c1">
+    Je construis du logiciel métier qui tourne
+  </text>
+  <text x="80" y="462" font-family="Helvetica, Arial, sans-serif" font-size="38" fill="#9fb2c1">
+    en production.
+  </text>
+  <text x="80" y="560" font-family="Helvetica, Arial, sans-serif" font-size="30" fill="#2fa08f">
+    schultz-thomas.fr
+  </text>
+</svg>

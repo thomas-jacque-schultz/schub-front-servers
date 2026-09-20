@@ -3,10 +3,65 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Game Server Manager</title>
+
+    <!--
+      Ces balises sont celles de la RACINE, et c'est volontaire.
+
+      Un SPA Vite ne produit qu'un seul `index.html`, servi tel quel pour toutes les routes.
+      `useDocumentMeta` affine ensuite le titre et la description écran par écran — ce que Google
+      lit, parce qu'il exécute le JavaScript. La plupart des aperçus de partage (Discord, Slack,
+      LinkedIn) ne l'exécutent pas : ils ne verront JAMAIS que ce fichier. D'où la règle tenue
+      ici — ce qui est écrit ci-dessous doit être juste pour `/`, la page la plus partagée.
+    -->
+    <title>Thomas Schultz — ingénieur full stack</title>
+    <meta
+      name="description"
+      content="Ingénieur full stack à Colmar. Je conçois et j'exploite du logiciel métier : Java, Spring Boot, React, Docker Swarm. Schub, ma plateforme de pilotage de serveurs de jeu, est en accès libre."
+    />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Thomas Schultz" />
+    <link rel="canonical" href="https://schultz-thomas.fr/" />
+
+    <!-- Les `hreflang` de la racine. Les autres routes les posent dynamiquement (LocalizedRoot),
+         mais celles-ci doivent exister sans JavaScript : c'est la page d'entrée du domaine. -->
+    <link rel="alternate" hreflang="fr" href="https://schultz-thomas.fr/" />
+    <link rel="alternate" hreflang="en" href="https://schultz-thomas.fr/en" />
+    <link rel="alternate" hreflang="x-default" href="https://schultz-thomas.fr/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Thomas Schultz" />
+    <meta property="og:title" content="Thomas Schultz — ingénieur full stack" />
+    <meta
+      property="og:description"
+      content="Je construis du logiciel métier qui tourne en production. Schub, ma plateforme de pilotage de serveurs de jeu, est en accès libre."
+    />
+    <meta property="og:url" content="https://schultz-thomas.fr/" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:locale:alternate" content="en_GB" />
+    <!--
+      MANQUE : og:image. L'aperçu au partage restera sans vignette tant qu'une image
+      1200 × 630 en PNG n'est pas déposée dans `public/`. La source vectorielle est fournie
+      (`public/og-card.svg`) ; il reste à la convertir, ce dépôt n'ayant aucun outil d'image.
+      Déclarer le SVG ici serait pire que de ne rien déclarer : Discord, LinkedIn et X ne le
+      lisent pas, et l'aperçu afficherait un cadre vide au lieu de rien.
+    -->
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Thomas Schultz — ingénieur full stack" />
+    <meta
+      name="twitter:description"
+      content="Je construis du logiciel métier qui tourne en production."
+    />
+
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <meta name="theme-color" content="#071019" />
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      Ce site a besoin de JavaScript pour s'afficher. Le code et les documents d'architecture
+      restent lisibles sur GitHub&nbsp;: https://github.com/thomas-jacque-schultz
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
