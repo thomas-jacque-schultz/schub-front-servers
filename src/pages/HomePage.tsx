@@ -105,7 +105,7 @@ function HomePage() {
           <Stack direction="responsive" spacing={1.5}>
             <Button onClick={() => navigate("/servers")}>{t("about.ctaServers")}</Button>
             {connected && canAny("TEAM_CREATE", "TEAM_VIEW") && (
-              <Button variant="secondary" onClick={() => navigate("/lol")}>
+              <Button variant="secondary" onClick={() => navigate("/lol/teams")}>
                 {t("about.ctaTeams")}
               </Button>
             )}

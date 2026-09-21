@@ -95,7 +95,7 @@ function TeamPage() {
     setError("");
     try {
       await deleteTeamApi(team.id);
-      navigate("/lol", { replace: true });
+      navigate("/lol/teams", { replace: true });
     } catch (deleteError) {
       setError(
         deleteError instanceof Error
@@ -120,7 +120,7 @@ function TeamPage() {
     return (
       <Stack spacing={3}>
         <Alert severity="error">{error || t("team.loadFailed")}</Alert>
-        <Button variant="secondary" onClick={() => navigate("/lol")}>
+        <Button variant="secondary" onClick={() => navigate("/lol/teams")}>
           {t("team.back")}
         </Button>
       </Stack>
@@ -143,7 +143,7 @@ function TeamPage() {
         subtitle={t("team.membersSummary", { count: team.memberCount })}
         actions={
           <Stack direction="row" spacing={1} wrap>
-            <Button variant="ghost" onClick={() => navigate("/lol")}>
+            <Button variant="ghost" onClick={() => navigate("/lol/teams")}>
               {t("team.back")}
             </Button>
             {team.viewerCanEdit && (
