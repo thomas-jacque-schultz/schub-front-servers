@@ -32,7 +32,6 @@
     "pendingExplanation": "Your Riot ID is saved, but we could not confirm it with Riot yet. Nothing is lost: try again later, or check what you typed.",
     "retry": "Try again",
     "linkedAt": "Declared on {{date}}",
-    "current": "Current account",
     "link": {
       "action": "Link my Riot account",
       "title": "Link a Riot account",
@@ -42,8 +41,6 @@
       "suggestions": "Known accounts that match",
       "noSuggestionTitle": "No known account matches",
       "noSuggestionDescription": "That is expected while few matches have been collected. Enter your full Riot ID below.",
-      "emptyDataTitle": "No match collected yet",
-      "emptyDataDescription": "Suggestions will appear as matches are ingested. Meanwhile, exact entry works.",
       "exactLabel": "Exact Riot ID",
       "exactPlaceholder": "Name#TAG",
       "exactHelper": "As the game client shows it, with the # and the tag.",

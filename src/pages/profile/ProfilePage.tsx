@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { updateDisplayNameApi } from "../../api/profileApi";
+import { linkRiotAccountApi, updateDisplayNameApi } from "../../api/profileApi";
 import {
   Alert,
   Avatar,
@@ -158,6 +158,25 @@ function RiotAccountCard({
   const { t } = useTranslation("profile");
   const { formatDateTime } = useLocaleFormat();
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+  const [isRetrying, setIsRetrying] = useState<boolean>(false);
+
+  /**
+   * Relancer la résolution, en rejouant le même Riot ID.
+   *
+   * <p>La route est idempotente et c'est tout l'intérêt : il n'existe pas de « réessayer »
+   * séparé à écrire côté serveur, la liaison en tient lieu. Un échec laisse l'état tel quel —
+   * c'est-à-dire en attente, ce qu'il était déjà.</p>
+   */
+  const onRetry = async (riotId: string) => {
+    setIsRetrying(true);
+    try {
+      onChanged(await linkRiotAccountApi(riotId));
+    } catch {
+      // L'état affiché reste le bon : la déclaration est conservée, elle attend toujours.
+    } finally {
+      setIsRetrying(false);
+    }
+  };
 
   const { riot } = profile;
   const linked = riot.state !== "ABSENT";
@@ -189,7 +208,23 @@ function RiotAccountCard({
         {/* L'état intermédiaire mérite une explication, pas un badge orange muet : la saisie est
             conservée, et rejouer le même Riot ID relance la résolution. */}
         {riot.state === "EN_ATTENTE_DE_RESOLUTION" && (
-          <Alert severity="warning">{t("riot.pendingExplanation")}</Alert>
+          <Alert severity="warning">
+            <Stack spacing={1}>
+              <Text variant="caption">{t("riot.pendingExplanation")}</Text>
+              {riot.riotId && (
+                <Stack direction="row">
+                  <Button
+                    variant="secondary"
+                    size="small"
+                    loading={isRetrying}
+                    onClick={() => void onRetry(riot.riotId as string)}
+                  >
+                    {t("riot.retry")}
+                  </Button>
+                </Stack>
+              )}
+            </Stack>
+          </Alert>
         )}
 
         <IngestState profile={profile} />
