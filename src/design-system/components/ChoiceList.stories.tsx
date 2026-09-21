@@ -79,3 +79,10 @@ export const Vide: Story = {
     ),
   },
 };
+
+/** Pendant qu'un choix est traité : la liste reste lisible, elle ne se reclique pas. */
+export const Occupee: Story = {
+  args: {
+    disabled: true,
+  },
+};

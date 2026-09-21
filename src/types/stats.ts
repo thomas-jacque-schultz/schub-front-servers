@@ -55,13 +55,18 @@ export interface StatLineDto {
 }
 
 export interface RankedStandingDto {
+  /** Le mode nommé — `RANKED_SOLO`, `RANKED_FLEX`, `OTHER`. */
   queue: string | null;
+  /** Le nom brut de Riot. Plusieurs files tombent sur `OTHER` : sans lui, elles se confondent. */
+  riotQueueType: string | null;
   tier: string | null;
   division: string | null;
   leaguePoints: number;
   wins: number;
   losses: number;
   hotStreak: boolean;
+  /** Riot marque ainsi un classement que l'inactivité menace de faire tomber. */
+  inactive: boolean;
   observedAt: string | null;
 }
 
@@ -81,7 +86,7 @@ export interface PlayerStatsDto {
   riotGameName: string | null;
   riotTagLine: string | null;
   status: MemberStatus;
-  role: GameRole | null;
+  roles: GameRole[];
   linked: boolean;
   state: StatsState;
   coverage: StatsCoverageDto | null;

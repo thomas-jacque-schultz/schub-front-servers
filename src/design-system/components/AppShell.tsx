@@ -69,7 +69,15 @@ export interface AppShellProps {
   onSignOut: () => void;
   footerLinks: AppShellFooterLink[];
   footerNote?: ReactNode;
-  maxWidth?: "md" | "lg";
+  /**
+   * La largeur du bandeau central.
+   *
+   * <p>`xl` est là pour les écrans denses — cinq colonnes de statistiques, un tableau de parties
+   * — qui deviennent illisibles resserrés dans `lg`. Les pages de texte restent en `lg` : une
+   * ligne de prose trop longue se relit mal, donc élargir partout aurait échangé un défaut
+   * contre un autre.</p>
+   */
+  maxWidth?: "md" | "lg" | "xl";
   children: ReactNode;
 }
 

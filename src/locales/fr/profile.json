@@ -34,39 +34,8 @@
     "link": {
       "action": "Lier mon compte Riot",
       "title": "Lier un compte Riot",
-      "searchLabel": "Chercher mon compte",
-      "searchPlaceholder": "Pseudo, ou Pseudo#TAG",
-      "searchHelper": "Trois caractères suffisent. Les propositions viennent des comptes déjà connus du site : l’API Riot ne sait pas chercher par pseudo partiel.",
-      "searching": "Recherche…",
-      "suggestions": "Comptes connus qui correspondent",
-      "noSuggestionTitle": "Aucun compte connu ne correspond",
-      "noSuggestionDescription": "C’est normal tant que peu de parties ont été collectées. Écrivez votre Riot ID en entier, puis demandez-le à Riot : il rejoindra la liste.",
-      "verify": "Demander à Riot",
-      "verifyHelper": "Votre compte n’est pas dans la liste ? Écrivez votre Riot ID en entier et demandez-le à Riot. Cela ne lie rien : le compte rejoint la liste, et c’est le clic qui lie.",
-      "verifyNeedsFullId": "Pour demander à Riot, écrivez le Riot ID en entier : un seul #, avec du texte de chaque côté.",
-      "verified": "{{riotId}} confirmé par Riot. Choisissez-le dans la liste pour le lier.",
-      "verifyUnavailable": "La vérification auprès de Riot est indisponible. Réessayez dans un instant.",
-      "failed": "La liaison a échoué",
       "conflict": "Ce compte Riot est déjà lié à un autre utilisateur.",
-      "notFound": "Riot ne connaît pas ce Riot ID."
-    },
-    "suggestion": {
-      "matchCount": "{{count}} partie(s) vue(s)",
-      "lastPlayed": "Dernière partie le {{date}}",
-      "positionWithCount": "{{position}} ({{count}})",
-      "mine": "Votre compte",
-      "alreadyLinked": "Déjà lié",
-      "verifiedAt": "Vérifié le {{date}}",
-      "stale": "À revérifier",
-      "neverPlayed": "Aucune partie collectée"
-    },
-    "position": {
-      "TOP": "Haut",
-      "JUNGLE": "Jungle",
-      "MIDDLE": "Milieu",
-      "BOTTOM": "Bas",
-      "UTILITY": "Support",
-      "UNKNOWN": "Poste indéterminé"
+      "failed": "La liaison a échoué"
     },
     "change": {
       "action": "Changer de compte",

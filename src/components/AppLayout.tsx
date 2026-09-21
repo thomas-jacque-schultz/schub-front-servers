@@ -3,6 +3,8 @@ import { useTranslation } from "react-i18next";
 import { Alert, AppShell, Stack } from "../design-system";
 import type { AppShellFooterLink, AppShellMenu, AppShellNavItem } from "../design-system";
 import { PORTFOLIO } from "../content/portfolio";
+import { useLocation } from "react-router-dom";
+import { pathWithoutLanguage } from "../i18n/config";
 import { useLocalizedNavigate, useLocalizedPath } from "../i18n/navigation";
 import { useAuthStore } from "../stores/authStore";
 import { useProfileStore } from "../stores/profileStore";
@@ -28,6 +30,16 @@ const GITHUB_URL = PORTFOLIO.fr.repositoryUrl;
 const STORYBOOK_PATH = "/storybook";
 
 /**
+ * Les écrans qui ont besoin de largeur : cinq colonnes de statistiques, un catalogue d'icônes,
+ * un tableau de parties.
+ *
+ * <p>La largeur se décide ici et pas dans les écrans, pour la même raison que le menu : c'est le
+ * seul endroit qui connaisse les routes. Ailleurs, chaque page redéciderait de sa marge et elles
+ * divergeraient.</p>
+ */
+const ECRANS_LARGES = ["/lol"];
+
+/**
  * La coquille, remplie.
  *
  * <p>C'est ici, et nulle part ailleurs, que les permissions décident du menu. La règle tenue :
@@ -47,6 +59,10 @@ export function AppLayout({ children }: { children: ReactNode }) {
   const { riotLinked } = useProfileStore();
   const localize = useLocalizedPath();
   const navigate = useLocalizedNavigate();
+  const { pathname } = useLocation();
+
+  const route = pathWithoutLanguage(pathname);
+  const largeur = ECRANS_LARGES.some((prefixe) => route.startsWith(prefixe)) ? "xl" : "lg";
 
   const menus = useMemo<AppShellMenu[]>(() => {
     if (!connected) {
@@ -140,6 +156,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
       brand={t("app.name")}
       brandTo={localize("/")}
       brandTagline={t("app.tagline")}
+      maxWidth={largeur}
       navItems={navItems}
       menus={menus}
       connected={connected}

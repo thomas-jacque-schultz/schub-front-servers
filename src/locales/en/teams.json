@@ -66,7 +66,7 @@
     "columns": {
       "player": "Player",
       "riotId": "Riot ID",
-      "role": "Position",
+      "roles": "Positions",
       "status": "Status",
       "account": "Account",
       "actions": "Actions"
@@ -82,13 +82,11 @@
     "add": {
       "action": "Add a member",
       "title": "Add a member",
-      "description": "The full Riot ID is required: it is what will attach the seat to an account, now or later.",
-      "gameName": "Game name",
-      "gameNameHelper": "The part before the #.",
-      "tagLine": "TAG",
-      "tagLineHelper": "The part after the #, without the #.",
+      "description": "Search for the player's Riot account, then pick it from the list. If they already have a Schub account, the slot is attached to it right away.",
       "confirm": "Add",
-      "failed": "Adding failed"
+      "failed": "Adding failed",
+      "chosen": "Account chosen: {{riotId}}",
+      "changeAccount": "Pick another account"
     },
     "edit": {
       "action": "Edit",
@@ -105,10 +103,10 @@
       "failed": "Removal failed"
     },
     "fields": {
-      "role": "Position",
-      "roleHelper": "Leave empty for a coach or a flexible substitute.",
+      "roles": "Positions",
+      "rolesHelper": "Several positions are allowed. The first one is the usual position — it is what orders the roster. Leave empty if the position is not decided yet.",
       "status": "Status",
-      "coachHasNoRole": "A coach holds no position: the position is cleared."
+      "coachHasNoRole": "A coach holds no position: positions are cleared."
     }
   },
   "draft": {
