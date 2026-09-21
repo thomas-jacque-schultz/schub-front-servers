@@ -61,6 +61,19 @@ PR de la connexion Discord retire de son côté : **le bloc, et la constante ave
 `AppShell` (design system) porte l'en-tête, le menu *Configuration*, le pied de page et le fond de
 marque. Un écran ne repose ni `ThemeModeToggle`, ni `LanguageSwitcher`, ni `PageBackdrop` :
 il rend un titre et du contenu. `AppShell` ne teste aucune permission — c'est `AppLayout` qui
+
+**La largeur du bandeau est décidée par `AppLayout`, pas par les écrans.** `/lol/*` reçoit `xl` —
+cinq colonnes de statistiques et un tableau de parties deviennent illisibles resserrés dans `lg` ;
+les pages de texte, `/contact` en tête, restent en `lg` parce qu'une ligne de prose trop longue se
+relit mal. Élargir partout aurait échangé un défaut contre un autre.
+
+**Cinq colonnes se déclarent, elles ne s'espèrent pas.** `Columns` en `auto-fit` replie dès que
+`count × minWidth` dépasse le conteneur, et la cinquième part seule à la ligne. Les grilles qui
+doivent tenir une ligne passent `count={5}` ; le repli reste en dessous du point de rupture.
+
+**Un tableau dont les colonnes dansent se corrige dans `DataTable`, pas dans l'écran.**
+`layout="fixed"` avec des largeurs déclarées : en largeur automatique, une cellule plus longue
+dans une ligne élargit la colonne pour toutes, et un rechargement redistribue tout.
 décide de ce qu'elle reçoit.
 
 ## Les routes, et ce que chacune coûte à charger
@@ -134,6 +147,28 @@ défaire :
 Cinq onglets : effectif, joueurs, équipe, pool de champions, préparateur de draft — tous servis.
 **Aucune donnée simulée n'entre nulle part**, ni dans un panneau, ni dans une story : un chiffre
 inventé est lu comme vrai, et il survit à celui qui l'a posé.
+
+**Le pool répond « ce qu'on peut aligner à ce poste », pas « ce que chacun maîtrise ».** Le choix
+des champions par poste **appartient à l'équipe** et vit dans le cœur : ce n'est pas un filtre
+d'affichage, et le refaire côté écran le ferait disparaître au rechargement. Le catalogue complet
+arrive **avec** le panneau et non par une route à part — deux appels, ce sont deux patches
+possibles, donc des icônes et des champions retenus qui ne parlent pas de la même version.
+
+**Le plancher de maîtrise appartient lui aussi à l'équipe.** On peut en essayer un autre pour
+voir : cette lecture n'écrit rien, et l'écran dit lequel des deux il montre. S'il vivait dans
+l'écran de chacun, deux membres liraient deux listes en croyant parler de la même chose.
+
+**Un membre tient plusieurs postes.** Il apparaît donc dans plusieurs colonnes du pool et il est
+candidat à plusieurs lignes d'une composition — que le cœur ne lui en accorde qu'une. Le premier
+poste déclaré est le poste habituel, et c'est lui qui range l'effectif.
+
+**Un membre dont on ne sait pas les maîtrises est dit au niveau de sa colonne**, une fois, avec la
+raison — jamais répété sous chaque champion, jamais retiré. Et une liste vide sous un champion se
+lit autrement selon sa cause : personne au-dessus du plancher, ou personne ne l'a jamais joué.
+
+**Désigner un compte Riot passe par `RiotAccountPicker`**, partagé par le profil et l'ajout d'un
+membre. Deux champs libres laissaient écrire un Riot ID qui n'existe pas, et le refus n'arrivait
+qu'à l'enregistrement.
 
 ## Les statistiques
 
