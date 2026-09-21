@@ -52,6 +52,9 @@
     "github": "GitHub",
     "toComplete": "adresse à fournir",
     "footerNote": "Schub — pilotage de serveurs de jeu",
-    "contact": "Contact"
+    "contact": "Contact",
+    "profile": "Mon profil",
+    "stats": "Mes stats",
+    "statsLocked": "Liez votre compte Riot pour y accéder"
   }
 }

@@ -5,6 +5,7 @@ import type { AppShellFooterLink, AppShellMenu, AppShellNavItem } from "../desig
 import { PORTFOLIO } from "../content/portfolio";
 import { useLocalizedNavigate, useLocalizedPath } from "../i18n/navigation";
 import { useAuthStore } from "../stores/authStore";
+import { useProfileStore } from "../stores/profileStore";
 import type { Permission } from "../types/permission";
 
 /**
@@ -43,6 +44,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
   const { t } = useTranslation();
   const { connected, profile, canAny, logout, discordLoginFailed, dismissDiscordLoginFailure } =
     useAuthStore();
+  const { riotLinked } = useProfileStore();
   const localize = useLocalizedPath();
   const navigate = useLocalizedNavigate();
 
@@ -95,12 +97,33 @@ export function AppLayout({ children }: { children: ReactNode }) {
       { key: "contact", label: t("shell.contact"), to: localize("/contact") },
     ];
 
+    if (connected) {
+      // À gauche d'*Équipes LoL*, et grisée tant qu'aucun compte Riot n'est lié.
+      //
+      // Elle n'est pas masquée : la masquer ferait croire que la fonctionnalité n'existe pas,
+      // alors que ce qui manque est une action à la portée de la personne. Elle n'est pas non
+      // plus désactivée : un bouton mort ne dit pas pourquoi. Grisée, expliquée au survol et à
+      // la lecture, elle reste un lien — et l'écran au bout redit la raison avec le chemin vers
+      // le profil, parce qu'une URL se tape à la main.
+      items.push({
+        key: "stats",
+        label: t("shell.stats"),
+        to: localize("/lol/stats"),
+        muted: !riotLinked,
+        hint: riotLinked ? undefined : t("shell.statsLocked"),
+      });
+    }
+
     if (connected && canAny("TEAM_CREATE", "TEAM_VIEW")) {
       items.push({ key: "lol", label: t("shell.lol"), to: localize("/lol") });
     }
 
+    if (connected) {
+      items.push({ key: "profile", label: t("shell.profile"), to: localize("/profile") });
+    }
+
     return items;
-  }, [connected, canAny, localize, t]);
+  }, [connected, canAny, localize, riotLinked, t]);
 
   const footerLinks = useMemo<AppShellFooterLink[]>(
     () => [

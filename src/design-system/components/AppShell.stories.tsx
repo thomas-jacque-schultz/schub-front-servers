@@ -93,3 +93,27 @@ export const DroitsPartiels: Story = {
 export const SansEntreeAutorisee: Story = {
   args: { menus: [{ ...CONFIGURATION, items: [] }] },
 };
+
+/**
+ * Une entrée grisée, et la raison qui va avec.
+ *
+ * <p>*Mes stats* n'a rien à montrer tant qu'aucun compte Riot n'est lié. La masquer laisserait
+ * croire que la fonctionnalité n'existe pas ; la proposer normalement mènerait à un écran vide.
+ * Grisée **et** expliquée, elle annonce ce qui existe et ce qu'il faut faire pour l'ouvrir — et
+ * elle reste un lien, donc atteignable au clavier.</p>
+ */
+export const EntreeGrisee: Story = {
+  args: {
+    navItems: [
+      { key: "servers", label: "Serveurs", to: "/servers" },
+      {
+        key: "stats",
+        label: "Mes stats",
+        to: "/lol/stats",
+        muted: true,
+        hint: "Liez votre compte Riot pour y accéder",
+      },
+      { key: "lol", label: "Équipes LoL", to: "/lol" },
+    ],
+  },
+};

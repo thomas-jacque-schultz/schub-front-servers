@@ -1,0 +1,96 @@
+{
+  "eyebrow": "Mon compte",
+  "title": "Mon profil",
+  "subtitle": "Ce que le site sait de vous, et ce que vous pouvez en changer.",
+  "loadFailed": "Le profil n'a pas pu être chargé",
+  "discord": {
+    "title": "Discord",
+    "description": "Votre identité de connexion. Elle vient de Discord et se modifie là-bas.",
+    "username": "Pseudo Discord",
+    "id": "Identifiant",
+    "idHelper": "C'est lui qui vous identifie auprès du site, jamais votre pseudo.",
+    "role": "Rôle"
+  },
+  "displayName": {
+    "title": "Nom sur le site",
+    "description": "Le nom que les autres voient dans les équipes et les écrans partagés.",
+    "field": "Nom affiché",
+    "helper": "Laissé vide, votre pseudo Discord est utilisé.",
+    "save": "Enregistrer",
+    "saved": "Nom enregistré.",
+    "failed": "Le nom n'a pas pu être enregistré",
+    "tooLong": "50 caractères au plus."
+  },
+  "riot": {
+    "title": "Compte Riot",
+    "description": "Il ouvre vos statistiques personnelles et vous rattache aux équipes où l'on vous attend.",
+    "state": {
+      "ABSENT": "Aucun compte lié",
+      "EN_ATTENTE_DE_RESOLUTION": "En attente de résolution",
+      "RESOLU": "Compte lié"
+    },
+    "pendingExplanation": "Votre Riot ID est enregistré, mais nous n'avons pas encore pu le confirmer auprès de Riot. Rien n'est perdu : réessayez plus tard, ou vérifiez la saisie.",
+    "retry": "Relancer la résolution",
+    "linkedAt": "Déclaré le {{date}}",
+    "current": "Compte actuel",
+    "link": {
+      "action": "Lier mon compte Riot",
+      "title": "Lier un compte Riot",
+      "searchLabel": "Chercher mon pseudo",
+      "searchHelper": "Les propositions viennent des parties déjà collectées, pas de Riot : leur API ne sait pas chercher par pseudo partiel.",
+      "searching": "Recherche…",
+      "suggestions": "Comptes connus qui correspondent",
+      "noSuggestionTitle": "Aucun compte connu ne correspond",
+      "noSuggestionDescription": "C'est normal tant que peu de parties ont été collectées. Saisissez votre Riot ID complet ci-dessous.",
+      "emptyDataTitle": "Aucune partie collectée pour l'instant",
+      "emptyDataDescription": "Les suggestions apparaîtront au fil des ingestions. En attendant, la saisie exacte fonctionne.",
+      "exactLabel": "Riot ID exact",
+      "exactPlaceholder": "Pseudo#TAG",
+      "exactHelper": "Tel que le client de jeu l'affiche, avec le # et le tag.",
+      "malformed": "Il faut exactement un #, avec du texte de chaque côté.",
+      "confirmTitle": "Est-ce bien votre compte ?",
+      "confirmDescription": "Vérifiez avant de valider : le compte lié détermine toutes vos statistiques.",
+      "confirm": "C'est mon compte",
+      "failed": "La liaison a échoué",
+      "conflict": "Ce compte Riot est déjà lié à un autre utilisateur.",
+      "notFound": "Riot ne connaît pas ce Riot ID."
+    },
+    "suggestion": {
+      "matchCount": "{{count}} partie(s) vue(s)",
+      "lastPlayed": "Dernière partie le {{date}}",
+      "lastPlayedUnknown": "Date de dernière partie inconnue",
+      "positionWithCount": "{{position}} ({{count}})"
+    },
+    "position": {
+      "TOP": "Haut",
+      "JUNGLE": "Jungle",
+      "MIDDLE": "Milieu",
+      "BOTTOM": "Bas",
+      "UTILITY": "Support",
+      "UNKNOWN": "Poste indéterminé"
+    },
+    "change": {
+      "action": "Changer de compte",
+      "title": "Changer de compte Riot",
+      "description": "Le compte actuel sera remplacé. Lisez les conséquences avant de valider.",
+      "confirm": "Changer de compte",
+      "consequencesTitle": "Ce que ce changement entraîne",
+      "statsReset": "Vos statistiques personnelles repartent de zéro.",
+      "matchesKept": "Les {{count}} partie(s) déjà collectées restent attachées à l'ancien compte : elles ne sont pas perdues, mais elles ne compteront plus pour vous.",
+      "ingestDuration": "Une nouvelle collecte démarre et prendra environ {{count}} minute(s).",
+      "affectedTeams": "Votre place change dans : {{teams}}.",
+      "unknownConsequences": "Les conséquences exactes n'ont pas pu être calculées — le cœur n'a pas répondu. Le changement reste possible, mais sans ces chiffres.",
+      "from": "De",
+      "to": "Vers",
+      "noUnlink": "Il n'existe pas de bouton pour délier un compte : cela laisserait les équipes qui vous référencent sans personne. Le changement le remplace."
+    },
+    "ingest": {
+      "title": "Collecte en cours",
+      "running": "Vos parties sont en cours de récupération.",
+      "pending": "{{count}} partie(s) en attente",
+      "readyAt": "Prêt vers {{date}}",
+      "readyUnknown": "Échéance inconnue pour le moment",
+      "unavailable": "L'avancement de la collecte est indisponible : le connecteur Riot ne répond pas. Ce n'est pas une perte de données, seulement une information manquante."
+    }
+  }
+}
