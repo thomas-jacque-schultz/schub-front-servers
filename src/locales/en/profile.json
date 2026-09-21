@@ -6,7 +6,6 @@
   "discord": {
     "title": "Discord",
     "description": "Your sign-in identity. It comes from Discord and is changed there.",
-    "username": "Discord username",
     "id": "Identifier",
     "idHelper": "This is what identifies you to the site — never your username.",
     "role": "Role"
@@ -56,7 +55,9 @@
       "matchCount": "{{count}} match(es) seen",
       "lastPlayed": "Last match on {{date}}",
       "lastPlayedUnknown": "Last match date unknown",
-      "positionWithCount": "{{position}} ({{count}})"
+      "positionWithCount": "{{position}} ({{count}})",
+      "mine": "Your account",
+      "alreadyLinked": "Already linked"
     },
     "position": {
       "TOP": "Top",
@@ -72,14 +73,15 @@
       "description": "The current account will be replaced. Read the consequences before confirming.",
       "confirm": "Change account",
       "consequencesTitle": "What this change entails",
-      "statsReset": "Your personal statistics start over from zero.",
-      "matchesKept": "The {{count}} match(es) already collected stay attached to the previous account: they are not lost, but they will no longer count for you.",
-      "ingestDuration": "A new collection starts and will take roughly {{count}} minute(s).",
-      "affectedTeams": "Your seat changes in: {{teams}}.",
-      "unknownConsequences": "The exact consequences could not be computed — the core did not answer. The change is still possible, but without those figures.",
+      "statsReset": "Your personal statistics start over from zero: the matches already collected stay attached to the previous account.",
+      "unknownConsequences": "The core detailed no consequence for this change. It is still possible, but without those details.",
       "from": "From",
       "to": "To",
-      "noUnlink": "There is no button to unlink an account: it would leave the teams referencing you with nobody. Changing replaces it."
+      "noUnlink": "There is no button to unlink an account: it would leave the teams referencing you with nobody. Changing replaces it.",
+      "ingestRestarted": "A new collection of your matches starts.",
+      "estimatedMatches": "Roughly {{count}} match(es) to retrieve.",
+      "estimatedDuration": "It should take about {{count}} minute(s).",
+      "rosterSlotsToClaim": "Roster seats are waiting for this account: they will be attached to it."
     },
     "ingest": {
       "title": "Collection in progress",

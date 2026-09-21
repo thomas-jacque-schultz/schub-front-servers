@@ -126,26 +126,40 @@ est lu comme vrai, et il survit à celui qui l'a posé.
 
 ## Mon profil et le compte Riot
 
-- **`/users/me` n'est pas `/auth/me`.** Le second lit le *jeton* et dit ce que le BFF
-  appliquera ; le premier lit le cœur et dit ce qui est vrai — avatar, nom choisi, état Riot. Le
-  jeton ne peut porter aucun des trois. Le profil vit dans `profileStore`, chargé une fois et
-  partagé : le menu, l'écran de profil et l'écran de stats en dépendent tous les trois.
+- **`/me` n'est pas `/auth/me`.** Le second lit le *jeton* et dit ce que le BFF appliquera ; le
+  premier lit le cœur et dit ce qui est vrai — avatar, nom choisi, état Riot. Le jeton ne peut
+  porter aucun des trois. Le compte Riot, lui, vit sous `/users/me/riot-account` : c'est le
+  découpage du cœur, et le front ne le réécrit pas. Le profil est chargé une fois dans
+  `profileStore` et partagé — le menu, l'écran de profil et l'écran de stats en dépendent tous
+  les trois.
 - **Aucune permission sur ces routes** : la ressource est le lecteur. Exiger `USER_VIEW` sur son
-  propre profil fermerait le site à tout compte neuf, qui est `VISITEUR`.
-- **Pas de bouton « délier ».** Le cœur porte un `DELETE`, le BFF ne le proxifie pas et l'écran
-  ne l'offre pas : délier laisserait sans personne les places d'équipe qui référencent le compte.
-  Le geste est le **changement**, et il affiche ce qu'il coûte.
-- **Les conséquences d'un changement viennent du cœur, en faits et non en phrases** : un serveur
-  ne peut pas servir une phrase sur un site bilingue. Un champ absent ne produit aucune ligne —
-  on n'invente pas un nombre de parties perdues.
+  propre profil fermerait le site à tout compte neuf, qui est `VISITEUR`. Côté BFF, les routes
+  Riot cohabitent avec l'administration des comptes dans `UserProxyController` : un test
+  distingue les deux, parce que rien dans le fichier ne le fait.
+- **Pas de déliaison.** Ni le cœur, ni le BFF, ni l'écran : délier laisserait sans personne les
+  places d'équipe qui référencent le compte. Le geste est le **changement**, et il affiche ce
+  qu'il coûte.
+- **Le changement se confirme sur un 409.** Il n'existe aucune route de prévisualisation : un
+  `PUT` sans `confirmChange` répond 409 **en portant** l'objet `change`. Le refus est donc
+  l'information, et il devient impossible de confirmer un changement dont on n'a pas reçu les
+  conséquences — la garantie est structurelle, pas une discipline à tenir. Attention : **deux 409
+  différents**, et ils demandent des gestes opposés — « déjà pris par quelqu'un d'autre » ne porte
+  pas de `change`.
+- **Les conséquences sont des faits, jamais des phrases** : un serveur ne peut pas servir une
+  phrase sur un site bilingue. Un champ absent ou faux ne produit aucune ligne — on n'invente pas
+  un nombre de parties ni une durée.
 - **L'API Riot ne sait pas chercher par pseudo partiel.** Les suggestions viennent de nos propres
   participations. **Une liste vide est l'état normal au démarrage**, pas une panne, et la saisie
   exacte `Pseudo#TAG` reste ouverte en permanence — c'est elle le chemin, la recherche est une
-  aide.
+  aide. Chaque proposition porte `mine` et `alreadyLinked`, des faits servis par le cœur : on
+  ne compare aucun identifiant pour se reconnaître.
 - **Trois états Riot, pas un booléen** : `ABSENT`, `EN_ATTENTE_DE_RESOLUTION`, `RESOLU`.
-  L'intermédiaire s'explique et se relance (rejouer le même Riot ID suffit, la route est
-  idempotente). Et `riot.ingest` à `null` veut dire « on ne sait pas », jamais « rien en
+  L'intermédiaire s'explique et se relance — rejouer le même Riot ID suffit, la route est
+  idempotente. Et `riot.ingest` à `null` veut dire « on ne sait pas », jamais « rien en
   attente » : les confondre ferait disparaître l'indicateur au moment où l'on ne sait plus rien.
+- **Après toute liaison réussie, `POST /teams/claim`.** C'est lui qui rattache les places
+  d'effectif laissées à ce Riot ID, et qui les resynchronise après un changement. Son échec ne
+  remet pas la liaison en cause.
 - **`Mes stats` est grisée, pas masquée ni désactivée.** Masquée, elle ferait croire que la
   fonctionnalité n'existe pas ; désactivée, elle ne dirait pas pourquoi. Elle reste un lien, le
   motif est lisible au survol **et** annoncé aux lecteurs d'écran, et la route redit la raison —
