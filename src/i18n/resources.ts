@@ -6,6 +6,7 @@ import enPortfolio from "../locales/en/portfolio.json";
 import enPorts from "../locales/en/ports.json";
 import enRoles from "../locales/en/roles.json";
 import enServers from "../locales/en/servers.json";
+import enTeams from "../locales/en/teams.json";
 import enUsers from "../locales/en/users.json";
 import frAuth from "../locales/fr/auth.json";
 import frContact from "../locales/fr/contact.json";
@@ -15,6 +16,7 @@ import frPortfolio from "../locales/fr/portfolio.json";
 import frPorts from "../locales/fr/ports.json";
 import frRoles from "../locales/fr/roles.json";
 import frServers from "../locales/fr/servers.json";
+import frTeams from "../locales/fr/teams.json";
 import frUsers from "../locales/fr/users.json";
 
 /**
@@ -35,6 +37,7 @@ export const resources = {
     roles: frRoles,
     portfolio: frPortfolio,
     contact: frContact,
+    teams: frTeams,
   },
   en: {
     common: enCommon,
@@ -46,6 +49,7 @@ export const resources = {
     roles: enRoles,
     portfolio: enPortfolio,
     contact: enContact,
+    teams: enTeams,
   },
 } as const;
 
@@ -62,6 +66,7 @@ export const namespaces = [
   "roles",
   "portfolio",
   "contact",
+  "teams",
 ] as const;
 
 export type Namespace = (typeof namespaces)[number];

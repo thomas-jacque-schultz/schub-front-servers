@@ -39,6 +39,10 @@
     "DISCORD_CHANNEL_MANAGE": "Gérer les salons Discord",
     "USER_VIEW": "Voir les comptes",
     "USER_ROLE_ASSIGN": "Attribuer un rôle",
+    "TEAM_CREATE": "Créer une équipe",
+    "TEAM_VIEW": "Voir une équipe",
+    "TEAM_EDIT": "Modifier une équipe et son effectif",
+    "COMPOSITION_EDIT": "Modifier les compositions d'une équipe",
     "ROLE_MANAGE": "Administrer les rôles"
   }
 }

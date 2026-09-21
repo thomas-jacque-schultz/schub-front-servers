@@ -39,6 +39,10 @@
     "DISCORD_CHANNEL_MANAGE": "Manage Discord channels",
     "USER_VIEW": "View accounts",
     "USER_ROLE_ASSIGN": "Assign a role",
+    "TEAM_CREATE": "Create a team",
+    "TEAM_VIEW": "View a team",
+    "TEAM_EDIT": "Edit a team and its roster",
+    "COMPOSITION_EDIT": "Edit a team's compositions",
     "ROLE_MANAGE": "Manage roles"
   }
 }
