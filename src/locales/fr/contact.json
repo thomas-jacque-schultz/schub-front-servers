@@ -1,10 +1,7 @@
 {
-  "eyebrow": "Contact",
-  "title": "M'écrire",
-  "subtitle": "Le message m'arrive directement sur Discord. Pas de liste de diffusion, pas de suivi.",
   "meta": {
-    "title": "Contact — Thomas Schultz",
-    "description": "Écrire à Thomas Schultz, ingénieur full stack. Le formulaire transmet le message directement, sans adresse e-mail publiée."
+    "title": "Thomas Schultz — ingénieur full stack",
+    "description": "Parcours, projets et contact de Thomas Schultz, ingénieur full stack à Colmar."
   },
   "fields": {
     "name": "Votre nom",
@@ -32,5 +29,9 @@
     "rejected": "Le message a été refusé. Si vous êtes bien humain, réessayez en rechargeant la page.",
     "failed": "L'envoi a échoué. Réessayez, ou passez par Discord depuis le pied de page."
   },
-  "privacy": "Aucune adresse e-mail n'est publiée sur ce site : ce formulaire existe pour la remplacer."
+  "privacy": "Aucune adresse e-mail n'est publiée sur ce site : ce formulaire existe pour la remplacer.",
+  "feedback": {
+    "title": "Feedback",
+    "intro": "Une question, une proposition, un bug rencontré sur Schub : le message m'arrive directement sur Discord."
+  }
 }

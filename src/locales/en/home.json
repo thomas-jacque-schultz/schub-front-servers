@@ -1,0 +1,38 @@
+{
+  "meta": {
+    "title": "Schub — game server hosting and control",
+    "description": "Schub hosts game servers, starts them on demand, and equips a League of Legends team: roster, statistics, champion pool and draft preparation."
+  },
+  "hero": {
+    "eyebrow": "Schub",
+    "title": "Game servers that switch on when you need them",
+    "subtitle": "And, for League of Legends, what it takes to run a team."
+  },
+  "about": {
+    "title": "What Schub does",
+    "servers": "Game servers are hosted at home and driven from the site or from Discord: their state is visible live, and starting or stopping one is a button. Port forwarding opens and closes along with the server.",
+    "lol": "On the League of Legends side, Schub reads your games through Riot's API: personal and team statistics, champion pool by role, draft preparation and post-game review.",
+    "identity": "Identity goes through Discord. There is no password to remember, and rights follow your role.",
+    "ctaServers": "See server status",
+    "ctaTeams": "My teams"
+  },
+  "onboarding": {
+    "title": "To get up and running",
+    "intro": "What is left to do on your profile. Every line leads there.",
+    "allDone": "Your profile is complete: nothing is missing.",
+    "loading": "Reading your profile…",
+    "unavailable": "Your profile could not be read. The list stays incomplete until it can.",
+    "signedOutTitle": "Sign in to use Schub",
+    "signedOutBody": "Server status is public, but starting a server, linking your League of Legends account and joining a team all need a Discord account.",
+    "signIn": "Sign in with Discord",
+    "riotAbsent": "Link your League of Legends account",
+    "riotAbsentHint": "Without it Schub has no games to count, and the My stats screen stays closed.",
+    "riotPending": "Your League of Legends account is being verified",
+    "riotPendingHint": "The Riot ID is recorded. Submitting it again restarts the lookup if it drags on.",
+    "riotLinked": "League of Legends account linked",
+    "ingestRunning": "Collecting your games",
+    "ingestRunningHint": "Statistics fill in as it goes. Your profile says where it stands.",
+    "displayName": "Choose your display name",
+    "displayNameHint": "Without a choice, your Discord username is what shows everywhere."
+  }
+}

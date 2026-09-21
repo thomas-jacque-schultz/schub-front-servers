@@ -1,10 +1,7 @@
 {
-  "eyebrow": "Contact",
-  "title": "Write to me",
-  "subtitle": "Your message reaches me directly on Discord. No mailing list, no tracking.",
   "meta": {
-    "title": "Contact — Thomas Schultz",
-    "description": "Write to Thomas Schultz, full stack engineer. The form delivers your message directly, with no email address published."
+    "title": "Thomas Schultz — full stack engineer",
+    "description": "Career, projects and contact details for Thomas Schultz, full stack engineer in Colmar, France."
   },
   "fields": {
     "name": "Your name",
@@ -32,5 +29,9 @@
     "rejected": "The message was refused. If you are human, reload the page and try again.",
     "failed": "Sending failed. Try again, or reach me on Discord from the footer."
   },
-  "privacy": "No email address is published on this site: this form exists in its place."
+  "privacy": "No email address is published on this site: this form exists in its place.",
+  "feedback": {
+    "title": "Feedback",
+    "intro": "A question, an offer, a bug you hit on Schub: your message reaches me directly on Discord."
+  }
 }

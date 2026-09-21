@@ -2,7 +2,7 @@ import { type ReactNode, Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { AppLayout } from "./components/AppLayout";
-import PortfolioPage from "./pages/PortfolioPage";
+import HomePage from "./pages/HomePage";
 import { Card, ProgressBar, Stack } from "./design-system";
 import type { AppLanguage } from "./i18n/config";
 import { LocalizedNavigate } from "./i18n/LocalizedNavigate";
@@ -19,8 +19,8 @@ import type { Permission } from "./types/permission";
  * une authentification. Ça n'en est plus une quand elle est la racine d'un domaine personnel,
  * destinée à être indexée et partagée — y compris depuis un téléphone sur un réseau lent.</p>
  *
- * <p>Seul le portfolio est chargé d'emblée. Tout le reste arrive à la demande, y compris
- * l'état des serveurs : l'ancienne page d'accueil est devenue une section comme une autre.</p>
+ * <p>Seule la racine est chargée d'emblée. Tout le reste arrive à la demande, y compris l'état
+ * des serveurs et le contenu personnel, qui est la page la plus lourde du site.</p>
  */
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const GameServerFormPage = lazy(() => import("./pages/GameServerFormPage"));
@@ -115,8 +115,9 @@ function LocalizedRoutes() {
       ) : (
         <Suspense fallback={<RouteLoadingScreen />}>
           <Routes>
-            {/* La racine est le portfolio depuis le chantier C. */}
-            <Route index element={<PortfolioPage />} />
+            {/* La racine est la page produit de Schub, plus la liste d'onboarding. Le contenu
+                personnel vit sur /contact depuis les retours d'usage. */}
+            <Route index element={<HomePage />} />
 
             {/* L'état des serveurs : c'était la racine jusqu'ici, c'est une section désormais.
                 La page elle-même n'a pas bougé — elle ne sait pas à quelle adresse on la sert. */}

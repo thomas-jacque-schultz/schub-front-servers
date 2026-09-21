@@ -14,6 +14,10 @@ import StorageIcon from "@mui/icons-material/Storage";
 import TranslateIcon from "@mui/icons-material/Translate";
 import WorkIcon from "@mui/icons-material/WorkOutline";
 import AddIcon from "@mui/icons-material/Add";
+import CheckCircleIcon from "@mui/icons-material/CheckCircleOutline";
+import HourglassIcon from "@mui/icons-material/HourglassEmpty";
+import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 /**
  * Le répertoire des icônes — **fermé, et c'est le but**.
@@ -27,8 +31,10 @@ import AddIcon from "@mui/icons-material/Add";
  */
 const ICONS = {
   add: AddIcon,
+  chevron: ChevronRightIcon,
   code: CodeIcon,
   delete: DeleteOutlineIcon,
+  done: CheckCircleIcon,
   email: EmailIcon,
   expand: ExpandMoreIcon,
   external: LaunchIcon,
@@ -36,11 +42,13 @@ const ICONS = {
   languages: TranslateIcon,
   memory: MemoryIcon,
   pause: PauseIcon,
+  pending: HourglassIcon,
   play: PlayArrowIcon,
   refresh: RefreshIcon,
   school: SchoolIcon,
   send: SendIcon,
   storage: StorageIcon,
+  todo: RadioButtonUncheckedIcon,
   work: WorkIcon,
 } as const;
 

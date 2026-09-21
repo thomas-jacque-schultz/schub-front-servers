@@ -1,0 +1,38 @@
+{
+  "meta": {
+    "title": "Schub — hébergement et pilotage de serveurs de jeu",
+    "description": "Schub héberge des serveurs de jeu, les démarre à la demande et outille une équipe League of Legends : effectif, statistiques, pool de champions et préparation de draft."
+  },
+  "hero": {
+    "eyebrow": "Schub",
+    "title": "Des serveurs de jeu qui s'allument quand on en a besoin",
+    "subtitle": "Et, pour League of Legends, de quoi faire vivre une équipe."
+  },
+  "about": {
+    "title": "Ce que fait Schub",
+    "servers": "Les serveurs de jeu sont hébergés à la maison et pilotés depuis le site ou depuis Discord : leur état est visible en direct, et démarrer ou arrêter est un bouton. Les redirections de ports s'ouvrent et se referment toutes seules avec le serveur.",
+    "lol": "Côté League of Legends, Schub lit tes parties par l'API de Riot : statistiques personnelles et d'équipe, pool de champions par poste, préparateur de draft et débrief d'après-match.",
+    "identity": "L'identité passe par Discord. Il n'y a pas de mot de passe à retenir, et les droits suivent le rôle.",
+    "ctaServers": "Voir l'état des serveurs",
+    "ctaTeams": "Mes équipes"
+  },
+  "onboarding": {
+    "title": "Pour être opérationnel",
+    "intro": "Ce qu'il reste à faire sur ton profil. Chaque ligne y mène.",
+    "allDone": "Ton profil est complet : rien ne manque.",
+    "loading": "Lecture de ton profil…",
+    "unavailable": "Ton profil n'a pas pu être lu. La liste des actions reste incomplète tant que c'est le cas.",
+    "signedOutTitle": "Connecte-toi pour utiliser Schub",
+    "signedOutBody": "L'état des serveurs est public, mais démarrer un serveur, lier ton compte League of Legends et rejoindre une équipe demandent un compte Discord.",
+    "signIn": "Se connecter avec Discord",
+    "riotAbsent": "Lier ton compte League of Legends",
+    "riotAbsentHint": "Sans lui, Schub n'a aucune partie à compter et l'écran Mes stats reste fermé.",
+    "riotPending": "Ton compte League of Legends est en cours de vérification",
+    "riotPendingHint": "Le Riot ID est enregistré. Rejouer la saisie relance la résolution si elle traîne.",
+    "riotLinked": "Compte League of Legends lié",
+    "ingestRunning": "Collecte de tes parties en cours",
+    "ingestRunningHint": "Les statistiques se remplissent au fur et à mesure. Le profil dit où ça en est.",
+    "displayName": "Choisir ton nom d'affichage",
+    "displayNameHint": "Sans choix, c'est ton pseudo Discord qui s'affiche partout."
+  }
+}

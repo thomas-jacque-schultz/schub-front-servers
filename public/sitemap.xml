@@ -2,6 +2,10 @@
 <!--
   Les six pages publiques : trois en français, leurs trois équivalentes en anglais.
 
+  La racine est la page produit de Schub ; le parcours, les projets et le formulaire vivent sur
+  /contact, qui est donc la page à indexer pour qui cherche la personne plutôt que l'outil. Elle
+  change plus souvent qu'un CV, d'où le `monthly`.
+
   Chaque URL déclare ses alternatives `hreflang`, y compris elle-même — c'est ce que demande la
   spécification, et c'est ce qui évite que les deux versions soient traitées comme du contenu
   dupliqué.
@@ -19,7 +23,7 @@
     <xhtml:link rel="alternate" hreflang="fr" href="https://schultz-thomas.fr/" />
     <xhtml:link rel="alternate" hreflang="en" href="https://schultz-thomas.fr/en" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://schultz-thomas.fr/" />
-    <changefreq>monthly</changefreq>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
@@ -35,7 +39,7 @@
     <xhtml:link rel="alternate" hreflang="fr" href="https://schultz-thomas.fr/contact" />
     <xhtml:link rel="alternate" hreflang="en" href="https://schultz-thomas.fr/en/contact" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://schultz-thomas.fr/contact" />
-    <changefreq>yearly</changefreq>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
@@ -43,7 +47,7 @@
     <xhtml:link rel="alternate" hreflang="fr" href="https://schultz-thomas.fr/" />
     <xhtml:link rel="alternate" hreflang="en" href="https://schultz-thomas.fr/en" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://schultz-thomas.fr/" />
-    <changefreq>monthly</changefreq>
+    <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
@@ -59,7 +63,7 @@
     <xhtml:link rel="alternate" hreflang="fr" href="https://schultz-thomas.fr/contact" />
     <xhtml:link rel="alternate" hreflang="en" href="https://schultz-thomas.fr/en/contact" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://schultz-thomas.fr/contact" />
-    <changefreq>yearly</changefreq>
+    <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
 </urlset>

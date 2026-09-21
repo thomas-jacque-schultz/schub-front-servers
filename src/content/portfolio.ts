@@ -73,11 +73,6 @@ export interface PortfolioLanguageSkill {
 }
 
 export interface PortfolioContent {
-  /** Ce que lisent les moteurs de recherche et les aperçus de partage. */
-  meta: {
-    title: string;
-    description: string;
-  };
   hero: {
     eyebrow: string;
     name: string;
@@ -86,7 +81,6 @@ export interface PortfolioContent {
     lede: string;
     body: string;
     ctaServers: string;
-    ctaContact: string;
   };
   /**
    * Le trou assumé : le paragraphe sur le poste actuel n'a pas été fourni.
@@ -104,7 +98,6 @@ export interface PortfolioContent {
     experience: { title: string; intro: string };
     education: { title: string };
     languages: { title: string };
-    contact: { title: string; intro: string; cta: string };
   };
   /** L'emplacement réservé au portrait — décidé sans photo, mais la place est gardée. */
   portrait: {
@@ -140,13 +133,6 @@ const PLAN_URL = `${REPOSITORY_URL}/Schub/blob/main/docs/evolutions-2026-09.md`;
 const MIGRATION_URL = `${REPOSITORY_URL}/Schub/blob/main/docs/migration-microservices.md`;
 
 const fr: PortfolioContent = {
-  meta: {
-    title: "Thomas Schultz — ingénieur full stack",
-    description:
-      "Ingénieur full stack à Colmar. Je conçois et j'exploite du logiciel métier : Java, " +
-      "Spring Boot, React, Docker Swarm. Schub, ma plateforme de pilotage de serveurs de jeu, " +
-      "est en accès libre.",
-  },
   hero: {
     eyebrow: "Ingénieur full stack",
     name: "Thomas Schultz",
@@ -162,7 +148,6 @@ const fr: PortfolioContent = {
       "justifier. Ce que je préfère montrer, ce n'est pas une liste de technologies : c'est du " +
       "code qui tourne, et les raisons écrites des choix qu'il porte.",
     ctaServers: "Voir les serveurs en direct",
-    ctaContact: "Me contacter",
   },
   currentRoleGap: {
     heading: "Aujourd'hui",
@@ -184,13 +169,6 @@ const fr: PortfolioContent = {
     },
     education: { title: "Formation" },
     languages: { title: "Langues" },
-    contact: {
-      title: "Parlons-en",
-      intro:
-        "Une question, une proposition, ou simplement l'envie de savoir comment tel morceau " +
-        "fonctionne : le formulaire me prévient directement.",
-      cta: "Ouvrir le formulaire",
-    },
   },
   portrait: { src: null, alt: "Portrait de Thomas Schultz" },
   projects: [
@@ -323,12 +301,6 @@ const fr: PortfolioContent = {
 };
 
 const en: PortfolioContent = {
-  meta: {
-    title: "Thomas Schultz — full stack engineer",
-    description:
-      "Full stack engineer based in Colmar, France. I design and run business software: Java, " +
-      "Spring Boot, React, Docker Swarm. Schub, my game server platform, is open to read.",
-  },
   hero: {
     eyebrow: "Full stack engineer",
     name: "Thomas Schultz",
@@ -344,7 +316,6 @@ const en: PortfolioContent = {
       "would rather show is not a list of technologies but working code — and the written " +
       "reasons behind the choices it carries.",
     ctaServers: "See the servers live",
-    ctaContact: "Get in touch",
   },
   currentRoleGap: {
     heading: "Right now",
@@ -366,13 +337,6 @@ const en: PortfolioContent = {
     },
     education: { title: "Education" },
     languages: { title: "Languages" },
-    contact: {
-      title: "Let's talk",
-      intro:
-        "A question, an offer, or plain curiosity about how one of these pieces works: the form " +
-        "reaches me directly.",
-      cta: "Open the form",
-    },
   },
   portrait: { src: null, alt: "Portrait of Thomas Schultz" },
   projects: [
