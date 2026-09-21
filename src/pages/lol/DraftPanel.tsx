@@ -224,10 +224,32 @@ export function DraftPanel({ team }: DraftPanelProps) {
     },
   ];
 
-  const playerOptions = [
-    { value: UNASSIGNED, label: t("draft.fields.playerNone") },
-    ...players.map((member) => ({ value: member.memberId, label: member.displayName })),
-  ];
+  /**
+   * Les joueurs proposés à un poste : ceux qui le tiennent d'abord, les autres ensuite.
+   *
+   * <p>Un membre tient plusieurs postes, donc il est candidat à plusieurs lignes — mais une même
+   * composition ne le retient qu'une fois, et le cœur le refuse. Les autres ne sont pas retirés :
+   * une rotation se prépare avec quelqu'un hors de son poste habituel, et l'IHM ne doit pas
+   * proposer moins que ce que le serveur accepte sans raison.</p>
+   */
+  const playerOptionsFor = (role: GameRole) => {
+    const duPoste = players.filter((member) => member.roles.includes(role));
+    const autres = players.filter((member) => !member.roles.includes(role));
+    return [
+      { value: UNASSIGNED, label: t("draft.fields.playerNone") },
+      ...duPoste.map((member) => ({ value: member.memberId, label: member.displayName })),
+      ...autres.map((member) => ({
+        value: member.memberId,
+        label: t("draft.fields.playerOffRole", {
+          name: member.displayName,
+          roles:
+            member.roles.length === 0
+              ? t("draft.fields.playerNoRole")
+              : member.roles.map((autre) => t(`roles.${autre}`)).join(" · "),
+        }),
+      })),
+    ];
+  };
 
   return (
     <Stack spacing={2}>
@@ -321,7 +343,8 @@ export function DraftPanel({ team }: DraftPanelProps) {
                 label={t("draft.fields.player", { role: t(`roles.${slot.role}`) })}
                 value={slot.memberId}
                 onChange={(value) => setSlot(slot.role, { memberId: value })}
-                options={playerOptions}
+                options={playerOptionsFor(slot.role)}
+                helperText={t("draft.fields.playerHelper")}
               />
             </Stack>
           ))}
