@@ -152,7 +152,10 @@
       "champion": "Champion ({{role}})",
       "championHelper": "The Data Dragon key: Ahri, MonkeyKing, LeeSin. The champion catalogue will arrive with the pool.",
       "player": "Player ({{role}})",
-      "playerNone": "To decide"
+      "playerNone": "To decide",
+      "playerOffRole": "{{name}} — {{roles}}",
+      "playerNoRole": "no declared position",
+      "playerHelper": "Players of this position first. The others stay available: the core accepts them, and a composition is also prepared with a rotation."
     },
     "validation": {
       "nameRequired": "A composition has a name.",
