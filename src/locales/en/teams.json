@@ -1,0 +1,190 @@
+{
+  "eyebrow": "League of Legends",
+  "list": {
+    "title": "My teams",
+    "subtitle": "The ones you created, and the ones you were given a seat in.",
+    "caption": "List of my teams",
+    "nameHeader": "Team",
+    "membersHeader": "Roster",
+    "updatedHeader": "Last update",
+    "emptyTitle": "No team yet",
+    "emptyDescription": "Create one: players are added by their Riot ID, without waiting for all five to sign in.",
+    "memberCount": "{{count}} member(s)",
+    "updated": "Updated on {{date}}",
+    "open": "Open",
+    "canEdit": "You lead it",
+    "isMember": "You are a member",
+    "claim": "Claim my seats",
+    "claimHelper": "If someone added you by your Riot ID before you linked your Riot account, this button attaches those seats to your account.",
+    "claimNone": "No seat was waiting for you.",
+    "claimDone": "{{count}} team(s) attached to your account."
+  },
+  "create": {
+    "action": "Create a team",
+    "title": "New team",
+    "description": "A name is enough to start. The roster comes next, player by player.",
+    "field": "Team name",
+    "helper": "60 characters at most.",
+    "confirm": "Create",
+    "failed": "Creation failed"
+  },
+  "team": {
+    "caption": "Team {{name}}",
+    "membersSummary": "{{count}} member(s) on the roster",
+    "rename": {
+      "action": "Rename",
+      "title": "Rename the team",
+      "description": "The name is what other members see; changing your mind costs nothing.",
+      "confirm": "Rename",
+      "failed": "Renaming failed"
+    },
+    "delete": {
+      "action": "Delete the team",
+      "title": "Delete \"{{name}}\"?",
+      "description": "The roster and the saved compositions go with it. This cannot be undone.",
+      "confirm": "Delete",
+      "failed": "Deletion failed"
+    },
+    "back": "Back to my teams",
+    "loadFailed": "Could not load this team",
+    "readOnly": "You are a member of this team: you see everything, and the captain alone writes."
+  },
+  "tabs": {
+    "roster": "Roster",
+    "players": "Players",
+    "pool": "Champion pool",
+    "draft": "Draft planner",
+    "ariaLabel": "The team panels",
+    "soonBadge": "coming"
+  },
+  "soon": {
+    "players": {
+      "title": "Player statistics are coming",
+      "description": "One column per player — rank, LP, recent games — plus team games, those where at least four of the five played, across all queues. This panel waits on Riot data ingestion, under way in the core. Nothing is shown here until it is true: a made-up number would be worse than an empty panel."
+    },
+    "pool": {
+      "title": "The champion pool is coming",
+      "description": "Five columns, one per position: the champions each member can play, from their masteries. It depends on Riot masteries and the Data Dragon catalogue, both being wired into the core."
+    }
+  },
+  "roster": {
+    "title": "The roster",
+    "description": "A member is identified by their Riot ID. If they already have a Schub account, the seat is attached at once; otherwise it waits for them, and they will claim it by linking their Riot account.",
+    "caption": "The team members",
+    "emptyTitle": "Empty roster",
+    "emptyDescription": "Add your players by their Riot ID — yours included, if you play.",
+    "columns": {
+      "player": "Player",
+      "riotId": "Riot ID",
+      "role": "Position",
+      "status": "Status",
+      "account": "Account",
+      "actions": "Actions"
+    },
+    "you": "you",
+    "captain": "Captain",
+    "linked": "Linked",
+    "free": "Open",
+    "linkedHelp": "This Riot ID matches a Schub account.",
+    "freeHelp": "Nobody has claimed this seat yet.",
+    "noRole": "No position",
+    "noRiotId": "Incomplete Riot ID",
+    "add": {
+      "action": "Add a member",
+      "title": "Add a member",
+      "description": "The full Riot ID is required: it is what will attach the seat to an account, now or later.",
+      "gameName": "Game name",
+      "gameNameHelper": "The part before the #.",
+      "tagLine": "TAG",
+      "tagLineHelper": "The part after the #, without the #.",
+      "confirm": "Add",
+      "failed": "Adding failed"
+    },
+    "edit": {
+      "action": "Edit",
+      "title": "Edit {{name}}",
+      "description": "The Riot ID and the linked account are not editable here: the first belongs to Riot, the second is earned by claiming.",
+      "confirm": "Save",
+      "failed": "The change failed"
+    },
+    "remove": {
+      "action": "Remove",
+      "title": "Remove {{name}} from the roster?",
+      "description": "The seat disappears. Compositions that named it will lose this player.",
+      "confirm": "Remove",
+      "failed": "Removal failed"
+    },
+    "fields": {
+      "role": "Position",
+      "roleHelper": "Leave empty for a coach or a flexible substitute.",
+      "status": "Status",
+      "coachHasNoRole": "A coach holds no position: the position is cleared."
+    }
+  },
+  "draft": {
+    "title": "Prepared compositions",
+    "description": "Drafts, to show the team: five positions, one champion each, a player once decided. No bans, no pick order, no timer — this is not a draft simulator.",
+    "emptyTitle": "No composition",
+    "emptyDescription": "Prepare one: all five positions are there, even if the roster is not.",
+    "loadFailed": "Could not load the compositions",
+    "patch": "Patch {{patch}}",
+    "noPatch": "Patch not stated",
+    "updated": "Updated on {{date}}",
+    "unassigned": "Player to decide",
+    "columns": {
+      "role": "Position",
+      "champion": "Champion",
+      "player": "Player"
+    },
+    "create": {
+      "action": "New composition",
+      "title": "New composition",
+      "confirm": "Save",
+      "failed": "Saving failed"
+    },
+    "edit": {
+      "action": "Edit",
+      "title": "Edit \"{{name}}\"",
+      "confirm": "Save"
+    },
+    "delete": {
+      "action": "Delete",
+      "title": "Delete \"{{name}}\"?",
+      "description": "The draft disappears. Nothing else depends on it.",
+      "confirm": "Delete",
+      "failed": "Deletion failed"
+    },
+    "fields": {
+      "name": "Composition name",
+      "nameHelper": "60 characters at most.",
+      "patch": "Patch",
+      "patchHelper": "The version at the time of preparation, for example 15.18. Optional, but a composition reread in three months without its version speaks of champions that have changed.",
+      "notes": "Notes",
+      "notesHelper": "What the composition is trying to do. Optional.",
+      "champion": "Champion ({{role}})",
+      "championHelper": "The Data Dragon key: Ahri, MonkeyKing, LeeSin. The champion catalogue will arrive with the pool.",
+      "player": "Player ({{role}})",
+      "playerNone": "To decide"
+    },
+    "validation": {
+      "nameRequired": "A composition has a name.",
+      "championRequired": "Every position carries a champion: that is what makes a composition.",
+      "duplicatePlayer": "The same player cannot hold two positions."
+    }
+  },
+  "roles": {
+    "TOP": "Top",
+    "JGL": "Jungle",
+    "MID": "Mid",
+    "ADC": "Bot",
+    "SUP": "Support"
+  },
+  "status": {
+    "TITULAIRE": "Starter",
+    "REMPLACANT": "Substitute",
+    "COACH": "Coach"
+  },
+  "errors": {
+    "loadFailed": "Could not load your teams"
+  }
+}

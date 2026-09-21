@@ -1,0 +1,190 @@
+{
+  "eyebrow": "League of Legends",
+  "list": {
+    "title": "Mes équipes",
+    "subtitle": "Celles que vous avez créées, et celles où l'on vous a donné une place.",
+    "caption": "Liste de mes équipes",
+    "nameHeader": "Équipe",
+    "membersHeader": "Effectif",
+    "updatedHeader": "Dernière modification",
+    "emptyTitle": "Aucune équipe pour le moment",
+    "emptyDescription": "Créez-en une : les joueurs s'ajoutent par leur Riot ID, sans attendre que les cinq se soient connectés.",
+    "memberCount": "{{count}} membre(s)",
+    "updated": "Modifiée le {{date}}",
+    "open": "Ouvrir",
+    "canEdit": "Vous la dirigez",
+    "isMember": "Vous en êtes membre",
+    "claim": "Récupérer mes places",
+    "claimHelper": "Si quelqu'un vous a ajouté par votre Riot ID avant que vous ayez lié votre compte Riot, ce bouton rattache ces places à votre compte.",
+    "claimNone": "Aucune place ne vous attendait.",
+    "claimDone": "{{count}} équipe(s) rattachée(s) à votre compte."
+  },
+  "create": {
+    "action": "Créer une équipe",
+    "title": "Nouvelle équipe",
+    "description": "Un nom suffit pour commencer. L'effectif s'ajoute ensuite, joueur par joueur.",
+    "field": "Nom de l'équipe",
+    "helper": "60 caractères au plus.",
+    "confirm": "Créer",
+    "failed": "La création a échoué"
+  },
+  "team": {
+    "caption": "Équipe {{name}}",
+    "membersSummary": "{{count}} membre(s) à l'effectif",
+    "rename": {
+      "action": "Renommer",
+      "title": "Renommer l'équipe",
+      "description": "Le nom est ce que voient les autres membres ; changer d'avis ne coûte rien.",
+      "confirm": "Renommer",
+      "failed": "Le changement de nom a échoué"
+    },
+    "delete": {
+      "action": "Supprimer l'équipe",
+      "title": "Supprimer « {{name}} » ?",
+      "description": "L'effectif et les compositions enregistrées partent avec elle. C'est définitif.",
+      "confirm": "Supprimer",
+      "failed": "La suppression a échoué"
+    },
+    "back": "Retour à mes équipes",
+    "loadFailed": "Impossible de charger cette équipe",
+    "readOnly": "Vous êtes membre de cette équipe : vous voyez tout, et le capitaine seul écrit."
+  },
+  "tabs": {
+    "roster": "Effectif",
+    "players": "Joueurs",
+    "pool": "Pool de champions",
+    "draft": "Préparateur de draft",
+    "ariaLabel": "Les panneaux de l'équipe",
+    "soonBadge": "à venir"
+  },
+  "soon": {
+    "players": {
+      "title": "Les statistiques des joueurs arrivent",
+      "description": "Une colonne par joueur — rang, LP, parties récentes — et les parties d'équipe, celles où au moins quatre des cinq ont joué, toutes files confondues. Ce panneau attend l'ingestion des données Riot, en cours dans le cœur. Rien n'est affiché ici tant que ce n'est pas vrai : un chiffre inventé serait pire qu'un panneau vide."
+    },
+    "pool": {
+      "title": "Le pool de champions arrive",
+      "description": "Cinq colonnes, une par poste : les champions jouables d'après les maîtrises de chaque membre. Il dépend des maîtrises Riot et du catalogue Data Dragon, tous deux en cours de branchement dans le cœur."
+    }
+  },
+  "roster": {
+    "title": "L'effectif",
+    "description": "Un membre est identifié par son Riot ID. S'il a déjà un compte Schub, la place lui est rattachée aussitôt ; sinon elle l'attend, et il la récupérera en liant son compte Riot.",
+    "caption": "Les membres de l'équipe",
+    "emptyTitle": "Effectif vide",
+    "emptyDescription": "Ajoutez vos joueurs par leur Riot ID — le vôtre compris, si vous jouez.",
+    "columns": {
+      "player": "Joueur",
+      "riotId": "Riot ID",
+      "role": "Poste",
+      "status": "Statut",
+      "account": "Compte",
+      "actions": "Actions"
+    },
+    "you": "vous",
+    "captain": "Capitaine",
+    "linked": "Lié",
+    "free": "Libre",
+    "linkedHelp": "Ce Riot ID correspond à un compte Schub.",
+    "freeHelp": "Personne n'a encore revendiqué cette place.",
+    "noRole": "Sans poste",
+    "noRiotId": "Riot ID incomplet",
+    "add": {
+      "action": "Ajouter un membre",
+      "title": "Ajouter un membre",
+      "description": "Le Riot ID complet est obligatoire : c'est lui qui rattachera la place à un compte, aujourd'hui ou plus tard.",
+      "gameName": "Pseudo",
+      "gameNameHelper": "La partie avant le #.",
+      "tagLine": "TAG",
+      "tagLineHelper": "La partie après le #, sans le #.",
+      "confirm": "Ajouter",
+      "failed": "L'ajout a échoué"
+    },
+    "edit": {
+      "action": "Modifier",
+      "title": "Modifier {{name}}",
+      "description": "Le Riot ID et le compte lié ne se modifient pas ici : le premier appartient à Riot, le second se gagne par revendication.",
+      "confirm": "Enregistrer",
+      "failed": "La modification a échoué"
+    },
+    "remove": {
+      "action": "Retirer",
+      "title": "Retirer {{name}} de l'effectif ?",
+      "description": "La place disparaît. Les compositions qui la désignaient perdront ce joueur.",
+      "confirm": "Retirer",
+      "failed": "Le retrait a échoué"
+    },
+    "fields": {
+      "role": "Poste",
+      "roleHelper": "Laissez vide pour un coach ou un remplaçant polyvalent.",
+      "status": "Statut",
+      "coachHasNoRole": "Un coach ne tient pas de poste : le poste est retiré."
+    }
+  },
+  "draft": {
+    "title": "Les compositions préparées",
+    "description": "Des brouillons, à montrer à l'équipe : cinq postes, un champion par poste, un joueur quand il est décidé. Ni bans, ni ordre de pick, ni minuteur — ce n'est pas un simulateur de draft.",
+    "emptyTitle": "Aucune composition",
+    "emptyDescription": "Préparez-en une : les cinq postes y sont, même si l'effectif ne l'est pas encore.",
+    "loadFailed": "Impossible de charger les compositions",
+    "patch": "Patch {{patch}}",
+    "noPatch": "Patch non précisé",
+    "updated": "Modifiée le {{date}}",
+    "unassigned": "Joueur à décider",
+    "columns": {
+      "role": "Poste",
+      "champion": "Champion",
+      "player": "Joueur"
+    },
+    "create": {
+      "action": "Nouvelle composition",
+      "title": "Nouvelle composition",
+      "confirm": "Enregistrer",
+      "failed": "L'enregistrement a échoué"
+    },
+    "edit": {
+      "action": "Modifier",
+      "title": "Modifier « {{name}} »",
+      "confirm": "Enregistrer"
+    },
+    "delete": {
+      "action": "Supprimer",
+      "title": "Supprimer « {{name}} » ?",
+      "description": "Le brouillon disparaît. Rien d'autre n'en dépend.",
+      "confirm": "Supprimer",
+      "failed": "La suppression a échoué"
+    },
+    "fields": {
+      "name": "Nom de la composition",
+      "nameHelper": "60 caractères au plus.",
+      "patch": "Patch",
+      "patchHelper": "La version au moment de la préparation, par exemple 15.18. Facultative, mais une composition relue dans trois mois sans sa version parle de champions qui ont changé.",
+      "notes": "Notes",
+      "notesHelper": "Ce que la composition cherche à faire. Facultatif.",
+      "champion": "Champion ({{role}})",
+      "championHelper": "La clé Data Dragon : Ahri, MonkeyKing, LeeSin. Le catalogue des champions arrivera avec le pool.",
+      "player": "Joueur ({{role}})",
+      "playerNone": "À décider"
+    },
+    "validation": {
+      "nameRequired": "Une composition a un nom.",
+      "championRequired": "Chaque poste porte un champion : c'est ce qui fait une composition.",
+      "duplicatePlayer": "Un même joueur ne peut pas tenir deux postes."
+    }
+  },
+  "roles": {
+    "TOP": "Top",
+    "JGL": "Jungle",
+    "MID": "Mid",
+    "ADC": "ADC",
+    "SUP": "Support"
+  },
+  "status": {
+    "TITULAIRE": "Titulaire",
+    "REMPLACANT": "Remplaçant",
+    "COACH": "Coach"
+  },
+  "errors": {
+    "loadFailed": "Impossible de charger vos équipes"
+  }
+}

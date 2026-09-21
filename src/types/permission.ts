@@ -22,6 +22,10 @@ export const PERMISSIONS = [
   "DISCORD_CHANNEL_MANAGE",
   "USER_VIEW",
   "USER_ROLE_ASSIGN",
+  "TEAM_CREATE",
+  "TEAM_VIEW",
+  "TEAM_EDIT",
+  "COMPOSITION_EDIT",
   "ROLE_MANAGE",
 ] as const;
 
