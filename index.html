@@ -42,15 +42,15 @@
     <meta property="og:url" content="https://schultz-thomas.fr/" />
     <meta property="og:locale" content="fr_FR" />
     <meta property="og:locale:alternate" content="en_GB" />
-    <!--
-      MANQUE : og:image. L'aperçu au partage restera sans vignette tant qu'une image
-      1200 × 630 en PNG n'est pas déposée dans `public/`. La source vectorielle est fournie
-      (`public/og-card.svg`) ; il reste à la convertir, ce dépôt n'ayant aucun outil d'image.
-      Déclarer le SVG ici serait pire que de ne rien déclarer : Discord, LinkedIn et X ne le
-      lisent pas, et l'aperçu afficherait un cadre vide au lieu de rien.
-    -->
+    <!-- Produit depuis public/og-card.svg. Le regénérer si la source change. -->
+    <meta property="og:image" content="https://schultz-thomas.fr/og-card.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:alt" content="Schub — hébergement et pilotage de serveurs de jeu" />
 
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://schultz-thomas.fr/og-card.png" />
     <meta name="twitter:title" content="Schub — hébergement et pilotage de serveurs de jeu" />
     <meta
       name="twitter:description"
