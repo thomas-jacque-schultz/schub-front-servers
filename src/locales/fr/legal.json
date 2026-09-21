@@ -1,0 +1,183 @@
+{
+  "draft": {
+    "title": "Brouillon — à relire avant publication",
+    "body": "Ce texte a été rédigé d'après ce que le code fait réellement, mais il n'a pas été relu par un juriste et il engage l'éditeur du site. Les passages entre crochets restent à compléter par lui.",
+    "marker": "Les passages entre crochets sont ceux qui manquent."
+  },
+  "riot": {
+    "title": "Mention exigée par Riot Games",
+    "intro": "Riot Games impose à tout produit tiers d'afficher la mention suivante à un endroit visible des joueurs. Elle est reproduite telle quelle, en anglais, parce que c'est sa formulation officielle. Elle dit que Schub n'est pas endossé par Riot Games et ne reflète ni les vues ni les opinions de Riot Games, ni de quiconque participe officiellement à la production ou à la gestion de ses propriétés.",
+    "text": "Schub isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.",
+    "sourceLabel": "Riot Games — General Policies"
+  },
+  "updated": "Dernière mise à jour : 22 septembre 2026.",
+  "terms": {
+    "meta": {
+      "title": "Conditions d'utilisation — Schub",
+      "description": "Les conditions d'utilisation de Schub : objet du service, accès par Discord, compte League of Legends, contenus publiés, disponibilité et propriété intellectuelle."
+    },
+    "hero": {
+      "eyebrow": "Mentions",
+      "title": "Conditions d'utilisation",
+      "subtitle": "Ce à quoi on s'engage de part et d'autre en se servant de Schub."
+    },
+    "purpose": {
+      "title": "Objet",
+      "p1": "Schub est un projet personnel, gratuit et non commercial, hébergé sur schultz-thomas.fr. Il rend deux services : piloter des serveurs de jeu hébergés à domicile, et outiller une équipe League of Legends — effectif, statistiques, pool de champions, préparation des compositions et revue d'après-partie.",
+      "p2": "Utiliser le site vaut acceptation des présentes conditions. Qui ne les accepte pas n'a qu'à ne pas créer de compte ; l'état des serveurs et les pages de texte restent consultables sans compte."
+    },
+    "publisher": {
+      "title": "Éditeur",
+      "p1": "Le site est édité et hébergé à titre privé par [nom légal de l'éditeur, à compléter], [statut et adresse, à compléter].",
+      "p2": "Aucune adresse électronique n'est publiée sur ce site : le formulaire de contact est la voie ouverte, et c'est lui qui sert aussi pour toute demande relative aux données."
+    },
+    "account": {
+      "title": "Compte et accès",
+      "p1": "L'identification se fait par Discord. Il faut donc disposer d'un compte Discord et respecter les conditions de Discord, sur lesquelles l'éditeur n'a aucune prise. Aucun mot de passe n'est créé ni conservé pour Schub.",
+      "p2": "Les droits d'un compte suivent un rôle attribué par l'éditeur. Un compte nouvellement créé n'a accès qu'à son propre profil et à ses propres statistiques ; l'accès aux équipes et à l'administration se donne au cas par cas.",
+      "p3": "L'éditeur peut suspendre ou fermer un accès, sans préavis, en cas d'usage abusif — notamment la déclaration d'un compte de jeu qui n'appartient pas à la personne, ou l'écriture de contenus visés plus bas."
+    },
+    "riotAccount": {
+      "title": "Compte League of Legends",
+      "p1": "Déclarer un Riot ID déclenche la lecture de l'historique public de ce compte par l'API de Riot Games. Ne déclare que ton propre compte : déclarer celui d'un autre revient à faire collecter ses parties sans son accord.",
+      "p2": "Un compte déclaré ne se délie pas, il se remplace. Le remplacement remet les statistiques personnelles à zéro et relance une collecte ; les conséquences sont affichées et demandent une confirmation avant d'être appliquées.",
+      "p3": "Schub n'interagit pas avec le client de jeu, ne modifie rien dans le jeu et ne procure aucun avantage en partie. Il ne lit que des données que l'API de Riot Games expose publiquement."
+    },
+    "content": {
+      "title": "Ce que tu publies",
+      "p1": "Les noms d'équipe, les compositions, leurs notes et les revues d'après-partie sont écrits par les utilisateurs. Ils sont visibles des membres de l'équipe concernée, et de personne d'autre.",
+      "p2": "Tu restes responsable de ce que tu écris. Sont exclus, et supprimés sans préavis :",
+      "i1": "les injures, le harcèlement et les propos discriminatoires, y compris visant un coéquipier nommé dans une revue ;",
+      "i2": "les données personnelles de tiers — adresse, numéro, identité civile — qui n'ont rien à faire dans une note de partie ;",
+      "i3": "tout contenu illicite, ou portant atteinte aux droits d'un tiers.",
+      "p3": "Une revue d'après-partie porte sur une partie : elle décrit du jeu, pas une personne."
+    },
+    "availability": {
+      "title": "Disponibilité et garanties",
+      "p1": "Le service est rendu tel quel, gratuitement, sans aucune garantie de disponibilité, d'exactitude ni de conservation. Il est hébergé sur une machine personnelle : une coupure de courant, une panne ou un déménagement l'arrêtent.",
+      "p2": "L'éditeur peut modifier, restreindre ou arrêter le service, en totalité ou en partie, sans préavis et sans contrepartie. Les statistiques affichées sont issues de calculs sur des données de jeu : elles peuvent être incomplètes ou fausses, et ne fondent aucune décision engageant qui que ce soit.",
+      "p3": "La responsabilité de l'éditeur ne peut être engagée à raison de l'indisponibilité du service ou de la perte des données qu'il contient. [Clause de limitation de responsabilité à faire relire, à compléter.]"
+    },
+    "ip": {
+      "title": "Propriété intellectuelle",
+      "p1": "League of Legends, les noms et les visuels de champions, les icônes servies par Data Dragon et l'ensemble des éléments de jeu appartiennent à Riot Games, Inc. Schub en fait un usage de produit tiers, dans le cadre des règles du portail développeur de Riot Games.",
+      "p2": "Le code de Schub est publié sous la licence de son dépôt public. Les contenus écrits par les utilisateurs — noms d'équipe, compositions, revues — restent les leurs ; l'éditeur ne les exploite qu'aux fins de faire fonctionner le service."
+    },
+    "privacy": {
+      "title": "Données personnelles",
+      "p1": "Ce qui est collecté, où cela vit, combien de temps et comment en demander la suppression est décrit dans la politique de confidentialité.",
+      "link": "Lire la politique de confidentialité"
+    },
+    "changes": {
+      "title": "Modification des conditions",
+      "p1": "Ces conditions peuvent changer, notamment si le service change. La date de dernière mise à jour figure en tête de page. Continuer à utiliser le site après une modification vaut acceptation de la version en vigueur."
+    },
+    "law": {
+      "title": "Droit applicable",
+      "p1": "[Droit applicable et juridiction compétente à compléter — par défaut le droit français et les tribunaux du ressort du domicile de l'éditeur, à confirmer par lui.]"
+    }
+  },
+  "privacy": {
+    "meta": {
+      "title": "Politique de confidentialité — Schub",
+      "description": "Ce que Schub collecte — identité Discord, Riot ID, historique de parties publiques, notes de revue —, où ces données vivent, combien de temps, et comment en demander la suppression."
+    },
+    "hero": {
+      "eyebrow": "Mentions",
+      "title": "Politique de confidentialité",
+      "subtitle": "Ce qui est collecté, pourquoi, où ça vit, combien de temps, et comment le faire effacer."
+    },
+    "controller": {
+      "title": "Qui traite ces données",
+      "p1": "Les données sont traitées par [nom légal de l'éditeur, à compléter], éditeur du site, à titre privé et non commercial. [Adresse à compléter.]",
+      "p2": "Aucune adresse électronique n'est publiée : toute demande passe par le formulaire de contact du site."
+    },
+    "collected": {
+      "title": "Ce qui est collecté",
+      "discordTitle": "Identité Discord",
+      "discord": "À la connexion, Discord transmet l'identifiant du compte, son pseudo et l'adresse de son avatar. Rien d'autre : ni adresse électronique Discord, ni liste de serveurs, ni messages.",
+      "accountTitle": "Compte Schub",
+      "account": "Le nom d'affichage choisi sur le site, le rôle attribué et les permissions qui en découlent, la date de création et celle de la dernière connexion.",
+      "riotTitle": "Compte de jeu",
+      "riot": "Le Riot ID déclaré (pseudo et tag) et le puuid que Riot lui associe. Le puuid n'est jamais renvoyé au navigateur : il reste côté serveur, parce qu'un identifiant Riot rendu au client est la clé d'entrée d'un sondage d'historique.",
+      "matchesTitle": "Historique de parties",
+      "matches": "Pour chaque partie lue par l'API de Riot Games, la réponse de Riot est conservée telle quelle, et une projection par joueur en est dérivée : champion, poste, file, résultat, camp, durée, patch, éliminations, morts, participations, sbires, or, dégâts aux champions, score de vision, absence en cours de partie, date. S'y ajoutent les classements en cours et les maîtrises de champions.",
+      "othersTitle": "Les autres joueurs de ces parties",
+      "others": "Une partie compte dix participants. Le Riot ID et les chiffres de partie des neuf autres sont donc enregistrés eux aussi, y compris lorsqu'ils n'ont pas de compte Schub et n'en auront jamais. Ce sont des données que l'API de Riot Games rend publiques, mais elles sont bien conservées ici — et une demande de suppression les concerne aussi.",
+      "teamsTitle": "Équipes",
+      "teams": "Le nom d'une équipe, son effectif — un Riot ID, des postes, un statut par place —, le pool de champions retenu par poste et les compositions préparées, avec leur patch et leurs notes.",
+      "reviewsTitle": "Revues d'après-partie",
+      "reviews": "Le texte libre écrit par un membre à propos d'un autre, rattaché à une partie précise, avec son auteur, son sujet et ses dates d'écriture et de modification.",
+      "contactTitle": "Formulaire de contact",
+      "contact": "Le nom, l'adresse électronique et le message saisis. Le message est remis à l'éditeur par Discord, en message privé ou dans un salon de repli. [Durée de conservation du message côté serveur à confirmer par l'éditeur.]"
+    },
+    "notCollected": {
+      "title": "Ce qui n'est pas collecté",
+      "i1": "aucun mot de passe : l'identification passe par Discord ;",
+      "i2": "aucun traceur publicitaire, aucune régie, aucun profilage commercial ;",
+      "i3": "aucune mesure d'audience, aucun outil d'analyse tiers ;",
+      "i4": "aucune donnée de paiement : le service est gratuit et ne facture rien."
+    },
+    "cookies": {
+      "title": "Cookies et stockage du navigateur",
+      "session": "Un cookie de session, posé par le serveur et inaccessible au JavaScript du site, porte le jeton d'authentification. Il est nécessaire au fonctionnement : sans lui, il n'y a pas de connexion possible. Se déconnecter l'efface.",
+      "local": "Le navigateur mémorise localement un seul réglage, sous la clé schub-color-mode : le choix entre thème clair et thème sombre. Il ne quitte jamais l'appareil.",
+      "turnstile": "Le formulaire de contact peut être protégé par Cloudflare Turnstile, un service anti-robots. Quand il est activé, le navigateur contacte Cloudflare, qui voit alors l'adresse IP du visiteur et applique sa propre politique. Sans clé configurée, ce widget n'est pas chargé du tout."
+    },
+    "purposes": {
+      "title": "Pourquoi ces données sont traitées",
+      "i1": "identifier une personne et lui donner les droits attachés à son rôle ;",
+      "i2": "rattacher un compte de jeu à un compte du site, et à une place d'effectif ;",
+      "i3": "calculer et afficher les statistiques personnelles et d'équipe ;",
+      "i4": "faire fonctionner les équipes : effectif, pool de champions, compositions, revues ;",
+      "i5": "recevoir les messages du formulaire de contact et en écarter le spam.",
+      "basis": "[Base légale à qualifier par l'éditeur — exécution du service demandé pour les comptes, intérêt légitime pour les données de parties de tiers. À faire relire.]"
+    },
+    "storage": {
+      "title": "Où ces données vivent",
+      "p1": "Dans une base MongoDB auto-hébergée, sur la machine qui héberge le site. Aucune donnée n'est confiée à un hébergeur de base de données tiers, à un service d'analyse ou à un service de sauvegarde en ligne.",
+      "p2": "[Localisation physique de la machine, et politique de sauvegarde, à préciser par l'éditeur.]"
+    },
+    "retention": {
+      "title": "Combien de temps",
+      "cachesTitle": "Ce qui expire tout seul",
+      "caches": "Les classements sont rafraîchis environ toutes les heures, les maîtrises de champions et la version du jeu toutes les six heures. Ce sont des caches : ils sont remplacés, pas accumulés.",
+      "permanentTitle": "Ce qui ne s'efface pas de lui-même",
+      "permanent": "Les parties collectées, leurs projections par joueur et l'index des comptes de jeu croisés n'ont aucune date d'expiration.",
+      "riotPurge": "Il faut le dire clairement : l'historique servi par Riot est borné à environ mille parties par joueur, et une partie plus ancienne en disparaît. Les parties déjà collectées par Schub, elles, restent. Autrement dit, Schub conserve des parties que Riot ne sert plus. C'est délibéré — c'est ce qui permet de comparer une saison à la précédente — et c'est aussi ce qui rend une demande de suppression utile.",
+      "accountTitle": "Le reste",
+      "account": "Le compte, ses équipes, ses compositions et ses revues sont conservés tant que le compte existe. Supprimer une équipe supprime ses compositions et ses revues."
+    },
+    "sharing": {
+      "title": "À qui ces données sont transmises",
+      "p1": "À personne. Rien n'est vendu, loué, cédé ni transmis à un tiers à des fins commerciales, publicitaires ou statistiques.",
+      "p2": "Trois services extérieurs sont néanmoins en jeu, et il est honnête de les nommer :",
+      "i1": "Riot Games — le site interroge son API pour lire des parties. Ce qui sort d'ici est l'identifiant du compte de jeu concerné, rien de plus ;",
+      "i2": "Discord — pour l'authentification, et pour la remise des messages du formulaire de contact ;",
+      "i3": "Cloudflare — uniquement si la protection anti-robots du formulaire de contact est activée.",
+      "p3": "Les données restent par ailleurs visibles de qui en a l'usage sur le site : les membres d'une équipe voient l'effectif, les statistiques et les revues de cette équipe. Rien n'est public : aucune page du site n'expose de statistiques ou de Riot ID à un visiteur non connecté."
+    },
+    "rights": {
+      "title": "Ce que tu peux demander",
+      "p1": "Consulter ce qui te concerne, le faire corriger, le faire effacer, ou t'opposer à sa collecte.",
+      "selfTitle": "Ce que tu peux faire toi-même, aujourd'hui",
+      "self1": "changer ton nom d'affichage, depuis ton profil ;",
+      "self2": "remplacer ton compte de jeu déclaré — les statistiques personnelles repartent alors de zéro ;",
+      "self3": "supprimer les revues que tu as écrites ;",
+      "self4": "supprimer une équipe que tu as créée, ou en retirer un membre.",
+      "gapTitle": "Ce qui n'existe pas encore",
+      "gap": "Il n'y a aucun bouton de suppression de compte, et il serait malhonnête de laisser croire le contraire. La suppression d'un compte et des données de jeu qui s'y rattachent se fait à la main, sur demande.",
+      "howTitle": "Comment demander",
+      "how": "Par le formulaire de contact du site, en indiquant le pseudo Discord ou le Riot ID concerné. L'éditeur s'engage à traiter la demande et à confirmer ce qui a été effacé. [Délai d'engagement à fixer par l'éditeur.]",
+      "thirdParty": "Cette voie est ouverte aussi à qui n'a pas de compte Schub : si ton Riot ID figure ici parce que tu as croisé un utilisateur en partie, la même demande s'applique, par le même formulaire."
+    },
+    "minors": {
+      "title": "Mineurs",
+      "p1": "Le site n'est pas destiné aux enfants et ne demande aucun âge, parce qu'il ne le vérifierait pas. L'accès suppose un compte Discord, dont les conditions posent déjà un âge minimum. [Position de l'éditeur sur l'âge des utilisateurs à arrêter.]"
+    },
+    "changes": {
+      "title": "Modifications",
+      "p1": "Cette politique suit le code : elle change quand le service change. La date de dernière mise à jour figure en tête de page."
+    }
+  }
+}

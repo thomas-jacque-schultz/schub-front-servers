@@ -36,8 +36,11 @@ const STORYBOOK_PATH = "/storybook";
  * <p>La largeur se décide ici et pas dans les écrans, pour la même raison que le menu : c'est le
  * seul endroit qui connaisse les routes. Ailleurs, chaque page redéciderait de sa marge et elles
  * divergeraient.</p>
+ *
+ * <p>`/lol` n'y est plus : c'est devenu une page de texte, et une ligne de prose en `xl` se
+ * relit mal. Les deux écrans denses sont nommés un par un.</p>
  */
-const ECRANS_LARGES = ["/lol"];
+const ECRANS_LARGES = ["/lol/teams", "/lol/stats"];
 
 /**
  * La coquille, remplie.
@@ -97,12 +100,14 @@ export function AppLayout({ children }: { children: ReactNode }) {
   /**
    * Les entrées permanentes du bandeau, plus celle des équipes.
    *
-   * <p>`/lol` n'est pas une page publique : elle n'apparaît que pour un compte connecté, et
-   * seulement si une permission la rend utile — la règle du menu, tenue ici comme pour les
-   * entrées de configuration.</p>
+   * <p><strong>Deux entrées pour League of Legends, et ce n'est pas un doublon.</strong>
+   * `/lol` est la vitrine publique — ce que l'outil fait, lisible sans compte — et
+   * `/lol/teams` est l'outil lui-même. Fondre les deux rendrait l'une des deux inatteignable :
+   * masquer la vitrine à un compte connecté, ou montrer à un visiteur une entrée qui mène à un
+   * écran de connexion.</p>
    *
-   * <p>Elle est exigée en `TEAM_CREATE` <strong>ou</strong> `TEAM_VIEW`, et non en `TEAM_VIEW`
-   * seule : cette dernière est à <em>portée d'équipe</em>, un capitaine ne la porte pas dans son
+   * <p>L'entrée des équipes est exigée en `TEAM_CREATE` <strong>ou</strong> `TEAM_VIEW`, et non
+   * en `TEAM_VIEW` seule : cette dernière est à <em>portée d'équipe</em>, un capitaine ne la porte pas dans son
    * jeton, il la tient de son équipe (plan §A.1). L'exiger masquerait l'entrée à exactement ceux
    * qui s'en servent. `TEAM_CREATE`, elle, est globale et va à tous les rôles système.</p>
    */
@@ -110,6 +115,9 @@ export function AppLayout({ children }: { children: ReactNode }) {
     const items: AppShellNavItem[] = [
       { key: "home", label: t("shell.home"), to: localize("/") },
       { key: "servers", label: t("shell.servers"), to: localize("/servers") },
+      // La vitrine LoL est publique et reste dans le bandeau pour tout le monde : c'est la
+      // page qui dit ce que l'outil fait, et elle ne sert à rien si seul un compte la trouve.
+      { key: "lolPublic", label: t("shell.lolPublic"), to: localize("/lol") },
       { key: "contact", label: t("shell.contact"), to: localize("/contact") },
     ];
 
@@ -131,7 +139,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
     }
 
     if (connected && canAny("TEAM_CREATE", "TEAM_VIEW")) {
-      items.push({ key: "lol", label: t("shell.lol"), to: localize("/lol") });
+      items.push({ key: "lol", label: t("shell.lol"), to: localize("/lol/teams") });
     }
 
     if (connected) {
@@ -143,12 +151,16 @@ export function AppLayout({ children }: { children: ReactNode }) {
 
   const footerLinks = useMemo<AppShellFooterLink[]>(
     () => [
+      // `to` et non `href` : ce sont des routes de l'application, et un rechargement complet
+      // pour aller lire deux pages de texte n'a aucune raison d'être.
+      { key: "terms", label: t("shell.terms"), to: localize("/terms") },
+      { key: "privacy", label: t("shell.privacy"), to: localize("/privacy") },
       { key: "storybook", label: t("shell.storybook"), href: STORYBOOK_PATH, external: false },
       { key: "linkedin", label: t("shell.linkedin"), href: LINKEDIN_URL },
       { key: "discord", label: t("shell.discord"), href: null, pendingLabel: t("shell.toComplete") },
       { key: "github", label: t("shell.github"), href: GITHUB_URL },
     ],
-    [t],
+    [localize, t],
   );
 
   return (

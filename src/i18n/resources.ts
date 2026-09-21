@@ -1,5 +1,7 @@
 import enAuth from "../locales/en/auth.json";
 import enContact from "../locales/en/contact.json";
+import enLegal from "../locales/en/legal.json";
+import enLol from "../locales/en/lol.json";
 import enHome from "../locales/en/home.json";
 import enCommon from "../locales/en/common.json";
 import enDiscord from "../locales/en/discord.json";
@@ -16,6 +18,8 @@ import enTeams from "../locales/en/teams.json";
 import enUsers from "../locales/en/users.json";
 import frAuth from "../locales/fr/auth.json";
 import frContact from "../locales/fr/contact.json";
+import frLegal from "../locales/fr/legal.json";
+import frLol from "../locales/fr/lol.json";
 import frHome from "../locales/fr/home.json";
 import frCommon from "../locales/fr/common.json";
 import frDiscord from "../locales/fr/discord.json";
@@ -56,6 +60,8 @@ export const resources = {
     pool: frPool,
     reviews: frReviews,
     riot: frRiot,
+    legal: frLegal,
+    lol: frLol,
   },
   en: {
     common: enCommon,
@@ -74,6 +80,8 @@ export const resources = {
     pool: enPool,
     reviews: enReviews,
     riot: enRiot,
+    legal: enLegal,
+    lol: enLol,
   },
 } as const;
 
@@ -96,6 +104,9 @@ export const namespaces = [
   "stats",
   "pool",
   "reviews",
+  "riot",
+  "legal",
+  "lol",
 ] as const;
 
 export type Namespace = (typeof namespaces)[number];
