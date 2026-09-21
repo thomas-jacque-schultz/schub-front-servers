@@ -72,6 +72,7 @@ décide de ce qu'elle reçoit.
 | `/contact` | le formulaire | public, à la demande |
 | `/storybook` | le design system | public, **hors du routeur React** (nginx) |
 | `/config/*` | l'administration | connecté + permission, à la demande |
+| `/lol`, `/lol/teams/:id` | les équipes LoL | connecté, à la demande |
 
 **Seule la racine est dans le fichier JavaScript initial.** Tout le reste passe par
 `React.lazy` dans `App.tsx`. Un écran neuf s'ajoute de la même façon : une visite sur `/` ne doit
@@ -102,6 +103,24 @@ se retire sans en ajouter une autre.**
   fois la connexion Discord vérifiée EN PROD.
 - **Storybook est destiné à être public.** Aucune donnée réelle dans une story : pas de pseudo
   Discord, pas d'IP, pas de numéro de port réel.
+
+## Les équipes (chantier D)
+
+`/lol` liste mes équipes, `/lol/teams/:id` ouvre la page à quatre panneaux. Deux choses à ne pas
+défaire :
+
+- **Ce qu'un écran propose vient des `viewerCanEdit`, `viewerCanEditCompositions` et
+  `viewerMemberId`** servis par le cœur. On ne recalcule rien à partir d'identifiants : c'est
+  exactement la comparaison qui répondait faux au §A.5 bis. La seule autorisée est
+  `member.memberId === team.viewerMemberId`, pour se surligner — un fait sur le lecteur.
+- **`TEAM_VIEW`, `TEAM_EDIT` et `COMPOSITION_EDIT` sont à portée d'équipe** : elles viennent de
+  l'appartenance à une équipe, pas du rôle, donc le jeton ne les porte pas. Ni la route ni le
+  menu ne peuvent les exiger — la route demande d'être connecté, le menu se contente de
+  `TEAM_CREATE` ou `TEAM_VIEW`. Le BFF fait de même et le cœur tranche.
+
+Les panneaux **joueurs** et **pool de champions** sont volontairement vides, en attendant
+l'ingestion Riot. **Aucune donnée simulée n'y entre**, même « pour voir » : un chiffre inventé
+est lu comme vrai, et il survit à celui qui l'a posé.
 
 ## La session
 
