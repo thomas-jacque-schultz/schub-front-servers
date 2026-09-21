@@ -59,24 +59,16 @@
   },
   "state": {
     "COMPTE_RIOT_ABSENT": {
-      "short": "Compte Riot non lié",
-      "title": "Compte Riot non lié",
-      "description": "Aucun compte Riot ne répond encore à ce Riot ID. La personne le lie depuis Mon profil, puis récupère ses places."
+      "short": "Compte Riot non lié"
     },
     "MAITRISES_INDISPONIBLES": {
-      "short": "Maîtrises non obtenues",
-      "title": "Maîtrises non obtenues",
-      "description": "Le connecteur Riot n'a pas répondu pour ce joueur. Rien à faire : réessayer plus tard."
+      "short": "Maîtrises non obtenues"
     },
     "CATALOGUE_INDISPONIBLE": {
-      "short": "Catalogue indisponible",
-      "title": "Catalogue indisponible",
-      "description": "Sans le catalogue, il n'y a ni nom, ni icône, ni version — donc aucun champion rendu, pour personne."
+      "short": "Catalogue indisponible"
     },
     "AUCUNE_MAITRISE": {
-      "short": "Aucune maîtrise",
-      "title": "Aucune maîtrise",
-      "description": "Riot a répondu, et ce compte n'a encore aucune maîtrise. C'est une information, pas une panne."
+      "short": "Aucune maîtrise"
     }
   }
 }
