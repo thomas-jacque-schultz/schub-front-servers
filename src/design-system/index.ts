@@ -67,6 +67,8 @@ export { StatusChip } from "./components/StatusChip";
 export type { StatusChipProps } from "./components/StatusChip";
 export { Switch } from "./components/Switch";
 export type { SwitchProps } from "./components/Switch";
+export { Tabs } from "./components/Tabs";
+export type { TabItem, TabsProps } from "./components/Tabs";
 export { Text } from "./components/Text";
 export type { TextProps, TextTone, TextVariant } from "./components/Text";
 export { TextField } from "./components/TextField";
