@@ -32,7 +32,6 @@
     "pendingExplanation": "Votre Riot ID est enregistré, mais nous n'avons pas encore pu le confirmer auprès de Riot. Rien n'est perdu : réessayez plus tard, ou vérifiez la saisie.",
     "retry": "Relancer la résolution",
     "linkedAt": "Déclaré le {{date}}",
-    "current": "Compte actuel",
     "link": {
       "action": "Lier mon compte Riot",
       "title": "Lier un compte Riot",
@@ -42,8 +41,6 @@
       "suggestions": "Comptes connus qui correspondent",
       "noSuggestionTitle": "Aucun compte connu ne correspond",
       "noSuggestionDescription": "C'est normal tant que peu de parties ont été collectées. Saisissez votre Riot ID complet ci-dessous.",
-      "emptyDataTitle": "Aucune partie collectée pour l'instant",
-      "emptyDataDescription": "Les suggestions apparaîtront au fil des ingestions. En attendant, la saisie exacte fonctionne.",
       "exactLabel": "Riot ID exact",
       "exactPlaceholder": "Pseudo#TAG",
       "exactHelper": "Tel que le client de jeu l'affiche, avec le # et le tag.",

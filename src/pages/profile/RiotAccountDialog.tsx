@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { ApiError } from "../../api/httpClient";
 import {
   linkRiotAccountApi,
   previewRiotAccountChangeApi,
@@ -221,10 +222,30 @@ export function RiotAccountDialog({
       onLinked(await linkRiotAccountApi(candidateRiotId));
       onClose();
     } catch (linkError) {
-      setError(linkError instanceof Error ? linkError.message : t("riot.link.failed"));
+      setError(messageDeRefus(linkError));
     } finally {
       setIsSaving(false);
     }
+  };
+
+  /**
+   * La phrase d'un refus, choisie sur le **statut** et non sur le texte du serveur.
+   *
+   * <p>Le cœur répond en français. Le reprendre tel quel afficherait une phrase française sur le
+   * site anglais — visible, et faux. Le statut, lui, est la même information dans les deux
+   * langues. Le message du serveur reste le repli pour ce qu'on n'a pas prévu : le taire
+   * laisserait un échec sans explication.</p>
+   */
+  const messageDeRefus = (cause: unknown): string => {
+    if (cause instanceof ApiError) {
+      if (cause.status === 409) {
+        return t("riot.link.conflict");
+      }
+      if (cause.status === 404) {
+        return t("riot.link.notFound");
+      }
+    }
+    return cause instanceof Error ? cause.message : t("riot.link.failed");
   };
 
   const chosen = typeof candidate === "object" && candidate !== null ? candidate : null;
@@ -271,9 +292,11 @@ export function RiotAccountDialog({
               )}
             </Stack>
 
-            {/* Deux absences, deux messages. « Rien ne correspond à votre saisie » et « nous
-                n'avons encore collecté aucune partie » demandent des gestes différents, et les
-                confondre laisserait croire à une panne au démarrage — quand c'est l'état normal. */}
+            {/* Un seul message, et il couvre les deux absences possibles : rien ne
+                ressemble à la saisie, ou rien n'a encore été collecté. Le front ne peut pas les
+                distinguer — la réponse est une liste vide dans les deux cas — donc il ne
+                prétend pas le faire, et dit ce qui est vrai des deux : c'est normal, et la
+                saisie exacte est juste en dessous. */}
             {hasSearched && !isSearching && (
               <ChoiceList
                 label={t("riot.link.suggestions")}
@@ -321,6 +344,14 @@ export function RiotAccountDialog({
           </>
         ) : (
           <Stack spacing={2}>
+            {/* Revenir au choix sans perdre la recherche déjà faite. Sans ce retour, se tromper
+                de compte coûte d'annuler le dialogue entier et de tout retaper. */}
+            <Stack direction="row">
+              <Button variant="ghost" onClick={() => setCandidate(null)}>
+                {t("actions.back", { ns: "common" })}
+              </Button>
+            </Stack>
+
             {/* La carte de confirmation : ce qu'on s'apprête à revendiquer, relu une fois. */}
             <Card title={t("riot.link.confirmTitle")} description={t("riot.link.confirmDescription")}>
               <Stack spacing={1}>
@@ -329,7 +360,14 @@ export function RiotAccountDialog({
                     {t("riot.change.from")} : {currentRiotId}
                   </Text>
                 )}
-                <Text variant="subtitle">{candidateRiotId}</Text>
+                <Stack spacing={0.25}>
+                  {isChange && (
+                    <Text variant="caption" tone="secondary">
+                      {t("riot.change.to")}
+                    </Text>
+                  )}
+                  <Text variant="subtitle">{candidateRiotId}</Text>
+                </Stack>
                 {chosen && (
                   <Stack direction="row" spacing={1} wrap>
                     <Chip
