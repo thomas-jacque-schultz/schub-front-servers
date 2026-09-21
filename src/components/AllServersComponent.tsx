@@ -20,8 +20,8 @@ interface ServersDashboardProps {
   isLoading: boolean;
   error: string;
   connected: boolean;
-  /** Prédicat par serveur : un rôle global OU `viewerIsAdmin` sur CE serveur (décision n°11). */
-  canControlServer?: (server: DisplayedServer) => boolean;
+  /** Le lecteur peut-il démarrer et arrêter ? Vient du rôle, donc vaut pour tous les serveurs. */
+  canControl?: boolean;
   canEdit?: boolean;
   lastRefreshedAt?: Date | null;
   onRefresh?: () => void;
@@ -36,16 +36,16 @@ interface ServersDashboardProps {
  * La liste des serveurs, telle qu'elle s'affiche sur `/servers` et dans les écrans
  * d'administration.
  *
- * <p>Migrée vers les primitives au lot B.5 : elle n'importe plus MUI et sort donc du bloc
- * « dette à résorber » d'ESLint. Le rendu est inchangé — c'est la porte qui a bougé, pas la
- * page.</p>
+ * <p>Démarrer et arrêter s'affichent dès que le rôle les porte : c'est ici que le modérateur les
+ * trouve, sur la page qu'il ouvre pour voir l'état de ses serveurs. Ils n'ont jamais été
+ * atteignables depuis l'onglet Configuration, qu'il ne voit pas.</p>
  */
 function ServersDashboard({
   servers,
   isLoading,
   error,
   connected,
-  canControlServer,
+  canControl = false,
   canEdit = false,
   lastRefreshedAt,
   onRefresh,
@@ -111,7 +111,7 @@ function ServersDashboard({
 
             {(server.id || server.slug) && (
               <Stack direction="row" spacing={1} justify="end">
-                {server.slug && canControlServer?.(server) && (
+                {server.slug && canControl && (
                   <>
                     <Button
                       size="small"

@@ -17,9 +17,8 @@ export interface AuthorityDto {
  * date de dernière connexion ici.</p>
  *
  * <p><strong>`actorId` et `userId` ne sont pas la même chose.</strong> `actorId` est
- * l'identifiant *Discord*, sujet du jeton ; `userId` est l'identifiant *interne* du compte, et
- * c'est lui seul que contiennent les `admins` d'un serveur (plan §A.4). Le second a été ajouté
- * par le back avec le lot A.3 : sans lui, le front n'avait rien à comparer.</p>
+ * l'identifiant *Discord*, sujet du jeton ; `userId` est l'identifiant *interne* du compte, la
+ * clé de l'appelant dans les collections du cœur.</p>
  *
  * <p>Cette route est le **seul** juge de l'état connecté depuis la décision n°4 : le jeton vit
  * dans un cookie `httpOnly` que le front ne voit pas. Une réponse 200 veut dire « connecté », un
@@ -40,6 +39,6 @@ export interface AuthenticatedUser {
   userId: string | null;
   username: string;
   roles: string[];
-  /** Les permissions du rôle seul. Ce qu'un compte tient d'être admin d'un serveur n'y est pas. */
+  /** Les permissions du rôle seul : celles à portée d'équipe ne sont pas dans le jeton. */
   permissions: Permission[];
 }

@@ -7,7 +7,7 @@ import type { Permission } from "./permission";
  * l'écran des utilisateurs n'ait pas à faire un appel par ligne.</p>
  */
 export interface UserDto {
-  /** L'identifiant **interne**. C'est lui qui figure dans les `admins` d'un serveur (§A.4). */
+  /** L'identifiant **interne**, la clé du compte dans les collections du cœur. */
   id: string;
   discordId: string;
   discordUsername?: string | null;

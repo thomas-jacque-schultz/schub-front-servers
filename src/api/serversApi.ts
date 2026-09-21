@@ -9,9 +9,9 @@ import type {
 } from "../types/server";
 
 const fallbackServers: DisplayedServer[] = [
-  { name: "Minecraft - HolyCube", status: "online", viewerIsAdmin: false },
-  { name: "Palworld - Miam", status: "offline", viewerIsAdmin: false },
-  { name: "Satisfactory", status: "online", viewerIsAdmin: false },
+  { name: "Minecraft - HolyCube", status: "online" },
+  { name: "Palworld - Miam", status: "offline" },
+  { name: "Satisfactory", status: "online" },
 ];
 
 const normalizeStatus = (rawStatus?: string): ServerStatus => {
@@ -39,17 +39,11 @@ const toDisplayedServer = (server: GameServerDto): DisplayedServer => ({
   name: server.name || server.slug || i18n.t("errors.unnamed", { ns: "servers" }),
   status: normalizeStatus(server.status),
   lastStatusCheckAt: server.lastStatusCheckAt,
-  // Le booléen suit le serveur jusqu'à la liste affichée : c'est lui qui décide si démarrer et
-  // arrêter sont proposés sur *cette* carte (décision n°11). Absent des deux projections
-  // anciennes, il vaut `false` par défaut plutôt que `undefined` — ce qui n'a pas été affirmé
-  // n'est pas accordé.
-  viewerIsAdmin: server.viewerIsAdmin === true,
 });
 
 const toPublicDisplayedServer = (server: PublicServerStatusDto): DisplayedServer => ({
   name: server.name || i18n.t("errors.unnamed", { ns: "servers" }),
   status: normalizeStatus(server.status),
-  viewerIsAdmin: false,
 });
 
 export const getGameServersApi = async (): Promise<GameServerDto[]> =>
