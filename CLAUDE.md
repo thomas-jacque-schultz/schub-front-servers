@@ -67,9 +67,9 @@ décide de ce qu'elle reçoit.
 
 | Route | Contenu | Accès |
 |---|---|---|
-| `/` | le portfolio | public, **chargé d'emblée** |
-| `/servers` | l'état public des serveurs | public, à la demande |
-| `/contact` | le formulaire | public, à la demande |
+| `/` | la page produit de Schub, plus la liste d'onboarding | public, **chargé d'emblée** |
+| `/servers` | l'état des serveurs, et démarrer/arrêter | public, à la demande |
+| `/contact` | le contenu personnel, puis le formulaire en bas | public, à la demande |
 | `/storybook` | le design system | public, **hors du routeur React** (nginx) |
 | `/config/*` | l'administration | connecté + permission, à la demande |
 | `/lol`, `/lol/teams/:id` | les équipes LoL | connecté, à la demande |
@@ -80,15 +80,26 @@ décide de ce qu'elle reçoit.
 `React.lazy` dans `App.tsx`. Un écran neuf s'ajoute de la même façon : une visite sur `/` ne doit
 embarquer ni formulaire d'administration, ni sa validation.
 
-## Le contenu du portfolio
+## L'accueil, et le contenu personnel
 
-Il vit dans **`src/content/portfolio.ts`, en données**, pas en JSX — c'est ce qui garde le
-pré-rendu de la racine possible plus tard sans réécrire la page. Les deux langues y sont côte à
-côte. `PortfolioPage.tsx` ne contient aucune phrase.
+**`/` est la page produit de Schub**, pas un CV : ce que fait l'outil, puis **la liste de ce qui
+reste à faire pour s'en servir**. Les actions sont **déduites de `GET /me`** — compte Riot non
+lié, résolution en attente, collecte en cours, nom d'affichage non choisi — et chacune mène à
+`/profile`. Elles ne se devinent pas : `displayNameChosen` est un fait servi par le cœur, parce
+que comparer le nom affiché au pseudo Discord proposerait « choisis ton nom » à qui l'a choisi.
+Un **visiteur non connecté** ne voit pas une liste vide mais la seule action qui le concerne : se
+connecter.
+
+**Le contenu personnel vit sur `/contact`** — accroche, projets, parcours, formation, langues —
+et le formulaire est en bas de cette page, sous le titre *Feedback*. Il vit dans
+**`src/content/portfolio.ts`, en données**, pas en JSX : c'est ce qui garde un pré-rendu possible
+plus tard sans réécrire la page. Les deux langues y sont côte à côte, et `PortfolioSections.tsx`
+ne contient aucune phrase.
 
 Ce qui manque y est **visible**, pas masqué : le paragraphe sur le poste actuel s'affiche en
-alerte avec un texte entre crochets, et la page ne se publie pas tant qu'elle est là.
-L'adresse e-mail n'est **pas** publiée : le formulaire de contact existe pour la remplacer.
+alerte avec un texte entre crochets, et **l'alerte a suivi le contenu** — elle dit que cette
+page-là n'est pas publiable, ce qui reste vrai. L'adresse e-mail n'est **pas** publiée : le
+formulaire existe pour la remplacer.
 
 ## La route publique de contact
 

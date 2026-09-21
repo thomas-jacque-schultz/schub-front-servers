@@ -77,6 +77,8 @@ export { MeterBar } from "./components/MeterBar";
 export type { MeterBarProps } from "./components/MeterBar";
 export { Spinner } from "./components/Spinner";
 export type { SpinnerProps } from "./components/Spinner";
+export { TaskList } from "./components/TaskList";
+export type { TaskListItem, TaskListProps, TaskState } from "./components/TaskList";
 export { Stack } from "./components/Stack";
 export type {
   StackAlign,

@@ -10,30 +10,25 @@ import {
   PageHeader,
   Stack,
   Text,
-} from "../design-system";
-import { PORTFOLIO } from "../content/portfolio";
-import { useCurrentLanguage, useLocalizedNavigate, useLocalizedPath } from "../i18n/navigation";
-import { useDocumentMeta } from "../seo/useDocumentMeta";
+} from "../../design-system";
+import { PORTFOLIO } from "../../content/portfolio";
+import { useCurrentLanguage, useLocalizedNavigate, useLocalizedPath } from "../../i18n/navigation";
 
 /**
- * La racine du domaine : une page d'ingénieur, pas un CV.
+ * Le contenu personnel : accroche, projets, parcours, formation, langues.
  *
- * <p>Le ton est tranché au §9 du plan : <em>montrer ce qu'on construit</em>, le parcours en
- * second rideau. L'ordre des blocs en découle — l'accroche, puis les projets, puis seulement la
- * chronologie. Un CV commence par l'inverse, et c'est pour ça qu'il ne retient personne sur une
- * page d'accueil.</p>
+ * <p>Il vit sur `/contact` depuis les retours d'usage : l'accueil est la page produit de Schub,
+ * et tout ce qui parle de la personne se lit au même endroit que le moyen de la joindre. Le
+ * formulaire est en bas de cette même page.</p>
  *
- * <p>Elle ne contient <strong>aucun texte</strong> : tout vient de `src/content/portfolio.ts`.
- * C'est ce qui garde le pré-rendu de `/` possible plus tard sans réécrire cette page.</p>
+ * <p>Aucun texte ici : tout vient de `src/content/portfolio.ts`.</p>
  */
-function PortfolioPage() {
+export function PortfolioSections() {
   const { t } = useTranslation("portfolio");
   const language = useCurrentLanguage();
   const navigate = useLocalizedNavigate();
   const localize = useLocalizedPath();
   const content = PORTFOLIO[language];
-
-  useDocumentMeta({ title: content.meta.title, description: content.meta.description });
 
   return (
     <Stack spacing={4}>
@@ -52,7 +47,6 @@ function PortfolioPage() {
           <Text variant="subtitle">{content.hero.lede}</Text>
           <Text>{content.hero.body}</Text>
           <Stack direction="responsive" spacing={1.5}>
-            <Button onClick={() => navigate("/contact")}>{content.hero.ctaContact}</Button>
             <Button variant="secondary" onClick={() => navigate("/servers")}>
               {content.hero.ctaServers}
             </Button>
@@ -160,14 +154,6 @@ function PortfolioPage() {
           </Stack>
         </Card>
       </Stack>
-
-      <Card title={content.sections.contact.title} description={content.sections.contact.intro}>
-        <Stack direction="row" spacing={2}>
-          <Button onClick={() => navigate("/contact")}>{content.sections.contact.cta}</Button>
-        </Stack>
-      </Card>
     </Stack>
   );
 }
-
-export default PortfolioPage;

@@ -56,6 +56,14 @@ export interface ProfileDto {
   userId: string;
   discord: ProfileDiscordDto;
   displayName: string;
+  /**
+   * Le nom affiché a-t-il été choisi, ou est-ce le repli sur le pseudo Discord ?
+   *
+   * <p>Un fait servi par le cœur, et pas une comparaison faite ici : `displayName` vaut le pseudo
+   * Discord tant que rien n'a été choisi, et comparer les deux proposerait « choisis ton nom » à
+   * quelqu'un qui a justement choisi le sien.</p>
+   */
+  displayNameChosen: boolean;
   role: ProfileRoleDto;
   riot: ProfileRiotDto;
 }
