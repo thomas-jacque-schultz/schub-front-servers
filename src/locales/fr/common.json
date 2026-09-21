@@ -39,6 +39,7 @@
   "shell": {
     "home": "Accueil",
     "servers": "Serveurs",
+    "lol": "Équipes LoL",
     "configuration": "Configuration",
     "configServers": "Serveurs",
     "configPorts": "Ports",

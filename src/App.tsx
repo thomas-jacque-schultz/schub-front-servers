@@ -26,6 +26,8 @@ const ContactPage = lazy(() => import("./pages/ContactPage"));
 const GameServerFormPage = lazy(() => import("./pages/GameServerFormPage"));
 const LandingPage = lazy(() => import("./pages/LandingPage"));
 const LoginPage = lazy(() => import("./pages/Login"));
+const TeamPage = lazy(() => import("./pages/lol/TeamPage"));
+const TeamsPage = lazy(() => import("./pages/lol/TeamsPage"));
 const DiscordConfigPage = lazy(() => import("./pages/config/DiscordConfigPage"));
 const PortsConfigPage = lazy(() => import("./pages/config/PortsConfigPage"));
 const RolesPage = lazy(() => import("./pages/config/RolesPage"));
@@ -195,6 +197,31 @@ function LocalizedRoutes() {
               element={
                 <RequireAuth>
                   <GameServerFormPage />
+                </RequireAuth>
+              }
+            />
+
+            {/* L'app d'équipe LoL (chantier D).
+
+                RequireAuth, et non RequirePermission : TEAM_VIEW est une permission à PORTÉE
+                D'ÉQUIPE — elle est accordée par l'appartenance à une équipe, pas par le rôle,
+                et le jeton ne peut donc pas la porter. L'exiger ici fermerait la porte à un
+                capitaine devant sa propre équipe. Le tri est fait par le cœur, qui ne sert que
+                les équipes de l'appelant et refuse les autres en 403 ; le menu, lui, n'affiche
+                l'entrée que si une permission la rend utile (voir AppLayout). */}
+            <Route
+              path="lol"
+              element={
+                <RequireAuth>
+                  <TeamsPage />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="lol/teams/:id"
+              element={
+                <RequireAuth>
+                  <TeamPage />
                 </RequireAuth>
               }
             />

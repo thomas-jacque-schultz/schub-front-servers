@@ -1,7 +1,7 @@
 import { type ReactNode, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Alert, AppShell, Stack } from "../design-system";
-import type { AppShellFooterLink, AppShellMenu } from "../design-system";
+import type { AppShellFooterLink, AppShellMenu, AppShellNavItem } from "../design-system";
 import { PORTFOLIO } from "../content/portfolio";
 import { useLocalizedNavigate, useLocalizedPath } from "../i18n/navigation";
 import { useAuthStore } from "../stores/authStore";
@@ -76,6 +76,32 @@ export function AppLayout({ children }: { children: ReactNode }) {
     return [{ key: "configuration", label: t("shell.configuration"), items: allowed }];
   }, [connected, canAny, localize, t]);
 
+  /**
+   * Les entrées permanentes du bandeau, plus celle des équipes.
+   *
+   * <p>`/lol` n'est pas une page publique : elle n'apparaît que pour un compte connecté, et
+   * seulement si une permission la rend utile — la règle du menu, tenue ici comme pour les
+   * entrées de configuration.</p>
+   *
+   * <p>Elle est exigée en `TEAM_CREATE` <strong>ou</strong> `TEAM_VIEW`, et non en `TEAM_VIEW`
+   * seule : cette dernière est à <em>portée d'équipe</em>, un capitaine ne la porte pas dans son
+   * jeton, il la tient de son équipe (plan §A.1). L'exiger masquerait l'entrée à exactement ceux
+   * qui s'en servent. `TEAM_CREATE`, elle, est globale et va à tous les rôles système.</p>
+   */
+  const navItems = useMemo<AppShellNavItem[]>(() => {
+    const items: AppShellNavItem[] = [
+      { key: "home", label: t("shell.home"), to: localize("/") },
+      { key: "servers", label: t("shell.servers"), to: localize("/servers") },
+      { key: "contact", label: t("shell.contact"), to: localize("/contact") },
+    ];
+
+    if (connected && canAny("TEAM_CREATE", "TEAM_VIEW")) {
+      items.push({ key: "lol", label: t("shell.lol"), to: localize("/lol") });
+    }
+
+    return items;
+  }, [connected, canAny, localize, t]);
+
   const footerLinks = useMemo<AppShellFooterLink[]>(
     () => [
       { key: "storybook", label: t("shell.storybook"), href: STORYBOOK_PATH, external: false },
@@ -91,11 +117,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
       brand={t("app.name")}
       brandTo={localize("/")}
       brandTagline={t("app.tagline")}
-      navItems={[
-        { key: "home", label: t("shell.home"), to: localize("/") },
-        { key: "servers", label: t("shell.servers"), to: localize("/servers") },
-        { key: "contact", label: t("shell.contact"), to: localize("/contact") },
-      ]}
+      navItems={navItems}
       menus={menus}
       connected={connected}
       username={profile?.username}
