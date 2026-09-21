@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "title": "Schub pour League of Legends — statistiques, pool de champions et draft d'équipe",
+    "description": "Schub outille une équipe League of Legends : effectif, historique des parties jouées ensemble, statistiques par joueur et par équipe, pool de champions par poste, préparation des compositions et revue d'après-partie."
+  },
+  "hero": {
+    "eyebrow": "League of Legends",
+    "title": "L'outil d'équipe de Schub",
+    "subtitle": "Constituer un effectif, réunir l'historique des parties jouées ensemble, et s'en servir pour préparer la suivante."
+  },
+  "intro": {
+    "title": "À quoi ça sert",
+    "p1": "Une équipe amateur joue ensemble sans jamais pouvoir relire ce qu'elle a joué : l'historique du client de jeu est individuel, court, et ne dit rien de ce que le groupe fait quand il est au complet. Schub rassemble ces parties au même endroit et les rend lisibles à l'échelle de l'équipe.",
+    "p2": "Le site sert un usage privé : un petit groupe de joueurs, ses équipes, et le propriétaire du domaine qui l'héberge. Il n'y a ni publicité, ni compte payant, ni classement public.",
+    "p3": "Les données de jeu viennent de l'API de Riot Games. Schub ne lit que des parties déjà publiques, et seulement pour les comptes que leurs propriétaires ont eux-mêmes déclarés."
+  },
+  "features": {
+    "title": "Ce que fait l'outil aujourd'hui",
+    "intro": "Rien de plus que cette liste. Ce qui est en chantier n'y figure pas.",
+    "roster": {
+      "title": "Constituer un effectif",
+      "body": "Une équipe se compose en ajoutant des Riot ID. Chaque place porte ses postes — top, jungle, milieu, bot, support — et son statut : titulaire, remplaçant ou coach. Un joueur ajouté avant d'avoir un compte garde sa place : elle le rejoint quand il se connecte et lie le même compte."
+    },
+    "collect": {
+      "title": "Collecter l'historique des parties jouées ensemble",
+      "body": "Une fois un compte déclaré, Schub lit son historique par l'API de Riot et repère les parties où l'équipe était présente. Une partie compte pour l'équipe dès que quatre de ses membres y figurent, toutes files confondues."
+    },
+    "playerStats": {
+      "title": "Statistiques par joueur",
+      "body": "Par champion, par poste, par file et par mois : parties, victoires, KDA, sbires, or, dégâts et vision à la minute, avec les classements en cours. Chaque chiffre dit sur combien de parties et sur quelle période il porte."
+    },
+    "teamStats": {
+      "title": "Statistiques par équipe",
+      "body": "Le bilan du groupe, découpé par file, par côté de la carte et par patch, avec le taux de présence de chaque membre et le tableau des parties jouées ensemble."
+    },
+    "pool": {
+      "title": "Pool de champions par poste",
+      "body": "L'équipe déclare, poste par poste, les champions qu'elle est prête à aligner. Sous chaque champion, Schub montre qui du poste l'a déjà joué et à quel niveau de maîtrise, à partir d'un plancher fixé par l'équipe."
+    },
+    "draft": {
+      "title": "Préparation des compositions",
+      "body": "Une composition retient cinq champions, un par poste, et le joueur qui prend chaque ligne. Elle porte le patch auquel elle se rapporte et des notes libres, et se retrouve à la partie suivante."
+    },
+    "reviews": {
+      "title": "Revue d'après-partie",
+      "body": "Depuis le tableau des parties, chaque membre reçoit une note écrite rattachée à cette partie-là. Une note par auteur, par joueur et par partie ; elle se modifie, elle ne se double pas."
+    }
+  },
+  "limits": {
+    "title": "Ce que l'outil ne fait pas",
+    "intro": "Dit ici plutôt que découvert à l'usage.",
+    "history": "L'historique servi par Riot est borné à environ mille parties par joueur. Au-delà, Schub n'a rien à lire — seulement ce qu'il a déjà collecté.",
+    "noWorldStats": "Aucune moyenne mondiale, aucun percentile : ces chiffres ne sont pas accessibles et ne sont pas inventés. Un joueur se compare au reste de ses propres parties et à ses coéquipiers.",
+    "noProbe": "Il n'existe aucune façon de consulter l'historique d'un joueur qu'on ne côtoie pas : les statistiques d'un membre ne s'ouvrent que depuis une équipe à laquelle on appartient.",
+    "noLive": "Rien en direct : pas de suivi de partie en cours, pas d'overlay, aucune interaction avec le client de jeu.",
+    "collectTime": "La première collecte prend du temps — le quota de l'API de Riot la limite. L'écran de profil dit où elle en est."
+  },
+  "access": {
+    "title": "Entrer dans l'outil",
+    "signedInBody": "Ton compte est connecté : l'outil est ouvert.",
+    "signedOutBody": "L'outil demande un compte. L'identification passe par Discord, puis par la déclaration de ton Riot ID depuis ton profil.",
+    "ctaTeams": "Mes équipes",
+    "ctaStats": "Mes stats",
+    "ctaProfile": "Lier mon compte League of Legends",
+    "ctaSignIn": "Se connecter avec Discord",
+    "noTeamPermission": "Ton rôle ne donne pas encore accès aux équipes. Les statistiques personnelles, elles, restent ouvertes."
+  },
+  "legal": {
+    "title": "Mentions",
+    "data": "Ce que Schub conserve, combien de temps, et comment en demander la suppression est décrit dans la politique de confidentialité.",
+    "terms": "Conditions d'utilisation",
+    "privacy": "Politique de confidentialité"
+  }
+}

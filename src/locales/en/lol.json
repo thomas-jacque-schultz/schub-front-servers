@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "title": "Schub for League of Legends — team stats, champion pool and draft preparation",
+    "description": "Schub equips a League of Legends team: roster, history of the games played together, per-player and per-team statistics, champion pool by position, composition planning and post-game reviews."
+  },
+  "hero": {
+    "eyebrow": "League of Legends",
+    "title": "Schub's team toolkit",
+    "subtitle": "Build a roster, gather the history of the games you played together, and use it to prepare the next one."
+  },
+  "intro": {
+    "title": "What it is for",
+    "p1": "An amateur team plays together without ever being able to look back at what it played: the in-game history is individual, short, and says nothing about what the group does when it is at full strength. Schub gathers those games in one place and makes them readable at team scale.",
+    "p2": "The site serves a private purpose: a small group of players, their teams, and the owner of the domain that hosts it. There is no advertising, no paid account and no public leaderboard.",
+    "p3": "Game data comes from the Riot Games API. Schub only reads games that are already public, and only for accounts their owners declared themselves."
+  },
+  "features": {
+    "title": "What the tool does today",
+    "intro": "Nothing beyond this list. Work in progress is not listed here.",
+    "roster": {
+      "title": "Build a roster",
+      "body": "A team is built by adding Riot IDs. Each seat carries its positions — top, jungle, mid, bot, support — and its status: starter, substitute or coach. A player added before he has an account keeps his seat: it reaches him when he signs in and links the same account."
+    },
+    "collect": {
+      "title": "Collect the history of games played together",
+      "body": "Once an account is declared, Schub reads its history through the Riot API and picks out the games where the team was present. A game counts for the team as soon as four of its members appear in it, across all queues."
+    },
+    "playerStats": {
+      "title": "Per-player statistics",
+      "body": "By champion, position, queue and month: games, wins, KDA, creep score, gold, damage and vision per minute, along with current rankings. Every figure states how many games and which period it covers."
+    },
+    "teamStats": {
+      "title": "Per-team statistics",
+      "body": "The group's record, broken down by queue, by side of the map and by patch, with each member's presence rate and the table of the games played together."
+    },
+    "pool": {
+      "title": "Champion pool by position",
+      "body": "The team declares, position by position, the champions it is ready to field. Under each champion, Schub shows who at that position has already played it and at which mastery level, against a floor the team sets."
+    },
+    "draft": {
+      "title": "Composition planning",
+      "body": "A composition holds five champions, one per position, and the player taking each line. It carries the patch it relates to and free-form notes, and is still there for the next game."
+    },
+    "reviews": {
+      "title": "Post-game review",
+      "body": "From the games table, each member gets a written note attached to that particular game. One note per author, per player and per game; it is edited, never duplicated."
+    }
+  },
+  "limits": {
+    "title": "What the tool does not do",
+    "intro": "Said here rather than discovered in use.",
+    "history": "The history Riot serves is capped at roughly a thousand games per player. Beyond that, Schub has nothing to read — only what it already collected.",
+    "noWorldStats": "No global averages, no percentiles: those figures are not available and are not invented. A player is compared with the rest of his own games and with his teammates.",
+    "noProbe": "There is no way to look up the history of a player you do not play with: a member's statistics only open from a team you belong to.",
+    "noLive": "Nothing live: no in-game tracking, no overlay, no interaction with the game client.",
+    "collectTime": "The first collection takes time — the Riot API quota limits it. The profile screen says where it stands."
+  },
+  "access": {
+    "title": "Enter the tool",
+    "signedInBody": "Your account is signed in: the tool is open.",
+    "signedOutBody": "The tool requires an account. Sign-in goes through Discord, then you declare your Riot ID from your profile.",
+    "ctaTeams": "My teams",
+    "ctaStats": "My stats",
+    "ctaProfile": "Link my League of Legends account",
+    "ctaSignIn": "Sign in with Discord",
+    "noTeamPermission": "Your role does not grant access to teams yet. Personal statistics remain open."
+  },
+  "legal": {
+    "title": "Notices",
+    "data": "What Schub keeps, for how long, and how to ask for its deletion is described in the privacy policy.",
+    "terms": "Terms of use",
+    "privacy": "Privacy policy"
+  }
+}

@@ -25,6 +25,9 @@ import type { Permission } from "./types/permission";
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const GameServerFormPage = lazy(() => import("./pages/GameServerFormPage"));
 const LandingPage = lazy(() => import("./pages/LandingPage"));
+const LolLandingPage = lazy(() => import("./pages/lol/LolLandingPage"));
+const PrivacyPage = lazy(() => import("./pages/legal/PrivacyPage"));
+const TermsPage = lazy(() => import("./pages/legal/TermsPage"));
 const LoginPage = lazy(() => import("./pages/Login"));
 const ProfilePage = lazy(() => import("./pages/profile/ProfilePage"));
 const StatsPage = lazy(() => import("./pages/lol/StatsPage"));
@@ -123,6 +126,12 @@ function LocalizedRoutes() {
                 La page elle-même n'a pas bougé — elle ne sait pas à quelle adresse on la sert. */}
             <Route path="servers" element={<LandingPage />} />
             <Route path="contact" element={<ContactPage />} />
+
+            {/* Les deux pages de texte, publiques et liées en pied de page. Riot exige qu'un
+                produit tiers les expose ; elles sont aussi la seule réponse honnête à « que
+                gardez-vous, et comment le fait-on effacer ». */}
+            <Route path="terms" element={<TermsPage />} />
+            <Route path="privacy" element={<PrivacyPage />} />
 
             <Route
               path="login"
@@ -238,8 +247,13 @@ function LocalizedRoutes() {
                 capitaine devant sa propre équipe. Le tri est fait par le cœur, qui ne sert que
                 les équipes de l'appelant et refuse les autres en 403 ; le menu, lui, n'affiche
                 l'entrée que si une permission la rend utile (voir AppLayout). */}
+            {/* /lol est PUBLIQUE, et c'est le point de ce lot. Derrière une session, elle ne
+                montrait qu'un écran de connexion — donc rien du produit — à qui ne l'a jamais
+                utilisé, examinateur du portail développeur de Riot compris. La liste des
+                équipes a pris l'adresse qui la décrit. */}
+            <Route path="lol" element={<LolLandingPage />} />
             <Route
-              path="lol"
+              path="lol/teams"
               element={
                 <RequireAuth>
                   <TeamsPage />
