@@ -10,4 +10,13 @@ Disallow: /en/config/
 Disallow: /login
 Disallow: /en/login
 
+# Même raison pour les écrans de l'outil LoL et le profil : ils exigent une session. La vitrine
+# publique, elle, est `/lol` — et elle doit être indexée.
+Disallow: /lol/teams
+Disallow: /en/lol/teams
+Disallow: /lol/stats
+Disallow: /en/lol/stats
+Disallow: /profile
+Disallow: /en/profile
+
 Sitemap: https://schultz-thomas.fr/sitemap.xml
