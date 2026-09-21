@@ -55,14 +55,7 @@
     "pool": "Champion pool",
     "draft": "Draft planner",
     "ariaLabel": "The team panels",
-    "soonBadge": "coming",
     "team": "Team"
-  },
-  "soon": {
-    "pool": {
-      "title": "The champion pool is coming",
-      "description": "Five columns, one per position: the champions each member can play, from their masteries. It depends on Riot masteries and the Data Dragon catalogue, both being wired into the core."
-    }
   },
   "roster": {
     "title": "The roster",

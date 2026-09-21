@@ -1,0 +1,61 @@
+{
+  "title": "Champion pool",
+  "subtitle": "Five columns, one per role: what each player can bring, based on their Riot masteries.",
+  "loading": "Reading masteries",
+  "loadFailed": "Could not load the champion pool",
+  "perMember": {
+    "label": "Champions per player",
+    "helper": "Most mastered first.",
+    "applied": "The {{count}} most mastered champions per player"
+  },
+  "patch": {
+    "label": "Patch {{version}}",
+    "hint": "Names and icons come from this Data Dragon version.",
+    "missingTitle": "Champion catalogue unavailable",
+    "missingDescription": "Without the patch version, a champion name and icon mean nothing three months from now, so the server returns none at all. Players are still listed, and champions will come back as soon as the connector answers."
+  },
+  "generatedAt": "Panel assembled on {{date}}",
+  "column": {
+    "empty": "Nobody on this role"
+  },
+  "withoutRole": {
+    "title": "No role assigned",
+    "description": "These players are on the roster but hold no role. Roles are set from the Roster tab."
+  },
+  "roster": {
+    "emptyTitle": "No player on the roster",
+    "emptyDescription": "Add players from the Roster tab — coaches are left out of this panel."
+  },
+  "member": {
+    "viewer": "You",
+    "substitute": "Substitute",
+    "free": "No Schub account",
+    "mastery": "Level {{level}} · {{points}} points",
+    "lastPlayed": "Played on {{date}}",
+    "observedAt": "Masteries read on {{date}}",
+    "unknownChampion": "Champion {{id}}",
+    "unknownChampionHint": "Released after the served version: the server keeps it rather than hiding a real mastery."
+  },
+  "state": {
+    "COMPTE_RIOT_ABSENT": {
+      "short": "Riot account not linked",
+      "title": "Riot account not linked",
+      "description": "No Riot account answers to this Riot ID yet. The person links it from My profile, then claims their seats."
+    },
+    "MAITRISES_INDISPONIBLES": {
+      "short": "Masteries not retrieved",
+      "title": "Masteries not retrieved",
+      "description": "The Riot connector did not answer for this player. Nothing to do: try again later."
+    },
+    "CATALOGUE_INDISPONIBLE": {
+      "short": "Catalogue unavailable",
+      "title": "Catalogue unavailable",
+      "description": "Without the catalogue there is no name, no icon and no version — so no champion is returned, for anyone."
+    },
+    "AUCUNE_MAITRISE": {
+      "short": "No mastery",
+      "title": "No mastery",
+      "description": "Riot answered, and this account has no mastery yet. That is information, not a failure."
+    }
+  }
+}

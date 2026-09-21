@@ -55,14 +55,7 @@
     "pool": "Pool de champions",
     "draft": "Préparateur de draft",
     "ariaLabel": "Les panneaux de l'équipe",
-    "soonBadge": "à venir",
     "team": "Équipe"
-  },
-  "soon": {
-    "pool": {
-      "title": "Le pool de champions arrive",
-      "description": "Cinq colonnes, une par poste : les champions jouables d'après les maîtrises de chaque membre. Il dépend des maîtrises Riot et du catalogue Data Dragon, tous deux en cours de branchement dans le cœur."
-    }
   },
   "roster": {
     "title": "L'effectif",

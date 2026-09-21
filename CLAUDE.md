@@ -120,8 +120,7 @@ défaire :
   menu ne peuvent les exiger — la route demande d'être connecté, le menu se contente de
   `TEAM_CREATE` ou `TEAM_VIEW`. Le BFF fait de même et le cœur tranche.
 
-Cinq onglets : effectif, joueurs, équipe, pool de champions, préparateur de draft. Seul le
-**pool de champions** reste vide, en attendant son écran — le cœur et le BFF le servent déjà.
+Cinq onglets : effectif, joueurs, équipe, pool de champions, préparateur de draft — tous servis.
 **Aucune donnée simulée n'entre nulle part**, ni dans un panneau, ni dans une story : un chiffre
 inventé est lu comme vrai, et il survit à celui qui l'a posé.
 
