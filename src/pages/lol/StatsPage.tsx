@@ -292,7 +292,7 @@ function StatsPage() {
                 {stats.queues.map((queue) => (
                   <MeterBar
                     key={queue.key}
-                    label={format.file(Number(queue.key))}
+                    label={format.file(queue.key)}
                     value={queue.winRate}
                     valueLabel={detail(queue, format)}
                   />
@@ -306,6 +306,9 @@ function StatsPage() {
               <Stack spacing={1}>
                 {stats.rankings.map((standing) => (
                   <Stack key={standing.queue ?? "?"} spacing={0}>
+                    <Text variant="caption" tone="secondary">
+                      {format.file(standing.queue)}
+                    </Text>
                     <Text variant="subtitle">
                       {`${standing.tier ?? format.absent} ${standing.division ?? ""} · ${format.entier(
                         standing.leaguePoints,

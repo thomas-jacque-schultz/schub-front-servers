@@ -3,28 +3,36 @@ import { useTranslation } from "react-i18next";
 import { useLocaleFormat } from "../../../i18n/format";
 import type { StatsCoverageDto } from "../../../types/stats";
 
-type FileConnue =
-  | "custom"
-  | "draft"
-  | "solo"
-  | "blind"
-  | "flex"
-  | "aram"
-  | "quickplay"
-  | "clash"
-  | "other";
+/**
+ * Les modes de jeu nommés par le connecteur, qui les tire de la liste officielle de Riot. Le
+ * cœur ne sert plus de `queueId` sur ces clés : plusieurs identifiants désignent le même mode.
+ */
+const MODES = [
+  "RANKED_SOLO",
+  "RANKED_FLEX",
+  "NORMAL_DRAFT",
+  "NORMAL_BLIND",
+  "QUICKPLAY",
+  "SWIFTPLAY",
+  "ARAM",
+  "ARAM_MAYHEM",
+  "CLASH",
+  "ARAM_CLASH",
+  "COOP_VS_AI",
+  "ARURF",
+  "URF",
+  "ONE_FOR_ALL",
+  "NEXUS_BLITZ",
+  "ULTIMATE_SPELLBOOK",
+  "ARENA",
+  "SWARM",
+  "BRAWL",
+  "TUTORIAL",
+  "CUSTOM",
+  "OTHER",
+] as const;
 
-/** Les files relevées sur l'API réelle. Tout le reste tombe dans « autre ». */
-const FILES: Record<number, FileConnue> = {
-  0: "custom",
-  400: "draft",
-  420: "solo",
-  430: "blind",
-  440: "flex",
-  450: "aram",
-  490: "quickplay",
-  700: "clash",
-};
+type Mode = (typeof MODES)[number];
 
 const POSTES = [
   "TOP",
@@ -100,9 +108,14 @@ export const useStatsFormat = () => {
         }
         return t("duration.minutes", { count: Math.round(secondes / 60) });
       },
-      file: (queueId: number) => {
-        const cle: FileConnue = FILES[queueId] ?? "other";
-        return t(`queue.${cle}`, { id: queueId });
+      /**
+       * Le nom du mode de jeu. Un mode que cette version ne connaît pas rend « autre mode »
+       * plutôt qu'une clé brute : Riot en ajoute, et l'écran doit rester lisible.
+       */
+      file: (mode: string | null | undefined) => {
+        const cle: Mode =
+          mode && (MODES as readonly string[]).includes(mode) ? (mode as Mode) : "OTHER";
+        return t(`queue.${cle}`);
       },
       poste: (position: string | null | undefined) => {
         const cle: Poste =
