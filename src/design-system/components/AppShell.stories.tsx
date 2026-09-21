@@ -23,6 +23,8 @@ const CONFIGURATION = {
 };
 
 const LIENS = [
+  { key: "terms", label: "Conditions d'utilisation", to: "/conditions" },
+  { key: "privacy", label: "Confidentialité", to: "/confidentialite" },
   { key: "storybook", label: "Design system", href: "/storybook", external: false },
   { key: "linkedin", label: "LinkedIn", href: "https://example.invalid/profil" },
   { key: "discord", label: "Discord", href: null, pendingLabel: "à compléter" },

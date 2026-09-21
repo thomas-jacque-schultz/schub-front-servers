@@ -26,6 +26,8 @@ export type {
   ButtonSize,
   ButtonVariant,
 } from "./components/Button";
+export { BulletList } from "./components/BulletList";
+export type { BulletListProps } from "./components/BulletList";
 export { Card } from "./components/Card";
 export type { CardProps } from "./components/Card";
 export { Checkbox } from "./components/Checkbox";

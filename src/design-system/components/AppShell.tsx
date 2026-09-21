@@ -45,7 +45,12 @@ export interface AppShellMenu {
 export interface AppShellFooterLink {
   key: string;
   label: string;
-  /** Absente, l'entrée s'affiche inerte et annoncée comme à compléter. */
+  /**
+   * Une route du site, **déjà localisée**. Elle passe par le routeur : servie en `href`, elle
+   * rechargerait toute l'application pour aller lire deux pages de texte.
+   */
+  to?: string;
+  /** Sans `to` ni `href`, l'entrée s'affiche inerte et annoncée comme à compléter. */
   href?: string | null;
   /** Ce qu'on lit au survol d'une entrée sans adresse. */
   pendingLabel?: string;
@@ -260,7 +265,18 @@ export function AppShell({
           >
             <MuiStack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
               {footerLinks.map((link) =>
-                link.href ? (
+                link.to ? (
+                  <Link
+                    key={link.key}
+                    component={RouterLink}
+                    to={link.to}
+                    color="text.secondary"
+                    underline="hover"
+                    variant="body2"
+                  >
+                    {link.label}
+                  </Link>
+                ) : link.href ? (
                   <Link
                     key={link.key}
                     href={link.href}
