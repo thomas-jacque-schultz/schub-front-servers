@@ -67,6 +67,13 @@ export interface DisplayNameRequest {
 export interface RiotAccountRequest {
   /** `Pseudo#TAG`, d'un bloc — c'est sous cette forme que le client de jeu l'affiche. */
   riotId: string;
+  /**
+   * Assume le remplacement d'un *autre* compte déjà lié.
+   *
+   * <p>Faux, le cœur refuse en 409 **et rend les conséquences** au lieu de les appliquer. C'est ce
+   * qui rend un changement subi impossible : on ne peut confirmer que ce qu'on a lu.</p>
+   */
+  confirmChange: boolean;
 }
 
 /**
