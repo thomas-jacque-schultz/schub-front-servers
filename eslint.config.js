@@ -43,10 +43,13 @@ const RESTRICTED_UI_IMPORTS = {
  * Le bloc est donc vide à la fusion des deux PR, et cette constante disparaît avec sa dernière
  * ligne.</p>
  */
-// Vide depuis le 2026-09-21 : les trois écrans restants sont sortis au lot B.5, et Login.tsx
-// a été réécrit par le lot A.3. Le chantier B est clos — cette liste ne doit plus jamais
-// grossir : un écran qui a besoin de MUI a besoin d'une primitive, pas d'une dérogation.
-const DESIGN_SYSTEM_DEBT = [];
+// LE BLOC DE DÉROGATION A ÉTÉ SUPPRIMÉ LE 2026-09-21, ET C'EST LA FIN DU CHANTIER B.
+// Il exemptait les écrans qui importaient MUI directement ; les trois derniers sont sortis au
+// lot B.5 et Login.tsx a été réécrit au lot A.3. Il ne reste donc rien à exempter.
+//
+// Ne le rétablis pas. Un écran qui a besoin de MUI a besoin d'une primitive dans
+// src/design-system/, pas d'une dérogation : une liste qui rétrécit est un plan, une règle
+// désactivée est un abandon.
 
 export default tseslint.config(
   {
@@ -107,13 +110,6 @@ export default tseslint.config(
     rules: {
       "@typescript-eslint/no-restricted-imports": "off",
       "react-refresh/only-export-components": "off",
-    },
-  },
-  {
-    name: "dette à résorber — imports MUI hors design system",
-    files: DESIGN_SYSTEM_DEBT,
-    rules: {
-      "@typescript-eslint/no-restricted-imports": "off",
     },
   },
   ...storybook.configs["flat/recommended"],
