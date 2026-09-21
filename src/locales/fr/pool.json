@@ -1,0 +1,61 @@
+{
+  "title": "Pool de champions",
+  "subtitle": "Cinq colonnes, une par poste : ce que chaque joueur maîtrise, d'après ses maîtrises Riot.",
+  "loading": "Lecture des maîtrises",
+  "loadFailed": "Impossible de charger le pool de champions",
+  "perMember": {
+    "label": "Champions par joueur",
+    "helper": "Du plus maîtrisé au moins maîtrisé.",
+    "applied": "Les {{count}} champions les plus maîtrisés par joueur"
+  },
+  "patch": {
+    "label": "Patch {{version}}",
+    "hint": "Les noms et les icônes viennent de cette version de Data Dragon.",
+    "missingTitle": "Catalogue des champions indisponible",
+    "missingDescription": "Sans la version du patch, un nom et une icône de champion ne veulent plus rien dire dans trois mois : le serveur préfère n'en rendre aucun. Les joueurs restent affichés, les champions reviendront dès que le connecteur répondra."
+  },
+  "generatedAt": "Panneau assemblé le {{date}}",
+  "column": {
+    "empty": "Personne à ce poste"
+  },
+  "withoutRole": {
+    "title": "Sans poste attribué",
+    "description": "Ces joueurs sont à l'effectif mais aucun poste ne leur est assigné. Le poste se choisit dans l'onglet Effectif."
+  },
+  "roster": {
+    "emptyTitle": "Aucun joueur à l'effectif",
+    "emptyDescription": "Ajoutez des joueurs dans l'onglet Effectif : les coachs ne figurent pas dans ce panneau."
+  },
+  "member": {
+    "viewer": "Vous",
+    "substitute": "Remplaçant",
+    "free": "Sans compte Schub",
+    "mastery": "Niveau {{level}} · {{points}} points",
+    "lastPlayed": "Joué le {{date}}",
+    "observedAt": "Maîtrises relevées le {{date}}",
+    "unknownChampion": "Champion {{id}}",
+    "unknownChampionHint": "Sorti après la version servie : le serveur le garde plutôt que de faire disparaître une maîtrise réelle."
+  },
+  "state": {
+    "COMPTE_RIOT_ABSENT": {
+      "short": "Compte Riot non lié",
+      "title": "Compte Riot non lié",
+      "description": "Aucun compte Riot ne répond encore à ce Riot ID. La personne le lie depuis Mon profil, puis récupère ses places."
+    },
+    "MAITRISES_INDISPONIBLES": {
+      "short": "Maîtrises non obtenues",
+      "title": "Maîtrises non obtenues",
+      "description": "Le connecteur Riot n'a pas répondu pour ce joueur. Rien à faire : réessayer plus tard."
+    },
+    "CATALOGUE_INDISPONIBLE": {
+      "short": "Catalogue indisponible",
+      "title": "Catalogue indisponible",
+      "description": "Sans le catalogue, il n'y a ni nom, ni icône, ni version — donc aucun champion rendu, pour personne."
+    },
+    "AUCUNE_MAITRISE": {
+      "short": "Aucune maîtrise",
+      "title": "Aucune maîtrise",
+      "description": "Riot a répondu, et ce compte n'a encore aucune maîtrise. C'est une information, pas une panne."
+    }
+  }
+}

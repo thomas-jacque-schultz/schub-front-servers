@@ -16,7 +16,7 @@ import {
 } from "../../design-system";
 import { useLocalizedNavigate } from "../../i18n/navigation";
 import type { TeamDto } from "../../types/team";
-import { ComingSoonPanel } from "./ComingSoonPanel";
+import { PoolPanel } from "./pool/PoolPanel";
 import { PlayersPanel } from "./stats/PlayersPanel";
 import { TeamGamesPanel } from "./stats/TeamGamesPanel";
 import { DraftPanel } from "./DraftPanel";
@@ -27,13 +27,9 @@ type PanelKey = "roster" | "players" | "team" | "pool" | "draft";
 /**
  * La page d'une équipe, à panneaux.
  *
- * <h2>Cinq onglets, dont un seul encore vide</h2>
- *
  * <p>L'effectif prend le premier onglet — il faut bien un endroit où l'équipe se compose — puis
- * viennent les deux panneaux du plan §D.2 bis : les statistiques individuelles, et les parties
- * d'équipe, celles où au moins quatre des membres ont joué, toutes files confondues. Le pool de
- * champions reste annoncé et <strong>vide</strong> : aucune donnée simulée n'y entre en
- * attendant, un chiffre inventé serait lu comme vrai.</p>
+ * viennent les quatre panneaux du plan §D.2 bis : joueurs, parties d'équipe, pool de champions et
+ * préparateur de draft.</p>
  *
  * <p>Seul le panneau actif est monté : ouvrir une équipe ne va pas chercher les compositions
  * tant qu'on n'ouvre pas le préparateur.</p>
@@ -135,7 +131,7 @@ function TeamPage() {
     { key: "roster", label: t("tabs.roster") },
     { key: "players", label: t("tabs.players") },
     { key: "team", label: t("tabs.team") },
-    { key: "pool", label: t("tabs.pool"), badge: t("tabs.soonBadge") },
+    { key: "pool", label: t("tabs.pool") },
     { key: "draft", label: t("tabs.draft") },
   ];
 
@@ -191,12 +187,7 @@ function TeamPage() {
         )}
         {panel === "players" && <PlayersPanel teamId={team.id} />}
         {panel === "team" && <TeamGamesPanel teamId={team.id} />}
-        {panel === "pool" && (
-          <ComingSoonPanel
-            title={t("soon.pool.title")}
-            description={t("soon.pool.description")}
-          />
-        )}
+        {panel === "pool" && <PoolPanel teamId={team.id} />}
         {panel === "draft" && <DraftPanel team={team} />}
       </Tabs>
 
