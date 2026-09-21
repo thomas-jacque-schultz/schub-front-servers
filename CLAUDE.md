@@ -62,7 +62,8 @@ PR de la connexion Discord retire de son côté : **le bloc, et la constante ave
 marque. Un écran ne repose ni `ThemeModeToggle`, ni `LanguageSwitcher`, ni `PageBackdrop` :
 il rend un titre et du contenu. `AppShell` ne teste aucune permission — c'est `AppLayout` qui
 
-**La largeur du bandeau est décidée par `AppLayout`, pas par les écrans.** `/lol/*` reçoit `xl` —
+**La largeur du bandeau est décidée par `AppLayout`, pas par les écrans.** `/lol/teams` et
+`/lol/stats` reçoivent `xl` —
 cinq colonnes de statistiques et un tableau de parties deviennent illisibles resserrés dans `lg` ;
 les pages de texte, `/contact` en tête, restent en `lg` parce qu'une ligne de prose trop longue se
 relit mal. Élargir partout aurait échangé un défaut contre un autre.
@@ -85,7 +86,9 @@ décide de ce qu'elle reçoit.
 | `/contact` | le contenu personnel, puis le formulaire en bas | public, à la demande |
 | `/storybook` | le design system | public, **hors du routeur React** (nginx) |
 | `/config/*` | l'administration | connecté + permission, à la demande |
-| `/lol`, `/lol/teams/:id` | les équipes LoL | connecté, à la demande |
+| `/lol` | la vitrine de l'outil League of Legends | **public**, à la demande |
+| `/lol/teams`, `/lol/teams/:id` | les équipes LoL | connecté, à la demande |
+| `/terms`, `/privacy` | conditions d'utilisation et confidentialité | public, à la demande |
 | `/profile` | Mon profil : Discord, nom, compte Riot | connecté, à la demande |
 | `/lol/stats` | Mes stats — ses parties, ses champions, ses postes | connecté, à la demande |
 
@@ -130,10 +133,47 @@ se retire sans en ajouter une autre.**
 - **Storybook est destiné à être public.** Aucune donnée réelle dans une story : pas de pseudo
   Discord, pas d'IP, pas de numéro de port réel.
 
+## Les pages de texte, et la mention Riot
+
+**`/lol` est publique, et ce n'est pas un détail d'ergonomie.** Elle servait la liste des équipes
+derrière une session : un visiteur — l'examinateur du portail développeur de Riot en particulier —
+n'y lisait qu'un écran de connexion, donc rien de ce que le produit fait. Riot écrit noir sur blanc
+« si votre site n'est pas complet, il est peu probable que nous approuvions votre produit ». La
+liste des équipes a donc pris `/lol/teams`, et `/lol` décrit l'outil.
+
+**Cette page ne décrit que ce qui existe.** La section des limites — historique Riot borné à mille
+parties, aucune moyenne mondiale, aucun sondage de l'historique d'un inconnu, rien en direct — est
+aussi importante que celle des fonctionnalités : un examinateur vérifie, et une promesse
+invérifiable coûte plus cher qu'une fonctionnalité manquante.
+
+**La mention légale de Riot est reproduite telle quelle, en anglais, et ne se traduit pas.** C'est
+une formulation imposée ; le seul ajustement permis est le nom du produit à la place de
+`[Your product]`. Elle vit dans `RiotDisclaimer` et pas dans trois copies, avec sa source. Riot
+demande qu'elle soit « à un endroit visible des joueurs » : elle est donc sur la vitrine **et** sur
+les deux pages de texte.
+
+**`/terms` et `/privacy` sont des brouillons, et le disent en tête.** Elles engagent le
+propriétaire du domaine, elles n'ont pas été relues par un juriste, et l'avertissement ne se
+retire pas avant que ce soit fait. Ce que le code ne porte pas — nom légal, adresse, juridiction,
+base légale, délai de réponse — reste **entre crochets** plutôt qu'inventé. Un crochet se voit et
+finit rempli ; une phrase plausible et fausse survit à celui qui l'a écrite.
+
+**Elles sont écrites depuis les collections, pas depuis un modèle.** Trois faits en découlent et ne
+doivent pas disparaître à la prochaine retouche :
+
+- `riot_match`, `riot_participation` et `riot_known_account` **n'ont aucun TTL**. L'historique
+  servi par Riot est borné ; ce qui a été collecté reste après que Riot l'a retiré du sien. C'est
+  voulu, et c'est dit.
+- **Les neuf autres joueurs d'une partie sont enregistrés** — Riot ID et chiffres de partie — sans
+  avoir de compte ici. La voie de suppression leur est ouverte au même titre.
+- **Il n'existe aucune route de suppression de compte** dans le cœur. La politique le dit comme un
+  engagement à traiter la demande par le formulaire de contact, jamais comme une fonctionnalité.
+  Le jour où la route existe, c'est ce paragraphe qui change en premier.
+
 ## Les équipes (chantier D)
 
-`/lol` liste mes équipes, `/lol/teams/:id` ouvre la page à quatre panneaux. Deux choses à ne pas
-défaire :
+`/lol/teams` liste mes équipes, `/lol/teams/:id` ouvre la page à quatre panneaux. Deux choses à
+ne pas défaire :
 
 - **Ce qu'un écran propose vient des `viewerCanEdit`, `viewerCanEditCompositions` et
   `viewerMemberId`** servis par le cœur. On ne recalcule rien à partir d'identifiants : c'est

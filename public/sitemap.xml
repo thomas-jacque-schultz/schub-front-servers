@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Les six pages publiques : trois en français, leurs trois équivalentes en anglais.
+  Les douze pages publiques : six en français, leurs six équivalentes en anglais.
 
-  La racine est la page produit de Schub ; le parcours, les projets et le formulaire vivent sur
-  /contact, qui est donc la page à indexer pour qui cherche la personne plutôt que l'outil. Elle
-  change plus souvent qu'un CV, d'où le `monthly`.
+  La racine est la page produit de Schub. /lol est la vitrine de l'outil League of Legends,
+  publique depuis le lot des pages légales : c'est elle qu'un examinateur du portail développeur
+  de Riot ouvre, et elle n'existerait pas dans un index si elle restait derrière une session.
+  Le parcours, les projets et le formulaire vivent sur /contact.
+
+  /terms et /privacy changent rarement, d'où le `yearly`, mais elles sont indexables à dessein :
+  Riot exige qu'un produit tiers les expose, et une page exigée qu'on ne trouve pas ne vaut rien.
 
   Chaque URL déclare ses alternatives `hreflang`, y compris elle-même — c'est ce que demande la
   spécification, et c'est ce qui évite que les deux versions soient traitées comme du contenu
   dupliqué.
 
-  Le Storybook (`/storybook`) n'y figure pas volontairement : il est public et lié en pied de
+  Le Storybook (/storybook) n'y figure pas volontairement : il est public et lié en pied de
   page, mais c'est une documentation technique, pas une page du site. Il reste crawlable ; il
   n'est simplement pas proposé à l'indexation.
+
+  Les écrans qui exigent une session — /lol/teams, /lol/stats, /profile, /config — n'y sont pas
+  non plus : indexés, ils ne produiraient que des redirections vers la connexion.
 -->
 <urlset
   xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
@@ -27,12 +34,12 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://schultz-thomas.fr/servers</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://schultz-thomas.fr/servers" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://schultz-thomas.fr/en/servers" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://schultz-thomas.fr/servers" />
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <loc>https://schultz-thomas.fr/lol</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://schultz-thomas.fr/lol" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://schultz-thomas.fr/en/lol" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://schultz-thomas.fr/lol" />
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://schultz-thomas.fr/contact</loc>
@@ -43,12 +50,52 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://schultz-thomas.fr/servers</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://schultz-thomas.fr/servers" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://schultz-thomas.fr/en/servers" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://schultz-thomas.fr/servers" />
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://schultz-thomas.fr/terms</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://schultz-thomas.fr/terms" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://schultz-thomas.fr/en/terms" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://schultz-thomas.fr/terms" />
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://schultz-thomas.fr/privacy</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://schultz-thomas.fr/privacy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://schultz-thomas.fr/en/privacy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://schultz-thomas.fr/privacy" />
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
     <loc>https://schultz-thomas.fr/en</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://schultz-thomas.fr/" />
     <xhtml:link rel="alternate" hreflang="en" href="https://schultz-thomas.fr/en" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://schultz-thomas.fr/" />
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://schultz-thomas.fr/en/lol</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://schultz-thomas.fr/lol" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://schultz-thomas.fr/en/lol" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://schultz-thomas.fr/lol" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://schultz-thomas.fr/en/contact</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://schultz-thomas.fr/contact" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://schultz-thomas.fr/en/contact" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://schultz-thomas.fr/contact" />
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
   </url>
   <url>
     <loc>https://schultz-thomas.fr/en/servers</loc>
@@ -59,11 +106,19 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://schultz-thomas.fr/en/contact</loc>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://schultz-thomas.fr/contact" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://schultz-thomas.fr/en/contact" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://schultz-thomas.fr/contact" />
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
+    <loc>https://schultz-thomas.fr/en/terms</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://schultz-thomas.fr/terms" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://schultz-thomas.fr/en/terms" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://schultz-thomas.fr/terms" />
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://schultz-thomas.fr/en/privacy</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://schultz-thomas.fr/privacy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://schultz-thomas.fr/en/privacy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://schultz-thomas.fr/privacy" />
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
 </urlset>
