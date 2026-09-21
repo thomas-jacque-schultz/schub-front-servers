@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { getTeamGamesStatsApi } from "../../../api/statsApi";
 import {
   Alert,
+  Button,
   Card,
   Chip,
   Columns,
@@ -21,6 +22,7 @@ import type {
   TeamGamesStatsDto,
   TeamRecordDto,
 } from "../../../types/stats";
+import { GameReviewDialog } from "../reviews/GameReviewDialog";
 import { StatsStateNote } from "./StatsStateNote";
 import { useStatsFormat } from "./statsFormat";
 import { useWindowOptions } from "./windows";
@@ -38,6 +40,7 @@ export interface TeamGamesPanelProps {
  */
 export function TeamGamesPanel({ teamId }: TeamGamesPanelProps) {
   const { t } = useTranslation("stats");
+  const { t: tReviews } = useTranslation("reviews");
   const format = useStatsFormat();
   const { formatDate } = useLocaleFormat();
   const fenetres = useWindowOptions();
@@ -45,6 +48,7 @@ export function TeamGamesPanel({ teamId }: TeamGamesPanelProps) {
   const [stats, setStats] = useState<TeamGamesStatsDto | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
+  const [reviewed, setReviewed] = useState<TeamGameDto | null>(null);
 
   const load = useCallback(async () => {
     setIsLoading(true);
@@ -142,6 +146,15 @@ export function TeamGamesPanel({ teamId }: TeamGamesPanelProps) {
       key: "patch",
       header: t("games.patch"),
       render: (game) => game.patch ?? format.absent,
+    },
+    {
+      key: "review",
+      header: tReviews("action"),
+      render: (game) => (
+        <Button variant="ghost" size="small" onClick={() => setReviewed(game)}>
+          {tReviews("action")}
+        </Button>
+      ),
     },
   ];
 
@@ -286,6 +299,12 @@ export function TeamGamesPanel({ teamId }: TeamGamesPanelProps) {
           </Card>
         </>
       )}
+
+      <GameReviewDialog
+        teamId={teamId}
+        game={reviewed}
+        onClose={() => setReviewed(null)}
+      />
     </Stack>
   );
 }

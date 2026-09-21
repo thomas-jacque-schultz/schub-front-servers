@@ -216,3 +216,17 @@ jusqu'au lot A.6.
 est administrateur de **ce** serveur-là. Démarrer et arrêter se proposent donc serveur par
 serveur : rôle portant `SERVER_START` *et* `SERVER_STOP`, **ou** `viewerIsAdmin` (décision n°11).
 Un booléen global serait faux dans les deux sens.
+
+## La revue par joueur
+
+Une note s'attache à **une partie d'équipe** et à **une place** de l'effectif ; elle s'ouvre
+depuis le tableau des parties du panneau *Équipe*.
+
+- **Qui écrit sur qui vient de deux faits sur le lecteur** — `viewerCanReviewAnyone` et
+  `viewerMemberId` — plus `viewerCanEdit` sur chaque note. Aucune comparaison d'identifiants, et
+  aucune liste d'ayants droit : c'est la règle du §A.5 bis, appliquée ici comme ailleurs.
+- **Les sujets proposés sont les joueurs présents dans cette partie.** Le cœur en accepterait
+  davantage — n'importe quel joueur de l'effectif — mais noter quelqu'un sur une partie qu'il n'a
+  pas jouée n'est pas un débrief. L'IHM propose donc **moins** que le serveur, jamais plus.
+- **Une note par auteur, par joueur et par partie.** Une seconde tentative revient en 409 ; la
+  note existante se modifie, elle ne se double pas.

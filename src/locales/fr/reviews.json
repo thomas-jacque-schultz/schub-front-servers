@@ -1,0 +1,34 @@
+{
+  "action": "Revue",
+  "title": "Revue de la partie",
+  "description": "Le débrief d'après-match, joueur par joueur. Ce que vous écrivez est visible par toute l'équipe.",
+  "close": "Fermer",
+  "loading": "Lecture des notes",
+  "loadFailed": "Impossible de charger les notes de cette partie",
+  "empty": "Aucune note sur cette partie pour l'instant.",
+  "readOnly": "Vous n'avez de place dans aucune des lignes de cette partie : vous lisez, vous n'écrivez pas.",
+  "onlyYourself": "Vous écrivez sur votre propre jeu. Le capitaine peut écrire sur tout le monde.",
+  "author": "Par {{name}}",
+  "unknownAuthor": "Auteur inconnu",
+  "updated": "Modifiée le {{date}}",
+  "written": "Écrite le {{date}}",
+  "form": {
+    "subject": "Sur qui porte la note",
+    "content": "La note",
+    "contentHelper": "2000 caractères au plus.",
+    "submit": "Enregistrer",
+    "failed": "L'enregistrement a échoué"
+  },
+  "edit": {
+    "action": "Modifier",
+    "title": "Modifier la note",
+    "confirm": "Enregistrer"
+  },
+  "remove": {
+    "action": "Supprimer",
+    "title": "Supprimer cette note ?",
+    "description": "Elle disparaît pour toute l'équipe. C'est définitif.",
+    "confirm": "Supprimer",
+    "failed": "La suppression a échoué"
+  }
+}

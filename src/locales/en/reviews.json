@@ -1,0 +1,34 @@
+{
+  "action": "Review",
+  "title": "Game review",
+  "description": "The post-game debrief, player by player. What you write is visible to the whole team.",
+  "close": "Close",
+  "loading": "Reading notes",
+  "loadFailed": "Could not load the notes for this game",
+  "empty": "No note on this game yet.",
+  "readOnly": "You hold none of the seats in this game: you read, you do not write.",
+  "onlyYourself": "You write about your own play. The captain can write about everyone.",
+  "author": "By {{name}}",
+  "unknownAuthor": "Unknown author",
+  "updated": "Edited on {{date}}",
+  "written": "Written on {{date}}",
+  "form": {
+    "subject": "Who the note is about",
+    "content": "The note",
+    "contentHelper": "2000 characters at most.",
+    "submit": "Save",
+    "failed": "Saving failed"
+  },
+  "edit": {
+    "action": "Edit",
+    "title": "Edit the note",
+    "confirm": "Save"
+  },
+  "remove": {
+    "action": "Delete",
+    "title": "Delete this note?",
+    "description": "It disappears for the whole team. This cannot be undone.",
+    "confirm": "Delete",
+    "failed": "Deletion failed"
+  }
+}

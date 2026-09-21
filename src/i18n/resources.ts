@@ -4,6 +4,7 @@ import enCommon from "../locales/en/common.json";
 import enDiscord from "../locales/en/discord.json";
 import enPool from "../locales/en/pool.json";
 import enPortfolio from "../locales/en/portfolio.json";
+import enReviews from "../locales/en/reviews.json";
 import enProfile from "../locales/en/profile.json";
 import enPorts from "../locales/en/ports.json";
 import enRoles from "../locales/en/roles.json";
@@ -17,6 +18,7 @@ import frCommon from "../locales/fr/common.json";
 import frDiscord from "../locales/fr/discord.json";
 import frPool from "../locales/fr/pool.json";
 import frPortfolio from "../locales/fr/portfolio.json";
+import frReviews from "../locales/fr/reviews.json";
 import frProfile from "../locales/fr/profile.json";
 import frPorts from "../locales/fr/ports.json";
 import frRoles from "../locales/fr/roles.json";
@@ -47,6 +49,7 @@ export const resources = {
     profile: frProfile,
     stats: frStats,
     pool: frPool,
+    reviews: frReviews,
   },
   en: {
     common: enCommon,
@@ -62,6 +65,7 @@ export const resources = {
     profile: enProfile,
     stats: enStats,
     pool: enPool,
+    reviews: enReviews,
   },
 } as const;
 
@@ -82,6 +86,7 @@ export const namespaces = [
   "profile",
   "stats",
   "pool",
+  "reviews",
 ] as const;
 
 export type Namespace = (typeof namespaces)[number];
