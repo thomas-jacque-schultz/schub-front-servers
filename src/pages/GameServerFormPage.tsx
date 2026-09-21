@@ -5,8 +5,6 @@ import {
   Alert,
   Button,
   Card,
-  MultiSelect,
-  type MultiSelectOption,
   PageHeader,
   ProgressBar,
   SelectField,
@@ -20,15 +18,12 @@ import {
   updateGameServerApi,
 } from "../api/serversApi";
 import { getDeploymentsApi } from "../api/deploymentsApi";
-import { getUsersApi } from "../api/usersApi";
 import { useAuthStore } from "../stores/authStore";
 import type { DeploymentDto } from "../types/deployment";
 import { slugFromDeploymentName } from "../types/deployment";
-import { userLabelOf, type UserDto } from "../types/user";
 import type {
   GameServerFormMode,
   GameServerPortDto,
-  ServerAdminDto,
   UpsertGameServerPayload,
 } from "../types/server";
 import { hasInfrastructureView } from "../types/server";
@@ -109,14 +104,12 @@ const formatPorts = (ports?: GameServerPortDto[]): string =>
 /**
  * Le corps de la requête.
  *
- * <p>`admins` et `ports` sont **omis** quand l'acteur ne voit pas l'infrastructure : le cœur
- * laisse alors les listes existantes intactes. Les envoyer vides — ce qu'un formulaire qui ne
- * les a jamais reçues ferait naturellement — effacerait à la première sauvegarde des
- * administrateurs et des redirections que l'acteur n'avait même pas le droit de lire.</p>
+ * <p>`ports` est **omis** quand l'acteur ne voit pas l'infrastructure : le cœur laisse alors la
+ * liste existante intacte. L'envoyer vide — ce qu'un formulaire qui ne l'a jamais reçue ferait
+ * naturellement — effacerait des redirections que l'acteur n'avait même pas le droit de lire.</p>
  */
 const toPayload = (
   values: GameServerFormValues,
-  adminIds: string[],
   seesInfrastructure: boolean,
 ): UpsertGameServerPayload => ({
   slug: values.slug.trim(),
@@ -128,8 +121,6 @@ const toPayload = (
   installation: values.installation.trim() || undefined,
   version: values.version.trim() || undefined,
   description: values.description.trim() || undefined,
-  // Le cœur ne lit que `userId` en entrée ; le reste de la forme n'est renseigné qu'en sortie.
-  admins: seesInfrastructure ? adminIds.map((userId) => ({ userId })) : undefined,
   // champ vidé = toutes les redirections du serveur sont retirées
   ports: seesInfrastructure ? parsePorts(values.ports) || [] : undefined,
 });
@@ -147,11 +138,9 @@ const resolveMode = (pathname: string): GameServerFormMode => {
 /**
  * La fiche d'un serveur.
  *
- * <p>Deux nouveautés du lot A.5 s'y voient : le champ `admins` est devenu un sélecteur de
- * comptes, avec portrait et pseudo ; et la fiche sait être servie **amputée**. Un acteur sans
- * `SERVER_INFRA_VIEW` reçoit la projection membre — ni ports, ni déploiement, ni
- * administrateurs. Ce n'est pas une erreur de chargement, et la fiche le dit au lieu d'afficher
- * des champs vides qui laisseraient croire à des données perdues.</p>
+ * <p>Elle sait être servie **amputée** : un acteur sans `SERVER_INFRA_VIEW` reçoit la projection
+ * membre, ni ports ni déploiement. Ce n'est pas une erreur de chargement, et la fiche le dit au
+ * lieu d'afficher des champs vides qui laisseraient croire à des données perdues.</p>
  */
 function GameServerFormPage() {
   const navigate = useLocalizedNavigate();
@@ -159,10 +148,6 @@ function GameServerFormPage() {
   const { id } = useParams();
   const { can } = useAuthStore();
   const [values, setValues] = useState<GameServerFormValues>(DEFAULT_VALUES);
-  const [adminIds, setAdminIds] = useState<string[]>([]);
-  const [knownAdmins, setKnownAdmins] = useState<ServerAdminDto[]>([]);
-  const [users, setUsers] = useState<UserDto[]>([]);
-  const [usersError, setUsersError] = useState<string>("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [globalError, setGlobalError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -208,40 +193,6 @@ function GameServerFormPage() {
     };
   }, [mode, can, t]);
 
-  /**
-   * Le catalogue des comptes, pour le sélecteur d'administrateurs.
-   *
-   * <p>Il demande `USER_VIEW`, que `SERVER_EDIT` n'implique pas. Sans lui, le champ reste
-   * lisible — les administrateurs déjà en place viennent de la fiche elle-même — mais figé :
-   * proposer une liste vide ferait croire qu'il n'existe aucun compte.</p>
-   */
-  useEffect(() => {
-    if (!can("USER_VIEW")) {
-      return;
-    }
-
-    let active = true;
-    void (async () => {
-      try {
-        const payload = await getUsersApi();
-        if (active) {
-          setUsers(payload);
-          setUsersError("");
-        }
-      } catch (error) {
-        if (active) {
-          setUsersError(
-            error instanceof Error ? error.message : t("form.errors.usersUnavailable"),
-          );
-        }
-      }
-    })();
-
-    return () => {
-      active = false;
-    };
-  }, [can, t]);
-
   useEffect(() => {
     if (!id || mode === "creation") {
       return;
@@ -278,8 +229,6 @@ function GameServerFormPage() {
           description: server.description || "",
           ports: formatPorts(server.ports),
         });
-        setKnownAdmins(server.admins ?? []);
-        setAdminIds((server.admins ?? []).map((admin) => admin.userId));
       } catch (error) {
         if (!active) {
           return;
@@ -324,30 +273,6 @@ function GameServerFormPage() {
     }
     return games;
   }, [deployments, selectedDeployment]);
-
-  /**
-   * Les comptes proposés comme administrateurs.
-   *
-   * <p>Les administrateurs déjà posés sur la fiche sont fusionnés au catalogue : sans eux, un
-   * compte retiré de la liste des comptes visibles disparaîtrait du sélecteur et se ferait
-   * effacer à la sauvegarde suivante.</p>
-   */
-  const adminOptions = useMemo<MultiSelectOption[]>(() => {
-    const fromUsers = users.map((user) => ({
-      value: user.id,
-      label: userLabelOf(user),
-      avatarUrl: user.avatarUrl,
-      description: user.roleName,
-    }));
-    const missing = knownAdmins
-      .filter((admin) => !users.some((user) => user.id === admin.userId))
-      .map((admin) => ({
-        value: admin.userId,
-        label: admin.discordUsername || admin.userId,
-        avatarUrl: admin.avatarUrl,
-      }));
-    return [...fromUsers, ...missing];
-  }, [users, knownAdmins]);
 
   const onDeploymentChange = (deploymentId: string) => {
     const deployment = deployments.find((candidate) => String(candidate.id) === deploymentId) ?? null;
@@ -408,7 +333,7 @@ function GameServerFormPage() {
     setIsSubmitting(true);
     setGlobalError("");
 
-    const payload = toPayload(values, adminIds, seesInfrastructure);
+    const payload = toPayload(values, seesInfrastructure);
 
     try {
       if (mode === "creation") {
@@ -538,21 +463,6 @@ function GameServerFormPage() {
             disabled={infraDisabled}
             error={Boolean(errors.ports)}
             helperText={errors.ports || t("form.helpers.ports")}
-          />
-
-          <MultiSelect
-            label={t("form.fields.admins")}
-            values={adminIds}
-            onChange={setAdminIds}
-            options={adminOptions}
-            disabled={infraDisabled || (!can("USER_VIEW") && adminOptions.length === 0)}
-            error={Boolean(usersError)}
-            helperText={
-              usersError ||
-              (can("USER_VIEW")
-                ? t("form.helpers.admins")
-                : t("form.helpers.adminsUnavailable"))
-            }
           />
 
           <TextField

@@ -6,23 +6,15 @@ import { Alert, Button, PageHeader, Stack } from "../../design-system";
 import { useLocalizedNavigate } from "../../i18n/navigation";
 import { useAuthStore } from "../../stores/authStore";
 import { useServersStore } from "../../stores/serversStore";
-import type { DisplayedServer } from "../../types/server";
 
 const REFRESH_INTERVAL_MS = 30_000;
 
 /**
  * Les fiches serveurs, sous le menu *Configuration*.
  *
- * <p><strong>Démarrer et arrêter ne sont plus proposés à tout compte connecté.</strong> Ils
- * l'étaient parce que le front n'avait aucun moyen de savoir qui figure dans les `admins` d'un
- * serveur : masquer les boutons sur la seule foi des permissions de rôle aurait retiré à un
- * administrateur de serveur ce que le cœur lui accorde (décision n°11 du 18-09). Le cœur expose
- * désormais `viewerIsAdmin` sur chaque projection, et la question se pose serveur par serveur.</p>
- *
- * <p>La règle recopie exactement celle du cœur (`PermissionEvaluator`) : autorité du rôle
- * <em>union</em> `START`/`STOP` sur les serveurs dont on est administrateur. L'autorité reste le
- * cœur — il refuse vraiment — ce qui se joue ici est qu'un visiteur ne clique plus sur un bouton
- * pour récolter un 403.</p>
+ * <p>Démarrer et arrêter s'y trouvent aussi, mais cet écran n'est pas leur adresse : il exige
+ * `SERVER_CREATE`, `SERVER_EDIT` ou `SERVER_INFRA_VIEW`, qu'un modérateur n'a pas. La page des
+ * serveurs les porte, et c'est là qu'il les trouve.</p>
  */
 function ServersConfigPage() {
   const { t } = useTranslation("servers");
@@ -42,18 +34,10 @@ function ServersConfigPage() {
   }, [refresh]);
 
   /**
-   * Le droit d'agir sur *ce* serveur.
-   *
-   * <p>`SERVER_START` et `SERVER_STOP` sont testées séparément par le cœur, mais les deux
-   * boutons vont ensemble dans la carte : exiger l'une ou l'autre afficherait la paire à qui ne
-   * peut qu'en actionner une. Exiger les deux du rôle serait faux dans l'autre sens, puisque
-   * l'administrateur du serveur les obtient toutes les deux d'un coup — d'où le `||`.</p>
+   * Les deux boutons vont ensemble dans la carte : exiger l'une ou l'autre permission
+   * afficherait la paire à qui ne peut en actionner qu'une.
    */
-  const canControlServer = useCallback(
-    (server: DisplayedServer) =>
-      server.viewerIsAdmin || (can("SERVER_START") && can("SERVER_STOP")),
-    [can],
-  );
+  const canControl = can("SERVER_START") && can("SERVER_STOP");
 
   const runServerAction = async (slug: string, action: (slug: string) => Promise<void>) => {
     setPendingServerSlug(slug);
@@ -78,7 +62,7 @@ function ServersConfigPage() {
         }
       />
 
-      {/* L'absence des ports et des admins n'est pas une panne : c'est la projection membre. */}
+      {/* L'absence des ports n'est pas une panne : c'est la projection membre. */}
       {!can("SERVER_INFRA_VIEW") && <Alert severity="info">{t("list.memberView")}</Alert>}
 
       <ServersDashboard
@@ -86,7 +70,7 @@ function ServersConfigPage() {
         isLoading={isLoading}
         error={error}
         connected={connected}
-        canControlServer={canControlServer}
+        canControl={canControl}
         canEdit={can("SERVER_EDIT")}
         lastRefreshedAt={lastRefreshedAt}
         onRefresh={refresh}

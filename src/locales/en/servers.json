@@ -43,15 +43,12 @@
       "installation": "Installation",
       "version": "Version",
       "ports": "Freebox ports",
-      "admins": "Administrators",
       "description": "Description"
     },
     "helpers": {
       "deploymentEmpty": "Links the entry to its deployment and derives its identifier",
       "deploymentLinked": "Entry identifier: {{slug}}",
-      "ports": "Opened while the server runs, closed when it stops. Format: tcp:25565, udp:8211",
-      "admins": "They may start and stop THIS server, nothing more: neither editing the record nor touching ports.",
-      "adminsUnavailable": "Listing accounts requires the account-view permission. Administrators already set remain displayed."
+      "ports": "Opened while the server runs, closed when it stops. Format: tcp:25565, udp:8211"
     },
     "errors": {
       "required": "This field is required.",
@@ -62,10 +59,9 @@
       "loadFailed": "Loading failed.",
       "saveFailed": "The server entry could not be saved.",
       "deploymentsUnavailable": "Deployments could not be read",
-      "deploymentsCatalog": "Deployment catalogue unavailable: {{reason}}. The entry stays editable, but the deployment cannot be picked from the list.",
-      "usersUnavailable": "Could not load accounts"
+      "deploymentsCatalog": "Deployment catalogue unavailable: {{reason}}. The entry stays editable, but the deployment cannot be picked from the list."
     },
-    "infraHidden": "Ports, deployment and administrators are only visible with the infrastructure permission. Your role does not carry it: these fields stay empty and will not be saved."
+    "infraHidden": "Ports and deployment are only visible with the infrastructure permission. Your role does not carry it: these fields stay empty and will not be saved."
   },
   "errors": {
     "loadFailed": "Servers could not be loaded",

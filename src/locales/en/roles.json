@@ -28,7 +28,7 @@
   },
   "permissions": {
     "SERVER_VIEW": "View a server",
-    "SERVER_INFRA_VIEW": "View ports, deployment and admins",
+    "SERVER_INFRA_VIEW": "View ports and deployment",
     "SERVER_START": "Start a server",
     "SERVER_STOP": "Stop a server",
     "SERVER_CREATE": "Create a server record",

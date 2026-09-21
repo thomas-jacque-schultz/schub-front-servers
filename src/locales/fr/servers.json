@@ -43,15 +43,12 @@
       "installation": "Installation",
       "version": "Version",
       "ports": "Ports Freebox",
-      "admins": "Administrateurs",
       "description": "Description"
     },
     "helpers": {
       "deploymentEmpty": "Lie la fiche à son déploiement et en dérive l'identifiant",
       "deploymentLinked": "Identifiant de la fiche : {{slug}}",
-      "ports": "Ouverts pendant que le serveur tourne, refermés à l'arrêt. Format : tcp:25565, udp:8211",
-      "admins": "Ils peuvent démarrer et arrêter CE serveur, rien de plus : ni modifier la fiche, ni toucher aux ports.",
-      "adminsUnavailable": "La liste des comptes demande la permission de consultation des comptes. Les administrateurs déjà en place restent affichés."
+      "ports": "Ouverts pendant que le serveur tourne, refermés à l'arrêt. Format : tcp:25565, udp:8211"
     },
     "errors": {
       "required": "Ce champ est obligatoire.",
@@ -62,10 +59,9 @@
       "loadFailed": "Erreur de chargement.",
       "saveFailed": "Impossible d'enregistrer la fiche serveur.",
       "deploymentsUnavailable": "Impossible de lire les déploiements",
-      "deploymentsCatalog": "Catalogue des déploiements indisponible : {{reason}}. La fiche reste modifiable, mais le déploiement ne peut pas être choisi dans la liste.",
-      "usersUnavailable": "Impossible de charger les comptes"
+      "deploymentsCatalog": "Catalogue des déploiements indisponible : {{reason}}. La fiche reste modifiable, mais le déploiement ne peut pas être choisi dans la liste."
     },
-    "infraHidden": "Ports, déploiement et administrateurs ne sont visibles qu'avec la permission d'infrastructure. Ton rôle ne la porte pas : ces champs restent vides et ne seront pas enregistrés."
+    "infraHidden": "Ports et déploiement ne sont visibles qu'avec la permission d'infrastructure. Ton rôle ne la porte pas : ces champs restent vides et ne seront pas enregistrés."
   },
   "errors": {
     "loadFailed": "Impossible de charger les serveurs",

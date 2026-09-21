@@ -53,7 +53,7 @@ PR de la connexion Discord retire de son côté : **le bloc, et la constante ave
   règle du sous-ensemble, on ne modifie pas son propre rôle et on ne rétrograde pas le dernier
   `OWNER`. C'est le cœur qui tranche ; l'écran évite d'avoir à découvrir le refus.
 - **L'absence n'est pas une panne** : sans `SERVER_INFRA_VIEW`, le cœur sert la projection
-  membre — ni ports, ni déploiement, ni admins. On le dit à l'écran, et on **omet** ces champs du
+  membre — ni ports, ni déploiement. On le dit à l'écran, et on **omet** ces champs du
   corps envoyé plutôt que de les poster vides.
 
 ## La coquille
@@ -212,10 +212,14 @@ jusqu'au lot A.6.
 
 ## Les droits liés à un serveur
 
-`viewerIsAdmin` est servi par le cœur sur les deux projections connectées et dit au lecteur s'il
-est administrateur de **ce** serveur-là. Démarrer et arrêter se proposent donc serveur par
-serveur : rôle portant `SERVER_START` *et* `SERVER_STOP`, **ou** `viewerIsAdmin` (décision n°11).
-Un booléen global serait faux dans les deux sens.
+Il n'y a **pas d'administrateur par serveur** : un modérateur pilote tous les serveurs de jeu, par
+son rôle. Démarrer et arrêter s'affichent donc dès que le rôle porte `SERVER_START` *et*
+`SERVER_STOP` — les deux, parce que les deux boutons vont ensemble dans une carte.
+
+**Ils vivent sur `/servers`, pas sous *Configuration*.** Ce menu exige `SERVER_CREATE`,
+`SERVER_EDIT` ou `SERVER_INFRA_VIEW`, qu'un modérateur n'a pas : les y laisser seuls lui donnait
+des permissions sans aucun écran pour s'en servir. `/servers` lit `GET /game-servers` quand on est
+connecté — seule réponse portant le slug — et la vue publique sinon.
 
 ## La revue par joueur
 
