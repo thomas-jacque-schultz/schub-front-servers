@@ -55,13 +55,10 @@
     "pool": "Champion pool",
     "draft": "Draft planner",
     "ariaLabel": "The team panels",
-    "soonBadge": "coming"
+    "soonBadge": "coming",
+    "team": "Team"
   },
   "soon": {
-    "players": {
-      "title": "Player statistics are coming",
-      "description": "One column per player — rank, LP, recent games — plus team games, those where at least four of the five played, across all queues. This panel waits on Riot data ingestion, under way in the core. Nothing is shown here until it is true: a made-up number would be worse than an empty panel."
-    },
     "pool": {
       "title": "The champion pool is coming",
       "description": "Five columns, one per position: the champions each member can play, from their masteries. It depends on Riot masteries and the Data Dragon catalogue, both being wired into the core."

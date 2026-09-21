@@ -1,32 +1,162 @@
 {
   "eyebrow": "League of Legends",
   "title": "My stats",
-  "subtitle": "Your matches, your champions, your roles.",
+  "subtitle": "Your games, your champions, your roles.",
+  "loading": "Loading your statistics",
+  "loadFailed": "Statistics could not be loaded.",
+  "emptyRoster": "This team has no players yet.",
+  "footnote": "No global average is shown here: it is not available, and inventing one would be worse than doing without. Every figure is compared to your own other games or to your teammates.",
   "locked": {
     "title": "Link a Riot account to open this screen",
-    "description": "Without a linked account there is nothing to compute: statistics are built from your matches, and nothing tells us which ones are yours.",
+    "description": "With no linked account there is nothing to compute: statistics are built from your games, and nothing tells us which ones are yours.",
     "action": "Go to my profile"
   },
   "pending": {
-    "title": "Your Riot ID is awaiting confirmation",
-    "description": "It is saved, but we could not confirm it with Riot yet. Collection starts as soon as that is done.",
-    "action": "View my profile"
+    "title": "Your Riot ID is waiting to be confirmed",
+    "description": "It is saved, but we could not confirm it with Riot yet. Collection will start as soon as we can.",
+    "action": "See my profile"
   },
   "waiting": {
     "title": "Your data is on its way",
-    "description": "The first collection walks through your whole history. It is slow once, and only once.",
-    "pending": "{{count}} match(es) queued",
+    "description": "The first pass walks your whole history. It is slow once, and only once.",
+    "pending": "{{count}} game(s) queued",
     "readyAt": "Ready around {{date}}",
     "readyUnknown": "No estimate yet",
-    "progressLabel": "Collecting your matches"
+    "progressLabel": "Collecting your games"
   },
-  "unavailable": {
-    "title": "Progress unavailable",
-    "description": "The Riot connector is not answering. Your data is not lost, but we cannot say how far the collection has got."
+  "window": {
+    "label": "Period",
+    "all": "All known history",
+    "days": "Last {{count}} days",
+    "helper": "Every figure on this screen covers that period.",
+    "bounded": "Riot keeps about a thousand games per player: beyond that the history no longer exists, for anyone."
   },
-  "soon": {
-    "title": "Statistics are coming",
-    "description": "Your account is linked and your matches are being collected. The screens that use them come in a later batch.",
-    "teams": "View my teams"
+  "coverage": {
+    "games": "over {{count}} game(s)",
+    "gamesShort": "{{count}} game(s)",
+    "gamesAndPeriod": "over {{count}} game(s), from {{from}} to {{to}}",
+    "period": "from {{from}} to {{to}}",
+    "untracked": "This account is not collected for itself yet: the known games are those where it met a player we track. The figures are exact, but partial."
+  },
+  "metric": {
+    "winRate": "Win rate",
+    "kda": "KDA",
+    "kdaDetail": "{{kills}} / {{deaths}} / {{assists}} per game",
+    "cs": "CS per minute",
+    "gold": "Gold per minute",
+    "vision": "Vision per minute"
+  },
+  "delta": {
+    "points": "{{value}} pts",
+    "versusRest": "{{delta}} against the rest of their pool ({{count}} game(s))",
+    "versusTeammates": "against the average of {{count}} teammate(s)",
+    "winRateVersusTeammates": "Win rate gap"
+  },
+  "section": {
+    "champions": "Most played champions",
+    "noChampion": "No champion over this period.",
+    "positions": "By role",
+    "queues": "By queue",
+    "queuesHelper": "Queues are counted separately: a win in normal draft is not a win in flex.",
+    "byQueue": "By queue",
+    "byQueueHelper": "The queue excludes nothing: it separates what cannot be compared.",
+    "bySide": "By side",
+    "byPatch": "By patch",
+    "presence": "Presence",
+    "presenceHelper": "Share of team games each player took part in.",
+    "games": "Team games",
+    "rankings": "Rankings",
+    "rankingDetail": "{{wins}} wins, {{losses}} losses in this queue",
+    "trend": "Trend",
+    "trendHelper": "Your win rate month by month, against your own average.",
+    "trendReference": "Line: your average over the period ({{value}})",
+    "trendPoint": "{{month}} · {{rate}} over {{count}} game(s)",
+    "noMonth": "Not enough history yet to draw a trend."
+  },
+  "team": {
+    "definition": "A team game: at least {{count}} of the {{roster}} players on the roster, across all queues.",
+    "games": "Team games",
+    "gamesHint": "{{total}} found, {{undecided}} of them without a shared result",
+    "averageDuration": "Average duration",
+    "truncated": "Only the most recent games are shown: the totals cover what is visible here.",
+    "presenceValue": "{{rate}} · {{count}} game(s)",
+    "memberWinRate": "{{rate}} wins when present"
+  },
+  "games": {
+    "date": "Date",
+    "result": "Result",
+    "win": "Win",
+    "loss": "Loss",
+    "split": "Opposite sides",
+    "queue": "Queue",
+    "present": "Present",
+    "presentCount": "{{count}} / 5",
+    "duration": "Duration",
+    "side": "Side",
+    "champions": "Champions",
+    "patch": "Patch"
+  },
+  "player": {
+    "unnamed": "Unnamed player",
+    "noRole": "No role set",
+    "you": "You"
+  },
+  "queue": {
+    "solo": "Ranked solo/duo",
+    "flex": "Ranked flex",
+    "draft": "Normal draft",
+    "blind": "Normal blind",
+    "quickplay": "Quickplay",
+    "aram": "ARAM",
+    "clash": "Clash",
+    "custom": "Custom",
+    "other": "Queue {{id}}"
+  },
+  "position": {
+    "TOP": "Top",
+    "JUNGLE": "Jungle",
+    "MIDDLE": "Mid",
+    "BOTTOM": "Bot",
+    "UTILITY": "Support",
+    "UNKNOWN": "Unknown role"
+  },
+  "side": {
+    "blue": "Blue",
+    "red": "Red"
+  },
+  "duration": {
+    "minutes": "{{count}} min"
+  },
+  "state": {
+    "STATISTIQUES_CONNUES": {
+      "short": "",
+      "title": "",
+      "description": ""
+    },
+    "COMPTE_RIOT_ABSENT": {
+      "short": "No Riot account linked: nothing to compute.",
+      "title": "No Riot account linked",
+      "description": "Statistics are built from an account's games. Until a Riot ID is set, there are no games to attach."
+    },
+    "INGESTION_EN_COURS": {
+      "short": "Collection under way.",
+      "title": "Collection is not finished",
+      "description": "The history is still being built. It is slow once, and only once: figures will appear as it goes."
+    },
+    "AUCUNE_PARTIE": {
+      "short": "No game over this period.",
+      "title": "No game",
+      "description": "Everything is collected and there is nothing to count over this period. That is not a failure: widen the period to look further back."
+    },
+    "EFFECTIF_INCOMPLET": {
+      "short": "Roster incomplete.",
+      "title": "Not enough Riot accounts on the roster",
+      "description": "A team game needs at least four players present. While fewer than four members have a linked Riot account, no game can be recognised as a team game."
+    },
+    "CONNECTEUR_INDISPONIBLE": {
+      "short": "Figures unavailable right now.",
+      "title": "Figures unavailable",
+      "description": "The Riot connector is not answering. Nothing is lost — but while it is silent we cannot claim anything, and showing zero would be wrong."
+    }
   }
 }

@@ -22,7 +22,8 @@ export type ColorSchemeName = "light" | "dark";
  * <p>Le design system redéclare ce type plutôt que d'importer `types/server` : une primitive ne
  * dépend pas du domaine, c'est ce qui la rend réutilisable par le portfolio et l'app d'équipe.</p>
  */
-export type ServerStatusToken = "online" | "offline" | "unknown" | "unreachable";
+export type ServerStatusToken =
+  "online" | "offline" | "unknown" | "unreachable";
 
 /**
  * Couleurs de marque, indépendantes du schéma.
@@ -43,7 +44,12 @@ export const brand = {
 /** Une palette complète, déclinée par schéma de couleur. */
 export interface PaletteTokens {
   primary: { main: string; light: string; dark: string; contrastText: string };
-  secondary: { main: string; light: string; dark: string; contrastText: string };
+  secondary: {
+    main: string;
+    light: string;
+    dark: string;
+    contrastText: string;
+  };
   success: { main: string; contrastText: string };
   warning: { main: string; contrastText: string };
   error: { main: string; contrastText: string };
@@ -136,7 +142,10 @@ export const palettes: Record<ColorSchemeName, PaletteTokens> = {
  * <p>C'est la transposition en token des `radial-gradient(...)` qui traînaient dans quatre
  * écrans. `page` habille les écrans pleine hauteur, `panel` les zones internes plus calmes.</p>
  */
-export const backdrops: Record<ColorSchemeName, { page: string; panel: string }> = {
+export const backdrops: Record<
+  ColorSchemeName,
+  { page: string; panel: string }
+> = {
   dark: {
     page:
       `radial-gradient(circle at 15% 25%, ${brand.deepBlue} 0%, transparent 35%), ` +
@@ -154,7 +163,10 @@ export const backdrops: Record<ColorSchemeName, { page: string; panel: string }>
 };
 
 /** Couleur de chaque statut de serveur, par schéma. */
-export const statusColors: Record<ColorSchemeName, Record<ServerStatusToken, string>> = {
+export const statusColors: Record<
+  ColorSchemeName,
+  Record<ServerStatusToken, string>
+> = {
   dark: {
     online: darkPalette.success.main,
     offline: darkPalette.text.secondary,
@@ -187,7 +199,10 @@ export const radii = {
  * Ombres. Elles diffèrent par schéma : sur fond sombre, une ombre noire ne se voit pas — c'est
  * le liseré clair qui donne le relief.
  */
-export const elevations: Record<ColorSchemeName, { sm: string; md: string; lg: string }> = {
+export const elevations: Record<
+  ColorSchemeName,
+  { sm: string; md: string; lg: string }
+> = {
   dark: {
     sm: "0 1px 2px rgba(0, 0, 0, 0.45)",
     md: "0 6px 18px rgba(0, 0, 0, 0.5)",
@@ -223,3 +238,46 @@ export const motion = {
   normal: 200,
   slow: 320,
 } as const;
+
+/**
+ * Couleurs des graphiques.
+ *
+ * <p>Une seule teinte de marque, jamais une palette catégorielle : tous les graphiques d'ici sont
+ * à série unique, et deux teintes voisines du thème (`primary` et `success`) sont
+ * indistinguables pour une vision deutéranope — vérifié, pas supposé.</p>
+ *
+ * <p>`mark` en clair n'est pas `primary.main` : le teal de marque tombe juste sous le plancher de
+ * saturation d'une marque graphique sur fond blanc et se lit gris. `#0a8a74` est le même teal,
+ * remonté jusqu'à passer.</p>
+ *
+ * <p>Un écart se lit au signe et à la valeur avant de se lire à la couleur : `positive` et
+ * `negative` accompagnent un texte, ils ne le remplacent jamais.</p>
+ */
+export const chartColors: Record<
+  ColorSchemeName,
+  {
+    mark: string;
+    markSoft: string;
+    track: string;
+    grid: string;
+    positive: string;
+    negative: string;
+  }
+> = {
+  dark: {
+    mark: darkPalette.primary.main,
+    markSoft: "rgba(47, 160, 143, 0.28)",
+    track: "rgba(159, 178, 193, 0.18)",
+    grid: darkPalette.outline,
+    positive: darkPalette.success.main,
+    negative: darkPalette.error.main,
+  },
+  light: {
+    mark: "#0a8a74",
+    markSoft: "rgba(10, 138, 116, 0.22)",
+    track: "rgba(19, 34, 38, 0.10)",
+    grid: lightPalette.outline,
+    positive: lightPalette.success.main,
+    negative: lightPalette.error.main,
+  },
+};

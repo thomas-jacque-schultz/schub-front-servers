@@ -55,13 +55,10 @@
     "pool": "Pool de champions",
     "draft": "Préparateur de draft",
     "ariaLabel": "Les panneaux de l'équipe",
-    "soonBadge": "à venir"
+    "soonBadge": "à venir",
+    "team": "Équipe"
   },
   "soon": {
-    "players": {
-      "title": "Les statistiques des joueurs arrivent",
-      "description": "Une colonne par joueur — rang, LP, parties récentes — et les parties d'équipe, celles où au moins quatre des cinq ont joué, toutes files confondues. Ce panneau attend l'ingestion des données Riot, en cours dans le cœur. Rien n'est affiché ici tant que ce n'est pas vrai : un chiffre inventé serait pire qu'un panneau vide."
-    },
     "pool": {
       "title": "Le pool de champions arrive",
       "description": "Cinq colonnes, une par poste : les champions jouables d'après les maîtrises de chaque membre. Il dépend des maîtrises Riot et du catalogue Data Dragon, tous deux en cours de branchement dans le cœur."

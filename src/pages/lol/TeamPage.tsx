@@ -17,27 +17,23 @@ import {
 import { useLocalizedNavigate } from "../../i18n/navigation";
 import type { TeamDto } from "../../types/team";
 import { ComingSoonPanel } from "./ComingSoonPanel";
+import { PlayersPanel } from "./stats/PlayersPanel";
+import { TeamGamesPanel } from "./stats/TeamGamesPanel";
 import { DraftPanel } from "./DraftPanel";
 import { RosterPanel } from "./RosterPanel";
 
-type PanelKey = "roster" | "players" | "pool" | "draft";
+type PanelKey = "roster" | "players" | "team" | "pool" | "draft";
 
 /**
  * La page d'une équipe, à panneaux.
  *
- * <h2>Quatre onglets, dont deux vides — et c'est le livrable, pas un raccourci</h2>
+ * <h2>Cinq onglets, dont un seul encore vide</h2>
  *
- * <p>Deux panneaux tiennent aujourd'hui sur une API qui existe : l'effectif et le préparateur de
- * draft. Les deux autres — statistiques des joueurs, pool de champions — attendent l'ingestion
- * des données Riot, en cours dans le cœur. Ils gardent leur onglet, annoncé comme à venir et
- * <strong>vide</strong> : une statistique simulée serait lue comme vraie, et il n'y aurait plus
- * moyen de savoir, le jour du branchement, laquelle des deux valeurs croire.</p>
- *
- * <p>Une nuance par rapport au plan §D.2 bis : son panneau 2 était « les parties où au moins
- * quatre des cinq ont joué, toutes files confondues ». Il dépend lui aussi des données Riot ;
- * l'effectif prend ici la place du premier onglet, parce qu'il faut bien un endroit où l'équipe
- * se compose. L'annonce du panneau « joueurs » mentionne explicitement les parties d'équipe,
- * pour que ce contenu ne disparaisse pas des intentions.</p>
+ * <p>L'effectif prend le premier onglet — il faut bien un endroit où l'équipe se compose — puis
+ * viennent les deux panneaux du plan §D.2 bis : les statistiques individuelles, et les parties
+ * d'équipe, celles où au moins quatre des membres ont joué, toutes files confondues. Le pool de
+ * champions reste annoncé et <strong>vide</strong> : aucune donnée simulée n'y entre en
+ * attendant, un chiffre inventé serait lu comme vrai.</p>
  *
  * <p>Seul le panneau actif est monté : ouvrir une équipe ne va pas chercher les compositions
  * tant qu'on n'ouvre pas le préparateur.</p>
@@ -63,7 +59,9 @@ function TeamPage() {
     try {
       setTeam(await getTeamApi(id));
     } catch (loadError) {
-      setError(loadError instanceof Error ? loadError.message : t("team.loadFailed"));
+      setError(
+        loadError instanceof Error ? loadError.message : t("team.loadFailed"),
+      );
     } finally {
       setIsLoading(false);
     }
@@ -83,7 +81,11 @@ function TeamPage() {
       setTeam(await renameTeamApi(team.id, newName.trim()));
       setIsRenaming(false);
     } catch (renameError) {
-      setError(renameError instanceof Error ? renameError.message : t("team.rename.failed"));
+      setError(
+        renameError instanceof Error
+          ? renameError.message
+          : t("team.rename.failed"),
+      );
     } finally {
       setIsSaving(false);
     }
@@ -99,7 +101,11 @@ function TeamPage() {
       await deleteTeamApi(team.id);
       navigate("/lol", { replace: true });
     } catch (deleteError) {
-      setError(deleteError instanceof Error ? deleteError.message : t("team.delete.failed"));
+      setError(
+        deleteError instanceof Error
+          ? deleteError.message
+          : t("team.delete.failed"),
+      );
       setIsDeleting(false);
     } finally {
       setIsSaving(false);
@@ -127,7 +133,8 @@ function TeamPage() {
 
   const tabs: TabItem[] = [
     { key: "roster", label: t("tabs.roster") },
-    { key: "players", label: t("tabs.players"), badge: t("tabs.soonBadge") },
+    { key: "players", label: t("tabs.players") },
+    { key: "team", label: t("tabs.team") },
     { key: "pool", label: t("tabs.pool"), badge: t("tabs.soonBadge") },
     { key: "draft", label: t("tabs.draft") },
   ];
@@ -179,12 +186,16 @@ function TeamPage() {
         onChange={(key) => setPanel(key as PanelKey)}
         ariaLabel={t("tabs.ariaLabel")}
       >
-        {panel === "roster" && <RosterPanel team={team} onTeamChange={setTeam} />}
-        {panel === "players" && (
-          <ComingSoonPanel title={t("soon.players.title")} description={t("soon.players.description")} />
+        {panel === "roster" && (
+          <RosterPanel team={team} onTeamChange={setTeam} />
         )}
+        {panel === "players" && <PlayersPanel teamId={team.id} />}
+        {panel === "team" && <TeamGamesPanel teamId={team.id} />}
         {panel === "pool" && (
-          <ComingSoonPanel title={t("soon.pool.title")} description={t("soon.pool.description")} />
+          <ComingSoonPanel
+            title={t("soon.pool.title")}
+            description={t("soon.pool.description")}
+          />
         )}
         {panel === "draft" && <DraftPanel team={team} />}
       </Tabs>
