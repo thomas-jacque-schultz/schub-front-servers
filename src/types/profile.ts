@@ -89,7 +89,8 @@ export type RiotPosition = (typeof RIOT_POSITIONS)[number];
  * de reconnaître son compte parmi des homonymes.</p>
  */
 export interface PositionPlayedDto {
-  position: RiotPosition;
+  /** Le vocabulaire de Riot, servi en chaîne. Un poste inconnu s’affiche brut plutôt que masqué. */
+  position: string;
   /** Le nombre de parties où on l'y a vu — un poste tenu deux fois ne vaut pas un poste habituel. */
   matches: number;
 }
@@ -104,27 +105,45 @@ export interface KnownRiotAccountDto {
   /** Ses postes, du plus joué au moins joué. */
   positions: PositionPlayedDto[];
   lastPlayedAt: string | null;
+  /**
+   * Ce compte est déjà revendiqué par quelqu’un. Un fait sur la proposition, pas la liste de
+   * ceux qui l’ont pris : le proposer sans le dire mènerait à un 409 qu’on pouvait éviter.
+   */
+  alreadyLinked: boolean;
+  /** C’est le compte de l’appelant. Un fait sur le lecteur — il se reconnaît sans comparer. */
+  mine: boolean;
 }
 
 /**
- * Ce que coûte un changement de compte, **calculé par le cœur**.
+ * Ce que le remplacement d'un compte emporte, **tel que le cœur le calcule**.
  *
- * <p>Chaque champ est un fait, pas une phrase : le site est bilingue, une phrase servie par le
- * serveur n'existerait que dans une langue. L'écran met en forme ce qu'il reçoit et n'affiche
- * rien pour un champ absent — il ne complète pas de sa propre initiative.</p>
+ * <p>Il n'existe pas de route de prévisualisation, et c'est mieux ainsi : un `PUT` sans
+ * `confirmChange` répond **409 et porte cet objet dans son corps**. Le refus est donc
+ * l'information, au lieu d'être une fin de non-recevoir suivie d'un second appel — et il devient
+ * impossible de confirmer un changement dont on n'a pas reçu les conséquences.</p>
+ *
+ * <p>Chaque champ est un fait, jamais une phrase : le site est bilingue, une phrase servie par le
+ * serveur n'existerait que dans une langue. L'écran met en forme ce qu'il reçoit, et n'affiche
+ * rien pour ce qu'il ne reçoit pas.</p>
  */
-export interface RiotAccountChangePreviewDto {
-  currentRiotId: string | null;
-  targetRiotId: string;
+export interface RiotAccountChangeDto {
+  previousRiotId: string | null;
+  riotId: string;
+  /** Les statistiques personnelles repartent de zéro. */
+  statsReset: boolean;
+  /** Une nouvelle collecte démarre. */
+  ingestRestarted: boolean;
+  /** Le volume estimé de cette collecte. */
+  estimatedMatches: number;
   /**
-   * Les parties déjà collectées restent attachées à l'ancien compte. Le chiffre dit combien
-   * exactement ; `null` veut dire que le cœur n'a pas pu l'établir, pas qu'il n'y en a aucune.
+   * La durée estimée de la collecte.
+   *
+   * <p>Jackson sérialise une `Duration` en ISO-8601 ou en secondes décimales selon
+   * `WRITE_DURATIONS_AS_TIMESTAMPS`, que rien ne fixe explicitement côté cœur. Les deux formes
+   * sont donc lues : afficher « 1 200 minutes » pour vingt minutes serait un chiffre faux, et un
+   * chiffre faux se lit comme vrai.</p>
    */
-  matchesKeptOnPreviousAccount: number | null;
-  /** Les statistiques personnelles repartent de zéro. Le cœur le confirme, on ne le suppose pas. */
-  statsResetToZero: boolean;
-  /** Durée estimée du nouvel ingest, en minutes. */
-  estimatedIngestMinutes: number | null;
-  /** Les équipes où la place de l'appelant suit le changement. */
-  affectedTeams: { id: string; name: string }[];
+  estimatedDuration: string | number | null;
+  /** Des places d'effectif attendent d'être revendiquées après le changement. */
+  rosterSlotsToClaim: boolean;
 }
