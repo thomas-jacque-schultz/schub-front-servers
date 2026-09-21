@@ -14,8 +14,17 @@ export const useLocaleFormat = () => {
   const locale = LANGUAGE_LOCALE[language];
 
   return useMemo(() => {
-    const time = new Intl.DateTimeFormat(locale, { hour: "2-digit", minute: "2-digit", second: "2-digit" });
-    const dateTime = new Intl.DateTimeFormat(locale, { dateStyle: "medium", timeStyle: "short" });
+    const time = new Intl.DateTimeFormat(locale, {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
+    const dateTime = new Intl.DateTimeFormat(locale, {
+      dateStyle: "medium",
+      timeStyle: "short",
+    });
+    const date = new Intl.DateTimeFormat(locale, { dateStyle: "medium" });
+    const month = new Intl.DateTimeFormat(locale, { month: "short" });
     const number = new Intl.NumberFormat(locale);
 
     return {
@@ -25,6 +34,10 @@ export const useLocaleFormat = () => {
       /** Date et heure, pour une observation datée de plus de quelques minutes. */
       formatDateTime: (value: Date) => dateTime.format(value),
       formatNumber: (value: number) => number.format(value),
+      /** Date seule : la période que couvre une statistique n'a pas d'heure. */
+      formatDate: (value: Date) => date.format(value),
+      /** Le mois d'un pas de graphique, abrégé — l'axe est étroit. */
+      formatMonth: (value: Date) => month.format(value),
     };
   }, [locale]);
 };

@@ -74,7 +74,7 @@ décide de ce qu'elle reçoit.
 | `/config/*` | l'administration | connecté + permission, à la demande |
 | `/lol`, `/lol/teams/:id` | les équipes LoL | connecté, à la demande |
 | `/profile` | Mon profil : Discord, nom, compte Riot | connecté, à la demande |
-| `/lol/stats` | Mes stats — l'accès et l'attente, pas les graphiques | connecté, à la demande |
+| `/lol/stats` | Mes stats — ses parties, ses champions, ses postes | connecté, à la demande |
 
 **Seule la racine est dans le fichier JavaScript initial.** Tout le reste passe par
 `React.lazy` dans `App.tsx`. Un écran neuf s'ajoute de la même façon : une visite sur `/` ne doit
@@ -120,9 +120,33 @@ défaire :
   menu ne peuvent les exiger — la route demande d'être connecté, le menu se contente de
   `TEAM_CREATE` ou `TEAM_VIEW`. Le BFF fait de même et le cœur tranche.
 
-Les panneaux **joueurs** et **pool de champions** sont volontairement vides, en attendant
-l'ingestion Riot. **Aucune donnée simulée n'y entre**, même « pour voir » : un chiffre inventé
-est lu comme vrai, et il survit à celui qui l'a posé.
+Cinq onglets : effectif, joueurs, équipe, pool de champions, préparateur de draft. Seul le
+**pool de champions** reste vide, en attendant son écran — le cœur et le BFF le servent déjà.
+**Aucune donnée simulée n'entre nulle part**, ni dans un panneau, ni dans une story : un chiffre
+inventé est lu comme vrai, et il survit à celui qui l'a posé.
+
+## Les statistiques
+
+- **`/me/stats` n'a pas d'équivalent ciblé, et n'en aura pas.** Il n'existe aucune route portant
+  un identifiant de joueur : il suffirait d'un identifiant croisé dans une réponse d'équipe pour
+  sonder l'historique de n'importe qui. Les deux panneaux d'équipe passent par `TEAM_VIEW` sur
+  l'équipe visée, et le cœur ne rend aucun `puuid`.
+- **Aucune moyenne mondiale.** Elle n'est pas accessible — ni quota, ni droit de collecte — et on
+  ne l'invente pas. Un groupe se compare au **reste des parties du même joueur** et à ses
+  **coéquipiers** : « 55 % sur Jayce » ne dit rien, « 55 % sur Jayce contre 41 % sur le reste »
+  dit beaucoup.
+- **Un chiffre dit toujours sur quoi il porte** : nombre de parties et période. Sans ça, trois
+  parties et trois cents se lisent pareil. L'historique Riot est borné à environ mille parties
+  par joueur, et l'écran le dit.
+- **Un vide n'est pas un zéro.** Chaque colonne porte un `state` qui dit *pourquoi* elle est
+  vide — compte non lié, collecte en cours, aucune partie, effectif incomplet, connecteur muet —
+  et tout ratio sans dénominateur s'affiche en tiret.
+- **Une partie d'équipe = au moins quatre des membres, toutes files confondues.** Le `queueId`
+  est affiché et compté à part, il ne filtre rien. Une partie où les membres étaient dans les
+  deux camps compte comme partie et pas comme résultat.
+- **Les graphiques sont à série unique**, une seule teinte (`chartColors` dans les tokens). Le
+  vert et le teal du thème sont indistinguables pour une vision deutéranope — vérifié — donc
+  aucune palette catégorielle ici, et un écart se lit à son signe avant sa couleur.
 
 ## Mon profil et le compte Riot
 

@@ -2,6 +2,10 @@
   "eyebrow": "League of Legends",
   "title": "Mes stats",
   "subtitle": "Vos parties, vos champions, vos postes.",
+  "loading": "Chargement de vos statistiques",
+  "loadFailed": "Les statistiques n'ont pas pu être chargées.",
+  "emptyRoster": "Cette équipe n'a encore aucun joueur.",
+  "footnote": "Aucune moyenne mondiale n'est affichée ici : elle n'est pas accessible, et l'inventer serait pire que de s'en passer. Chaque chiffre se compare à vos autres parties ou à vos coéquipiers.",
   "locked": {
     "title": "Liez un compte Riot pour ouvrir cet écran",
     "description": "Sans compte lié, il n'y a rien à calculer : les statistiques se construisent à partir de vos parties, et rien ne permet de savoir lesquelles sont les vôtres.",
@@ -20,13 +24,139 @@
     "readyUnknown": "Échéance encore inconnue",
     "progressLabel": "Collecte de vos parties"
   },
-  "unavailable": {
-    "title": "Avancement indisponible",
-    "description": "Le connecteur Riot ne répond pas. Vos données ne sont pas perdues, mais nous ne pouvons pas dire où en est la collecte."
+  "window": {
+    "label": "Période",
+    "all": "Tout l'historique connu",
+    "days": "{{count}} derniers jours",
+    "helper": "Toutes les valeurs de l'écran portent sur cette période.",
+    "bounded": "Riot conserve environ mille parties par joueur : au-delà, l'historique n'existe plus, chez personne."
   },
-  "soon": {
-    "title": "Les statistiques arrivent",
-    "description": "Votre compte est lié et vos parties sont collectées. Les écrans qui les exploitent viennent dans un lot suivant.",
-    "teams": "Voir mes équipes"
+  "coverage": {
+    "games": "sur {{count}} partie(s)",
+    "gamesShort": "{{count}} partie(s)",
+    "gamesAndPeriod": "sur {{count}} partie(s), du {{from}} au {{to}}",
+    "period": "du {{from}} au {{to}}",
+    "untracked": "Ce compte n'est pas encore collecté pour lui-même : les parties connues sont celles où il a croisé un joueur que nous suivons. Les chiffres sont exacts, mais partiels."
+  },
+  "metric": {
+    "winRate": "Taux de victoire",
+    "kda": "KDA",
+    "kdaDetail": "{{kills}} / {{deaths}} / {{assists}} par partie",
+    "cs": "CS par minute",
+    "gold": "Or par minute",
+    "vision": "Vision par minute"
+  },
+  "delta": {
+    "points": "{{value}} pts",
+    "versusRest": "{{delta}} contre le reste de son pool ({{count}} partie(s))",
+    "versusTeammates": "contre la moyenne de {{count}} coéquipier(s)",
+    "winRateVersusTeammates": "Écart de taux de victoire"
+  },
+  "section": {
+    "champions": "Champions les plus joués",
+    "noChampion": "Aucun champion sur la période.",
+    "positions": "Par poste",
+    "queues": "Par file",
+    "queuesHelper": "Les files sont comptées séparément : une victoire en normale draft ne vaut pas une victoire en flex.",
+    "byQueue": "Par file",
+    "byQueueHelper": "La file n'exclut rien : elle sépare ce qui ne se compare pas.",
+    "bySide": "Par côté",
+    "byPatch": "Par patch",
+    "presence": "Présence",
+    "presenceHelper": "Part des parties d'équipe où chacun était là.",
+    "games": "Les parties d'équipe",
+    "rankings": "Classements",
+    "rankingDetail": "{{wins}} victoires, {{losses}} défaites dans cette file",
+    "trend": "Évolution",
+    "trendHelper": "Votre taux de victoire mois par mois, comparé à votre propre moyenne.",
+    "trendReference": "Trait : votre moyenne sur la période ({{value}})",
+    "trendPoint": "{{month}} · {{rate}} sur {{count}} partie(s)",
+    "noMonth": "Pas encore assez d'historique pour dessiner une évolution."
+  },
+  "team": {
+    "definition": "Une partie d'équipe : au moins {{count}} des {{roster}} joueurs de l'effectif, toutes files confondues.",
+    "games": "Parties d'équipe",
+    "gamesHint": "{{total}} trouvée(s), dont {{undecided}} sans résultat commun",
+    "averageDuration": "Durée moyenne",
+    "truncated": "Seules les parties les plus récentes sont affichées : les totaux portent sur ce qui est visible ici.",
+    "presenceValue": "{{rate}} · {{count}} partie(s)",
+    "memberWinRate": "{{rate}} de victoires quand il est là"
+  },
+  "games": {
+    "date": "Date",
+    "result": "Résultat",
+    "win": "Victoire",
+    "loss": "Défaite",
+    "split": "Camps opposés",
+    "queue": "File",
+    "present": "Présents",
+    "presentCount": "{{count}} / 5",
+    "duration": "Durée",
+    "side": "Côté",
+    "champions": "Champions",
+    "patch": "Patch"
+  },
+  "player": {
+    "unnamed": "Joueur sans nom",
+    "noRole": "Poste non renseigné",
+    "you": "Vous"
+  },
+  "queue": {
+    "solo": "Classée solo/duo",
+    "flex": "Classée flexible",
+    "draft": "Normale draft",
+    "blind": "Normale aveugle",
+    "quickplay": "Partie rapide",
+    "aram": "ARAM",
+    "clash": "Clash",
+    "custom": "Personnalisée",
+    "other": "File {{id}}"
+  },
+  "position": {
+    "TOP": "Haut",
+    "JUNGLE": "Jungle",
+    "MIDDLE": "Milieu",
+    "BOTTOM": "Bas",
+    "UTILITY": "Support",
+    "UNKNOWN": "Poste indéterminé"
+  },
+  "side": {
+    "blue": "Bleu",
+    "red": "Rouge"
+  },
+  "duration": {
+    "minutes": "{{count}} min"
+  },
+  "state": {
+    "STATISTIQUES_CONNUES": {
+      "short": "",
+      "title": "",
+      "description": ""
+    },
+    "COMPTE_RIOT_ABSENT": {
+      "short": "Aucun compte Riot lié : rien à calculer.",
+      "title": "Aucun compte Riot lié",
+      "description": "Les statistiques se construisent à partir des parties d'un compte. Tant qu'aucun Riot ID n'est renseigné, il n'y a pas de parties à rattacher."
+    },
+    "INGESTION_EN_COURS": {
+      "short": "Collecte en cours.",
+      "title": "La collecte n'est pas terminée",
+      "description": "L'historique est en train d'être constitué. C'est long une fois, et une seule : les chiffres apparaîtront au fur et à mesure."
+    },
+    "AUCUNE_PARTIE": {
+      "short": "Aucune partie sur la période.",
+      "title": "Aucune partie",
+      "description": "Tout est collecté et il n'y a rien à compter sur cette période. Ce n'est pas une panne : élargissez la période pour voir plus loin."
+    },
+    "EFFECTIF_INCOMPLET": {
+      "short": "Effectif incomplet.",
+      "title": "Pas assez de comptes Riot dans l'effectif",
+      "description": "Une partie d'équipe demande au moins quatre joueurs présents. Tant que moins de quatre membres ont un compte Riot lié, aucune partie ne peut être reconnue comme une partie d'équipe."
+    },
+    "CONNECTEUR_INDISPONIBLE": {
+      "short": "Données indisponibles pour l'instant.",
+      "title": "Chiffres indisponibles",
+      "description": "Le connecteur Riot ne répond pas. Rien n'est perdu — mais tant qu'il est muet, nous ne pouvons rien affirmer, et afficher zéro serait faux."
+    }
   }
 }
