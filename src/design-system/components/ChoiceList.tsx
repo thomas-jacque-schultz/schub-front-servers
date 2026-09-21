@@ -19,6 +19,8 @@ export interface ChoiceListProps {
   options: ChoiceListOption[];
   selectedId?: string | null;
   onSelect: (id: string) => void;
+  /** Le temps qu'un choix soit traité : sans ça, un double clic envoie deux fois. */
+  disabled?: boolean;
   /** Rendu à la place de la liste quand elle est vide. Une absence se dit, elle ne se tait pas. */
   empty?: ReactNode;
 }
@@ -35,7 +37,14 @@ export interface ChoiceListProps {
  * qu'on ait à réinventer la navigation. C'est aussi pourquoi `description` et `meta` acceptent du
  * contenu et non des chaînes — le composant met en page, il ne met pas en forme.</p>
  */
-export function ChoiceList({ label, options, selectedId, onSelect, empty }: ChoiceListProps) {
+export function ChoiceList({
+  label,
+  options,
+  selectedId,
+  onSelect,
+  disabled = false,
+  empty,
+}: ChoiceListProps) {
   if (options.length === 0) {
     return empty ? <>{empty}</> : null;
   }
@@ -46,6 +55,7 @@ export function ChoiceList({ label, options, selectedId, onSelect, empty }: Choi
         <ListItemButton
           key={option.id}
           selected={option.id === selectedId}
+          disabled={disabled}
           onClick={() => onSelect(option.id)}
           sx={{ borderRadius: 1, alignItems: "flex-start", gap: 1 }}
         >

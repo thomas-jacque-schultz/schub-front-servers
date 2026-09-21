@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { addTeamMemberApi, removeTeamMemberApi, updateTeamMemberApi } from "../../api/teamsApi";
+import { RiotAccountPicker } from "../../components/riot/RiotAccountPicker";
 import {
   Alert,
   Avatar,
@@ -10,10 +11,10 @@ import {
   DataTable,
   type DataTableColumn,
   Dialog,
+  MultiSelect,
   SelectField,
   Stack,
   Text,
-  TextField,
 } from "../../design-system";
 import {
   GAME_ROLES,
@@ -24,6 +25,7 @@ import {
   type TeamDto,
   type TeamMemberDto,
 } from "../../types/team";
+import type { KnownRiotAccountDto } from "../../types/profile";
 
 export interface RosterPanelProps {
   team: TeamDto;
@@ -31,27 +33,26 @@ export interface RosterPanelProps {
   onTeamChange: (team: TeamDto) => void;
 }
 
-/** La valeur qui représente « pas de poste » dans une liste déroulante, qui ne connaît que des chaînes. */
-const NO_ROLE = "";
-
 /**
- * L'effectif : qui est dans l'équipe, à quel poste, et à quel titre.
+ * L'effectif : qui est dans l'équipe, à quels postes, et à quel titre.
  *
- * <h2>Un seul geste d'ajout, deux issues</h2>
+ * <h2>Un membre tient plusieurs postes</h2>
  *
- * <p>Le plan parlait d'un membre « lié » ou « libre » ; le cœur, lui, n'offre qu'un formulaire —
- * un Riot ID. Il relie la place tout seul au compte dont le `puuid` correspond, s'il en existe
- * un. Lié et libre ne sont donc pas deux gestes mais deux <em>résultats</em> du même geste, et
- * c'est ce qui permet de monter une équipe sans attendre que les cinq se soient connectés.
- * Proposer un sélecteur de comptes à côté aurait été une deuxième porte vers la même
- * opération — et une porte qui demande à ses joueurs d'exister d'abord.</p>
+ * <p>C'est la règle, pas l'exception : il apparaît alors dans plusieurs colonnes du pool et reste
+ * éligible à plusieurs lignes d'une composition. Le premier poste déclaré est le poste habituel —
+ * c'est lui qui range l'effectif.</p>
+ *
+ * <h2>Le compte se choisit, il ne se saisit pas</h2>
+ *
+ * <p>Deux champs libres « pseudo » et « TAG » laissaient écrire un Riot ID qui n'existe pas, et
+ * le refus n'arrivait qu'à l'enregistrement. {@link RiotAccountPicker} — le même qu'au profil —
+ * propose ce qu'on connaît déjà et fait confirmer le reste par Riot avant qu'on clique.</p>
  *
  * <h2>Ce qui décide de l'affichage des boutons</h2>
  *
- * <p>{@code team.viewerCanEdit}, servi par le cœur, et rien d'autre. Aucune comparaison d'identifiants
- * ici : la seule que l'écran se permette est {@code memberId === team.viewerMemberId} pour se
- * surligner, et c'est justement la forme que le plan §A.5 bis autorise — un fait sur le lecteur,
- * pas la liste des ayants droit.</p>
+ * <p>{@code team.viewerCanEdit}, servi par le cœur, et rien d'autre. La seule comparaison que
+ * l'écran se permette est {@code memberId === team.viewerMemberId} pour se surligner — un fait
+ * sur le lecteur, pas la liste des ayants droit (plan §A.5 bis).</p>
  */
 export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
   const { t } = useTranslation("teams");
@@ -60,23 +61,19 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
   const [isSaving, setIsSaving] = useState<boolean>(false);
 
   const [isAdding, setIsAdding] = useState<boolean>(false);
-  const [gameName, setGameName] = useState<string>("");
-  const [tagLine, setTagLine] = useState<string>("");
-  const [newRole, setNewRole] = useState<string>(NO_ROLE);
+  const [chosen, setChosen] = useState<KnownRiotAccountDto | null>(null);
+  const [newRoles, setNewRoles] = useState<string[]>([]);
   const [newStatus, setNewStatus] = useState<MemberStatus>("TITULAIRE");
 
   const [edited, setEdited] = useState<TeamMemberDto | null>(null);
-  const [editedRole, setEditedRole] = useState<string>(NO_ROLE);
+  const [editedRoles, setEditedRoles] = useState<string[]>([]);
   const [editedStatus, setEditedStatus] = useState<MemberStatus>("TITULAIRE");
 
   const [removed, setRemoved] = useState<TeamMemberDto | null>(null);
 
   const canEdit = team.viewerCanEdit;
 
-  const roleOptions = [
-    { value: NO_ROLE, label: t("roster.noRole") },
-    ...GAME_ROLES.map((role) => ({ value: role, label: t(`roles.${role}`) })),
-  ];
+  const roleOptions = GAME_ROLES.map((role) => ({ value: role, label: t(`roles.${role}`) }));
 
   const statusOptions = MEMBER_STATUSES.map((status) => ({
     value: status,
@@ -86,15 +83,22 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
   /**
    * Un coach ne tient pas de poste — le cœur refuse le contraire en 400.
    *
-   * <p>L'écran le rejoue pour ne pas *proposer* ce qui sera refusé : on retire le poste au
-   * moment où le statut passe à coach, et on le dit. Découvrir la règle par un message d'erreur
-   * après coup se lit comme une panne.</p>
+   * <p>L'écran le rejoue pour ne pas *proposer* ce qui sera refusé : les postes tombent au moment
+   * où le statut passe à coach, et on le dit. Découvrir la règle par un message d'erreur après
+   * coup se lit comme une panne.</p>
    */
-  const roleFor = (status: MemberStatus, role: string): GameRole | null =>
-    status === "COACH" || role === NO_ROLE ? null : (role as GameRole);
+  const rolesFor = (status: MemberStatus, roles: string[]): GameRole[] =>
+    status === "COACH" ? [] : (roles as GameRole[]);
+
+  const fermerAjout = () => {
+    setIsAdding(false);
+    setChosen(null);
+    setNewRoles([]);
+    setNewStatus("TITULAIRE");
+  };
 
   const onAdd = async () => {
-    if (!gameName.trim() || !tagLine.trim()) {
+    if (!chosen) {
       return;
     }
     setIsSaving(true);
@@ -102,17 +106,13 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
     try {
       onTeamChange(
         await addTeamMemberApi(team.id, {
-          riotGameName: gameName.trim(),
-          riotTagLine: tagLine.trim(),
-          role: roleFor(newStatus, newRole),
+          riotGameName: chosen.gameName,
+          riotTagLine: chosen.tagLine,
+          roles: rolesFor(newStatus, newRoles),
           status: newStatus,
         }),
       );
-      setIsAdding(false);
-      setGameName("");
-      setTagLine("");
-      setNewRole(NO_ROLE);
-      setNewStatus("TITULAIRE");
+      fermerAjout();
     } catch (addError) {
       setError(addError instanceof Error ? addError.message : t("roster.add.failed"));
     } finally {
@@ -129,7 +129,7 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
     try {
       onTeamChange(
         await updateTeamMemberApi(team.id, edited.memberId, {
-          role: roleFor(editedStatus, editedRole),
+          roles: rolesFor(editedStatus, editedRoles),
           status: editedStatus,
         }),
       );
@@ -161,6 +161,7 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
     {
       key: "player",
       header: t("roster.columns.player"),
+      width: "22%",
       render: (member) => (
         <Stack direction="row" spacing={1.5} align="center">
           <Avatar src={member.avatarUrl} name={member.displayName} size="small" />
@@ -177,6 +178,7 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
     {
       key: "riotId",
       header: t("roster.columns.riotId"),
+      width: "20%",
       render: (member) => {
         const riotId = riotIdOf(member);
         return riotId ? (
@@ -187,23 +189,30 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
       },
     },
     {
-      key: "role",
-      header: t("roster.columns.role"),
+      key: "roles",
+      header: t("roster.columns.roles"),
+      width: "22%",
       render: (member) =>
-        member.role ? (
-          <Text>{t(`roles.${member.role}`)}</Text>
-        ) : (
+        member.roles.length === 0 ? (
           <Text tone="disabled">{t("roster.noRole")}</Text>
+        ) : (
+          <Stack direction="row" spacing={0.5} wrap>
+            {member.roles.map((role) => (
+              <Chip key={role} label={t(`roles.${role}`)} variant="outline" size="small" />
+            ))}
+          </Stack>
         ),
     },
     {
       key: "status",
       header: t("roster.columns.status"),
+      width: "12%",
       render: (member) => <Text tone="secondary">{t(`status.${member.status}`)}</Text>,
     },
     {
       key: "account",
       header: t("roster.columns.account"),
+      width: "12%",
       render: (member) => (
         <Chip
           label={member.linked ? t("roster.linked") : t("roster.free")}
@@ -219,7 +228,7 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
       key: "actions",
       header: t("roster.columns.actions"),
       align: "right",
-      width: 200,
+      width: "12%",
       render: (member) => (
         <Stack direction="row" spacing={1} justify="end">
           <Button
@@ -227,7 +236,7 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
             variant="ghost"
             onClick={() => {
               setEdited(member);
-              setEditedRole(member.role ?? NO_ROLE);
+              setEditedRoles([...member.roles]);
               setEditedStatus(member.status);
             }}
           >
@@ -257,6 +266,8 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
           caption={t("roster.caption")}
           emptyTitle={t("roster.emptyTitle")}
           emptyDescription={t("roster.emptyDescription")}
+          layout="fixed"
+          minWidth={840}
         />
       </Card>
 
@@ -265,45 +276,38 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
         title={t("roster.add.title")}
         description={t("roster.add.description")}
         cancelLabel={t("actions.cancel", { ns: "common" })}
-        confirmLabel={t("roster.add.confirm")}
-        confirmDisabled={!gameName.trim() || !tagLine.trim()}
+        confirmLabel={chosen ? t("roster.add.confirm") : undefined}
         confirmLoading={isSaving}
-        onClose={() => setIsAdding(false)}
-        onConfirm={() => void onAdd()}
+        onClose={fermerAjout}
+        onConfirm={chosen ? () => void onAdd() : undefined}
       >
-        <Stack spacing={2}>
-          <TextField
-            label={t("roster.add.gameName")}
-            value={gameName}
-            onChange={setGameName}
-            helperText={t("roster.add.gameNameHelper")}
-            required
-            autoFocus
-          />
-          <TextField
-            label={t("roster.add.tagLine")}
-            value={tagLine}
-            onChange={setTagLine}
-            helperText={t("roster.add.tagLineHelper")}
-            required
-          />
-          <SelectField
-            label={t("roster.fields.status")}
-            value={newStatus}
-            onChange={(value) => setNewStatus(value as MemberStatus)}
-            options={statusOptions}
-          />
-          <SelectField
-            label={t("roster.fields.role")}
-            value={newStatus === "COACH" ? NO_ROLE : newRole}
-            onChange={setNewRole}
-            options={roleOptions}
-            disabled={newStatus === "COACH"}
-            helperText={
-              newStatus === "COACH" ? t("roster.fields.coachHasNoRole") : t("roster.fields.roleHelper")
-            }
-          />
-        </Stack>
+        {chosen ? (
+          <Stack spacing={2}>
+            <Alert severity="success" title={t("roster.add.chosen", { riotId: chosen.riotId })}>
+              <Button variant="ghost" size="small" onClick={() => setChosen(null)}>
+                {t("roster.add.changeAccount")}
+              </Button>
+            </Alert>
+            <SelectField
+              label={t("roster.fields.status")}
+              value={newStatus}
+              onChange={(value) => setNewStatus(value as MemberStatus)}
+              options={statusOptions}
+            />
+            <MultiSelect
+              label={t("roster.fields.roles")}
+              values={newStatus === "COACH" ? [] : newRoles}
+              onChange={setNewRoles}
+              options={roleOptions}
+              disabled={newStatus === "COACH"}
+              helperText={
+                newStatus === "COACH" ? t("roster.fields.coachHasNoRole") : t("roster.fields.rolesHelper")
+              }
+            />
+          </Stack>
+        ) : (
+          <RiotAccountPicker resetKey={isAdding} busy={isSaving} onPick={setChosen} />
+        )}
       </Dialog>
 
       <Dialog
@@ -323,14 +327,14 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
             onChange={(value) => setEditedStatus(value as MemberStatus)}
             options={statusOptions}
           />
-          <SelectField
-            label={t("roster.fields.role")}
-            value={editedStatus === "COACH" ? NO_ROLE : editedRole}
-            onChange={setEditedRole}
+          <MultiSelect
+            label={t("roster.fields.roles")}
+            values={editedStatus === "COACH" ? [] : editedRoles}
+            onChange={setEditedRoles}
             options={roleOptions}
             disabled={editedStatus === "COACH"}
             helperText={
-              editedStatus === "COACH" ? t("roster.fields.coachHasNoRole") : t("roster.fields.roleHelper")
+              editedStatus === "COACH" ? t("roster.fields.coachHasNoRole") : t("roster.fields.rolesHelper")
             }
           />
         </Stack>

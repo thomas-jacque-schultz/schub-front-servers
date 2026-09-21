@@ -11,6 +11,7 @@ import {
 } from "../../../design-system";
 import type { PlayerStatsDto } from "../../../types/stats";
 import { ChampionLines } from "./ChampionLines";
+import { RankedStandings } from "./RankedStandings";
 import { StatsStateNote } from "./StatsStateNote";
 import { useStatsFormat } from "./statsFormat";
 
@@ -28,7 +29,6 @@ export function PlayerStatsColumn({
   const { t } = useTranslation("stats");
   const format = useStatsFormat();
   const overall = player.overall;
-  const rang = player.rankings.find((standing) => standing.tier);
 
   return (
     <Card>
@@ -40,25 +40,21 @@ export function PlayerStatsColumn({
               {player.displayName ?? t("player.unnamed")}
             </Text>
             <Text variant="caption" tone="secondary">
-              {player.role
-                ? t(`roles.${player.role}`, { ns: "teams" })
+              {player.roles.length > 0
+                ? player.roles.map((role) => t(`roles.${role}`, { ns: "teams" })).join(" · ")
                 : t("player.noRole")}
             </Text>
           </Stack>
         </Stack>
 
-        <Stack direction="row" spacing={0.5} wrap>
-          {isViewer && (
+        {isViewer && (
+          <Stack direction="row" spacing={0.5} wrap>
             <Chip label={t("player.you")} tone="primary" size="small" />
-          )}
-          {rang && (
-            <Chip
-              label={`${format.file(rang.queue)} · ${rang.tier} ${rang.division ?? ""} · ${format.entier(rang.leaguePoints)} LP`}
-              variant="outline"
-              size="small"
-            />
-          )}
-        </Stack>
+          </Stack>
+        )}
+
+        {/* Tous les rangs, pas le premier : un joueur classé en solo et en flex en a deux. */}
+        <RankedStandings standings={player.rankings} />
 
         {player.state !== "STATISTIQUES_CONNUES" || !overall ? (
           <StatsStateNote state={player.state} />

@@ -34,39 +34,8 @@
     "link": {
       "action": "Link my Riot account",
       "title": "Link a Riot account",
-      "searchLabel": "Find my account",
-      "searchPlaceholder": "Name, or Name#TAG",
-      "searchHelper": "Three characters are enough. Suggestions come from the accounts the site already knows: the Riot API cannot search by partial name.",
-      "searching": "Searching…",
-      "suggestions": "Known accounts that match",
-      "noSuggestionTitle": "No known account matches",
-      "noSuggestionDescription": "That is expected while few games have been collected. Write your full Riot ID, then ask Riot: it will join the list.",
-      "verify": "Ask Riot",
-      "verifyHelper": "Your account is not in the list? Write your full Riot ID and ask Riot. This links nothing: the account joins the list, and the click is what links.",
-      "verifyNeedsFullId": "To ask Riot, write the full Riot ID: exactly one #, with text on each side.",
-      "verified": "{{riotId}} confirmed by Riot. Pick it from the list to link it.",
-      "verifyUnavailable": "Checking with Riot is unavailable. Try again in a moment.",
-      "failed": "Linking failed",
       "conflict": "This Riot account is already linked to another user.",
-      "notFound": "Riot does not know this Riot ID."
-    },
-    "suggestion": {
-      "matchCount": "{{count}} match(es) seen",
-      "lastPlayed": "Last match on {{date}}",
-      "positionWithCount": "{{position}} ({{count}})",
-      "mine": "Your account",
-      "alreadyLinked": "Already linked",
-      "verifiedAt": "Checked on {{date}}",
-      "stale": "Worth re-checking",
-      "neverPlayed": "No collected games"
-    },
-    "position": {
-      "TOP": "Top",
-      "JUNGLE": "Jungle",
-      "MIDDLE": "Mid",
-      "BOTTOM": "Bot",
-      "UTILITY": "Support",
-      "UNKNOWN": "Undetermined role"
+      "failed": "Linking failed"
     },
     "change": {
       "action": "Change account",

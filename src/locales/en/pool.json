@@ -1,50 +1,71 @@
 {
   "title": "Champion pool",
-  "subtitle": "Five columns, one per role: what each player can bring, based on their Riot masteries.",
-  "loading": "Reading masteries",
+  "subtitle": "Five columns, one per position: the champions the team allows there, and who can take them.",
+  "loading": "Loading the pool",
   "loadFailed": "Could not load the champion pool",
-  "perMember": {
-    "label": "Champions per player",
-    "helper": "Most mastered first.",
-    "applied": "The {{count}} most mastered champions per player"
-  },
+  "saveFailed": "Saving failed",
   "patch": {
     "label": "Patch {{version}}",
-    "hint": "Names and icons come from this Data Dragon version.",
     "missingTitle": "Champion catalogue unavailable",
-    "missingDescription": "Without the patch version, a champion name and icon mean nothing three months from now, so the server returns none at all. Players are still listed, and champions will come back as soon as the connector answers."
+    "missingDescription": "Without the patch version, a champion name and icon mean nothing three months from now: the server would rather return none. The team's selection is not lost, only unviewable until the connector answers."
   },
   "generatedAt": "Panel assembled on {{date}}",
-  "column": {
-    "empty": "Nobody on this role"
+  "floor": {
+    "label": "Mastery floor",
+    "helper": "In mastery points. Below it, a player is not offered on a champion.",
+    "apply": "Preview",
+    "save": "Save for the team",
+    "saved": "Team floor: {{count}} points",
+    "preview": "You are looking with {{count}} points; the team saved {{team}}.",
+    "explain": "It belongs to the team: if it lived in each viewer's screen, two members would read two lists while believing they meant the same thing."
   },
-  "withoutRole": {
-    "title": "No role assigned",
-    "description": "These players are on the roster but hold no role. Roles are set from the Roster tab."
+  "column": {
+    "choose": "Pick champions",
+    "empty": "No champion kept for this position",
+    "emptyHint": "Pick from the catalogue the ones the team agrees to field here."
+  },
+  "champion": {
+    "nobody": "Nobody above the floor",
+    "setAside": "{{count}} set aside by the floor",
+    "neverPicked": "No player of this position has played it",
+    "outOfCatalog": "Not in this patch's catalogue",
+    "mastery": "{{points}} points",
+    "masteryWithLevel": "Level {{level}} · {{points}} points",
+    "lastPlayed": "Played on {{date}}"
+  },
+  "unavailable": {
+    "title": "No readable masteries",
+    "description": "These players hold this position, but we do not know what they master. They are set aside from nothing: we simply cannot rank them."
+  },
+  "picker": {
+    "title": "Champions for {{role}}",
+    "description": "Click the champions the team agrees to field here. The selection belongs to the team and is there next time.",
+    "search": "Filter the catalogue",
+    "searchPlaceholder": "Champion name",
+    "selected": "{{count}} kept",
+    "confirm": "Save",
+    "none": "No champion matches",
+    "catalogEmpty": "The catalogue is unavailable: there is nothing to pick until the connector answers."
   },
   "roster": {
-    "emptyTitle": "No player on the roster",
-    "emptyDescription": "Add players from the Roster tab — coaches are left out of this panel."
+    "emptyTitle": "No player in the roster",
+    "emptyDescription": "Add players in the Roster tab: coaches do not appear in this panel."
   },
   "member": {
     "viewer": "You",
     "substitute": "Substitute",
     "free": "No Schub account",
-    "mastery": "Level {{level}} · {{points}} points",
-    "lastPlayed": "Played on {{date}}",
-    "observedAt": "Masteries read on {{date}}",
-    "unknownChampion": "Champion {{id}}",
-    "unknownChampionHint": "Released after the served version: the server keeps it rather than hiding a real mastery."
+    "observedAt": "Masteries read on {{date}}"
   },
   "state": {
     "COMPTE_RIOT_ABSENT": {
       "short": "Riot account not linked",
       "title": "Riot account not linked",
-      "description": "No Riot account answers to this Riot ID yet. The person links it from My profile, then claims their seats."
+      "description": "No Riot account answers to this Riot ID yet. The person links it from My profile, then claims their slots."
     },
     "MAITRISES_INDISPONIBLES": {
-      "short": "Masteries not retrieved",
-      "title": "Masteries not retrieved",
+      "short": "Masteries not obtained",
+      "title": "Masteries not obtained",
       "description": "The Riot connector did not answer for this player. Nothing to do: try again later."
     },
     "CATALOGUE_INDISPONIBLE": {

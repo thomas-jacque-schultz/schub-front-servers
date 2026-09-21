@@ -30,6 +30,8 @@ export { Card } from "./components/Card";
 export type { CardProps } from "./components/Card";
 export { Checkbox } from "./components/Checkbox";
 export type { CheckboxProps } from "./components/Checkbox";
+export { ChampionIcon } from "./components/ChampionIcon";
+export type { ChampionIconProps } from "./components/ChampionIcon";
 export { Chip } from "./components/Chip";
 export type { ChipProps, ChipTone } from "./components/Chip";
 export { ChoiceList } from "./components/ChoiceList";

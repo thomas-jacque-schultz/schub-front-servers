@@ -66,7 +66,7 @@
     "columns": {
       "player": "Joueur",
       "riotId": "Riot ID",
-      "role": "Poste",
+      "roles": "Postes",
       "status": "Statut",
       "account": "Compte",
       "actions": "Actions"
@@ -82,13 +82,11 @@
     "add": {
       "action": "Ajouter un membre",
       "title": "Ajouter un membre",
-      "description": "Le Riot ID complet est obligatoire : c'est lui qui rattachera la place à un compte, aujourd'hui ou plus tard.",
-      "gameName": "Pseudo",
-      "gameNameHelper": "La partie avant le #.",
-      "tagLine": "TAG",
-      "tagLineHelper": "La partie après le #, sans le #.",
+      "description": "Cherchez le compte Riot du joueur, puis choisissez-le dans la liste. S'il a déjà un compte Schub, la place lui est rattachée aussitôt.",
       "confirm": "Ajouter",
-      "failed": "L'ajout a échoué"
+      "failed": "L'ajout a échoué",
+      "chosen": "Compte choisi : {{riotId}}",
+      "changeAccount": "Choisir un autre compte"
     },
     "edit": {
       "action": "Modifier",
@@ -105,10 +103,10 @@
       "failed": "Le retrait a échoué"
     },
     "fields": {
-      "role": "Poste",
-      "roleHelper": "Laissez vide pour un coach ou un remplaçant polyvalent.",
+      "roles": "Postes",
+      "rolesHelper": "Plusieurs postes sont possibles. Le premier est le poste habituel — c'est lui qui range l'effectif. Laissez vide si le poste n'est pas encore décidé.",
       "status": "Statut",
-      "coachHasNoRole": "Un coach ne tient pas de poste : le poste est retiré."
+      "coachHasNoRole": "Un coach ne tient pas de poste : les postes sont retirés."
     }
   },
   "draft": {

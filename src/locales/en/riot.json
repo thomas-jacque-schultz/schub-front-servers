@@ -1,0 +1,40 @@
+{
+  "search": {
+    "label": "Search for a Riot account",
+    "placeholder": "Name, or Name#TAG",
+    "helper": "Three characters are enough. Suggestions come from accounts the site already knows: the Riot API cannot search by partial name.",
+    "searching": "Searching…",
+    "suggestions": "Known accounts that match",
+    "noSuggestionTitle": "No known account matches",
+    "noSuggestionDescription": "That is expected while few games have been collected. Type the full Riot ID, then ask Riot: the account will join the list."
+  },
+  "verify": {
+    "action": "Ask Riot",
+    "helper": "Account not in the list? Type the full Riot ID and ask Riot. This links nothing: the account joins the list, and clicking is what picks it.",
+    "needsFullId": "To ask Riot, type the full Riot ID: a single #, with text on both sides.",
+    "done": "{{riotId}} confirmed by Riot. Pick it from the list.",
+    "unavailable": "Verification with Riot is unavailable. Try again in a moment."
+  },
+  "errors": {
+    "notFound": "Riot does not know that Riot ID.",
+    "failed": "The search failed."
+  },
+  "suggestion": {
+    "matchCount": "{{count}} match(es) seen",
+    "lastPlayed": "Last match on {{date}}",
+    "positionWithCount": "{{position}} ({{count}})",
+    "mine": "Your account",
+    "alreadyLinked": "Already linked",
+    "verifiedAt": "Checked on {{date}}",
+    "stale": "Worth re-checking",
+    "neverPlayed": "No collected games"
+  },
+  "position": {
+    "TOP": "Top",
+    "JUNGLE": "Jungle",
+    "MIDDLE": "Mid",
+    "BOTTOM": "Bot",
+    "UTILITY": "Support",
+    "UNKNOWN": "Undetermined role"
+  }
+}

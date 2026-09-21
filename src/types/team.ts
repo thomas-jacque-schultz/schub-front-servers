@@ -56,7 +56,8 @@ export interface TeamMemberDto {
   avatarUrl: string | null;
   riotGameName: string | null;
   riotTagLine: string | null;
-  role: GameRole | null;
+  /** Les postes tenus, du plus habituel au moins habituel. Vide pour un coach. */
+  roles: GameRole[];
   status: MemberStatus;
   /** A-t-il un compte Schub ? Un membre libre n'a que son Riot ID. */
   linked: boolean;
@@ -111,13 +112,14 @@ export interface AddMemberRequest {
   riotTagLine: string;
   /** Facultatif : fourni, il évite au cœur un appel au connecteur Riot. Le front ne l'a pas. */
   riotPuuid?: string | null;
-  /** `null` pour un coach ou un remplaçant polyvalent : le cœur refuse un coach avec un poste. */
-  role: GameRole | null;
+  /** Les postes tenus, du plus habituel au moins habituel. Vide pour un coach. */
+  roles: GameRole[];
   status: MemberStatus;
 }
 
 export interface UpdateMemberRequest {
-  role: GameRole | null;
+  /** Les postes tenus, du plus habituel au moins habituel. Vide pour un coach. */
+  roles: GameRole[];
   status: MemberStatus;
 }
 

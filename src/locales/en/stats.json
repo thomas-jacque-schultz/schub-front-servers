@@ -171,5 +171,12 @@
       "title": "Figures unavailable",
       "description": "The Riot connector is not answering. Nothing is lost — but while it is silent we cannot claim anything, and showing zero would be wrong."
     }
+  },
+  "ranked": {
+    "none": "Unranked",
+    "rank": "{{tier}} {{division}} · {{lp}} LP",
+    "record": "{{wins}}W – {{losses}}L",
+    "hotStreak": "Hot streak",
+    "inactive": "Inactive"
   }
 }

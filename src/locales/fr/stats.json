@@ -171,5 +171,12 @@
       "title": "Chiffres indisponibles",
       "description": "Le connecteur Riot ne répond pas. Rien n'est perdu — mais tant qu'il est muet, nous ne pouvons rien affirmer, et afficher zéro serait faux."
     }
+  },
+  "ranked": {
+    "none": "Aucun classement",
+    "rank": "{{tier}} {{division}} · {{lp}} LP",
+    "record": "{{wins}}V – {{losses}}D",
+    "hotStreak": "Série en cours",
+    "inactive": "Inactif"
   }
 }
