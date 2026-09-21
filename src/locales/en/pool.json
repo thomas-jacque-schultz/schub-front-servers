@@ -59,24 +59,16 @@
   },
   "state": {
     "COMPTE_RIOT_ABSENT": {
-      "short": "Riot account not linked",
-      "title": "Riot account not linked",
-      "description": "No Riot account answers to this Riot ID yet. The person links it from My profile, then claims their slots."
+      "short": "Riot account not linked"
     },
     "MAITRISES_INDISPONIBLES": {
-      "short": "Masteries not obtained",
-      "title": "Masteries not obtained",
-      "description": "The Riot connector did not answer for this player. Nothing to do: try again later."
+      "short": "Masteries not obtained"
     },
     "CATALOGUE_INDISPONIBLE": {
-      "short": "Catalogue unavailable",
-      "title": "Catalogue unavailable",
-      "description": "Without the catalogue there is no name, no icon and no version — so no champion is returned, for anyone."
+      "short": "Catalogue unavailable"
     },
     "AUCUNE_MAITRISE": {
-      "short": "No mastery",
-      "title": "No mastery",
-      "description": "Riot answered, and this account has no mastery yet. That is information, not a failure."
+      "short": "No mastery"
     }
   }
 }
