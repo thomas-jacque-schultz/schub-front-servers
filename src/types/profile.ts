@@ -113,6 +113,18 @@ export interface KnownRiotAccountDto {
   positions: PositionPlayedDto[];
   lastPlayedAt: string | null;
   /**
+   * Quand cette identité a été observée — la partie où on l'a croisé, ou l'appel qui l'a fait
+   * confirmer par Riot. Un Riot ID change de main : c'est cette date qui dit s'il faut le
+   * revérifier avant de s'y fier.
+   */
+  observedAt: string;
+  /**
+   * `PARTICIPATION` ou `RESOLUTION`, servi en chaîne. Le connecteur peut en ajouter une sans que
+   * cet écran cesse de fonctionner — une source inconnue s'affiche sans étiquette plutôt que de
+   * rendre une clé de traduction manquante.
+   */
+  source: string;
+  /**
    * Ce compte est déjà revendiqué par quelqu’un. Un fait sur la proposition, pas la liste de
    * ceux qui l’ont pris : le proposer sans le dire mènerait à un 409 qu’on pouvait éviter.
    */
