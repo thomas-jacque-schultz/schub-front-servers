@@ -104,7 +104,7 @@ export function TeamGamesPanel({ teamId }: TeamGamesPanelProps) {
     {
       key: "queue",
       header: t("games.queue"),
-      render: (game) => format.file(game.queueId),
+      render: (game) => format.file(game.queue),
     },
     {
       key: "present",
@@ -225,7 +225,7 @@ export function TeamGamesPanel({ teamId }: TeamGamesPanelProps) {
                 {stats.byQueue.map((record) => (
                   <MeterBar
                     key={record.key}
-                    label={format.file(Number(record.key))}
+                    label={format.file(record.key)}
                     value={record.winRate}
                     valueLabel={libelle(record, format)}
                   />

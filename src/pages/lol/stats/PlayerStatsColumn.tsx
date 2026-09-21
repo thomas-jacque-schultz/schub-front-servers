@@ -53,7 +53,7 @@ export function PlayerStatsColumn({
           )}
           {rang && (
             <Chip
-              label={`${rang.tier} ${rang.division ?? ""} · ${format.entier(rang.leaguePoints)} LP`}
+              label={`${format.file(rang.queue)} · ${rang.tier} ${rang.division ?? ""} · ${format.entier(rang.leaguePoints)} LP`}
               variant="outline"
               size="small"
             />
@@ -154,7 +154,7 @@ export function PlayerStatsColumn({
                 {player.queues.map((queue) => (
                   <MeterBar
                     key={queue.key}
-                    label={format.file(Number(queue.key))}
+                    label={format.file(queue.key)}
                     value={queue.winRate}
                     valueLabel={`${format.taux(queue.winRate)} · ${t(
                       "coverage.gamesShort",

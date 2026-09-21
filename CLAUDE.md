@@ -140,9 +140,14 @@ inventé est lu comme vrai, et il survit à celui qui l'a posé.
 - **Un vide n'est pas un zéro.** Chaque colonne porte un `state` qui dit *pourquoi* elle est
   vide — compte non lié, collecte en cours, aucune partie, effectif incomplet, connecteur muet —
   et tout ratio sans dénominateur s'affiche en tiret.
-- **Une partie d'équipe = au moins quatre des membres, toutes files confondues.** Le `queueId`
+- **Une partie d'équipe = au moins quatre des membres, toutes files confondues.** Le mode de jeu
   est affiché et compté à part, il ne filtre rien. Une partie où les membres étaient dans les
   deux camps compte comme partie et pas comme résultat.
+- **Une file se dit par son mode, jamais par son numéro.** Le connecteur nomme les `queueId` à
+  partir de la liste officielle de Riot et sert un nom de mode ; le front le traduit sous
+  `queue.<MODE>`. Plusieurs identifiants donnent le même mode — l'arène en a deux — donc le
+  regroupement se fait sur le mode. Un mode inconnu de cette version rend « autre mode », pas une
+  clé brute.
 - **Les graphiques sont à série unique**, une seule teinte (`chartColors` dans les tokens). Le
   vert et le teal du thème sont indistinguables pour une vision deutéranope — vérifié — donc
   aucune palette catégorielle ici, et un écart se lit à son signe avant sa couleur.
