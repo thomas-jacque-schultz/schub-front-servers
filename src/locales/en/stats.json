@@ -1,0 +1,32 @@
+{
+  "eyebrow": "League of Legends",
+  "title": "My stats",
+  "subtitle": "Your matches, your champions, your roles.",
+  "locked": {
+    "title": "Link a Riot account to open this screen",
+    "description": "Without a linked account there is nothing to compute: statistics are built from your matches, and nothing tells us which ones are yours.",
+    "action": "Go to my profile"
+  },
+  "pending": {
+    "title": "Your Riot ID is awaiting confirmation",
+    "description": "It is saved, but we could not confirm it with Riot yet. Collection starts as soon as that is done.",
+    "action": "View my profile"
+  },
+  "waiting": {
+    "title": "Your data is on its way",
+    "description": "The first collection walks through your whole history. It is slow once, and only once.",
+    "pending": "{{count}} match(es) queued",
+    "readyAt": "Ready around {{date}}",
+    "readyUnknown": "No estimate yet",
+    "progressLabel": "Collecting your matches"
+  },
+  "unavailable": {
+    "title": "Progress unavailable",
+    "description": "The Riot connector is not answering. Your data is not lost, but we cannot say how far the collection has got."
+  },
+  "soon": {
+    "title": "Statistics are coming",
+    "description": "Your account is linked and your matches are being collected. The screens that use them come in a later batch.",
+    "teams": "View my teams"
+  }
+}

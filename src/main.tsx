@@ -7,17 +7,20 @@ import "./i18n";
 import { AuthStoreProvider } from "./stores/authStore";
 import { ServersStoreProvider } from "./stores/serversStore";
 import { PortForwardingStoreProvider } from "./stores/portForwardingStore";
+import { ProfileStoreProvider } from "./stores/profileStore";
 
 createRoot(document.getElementById("root") as HTMLElement).render(
   <StrictMode>
     <AppThemeProvider>
       <BrowserRouter>
         <AuthStoreProvider>
-          <ServersStoreProvider>
-            <PortForwardingStoreProvider>
-              <App />
-            </PortForwardingStoreProvider>
-          </ServersStoreProvider>
+          <ProfileStoreProvider>
+            <ServersStoreProvider>
+              <PortForwardingStoreProvider>
+                <App />
+              </PortForwardingStoreProvider>
+            </ServersStoreProvider>
+          </ProfileStoreProvider>
         </AuthStoreProvider>
       </BrowserRouter>
     </AppThemeProvider>

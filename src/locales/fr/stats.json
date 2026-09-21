@@ -1,0 +1,32 @@
+{
+  "eyebrow": "League of Legends",
+  "title": "Mes stats",
+  "subtitle": "Vos parties, vos champions, vos postes.",
+  "locked": {
+    "title": "Liez un compte Riot pour ouvrir cet écran",
+    "description": "Sans compte lié, il n'y a rien à calculer : les statistiques se construisent à partir de vos parties, et rien ne permet de savoir lesquelles sont les vôtres.",
+    "action": "Aller à mon profil"
+  },
+  "pending": {
+    "title": "Votre Riot ID attend d'être confirmé",
+    "description": "Il est enregistré, mais nous n'avons pas encore pu le confirmer auprès de Riot. La collecte démarrera dès que ce sera fait.",
+    "action": "Voir mon profil"
+  },
+  "waiting": {
+    "title": "Vos données arrivent",
+    "description": "La première collecte parcourt tout votre historique. C'est long une fois, et une seule.",
+    "pending": "{{count}} partie(s) en attente",
+    "readyAt": "Prêt vers {{date}}",
+    "readyUnknown": "Échéance encore inconnue",
+    "progressLabel": "Collecte de vos parties"
+  },
+  "unavailable": {
+    "title": "Avancement indisponible",
+    "description": "Le connecteur Riot ne répond pas. Vos données ne sont pas perdues, mais nous ne pouvons pas dire où en est la collecte."
+  },
+  "soon": {
+    "title": "Les statistiques arrivent",
+    "description": "Votre compte est lié et vos parties sont collectées. Les écrans qui les exploitent viennent dans un lot suivant.",
+    "teams": "Voir mes équipes"
+  }
+}

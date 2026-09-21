@@ -28,6 +28,8 @@ export { Checkbox } from "./components/Checkbox";
 export type { CheckboxProps } from "./components/Checkbox";
 export { Chip } from "./components/Chip";
 export type { ChipProps, ChipTone } from "./components/Chip";
+export { ChoiceList } from "./components/ChoiceList";
+export type { ChoiceListOption, ChoiceListProps } from "./components/ChoiceList";
 export { DataTable } from "./components/DataTable";
 export type { DataTableColumn, DataTableProps } from "./components/DataTable";
 export { Dialog } from "./components/Dialog";

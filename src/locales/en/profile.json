@@ -1,0 +1,96 @@
+{
+  "eyebrow": "My account",
+  "title": "My profile",
+  "subtitle": "What the site knows about you, and what you can change.",
+  "loadFailed": "Your profile could not be loaded",
+  "discord": {
+    "title": "Discord",
+    "description": "Your sign-in identity. It comes from Discord and is changed there.",
+    "username": "Discord username",
+    "id": "Identifier",
+    "idHelper": "This is what identifies you to the site — never your username.",
+    "role": "Role"
+  },
+  "displayName": {
+    "title": "Name on this site",
+    "description": "The name others see in teams and shared screens.",
+    "field": "Display name",
+    "helper": "Left empty, your Discord username is used.",
+    "save": "Save",
+    "saved": "Name saved.",
+    "failed": "The name could not be saved",
+    "tooLong": "50 characters at most."
+  },
+  "riot": {
+    "title": "Riot account",
+    "description": "It unlocks your personal statistics and attaches you to the teams expecting you.",
+    "state": {
+      "ABSENT": "No account linked",
+      "EN_ATTENTE_DE_RESOLUTION": "Awaiting confirmation",
+      "RESOLU": "Account linked"
+    },
+    "pendingExplanation": "Your Riot ID is saved, but we could not confirm it with Riot yet. Nothing is lost: try again later, or check what you typed.",
+    "retry": "Try again",
+    "linkedAt": "Declared on {{date}}",
+    "current": "Current account",
+    "link": {
+      "action": "Link my Riot account",
+      "title": "Link a Riot account",
+      "searchLabel": "Search for my username",
+      "searchHelper": "Suggestions come from matches we already collected, not from Riot: their API cannot search by partial username.",
+      "searching": "Searching…",
+      "suggestions": "Known accounts that match",
+      "noSuggestionTitle": "No known account matches",
+      "noSuggestionDescription": "That is expected while few matches have been collected. Enter your full Riot ID below.",
+      "emptyDataTitle": "No match collected yet",
+      "emptyDataDescription": "Suggestions will appear as matches are ingested. Meanwhile, exact entry works.",
+      "exactLabel": "Exact Riot ID",
+      "exactPlaceholder": "Name#TAG",
+      "exactHelper": "As the game client shows it, with the # and the tag.",
+      "malformed": "Exactly one # is required, with text on both sides.",
+      "confirmTitle": "Is this your account?",
+      "confirmDescription": "Check before confirming: the linked account determines all your statistics.",
+      "confirm": "This is my account",
+      "failed": "Linking failed",
+      "conflict": "This Riot account is already linked to another user.",
+      "notFound": "Riot does not know this Riot ID."
+    },
+    "suggestion": {
+      "matchCount": "{{count}} match(es) seen",
+      "lastPlayed": "Last match on {{date}}",
+      "lastPlayedUnknown": "Last match date unknown",
+      "positionWithCount": "{{position}} ({{count}})"
+    },
+    "position": {
+      "TOP": "Top",
+      "JUNGLE": "Jungle",
+      "MIDDLE": "Mid",
+      "BOTTOM": "Bot",
+      "UTILITY": "Support",
+      "UNKNOWN": "Undetermined role"
+    },
+    "change": {
+      "action": "Change account",
+      "title": "Change Riot account",
+      "description": "The current account will be replaced. Read the consequences before confirming.",
+      "confirm": "Change account",
+      "consequencesTitle": "What this change entails",
+      "statsReset": "Your personal statistics start over from zero.",
+      "matchesKept": "The {{count}} match(es) already collected stay attached to the previous account: they are not lost, but they will no longer count for you.",
+      "ingestDuration": "A new collection starts and will take roughly {{count}} minute(s).",
+      "affectedTeams": "Your seat changes in: {{teams}}.",
+      "unknownConsequences": "The exact consequences could not be computed — the core did not answer. The change is still possible, but without those figures.",
+      "from": "From",
+      "to": "To",
+      "noUnlink": "There is no button to unlink an account: it would leave the teams referencing you with nobody. Changing replaces it."
+    },
+    "ingest": {
+      "title": "Collection in progress",
+      "running": "Your matches are being retrieved.",
+      "pending": "{{count}} match(es) queued",
+      "readyAt": "Ready around {{date}}",
+      "readyUnknown": "No estimate available yet",
+      "unavailable": "Collection progress is unavailable: the Riot connector is not answering. No data is lost, only this information is missing."
+    }
+  }
+}

@@ -26,6 +26,8 @@ const ContactPage = lazy(() => import("./pages/ContactPage"));
 const GameServerFormPage = lazy(() => import("./pages/GameServerFormPage"));
 const LandingPage = lazy(() => import("./pages/LandingPage"));
 const LoginPage = lazy(() => import("./pages/Login"));
+const ProfilePage = lazy(() => import("./pages/profile/ProfilePage"));
+const StatsPage = lazy(() => import("./pages/lol/StatsPage"));
 const TeamPage = lazy(() => import("./pages/lol/TeamPage"));
 const TeamsPage = lazy(() => import("./pages/lol/TeamsPage"));
 const DiscordConfigPage = lazy(() => import("./pages/config/DiscordConfigPage"));
@@ -197,6 +199,32 @@ function LocalizedRoutes() {
               element={
                 <RequireAuth>
                   <GameServerFormPage />
+                </RequireAuth>
+              }
+            />
+
+            {/* Mon profil : Discord, nom sur le site, compte Riot.
+
+                RequireAuth et rien de plus : la ressource est le lecteur. Exiger une permission
+                reviendrait à pouvoir refuser à quelqu'un l'accès à son propre nom, et fermerait
+                l'écran à un compte tout juste créé — donc à tout le monde, au premier jour. */}
+            <Route
+              path="profile"
+              element={
+                <RequireAuth>
+                  <ProfilePage />
+                </RequireAuth>
+              }
+            />
+
+            {/* Mes stats : l'écran décide lui-même s'il s'ouvre, à partir de l'état du compte
+                Riot. Aucune permission ne peut porter cette condition — ce n'est pas un droit,
+                c'est un prérequis de donnée. Le menu grise l'entrée, la route explique. */}
+            <Route
+              path="lol/stats"
+              element={
+                <RequireAuth>
+                  <StatsPage />
                 </RequireAuth>
               }
             />

@@ -23,6 +23,17 @@ export interface AppShellNavItem {
   label: string;
   /** Chemin **déjà localisé** : la coquille ne connaît pas la règle des préfixes de langue. */
   to: string;
+  /**
+   * Rend l'entrée grisée, sans la désactiver.
+   *
+   * <p>Un `disabled` serait plus simple et plus faux : il retire l'entrée du parcours clavier et
+   * ne dit rien de la raison. Or une entrée grisée pose exactement une question — « pourquoi ? »
+   * — et c'est en la suivant qu'on trouve la réponse. Elle reste donc un lien : le survol
+   * explique, le clic mène à ce qui débloque.</p>
+   */
+  muted?: boolean;
+  /** Ce qu'on lit au survol. Sans elle, une entrée grisée est une énigme. */
+  hint?: string;
 }
 
 export interface AppShellMenu {
@@ -134,18 +145,35 @@ export function AppShell({
             </MuiStack>
 
             <MuiStack direction="row" spacing={0.5} alignItems="center" sx={{ flexGrow: 1, flexWrap: "wrap" }}>
-              {navItems.map((item) => (
-                <MuiButton
-                  key={item.key}
-                  component={RouterLink}
-                  to={item.to}
-                  color="inherit"
-                  aria-current={pathname === item.to ? "page" : undefined}
-                  sx={{ fontWeight: pathname === item.to ? 700 : 500 }}
-                >
-                  {item.label}
-                </MuiButton>
-              ))}
+              {navItems.map((item) => {
+                const bouton = (
+                  <MuiButton
+                    component={RouterLink}
+                    to={item.to}
+                    color="inherit"
+                    aria-current={pathname === item.to ? "page" : undefined}
+                    // Le motif est lu, pas seulement survolé : une infobulle seule laisse
+                    // l'entrée grisée inexpliquée pour qui n'a pas de souris.
+                    aria-label={item.hint ? `${item.label} — ${item.hint}` : undefined}
+                    sx={{
+                      fontWeight: pathname === item.to ? 700 : 500,
+                      color: item.muted ? "text.disabled" : undefined,
+                    }}
+                  >
+                    {item.label}
+                  </MuiButton>
+                );
+
+                return item.hint ? (
+                  <Tooltip key={item.key} title={item.hint}>
+                    <Box component="span">{bouton}</Box>
+                  </Tooltip>
+                ) : (
+                  <Box key={item.key} component="span">
+                    {bouton}
+                  </Box>
+                );
+              })}
 
               {menus
                 .filter((menu) => menu.items.length > 0)

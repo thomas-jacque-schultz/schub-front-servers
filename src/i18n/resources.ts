@@ -3,9 +3,11 @@ import enContact from "../locales/en/contact.json";
 import enCommon from "../locales/en/common.json";
 import enDiscord from "../locales/en/discord.json";
 import enPortfolio from "../locales/en/portfolio.json";
+import enProfile from "../locales/en/profile.json";
 import enPorts from "../locales/en/ports.json";
 import enRoles from "../locales/en/roles.json";
 import enServers from "../locales/en/servers.json";
+import enStats from "../locales/en/stats.json";
 import enTeams from "../locales/en/teams.json";
 import enUsers from "../locales/en/users.json";
 import frAuth from "../locales/fr/auth.json";
@@ -13,9 +15,11 @@ import frContact from "../locales/fr/contact.json";
 import frCommon from "../locales/fr/common.json";
 import frDiscord from "../locales/fr/discord.json";
 import frPortfolio from "../locales/fr/portfolio.json";
+import frProfile from "../locales/fr/profile.json";
 import frPorts from "../locales/fr/ports.json";
 import frRoles from "../locales/fr/roles.json";
 import frServers from "../locales/fr/servers.json";
+import frStats from "../locales/fr/stats.json";
 import frTeams from "../locales/fr/teams.json";
 import frUsers from "../locales/fr/users.json";
 
@@ -38,6 +42,8 @@ export const resources = {
     portfolio: frPortfolio,
     contact: frContact,
     teams: frTeams,
+    profile: frProfile,
+    stats: frStats,
   },
   en: {
     common: enCommon,
@@ -50,6 +56,8 @@ export const resources = {
     portfolio: enPortfolio,
     contact: enContact,
     teams: enTeams,
+    profile: enProfile,
+    stats: enStats,
   },
 } as const;
 
@@ -67,6 +75,8 @@ export const namespaces = [
   "portfolio",
   "contact",
   "teams",
+  "profile",
+  "stats",
 ] as const;
 
 export type Namespace = (typeof namespaces)[number];
