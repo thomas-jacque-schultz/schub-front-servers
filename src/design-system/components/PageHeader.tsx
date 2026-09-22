@@ -1,4 +1,5 @@
 import { type ReactNode } from "react";
+import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
@@ -19,9 +20,12 @@ export function PageHeader({ title, eyebrow, subtitle, actions }: PageHeaderProp
     >
       <Stack spacing={1}>
         {eyebrow && (
-          <Typography variant="overline" color="primary">
-            {eyebrow}
-          </Typography>
+          <Stack direction="row" spacing={1} alignItems="center">
+            <Box sx={{ width: 18, height: 2, bgcolor: "primary.main", flexShrink: 0 }} />
+            <Typography variant="overline" color="primary" lineHeight={1.6}>
+              {eyebrow}
+            </Typography>
+          </Stack>
         )}
         <Typography variant="h4" component="h1">
           {title}

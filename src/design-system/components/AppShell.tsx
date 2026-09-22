@@ -13,7 +13,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { Link as RouterLink, useLocation } from "react-router-dom";
-import { backdropSx } from "../theme";
+import { backdropSx, gridOverlaySx } from "../theme";
 import { Button } from "./Button";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { ThemeModeToggle } from "./ThemeModeToggle";
@@ -91,12 +91,23 @@ export function AppShell({
     <Box
       sx={{
         minHeight: "100vh",
+        position: "relative",
         display: "flex",
         flexDirection: "column",
         ...backdropSx.page,
+        "&::before": gridOverlaySx,
       }}
     >
-      <AppBar position="sticky" color="transparent" elevation={0} sx={{ backdropFilter: "blur(8px)" }}>
+      <AppBar
+        position="sticky"
+        color="transparent"
+        elevation={0}
+        sx={{
+          backdropFilter: "blur(8px)",
+          borderBottom: "1px solid",
+          borderColor: "divider",
+        }}
+      >
         <Container maxWidth={maxWidth}>
           <Toolbar disableGutters sx={{ flexWrap: "wrap", gap: 1, py: 1 }}>
             <MuiStack
@@ -105,9 +116,20 @@ export function AppShell({
               spacing={0}
               sx={{ textDecoration: "none", color: "inherit", mr: 2 }}
             >
-              <Typography variant="h6" component="span" sx={{ fontWeight: 800 }}>
-                {brand}
-              </Typography>
+              <MuiStack direction="row" spacing={0.75} alignItems="center">
+                <Typography
+                  variant="h6"
+                  component="span"
+                  sx={{ fontWeight: 800, letterSpacing: "-0.02em" }}
+                >
+                  {brand}
+                </Typography>
+                {/* Le seul signe graphique de la marque. Il est décoratif : rien à annoncer. */}
+                <Box
+                  aria-hidden
+                  sx={{ width: 7, height: 15, bgcolor: "primary.main", flexShrink: 0 }}
+                />
+              </MuiStack>
               {brandTagline && (
                 <Typography variant="caption" color="text.secondary">
                   {brandTagline}
@@ -207,11 +229,11 @@ export function AppShell({
         <Divider />
       </AppBar>
 
-      <Box component="main" sx={{ flexGrow: 1, py: { xs: 3, md: 4 } }}>
+      <Box component="main" sx={{ position: "relative", flexGrow: 1, py: { xs: 3, md: 4 } }}>
         <Container maxWidth={maxWidth}>{children}</Container>
       </Box>
 
-      <Box component="footer" sx={{ borderTop: 1, borderColor: "divider", py: 3, mt: 4 }}>
+      <Box component="footer" sx={{ position: "relative", borderTop: 1, borderColor: "divider", py: 3, mt: 4 }}>
         <Container maxWidth={maxWidth}>
           <MuiStack
             direction={{ xs: "column", sm: "row" }}

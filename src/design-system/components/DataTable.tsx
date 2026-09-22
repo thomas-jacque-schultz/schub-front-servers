@@ -5,6 +5,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { typographyTokens } from "../tokens";
 import { EmptyState } from "./EmptyState";
 
 export interface DataTableColumn<Row> {
@@ -66,7 +67,12 @@ export function DataTable<Row>({
                 align={column.align ?? "left"}
                 sx={{
                   width: fixe ? undefined : column.width,
-                  fontWeight: 700,
+                  fontFamily: typographyTokens.monospaceFontFamily,
+                  fontSize: "0.72rem",
+                  letterSpacing: typographyTokens.letterSpacing.wide,
+                  textTransform: "uppercase",
+                  fontWeight: 600,
+                  color: "text.secondary",
                   whiteSpace: "nowrap",
                   overflow: "hidden",
                   textOverflow: "ellipsis",
@@ -84,7 +90,13 @@ export function DataTable<Row>({
                 <TableCell
                   key={column.key}
                   align={column.align ?? "left"}
-                  sx={{ verticalAlign: "middle", wordBreak: fixe ? "break-word" : undefined }}
+                  sx={{
+                    verticalAlign: "middle",
+                    wordBreak: fixe ? "break-word" : undefined,
+                    ...(column.align === "right"
+                      ? { fontFamily: typographyTokens.monospaceFontFamily }
+                      : {}),
+                  }}
                 >
                   {column.render(row)}
                 </TableCell>

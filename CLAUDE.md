@@ -26,6 +26,33 @@ PR de la connexion Discord retire de son côté : **le bloc, et la constante ave
 - **Aucune couleur, aucun rayon, aucune ombre en dur.** Tout vient de
   `src/design-system/tokens.ts`. Une nuance qui manque s'ajoute là-bas.
 
+## L'identité : prune, or et noir
+
+Elle a remplacé un teal/ambre sur bleu-nuit qui ne distinguait le site d'aucun autre tableau de
+bord. Quatre règles la tiennent, et elles se défont vite si on les oublie :
+
+- **L'or est rare.** Il marque l'action principale, la marque d'un graphique, les liserés et le
+  surtitre. Partout, il devient clinquant : c'est la prune qui porte le volume.
+- **Le rôle `primary` change de couleur selon le schéma** — or sur sombre, prune sur clair. L'or
+  de marque plafonne à 2,5:1 sur blanc, il y serait illisible. C'est la répartition qui suit le
+  contraste, jamais l'inverse. Deux conséquences à ne pas défaire : `warning` est un **orange** et
+  non l'ambre habituel, qui se confondrait avec l'or d'un bouton ; et `outline` est un or très
+  dilué plutôt qu'un gris, parce que c'est ce liseré de laiton qui donne aux cartes leur arête.
+- **Les arêtes sont nettes** (`radii` : 2 / 4 / 8). Les angles très arrondis sont la deuxième
+  signature du gabarit générique. `pill` ne sert plus qu'aux pastilles rondes.
+- **La chasse fixe est réservée aux données.** JetBrains Mono porte les chiffres, les
+  identifiants, les en-têtes de colonnes et les surtitres — jamais la prose. C'est là que la
+  touche « geek » est utile plutôt que décorative, et ses chiffres alignent les colonnes.
+
+Les deux polices sont **auto-hébergées** (`@fontsource-variable/*`) et importées par `theme.ts`,
+pas par les points d'entrée : le thème les déclare, il doit donc les embarquer. Une police servie
+par Google serait une requête vers un tiers, donc un paragraphe de plus dans `/privacy`.
+
+La **trame** de fond — un quadrillage d'un pixel tous les 32, à peine visible — est un calque
+séparé (`gridOverlaySx`) et non une couche du `background` : elle porte un masque qui l'estompe
+vers le bas. Elle se peint **sous** le contenu, ce qui oblige `<main>` et `<footer>` à être
+`position: relative`. Sans ça, elle quadrille le texte.
+
 ## Langues
 
 - Le site est bilingue : `/` en français, `/en/…` en anglais. Un nouvel écran est ajouté aux
@@ -234,9 +261,9 @@ qu'à l'enregistrement.
   `queue.<MODE>`. Plusieurs identifiants donnent le même mode — l'arène en a deux — donc le
   regroupement se fait sur le mode. Un mode inconnu de cette version rend « autre mode », pas une
   clé brute.
-- **Les graphiques sont à série unique**, une seule teinte (`chartColors` dans les tokens). Le
-  vert et le teal du thème sont indistinguables pour une vision deutéranope — vérifié — donc
-  aucune palette catégorielle ici, et un écart se lit à son signe avant sa couleur.
+- **Les graphiques sont à série unique**, une seule teinte — l'or (`chartColors` dans les tokens).
+  Aucune palette catégorielle : deux teintes voisines du thème seraient indistinguables pour une
+  vision deutéranope, et un écart se lit à son signe avant sa couleur.
 
 ## Mon profil et le compte Riot
 

@@ -1,3 +1,7 @@
+// Importées ici et non dans les points d'entrée : sans ça, Storybook rend la marque en Arial.
+import "@fontsource-variable/space-grotesk";
+import "@fontsource-variable/jetbrains-mono";
+
 import { createTheme } from "@mui/material/styles";
 import {
   backdrops,
@@ -6,6 +10,7 @@ import {
   lightPalette,
   radii,
   spacingUnit,
+  textures,
   typographyTokens,
 } from "./tokens";
 
@@ -58,11 +63,15 @@ export const appTheme = createTheme({
   typography: {
     fontFamily: typographyTokens.fontFamily,
     h3: { fontWeight: typographyTokens.weights.heavy, letterSpacing: typographyTokens.letterSpacing.tight },
-    h4: { fontWeight: typographyTokens.weights.bold, letterSpacing: typographyTokens.letterSpacing.normal },
-    h5: { fontWeight: typographyTokens.weights.bold },
+    h4: { fontWeight: typographyTokens.weights.bold, letterSpacing: typographyTokens.letterSpacing.tight },
+    h5: { fontWeight: typographyTokens.weights.bold, letterSpacing: typographyTokens.letterSpacing.tight },
     h6: { fontWeight: typographyTokens.weights.medium },
-    overline: { letterSpacing: typographyTokens.letterSpacing.wide, fontWeight: typographyTokens.weights.bold },
-    button: { textTransform: "none", fontWeight: typographyTokens.weights.medium },
+    overline: {
+      fontFamily: typographyTokens.monospaceFontFamily,
+      letterSpacing: typographyTokens.letterSpacing.wide,
+      fontWeight: typographyTokens.weights.medium,
+    },
+    button: { textTransform: "none", fontWeight: typographyTokens.weights.bold },
   },
   components: {
     MuiCssBaseline: {
@@ -70,17 +79,24 @@ export const appTheme = createTheme({
         "html, body, #root": {
           minHeight: "100%",
         },
+        "table, [role='table']": {
+          fontVariantNumeric: "tabular-nums",
+        },
+        "::selection": {
+          background: "rgba(164, 71, 126, 0.45)",
+        },
       },
     },
     MuiCard: {
       styleOverrides: {
         root: ({ theme }) => ({
-          borderRadius: radii.md,
+          borderRadius: radii.lg,
           border: "1px solid",
-          borderColor: theme.vars ? theme.vars.palette.divider : theme.palette.divider,
+          borderColor: darkPalette.outline,
           backgroundImage: "none",
           boxShadow: elevations.dark.md,
           ...theme.applyStyles("light", {
+            borderColor: lightPalette.outline,
             boxShadow: elevations.light.md,
           }),
         }),
@@ -103,7 +119,7 @@ export const appTheme = createTheme({
     MuiChip: {
       styleOverrides: {
         root: {
-          borderRadius: radii.pill,
+          borderRadius: radii.sm,
           fontWeight: typographyTokens.weights.medium,
         },
       },
@@ -123,6 +139,23 @@ export const backdropSx = {
     "[data-mui-color-scheme='light'] &": {
       background: backdrops.light.panel,
     },
+  },
+} as const;
+
+const trame = (couleur: string, pas: number) =>
+  `repeating-linear-gradient(0deg, ${couleur} 0 1px, transparent 1px ${pas}px), ` +
+  `repeating-linear-gradient(90deg, ${couleur} 0 1px, transparent 1px ${pas}px)`;
+
+export const gridOverlaySx = {
+  content: '""',
+  position: "absolute",
+  inset: 0,
+  pointerEvents: "none",
+  backgroundImage: trame(textures.dark.grid, textures.dark.gridSize),
+  maskImage: "linear-gradient(180deg, rgba(0,0,0,0.9) 0%, transparent 38%)",
+  WebkitMaskImage: "linear-gradient(180deg, rgba(0,0,0,0.9) 0%, transparent 38%)",
+  "[data-mui-color-scheme='light'] &": {
+    backgroundImage: trame(textures.light.grid, textures.light.gridSize),
   },
 } as const;
 
