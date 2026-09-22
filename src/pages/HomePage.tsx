@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Alert,
@@ -11,6 +11,8 @@ import {
   type TaskListItem,
   Text,
 } from "../design-system";
+import { getMyTeamsApi } from "../api/teamsApi";
+import type { TeamSummaryDto } from "../types/team";
 import { useLocalizedNavigate } from "../i18n/navigation";
 import { useAuthStore } from "../stores/authStore";
 import { useProfileStore } from "../stores/profileStore";
@@ -31,6 +33,21 @@ function HomePage() {
   const navigate = useLocalizedNavigate();
   const { connected, canAny } = useAuthStore();
   const { profile, isLoading, error, ingestInFlight } = useProfileStore();
+  const [equipes, setEquipes] = useState<TeamSummaryDto[]>([]);
+
+  useEffect(() => {
+    if (!connected) {
+      setEquipes([]);
+      return;
+    }
+    let vivant = true;
+    getMyTeamsApi()
+      .then((liste) => vivant && setEquipes(liste))
+      .catch(() => undefined);
+    return () => {
+      vivant = false;
+    };
+  }, [connected]);
 
   useDocumentMeta({ title: t("meta.title"), description: t("meta.description") });
 
@@ -74,18 +91,18 @@ function HomePage() {
       });
     }
 
-    if (!profile.displayNameChosen) {
-      items.push({
-        key: "displayName",
-        label: t("onboarding.displayName"),
-        description: t("onboarding.displayNameHint"),
-        state: "todo",
-        href: "/profile",
-      });
-    }
+    items.push(equipes.length === 0
+      ? {
+          key: "team",
+          label: t("onboarding.teamAbsent"),
+          description: t("onboarding.teamAbsentHint"),
+          state: "todo",
+          href: "/lol/teams",
+        }
+      : { key: "team", label: t("onboarding.teamJoined", { count: equipes.length }), state: "done" });
 
     return items;
-  }, [profile, ingestInFlight, t]);
+  }, [profile, ingestInFlight, equipes, t]);
 
   const resteAFaire = taches.some((tache) => tache.state !== "done");
 

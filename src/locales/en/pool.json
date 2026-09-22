@@ -17,7 +17,9 @@
     "save": "Save for the team",
     "saved": "Team floor: {{count}} points",
     "preview": "You are looking with {{count}} points; the team saved {{team}}.",
-    "explain": "It belongs to the team: if it lived in each viewer's screen, two members would read two lists while believing they meant the same thing."
+    "explain": "It belongs to the team: if it lived in each viewer's screen, two members would read two lists while believing they meant the same thing.",
+    "hidden": "{{count}} selected champion hidden: nobody above the floor",
+    "hidden_other": "{{count}} selected champions hidden: nobody above the floor"
   },
   "column": {
     "choose": "Pick champions",

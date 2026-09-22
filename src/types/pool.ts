@@ -59,6 +59,8 @@ export interface ChampionPoolColumnDto {
   champions: ChampionPoolEntryDto[];
   /** Ceux qui tiennent ce poste et dont on ne sait pas les maîtrises. Ils ne disparaissent pas. */
   unavailableMembers: ChampionPoolMemberDto[];
+  /** Choix retenus mais masqués : personne du poste ne tient le plancher. */
+  hiddenByFloor: number;
 }
 
 export interface ChampionPoolDto {
