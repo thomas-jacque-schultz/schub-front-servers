@@ -4,13 +4,14 @@ export type ServerStatusToken =
   "online" | "offline" | "unknown" | "unreachable";
 
 export const brand = {
-  teal: "#0b7a6c",
-  tealBright: "#2fa08f",
-  amber: "#d56c11",
-  amberBright: "#e59a45",
-  deepBlue: "#0d47a1",
-  deepGreen: "#004d40",
-  abyss: "#071019",
+  prune: "#6B2853",
+  pruneBright: "#A4477E",
+  pruneDeep: "#3A1230",
+  pruneInk: "#1C0A18",
+  gold: "#C9A227",
+  goldBright: "#E9C766",
+  goldDeep: "#8A6B12",
+  obsidian: "#0A060C",
 } as const;
 
 export interface PaletteTokens {
@@ -33,64 +34,64 @@ export interface PaletteTokens {
 
 export const darkPalette: PaletteTokens = {
   primary: {
-    main: "#2fa08f",
-    light: "#5cc4b3",
-    dark: "#1d7466",
-    contrastText: "#04110f",
+    main: brand.gold,
+    light: brand.goldBright,
+    dark: brand.goldDeep,
+    contrastText: "#140C02",
   },
   secondary: {
-    main: "#e59a45",
-    light: "#f2b978",
-    dark: "#b9762a",
-    contrastText: "#1a1006",
+    main: brand.pruneBright,
+    light: "#C36BA0",
+    dark: brand.prune,
+    contrastText: "#FDF2F8",
   },
-  success: { main: "#4caf7d", contrastText: "#04110b" },
-  warning: { main: "#e0a33a", contrastText: "#1a1206" },
-  error: { main: "#e06a6a", contrastText: "#1a0707" },
-  info: { main: "#4d8bde", contrastText: "#04101d" },
+  success: { main: "#4FB783", contrastText: "#04120B" },
+  warning: { main: "#E2803C", contrastText: "#1A0C04" },
+  error: { main: "#E0576B", contrastText: "#1A050A" },
+  info: { main: "#5B9BE8", contrastText: "#04101D" },
   background: {
-    default: brand.abyss,
-    paper: "#0f1b26",
-    raised: "#16242f",
+    default: brand.obsidian,
+    paper: "#150D18",
+    raised: "#1F1426",
   },
   text: {
-    primary: "#e7eef4",
-    secondary: "#9fb2c1",
-    disabled: "#6b7f8e",
+    primary: "#F2E9EE",
+    secondary: "#B6A3B4",
+    disabled: "#7A6A7C",
   },
-  divider: "rgba(159, 178, 193, 0.22)",
-  outline: "rgba(159, 178, 193, 0.16)",
+  divider: "rgba(182, 163, 180, 0.20)",
+  outline: "rgba(201, 162, 39, 0.14)",
 };
 
 export const lightPalette: PaletteTokens = {
   primary: {
-    main: brand.teal,
-    light: "#3d9d90",
-    dark: "#075449",
-    contrastText: "#ffffff",
+    main: brand.prune,
+    light: "#8E3F72",
+    dark: "#47163A",
+    contrastText: "#FFFFFF",
   },
   secondary: {
-    main: brand.amber,
-    light: "#e28f45",
-    dark: "#a04d06",
-    contrastText: "#ffffff",
+    main: brand.goldDeep,
+    light: "#A9861F",
+    dark: "#5E480A",
+    contrastText: "#FFFFFF",
   },
-  success: { main: "#2e7d52", contrastText: "#ffffff" },
-  warning: { main: "#a96c10", contrastText: "#ffffff" },
-  error: { main: "#b3261e", contrastText: "#ffffff" },
-  info: { main: "#1f5fa9", contrastText: "#ffffff" },
+  success: { main: "#1F7A50", contrastText: "#FFFFFF" },
+  warning: { main: "#9A5312", contrastText: "#FFFFFF" },
+  error: { main: "#B02A3C", contrastText: "#FFFFFF" },
+  info: { main: "#1F5FA9", contrastText: "#FFFFFF" },
   background: {
-    default: "#eef3f0",
-    paper: "#ffffff",
-    raised: "#f7faf8",
+    default: "#F5F0F2",
+    paper: "#FFFFFF",
+    raised: "#FAF6F8",
   },
   text: {
-    primary: "#132226",
-    secondary: "#4a5a61",
-    disabled: "#84969d",
+    primary: brand.pruneInk,
+    secondary: "#584A55",
+    disabled: "#8E7F8B",
   },
-  divider: "#d8e2dd",
-  outline: "#e2eae6",
+  divider: "#E2D6DE",
+  outline: "#EDE2E8",
 };
 
 export const palettes: Record<ColorSchemeName, PaletteTokens> = {
@@ -104,18 +105,23 @@ export const backdrops: Record<
 > = {
   dark: {
     page:
-      `radial-gradient(circle at 15% 25%, ${brand.deepBlue} 0%, transparent 35%), ` +
-      `radial-gradient(circle at 85% 75%, ${brand.deepGreen} 0%, transparent 40%), ` +
-      brand.abyss,
-    panel: "linear-gradient(180deg, rgba(7,16,25,1) 0%, rgba(10,22,34,1) 100%)",
+      "radial-gradient(1100px 620px at 8% -14%, rgba(164, 71, 126, 0.30) 0%, transparent 62%), " +
+      "radial-gradient(900px 540px at 108% 112%, rgba(107, 40, 83, 0.36) 0%, transparent 58%), " +
+      brand.obsidian,
+    panel: `linear-gradient(180deg, ${brand.obsidian} 0%, #140A16 100%)`,
   },
   light: {
     page:
-      "radial-gradient(circle at 15% 25%, #cfe0f5 0%, transparent 35%), " +
-      "radial-gradient(circle at 85% 75%, #cfe8e1 0%, transparent 40%), " +
-      "#eef3f0",
-    panel: "linear-gradient(180deg, #f4f8f6 0%, #e7efeb 100%)",
+      "radial-gradient(1100px 620px at 8% -14%, rgba(164, 71, 126, 0.12) 0%, transparent 62%), " +
+      "radial-gradient(900px 540px at 108% 112%, rgba(201, 162, 39, 0.14) 0%, transparent 58%), " +
+      "#F5F0F2",
+    panel: "linear-gradient(180deg, #FAF6F8 0%, #F1E9EE 100%)",
   },
+};
+
+export const textures: Record<ColorSchemeName, { grid: string; gridSize: number }> = {
+  dark: { grid: "rgba(201, 162, 39, 0.055)", gridSize: 32 },
+  light: { grid: "rgba(107, 40, 83, 0.055)", gridSize: 32 },
 };
 
 export const statusColors: Record<
@@ -124,13 +130,13 @@ export const statusColors: Record<
 > = {
   dark: {
     online: darkPalette.success.main,
-    offline: darkPalette.text.secondary,
+    offline: "#6E6076",
     unknown: darkPalette.warning.main,
     unreachable: darkPalette.error.main,
   },
   light: {
     online: lightPalette.success.main,
-    offline: lightPalette.text.secondary,
+    offline: "#7A6B78",
     unknown: lightPalette.warning.main,
     unreachable: lightPalette.error.main,
   },
@@ -139,9 +145,9 @@ export const statusColors: Record<
 export const spacingUnit = 8;
 
 export const radii = {
-  sm: 6,
-  md: 10,
-  lg: 16,
+  sm: 2,
+  md: 4,
+  lg: 8,
   pill: 999,
 } as const;
 
@@ -150,20 +156,22 @@ export const elevations: Record<
   { sm: string; md: string; lg: string }
 > = {
   dark: {
-    sm: "0 1px 2px rgba(0, 0, 0, 0.45)",
-    md: "0 6px 18px rgba(0, 0, 0, 0.5)",
-    lg: "0 18px 40px rgba(0, 0, 0, 0.55)",
+    sm: "0 1px 2px rgba(0, 0, 0, 0.6)",
+    md: "0 10px 30px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(233, 199, 102, 0.07)",
+    lg: "0 24px 60px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(233, 199, 102, 0.10)",
   },
   light: {
-    sm: "0 1px 2px rgba(16, 24, 40, 0.06)",
-    md: "0 6px 16px rgba(16, 24, 40, 0.08)",
-    lg: "0 18px 40px rgba(16, 24, 40, 0.12)",
+    sm: "0 1px 2px rgba(28, 10, 24, 0.06)",
+    md: "0 6px 16px rgba(28, 10, 24, 0.08)",
+    lg: "0 18px 40px rgba(28, 10, 24, 0.12)",
   },
 };
 
 export const typographyTokens = {
-  fontFamily: "'Segoe UI', 'Noto Sans', 'Helvetica Neue', Arial, sans-serif",
-  monospaceFontFamily: "'JetBrains Mono', 'Fira Mono', 'Consolas', monospace",
+  fontFamily:
+    "'Space Grotesk Variable', 'Space Grotesk', 'Segoe UI', 'Noto Sans', Arial, sans-serif",
+  monospaceFontFamily:
+    "'JetBrains Mono Variable', 'JetBrains Mono', 'Fira Mono', 'Consolas', monospace",
   weights: {
     regular: 400,
     medium: 600,
@@ -171,9 +179,9 @@ export const typographyTokens = {
     heavy: 800,
   },
   letterSpacing: {
-    tight: "-0.01em",
+    tight: "-0.02em",
     normal: "0",
-    wide: "0.08em",
+    wide: "0.14em",
   },
 } as const;
 
@@ -195,17 +203,17 @@ export const chartColors: Record<
   }
 > = {
   dark: {
-    mark: darkPalette.primary.main,
-    markSoft: "rgba(47, 160, 143, 0.28)",
-    track: "rgba(159, 178, 193, 0.18)",
+    mark: brand.gold,
+    markSoft: "rgba(201, 162, 39, 0.26)",
+    track: "rgba(182, 163, 180, 0.14)",
     grid: darkPalette.outline,
     positive: darkPalette.success.main,
     negative: darkPalette.error.main,
   },
   light: {
-    mark: "#0a8a74",
-    markSoft: "rgba(10, 138, 116, 0.22)",
-    track: "rgba(19, 34, 38, 0.10)",
+    mark: brand.goldDeep,
+    markSoft: "rgba(138, 107, 18, 0.20)",
+    track: "rgba(28, 10, 24, 0.10)",
     grid: lightPalette.outline,
     positive: lightPalette.success.main,
     negative: lightPalette.error.main,

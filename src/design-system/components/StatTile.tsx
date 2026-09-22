@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { chartColors } from "../tokens";
+import { chartColors, typographyTokens } from "../tokens";
 
 export interface StatTileProps {
   label: string;
@@ -27,7 +27,13 @@ export function StatTile({
       <Typography
         variant="h6"
         component="p"
-        sx={{ fontWeight: 700, lineHeight: 1.2 }}
+        sx={{
+          fontWeight: 700,
+          lineHeight: 1.2,
+          fontFamily: typographyTokens.monospaceFontFamily,
+          fontVariantNumeric: "tabular-nums",
+          letterSpacing: "-0.01em",
+        }}
       >
         {value}
       </Typography>

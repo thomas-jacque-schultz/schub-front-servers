@@ -8,32 +8,53 @@
 
       rsvg-convert -w 1200 -h 630 public/og-card.svg -o public/og-card.png
 
-  puis déclarer `og:image` sur https://schultz-thomas.fr/og-card.png dans `index.html`.
-
-  Les couleurs viennent des tokens du design system (`brand.abyss`, `brand.tealBright`).
+  Les couleurs viennent des tokens (`brand.obsidian`, `brand.prune`, `brand.gold`). Les polices
+  du design system ne sont pas installées sur la machine qui convertit : la vignette tient son
+  identité de ses couleurs et de sa mise en page, pas de sa fonte.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
-    <linearGradient id="fond" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#0d47a1" stop-opacity="0.55" />
-      <stop offset="55%" stop-color="#004d40" stop-opacity="0.35" />
-      <stop offset="100%" stop-color="#071019" />
+    <radialGradient id="halo-prune" cx="0.08" cy="-0.14" r="0.9">
+      <stop offset="0%" stop-color="#A4477E" stop-opacity="0.34" />
+      <stop offset="62%" stop-color="#A4477E" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="halo-profond" cx="1.08" cy="1.12" r="0.8">
+      <stop offset="0%" stop-color="#6B2853" stop-opacity="0.42" />
+      <stop offset="58%" stop-color="#6B2853" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="trame" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#C9A227" stroke-opacity="0.055" stroke-width="1" />
+    </pattern>
+    <linearGradient id="estompe" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.9" />
+      <stop offset="60%" stop-color="#FFFFFF" stop-opacity="0" />
     </linearGradient>
+    <mask id="masque-trame">
+      <rect width="1200" height="630" fill="url(#estompe)" />
+    </mask>
   </defs>
-  <rect width="1200" height="630" fill="#071019" />
-  <rect width="1200" height="630" fill="url(#fond)" />
-  <rect x="80" y="250" width="72" height="6" rx="3" fill="#2fa08f" />
-  <text x="80" y="200" font-family="Helvetica, Arial, sans-serif" font-size="34" fill="#9fb2c1"
-    letter-spacing="6">INGÉNIEUR FULL STACK</text>
-  <text x="80" y="330" font-family="Helvetica, Arial, sans-serif" font-size="82" font-weight="bold"
-    fill="#e7eef4">Thomas Schultz</text>
-  <text x="80" y="410" font-family="Helvetica, Arial, sans-serif" font-size="38" fill="#9fb2c1">
-    Je construis du logiciel métier qui tourne
+
+  <rect width="1200" height="630" fill="#0A060C" />
+  <rect width="1200" height="630" fill="url(#halo-prune)" />
+  <rect width="1200" height="630" fill="url(#halo-profond)" />
+  <rect width="1200" height="630" fill="url(#trame)" mask="url(#masque-trame)" />
+
+  <rect x="80" y="150" width="40" height="5" fill="#C9A227" />
+  <text x="136" y="160" font-family="'JetBrains Mono', Menlo, Consolas, monospace" font-size="24"
+    fill="#C9A227" letter-spacing="7">SERVEURS · DISCORD · LEAGUE OF LEGENDS</text>
+
+  <text x="80" y="300" font-family="Helvetica, Arial, sans-serif" font-size="112" font-weight="bold"
+    fill="#F2E9EE" letter-spacing="-3">Schub</text>
+  <rect x="368" y="248" width="22" height="52" fill="#C9A227" />
+
+  <text x="80" y="386" font-family="Helvetica, Arial, sans-serif" font-size="36" fill="#B6A3B4">
+    Des serveurs de jeu qui s'allument quand on en a besoin,
   </text>
-  <text x="80" y="462" font-family="Helvetica, Arial, sans-serif" font-size="38" fill="#9fb2c1">
-    en production.
+  <text x="80" y="438" font-family="Helvetica, Arial, sans-serif" font-size="36" fill="#B6A3B4">
+    et de quoi faire vivre une équipe League of Legends.
   </text>
-  <text x="80" y="560" font-family="Helvetica, Arial, sans-serif" font-size="30" fill="#2fa08f">
-    schultz-thomas.fr
-  </text>
+
+  <rect x="80" y="516" width="1040" height="1" fill="#C9A227" fill-opacity="0.22" />
+  <text x="80" y="566" font-family="'JetBrains Mono', Menlo, Consolas, monospace" font-size="28"
+    fill="#C9A227">schultz-thomas.fr</text>
 </svg>
