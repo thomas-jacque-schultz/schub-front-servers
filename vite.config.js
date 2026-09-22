@@ -7,7 +7,8 @@ const racineProjet = path.dirname(fileURLToPath(import.meta.url));
 
 const TYPES = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css",
   ".json": "application/json", ".svg": "image/svg+xml", ".png": "image/png",
-  ".woff2": "font/woff2", ".map": "application/json" };
+  ".woff2": "font/woff2", ".woff": "font/woff", ".ttf": "font/ttf", ".ico": "image/x-icon",
+  ".map": "application/json" };
 
 // nginx sert /storybook en prod ; sans ce middleware, le dev le renvoyait à l'accueil.
 const storybookEnDev = () => ({
@@ -21,9 +22,24 @@ const storybookEnDev = () => ({
         res.end("Storybook absent en dev : lancez npm run build-storybook.");
         return;
       }
+      // L'index de Storybook référence ses bundles en relatif : sans la barre finale, le
+      // navigateur les résout depuis la racine du site et n'obtient que des 404.
+      if ((req.originalUrl || "").split("?")[0] === "/storybook") {
+        res.statusCode = 301;
+        res.setHeader("Location", "/storybook/");
+        res.end();
+        return;
+      }
       const demande = decodeURIComponent((req.url || "/").split("?")[0]);
       let cible = path.join(racine, demande === "/" ? "index.html" : demande);
       if (!cible.startsWith(racine) || !fs.existsSync(cible) || fs.statSync(cible).isDirectory()) {
+        // Servir l'index à la place d'un asset manquant rend du HTML sous un nom de script :
+        // l'erreur se lit alors comme un bug de Storybook.
+        if (path.extname(demande)) {
+          res.statusCode = 404;
+          res.end();
+          return;
+        }
         cible = path.join(racine, "index.html");
       }
       res.setHeader("Content-Type", TYPES[path.extname(cible)] ?? "application/octet-stream");
