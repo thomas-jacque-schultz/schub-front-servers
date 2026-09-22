@@ -17,7 +17,9 @@
     "save": "Enregistrer pour l'équipe",
     "saved": "Plancher de l'équipe : {{count}} points",
     "preview": "Vous regardez avec {{count}} points ; l'équipe en a enregistré {{team}}.",
-    "explain": "Il appartient à l'équipe : s'il vivait dans l'écran de chacun, deux membres liraient deux listes en croyant parler de la même chose."
+    "explain": "Il appartient à l'équipe : s'il vivait dans l'écran de chacun, deux membres liraient deux listes en croyant parler de la même chose.",
+    "hidden": "{{count}} champion retenu est masqué : personne au-dessus du plancher",
+    "hidden_other": "{{count}} champions retenus sont masqués : personne au-dessus du plancher"
   },
   "column": {
     "choose": "Choisir des champions",

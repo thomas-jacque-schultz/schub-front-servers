@@ -32,7 +32,9 @@
     "riotLinked": "League of Legends account linked",
     "ingestRunning": "Collecting your games",
     "ingestRunningHint": "Statistics fill in as it goes. Your profile says where it stands.",
-    "displayName": "Choose your display name",
-    "displayNameHint": "Without a choice, your Discord username is what shows everywhere."
+    "teamAbsent": "Create or join your first team",
+    "teamAbsentHint": "Statistics, champion pool and draft planning all live inside a team.",
+    "teamJoined": "You belong to {{count}} team",
+    "teamJoined_other": "You belong to {{count}} teams"
   }
 }

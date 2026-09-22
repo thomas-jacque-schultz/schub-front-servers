@@ -47,10 +47,16 @@ export function ChampionPicker({
   const [retenus, setRetenus] = useState<string[]>(selected);
   const [filtre, setFiltre] = useState<string>("");
 
+  // `selected` est un tableau reconstruit à chaque rendu du parent : en dépendre réinitialisait
+  // la sélection à chaque re-rendu, et donc l'effaçait quand une écriture échouait. On ne repart
+  // de l'état du serveur qu'à l'ouverture.
   useEffect(() => {
-    setRetenus(selected);
-    setFiltre("");
-  }, [selected, open]);
+    if (open) {
+      setRetenus(selected);
+      setFiltre("");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
 
   const affiches = useMemo(() => {
     const recherche = filtre.trim().toLowerCase();

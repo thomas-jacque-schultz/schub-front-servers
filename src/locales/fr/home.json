@@ -32,7 +32,9 @@
     "riotLinked": "Compte League of Legends lié",
     "ingestRunning": "Collecte de tes parties en cours",
     "ingestRunningHint": "Les statistiques se remplissent au fur et à mesure. Le profil dit où ça en est.",
-    "displayName": "Choisir ton nom d'affichage",
-    "displayNameHint": "Sans choix, c'est ton pseudo Discord qui s'affiche partout."
+    "teamAbsent": "Créer ou rejoindre ta première équipe",
+    "teamAbsentHint": "Les statistiques, le pool de champions et le préparateur de draft vivent dans une équipe.",
+    "teamJoined": "Tu fais partie de {{count}} équipe",
+    "teamJoined_other": "Tu fais partie de {{count}} équipes"
   }
 }

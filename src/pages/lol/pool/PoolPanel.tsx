@@ -239,6 +239,12 @@ function PoolColumn({
         ))
       )}
 
+      {column.hiddenByFloor > 0 && (
+        <Text variant="caption" tone="secondary">
+          {t("floor.hidden", { count: column.hiddenByFloor })}
+        </Text>
+      )}
+
       {/* Un membre dont on ne sait pas les maîtrises ne disparaît pas de son poste : il est dit
           une fois pour la colonne, avec la raison. */}
       {column.unavailableMembers.length > 0 && (
