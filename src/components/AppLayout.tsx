@@ -1,4 +1,4 @@
-import { type ReactNode, useMemo } from "react";
+import { type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { Alert, AppShell, Stack } from "../design-system";
 import type { AppShellFooterLink, AppShellNavEntry, AppShellNavItem } from "../design-system";
@@ -30,75 +30,118 @@ export function AppLayout({ children }: { children: ReactNode }) {
   const route = pathWithoutLanguage(pathname);
   const largeur = ECRANS_LARGES.some((prefixe) => route.startsWith(prefixe)) ? "xl" : "lg";
 
-  const configuration = useMemo<AppShellNavItem[]>(() => {
-    if (!connected) {
-      return [];
-    }
+  // Pas de useMemo sur des libellés : `t` garde la même référence quand la langue change.
+  const configurationEntries: Array<{
+    key: string;
+    label: string;
+    to: string;
+    permissions: Permission[];
+  }> = [
+    {
+      key: "servers",
+      label: t("shell.configServers"),
+      to: "/config/servers",
+      permissions: ["SERVER_CREATE", "SERVER_EDIT", "SERVER_INFRA_VIEW"],
+    },
+    {
+      key: "ports",
+      label: t("shell.configPorts"),
+      to: "/config/ports",
+      permissions: ["PORT_VIEW"],
+    },
+    {
+      key: "users",
+      label: t("shell.configUsers"),
+      to: "/config/users",
+      permissions: ["USER_VIEW"],
+    },
+    {
+      key: "roles",
+      label: t("shell.configRoles"),
+      to: "/config/roles",
+      permissions: ["ROLE_MANAGE"],
+    },
+    {
+      key: "discord",
+      label: t("shell.configDiscord"),
+      to: "/config/discord",
+      permissions: ["DISCORD_CHANNEL_MANAGE"],
+    },
+  ];
+  const configuration: AppShellNavItem[] = connected
+    ? configurationEntries
+        .filter((entry) => canAny(...entry.permissions))
+        .map(({ key, label, to }) => ({ key, label, to: localize(to) }))
+    : [];
 
-    const entries: Array<{ key: string; label: string; to: string; permissions: Permission[] }> = [
-      {
-        key: "servers",
-        label: t("shell.configServers"),
-        to: "/config/servers",
-        permissions: ["SERVER_CREATE", "SERVER_EDIT", "SERVER_INFRA_VIEW"],
-      },
-      { key: "ports", label: t("shell.configPorts"), to: "/config/ports", permissions: ["PORT_VIEW"] },
-      { key: "users", label: t("shell.configUsers"), to: "/config/users", permissions: ["USER_VIEW"] },
-      { key: "roles", label: t("shell.configRoles"), to: "/config/roles", permissions: ["ROLE_MANAGE"] },
-      {
-        key: "discord",
-        label: t("shell.configDiscord"),
-        to: "/config/discord",
-        permissions: ["DISCORD_CHANNEL_MANAGE"],
-      },
-    ];
+  const lol: AppShellNavItem[] = [
+    {
+      key: "lolPublic",
+      label: t("shell.lolPresentation"),
+      to: localize("/lol"),
+    },
+  ];
+  if (connected) {
+    lol.push({
+      key: "stats",
+      label: t("shell.stats"),
+      to: localize("/lol/stats"),
+      muted: !riotLinked,
+      hint: riotLinked ? undefined : t("shell.statsLocked"),
+    });
+  }
+  if (connected && canAny("TEAM_CREATE", "TEAM_VIEW")) {
+    lol.push({
+      key: "teams",
+      label: t("shell.lolTeams"),
+      to: localize("/lol/teams"),
+    });
+  }
 
-    return entries
-      .filter((entry) => canAny(...entry.permissions))
-      .map(({ key, label, to }) => ({ key, label, to: localize(to) }));
-  }, [connected, canAny, localize, t]);
+  const navItems: AppShellNavEntry[] = [
+    { key: "home", label: t("shell.home"), to: localize("/") },
+    { key: "servers", label: t("shell.servers"), to: localize("/servers") },
+    { key: "lol", label: t("shell.lolMenu"), items: lol },
+    ...(connected
+      ? [
+          {
+            key: "profile",
+            label: t("shell.profile"),
+            to: localize("/profile"),
+          },
+        ]
+      : []),
+    {
+      key: "configuration",
+      label: t("shell.configuration"),
+      items: configuration,
+    },
+  ];
 
-  const navItems = useMemo<AppShellNavEntry[]>(() => {
-    const lol: AppShellNavItem[] = [
-      { key: "lolPublic", label: t("shell.lolPresentation"), to: localize("/lol") },
-    ];
-    if (connected) {
-      lol.push({
-        key: "stats",
-        label: t("shell.stats"),
-        to: localize("/lol/stats"),
-        muted: !riotLinked,
-        hint: riotLinked ? undefined : t("shell.statsLocked"),
-      });
-    }
-    if (connected && canAny("TEAM_CREATE", "TEAM_VIEW")) {
-      lol.push({ key: "teams", label: t("shell.lolTeams"), to: localize("/lol/teams") });
-    }
-
-    const entries: AppShellNavEntry[] = [
-      { key: "home", label: t("shell.home"), to: localize("/") },
-      { key: "servers", label: t("shell.servers"), to: localize("/servers") },
-      { key: "lol", label: t("shell.lolMenu"), items: lol },
-    ];
-    if (connected) {
-      entries.push({ key: "profile", label: t("shell.profile"), to: localize("/profile") });
-    }
-    entries.push({ key: "configuration", label: t("shell.configuration"), items: configuration });
-    return entries;
-  }, [connected, canAny, configuration, localize, riotLinked, t]);
-
-  const footerLinks = useMemo<AppShellFooterLink[]>(
-    () => [
-      { key: "creator", label: t("shell.creator"), to: localize("/contact"), accent: true },
-      { key: "feedback", label: t("shell.feedback"), to: localize("/contact#feedback"), accent: true },
-      { key: "terms", label: t("shell.terms"), to: localize("/terms") },
-      { key: "privacy", label: t("shell.privacy"), to: localize("/privacy") },
-      { key: "storybook", label: t("shell.storybook"), href: STORYBOOK_PATH, external: false },
-      { key: "linkedin", label: t("shell.linkedin"), href: LINKEDIN_URL },
-      { key: "github", label: t("shell.github"), href: GITHUB_URL },
-    ],
-    [localize, t],
-  );
+  const footerLinks: AppShellFooterLink[] = [
+    {
+      key: "creator",
+      label: t("shell.creator"),
+      to: localize("/contact"),
+      accent: true,
+    },
+    {
+      key: "feedback",
+      label: t("shell.feedback"),
+      to: localize("/contact#feedback"),
+      accent: true,
+    },
+    { key: "terms", label: t("shell.terms"), to: localize("/terms") },
+    { key: "privacy", label: t("shell.privacy"), to: localize("/privacy") },
+    {
+      key: "storybook",
+      label: t("shell.storybook"),
+      href: STORYBOOK_PATH,
+      external: false,
+    },
+    { key: "linkedin", label: t("shell.linkedin"), href: LINKEDIN_URL },
+    { key: "github", label: t("shell.github"), href: GITHUB_URL },
+  ];
 
   return (
     <AppShell
