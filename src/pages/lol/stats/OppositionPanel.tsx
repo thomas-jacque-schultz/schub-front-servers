@@ -4,6 +4,7 @@ import { getTeamOppositionApi } from "../../../api/statsApi";
 import {
   Alert,
   Card,
+  Chip,
   Columns,
   DataTable,
   type DataTableColumn,
@@ -15,7 +16,7 @@ import {
   Text,
 } from "../../../design-system";
 import type { PositionOppositionDto, TeamOppositionDto, TeamRecordDto } from "../../../types/stats";
-import { useRankGapLabel } from "./rank";
+import { useRankGap } from "./rank";
 import { StatsStateNote } from "./StatsStateNote";
 import { useStatsFormat } from "./statsFormat";
 import { useWindowOptions } from "./windows";
@@ -28,7 +29,7 @@ export interface OppositionPanelProps {
 export function OppositionPanel({ teamId }: OppositionPanelProps) {
   const { t } = useTranslation("stats");
   const format = useStatsFormat();
-  const ecart = useRankGapLabel();
+  const ecart = useRankGap();
   const fenetres = useWindowOptions();
   const [days, setDays] = useState<string>("");
   const [dto, setDto] = useState<TeamOppositionDto | null>(null);
@@ -63,10 +64,17 @@ export function OppositionPanel({ teamId }: OppositionPanelProps) {
 
   const palier = (key: string) => t(`tier.${key}`, { defaultValue: key });
   const bilan = (record: TeamRecordDto) =>
-    record.games === 0 ? format.absent : `${format.taux(record.winRate)} · ${record.wins}-${record.losses}`;
+    record.games === 0
+      ? format.absent
+      : `${format.taux(record.winRate)} · ${record.wins}-${record.losses}`;
 
   const colonnes: Array<DataTableColumn<PositionOppositionDto>> = [
-    { key: "position", header: t("detail.position"), width: 100, render: (l) => format.poste(l.position) },
+    {
+      key: "position",
+      header: t("detail.position"),
+      width: 100,
+      render: (l) => format.poste(l.position),
+    },
     {
       key: "games",
       header: t("metricShort.games"),
@@ -79,7 +87,14 @@ export function OppositionPanel({ teamId }: OppositionPanelProps) {
       header: t("opposition.averageGap"),
       width: 110,
       align: "right",
-      render: (l) => ecart(l.averageGap),
+      render: (l) => {
+        const valeur = ecart(l.averageGap);
+        return valeur ? (
+          <Chip label={valeur.label} tone={valeur.tone} variant="outline" size="small" />
+        ) : (
+          format.absent
+        );
+      },
     },
     {
       key: "stronger",
@@ -158,7 +173,10 @@ export function OppositionPanel({ teamId }: OppositionPanelProps) {
           </Text>
 
           <Columns minWidth={300}>
-            <Card title={t("opposition.ceiling")} description={t("opposition.ceilingHelper", { count: dto.ceilingMinimumGames })}>
+            <Card
+              title={t("opposition.ceiling")}
+              description={t("opposition.ceilingHelper", { count: dto.ceilingMinimumGames })}
+            >
               <StatTile
                 label={t("opposition.title")}
                 value={dto.ceilingTier ? palier(dto.ceilingTier) : format.absent}

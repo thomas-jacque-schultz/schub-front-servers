@@ -234,7 +234,11 @@
     "filterHint": "Click an avatar to keep only some players.",
     "radarHint": "Pick {{count}} players at most to see their radar profiles side by side."
   },
-  "rankGap": "{{value}} div.",
+  "rankGap": {
+    "ours": "Us +{{value}} div.",
+    "theirs": "Them +{{value}} div.",
+    "even": "Same level"
+  },
   "detail": {
     "title": "Game of {{date}}",
     "matchups": "Lane matchups",
@@ -254,7 +258,8 @@
     "loadFailed": "The game details could not be loaded.",
     "close": "Close",
     "shortGame": "Game over before 15 minutes: there is no 15-minute lane state.",
-    "ganksSuffered": "Ganks suffered {{ally}} – {{enemy}}"
+    "ganksSuffered": "Ganks suffered {{count}}",
+    "ganksSucceeded": "Successful ganks {{count}}"
   },
   "opposition": {
     "tab": "Opponent level",
