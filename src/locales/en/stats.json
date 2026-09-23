@@ -214,5 +214,10 @@
   },
   "scope": {
     "rift": "Figures computed on Summoner's Rift (ranked, normals, Clash): ARAM and Arena would skew per-minute numbers."
+  },
+  "players": {
+    "filter": "Players shown",
+    "filterHint": "Click an avatar to keep only some players.",
+    "radarHint": "Pick {{count}} players at most to see their radar profiles side by side."
   }
 }

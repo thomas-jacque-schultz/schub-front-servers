@@ -214,5 +214,10 @@
   },
   "scope": {
     "rift": "Indicateurs calculés sur la Faille (classées, normales, Clash) : l'ARAM et l'Arène fausseraient les chiffres par minute."
+  },
+  "players": {
+    "filter": "Joueurs affichés",
+    "filterHint": "Cliquez sur un avatar pour ne garder que certains joueurs.",
+    "radarHint": "Choisissez {{count}} joueurs au plus pour voir leurs profils radar côte à côte."
   }
 }

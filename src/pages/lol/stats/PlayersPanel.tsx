@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { getTeamPlayersStatsApi } from "../../../api/statsApi";
 import {
   Alert,
+  AvatarToggleGroup,
   Card,
   Columns,
   ProgressBar,
@@ -18,6 +19,8 @@ export interface PlayersPanelProps {
   teamId: string;
 }
 
+const RADAR_JUSQU_A = 3;
+
 export function PlayersPanel({ teamId }: PlayersPanelProps) {
   const { t } = useTranslation("stats");
   const fenetres = useWindowOptions();
@@ -25,6 +28,7 @@ export function PlayersPanel({ teamId }: PlayersPanelProps) {
   const [stats, setStats] = useState<TeamPlayersStatsDto | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
+  const [choisis, setChoisis] = useState<string[]>([]);
 
   const load = useCallback(async () => {
     setIsLoading(true);
@@ -54,8 +58,32 @@ export function PlayersPanel({ teamId }: PlayersPanelProps) {
     return <Alert severity="error">{error}</Alert>;
   }
 
+  const joueurs = stats?.players ?? [];
+  const visibles =
+    choisis.length === 0 ? joueurs : joueurs.filter((player) => choisis.includes(player.memberId));
+
   return (
     <Stack spacing={2}>
+      {joueurs.length > 1 && (
+        <Stack direction="row" spacing={2} align="center" wrap>
+          <AvatarToggleGroup
+            label={t("players.filter")}
+            options={joueurs.map((player) => ({
+              value: player.memberId,
+              name: player.displayName ?? t("player.unnamed"),
+              src: player.avatarUrl,
+            }))}
+            values={choisis}
+            onChange={setChoisis}
+          />
+          <Text variant="caption" tone="secondary">
+            {visibles.length > RADAR_JUSQU_A
+              ? t("players.radarHint", { count: RADAR_JUSQU_A })
+              : t("players.filterHint")}
+          </Text>
+        </Stack>
+      )}
+
       <Stack direction="row" spacing={2} align="center" wrap>
         <SelectField
           label={t("window.label")}
@@ -78,12 +106,14 @@ export function PlayersPanel({ teamId }: PlayersPanelProps) {
           </Text>
         </Card>
       ) : (
-        <Columns minWidth={260} count={5}>
-          {stats?.players.map((player) => (
+        <Columns minWidth={260} count={Math.max(1, Math.min(5, visibles.length))}>
+          {visibles.map((player) => (
             <PlayerStatsColumn
               key={player.memberId}
               player={player}
-              isViewer={player.memberId === stats.viewerMemberId}
+              isViewer={player.memberId === stats?.viewerMemberId}
+              scale={stats?.scale ?? null}
+              showRadar={visibles.length <= RADAR_JUSQU_A}
             />
           ))}
         </Columns>
