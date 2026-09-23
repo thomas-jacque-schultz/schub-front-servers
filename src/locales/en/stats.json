@@ -57,6 +57,18 @@
     "versusTeammates": "against the average of {{count}} teammate(s)",
     "winRateVersusTeammates": "Win rate gap"
   },
+  "championChoice": {
+    "button": "Choose",
+    "buttonCount": "{{count}} chosen",
+    "title": "Champions to show",
+    "selected": "{{count}} champion(s) selected",
+    "default": "No choice: the {{count}} most played.",
+    "reset": "Back to most played",
+    "search": "Search a champion",
+    "noResult": "No played champion matches.",
+    "confirm": "Show",
+    "cancel": "Cancel"
+  },
   "section": {
     "champions": "Most played champions",
     "noChampion": "No champion over this period.",
@@ -257,9 +269,7 @@
     "noMatchups": "Members on both sides: no matchups.",
     "loadFailed": "The game details could not be loaded.",
     "close": "Close",
-    "shortGame": "Game over before 15 minutes: there is no 15-minute lane state.",
-    "ganksSuffered": "Ganks suffered {{count}}",
-    "ganksSucceeded": "Successful ganks {{count}}"
+    "shortGame": "Game over before 15 minutes: there is no 15-minute lane state."
   },
   "opposition": {
     "tab": "Strategy",

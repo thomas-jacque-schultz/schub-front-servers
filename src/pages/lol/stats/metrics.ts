@@ -42,7 +42,10 @@ interface MetricDefinition {
 }
 
 export const KPI_ORDER: MetricKey[] = [
+  "winRate",
   "kda",
+  "killParticipation",
+  "deathShare",
   "csPerMinute",
   "goldPerMinute",
   "damagePerMinute",

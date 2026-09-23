@@ -285,8 +285,10 @@ qu'à l'enregistrement.
   deux écrans qui divergent ici ne se comparent plus.
 - **Les indicateurs par minute portent sur la Faille** (classées, normales, Clash). Les files, elles,
   restent toutes comptées. Le poste « indéterminé » n'existe plus : c'était l'ARAM et l'Arène.
-- **Mes stats et l'onglet Joueurs partagent `PlayerStatsView`** : mise en page pleine ou en colonne.
-  Un seul joueur retenu dans Joueurs prend la vue pleine, la même que Mes stats.
+- **Mes stats et l'onglet Joueurs partagent `PlayerStatsView`** pour la vue pleine : un seul joueur
+  retenu dans Joueurs prend la même vue que Mes stats. À plusieurs, chaque joueur est une colonne
+  d'`AlignedColumns` (subgrid) : `playerColumn` rend toujours les mêmes sections dans le même ordre,
+  c'est ce qui aligne les rangées d'une colonne à l'autre.
 - **Les bornes du radar sont locales** : 5e et 95e percentiles des joueurs croisés dans nos parties
   (au moins dix parties sur la Faille), servies par le cœur avec les stats. L'écran le dit.
 

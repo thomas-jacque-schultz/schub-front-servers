@@ -12,6 +12,8 @@ export type {
   AppShellNavItem,
   AppShellProps,
 } from "./components/AppShell";
+export { AlignedColumns } from "./components/AlignedColumns";
+export type { AlignedColumn, AlignedColumnsProps } from "./components/AlignedColumns";
 export { Avatar } from "./components/Avatar";
 export { AvatarToggleGroup } from "./components/AvatarToggleGroup";
 export type { AvatarToggleGroupProps, AvatarToggleOption } from "./components/AvatarToggleGroup";
