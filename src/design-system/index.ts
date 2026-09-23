@@ -77,6 +77,10 @@ export type {
   MultiSelectOption,
   MultiSelectProps,
 } from "./components/MultiSelect";
+export { SegmentedControl } from "./components/SegmentedControl";
+export type { SegmentedControlOption, SegmentedControlProps } from "./components/SegmentedControl";
+export { SplitBar } from "./components/SplitBar";
+export type { SplitBarProps, SplitBarSegment } from "./components/SplitBar";
 export { PageBackdrop } from "./components/PageBackdrop";
 export type { PageBackdropProps } from "./components/PageBackdrop";
 export { PageHeader } from "./components/PageHeader";

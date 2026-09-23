@@ -64,24 +64,26 @@ export interface RankedStandingDto {
   observedAt: string | null;
 }
 
-export interface RadarDto {
-  recentPatches: string[];
-  previousPatches: string[];
-  recent: StatLineDto | null;
-  previous: StatLineDto | null;
-}
-
 export interface MetricBoundDto {
   low: number;
   high: number;
 }
 
-/** Bornes des axes : 5e et 95e percentiles des joueurs croisés. Une population locale. */
-export interface MetricScaleDto {
-  computedAt: string;
+/** 5e et 95e percentiles des moyennes par joueur d'une population, au même poste. */
+export interface MetricReferenceDto {
+  tier: string | null;
+  position: string;
   population: number;
   minimumGames: number;
   bounds: Partial<Record<string, MetricBoundDto>>;
+}
+
+/** Référentiels du poste le plus joué sur la période ; `league` : même palier, `met` : adversaires directs. */
+export interface RadarReferencesDto {
+  position: string;
+  tier: string | null;
+  league: MetricReferenceDto | null;
+  met: MetricReferenceDto | null;
 }
 
 export interface TeamComparisonDto {
@@ -112,7 +114,7 @@ export interface PlayerStatsDto {
   queues: StatLineDto[];
   months: StatLineDto[];
   rankings: RankedStandingDto[];
-  radar: RadarDto | null;
+  references: RadarReferencesDto | null;
   versusTeammates: TeamComparisonDto | null;
 }
 
@@ -122,7 +124,6 @@ export interface TeamPlayersStatsDto {
   days: number | null;
   championsPerPlayer: number;
   players: PlayerStatsDto[];
-  scale: MetricScaleDto | null;
   viewerMemberId: string | null;
   generatedAt: string;
 }
@@ -168,10 +169,6 @@ export interface At15Dto {
   kills: number;
   deaths: number;
   assists: number;
-  /** Morts avant 15 min impliquant le jungler adverse ; null si les postes sont inconnus. */
-  ganksSuffered: number | null;
-  /** Kills sur un laner adverse avec le jungler allié ; pour le jungler, tous ses ganks réussis. */
-  ganksSucceeded: number | null;
 }
 
 /** Moyenne des joueurs classés seulement ; `value` sur l'échelle Fer IV = 0 … Challenger = 30. */
@@ -220,7 +217,80 @@ export interface TeamGameDetailDto {
   matchups: MatchupDto[];
   timelineAvailable: boolean;
   ranksObservedAt: string | null;
+  early: EarlyGameDto | null;
   viewerMemberId: string | null;
+}
+
+export type Lane = "TOP" | "MID" | "BOT";
+export type StrongSide = "TOP" | "BOT" | "BALANCED";
+
+/** Issue vue de l'attaquant : KILL, le couloir visé a perdu quelqu'un sans perte en face. */
+export type GankOutcome = "KILL" | "TRADE" | "SURVIVED" | "COUNTER";
+
+export interface GankDto {
+  second: number;
+  lane: Lane;
+  /** Gank de notre jungler. */
+  ours: boolean;
+  outcome: GankOutcome;
+  decisive: boolean;
+  objectiveFollowUp: boolean;
+  targetMemberIds: string[];
+  fallenMemberIds: string[];
+  alliesLost: number;
+  enemiesLost: number;
+}
+
+export interface JunglePresenceDto {
+  memberId: string | null;
+  topMinutes: number;
+  midMinutes: number;
+  botMinutes: number;
+  strongSide: StrongSide;
+}
+
+export interface ObjectivesDto {
+  dragons: number;
+  grubs: number;
+  heralds: number;
+}
+
+export interface EarlyGameDto {
+  ganks: GankDto[];
+  ourJungler: JunglePresenceDto | null;
+  theirJungler: JunglePresenceDto | null;
+  ourObjectives: ObjectivesDto;
+  theirObjectives: ObjectivesDto;
+}
+
+export interface MemberEarlyDto {
+  memberId: string;
+  displayName: string | null;
+  laneGames: number;
+  ganksFaced: number;
+  ganksHeld: number;
+  deathsOnGank: number;
+  jungleGames: number;
+  ganksMade: number;
+  ganksDecisive: number;
+  ganksCountered: number;
+  topMinutes: number;
+  midMinutes: number;
+  botMinutes: number;
+}
+
+export interface StrongSideRecordDto {
+  side: StrongSide;
+  games: number;
+  wins: number;
+  enemyGanks: number;
+  enemyGanksOnWeakSide: number;
+}
+
+export interface TeamEarlyGameDto {
+  games: number;
+  members: MemberEarlyDto[];
+  strongSides: StrongSideRecordDto[];
 }
 
 export interface PositionOppositionDto {
@@ -247,6 +317,7 @@ export interface TeamOppositionDto {
   byPosition: PositionOppositionDto[];
   ceilingTier: string | null;
   ceilingMinimumGames: number;
+  early: TeamEarlyGameDto | null;
   generatedAt: string;
 }
 
@@ -303,8 +374,7 @@ export interface MyStatsDto {
   queues: StatLineDto[];
   months: StatLineDto[];
   rankings: RankedStandingDto[];
-  radar: RadarDto | null;
-  scale: MetricScaleDto | null;
+  references: RadarReferencesDto | null;
   generatedAt: string;
 }
 

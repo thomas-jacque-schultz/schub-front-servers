@@ -99,6 +99,8 @@ export const useStatsFormat = () => {
         }
         return t("duration.minutes", { count: Math.round(secondes / 60) });
       },
+      // Temps de jeu, comme le client l'affiche : 4:05.
+      horloge: (secondes: number) => `${Math.floor(secondes / 60)}:${String(secondes % 60).padStart(2, "0")}`,
       file: (mode: string | null | undefined) => {
         const cle: Mode =
           mode && (MODES as readonly string[]).includes(mode) ? (mode as Mode) : "OTHER";

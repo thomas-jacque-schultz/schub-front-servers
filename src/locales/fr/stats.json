@@ -220,11 +220,29 @@
   },
   "radar": {
     "title": "Profil",
-    "helper": "Deux périodes comparées sur les mêmes axes : les deux derniers patchs contre les deux précédents.",
-    "series": "Patchs {{patches}}",
-    "empty": "Pas de partie sur la Faille pendant les quatre derniers patchs.",
-    "scaleNote": "Centre : 5e percentile des {{count}} joueurs croisés dans nos parties (au moins {{min}} parties sur la Faille), bord : 95e. Une population locale, pas une moyenne mondiale. Rang : de Fer IV à Challenger.",
-    "noScale": "Les bornes des axes ne sont pas encore calculées."
+    "helper": "Huit axes, lus contre le référentiel choisi : le centre est le bas du référentiel, le bord son haut.",
+    "reference": {
+      "label": "Référentiel",
+      "team": "Équipe",
+      "met": "Adversaires",
+      "league": "Palier"
+    },
+    "series": {
+      "period": "Sur la période",
+      "position": "Au poste {{position}}"
+    },
+    "note": {
+      "team": "Centre : le plus bas de l'équipe, bord : le plus haut, sur la même période que le tableau de bord.",
+      "met": "Au poste {{position}}, {{games}} partie(s). Centre : 5e percentile de {{count}} adversaires directs (au moins {{min}} parties chacun), bord : 95e.",
+      "league": "Au poste {{position}}, {{games}} partie(s). Centre : 5e percentile de {{count}} joueurs {{tier}} collectés à ce poste (au moins {{min}} parties), bord : 95e. Le palier est le rang d'aujourd'hui."
+    },
+    "empty": {
+      "noGames": "Aucune partie sur la Faille sur la période.",
+      "team": "Il faut au moins deux joueurs avec des statistiques.",
+      "met": "Pas encore assez d'adversaires directs connus au poste {{position}} : il en faut dix, avec au moins cinq parties chacun. Le référentiel grossit avec la collecte.",
+      "leagueThin": "Pas encore assez de joueurs {{tier}} collectés au poste {{position}} : il en faut dix. Le référentiel grossit avec la collecte.",
+      "unranked": "Joueur non classé : pas de palier auquel se comparer."
+    }
   },
   "tier": {
     "IRON": "Fer",
@@ -259,7 +277,7 @@
     "ally": "Nous",
     "enemy": "Eux",
     "gap": "Écart de rang",
-    "at15": "À 15 min",
+    "at15": "À 15 min (nous − eux)",
     "goldDiff": "Or",
     "csDiff": "CS",
     "kdaAt15": "K/D/A",
@@ -269,7 +287,12 @@
     "noMatchups": "Membres dans les deux camps : pas de face-à-face.",
     "loadFailed": "Le détail de la partie n'a pas pu être chargé.",
     "close": "Fermer",
-    "shortGame": "Partie finie avant 15 minutes : il n'y a pas d'état des couloirs à 15 minutes."
+    "shortGame": "Partie finie avant 15 minutes : il n'y a pas d'état des couloirs à 15 minutes.",
+    "lane": {
+      "won": "Couloir gagné",
+      "even": "Couloir égal",
+      "lost": "Couloir perdu"
+    }
   },
   "opposition": {
     "tab": "Stratégie",
@@ -312,6 +335,81 @@
   },
   "strategy": {
     "summary": "Bilan de l'équipe",
-    "opposition": "Niveau adverse"
+    "opposition": "Niveau adverse",
+    "early": "Début de partie"
+  },
+  "early": {
+    "title": "Début de partie, 0 à 15 min",
+    "helper": "Un gank, c'est le jungler qui vient sur un couloir adverse. Il est vu par un kill sur le couloir, ou à l'image de chaque minute de la timeline : une venue sans kill entre deux images n'est pas vue.",
+    "lane": {
+      "TOP": "Haut",
+      "MID": "Milieu",
+      "BOT": "Bas"
+    },
+    "theirs": "Leur jungler chez nous",
+    "ours": "Notre jungler chez eux",
+    "none": "Aucune venue",
+    "strong": "Côté fort",
+    "weak": "Côté faible",
+    "decisive": "décisif",
+    "objective": "objectif",
+    "fallen": "Morts : {{names}}",
+    "verdict": {
+      "theirs": {
+        "KILL": "Mort",
+        "TRADE": "Échange",
+        "SURVIVED": "Tenu",
+        "COUNTER": "Contre-kill"
+      },
+      "ours": {
+        "KILL": "Kill",
+        "TRADE": "Échange",
+        "SURVIVED": "Sans kill",
+        "COUNTER": "Contré"
+      }
+    },
+    "presence": {
+      "ours": "Notre jungler, de 2 à 14 min",
+      "theirs": "Leur jungler, de 2 à 14 min",
+      "minutes": "{{count}} min"
+    },
+    "side": {
+      "TOP": "côté haut",
+      "BOT": "côté bas",
+      "BALANCED": "des deux côtés"
+    },
+    "weakSummary": "Notre jungler a joué {{side}} ; {{onWeak}} gank(s) adverse(s) sur {{total}} sont tombés sur l'autre côté.",
+    "balancedSummary": "Notre jungler a partagé son temps entre les deux côtés.",
+    "objectives": {
+      "title": "Objectifs avant 15 min (nous – eux)",
+      "dragons": "Dragons",
+      "grubs": "Larves",
+      "heralds": "Héraut"
+    },
+    "noAnalysis": "Pas d'analyse du début de partie : timeline absente, ou postes de la partie inconnus.",
+    "team": {
+      "helper": "Sur {{count}} partie(s) d'équipe dont la timeline est analysée. Les ganks sans kill ne sont vus qu'à l'image de chaque minute : ils sont sous-comptés.",
+      "none": "Aucune partie d'équipe analysée sur la période.",
+      "laners": "Encaisser les ganks",
+      "lanersHelper": "Tenu : le joueur visé n'est pas mort pendant le gank.",
+      "junglers": "Ganks du jungler",
+      "junglersHelper": "Décisif : un kill sans perte, ou un objectif du côté du couloir dans les 90 secondes.",
+      "sides": "Côté fort de notre jungler",
+      "sidesHelper": "Le côté où il a passé au moins deux minutes de plus. Côté faible : l'autre.",
+      "member": "Joueur",
+      "laneGames": "Parties",
+      "facedPerGame": "Subis / partie",
+      "held": "Tenus",
+      "deaths": "Morts sur gank",
+      "jungleGames": "Parties",
+      "madePerGame": "Ganks / partie",
+      "decisive": "Décisifs",
+      "countered": "Contrés",
+      "presence": "Présence",
+      "side": "Côté fort",
+      "games": "Parties",
+      "winRate": "Victoires",
+      "onWeakSide": "Ganks adverses côté faible"
+    }
   }
 }

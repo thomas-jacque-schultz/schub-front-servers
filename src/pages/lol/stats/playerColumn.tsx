@@ -1,21 +1,22 @@
 import type { AlignedColumn } from "../../../design-system";
-import type { MetricScaleDto, PlayerStatsDto } from "../../../types/stats";
+import type { PlayerStatsDto, StatLineDto } from "../../../types/stats";
 import { PlayerRadar } from "./PlayerRadar";
 import { Champions, Files, PlayerHeader, Tableau } from "./PlayerStatsColumn";
-import { rangDeReference } from "./rank";
+import type { RadarReference } from "./radar";
 import { RankedStandings } from "./RankedStandings";
 import { StatsStateNote } from "./StatsStateNote";
 
 export interface PlayerColumnOptions {
   isViewer: boolean;
-  scale: MetricScaleDto | null;
   showRadar: boolean;
+  teamLines: StatLineDto[];
+  reference: RadarReference;
 }
 
 // Même ordre de sections pour tous les joueurs : AlignedColumns aligne la n-ième section de chaque colonne.
 export const playerColumn = (
   player: PlayerStatsDto,
-  { isViewer, scale, showRadar }: PlayerColumnOptions,
+  { isViewer, showRadar, teamLines, reference }: PlayerColumnOptions,
 ): AlignedColumn => {
   const connu = player.state === "STATISTIQUES_CONNUES" && player.overall !== null;
   return {
@@ -29,9 +30,11 @@ export const playerColumn = (
             connu ? (
               <PlayerRadar
                 key="radar"
-                radar={player.radar}
-                scale={scale}
-                rank={rangDeReference(player.rankings)}
+                overall={player.overall}
+                positions={player.positions}
+                references={player.references}
+                teamLines={teamLines}
+                reference={reference}
               />
             ) : null,
           ]
