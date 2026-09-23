@@ -2,7 +2,9 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { SelectField, Stack, Text } from "../../../design-system";
 import { OppositionPanel } from "./OppositionPanel";
+import { TeamEarlyGame } from "./TeamEarlyGame";
 import { TeamSummary } from "./TeamSummary";
+import { useTeamOpposition } from "./useTeamOpposition";
 import { useWindowOptions } from "./windows";
 
 export interface StrategyPanelProps {
@@ -14,6 +16,7 @@ export function StrategyPanel({ teamId }: StrategyPanelProps) {
   const { t } = useTranslation("stats");
   const fenetres = useWindowOptions();
   const [days, setDays] = useState<string>("");
+  const opposition = useTeamOpposition(teamId, days);
 
   return (
     <Stack spacing={3}>
@@ -30,8 +33,14 @@ export function StrategyPanel({ teamId }: StrategyPanelProps) {
       </Stack>
       <Stack spacing={2}>
         <Text variant="section">{t("strategy.opposition")}</Text>
-        <OppositionPanel teamId={teamId} days={days} />
+        <OppositionPanel {...opposition} />
       </Stack>
+      {opposition.dto?.state === "STATISTIQUES_CONNUES" && (
+        <Stack spacing={2}>
+          <Text variant="section">{t("strategy.early")}</Text>
+          <TeamEarlyGame early={opposition.dto.early} />
+        </Stack>
+      )}
     </Stack>
   );
 }

@@ -289,8 +289,13 @@ qu'à l'enregistrement.
   retenu dans Joueurs prend la même vue que Mes stats. À plusieurs, chaque joueur est une colonne
   d'`AlignedColumns` (subgrid) : `playerColumn` rend toujours les mêmes sections dans le même ordre,
   c'est ce qui aligne les rangées d'une colonne à l'autre.
-- **Les bornes du radar sont locales** : 5e et 95e percentiles des joueurs croisés dans nos parties
-  (au moins dix parties sur la Faille), servies par le cœur avec les stats. L'écran le dit.
+- **Le radar se lit contre un référentiel choisi** : l'équipe (min et max des membres, sur la période du
+  tableau de bord), les adversaires directs ou le palier — ces deux-là au poste le plus joué, en 5e et
+  95e percentiles de joueurs collectés. Un référentiel de moins de dix joueurs est absent, et l'écran dit
+  pourquoi. Plusieurs colonnes partagent le même référentiel.
+- **Le début de partie se dit depuis notre camp** : un gank de leur jungler qui tue chez nous est rouge,
+  le même par le nôtre est vert. Les ganks sans kill ne sont vus qu'à l'image de chaque minute :
+  l'écran le dit, ils sont sous-comptés.
 
 ## Mon profil et le compte Riot
 

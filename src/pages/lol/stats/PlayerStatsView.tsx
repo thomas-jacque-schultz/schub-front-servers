@@ -12,13 +12,12 @@ import {
   TrendChart,
 } from "../../../design-system";
 import { useLocaleFormat } from "../../../i18n/format";
-import type { MyStatsDto, MetricScaleDto, StatLineDto, TeamComparisonDto } from "../../../types/stats";
+import type { MyStatsDto, StatLineDto, TeamComparisonDto } from "../../../types/stats";
 import { ChampionChoice } from "./ChampionChoice";
 import { championsAffiches } from "./champions";
 import { ChampionStatCard } from "./ChampionStatCard";
 import { useMetrics } from "./metrics";
 import { PlayerRadar } from "./PlayerRadar";
-import { rangDeReference } from "./rank";
 import { RankedStandings } from "./RankedStandings";
 import { StatsStateNote } from "./StatsStateNote";
 import { useStatsFormat } from "./statsFormat";
@@ -28,16 +27,17 @@ const CHAMPIONS_PLEINE_LARGEUR = 6;
 /** Ce que Mes stats et un joueur d'équipe ont en commun. */
 export type PlayerStatsData = Pick<
   MyStatsDto,
-  "state" | "coverage" | "overall" | "champions" | "positions" | "queues" | "months" | "rankings" | "radar"
+  "state" | "coverage" | "overall" | "champions" | "positions" | "queues" | "months" | "rankings" | "references"
 >;
 
 export interface PlayerStatsViewProps {
   data: PlayerStatsData;
-  scale: MetricScaleDto | null;
   versusTeammates?: TeamComparisonDto | null;
+  /** Les lignes des joueurs de l'équipe : ouvrent le référentiel d'équipe du radar. */
+  teamLines?: StatLineDto[];
 }
 
-export function PlayerStatsView({ data, scale, versusTeammates }: PlayerStatsViewProps) {
+export function PlayerStatsView({ data, versusTeammates, teamLines }: PlayerStatsViewProps) {
   const { t } = useTranslation("stats");
   const format = useStatsFormat();
   const { formatMonth } = useLocaleFormat();
@@ -65,7 +65,12 @@ export function PlayerStatsView({ data, scale, versusTeammates }: PlayerStatsVie
 
       <Columns minWidth={320}>
         <Card title={t("radar.title")} description={t("radar.helper")}>
-          <PlayerRadar radar={data.radar} scale={scale} rank={rangDeReference(data.rankings)} />
+          <PlayerRadar
+            overall={overall}
+            positions={data.positions}
+            references={data.references}
+            teamLines={teamLines}
+          />
         </Card>
         <Stack spacing={2}>
           <Card title={t("section.rankings")}>
