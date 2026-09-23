@@ -21,6 +21,7 @@ import type {
   TeamGamePlayerDto,
 } from "../../../types/stats";
 import { GameReviews } from "../reviews/GameReviews";
+import { EarlyGameView } from "./EarlyGameView";
 import { useRankGap, useRankLabel } from "./rank";
 import { useStatsFormat } from "./statsFormat";
 
@@ -32,6 +33,8 @@ export interface GameDetailDialogProps {
 }
 
 const QUINZE = 15;
+// En deçà de 500 pièces d'or d'écart à 15 minutes, le couloir est tenu pour égal.
+const SEUIL_OR = 500;
 
 export function GameDetailDialog({ teamId, game, avatars, onClose }: GameDetailDialogProps) {
   const { t } = useTranslation("stats");
@@ -76,6 +79,22 @@ export function GameDetailDialog({ teamId, game, avatars, onClose }: GameDetailD
         {error && <Alert severity="error">{error}</Alert>}
         {!detail && !error && <ProgressBar label={t("loading")} />}
         {detail && <FaceAFace detail={detail} avatars={avatars} />}
+        {detail?.early && (
+          <>
+            <Divider />
+            <EarlyGameView
+              early={detail.early}
+              names={Object.fromEntries(
+                detail.game.players.flatMap((membre) =>
+                  membre.memberId && membre.displayName ? [[membre.memberId, membre.displayName]] : [],
+                ),
+              )}
+            />
+          </>
+        )}
+        {detail && detail.timelineAvailable && !detail.early && (
+          <Alert severity="info">{t("early.noAnalysis")}</Alert>
+        )}
         {game && (
           <>
             <Divider />
@@ -151,24 +170,21 @@ function FaceAFace({
     if (!nous || !eux) {
       return <Text tone="disabled">{format.absent}</Text>;
     }
-    const ecart = (valeur: number) => (valeur > 0 ? "success" : valeur < 0 ? "error" : "neutral");
     const or = nous.gold - eux.gold;
     const cs = nous.cs - eux.cs;
+    const verdict = or >= SEUIL_OR ? "won" : or <= -SEUIL_OR ? "lost" : "even";
     return (
       <Stack spacing={0.25}>
-        <Stack direction="row" spacing={0.5} wrap>
+        <Stack direction="row" spacing={0.75} align="center" wrap>
           <Chip
-            label={`${t("detail.goldDiff")} ${signe(or)}`}
-            tone={ecart(or)}
+            label={t(`detail.lane.${verdict}`)}
+            tone={verdict === "won" ? "success" : verdict === "lost" ? "error" : "neutral"}
             variant="outline"
             size="small"
           />
-          <Chip
-            label={`${t("detail.csDiff")} ${signe(cs)}`}
-            tone={ecart(cs)}
-            variant="outline"
-            size="small"
-          />
+          <Text variant="caption" mono>
+            {`${t("detail.goldDiff")} ${signe(or)} · ${t("detail.csDiff")} ${signe(cs)}`}
+          </Text>
         </Stack>
         <Text variant="caption" tone="secondary" mono>
           {`${t("detail.kdaAt15")} ${nous.kills}/${nous.deaths}/${nous.assists} – ${eux.kills}/${eux.deaths}/${eux.assists}`}

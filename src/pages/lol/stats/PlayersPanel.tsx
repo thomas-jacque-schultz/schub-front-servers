@@ -15,6 +15,8 @@ import type { TeamPlayersStatsDto } from "../../../types/stats";
 import { playerColumn } from "./playerColumn";
 import { PlayerHeader } from "./PlayerStatsColumn";
 import { PlayerStatsView } from "./PlayerStatsView";
+import { RadarReferenceSelector } from "./PlayerRadar";
+import { type RadarReference, referenceParDefaut } from "./radar";
 import { useWindowOptions } from "./windows";
 
 export interface PlayersPanelProps {
@@ -31,6 +33,7 @@ export function PlayersPanel({ teamId }: PlayersPanelProps) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
   const [choisis, setChoisis] = useState<string[]>([]);
+  const [referentiel, setReferentiel] = useState<RadarReference | null>(null);
 
   const load = useCallback(async () => {
     setIsLoading(true);
@@ -63,6 +66,11 @@ export function PlayersPanel({ teamId }: PlayersPanelProps) {
   const joueurs = stats?.players ?? [];
   const visibles =
     choisis.length === 0 ? joueurs : joueurs.filter((player) => choisis.includes(player.memberId));
+  const lignesEquipe = joueurs.flatMap((player) =>
+    player.state === "STATISTIQUES_CONNUES" && player.overall ? [player.overall] : [],
+  );
+  const reference = referentiel ?? referenceParDefaut(lignesEquipe);
+  const radars = visibles.length > 1 && visibles.length <= RADAR_JUSQU_A;
 
   return (
     <Stack spacing={2}>
@@ -115,22 +123,32 @@ export function PlayersPanel({ teamId }: PlayersPanelProps) {
           </Card>
           <PlayerStatsView
             data={visibles[0]}
-            scale={stats?.scale ?? null}
             versusTeammates={visibles[0].versusTeammates}
+            teamLines={lignesEquipe}
           />
         </Stack>
       ) : (
-        <AlignedColumns
+        <Stack spacing={1.5}>
+          {radars && (
+            <RadarReferenceSelector
+              value={reference}
+              onChange={(valeur) => setReferentiel(valeur as RadarReference)}
+              teamAvailable={lignesEquipe.length >= 2}
+            />
+          )}
+          <AlignedColumns
           minWidth={220}
           count={Math.max(1, Math.min(6, visibles.length))}
           columns={visibles.map((player) =>
             playerColumn(player, {
               isViewer: player.memberId === stats?.viewerMemberId,
-              scale: stats?.scale ?? null,
-              showRadar: visibles.length <= RADAR_JUSQU_A,
+              showRadar: radars,
+              teamLines: lignesEquipe,
+              reference,
             }),
           )}
-        />
+          />
+        </Stack>
       )}
     </Stack>
   );
