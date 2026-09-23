@@ -15,7 +15,9 @@ export type MetricKey =
   | "goldPerMinute"
   | "damagePerMinute"
   | "damageTakenPerMinute"
-  | "visionPerMinute";
+  | "visionPerMinute"
+  | "killParticipation"
+  | "deathShare";
 
 type Deltas = Pick<
   TeamComparisonDto,
@@ -36,7 +38,7 @@ interface MetricDefinition {
   delta: (value: number | null | undefined) => string | null;
   deltaOf: (comparison: Deltas) => number | null;
   /** Les dégâts subis n'ont pas de bon sens : un tank en encaisse, c'est son rôle. */
-  polarity: "higher" | "neutral";
+  polarity: "higher" | "lower" | "neutral";
 }
 
 export const KPI_ORDER: MetricKey[] = [
@@ -122,6 +124,24 @@ export const useMetrics = () => {
         deltaOf: (c) => c.visionPerMinuteDelta,
         polarity: "higher",
       },
+      killParticipation: {
+        key: "killParticipation",
+        label: t("metric.kp"),
+        short: t("metricShort.kp"),
+        format: format.taux,
+        delta: format.ecartEnPoints,
+        deltaOf: () => null,
+        polarity: "higher",
+      },
+      deathShare: {
+        key: "deathShare",
+        label: t("metric.dp"),
+        short: t("metricShort.dp"),
+        format: format.taux,
+        delta: format.ecartEnPoints,
+        deltaOf: () => null,
+        polarity: "lower",
+      },
     };
 
     /** Une rangée de tuiles dans l'ordre du catalogue, avec l'écart aux coéquipiers s'il existe. */
@@ -145,7 +165,10 @@ export const useMetrics = () => {
                 })
               : undefined,
           delta: metric.delta(ecart) ?? undefined,
-          deltaTone: metric.polarity === "neutral" ? "neutral" : format.tonDeLEcart(ecart),
+          deltaTone:
+            metric.polarity === "neutral"
+              ? "neutral"
+              : format.tonDeLEcart(metric.polarity === "lower" && ecart !== null ? -ecart : ecart),
         };
       });
 
