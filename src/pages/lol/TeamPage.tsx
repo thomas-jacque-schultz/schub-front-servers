@@ -17,12 +17,13 @@ import {
 import { useLocalizedNavigate } from "../../i18n/navigation";
 import type { TeamDto } from "../../types/team";
 import { PoolPanel } from "./pool/PoolPanel";
+import { OppositionPanel } from "./stats/OppositionPanel";
 import { PlayersPanel } from "./stats/PlayersPanel";
 import { TeamGamesPanel } from "./stats/TeamGamesPanel";
 import { DraftPanel } from "./DraftPanel";
 import { RosterPanel } from "./RosterPanel";
 
-type PanelKey = "roster" | "players" | "team" | "pool" | "draft";
+type PanelKey = "roster" | "players" | "team" | "opposition" | "pool" | "draft";
 
 function TeamPage() {
   const { t } = useTranslation("teams");
@@ -121,6 +122,7 @@ function TeamPage() {
     { key: "roster", label: t("tabs.roster") },
     { key: "players", label: t("tabs.players") },
     { key: "team", label: t("tabs.team") },
+    { key: "opposition", label: t("opposition.tab", { ns: "stats" }) },
     { key: "pool", label: t("tabs.pool") },
     { key: "draft", label: t("tabs.draft") },
   ];
@@ -174,7 +176,13 @@ function TeamPage() {
           <RosterPanel team={team} onTeamChange={setTeam} />
         )}
         {panel === "players" && <PlayersPanel teamId={team.id} />}
-        {panel === "team" && <TeamGamesPanel teamId={team.id} />}
+        {panel === "team" && (
+          <TeamGamesPanel
+            teamId={team.id}
+            avatars={Object.fromEntries(team.members.map((member) => [member.memberId, member.avatarUrl]))}
+          />
+        )}
+        {panel === "opposition" && <OppositionPanel teamId={team.id} />}
         {panel === "pool" && <PoolPanel teamId={team.id} />}
         {panel === "draft" && <DraftPanel team={team} />}
       </Tabs>

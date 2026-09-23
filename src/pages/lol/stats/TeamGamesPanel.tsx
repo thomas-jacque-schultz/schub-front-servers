@@ -3,13 +3,8 @@ import { useTranslation } from "react-i18next";
 import { getTeamGamesStatsApi } from "../../../api/statsApi";
 import {
   Alert,
-  Button,
   Card,
-  ChampionIcon,
-  Chip,
   Columns,
-  DataTable,
-  type DataTableColumn,
   MeterBar,
   ProgressBar,
   SelectField,
@@ -17,26 +12,26 @@ import {
   StatTile,
   Text,
 } from "../../../design-system";
-import { useLocaleFormat } from "../../../i18n/format";
 import type {
   TeamGameDto,
   TeamGamesStatsDto,
   TeamRecordDto,
 } from "../../../types/stats";
-import { GameReviewDialog } from "../reviews/GameReviewDialog";
+import { GameDetailDialog } from "./GameDetailDialog";
+import { TeamGameRow } from "./TeamGameRow";
 import { StatsStateNote } from "./StatsStateNote";
 import { useStatsFormat } from "./statsFormat";
 import { useWindowOptions } from "./windows";
 
 export interface TeamGamesPanelProps {
   teamId: string;
+  /** Les avatars de l'effectif, par place : une partie ne les porte pas. */
+  avatars: Record<string, string | null>;
 }
 
-export function TeamGamesPanel({ teamId }: TeamGamesPanelProps) {
+export function TeamGamesPanel({ teamId, avatars }: TeamGamesPanelProps) {
   const { t } = useTranslation("stats");
-  const { t: tReviews } = useTranslation("reviews");
   const format = useStatsFormat();
-  const { formatDate } = useLocaleFormat();
   const fenetres = useWindowOptions();
   const [days, setDays] = useState<string>("");
   const [stats, setStats] = useState<TeamGamesStatsDto | null>(null);
@@ -73,102 +68,6 @@ export function TeamGamesPanel({ teamId }: TeamGamesPanelProps) {
   if (!stats) {
     return null;
   }
-
-  const colonnes: Array<DataTableColumn<TeamGameDto>> = [
-    {
-      key: "date",
-      header: t("games.date"),
-      width: 110,
-      render: (game) =>
-        game.startedAt ? formatDate(new Date(game.startedAt)) : format.absent,
-    },
-    {
-      key: "result",
-      header: t("games.result"),
-      width: 90,
-      render: (game) =>
-        game.win === null ? (
-          <Chip label={t("games.split")} variant="outline" size="small" />
-        ) : (
-          <Chip
-            label={game.win ? t("games.win") : t("games.loss")}
-            tone={game.win ? "success" : "neutral"}
-            size="small"
-          />
-        ),
-    },
-    {
-      key: "queue",
-      header: t("games.queue"),
-      width: 120,
-      render: (game) => format.file(game.queue),
-    },
-    {
-      key: "present",
-      header: t("games.present"),
-      align: "right",
-      width: 80,
-      render: (game) => t("games.presentCount", { count: game.presentPlayers }),
-    },
-    {
-      key: "duration",
-      header: t("games.duration"),
-      align: "right",
-      width: 80,
-      render: (game) => format.duree(game.durationSeconds),
-    },
-    {
-      key: "side",
-      header: t("games.side"),
-      width: 80,
-      render: (game) =>
-        game.players.length > 0
-          ? format.cote(game.players[0].side)
-          : format.absent,
-    },
-    {
-      key: "champions",
-      header: t("games.champions"),
-      width: 320,
-      render: (game) => (
-        <Stack direction="row" spacing={0.75} wrap>
-          {game.players.map((player) => (
-            <Stack
-              key={`${game.matchId}-${player.memberId ?? player.championId}`}
-              spacing={0.25}
-              align="center"
-            >
-              <ChampionIcon
-                src={player.iconUrl}
-                name={player.championName ?? String(player.championId)}
-                size="small"
-              />
-              <Text variant="caption" tone="secondary">
-                {`${player.kills}/${player.deaths}/${player.assists}`}
-              </Text>
-            </Stack>
-          ))}
-        </Stack>
-      ),
-    },
-    {
-      key: "patch",
-      header: t("games.patch"),
-      width: 90,
-      render: (game) => game.patch ?? format.absent,
-    },
-    {
-      key: "review",
-      header: tReviews("action"),
-      align: "right",
-      width: 110,
-      render: (game) => (
-        <Button variant="ghost" size="small" onClick={() => setReviewed(game)}>
-          {tReviews("action")}
-        </Button>
-      ),
-    },
-  ];
 
   return (
     <Stack spacing={2}>
@@ -298,25 +197,25 @@ export function TeamGamesPanel({ teamId }: TeamGamesPanelProps) {
             </Stack>
           </Card>
 
-          <Card title={t("section.games")} disablePadding>
-            <DataTable
-              columns={colonnes}
-              rows={stats.games}
-              rowKey={(game) => game.matchId}
-              caption={t("section.games")}
-              emptyTitle={t("state.AUCUNE_PARTIE.title")}
-              emptyDescription={t("state.AUCUNE_PARTIE.description")}
-              dense
-              layout="fixed"
-              minWidth={1080}
-            />
+          <Card title={t("section.games")}>
+            <Stack spacing={1}>
+              {stats.games.map((game) => (
+                <TeamGameRow
+                  key={game.matchId}
+                  game={game}
+                  avatars={avatars}
+                  onOpen={() => setReviewed(game)}
+                />
+              ))}
+            </Stack>
           </Card>
         </>
       )}
 
-      <GameReviewDialog
+      <GameDetailDialog
         teamId={teamId}
         game={reviewed}
+        avatars={avatars}
         onClose={() => setReviewed(null)}
       />
     </Stack>
