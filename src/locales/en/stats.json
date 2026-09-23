@@ -47,7 +47,9 @@
     "vision": "Vision per minute",
     "dpm": "Damage per minute",
     "damageTaken": "Damage taken per minute",
-    "games": "Games"
+    "games": "Games",
+    "kp": "Kill participation",
+    "dp": "Share of team deaths"
   },
   "delta": {
     "points": "{{value}} pts",
@@ -200,7 +202,9 @@
     "damageTaken": "Taken/min",
     "vision": "Vision/min",
     "rank": "Rank",
-    "games": "Games"
+    "games": "Games",
+    "kp": "KP",
+    "dp": "DP"
   },
   "radar": {
     "title": "Profile",
@@ -249,7 +253,8 @@
     "noMatchups": "Members on both sides: no matchups.",
     "loadFailed": "The game details could not be loaded.",
     "close": "Close",
-    "shortGame": "Game over before 15 minutes: there is no 15-minute lane state."
+    "shortGame": "Game over before 15 minutes: there is no 15-minute lane state.",
+    "ganksSuffered": "Ganks suffered {{ally}} – {{enemy}}"
   },
   "opposition": {
     "tab": "Opponent level",
