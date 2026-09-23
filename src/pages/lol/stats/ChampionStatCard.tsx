@@ -28,24 +28,19 @@ export function ChampionStatCard({ line, compact = false }: ChampionStatCardProp
           <Stack spacing={0} fullWidth>
             <Text variant="subtitle">{nom}</Text>
             <Text variant="caption" tone="secondary">
-              {t("coverage.gamesShort", { count: line.games })}
+              {ecart
+                ? `${t("coverage.gamesShort", { count: line.games })} · ${ecart}`
+                : t("coverage.gamesShort", { count: line.games })}
             </Text>
           </Stack>
-          <Stack spacing={0} align="end">
-            <Text variant="subtitle" mono>
-              {format.taux(line.winRate)}
-            </Text>
-            {ecart && (
-              <Text variant="caption" tone="secondary" mono>
-                {ecart}
-              </Text>
-            )}
-          </Stack>
+          <Text variant="subtitle" mono>
+            {format.taux(line.winRate)}
+          </Text>
         </Stack>
         <StatGrid
           items={tuiles(line, { compact: true, keys: compact ? COMPACT : undefined })}
           size="small"
-          minWidth={compact ? 64 : 78}
+          minWidth={compact ? 52 : 78}
           divided
         />
       </Stack>

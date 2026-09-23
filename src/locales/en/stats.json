@@ -248,7 +248,8 @@
     "noTimeline": "Timeline being collected: the 15-minute numbers will come with it.",
     "noMatchups": "Members on both sides: no matchups.",
     "loadFailed": "The game details could not be loaded.",
-    "close": "Close"
+    "close": "Close",
+    "shortGame": "Game over before 15 minutes: there is no 15-minute lane state."
   },
   "opposition": {
     "tab": "Opponent level",

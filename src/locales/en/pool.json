@@ -31,7 +31,7 @@
     "neverPicked": "No player of this position has played it",
     "outOfCatalog": "Not in this patch's catalogue",
     "lastPlayed": "Played on {{date}}",
-    "line": "Lvl {{level}} · {{points}} pts · {{winRate}}",
+    "line": "Lvl {{level}} · {{points}} · {{winRate}}",
     "more": "+{{count}}",
     "winRateDetail": "{{rate}} over {{count}} game(s)"
   },
@@ -57,7 +57,8 @@
     "viewer": "You",
     "substitute": "Substitute",
     "free": "No Schub account",
-    "observedAt": "Masteries read on {{date}}"
+    "observedAt": "Masteries read on {{date}}",
+    "substituteShort": "sub"
   },
   "state": {
     "COMPTE_RIOT_ABSENT": {

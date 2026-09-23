@@ -1,6 +1,5 @@
 import { useTranslation } from "react-i18next";
 import { Avatar, Card, ChampionIcon, Chip, Stack, Text, Tooltip } from "../../../design-system";
-import { useLocaleFormat } from "../../../i18n/format";
 import type { ChampionPoolEntryDto, ChampionPoolMemberDto } from "../../../types/pool";
 import { useStatsFormat } from "../stats/statsFormat";
 
@@ -11,11 +10,10 @@ export interface PoolChampionCardProps {
 
 const JOUEURS_VISIBLES = 3;
 // En-tête + trois lignes joueur : toutes les cartes d'une colonne font la même hauteur.
-const HAUTEUR = 204;
+const HAUTEUR = 236;
 
 export function PoolChampionCard({ champion, viewerMemberId }: PoolChampionCardProps) {
   const { t } = useTranslation("pool");
-  const { formatNumber } = useLocaleFormat();
   const format = useStatsFormat();
 
   const nom = champion.name ?? champion.championKey;
@@ -25,7 +23,7 @@ export function PoolChampionCard({ champion, viewerMemberId }: PoolChampionCardP
   const ligne = (joueur: ChampionPoolMemberDto) =>
     t("champion.line", {
       level: joueur.masteryLevel ?? format.absent,
-      points: formatNumber(joueur.masteryPoints ?? 0),
+      points: format.compact(joueur.masteryPoints ?? 0),
       winRate: format.taux(joueur.winRate),
     });
 
@@ -64,6 +62,7 @@ export function PoolChampionCard({ champion, viewerMemberId }: PoolChampionCardP
                   <Text variant="body" truncate>
                     {joueur.displayName ?? joueur.riotGameName}
                     {joueur.memberId === viewerMemberId ? ` (${t("member.viewer")})` : ""}
+                    {joueur.status === "REMPLACANT" ? ` · ${t("member.substituteShort")}` : ""}
                   </Text>
                   <Tooltip
                     title={
@@ -80,9 +79,6 @@ export function PoolChampionCard({ champion, viewerMemberId }: PoolChampionCardP
                     </Text>
                   </Tooltip>
                 </Stack>
-                {joueur.status === "REMPLACANT" && (
-                  <Chip label={t("member.substitute")} variant="outline" size="small" />
-                )}
               </Stack>
             ))}
           </Stack>
