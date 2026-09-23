@@ -9,14 +9,23 @@ export interface CardProps {
   description?: ReactNode;
   actions?: ReactNode;
   disablePadding?: boolean;
+  /** Hauteur minimale, pour qu'une grille de cartes voisines se lise ligne à ligne. */
+  minHeight?: number;
   children?: ReactNode;
 }
 
-export function Card({ title, description, actions, disablePadding = false, children }: CardProps) {
+export function Card({
+  title,
+  description,
+  actions,
+  disablePadding = false,
+  minHeight,
+  children,
+}: CardProps) {
   const hasHeader = Boolean(title || description || actions);
 
   return (
-    <MuiCard>
+    <MuiCard sx={minHeight ? { minHeight } : undefined}>
       <CardContent sx={disablePadding ? { p: 0, "&:last-child": { pb: 0 } } : undefined}>
         <Stack spacing={2}>
           {hasHeader && (
