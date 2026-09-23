@@ -231,7 +231,7 @@
   },
   "players": {
     "filter": "Players shown",
-    "filterHint": "Click an avatar to keep only some players.",
+    "filterHint": "Click an avatar to keep only some players. A single player is shown in full, like My stats.",
     "radarHint": "Pick {{count}} players at most to see their radar profiles side by side."
   },
   "rankGap": {
@@ -262,7 +262,7 @@
     "ganksSucceeded": "Successful ganks {{count}}"
   },
   "opposition": {
-    "tab": "Opponent level",
+    "tab": "Strategy",
     "title": "How far the team wins",
     "intro": "Win rate by opponent level. Ranks are those observed at collection: for an old game, that is today's rank.",
     "coverage": "{{withRanks}} of {{games}} game(s) have ranks; median observation {{lag}} day(s) after the game.",
@@ -299,5 +299,9 @@
     "done_other": "New games requested for {{count}} players: they will appear as collection proceeds.",
     "tooSoon": "An update was just requested: try again in a few minutes.",
     "failed": "The update failed"
+  },
+  "strategy": {
+    "summary": "Team record",
+    "opposition": "Opponent level"
   }
 }

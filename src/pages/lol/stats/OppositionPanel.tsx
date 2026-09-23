@@ -10,7 +10,6 @@ import {
   type DataTableColumn,
   MeterBar,
   ProgressBar,
-  SelectField,
   Stack,
   StatTile,
   Text,
@@ -19,19 +18,17 @@ import type { PositionOppositionDto, TeamOppositionDto, TeamRecordDto } from "..
 import { useRankGap } from "./rank";
 import { StatsStateNote } from "./StatsStateNote";
 import { useStatsFormat } from "./statsFormat";
-import { useWindowOptions } from "./windows";
 
 export interface OppositionPanelProps {
   teamId: string;
+  days: string;
 }
 
 /** Le niveau adverse : où l'équipe gagne encore, et où elle bute. */
-export function OppositionPanel({ teamId }: OppositionPanelProps) {
+export function OppositionPanel({ teamId, days }: OppositionPanelProps) {
   const { t } = useTranslation("stats");
   const format = useStatsFormat();
   const ecart = useRankGap();
-  const fenetres = useWindowOptions();
-  const [days, setDays] = useState<string>("");
   const [dto, setDto] = useState<TeamOppositionDto | null>(null);
   const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -141,18 +138,9 @@ export function OppositionPanel({ teamId }: OppositionPanelProps) {
 
   return (
     <Stack spacing={2}>
-      <Stack direction="row" spacing={2} align="center" wrap>
-        <SelectField
-          label={t("window.label")}
-          value={days}
-          onChange={setDays}
-          options={fenetres}
-          helperText={t("window.helper")}
-        />
-        <Text variant="caption" tone="secondary">
-          {t("opposition.intro")}
-        </Text>
-      </Stack>
+      <Text variant="caption" tone="secondary">
+        {t("opposition.intro")}
+      </Text>
 
       {error && <Alert severity="warning">{error}</Alert>}
 
