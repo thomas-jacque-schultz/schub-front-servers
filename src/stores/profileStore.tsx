@@ -5,6 +5,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import { getProfileApi } from "../api/profileApi";
@@ -21,7 +22,9 @@ interface ProfileStoreValue {
   ingestInFlight: boolean;
 }
 
-const ProfileStoreContext = createContext<ProfileStoreValue | undefined>(undefined);
+const ProfileStoreContext = createContext<ProfileStoreValue | undefined>(
+  undefined,
+);
 
 export const ProfileStoreProvider = ({ children }: { children: ReactNode }) => {
   const { connected } = useAuthStore();
@@ -30,22 +33,34 @@ export const ProfileStoreProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
+  // Rechargé toutes les 30 s pendant une collecte : une erreur passagère garde le profil connu, et une
+  // réponse dépassée par une plus récente est jetée.
+  const derniere = useRef(0);
   const reload = useCallback(async () => {
+    const numero = ++derniere.current;
     setIsLoading(true);
     setError("");
     try {
-      setProfileState(await getProfileApi());
+      const lu = await getProfileApi();
+      if (numero === derniere.current) {
+        setProfileState(lu);
+      }
     } catch (loadError) {
-      setError(loadError instanceof Error ? loadError.message : "");
-      setProfileState(null);
+      if (numero === derniere.current) {
+        setError(loadError instanceof Error ? loadError.message : "");
+      }
     } finally {
-      setIsLoading(false);
+      if (numero === derniere.current) {
+        setIsLoading(false);
+      }
     }
   }, []);
 
   useEffect(() => {
     if (!connected) {
+      derniere.current++;
       setProfileState(null);
+      setIsLoading(false);
       setError("");
       return;
     }
@@ -59,15 +74,28 @@ export const ProfileStoreProvider = ({ children }: { children: ReactNode }) => {
   const riotLinked = profile?.riot.state === "RESOLU";
 
   const ingestInFlight = Boolean(
-    profile?.riot.ingest && (profile.riot.ingest.running > 0 || profile.riot.ingest.pending > 0),
+    profile?.riot.ingest &&
+    (profile.riot.ingest.running > 0 || profile.riot.ingest.pending > 0),
   );
 
   const value = useMemo<ProfileStoreValue>(
-    () => ({ profile, isLoading, error, reload, setProfile, riotLinked, ingestInFlight }),
+    () => ({
+      profile,
+      isLoading,
+      error,
+      reload,
+      setProfile,
+      riotLinked,
+      ingestInFlight,
+    }),
     [profile, isLoading, error, reload, setProfile, riotLinked, ingestInFlight],
   );
 
-  return <ProfileStoreContext.Provider value={value}>{children}</ProfileStoreContext.Provider>;
+  return (
+    <ProfileStoreContext.Provider value={value}>
+      {children}
+    </ProfileStoreContext.Provider>
+  );
 };
 
 export const useProfileStore = (): ProfileStoreValue => {

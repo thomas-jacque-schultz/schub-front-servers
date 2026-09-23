@@ -126,7 +126,6 @@
     "side": "Side",
     "champions": "Champions",
     "patch": "Patch",
-    "detail": "Details",
     "ours": "Us",
     "theirs": "Them",
     "solo": "Solo",
@@ -135,7 +134,8 @@
     "ranksObserved": "Ranks observed on {{date}} — Riot only serves the current rank.",
     "enemies": "Opponents",
     "outsider": "Not in roster",
-    "rankHint": "Average of ranked players ({{count}}); unranked players are not counted."
+    "rankHint": "Average of ranked players ({{count}}); unranked players are not counted.",
+    "accordionHelper": "Click a game to expand it, then a player for their numbers in that game."
   },
   "player": {
     "unnamed": "Unnamed player",
@@ -298,7 +298,6 @@
     "even": "Same level"
   },
   "detail": {
-    "title": "Game of {{date}}",
     "matchups": "Lane matchups",
     "matchupsHelper": "Our player against their counterpart. Rank gap in divisions (solo, else flex), and the lane state at 15 minutes.",
     "position": "Position",
@@ -320,7 +319,9 @@
       "won": "Lane won",
       "even": "Lane even",
       "lost": "Lane lost"
-    }
+    },
+    "playerHint": "Click a player: their numbers in this game, their average and the rank they match.",
+    "openPlayer": "Open {{player}}'s numbers for this game"
   },
   "opposition": {
     "tab": "Strategy",
@@ -484,5 +485,28 @@
       "ganksDecisive": "Decisive ganks made",
       "ganksConceded": "Decisive ganks conceded"
     }
+  },
+  "tabs": {
+    "ariaLabel": "My stats sections",
+    "overview": "Overview",
+    "history": "History"
+  },
+  "history": {
+    "title": "My games",
+    "helper": "All queues, most recent first. A game's ranks and timeline are collected when you open it.",
+    "truncated": "The {{count}} most recent games out of {{total}} in the period."
+  },
+  "playerGame": {
+    "title": "{{player}} in this game",
+    "game": "Game",
+    "average": "Average",
+    "rank": "Rank",
+    "averageBasis_one": "Average over {{count}} game as {{position}}, over the selected period.",
+    "averageBasis_other": "Average over {{count}} games as {{position}}, over the selected period.",
+    "noAverage": "No average: no Summoner's Rift game at this position over the period.",
+    "tier": "Rank held at the time of the game: {{tier}}.",
+    "tierEstimated": "Rank estimated from the game's lobby: {{tier}}.",
+    "noMetrics": "This game's numbers are not computed yet.",
+    "rankHelper": "Rank: the tier the game value matches on the ladder scale, among ranked games at the same position. A dash: not enough games per tier yet to tell."
   }
 }

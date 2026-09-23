@@ -2,6 +2,7 @@ import { requestJson } from "./httpClient";
 import type {
   ChampionGridDto,
   MyStatsDto,
+  MyGamesDto,
   ReferenceGridDto,
   ReferenceScope,
   StatsRefreshDto,
@@ -51,12 +52,27 @@ export const getMyStatsApi = async (
 export const getTeamGameDetailApi = async (
   teamId: string,
   matchId: string,
+  periode?: StatsWindow | null,
 ): Promise<TeamGameDetailDto> =>
   requestJson<TeamGameDetailDto>(
-    `/teams/${teamId}/stats/games/${encodeURIComponent(matchId)}`,
-    {
-      method: "GET",
-    },
+    `/teams/${teamId}/stats/games/${encodeURIComponent(matchId)}${fenetre(periode)}`,
+    { method: "GET" },
+  );
+
+export const getMyGamesApi = async (
+  periode?: StatsWindow | null,
+): Promise<MyGamesDto> =>
+  requestJson<MyGamesDto>(`/me/stats/games${fenetre(periode)}`, {
+    method: "GET",
+  });
+
+export const getMyGameDetailApi = async (
+  matchId: string,
+  periode?: StatsWindow | null,
+): Promise<TeamGameDetailDto> =>
+  requestJson<TeamGameDetailDto>(
+    `/me/stats/games/${encodeURIComponent(matchId)}${fenetre(periode)}`,
+    { method: "GET" },
   );
 
 export const getTeamOppositionApi = async (

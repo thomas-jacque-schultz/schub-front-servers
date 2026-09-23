@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
-import { Text, Tooltip } from "../../../design-system";
+import { Stack, Text, Tooltip } from "../../../design-system";
 import { EMBLEMES } from "./emblems";
 import type { Grade } from "./grading";
-import { useStatsFormat } from "./statsFormat";
+import { useGradeTitle } from "./gradeTitle";
 
 export interface LevelCrestProps {
   grade: Grade;
@@ -20,33 +20,11 @@ export function LevelCrest({
   scope,
 }: LevelCrestProps) {
   const { t } = useTranslation("stats");
-  const format = useStatsFormat();
-  const poste = format.poste(position);
+  const titre = useGradeTitle()(grade, position, patches, scope);
   const palier = (tier: string) => t(`tier.${tier}`, { defaultValue: tier });
 
-  const phrases = [
-    grade.level && grade.ladder !== null
-      ? t("grade.level", {
-          tier: palier(grade.level),
-          ladder: format.taux(grade.ladder),
-          position: poste,
-        })
-      : t("grade.noLadder"),
-    grade.inTier !== null && grade.tier
-      ? t(scope === "GAME" ? "grade.inTierGame" : "grade.inTier", {
-          rank: Math.round(grade.inTier * 100),
-          tier: palier(grade.tier),
-          position: poste,
-          count: grade.tierCount,
-        })
-      : null,
-    scope === "MEAN"
-      ? t("grade.basis", { position: poste, patches: patches.join(", ") })
-      : null,
-  ].filter(Boolean);
-
   return (
-    <Tooltip title={phrases.join(" ")}>
+    <Tooltip title={titre}>
       {grade.level ? (
         <img
           src={EMBLEMES[grade.level]}
@@ -59,6 +37,29 @@ export function LevelCrest({
           {t("grade.short", { rank: Math.round((grade.inTier ?? 0) * 100) })}
         </Text>
       )}
+    </Tooltip>
+  );
+}
+
+/** L'icône suivie du nom du palier : le rang auquel correspond la valeur, lisible sans survol. */
+export function GradeLabel({
+  grade,
+  position,
+  patches,
+  scope,
+}: LevelCrestProps) {
+  const { t } = useTranslation("stats");
+  const titre = useGradeTitle()(grade, position, patches, scope);
+  if (!grade.level) {
+    return <PercentileMark value={grade.inTier ?? 0} title={titre} />;
+  }
+  const palier = t(`tier.${grade.level}`, { defaultValue: grade.level });
+  return (
+    <Tooltip title={titre}>
+      <Stack direction="row" spacing={0.5} align="center">
+        <img src={EMBLEMES[grade.level]} alt="" width={20} height={15} />
+        <Text variant="caption">{palier}</Text>
+      </Stack>
     </Tooltip>
   );
 }

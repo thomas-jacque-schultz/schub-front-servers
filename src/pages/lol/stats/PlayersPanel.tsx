@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { getTeamPlayersStatsApi } from "../../../api/statsApi";
+import { messageOf, useRequest } from "../../../api/useRequest";
 import {
   AlignedColumns,
   Alert,
@@ -11,7 +12,6 @@ import {
   Stack,
   Text,
 } from "../../../design-system";
-import type { TeamPlayersStatsDto } from "../../../types/stats";
 import { playerColumn } from "./playerColumn";
 import { PlayerHeader } from "./PlayerStatsColumn";
 import { PlayerStatsView } from "./PlayerStatsView";
@@ -29,29 +29,16 @@ export function PlayersPanel({ teamId }: PlayersPanelProps) {
   const { t } = useTranslation("stats");
   const fenetres = useWindowOptions();
   const [periode, setPeriode] = useState<string>("");
-  const [stats, setStats] = useState<TeamPlayersStatsDto | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string>("");
+  const {
+    data: stats,
+    error: echec,
+    isLoading,
+  } = useRequest(`${teamId}/${periode}`, () =>
+    getTeamPlayersStatsApi(teamId, periode),
+  );
+  const error = echec === null ? "" : messageOf(echec, t("loadFailed"));
   const [choisis, setChoisis] = useState<string[]>([]);
   const [referentiel, setReferentiel] = useState<RadarReference | null>(null);
-
-  const load = useCallback(async () => {
-    setIsLoading(true);
-    setError("");
-    try {
-      setStats(await getTeamPlayersStatsApi(teamId, periode));
-    } catch (loadError) {
-      setError(
-        loadError instanceof Error ? loadError.message : t("loadFailed"),
-      );
-    } finally {
-      setIsLoading(false);
-    }
-  }, [teamId, periode, t]);
-
-  useEffect(() => {
-    void load();
-  }, [load]);
 
   if (isLoading && !stats) {
     return <ProgressBar label={t("loading")} />;

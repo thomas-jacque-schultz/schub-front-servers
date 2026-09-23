@@ -11,4 +11,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const AvecJoueur: Story = {};
-export const Adversaire: Story = { args: { playerName: null, size: "small", framed: false, caption: "3/4/2" } };
+export const Adversaire: Story = {
+  args: { playerName: null, size: "small", framed: false, caption: "3/4/2" },
+};
+export const Cliquable: Story = {
+  args: { onClick: () => undefined, ariaLabel: "Ouvrir le détail du joueur" },
+};

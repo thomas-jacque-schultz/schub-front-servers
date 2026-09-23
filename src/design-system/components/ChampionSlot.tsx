@@ -1,6 +1,7 @@
 import Box from "@mui/material/Box";
+import ButtonBase from "@mui/material/ButtonBase";
 import Typography from "@mui/material/Typography";
-import { radii, typographyTokens } from "../tokens";
+import { motion, radii, typographyTokens } from "../tokens";
 import { Avatar } from "./Avatar";
 import { ChampionIcon } from "./ChampionIcon";
 
@@ -14,6 +15,9 @@ export interface ChampionSlotProps {
   caption?: string;
   size?: "small" | "medium";
   framed?: boolean;
+  /** Rend l'emplacement cliquable ; l'étiquette dit ce que le clic ouvre. */
+  onClick?: () => void;
+  ariaLabel?: string;
 }
 
 // Le champion d'abord, le joueur en pastille : c'est le champion qu'on reconnaît d'un coup d'œil.
@@ -25,21 +29,11 @@ export function ChampionSlot({
   caption,
   size = "medium",
   framed = true,
+  onClick,
+  ariaLabel,
 }: ChampionSlotProps) {
-  return (
-    <Box
-      sx={{
-        display: "inline-flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: 0.25,
-        p: framed ? 0.5 : 0,
-        border: framed ? "1px solid" : "none",
-        borderColor: "divider",
-        borderRadius: `${radii.sm}px`,
-        minWidth: size === "small" ? 40 : 56,
-      }}
-    >
+  const contenu = (
+    <>
       <Box sx={{ position: "relative" }}>
         <ChampionIcon src={championIcon} name={championName} size={size} />
         {playerName && (
@@ -52,11 +46,46 @@ export function ChampionSlot({
         <Typography
           variant="caption"
           color="text.secondary"
-          sx={{ fontFamily: typographyTokens.monospaceFontFamily, fontVariantNumeric: "tabular-nums", mt: playerName ? 0.5 : 0 }}
+          sx={{
+            fontFamily: typographyTokens.monospaceFontFamily,
+            fontVariantNumeric: "tabular-nums",
+            mt: playerName ? 0.5 : 0,
+          }}
         >
           {caption}
         </Typography>
       )}
-    </Box>
+    </>
+  );
+  const sx = {
+    display: "inline-flex",
+    flexDirection: "column" as const,
+    alignItems: "center",
+    gap: 0.25,
+    p: framed || onClick ? 0.5 : 0,
+    border: framed ? "1px solid" : "none",
+    borderColor: "divider",
+    borderRadius: `${radii.sm}px`,
+    minWidth: size === "small" ? 40 : 56,
+  };
+
+  if (!onClick) {
+    return <Box sx={sx}>{contenu}</Box>;
+  }
+  return (
+    <ButtonBase
+      onClick={onClick}
+      aria-label={ariaLabel}
+      sx={{
+        ...sx,
+        transition: `border-color ${motion.fast}ms`,
+        "&:hover, &.Mui-focusVisible": {
+          borderColor: "primary.main",
+          bgcolor: "action.hover",
+        },
+      }}
+    >
+      {contenu}
+    </ButtonBase>
   );
 }

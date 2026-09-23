@@ -126,7 +126,6 @@
     "side": "Côté",
     "champions": "Champions",
     "patch": "Patch",
-    "detail": "Détail",
     "ours": "Nous",
     "theirs": "Eux",
     "solo": "Solo",
@@ -135,7 +134,8 @@
     "ranksObserved": "Rangs relevés le {{date}} — Riot ne sert que le rang courant.",
     "enemies": "Adversaires",
     "outsider": "Hors effectif",
-    "rankHint": "Moyenne des joueurs classés ({{count}}) ; un non-classé n'est pas compté."
+    "rankHint": "Moyenne des joueurs classés ({{count}}) ; un non-classé n'est pas compté.",
+    "accordionHelper": "Cliquez sur une partie pour la déplier, puis sur un joueur pour ses chiffres de la partie."
   },
   "player": {
     "unnamed": "Joueur sans nom",
@@ -298,7 +298,6 @@
     "even": "Même niveau"
   },
   "detail": {
-    "title": "Partie du {{date}}",
     "matchups": "Face-à-face par poste",
     "matchupsHelper": "Notre joueur contre son vis-à-vis. Écart de rang en divisions (solo, à défaut flex), et l'état du couloir à 15 minutes.",
     "position": "Poste",
@@ -320,7 +319,9 @@
       "won": "Couloir gagné",
       "even": "Couloir égal",
       "lost": "Couloir perdu"
-    }
+    },
+    "playerHint": "Cliquez sur un joueur : ses chiffres de la partie, sa moyenne et le rang auquel ils correspondent.",
+    "openPlayer": "Ouvrir les chiffres de {{player}} sur cette partie"
   },
   "opposition": {
     "tab": "Stratégie",
@@ -484,5 +485,28 @@
       "ganksDecisive": "Ganks décisifs faits",
       "ganksConceded": "Ganks décisifs subis"
     }
+  },
+  "tabs": {
+    "ariaLabel": "Sections de mes stats",
+    "overview": "Vue d'ensemble",
+    "history": "Historique"
+  },
+  "history": {
+    "title": "Mes parties",
+    "helper": "Toutes files confondues, les plus récentes d'abord. Les rangs et la timeline d'une partie se collectent quand on l'ouvre.",
+    "truncated": "Les {{count}} parties les plus récentes sur {{total}} de la période."
+  },
+  "playerGame": {
+    "title": "{{player}} sur cette partie",
+    "game": "Partie",
+    "average": "Moyenne",
+    "rank": "Rang",
+    "averageBasis_one": "Moyenne sur {{count}} partie au poste {{position}}, sur la période choisie.",
+    "averageBasis_other": "Moyenne sur {{count}} parties au poste {{position}}, sur la période choisie.",
+    "noAverage": "Pas de moyenne : aucune partie de la Faille à ce poste sur la période.",
+    "tier": "Rang tenu à la date de la partie : {{tier}}.",
+    "tierEstimated": "Rang estimé d'après le lobby de la partie : {{tier}}.",
+    "noMetrics": "Les chiffres de cette partie ne sont pas encore calculés.",
+    "rankHelper": "Rang : le palier auquel correspond la valeur de la partie, à l'échelle du ladder, parmi les parties classées du même poste. Un tiret : pas encore assez de parties par palier pour le dire."
   }
 }
