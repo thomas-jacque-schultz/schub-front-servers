@@ -80,3 +80,7 @@ export const DansUneCarte: Story = {
     </Card>
   ),
 };
+
+export const LigneEncadree: Story = {
+  args: { rowAccent: (ligne: LigneDemo) => ligne.id === "2" },
+};
