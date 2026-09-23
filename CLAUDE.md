@@ -91,7 +91,9 @@ marque. Contact n'est plus dans le bandeau : *Créateur* et *Feedback* (`/contac
 pied de page, en couleur d'accent — deux liens, pas davantage.
 
 **Aucun `useMemo` sur des libellés traduits.** Avec react-i18next 15, `t` garde sa référence quand
-la langue change, et `/` démarre dans la langue du navigateur avant de prendre celle de l'URL. Un écran ne repose ni `ThemeModeToggle`, ni `LanguageSwitcher`, ni `PageBackdrop` :
+la langue change, et `/` démarre dans la langue du navigateur avant de prendre celle de l'URL.
+
+Un écran ne repose ni `ThemeModeToggle`, ni `LanguageSwitcher`, ni `PageBackdrop` :
 il rend un titre et du contenu. `AppShell` ne teste aucune permission — c'est `AppLayout` qui
 
 **La largeur du bandeau est décidée par `AppLayout`, pas par les écrans.** `/lol/teams` et
@@ -224,6 +226,7 @@ encadrée. Le statut `COACH` seul désigne un coach qui ne joue pas.
 timeline (`riot_match_timeline`, chiffres à 15 minutes dans `riot_match_early`). Riot ne sert que
 le rang courant : pour une partie ancienne, c'est le rang d'aujourd'hui, et le niveau adverse dit
 l'écart médian entre la partie et le relevé. Une moyenne de rang ne compte que les classés.
+
 **Aucune donnée simulée n'entre nulle part**, ni dans un panneau, ni dans une story : un chiffre
 inventé est lu comme vrai, et il survit à celui qui l'a posé.
 
