@@ -291,5 +291,13 @@
     "goldDiff15": "Or à 15 min",
     "csDiff15": "CS à 15 min",
     "pending": "Les rangs des adversaires sont en cours de relevé : la section se remplira au fil de la collecte."
+  },
+  "refresh": {
+    "action": "Mettre à jour les stats",
+    "wait": "Mise à jour possible dans {{time}}",
+    "done_one": "Nouvelles parties demandées pour {{count}} joueur : elles apparaîtront au fil de la collecte.",
+    "done_other": "Nouvelles parties demandées pour {{count}} joueurs : elles apparaîtront au fil de la collecte.",
+    "tooSoon": "Une mise à jour vient d'être demandée : réessayez dans quelques minutes.",
+    "failed": "La mise à jour a échoué"
   }
 }

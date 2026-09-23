@@ -21,6 +21,7 @@ import { OppositionPanel } from "./stats/OppositionPanel";
 import { PlayersPanel } from "./stats/PlayersPanel";
 import { TeamGamesPanel } from "./stats/TeamGamesPanel";
 import { DraftPanel } from "./DraftPanel";
+import { StatsRefreshButton } from "./stats/StatsRefreshButton";
 import { RosterPanel } from "./RosterPanel";
 
 type PanelKey = "roster" | "players" | "team" | "opposition" | "pool" | "draft";
@@ -138,6 +139,7 @@ function TeamPage() {
             <Button variant="ghost" onClick={() => navigate("/lol/teams")}>
               {t("team.back")}
             </Button>
+            <StatsRefreshButton teamId={team.id} />
             {team.viewerCanEdit && (
               <>
                 <Button
