@@ -39,6 +39,8 @@
     "DISCORD_CHANNEL_MANAGE": "Gérer les salons Discord",
     "USER_VIEW": "Voir les comptes",
     "USER_ROLE_ASSIGN": "Attribuer un rôle",
+    "INGEST_VIEW": "Voir la collecte Riot",
+    "INGEST_MANAGE": "Piloter la collecte Riot",
     "TEAM_CREATE": "Créer une équipe",
     "TEAM_VIEW": "Voir une équipe",
     "TEAM_EDIT": "Modifier une équipe et son effectif",
