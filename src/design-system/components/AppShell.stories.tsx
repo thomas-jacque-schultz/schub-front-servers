@@ -17,12 +17,25 @@ const CONFIGURATION = {
   ],
 };
 
+const LOL = {
+  key: "lol",
+  label: "League of Legends",
+  items: [
+    { key: "lolPublic", label: "Présentation", to: "/lol" },
+    { key: "stats", label: "Mes stats", to: "/lol/stats" },
+    { key: "teams", label: "Équipes", to: "/lol/teams" },
+  ],
+};
+
+const SERVEURS = { key: "servers", label: "Serveurs", to: "/servers" };
+
 const LIENS = [
+  { key: "creator", label: "Créateur", to: "/contact", accent: true },
+  { key: "feedback", label: "Feedback", to: "/contact#feedback", accent: true },
   { key: "terms", label: "Conditions d'utilisation", to: "/conditions" },
   { key: "privacy", label: "Confidentialité", to: "/confidentialite" },
   { key: "storybook", label: "Design system", href: "/storybook", external: false },
   { key: "linkedin", label: "LinkedIn", href: "https://example.invalid/profil" },
-  { key: "discord", label: "Discord", href: null, pendingLabel: "à compléter" },
   { key: "github", label: "GitHub", href: null, pendingLabel: "à compléter" },
 ];
 
@@ -34,8 +47,7 @@ const meta = {
     brand: "Schub",
     brandTo: "/",
     brandTagline: "Pilotage de serveurs de jeu",
-    navItems: [{ key: "servers", label: "Serveurs", to: "/servers" }],
-    menus: [CONFIGURATION],
+    navItems: [SERVEURS, LOL, CONFIGURATION],
     connected: true,
     username: "capitaine.nemo",
     connectedAsLabel: "Connecté : capitaine.nemo",
@@ -67,36 +79,40 @@ type Story = StoryObj<typeof meta>;
 export const Connecte: Story = {};
 
 export const Deconnecte: Story = {
-  args: { connected: false, username: null, menus: [], connectedAsLabel: undefined },
+  args: {
+    connected: false,
+    username: null,
+    navItems: [SERVEURS, { ...LOL, items: LOL.items.slice(0, 1) }],
+    connectedAsLabel: undefined,
+  },
 };
 
 export const DroitsPartiels: Story = {
   args: {
-    menus: [
-      {
-        ...CONFIGURATION,
-        items: [{ key: "servers", label: "Serveurs", to: "/config/servers" }],
-      },
+    navItems: [
+      SERVEURS,
+      LOL,
+      { ...CONFIGURATION, items: [{ key: "servers", label: "Serveurs", to: "/config/servers" }] },
     ],
   },
 };
 
 export const SansEntreeAutorisee: Story = {
-  args: { menus: [{ ...CONFIGURATION, items: [] }] },
+  args: { navItems: [SERVEURS, LOL, { ...CONFIGURATION, items: [] }] },
 };
 
 export const EntreeGrisee: Story = {
   args: {
     navItems: [
-      { key: "servers", label: "Serveurs", to: "/servers" },
+      SERVEURS,
       {
-        key: "stats",
-        label: "Mes stats",
-        to: "/lol/stats",
-        muted: true,
-        hint: "Liez votre compte Riot pour y accéder",
+        ...LOL,
+        items: [
+          LOL.items[0],
+          { ...LOL.items[1], muted: true, hint: "Liez votre compte Riot pour y accéder" },
+          LOL.items[2],
+        ],
       },
-      { key: "lol", label: "Équipes LoL", to: "/lol" },
     ],
   },
 };

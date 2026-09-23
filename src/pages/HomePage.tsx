@@ -103,6 +103,7 @@ function HomePage() {
 
       <Card title={t("about.title")}>
         <Stack spacing={2}>
+          <Text>{t("about.community")}</Text>
           <Text>{t("about.servers")}</Text>
           <Text>{t("about.lol")}</Text>
           <Text>{t("about.identity")}</Text>

@@ -15,6 +15,8 @@ export interface StackProps {
   fullWidth?: boolean;
   component?: ElementType;
   onSubmit?: (event: React.FormEvent<HTMLFormElement>) => void;
+  /** Ancre de page (`/contact#feedback`). */
+  id?: string;
 }
 
 const ALIGN: Record<StackAlign, string> = {
@@ -42,11 +44,13 @@ export function Stack({
   fullWidth = false,
   component,
   onSubmit,
+  id,
 }: StackProps) {
   return (
     <MuiStack
       component={component ?? "div"}
       onSubmit={onSubmit}
+      id={id}
       direction={direction === "responsive" ? { xs: "column", sm: "row" } : direction}
       spacing={spacing}
       alignItems={align ? ALIGN[align] : undefined}
