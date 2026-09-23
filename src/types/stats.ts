@@ -44,6 +44,24 @@ export interface StatLineDto {
   killParticipation: number | null;
   /** Morts / morts de l'équipe. */
   deathShare: number | null;
+  wardsKilledPerMinute: number | null;
+  controlWardsPlaced: number | null;
+  /** Dégâts aux champions / ceux de toute l'équipe. */
+  damageShare: number | null;
+  deathsPer10: number | null;
+  /** Part de la partie passée mort. */
+  timeDeadShare: number | null;
+  turretDamagePerMinute: number | null;
+  turretTakedowns: number | null;
+  epicMonsterDamagePerMinute: number | null;
+  /** Plaques prises moins celles de l'adversaire direct. */
+  platesDiff: number | null;
+  /** Parties dont on a la timeline : les écarts à 15 min ne portent que sur elles. */
+  laningGames: number;
+  goldDiffAt15: number | null;
+  csDiffAt15: number | null;
+  xpDiffAt15: number | null;
+  killsDiffAt15: number | null;
   afkGames: number;
   secondsPlayed: number;
   firstPlayedAt: string | null;
@@ -383,4 +401,28 @@ export interface StatsRefreshDto {
   triggered: boolean;
   playersQueued: number;
   nextAllowedAt: string | null;
+}
+
+export type ReferenceScope = "GAME" | "MEAN";
+
+/** Répartition d'une métrique : une grille de quantiles par palier, et celle du ladder entier. */
+export interface ReferenceGridDto {
+  patches: string[];
+  scope: ReferenceScope;
+  position: string;
+  computedAt: string;
+  distribution: string;
+  /** Rangs des quantiles de chaque grille, de 0 à 1. */
+  percentiles: number[];
+  /** Percentile à partir duquel commence chaque palier, du plus bas au plus haut. */
+  levels: { tier: string; fromPercentile: number }[];
+  metrics: Record<string, ReferenceMetricDto>;
+}
+
+export interface ReferenceMetricDto {
+  polarity: "HIGHER" | "LOWER" | "NEUTRAL";
+  tiers: Record<string, { count: number; values: number[] }>;
+  /** Absente tant qu'un palier manque : pas d'icône de rang sans elle. */
+  ladder: number[] | null;
+  missingTiers: string[];
 }

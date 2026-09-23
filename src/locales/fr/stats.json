@@ -28,6 +28,7 @@
     "label": "Période",
     "all": "Tout l'historique connu",
     "days": "{{count}} derniers jours",
+    "patches": "{{count}} derniers patchs",
     "helper": "Toutes les valeurs de l'écran portent sur cette période.",
     "bounded": "Riot conserve environ mille parties par joueur : au-delà, l'historique n'existe plus, chez personne."
   },
@@ -49,7 +50,20 @@
     "damageTaken": "Dégâts subis par minute",
     "games": "Parties",
     "kp": "Participation aux kills",
-    "dp": "Part des morts de l'équipe"
+    "dp": "Part des morts de l'équipe",
+    "wardsKilledPerMinute": "Balises détruites par minute",
+    "controlWardsPlaced": "Balises de contrôle par partie",
+    "damageShare": "Part des dégâts de l’équipe",
+    "deathsPer10": "Morts par 10 minutes",
+    "timeDeadShare": "Temps passé mort",
+    "turretDamagePerMinute": "Dégâts aux tours par minute",
+    "turretTakedowns": "Tours détruites par partie",
+    "epicMonsterDamagePerMinute": "Dégâts aux objectifs par minute",
+    "platesDiff": "Écart de plaques",
+    "goldDiffAt15": "Écart d’or à 15 min",
+    "csDiffAt15": "Écart de CS à 15 min",
+    "xpDiffAt15": "Écart d’XP à 15 min",
+    "killsDiffAt15": "Écart de kills à 15 min"
   },
   "delta": {
     "points": "{{value}} pts",
@@ -216,7 +230,20 @@
     "rank": "Rang",
     "games": "Parties",
     "kp": "KP",
-    "dp": "DP"
+    "dp": "DP",
+    "wardsKilledPerMinute": "Balises dét./min",
+    "controlWardsPlaced": "Contrôle/partie",
+    "damageShare": "Part dégâts",
+    "deathsPer10": "Morts/10 min",
+    "timeDeadShare": "Temps mort",
+    "turretDamagePerMinute": "Tours/min",
+    "turretTakedowns": "Tours/partie",
+    "epicMonsterDamagePerMinute": "Objectifs/min",
+    "platesDiff": "Plaques",
+    "goldDiffAt15": "Or @15",
+    "csDiffAt15": "CS @15",
+    "xpDiffAt15": "XP @15",
+    "killsDiffAt15": "Kills @15"
   },
   "radar": {
     "title": "Profil",
@@ -254,7 +281,8 @@
     "DIAMOND": "Diamant",
     "MASTER": "Maître",
     "GRANDMASTER": "Grand maître",
-    "CHALLENGER": "Challenger"
+    "CHALLENGER": "Challenger",
+    "MASTER_PLUS": "Maître+"
   },
   "scope": {
     "rift": "Indicateurs calculés sur la Faille (classées, normales, Clash) : l'ARAM et l'Arène fausseraient les chiffres par minute."
@@ -411,5 +439,23 @@
       "winRate": "Victoires",
       "onWeakSide": "Ganks adverses côté faible"
     }
+  },
+  "family": {
+    "title": "Le détail, famille par famille",
+    "income": "Revenus",
+    "laning": "Phase de couloir",
+    "fights": "Combats",
+    "survival": "Survie",
+    "vision": "Vision",
+    "objectives": "Objectifs",
+    "laningBasis": "Écarts face à l’adversaire direct, sur {{count}} partie(s) dont on a la timeline."
+  },
+  "grade": {
+    "level": "Niveau {{tier}} à l’échelle du ladder : mieux que {{ladder}} des joueurs au poste {{position}}, tous rangs confondus.",
+    "inTier": "{{rank}}e percentile des {{tier}} au poste {{position}} ({{count}} joueurs).",
+    "inTierGame": "{{rank}}e percentile des parties des {{tier}} au poste {{position}}.",
+    "noLadder": "Échelle du ladder pas encore disponible : il manque des paliers dans l’échantillon.",
+    "basis": "Calculé sur vos parties au poste {{position}}, comparées aux joueurs classés des patchs {{patches}}.",
+    "short": "p{{rank}}"
   }
 }

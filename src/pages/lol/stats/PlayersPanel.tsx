@@ -28,7 +28,7 @@ const RADAR_JUSQU_A = 3;
 export function PlayersPanel({ teamId }: PlayersPanelProps) {
   const { t } = useTranslation("stats");
   const fenetres = useWindowOptions();
-  const [days, setDays] = useState<string>("");
+  const [periode, setPeriode] = useState<string>("");
   const [stats, setStats] = useState<TeamPlayersStatsDto | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
@@ -39,9 +39,7 @@ export function PlayersPanel({ teamId }: PlayersPanelProps) {
     setIsLoading(true);
     setError("");
     try {
-      setStats(
-        await getTeamPlayersStatsApi(teamId, days ? Number(days) : null),
-      );
+      setStats(await getTeamPlayersStatsApi(teamId, periode));
     } catch (loadError) {
       setError(
         loadError instanceof Error ? loadError.message : t("loadFailed"),
@@ -49,7 +47,7 @@ export function PlayersPanel({ teamId }: PlayersPanelProps) {
     } finally {
       setIsLoading(false);
     }
-  }, [teamId, days, t]);
+  }, [teamId, periode, t]);
 
   useEffect(() => {
     void load();
@@ -65,9 +63,13 @@ export function PlayersPanel({ teamId }: PlayersPanelProps) {
 
   const joueurs = stats?.players ?? [];
   const visibles =
-    choisis.length === 0 ? joueurs : joueurs.filter((player) => choisis.includes(player.memberId));
+    choisis.length === 0
+      ? joueurs
+      : joueurs.filter((player) => choisis.includes(player.memberId));
   const lignesEquipe = joueurs.flatMap((player) =>
-    player.state === "STATISTIQUES_CONNUES" && player.overall ? [player.overall] : [],
+    player.state === "STATISTIQUES_CONNUES" && player.overall
+      ? [player.overall]
+      : [],
   );
   const reference = referentiel ?? referenceParDefaut(lignesEquipe);
   const radars = visibles.length > 1 && visibles.length <= RADAR_JUSQU_A;
@@ -97,8 +99,8 @@ export function PlayersPanel({ teamId }: PlayersPanelProps) {
       <Stack direction="row" spacing={2} align="center" wrap>
         <SelectField
           label={t("window.label")}
-          value={days}
-          onChange={setDays}
+          value={periode}
+          onChange={setPeriode}
           options={fenetres}
           helperText={t("window.helper")}
         />
@@ -119,7 +121,10 @@ export function PlayersPanel({ teamId }: PlayersPanelProps) {
         // Un seul joueur retenu : la même vue que Mes stats.
         <Stack spacing={2}>
           <Card>
-            <PlayerHeader player={visibles[0]} isViewer={visibles[0].memberId === stats?.viewerMemberId} />
+            <PlayerHeader
+              player={visibles[0]}
+              isViewer={visibles[0].memberId === stats?.viewerMemberId}
+            />
           </Card>
           <PlayerStatsView
             data={visibles[0]}
@@ -137,16 +142,16 @@ export function PlayersPanel({ teamId }: PlayersPanelProps) {
             />
           )}
           <AlignedColumns
-          minWidth={220}
-          count={Math.max(1, Math.min(6, visibles.length))}
-          columns={visibles.map((player) =>
-            playerColumn(player, {
-              isViewer: player.memberId === stats?.viewerMemberId,
-              showRadar: radars,
-              teamLines: lignesEquipe,
-              reference,
-            }),
-          )}
+            minWidth={220}
+            count={Math.max(1, Math.min(6, visibles.length))}
+            columns={visibles.map((player) =>
+              playerColumn(player, {
+                isViewer: player.memberId === stats?.viewerMemberId,
+                showRadar: radars,
+                teamLines: lignesEquipe,
+                reference,
+              }),
+            )}
           />
         </Stack>
       )}

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { getTeamOppositionApi } from "../../../api/statsApi";
 import type { TeamOppositionDto } from "../../../types/stats";
 
-export const useTeamOpposition = (teamId: string, days: string) => {
+export const useTeamOpposition = (teamId: string, periode: string) => {
   const { t } = useTranslation("stats");
   const [dto, setDto] = useState<TeamOppositionDto | null>(null);
   const [error, setError] = useState<string>("");
@@ -13,13 +13,15 @@ export const useTeamOpposition = (teamId: string, days: string) => {
     setIsLoading(true);
     setError("");
     try {
-      setDto(await getTeamOppositionApi(teamId, days ? Number(days) : null));
+      setDto(await getTeamOppositionApi(teamId, periode));
     } catch (loadError) {
-      setError(loadError instanceof Error ? loadError.message : t("loadFailed"));
+      setError(
+        loadError instanceof Error ? loadError.message : t("loadFailed"),
+      );
     } finally {
       setIsLoading(false);
     }
-  }, [teamId, days, t]);
+  }, [teamId, periode, t]);
 
   useEffect(() => {
     void load();

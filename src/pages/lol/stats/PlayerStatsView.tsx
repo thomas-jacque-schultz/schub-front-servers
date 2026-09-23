@@ -12,22 +12,35 @@ import {
   TrendChart,
 } from "../../../design-system";
 import { useLocaleFormat } from "../../../i18n/format";
-import type { MyStatsDto, StatLineDto, TeamComparisonDto } from "../../../types/stats";
+import type {
+  MyStatsDto,
+  StatLineDto,
+  TeamComparisonDto,
+} from "../../../types/stats";
 import { ChampionChoice } from "./ChampionChoice";
 import { championsAffiches } from "./champions";
 import { ChampionStatCard } from "./ChampionStatCard";
-import { useMetrics } from "./metrics";
+import { FAMILLES, useMetrics } from "./metrics";
 import { PlayerRadar } from "./PlayerRadar";
 import { RankedStandings } from "./RankedStandings";
 import { StatsStateNote } from "./StatsStateNote";
 import { useStatsFormat } from "./statsFormat";
+import { useGradeAdornment } from "./useGrades";
 
 const CHAMPIONS_PLEINE_LARGEUR = 6;
 
 /** Ce que Mes stats et un joueur d'équipe ont en commun. */
 export type PlayerStatsData = Pick<
   MyStatsDto,
-  "state" | "coverage" | "overall" | "champions" | "positions" | "queues" | "months" | "rankings" | "references"
+  | "state"
+  | "coverage"
+  | "overall"
+  | "champions"
+  | "positions"
+  | "queues"
+  | "months"
+  | "rankings"
+  | "references"
 >;
 
 export interface PlayerStatsViewProps {
@@ -37,12 +50,17 @@ export interface PlayerStatsViewProps {
   teamLines?: StatLineDto[];
 }
 
-export function PlayerStatsView({ data, versusTeammates, teamLines }: PlayerStatsViewProps) {
+export function PlayerStatsView({
+  data,
+  versusTeammates,
+  teamLines,
+}: PlayerStatsViewProps) {
   const { t } = useTranslation("stats");
   const format = useStatsFormat();
   const { formatMonth } = useLocaleFormat();
   const { tuiles } = useMetrics();
   const [choisis, setChoisis] = useState<string[]>([]);
+  const adornment = useGradeAdornment(data.references, data.positions);
   const overall = data.overall;
 
   if (data.state !== "STATISTIQUES_CONNUES" || !overall) {
@@ -54,14 +72,43 @@ export function PlayerStatsView({ data, versusTeammates, teamLines }: PlayerStat
       <Card>
         <Stack spacing={2}>
           <VersusTeammates versus={versusTeammates} />
-          <StatGrid items={tuiles(overall, { versus: versusTeammates })} minWidth={130} divided />
+          <StatGrid
+            items={tuiles(overall, { versus: versusTeammates, adornment })}
+            minWidth={130}
+            divided
+          />
           <Text variant="caption" tone="secondary">
-            {[format.assise(data.coverage), t("scope.rift")].filter(Boolean).join(" · ")}
+            {[format.assise(data.coverage), t("scope.rift")]
+              .filter(Boolean)
+              .join(" · ")}
           </Text>
         </Stack>
       </Card>
 
-      {data.coverage && !data.coverage.tracked && <Alert severity="info">{t("coverage.untracked")}</Alert>}
+      {data.coverage && !data.coverage.tracked && (
+        <Alert severity="info">{t("coverage.untracked")}</Alert>
+      )}
+
+      <Card title={t("family.title")}>
+        <Stack spacing={2.5}>
+          {FAMILLES.map((famille) => (
+            <Stack key={famille.key} spacing={1}>
+              <Text variant="subtitle">
+                {t(`family.${famille.key}`, { defaultValue: famille.key })}
+              </Text>
+              <StatGrid
+                items={tuiles(overall, { keys: famille.metrics, adornment })}
+                minWidth={150}
+              />
+              {famille.key === "laning" && (
+                <Text variant="caption" tone="secondary">
+                  {t("family.laningBasis", { count: overall.laningGames })}
+                </Text>
+              )}
+            </Stack>
+          ))}
+        </Stack>
+      </Card>
 
       <Columns minWidth={320}>
         <Card title={t("radar.title")} description={t("radar.helper")}>
@@ -87,7 +134,9 @@ export function PlayerStatsView({ data, versusTeammates, teamLines }: PlayerStat
                   hint={
                     position.versusRest
                       ? (t("delta.versusRest", {
-                          delta: format.ecartEnPoints(position.versusRest.winRateDelta),
+                          delta: format.ecartEnPoints(
+                            position.versusRest.winRateDelta,
+                          ),
                           count: position.versusRest.referenceGames,
                         }) ?? undefined)
                       : undefined
@@ -116,7 +165,11 @@ export function PlayerStatsView({ data, versusTeammates, teamLines }: PlayerStat
           </Text>
         ) : (
           <Columns minWidth={280}>
-            {championsAffiches(data.champions, choisis, CHAMPIONS_PLEINE_LARGEUR).map((line) => (
+            {championsAffiches(
+              data.champions,
+              choisis,
+              CHAMPIONS_PLEINE_LARGEUR,
+            ).map((line) => (
               <ChampionStatCard key={line.key} line={line} />
             ))}
           </Columns>
@@ -130,7 +183,9 @@ export function PlayerStatsView({ data, versusTeammates, teamLines }: PlayerStat
           emptyLabel={t("section.noMonth")}
           scaleMax={1}
           reference={overall.winRate}
-          referenceLabel={t("section.trendReference", { value: format.taux(overall.winRate) })}
+          referenceLabel={t("section.trendReference", {
+            value: format.taux(overall.winRate),
+          })}
           points={data.months.map((month) => ({
             key: month.key,
             label: etiquetteDuMois(month.key, formatMonth),
@@ -160,7 +215,13 @@ export function PlayerStatsView({ data, versusTeammates, teamLines }: PlayerStat
   );
 }
 
-export function VersusTeammates({ versus, compact = false }: { versus?: TeamComparisonDto | null; compact?: boolean }) {
+export function VersusTeammates({
+  versus,
+  compact = false,
+}: {
+  versus?: TeamComparisonDto | null;
+  compact?: boolean;
+}) {
   const { t } = useTranslation("stats");
   const format = useStatsFormat();
   if (!versus) {
@@ -186,4 +247,3 @@ const etiquetteDuMois = (key: string, formatMonth: (value: Date) => string) => {
   }
   return formatMonth(new Date(Date.UTC(annee, mois - 1, 1)));
 };
-

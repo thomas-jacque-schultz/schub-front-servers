@@ -28,6 +28,7 @@
     "label": "Period",
     "all": "All known history",
     "days": "Last {{count}} days",
+    "patches": "Last {{count}} patches",
     "helper": "Every figure on this screen covers that period.",
     "bounded": "Riot keeps about a thousand games per player: beyond that the history no longer exists, for anyone."
   },
@@ -49,7 +50,20 @@
     "damageTaken": "Damage taken per minute",
     "games": "Games",
     "kp": "Kill participation",
-    "dp": "Share of team deaths"
+    "dp": "Share of team deaths",
+    "wardsKilledPerMinute": "Wards destroyed per minute",
+    "controlWardsPlaced": "Control wards per game",
+    "damageShare": "Share of team damage",
+    "deathsPer10": "Deaths per 10 minutes",
+    "timeDeadShare": "Time spent dead",
+    "turretDamagePerMinute": "Turret damage per minute",
+    "turretTakedowns": "Turrets taken per game",
+    "epicMonsterDamagePerMinute": "Objective damage per minute",
+    "platesDiff": "Plate difference",
+    "goldDiffAt15": "Gold difference at 15",
+    "csDiffAt15": "CS difference at 15",
+    "xpDiffAt15": "XP difference at 15",
+    "killsDiffAt15": "Kill difference at 15"
   },
   "delta": {
     "points": "{{value}} pts",
@@ -216,7 +230,20 @@
     "rank": "Rank",
     "games": "Games",
     "kp": "KP",
-    "dp": "DP"
+    "dp": "DP",
+    "wardsKilledPerMinute": "Wards killed/min",
+    "controlWardsPlaced": "Control/game",
+    "damageShare": "Dmg share",
+    "deathsPer10": "Deaths/10 min",
+    "timeDeadShare": "Time dead",
+    "turretDamagePerMinute": "Turrets/min",
+    "turretTakedowns": "Turrets/game",
+    "epicMonsterDamagePerMinute": "Objectives/min",
+    "platesDiff": "Plates",
+    "goldDiffAt15": "Gold @15",
+    "csDiffAt15": "CS @15",
+    "xpDiffAt15": "XP @15",
+    "killsDiffAt15": "Kills @15"
   },
   "radar": {
     "title": "Profile",
@@ -254,7 +281,8 @@
     "DIAMOND": "Diamond",
     "MASTER": "Master",
     "GRANDMASTER": "Grandmaster",
-    "CHALLENGER": "Challenger"
+    "CHALLENGER": "Challenger",
+    "MASTER_PLUS": "Master+"
   },
   "scope": {
     "rift": "Figures computed on Summoner's Rift (ranked, normals, Clash): ARAM and Arena would skew per-minute numbers."
@@ -411,5 +439,23 @@
       "winRate": "Wins",
       "onWeakSide": "Enemy ganks on weak side"
     }
+  },
+  "family": {
+    "title": "The detail, family by family",
+    "income": "Income",
+    "laning": "Laning phase",
+    "fights": "Fights",
+    "survival": "Survival",
+    "vision": "Vision",
+    "objectives": "Objectives",
+    "laningBasis": "Differences against the direct opponent, over {{count}} game(s) with a timeline."
+  },
+  "grade": {
+    "level": "{{tier}} level on the ladder scale: better than {{ladder}} of players in the {{position}} role, all ranks.",
+    "inTier": "{{rank}}th percentile of {{tier}} players in the {{position}} role ({{count}} players).",
+    "inTierGame": "{{rank}}th percentile of {{tier}} games in the {{position}} role.",
+    "noLadder": "Ladder scale not available yet: some tiers are missing from the sample.",
+    "basis": "Based on your games in the {{position}} role, compared with ranked players on patches {{patches}}.",
+    "short": "p{{rank}}"
   }
 }

@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { type ReactNode, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import type { StatGridItem } from "../../../design-system";
 import type { StatLineDto, TeamComparisonDto } from "../../../types/stats";
@@ -17,7 +17,24 @@ export type MetricKey =
   | "damageTakenPerMinute"
   | "visionPerMinute"
   | "killParticipation"
-  | "deathShare";
+  | "deathShare"
+  | MetriqueDePartie;
+
+/** Les métriques de la projection v3 : libellées sous leur propre clé. */
+type MetriqueDePartie =
+  | "wardsKilledPerMinute"
+  | "controlWardsPlaced"
+  | "damageShare"
+  | "deathsPer10"
+  | "timeDeadShare"
+  | "turretDamagePerMinute"
+  | "turretTakedowns"
+  | "epicMonsterDamagePerMinute"
+  | "platesDiff"
+  | "goldDiffAt15"
+  | "csDiffAt15"
+  | "xpDiffAt15"
+  | "killsDiffAt15";
 
 type Deltas = Pick<
   TeamComparisonDto,
@@ -53,6 +70,46 @@ export const KPI_ORDER: MetricKey[] = [
   "visionPerMinute",
 ];
 
+/** Les six familles de la fiche détaillée, dans l'ordre de lecture d'une partie. */
+export const FAMILLES: { key: string; metrics: MetricKey[] }[] = [
+  { key: "income", metrics: ["csPerMinute", "goldPerMinute"] },
+  {
+    key: "laning",
+    metrics: [
+      "goldDiffAt15",
+      "csDiffAt15",
+      "xpDiffAt15",
+      "killsDiffAt15",
+      "platesDiff",
+    ],
+  },
+  {
+    key: "fights",
+    metrics: [
+      "damagePerMinute",
+      "damageShare",
+      "killParticipation",
+      "deathShare",
+    ],
+  },
+  {
+    key: "survival",
+    metrics: ["kda", "deathsPer10", "timeDeadShare", "damageTakenPerMinute"],
+  },
+  {
+    key: "vision",
+    metrics: ["visionPerMinute", "wardsKilledPerMinute", "controlWardsPlaced"],
+  },
+  {
+    key: "objectives",
+    metrics: [
+      "turretDamagePerMinute",
+      "turretTakedowns",
+      "epicMonsterDamagePerMinute",
+    ],
+  },
+];
+
 export const useMetrics = () => {
   const { t } = useTranslation("stats");
   const format = useStatsFormat();
@@ -62,6 +119,53 @@ export const useMetrics = () => {
       value === null || value === undefined
         ? null
         : `${value > 0 ? "+" : ""}${format.entier(value)}`;
+
+    // Sans écart aux coéquipiers : le cœur ne le calcule que pour les indicateurs historiques.
+    const simple = (
+      key: MetriqueDePartie,
+      format: (value: number | null | undefined) => string,
+      polarity: MetricDefinition["polarity"],
+    ): MetricDefinition => ({
+      key,
+      label: t(`metric.${key}`),
+      short: t(`metricShort.${key}`),
+      format,
+      delta: () => null,
+      deltaOf: () => null,
+      polarity,
+    });
+    const signe = (value: number | null | undefined) =>
+      ecartEntier(value) ?? format.absent;
+    const signeDecimal = (value: number | null | undefined) =>
+      format.ecartRatio(value) ?? format.absent;
+
+    const nouvelles = {
+      wardsKilledPerMinute: simple(
+        "wardsKilledPerMinute",
+        format.ratio,
+        "higher",
+      ),
+      controlWardsPlaced: simple("controlWardsPlaced", format.ratio, "higher"),
+      damageShare: simple("damageShare", format.taux, "higher"),
+      deathsPer10: simple("deathsPer10", format.ratio, "lower"),
+      timeDeadShare: simple("timeDeadShare", format.taux, "lower"),
+      turretDamagePerMinute: simple(
+        "turretDamagePerMinute",
+        format.entier,
+        "higher",
+      ),
+      turretTakedowns: simple("turretTakedowns", format.ratio, "higher"),
+      epicMonsterDamagePerMinute: simple(
+        "epicMonsterDamagePerMinute",
+        format.entier,
+        "higher",
+      ),
+      platesDiff: simple("platesDiff", signeDecimal, "higher"),
+      goldDiffAt15: simple("goldDiffAt15", signe, "higher"),
+      csDiffAt15: simple("csDiffAt15", signeDecimal, "higher"),
+      xpDiffAt15: simple("xpDiffAt15", signe, "higher"),
+      killsDiffAt15: simple("killsDiffAt15", signeDecimal, "higher"),
+    };
 
     const definitions: Record<MetricKey, MetricDefinition> = {
       winRate: {
@@ -145,12 +249,18 @@ export const useMetrics = () => {
         deltaOf: () => null,
         polarity: "lower",
       },
+      ...nouvelles,
     };
 
     /** Une rangée de tuiles dans l'ordre du catalogue, avec l'écart aux coéquipiers s'il existe. */
     const tuiles = (
       line: StatLineDto,
-      options: { compact?: boolean; versus?: TeamComparisonDto | null; keys?: MetricKey[] } = {},
+      options: {
+        compact?: boolean;
+        versus?: TeamComparisonDto | null;
+        keys?: MetricKey[];
+        adornment?: (key: MetricKey) => ReactNode | undefined;
+      } = {},
     ): StatGridItem[] =>
       (options.keys ?? KPI_ORDER).map((key) => {
         const metric = definitions[key];
@@ -167,11 +277,16 @@ export const useMetrics = () => {
                   assists: format.ratio(line.assistsPerGame),
                 })
               : undefined,
+          adornment: options.adornment?.(key),
           delta: metric.delta(ecart) ?? undefined,
           deltaTone:
             metric.polarity === "neutral"
               ? "neutral"
-              : format.tonDeLEcart(metric.polarity === "lower" && ecart !== null ? -ecart : ecart),
+              : format.tonDeLEcart(
+                  metric.polarity === "lower" && ecart !== null
+                    ? -ecart
+                    : ecart,
+                ),
         };
       });
 

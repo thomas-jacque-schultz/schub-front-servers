@@ -15,21 +15,21 @@ export interface StrategyPanelProps {
 export function StrategyPanel({ teamId }: StrategyPanelProps) {
   const { t } = useTranslation("stats");
   const fenetres = useWindowOptions();
-  const [days, setDays] = useState<string>("");
-  const opposition = useTeamOpposition(teamId, days);
+  const [periode, setPeriode] = useState<string>("");
+  const opposition = useTeamOpposition(teamId, periode);
 
   return (
     <Stack spacing={3}>
       <SelectField
         label={t("window.label")}
-        value={days}
-        onChange={setDays}
+        value={periode}
+        onChange={setPeriode}
         options={fenetres}
         helperText={t("window.helper")}
       />
       <Stack spacing={2}>
         <Text variant="section">{t("strategy.summary")}</Text>
-        <TeamSummary teamId={teamId} days={days} />
+        <TeamSummary teamId={teamId} periode={periode} />
       </Stack>
       <Stack spacing={2}>
         <Text variant="section">{t("strategy.opposition")}</Text>
