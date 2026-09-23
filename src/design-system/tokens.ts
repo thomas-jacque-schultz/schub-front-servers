@@ -196,6 +196,9 @@ export const chartColors: Record<
   {
     mark: string;
     markSoft: string;
+    // Seconde série : validée avec mark (ΔE deutan 17,7 sombre, 14,3 clair), et toujours en pointillés.
+    markSecondary: string;
+    markMuted: string;
     track: string;
     grid: string;
     positive: string;
@@ -205,6 +208,8 @@ export const chartColors: Record<
   dark: {
     mark: brand.gold,
     markSoft: "rgba(201, 162, 39, 0.26)",
+    markSecondary: "#C07AA6",
+    markMuted: "rgba(182, 163, 180, 0.55)",
     track: "rgba(182, 163, 180, 0.14)",
     grid: darkPalette.outline,
     positive: darkPalette.success.main,
@@ -213,6 +218,8 @@ export const chartColors: Record<
   light: {
     mark: brand.goldDeep,
     markSoft: "rgba(138, 107, 18, 0.20)",
+    markSecondary: "#8E3E6F",
+    markMuted: "rgba(28, 10, 24, 0.40)",
     track: "rgba(28, 10, 24, 0.10)",
     grid: lightPalette.outline,
     positive: lightPalette.success.main,
