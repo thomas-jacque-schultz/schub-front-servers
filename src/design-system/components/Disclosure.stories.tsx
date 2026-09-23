@@ -19,7 +19,6 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/** Contrôlé : l'ouverture appartient à l'écran, la story tient donc son propre état. */
 export const Replie: Story = {
   render: () => {
     const [open, setOpen] = useState(false);
@@ -34,7 +33,6 @@ export const Replie: Story = {
   },
 };
 
-/** Avec une mention à droite du titre — ici le nombre d'éléments retenus. */
 export const AvecMention: Story = {
   render: () => {
     const [open, setOpen] = useState(true);

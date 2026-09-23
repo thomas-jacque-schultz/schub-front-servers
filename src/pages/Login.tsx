@@ -4,23 +4,6 @@ import { Alert, Button, Card, DiscordIcon, Stack, Text, TextField } from "../des
 import { useLocalizedNavigate } from "../i18n/navigation";
 import { useAuthStore } from "../stores/authStore";
 
-/**
- * L'écran de connexion — deux portes, et une seule qui compte.
- *
- * <p><strong>Discord est l'entrée principale</strong> (lot A.3). Le bouton fait une vraie
- * navigation vers `GET /auth/discord`, que le BFF résout en redirection vers l'écran
- * d'autorisation Discord ; tout le reste du flux se joue entre le navigateur, Discord et le BFF,
- * et se termine par un cookie `httpOnly` et un retour sur le site. Le front n'orchestre rien —
- * c'est exactement ce que le cookie permet.</p>
- *
- * <p><strong>Le formulaire mot de passe reste</strong>, en dessous et visuellement secondaire.
- * C'est la porte de service jusqu'au lot A.6, qui ne se lancera qu'après une connexion Discord
- * réussie en prod : on ne démonte pas la porte de service avant d'avoir vu la porte principale
- * s'ouvrir. Sa réponse pose le même cookie que le flux Discord, donc rien ici ne lit de jeton.</p>
- *
- * <p>Écrit avec les primitives du design system, et retiré à cette occasion du bloc « dette à
- * résorber » de `eslint.config.js`.</p>
- */
 function LoginPage() {
   const { isSubmitting, error, login, loginWithDiscord, clearError } = useAuthStore();
   const navigate = useLocalizedNavigate();
@@ -46,8 +29,7 @@ function LoginPage() {
       await login(username, password);
       navigate("/config/servers", { replace: true });
     } catch {
-      // Le message est déjà porté par le store ; le relancer ici ne ferait que produire un
-      // rejet non intercepté dans la console.
+      // Erreur déjà exposée par le store.
     }
   };
 

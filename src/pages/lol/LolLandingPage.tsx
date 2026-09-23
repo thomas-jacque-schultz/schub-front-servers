@@ -15,18 +15,6 @@ import { useAuthStore } from "../../stores/authStore";
 import { useProfileStore } from "../../stores/profileStore";
 import { useDocumentMeta } from "../../seo/useDocumentMeta";
 
-/**
- * La vitrine publique de l'outil League of Legends.
- *
- * <p><strong>Cette page est publique, et c'est sa raison d'être.</strong> `/lol` servait la liste
- * des équipes derrière une session : un visiteur — un examinateur du portail développeur de Riot
- * en particulier — n'y lisait qu'un écran de connexion, donc rien de ce que le produit fait. La
- * liste des équipes a pris l'adresse `/lol/teams`, qui dit ce qu'elle contient.</p>
- *
- * <p>Ce qui est décrit ici est <strong>ce qui existe</strong>, et la section des limites est
- * aussi importante que celle des fonctionnalités : un examinateur vérifie, et une promesse
- * invérifiable coûte plus qu'une fonctionnalité manquante.</p>
- */
 function LolLandingPage() {
   const { t } = useTranslation("lol");
   const navigate = useLocalizedNavigate();
@@ -97,8 +85,6 @@ function LolLandingPage() {
               {canAny("TEAM_CREATE", "TEAM_VIEW") && (
                 <Button onClick={() => navigate("/lol/teams")}>{t("access.ctaTeams")}</Button>
               )}
-              {/* Le compte Riot manquant renvoie au profil plutôt qu'à des statistiques vides :
-                  c'est là que se joue la seule action utile à ce stade. */}
               {riotLinked ? (
                 <Button variant="secondary" onClick={() => navigate("/lol/stats")}>
                   {t("access.ctaStats")}

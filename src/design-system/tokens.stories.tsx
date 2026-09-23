@@ -5,10 +5,6 @@ import Typography from "@mui/material/Typography";
 import { Card } from "./components/Card";
 import { darkPalette, elevations, lightPalette, radii, spacingUnit, typographyTokens } from "./tokens";
 
-/**
- * La planche des tokens : de quoi relire la palette d'un coup d'œil, et vérifier que le
- * basculement clair / sombre de la barre d'outils ne laisse rien derrière.
- */
 const meta = {
   title: "Fondations/Tokens",
 } satisfies Meta;
@@ -56,7 +52,6 @@ function PaletteBoard({ title, palette }: { title: string; palette: typeof darkP
   );
 }
 
-/** La palette sombre est la palette canonique : c'est elle qu'on dessine en premier. */
 export const Palettes: Story = {
   render: () => (
     <Stack spacing={3}>

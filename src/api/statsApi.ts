@@ -5,14 +5,6 @@ import type {
   TeamPlayersStatsDto,
 } from "../types/stats";
 
-/**
- * Les trois lectures de statistiques.
- *
- * <p>`getMyStatsApi` ne prend pas de joueur, et il n'existe pas de variante qui en prendrait un :
- * le sujet est la session. Un chemin portant un identifiant Riot laisserait sonder l'historique
- * de n'importe qui à partir d'un identifiant croisé dans une réponse d'équipe.</p>
- */
-
 const fenetre = (days?: number | null) => (days ? `?days=${days}` : "");
 
 export const getTeamPlayersStatsApi = async (

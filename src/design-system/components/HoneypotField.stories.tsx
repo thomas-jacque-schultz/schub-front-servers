@@ -13,11 +13,6 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/**
- * La story ne montre presque rien, et c'est le résultat attendu : le champ est hors de l'écran.
- * Ce qu'elle permet de vérifier, c'est qu'il ne pousse **aucun** espace dans la mise en page et
- * qu'un `Tab` depuis le champ précédent l'ignore.
- */
 export const Invisible: Story = {
   render: (args) => {
     const [value, setValue] = useState("");

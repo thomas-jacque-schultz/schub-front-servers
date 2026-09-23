@@ -21,18 +21,8 @@ import { ThemeModeToggle } from "./ThemeModeToggle";
 export interface AppShellNavItem {
   key: string;
   label: string;
-  /** Chemin **déjà localisé** : la coquille ne connaît pas la règle des préfixes de langue. */
   to: string;
-  /**
-   * Rend l'entrée grisée, sans la désactiver.
-   *
-   * <p>Un `disabled` serait plus simple et plus faux : il retire l'entrée du parcours clavier et
-   * ne dit rien de la raison. Or une entrée grisée pose exactement une question — « pourquoi ? »
-   * — et c'est en la suivant qu'on trouve la réponse. Elle reste donc un lien : le survol
-   * explique, le clic mène à ce qui débloque.</p>
-   */
   muted?: boolean;
-  /** Ce qu'on lit au survol. Sans elle, une entrée grisée est une énigme. */
   hint?: string;
 }
 
@@ -45,16 +35,9 @@ export interface AppShellMenu {
 export interface AppShellFooterLink {
   key: string;
   label: string;
-  /**
-   * Une route du site, **déjà localisée**. Elle passe par le routeur : servie en `href`, elle
-   * rechargerait toute l'application pour aller lire deux pages de texte.
-   */
   to?: string;
-  /** Sans `to` ni `href`, l'entrée s'affiche inerte et annoncée comme à compléter. */
   href?: string | null;
-  /** Ce qu'on lit au survol d'une entrée sans adresse. */
   pendingLabel?: string;
-  /** Faux pour un lien interne au site (le Storybook, servi sous le même domaine). */
   external?: boolean;
 }
 
@@ -63,7 +46,6 @@ export interface AppShellProps {
   brandTo: string;
   brandTagline?: string;
   navItems?: AppShellNavItem[];
-  /** Les menus déroulants — *Configuration*, et ce que le chantier C y ajoutera. */
   menus?: AppShellMenu[];
   connected: boolean;
   username?: string | null;
@@ -74,31 +56,10 @@ export interface AppShellProps {
   onSignOut: () => void;
   footerLinks: AppShellFooterLink[];
   footerNote?: ReactNode;
-  /**
-   * La largeur du bandeau central.
-   *
-   * <p>`xl` est là pour les écrans denses — cinq colonnes de statistiques, un tableau de parties
-   * — qui deviennent illisibles resserrés dans `lg`. Les pages de texte restent en `lg` : une
-   * ligne de prose trop longue se relit mal, donc élargir partout aurait échangé un défaut
-   * contre un autre.</p>
-   */
   maxWidth?: "md" | "lg" | "xl";
   children: ReactNode;
 }
 
-/**
- * La coquille de l'application : un en-tête, le contenu, un pied de page.
- *
- * <p>Elle manquait au chantier B parce qu'elle dépend de l'authentification. Elle devient le
- * cadre de tous les écrans, et c'est elle qui rend vraie la règle « un menu qui mène à un 403
- * est un menu de trop » : <strong>elle n'affiche que ce qu'on lui donne</strong>, et c'est
- * l'appelant, qui connaît les permissions, qui décide ce qu'il lui donne. Aucune permission
- * n'est testée ici — le design system ne connaît pas le modèle de droits.</p>
- *
- * <p>Le pied de page accepte des liens **sans adresse** : ils s'affichent inertes et signalés
- * comme à compléter, plutôt que de disparaître. Un lien manquant qu'on voit finit par être
- * fourni ; un lien supprimé est oublié.</p>
- */
 export function AppShell({
   brand,
   brandTo,
@@ -132,9 +93,6 @@ export function AppShell({
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
-        // Le fond de marque est porté par la coquille, plus par chaque écran : c'était
-        // exactement le défaut que les tokens ont corrigé, et le remettre dans les pages le
-        // ferait revenir par la fenêtre.
         ...backdropSx.page,
       }}
     >
@@ -165,8 +123,6 @@ export function AppShell({
                     to={item.to}
                     color="inherit"
                     aria-current={pathname === item.to ? "page" : undefined}
-                    // Le motif est lu, pas seulement survolé : une infobulle seule laisse
-                    // l'entrée grisée inexpliquée pour qui n'a pas de souris.
                     aria-label={item.hint ? `${item.label} — ${item.hint}` : undefined}
                     sx={{
                       fontWeight: pathname === item.to ? 700 : 500,

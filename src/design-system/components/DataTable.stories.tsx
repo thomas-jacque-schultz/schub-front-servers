@@ -13,10 +13,6 @@ interface LigneDemo {
   statut: "online" | "offline" | "unknown" | "unreachable";
 }
 
-/**
- * Serveurs inventés, jeux inventés : aucune donnée réelle — ni pseudo, ni IP, ni port — ne
- * figure dans un Storybook public.
- */
 const LIGNES: LigneDemo[] = [
   { id: "1", nom: "Atelier des dunes", jeu: "Jeu de bac à sable", statut: "online" },
   { id: "2", nom: "Vallée close", jeu: "Jeu de survie", statut: "offline" },
@@ -73,13 +69,8 @@ export const Simple: Story = {};
 
 export const Dense: Story = { args: { dense: true } };
 
-/**
- * Une liste vide rend un état vide, jamais un tableau à zéro ligne : un cadre vide se lit comme
- * une panne de chargement.
- */
 export const Vide: Story = { args: { rows: [] } };
 
-/** En situation : le tableau vit dans une carte, sans gouttière, et touche les bords. */
 export const DansUneCarte: Story = {
   render: (args) => (
     <Card title="État des serveurs" description="Trois fiches de démonstration.">

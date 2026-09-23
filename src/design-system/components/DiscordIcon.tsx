@@ -1,26 +1,9 @@
 import SvgIcon from "@mui/material/SvgIcon";
 
 export interface DiscordIconProps {
-  /** Suit la taille de texte de l'élément porteur — un bouton, le plus souvent. */
   fontSize?: "small" | "medium" | "large" | "inherit";
 }
 
-/**
- * La marque Discord, en icône.
- *
- * <p><strong>Pourquoi elle vit ici</strong> : `@mui/icons-material` ne fournit aucune icône de
- * marque, et le design system est la seule porte vers l'habillage (règle du dépôt). Un écran qui
- * poserait ce `path` lui-même remettrait du dessin dans un écran — exactement ce que la règle
- * ferme.</p>
- *
- * <p>Elle est <strong>décorative</strong> : `aria-hidden` par construction, via `SvgIcon`. Le
- * bouton qui la porte dit « Se connecter avec Discord » en toutes lettres, et c'est ce libellé
- * qu'un lecteur d'écran doit annoncer — pas un second « Discord » collé devant.</p>
- *
- * <p>Elle n'impose pas la couleur de marque : elle hérite de `currentColor`, donc de l'intention
- * du bouton. Peindre le blurple ici obligerait à le repeindre pour chaque variante de bouton, et
- * ferait entrer une couleur de marque tierce dans une palette qui n'est pas la sienne.</p>
- */
 export function DiscordIcon({ fontSize = "medium" }: DiscordIconProps) {
   return (
     <SvgIcon fontSize={fontSize} viewBox="0 0 24 24">

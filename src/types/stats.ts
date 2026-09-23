@@ -1,13 +1,5 @@
-/**
- * Les formes servies par le cœur pour les trois écrans de statistiques.
- *
- * <p>Aucun `puuid` n'y figure, et ce n'est pas un oubli : le cœur n'en rend pas, parce qu'un
- * identifiant Riot rendu au client est la clé d'entrée d'un sondage d'historique.</p>
- */
-
 import type { GameRole, MemberStatus } from "./team";
 
-/** Pourquoi une colonne est vide. Un vide sans raison se lit comme une panne. */
 export type StatsState =
   | "STATISTIQUES_CONNUES"
   | "COMPTE_RIOT_ABSENT"
@@ -55,9 +47,7 @@ export interface StatLineDto {
 }
 
 export interface RankedStandingDto {
-  /** Le mode nommé — `RANKED_SOLO`, `RANKED_FLEX`, `OTHER`. */
   queue: string | null;
-  /** Le nom brut de Riot. Plusieurs files tombent sur `OTHER` : sans lui, elles se confondent. */
   riotQueueType: string | null;
   tier: string | null;
   division: string | null;
@@ -65,7 +55,6 @@ export interface RankedStandingDto {
   wins: number;
   losses: number;
   hotStreak: boolean;
-  /** Riot marque ainsi un classement que l'inactivité menace de faire tomber. */
   inactive: boolean;
   observedAt: string | null;
 }

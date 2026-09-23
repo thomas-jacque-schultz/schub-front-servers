@@ -8,18 +8,6 @@ import { useServersStore } from "../stores/serversStore";
 
 const REFRESH_INTERVAL_MS = 30_000;
 
-/**
- * `/servers` : l'état des serveurs, et les gestes qui vont avec.
- *
- * <p><strong>C'est ici que démarrer et arrêter se trouvent.</strong> Ils n'existaient que sous le
- * menu <em>Configuration</em>, qui exige `SERVER_CREATE`, `SERVER_EDIT` ou `SERVER_INFRA_VIEW` —
- * dont un modérateur ne porte aucune. Il avait `SERVER_START` et `SERVER_STOP` et aucun écran
- * pour s'en servir. Une permission sans chemin vers elle n'est pas une permission.</p>
- *
- * <p>Deux sources selon l'acteur : un visiteur lit la vue publique, qui ne porte ni slug ni
- * identifiant, donc aucune action ; un compte connecté lit `GET /game-servers`, seule réponse
- * portant le slug par lequel on démarre.</p>
- */
 function LandingPage() {
   const { t } = useTranslation("servers");
   const { connected, can } = useAuthStore();

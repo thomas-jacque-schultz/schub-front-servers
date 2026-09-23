@@ -16,7 +16,6 @@ type Story = StoryObj<typeof meta>;
 
 export const ParDefaut: Story = {};
 
-/** Les quatre états d'une même action : disponible, en cours, refusée, destructrice. */
 export const LesEtats: Story = {
   render: () => (
     <Stack direction="row" spacing={1} alignItems="center">

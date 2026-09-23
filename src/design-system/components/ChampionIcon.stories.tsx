@@ -10,11 +10,6 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/**
- * Aucune image n'est chargée depuis Data Dragon dans les stories : le Storybook est public et
- * doit rendre hors ligne. Les états se lisent tous sur le repli, qui est justement celui qu'on
- * risque de ne jamais regarder autrement.
- */
 export const SansIcone: Story = {
   args: { name: "Aurelion Sol" },
 };

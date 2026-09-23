@@ -3,17 +3,10 @@ import Tooltip from "@mui/material/Tooltip";
 import { radii } from "../tokens";
 
 export interface ChampionIconProps {
-  /** L'URL absolue et déjà versionnée servie par le cœur, ou `null` hors catalogue. */
   src?: string | null;
-  /**
-   * Le nom du champion. Il **n'est pas décoratif** : c'est l'alternative textuelle de l'icône et
-   * l'infobulle. Une grille d'icônes sans nom n'est lisible que par qui les connaît déjà.
-   */
   name: string;
   size?: "small" | "medium" | "large";
-  /** Retiré du pool : l'icône se lit comme non retenue, sans disparaître. */
   dimmed?: boolean;
-  /** Entouré : retenu à ce poste. */
   selected?: boolean;
 }
 
@@ -23,13 +16,6 @@ const TAILLES: Record<NonNullable<ChampionIconProps["size"]>, number> = {
   large: 56,
 };
 
-/**
- * L'icône d'un champion.
- *
- * <p>Sans URL — un champion sorti après le patch servi —, les premières lettres de son nom
- * tiennent la place. Le cadre garde la même taille : une grille qui se déforme sur un champion
- * manquant se lit comme cassée.</p>
- */
 export function ChampionIcon({
   src,
   name,

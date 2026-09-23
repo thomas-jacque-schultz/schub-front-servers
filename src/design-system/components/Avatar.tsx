@@ -1,9 +1,7 @@
 import MuiAvatar from "@mui/material/Avatar";
 
 export interface AvatarProps {
-  /** L'URL de l'image ; absente, les initiales du nom prennent le relais. */
   src?: string | null;
-  /** Le nom affiché à côté : il sert d'alternative textuelle et d'initiales. */
   name: string;
   size?: "small" | "medium";
 }
@@ -18,13 +16,6 @@ const initialsOf = (name: string): string =>
     .map((part) => part[0]?.toUpperCase() ?? "")
     .join("");
 
-/**
- * Le portrait d'un compte.
- *
- * <p>L'image est décorative : le nom est **toujours** affiché à côté par l'appelant, et
- * l'alternative textuelle reprend ce nom plutôt que de le répéter à un lecteur d'écran. Sans
- * image, les initiales évitent le trou gris qui laisse croire à un chargement en cours.</p>
- */
 export function Avatar({ src, name, size = "medium" }: AvatarProps) {
   return (
     <MuiAvatar

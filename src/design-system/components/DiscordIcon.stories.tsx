@@ -18,13 +18,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Seule: Story = {};
 
-/**
- * Son unique emploi réel : l'entrée principale de l'écran de connexion.
- *
- * <p>Le libellé porte tout le sens — l'icône est décorative et n'est pas annoncée. C'est ce qui
- * évite le « Discord Se connecter avec Discord » qu'on entend sur les boutons où l'icône a été
- * étiquetée elle aussi.</p>
- */
 export const DansUnBouton: Story = {
   render: (args) => (
     <Button startIcon={<DiscordIcon {...args} />} size="large">
@@ -33,7 +26,6 @@ export const DansUnBouton: Story = {
   ),
 };
 
-/** Elle hérite de `currentColor` : c'est le bouton qui décide de la teinte, pas elle. */
 export const HeriteDeLaCouleur: Story = {
   render: (args) => (
     <Stack spacing={2} align="start">

@@ -5,11 +5,6 @@ import { PageHeader } from "./PageHeader";
 import { Stack } from "./Stack";
 import { Text } from "./Text";
 
-/**
- * Menus et liens inventés. Ce qui se vérifie ici n'est pas le contenu mais la règle : la
- * coquille n'affiche **que** ce qu'on lui donne, et c'est l'appelant, qui connaît les
- * permissions, qui décide ce qu'il lui donne. Un menu qui mène à un 403 est un menu de trop.
- */
 const CONFIGURATION = {
   key: "configuration",
   label: "Configuration",
@@ -71,15 +66,10 @@ type Story = StoryObj<typeof meta>;
 
 export const Connecte: Story = {};
 
-/** Déconnecté : pas de menu *Configuration*, et le bouton de connexion en haut à droite. */
 export const Deconnecte: Story = {
   args: { connected: false, username: null, menus: [], connectedAsLabel: undefined },
 };
 
-/**
- * Connecté mais sans droit d'administration : le menu existe, amputé de ce que l'acteur ne peut
- * pas ouvrir. C'est l'appelant qui a filtré — la coquille, elle, affiche ce qu'elle reçoit.
- */
 export const DroitsPartiels: Story = {
   args: {
     menus: [
@@ -91,19 +81,10 @@ export const DroitsPartiels: Story = {
   },
 };
 
-/** Un menu vide ne s'affiche pas du tout, plutôt que de s'ouvrir sur rien. */
 export const SansEntreeAutorisee: Story = {
   args: { menus: [{ ...CONFIGURATION, items: [] }] },
 };
 
-/**
- * Une entrée grisée, et la raison qui va avec.
- *
- * <p>*Mes stats* n'a rien à montrer tant qu'aucun compte Riot n'est lié. La masquer laisserait
- * croire que la fonctionnalité n'existe pas ; la proposer normalement mènerait à un écran vide.
- * Grisée **et** expliquée, elle annonce ce qui existe et ce qu'il faut faire pour l'ouvrir — et
- * elle reste un lien, donc atteignable au clavier.</p>
- */
 export const EntreeGrisee: Story = {
   args: {
     navItems: [

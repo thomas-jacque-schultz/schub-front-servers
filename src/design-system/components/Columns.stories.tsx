@@ -21,7 +21,6 @@ const colonne = (titre: string) => (
   </Card>
 );
 
-/** Sans `count`, la cinquième passe à la ligne dès que le conteneur ne tient plus 5 × `minWidth`. */
 export const Repliees: Story = {
   args: {
     minWidth: 260,
@@ -29,7 +28,6 @@ export const Repliees: Story = {
   },
 };
 
-/** Avec `count`, les cinq tiennent sur une ligne au-dessus de `lg` : elles se resserrent. */
 export const CinqSurUneLigne: Story = {
   args: {
     minWidth: 260,

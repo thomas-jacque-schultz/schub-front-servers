@@ -18,7 +18,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Puces: Story = {};
 
-/** Numérotée quand l'ordre porte du sens : une marche à suivre, pas un inventaire. */
 export const Numerotee: Story = {
   args: { ordered: true },
 };

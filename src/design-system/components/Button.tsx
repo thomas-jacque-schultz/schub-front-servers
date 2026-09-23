@@ -7,18 +7,15 @@ export type ButtonSize = "small" | "medium" | "large";
 
 export interface ButtonProps {
   children: ReactNode;
-  /** `primary` pour l'action principale d'un écran, une seule à la fois. */
   variant?: ButtonVariant;
   size?: ButtonSize;
   type?: "button" | "submit";
   disabled?: boolean;
-  /** Affiche un indicateur et bloque le bouton : à préférer à un `disabled` muet. */
   loading?: boolean;
   fullWidth?: boolean;
   startIcon?: ReactNode;
   endIcon?: ReactNode;
   onClick?: () => void;
-  /** Rappel d'accessibilité : obligatoire quand le libellé ne suffit pas à comprendre l'action. */
   "aria-label"?: string;
 }
 
@@ -29,13 +26,6 @@ const MUI_VARIANT: Record<ButtonVariant, "contained" | "outlined" | "text"> = {
   danger: "contained",
 };
 
-/**
- * Le bouton de l'application.
- *
- * <p>Quatre intentions nommées plutôt que le couple `variant`/`color` de MUI : un écran déclare
- * ce que le bouton *fait*, pas comment il est peint. C'est ce qui permet de redessiner tous les
- * boutons dangereux d'un coup, ici, sans rouvrir les écrans.</p>
- */
 export function Button({
   children,
   variant = "primary",

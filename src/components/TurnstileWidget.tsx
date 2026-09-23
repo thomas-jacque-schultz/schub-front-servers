@@ -1,12 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 
-/**
- * La clé publique Turnstile. **Absente, le composant ne rend rien et n'échoue pas.**
- *
- * <p>C'est la condition posée au §4 du plan : la clé n'existe pas encore, et le développement ne
- * doit pas en dépendre. Le BFF applique la même règle en miroir — sans `TURNSTILE_SECRET`, il ne
- * réclame aucun jeton. Les deux autres couches anti-spam, elles, sont actives en permanence.</p>
- */
 const SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY as string | undefined;
 
 const SCRIPT_URL = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
@@ -32,7 +25,6 @@ declare global {
   }
 }
 
-/** Charge le script une seule fois, quel que soit le nombre de montages. */
 const loadScript = (): Promise<void> =>
   new Promise((resolve, reject) => {
     if (window.turnstile) {
@@ -55,16 +47,6 @@ const loadScript = (): Promise<void> =>
     document.head.appendChild(script);
   });
 
-/**
- * Le rempart Cloudflare, **optionnel par construction**.
- *
- * <p>Il n'est pas dans `src/design-system/` volontairement : ce n'est pas une primitive
- * d'interface mais un widget tiers, qui charge un script externe et dessine ce qu'il veut. Le
- * design system ne doit pas lui servir de couverture.</p>
- *
- * <p>Sans clé, il rend `null` et le formulaire fonctionne sans lui. C'est ce qui permet de
- * développer et de livrer avant que la clé existe, au lieu d'attendre.</p>
- */
 export function TurnstileWidget({ onToken }: { onToken: (token: string) => void }) {
   const container = useRef<HTMLDivElement | null>(null);
   const [failed, setFailed] = useState(false);
@@ -102,8 +84,6 @@ export function TurnstileWidget({ onToken }: { onToken: (token: string) => void 
   }, [onToken]);
 
   if (!SITE_KEY || failed) {
-    // Un rempart qui ne se charge pas ne doit pas bloquer l'envoi : le champ leurre et la
-    // limitation de débit du BFF restent en place, et le BFF reste seul juge du refus.
     return null;
   }
 

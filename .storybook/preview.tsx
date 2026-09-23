@@ -8,13 +8,7 @@ import { useTranslation } from "react-i18next";
 import { AppThemeProvider } from "../src/design-system";
 import "../src/i18n";
 
-/**
- * Aligne le mode connu de MUI côté JavaScript sur le schéma choisi dans la barre d'outils.
- *
- * <p>`withThemeByDataAttribute` pose l'attribut sur `<html>`, ce qui suffit aux couleurs — elles
- * passent par des variables CSS. Mais un composant qui lit `theme.palette.mode` en JavaScript,
- * comme `StatusChip`, resterait sur l'ancien schéma : ces deux lignes évitent cet écart.</p>
- */
+// withThemeByDataAttribute ne change que l'attribut CSS : sans ceci, theme.palette.mode lu en JS reste sur l'ancien schéma.
 function ColorSchemeSync({ scheme }: { scheme: "light" | "dark" }) {
   const { setMode } = useColorScheme();
   useEffect(() => {
@@ -55,7 +49,6 @@ const preview: Preview = {
     controls: {
       matchers: { color: /(background|color)$/i, date: /Date$/i },
     },
-    // Le fond vient du thème : proposer en plus les fonds de Storybook ferait mentir le rendu.
     backgrounds: { disable: true },
     a11y: { element: "#storybook-root" },
     options: {

@@ -9,13 +9,6 @@ import { useServersStore } from "../../stores/serversStore";
 
 const REFRESH_INTERVAL_MS = 30_000;
 
-/**
- * Les fiches serveurs, sous le menu *Configuration*.
- *
- * <p>Démarrer et arrêter s'y trouvent aussi, mais cet écran n'est pas leur adresse : il exige
- * `SERVER_CREATE`, `SERVER_EDIT` ou `SERVER_INFRA_VIEW`, qu'un modérateur n'a pas. La page des
- * serveurs les porte, et c'est là qu'il les trouve.</p>
- */
 function ServersConfigPage() {
   const { t } = useTranslation("servers");
   const navigate = useLocalizedNavigate();
@@ -33,10 +26,6 @@ function ServersConfigPage() {
     return () => clearInterval(interval);
   }, [refresh]);
 
-  /**
-   * Les deux boutons vont ensemble dans la carte : exiger l'une ou l'autre permission
-   * afficherait la paire à qui ne peut en actionner qu'une.
-   */
   const canControl = can("SERVER_START") && can("SERVER_STOP");
 
   const runServerAction = async (slug: string, action: (slug: string) => Promise<void>) => {
@@ -62,7 +51,6 @@ function ServersConfigPage() {
         }
       />
 
-      {/* L'absence des ports n'est pas une panne : c'est la projection membre. */}
       {!can("SERVER_INFRA_VIEW") && <Alert severity="info">{t("list.memberView")}</Alert>}
 
       <ServersDashboard

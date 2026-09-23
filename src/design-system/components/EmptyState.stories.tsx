@@ -22,7 +22,6 @@ export const AvecIcone: Story = {
   args: { icon: <InboxOutlinedIcon fontSize="inherit" /> },
 };
 
-/** Un vide n'appelle qu'un geste : une action, pas trois. */
 export const AvecAction: Story = {
   args: {
     icon: <InboxOutlinedIcon fontSize="inherit" />,
@@ -30,7 +29,6 @@ export const AvecAction: Story = {
   },
 };
 
-/** Le cas réel : le vide occupe l'intérieur d'une carte, pas la page entière. */
 export const DansUneCarte: Story = {
   render: (args) => (
     <Card title="État des serveurs">

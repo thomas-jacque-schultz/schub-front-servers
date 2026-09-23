@@ -8,12 +8,6 @@ export interface PoolChampionCardProps {
   viewerMemberId: string | null;
 }
 
-/**
- * Un champion retenu à un poste, et qui peut le prendre.
- *
- * <p>Une liste vide se lit autrement selon sa cause : personne au-dessus du plancher, ou personne
- * ne l'a jamais joué. Les confondre ferait monter ou descendre le plancher au hasard.</p>
- */
 export function PoolChampionCard({ champion, viewerMemberId }: PoolChampionCardProps) {
   const { t } = useTranslation("pool");
   const { formatNumber } = useLocaleFormat();

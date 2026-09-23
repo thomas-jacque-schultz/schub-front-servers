@@ -3,10 +3,6 @@ import { useTranslation } from "react-i18next";
 import { useLocaleFormat } from "../../../i18n/format";
 import type { StatsCoverageDto } from "../../../types/stats";
 
-/**
- * Les modes de jeu nommés par le connecteur, qui les tire de la liste officielle de Riot. Le
- * cœur ne sert plus de `queueId` sur ces clés : plusieurs identifiants désignent le même mode.
- */
 const MODES = [
   "RANKED_SOLO",
   "RANKED_FLEX",
@@ -45,12 +41,6 @@ const POSTES = [
 
 type Poste = (typeof POSTES)[number];
 
-/**
- * La mise en forme commune aux trois écrans.
- *
- * <p>Tout ce qui est nul rend un tiret, jamais un zéro : « pas de chiffre » et « zéro » sont deux
- * réponses différentes, et les confondre invente une donnée.</p>
- */
 export const useStatsFormat = () => {
   const { t } = useTranslation("stats");
   const { locale, formatNumber, formatDate } = useLocaleFormat();
@@ -79,7 +69,6 @@ export const useStatsFormat = () => {
         value === null || value === undefined
           ? absent
           : formatNumber(Math.round(value)),
-      /** Un écart de taux se dit en points, pas en pourcent : 54 % contre 41 % font 13 points. */
       ecartEnPoints: (value: number | null | undefined) => {
         const valeur = points(value);
         if (valeur === null) {
@@ -108,10 +97,6 @@ export const useStatsFormat = () => {
         }
         return t("duration.minutes", { count: Math.round(secondes / 60) });
       },
-      /**
-       * Le nom du mode de jeu. Un mode que cette version ne connaît pas rend « autre mode »
-       * plutôt qu'une clé brute : Riot en ajoute, et l'écran doit rester lisible.
-       */
       file: (mode: string | null | undefined) => {
         const cle: Mode =
           mode && (MODES as readonly string[]).includes(mode) ? (mode as Mode) : "OTHER";
@@ -125,10 +110,6 @@ export const useStatsFormat = () => {
         return t(`position.${cle}`);
       },
       cote: (side: number) => t(side === 200 ? "side.red" : "side.blue"),
-      /**
-       * Sur quoi porte un chiffre : le nombre de parties et la période. Sans cette phrase, trois
-       * parties et trois cents se lisent pareil.
-       */
       assise: (coverage: StatsCoverageDto | null | undefined) => {
         if (!coverage) {
           return null;

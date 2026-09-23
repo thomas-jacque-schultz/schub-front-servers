@@ -11,7 +11,6 @@ export interface DataTableColumn<Row> {
   key: string;
   header: string;
   align?: "left" | "center" | "right";
-  /** Largeur de la colonne. En `layout="fixed"`, c'est elle qui la détermine. */
   width?: number | string;
   render: (row: Row) => ReactNode;
 }
@@ -19,36 +18,15 @@ export interface DataTableColumn<Row> {
 export interface DataTableProps<Row> {
   columns: Array<DataTableColumn<Row>>;
   rows: Row[];
-  /** La clé React d'une ligne — jamais l'index : une liste rechargée se réordonne. */
   rowKey: (row: Row) => string;
-  /** Résumé lu par les lecteurs d'écran : ce que ce tableau liste. */
   caption: string;
   emptyTitle: string;
   emptyDescription?: string;
   dense?: boolean;
-  /**
-   * `fixed` fige les largeurs déclarées.
-   *
-   * <p>En `auto`, le navigateur répartit les colonnes d'après leur contenu : une cellule plus
-   * longue dans une ligne élargit la colonne pour toutes, et un rechargement redistribue tout.
-   * Les colonnes « dansent », et c'est la cause, pas la conséquence. `fixed` la retire : la
-   * largeur vient de la déclaration, le contenu s'y plie.</p>
-   */
   layout?: "auto" | "fixed";
-  /** Largeur minimale sous laquelle le tableau défile plutôt que de se tasser. */
   minWidth?: number;
 }
 
-/**
- * Le tableau de données.
- *
- * <p>Les colonnes sont **déclarées**, pas écrites en JSX : c'est ce qui permet d'aligner les
- * en-têtes et les cellules sans que chaque écran redécide de ses marges, et de traiter le cas
- * de la liste vide une seule fois, ici.</p>
- *
- * <p>Une liste vide rend un {@link EmptyState} et non un tableau à zéro ligne : un cadre vide se
- * lit comme une panne de chargement.</p>
- */
 export function DataTable<Row>({
   columns,
   rows,

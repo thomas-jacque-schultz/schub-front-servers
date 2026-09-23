@@ -4,13 +4,11 @@ import { useLocation } from "react-router-dom";
 export interface DocumentMeta {
   title: string;
   description: string;
-  /** L'image d'aperçu au partage. Par défaut, celle déclarée dans `index.html`. */
   image?: string;
 }
 
 const MARKER = "data-schub-meta";
 
-/** Pose une balise `<meta>` et la marque, pour pouvoir la retirer au démontage. */
 const setMeta = (attribute: "name" | "property", key: string, value: string) => {
   const existing = document.head.querySelector<HTMLMetaElement>(`meta[${attribute}="${key}"]`);
   const node = existing ?? document.createElement("meta");
@@ -23,21 +21,6 @@ const setMeta = (attribute: "name" | "property", key: string, value: string) => 
   return node;
 };
 
-/**
- * Le titre, la description et les balises de partage de l'écran courant.
- *
- * <p>Un SPA ne produit qu'un `index.html`, donc un seul titre pour tout le site. C'est sans
- * conséquence pour une application d'administration derrière une authentification ; ça ne l'est
- * plus pour la racine d'un domaine personnel, où le titre et la description sont ce qu'un moteur
- * de recherche affiche et ce qu'un lien partagé montre.</p>
- *
- * <p><strong>Ce que ça ne règle pas, et qu'il faut savoir</strong> : ces balises sont posées par
- * JavaScript, après le chargement. Google les lit, parce qu'il exécute le JavaScript ; la
- * plupart des aperçus de partage (Discord, Slack, LinkedIn) ne l'exécutent pas et se contentent
- * de ce que `index.html` contient. D'où la règle tenue ici : <em>`index.html` porte des valeurs
- * correctes pour la racine</em>, et ce hook ne fait que les affiner écran par écran. La vraie
- * réponse est le pré-rendu, que le contenu en données rend possible sans réécriture.</p>
- */
 export function useDocumentMeta({ title, description, image }: DocumentMeta) {
   const { pathname } = useLocation();
 

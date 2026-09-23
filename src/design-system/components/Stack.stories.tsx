@@ -3,7 +3,6 @@ import { Card } from "./Card";
 import { Stack } from "./Stack";
 import { Text } from "./Text";
 
-/** Données inventées : le Storybook est public, aucune valeur réelle n'y figure. */
 const meta = {
   title: "Primitives/Stack",
   component: Stack,
@@ -40,10 +39,6 @@ export const Ligne: Story = {
   render: Colonne.render,
 };
 
-/**
- * `responsive` empile sur mobile et aligne en ligne à partir de `sm`. À vérifier en réduisant
- * la fenêtre : c'est le seul comportement de ce composant qui ne se voit pas à l'arrêt.
- */
 export const Responsive: Story = {
   args: { direction: "responsive" },
   render: Colonne.render,

@@ -4,19 +4,10 @@ import Typography from "@mui/material/Typography";
 
 export interface BulletListProps {
   items: ReactNode[];
-  /** Numérote au lieu de pointer. Pour une énumération dont l'ordre porte du sens. */
   ordered?: boolean;
   tone?: "default" | "secondary";
 }
 
-/**
- * Une énumération dans de la prose.
- *
- * <p>Elle existe parce qu'une page de texte — conditions d'utilisation, politique de
- * confidentialité — énumère, et qu'un `Stack` de `Text` rend une suite de paragraphes : la
- * relation « ces éléments forment une liste » disparaît pour un lecteur d'écran. Ici la balise
- * est un vrai `ul` ou `ol`, et la puce est rendue par le navigateur.</p>
- */
 export function BulletList({ items, ordered = false, tone = "default" }: BulletListProps) {
   return (
     <Box

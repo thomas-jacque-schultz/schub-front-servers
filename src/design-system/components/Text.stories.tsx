@@ -23,7 +23,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Corps: Story = {};
 
-/** Les six intentions ensemble : c'est la vue utile pour arbitrer une hiérarchie. */
 export const LesSixIntentions: Story = {
   render: () => (
     <Stack spacing={1.5}>
@@ -49,7 +48,6 @@ export const LesTeintes: Story = {
   ),
 };
 
-/** Une cellule étroite coupe plutôt que de déformer la colonne. */
 export const Tronque: Story = {
   args: {
     truncate: true,

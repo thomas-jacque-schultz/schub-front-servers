@@ -1,10 +1,3 @@
-/**
- * La porte d'entrée du design system — et **la seule porte vers MUI**.
- *
- * <p>Une règle ESLint (`no-restricted-imports`, voir `eslint.config.js`) interdit d'importer
- * `@mui/material` et `@mui/icons-material` ailleurs que dans `src/design-system/`. Un écran qui a
- * besoin d'un composant absent d'ici l'ajoute ici, avec sa story — il ne contourne pas.</p>
- */
 export { AppThemeProvider } from "./AppThemeProvider";
 export { appTheme, backdropSx, THEME_MODE_STORAGE_KEY } from "./theme";
 export * from "./tokens";

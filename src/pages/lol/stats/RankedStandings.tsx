@@ -7,16 +7,6 @@ export interface RankedStandingsProps {
   standings: RankedStandingDto[];
 }
 
-/**
- * Les rangs d'un joueur — <strong>un par file classée</strong>.
- *
- * <p>`league-v4` rend une entrée par file où le compte est classé : solo/duo, flex, et les files
- * de TFT si le compte y joue. Le panneau n'en montrait que la première, donc un joueur classé en
- * flex et en solo n'affichait qu'un rang, sans que rien ne dise que l'autre existait.</p>
- *
- * <p>Une file que le connecteur ne sait pas nommer s'affiche sous son nom Riot brut plutôt que
- * sous « autre mode » : deux lignes « autre mode » côte à côte ne se distinguent pas.</p>
- */
 export function RankedStandings({ standings }: RankedStandingsProps) {
   const { t } = useTranslation("stats");
   const format = useStatsFormat();

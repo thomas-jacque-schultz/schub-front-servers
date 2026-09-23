@@ -32,13 +32,6 @@ export interface TeamGamesPanelProps {
   teamId: string;
 }
 
-/**
- * <strong>Panneau « équipe »</strong> — les parties où au moins quatre des membres ont joué,
- * toutes files confondues.
- *
- * <p>La file est affichée et comptée à part, jamais utilisée pour filtrer : une victoire en
- * normale draft ne vaut pas une victoire en flex, mais elle a bien eu lieu.</p>
- */
 export function TeamGamesPanel({ teamId }: TeamGamesPanelProps) {
   const { t } = useTranslation("stats");
   const { t: tReviews } = useTranslation("reviews");
@@ -81,14 +74,6 @@ export function TeamGamesPanel({ teamId }: TeamGamesPanelProps) {
     return null;
   }
 
-  /**
-   * Largeurs figées, et déclarées ici une fois.
-   *
-   * <p>En largeur automatique, une cellule plus longue dans une ligne élargit la colonne pour
-   * toutes les autres, et un rechargement redistribue tout : les colonnes « dansent » d'une ligne
-   * à l'autre. `layout="fixed"` retire la cause — la largeur vient de la déclaration, le contenu
-   * s'y plie.</p>
-   */
   const colonnes: Array<DataTableColumn<TeamGameDto>> = [
     {
       key: "date",
@@ -142,10 +127,6 @@ export function TeamGamesPanel({ teamId }: TeamGamesPanelProps) {
           : format.absent,
     },
     {
-      // L'icône remplace le nom écrit : cinq noms de champions à côté de cinq scores ne
-      // tenaient pas dans une cellule et poussaient toutes les autres colonnes. Le nom reste
-      // servi aux lecteurs d'écran et au survol — `ChampionIcon` en fait son alternative
-      // textuelle —, donc rien n'est perdu de ce qu'il portait.
       key: "champions",
       header: t("games.champions"),
       width: 320,

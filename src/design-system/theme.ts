@@ -9,29 +9,11 @@ import {
   typographyTokens,
 } from "./tokens";
 
-/**
- * Le thème de l'application, construit **uniquement** à partir des tokens.
- *
- * <p>Deux schémas de couleur dans un seul thème (`colorSchemes`), pas deux thèmes qu'un
- * `ThemeProvider` maison basculerait à la main : MUI 7 génère alors des variables CSS, ce qui
- * évite le scintillement au chargement et permet à `@storybook/addon-themes` de basculer le
- * rendu en changeant un attribut du DOM.</p>
- *
- * <p>`colorSchemeSelector: "data"` fait porter le schéma par `data-mui-color-scheme` sur
- * `<html>` — c'est ce que pilote le bouton de bascule de l'application comme la barre d'outils
- * de Storybook.</p>
- */
 export const appTheme = createTheme({
   cssVariables: {
-    // Le nom complet de l'attribut, et pas le raccourci "data" : celui-ci produirait des
-    // attributs sans valeur (`data-dark`, `data-light`), que ni les sélecteurs de ce fichier ni
-    // `@storybook/addon-themes` ne savent viser.
+    // Nom complet de l'attribut : le raccourci "data" produit data-dark/data-light, que ni ce fichier ni addon-themes ne visent.
     colorSchemeSelector: "data-mui-color-scheme",
   },
-  /**
-   * Le schéma servi quand rien n'est encore connu (premier rendu, pas de préférence lisible).
-   * C'est ici que « le sombre est le thème par défaut » devient vrai côté CSS.
-   */
   defaultColorScheme: "dark",
   colorSchemes: {
     dark: {
@@ -129,10 +111,6 @@ export const appTheme = createTheme({
   },
 });
 
-/**
- * Le dégradé de fond du schéma courant, sous forme de valeur `sx` — c'est ce que consomme
- * `PageBackdrop`. Il est ici et pas dans un écran : c'était précisément le problème à corriger.
- */
 export const backdropSx = {
   page: {
     background: backdrops.dark.page,
@@ -148,5 +126,4 @@ export const backdropSx = {
   },
 } as const;
 
-/** Clé de `localStorage` où se mémorise le choix clair/sombre de l'utilisateur. */
 export const THEME_MODE_STORAGE_KEY = "schub-color-mode";

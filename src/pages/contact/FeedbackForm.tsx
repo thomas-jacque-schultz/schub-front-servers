@@ -16,19 +16,6 @@ import { TurnstileWidget } from "../../components/TurnstileWidget";
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MIN_MESSAGE_LENGTH = 20;
 
-/**
- * Le formulaire, en bas de `/contact`.
- *
- * <p>C'est la seule route publique du site qui déclenche une écriture, et le §4 du plan en tire
- * la conséquence : sans protection, le premier robot qui la trouve transforme une messagerie
- * Discord en boîte à spam — dont on ne se désabonne pas. Trois couches, dont deux visibles
- * ici : le champ leurre, et Turnstile <em>si</em> une clé est configurée. La troisième, la
- * limitation de débit par IP, est au BFF, où elle ne se contourne pas.</p>
- *
- * <p>La validation faite ici est un confort, pas une garantie : le BFF revalide tout. Un
- * formulaire qui n'attend pas l'aller-retour pour dire « il manque le message » est simplement
- * moins pénible.</p>
- */
 export function FeedbackForm() {
   const { t } = useTranslation("contact");
 
@@ -148,7 +135,6 @@ export function FeedbackForm() {
             minRows={6}
           />
 
-          {/* Hors de l'écran, hors de la tabulation. Un robot le remplit, le BFF rejette. */}
           <HoneypotField
             name="website"
             label={t("fields.honeypot")}

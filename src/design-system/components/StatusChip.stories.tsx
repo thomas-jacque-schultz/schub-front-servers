@@ -20,10 +20,6 @@ export const HorsLigne: Story = { args: { status: "offline" } };
 export const Inconnu: Story = { args: { status: "unknown" } };
 export const Inaccessible: Story = { args: { status: "unreachable" } };
 
-/**
- * Les quatre statuts ensemble. La distinction à vérifier à l'œil : *hors ligne* (normal, gris)
- * ne doit pas se confondre avec *inaccessible* (panne, rouge).
- */
 export const LesQuatreStatuts: Story = {
   render: () => (
     <Stack direction="row" spacing={1.5} flexWrap="wrap" useFlexGap>
@@ -35,7 +31,6 @@ export const LesQuatreStatuts: Story = {
   ),
 };
 
-/** Le libellé suit la langue choisie dans la barre d'outils. */
 export const TaillePetite: Story = {
   render: () => (
     <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>

@@ -18,12 +18,6 @@ export interface PlayersPanelProps {
   teamId: string;
 }
 
-/**
- * <strong>Panneau « joueurs »</strong> — une colonne par joueur.
- *
- * <p>Chargé à l'ouverture de l'onglet et pas avant : le panneau interroge cinq historiques, et
- * une équipe qu'on ouvre pour renommer n'a pas à les payer.</p>
- */
 export function PlayersPanel({ teamId }: PlayersPanelProps) {
   const { t } = useTranslation("stats");
   const fenetres = useWindowOptions();

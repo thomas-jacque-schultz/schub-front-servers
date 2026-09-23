@@ -19,20 +19,8 @@ import { useProfileStore } from "../../stores/profileStore";
 import { RiotAccountDialog } from "./RiotAccountDialog";
 import type { ProfileDto } from "../../types/profile";
 
-/** Le cœur refuse au-delà ; on le dit pendant la saisie plutôt qu'après un aller-retour. */
 const DISPLAY_NAME_MAX = 50;
 
-/**
- * Mon profil — trois blocs, trois natures différentes.
- *
- * <ol>
- *   <li><strong>Discord</strong> : en lecture seule, parce que ces valeurs viennent de Discord et
- *     ne s'y changent pas d'ici. Les afficher modifiables ferait une promesse fausse.</li>
- *   <li><strong>Nom sur le site</strong> : la seule chose que l'on modifie librement.</li>
- *   <li><strong>Compte Riot</strong> : ni un champ ni un formulaire, mais un état à trois valeurs
- *     et les gestes qui vont avec.</li>
- * </ol>
- */
 function ProfilePage() {
   const { t } = useTranslation("profile");
   const { profile, isLoading, error, setProfile } = useProfileStore();
@@ -65,7 +53,6 @@ function ProfilePage() {
   );
 }
 
-/** L'identité de connexion. Rien n'est modifiable ici, et l'écran le montre plutôt qu'il le dise. */
 function DiscordCard({ profile }: { profile: ProfileDto }) {
   const { t } = useTranslation("profile");
 
@@ -140,14 +127,6 @@ function DisplayNameCard({
   );
 }
 
-/**
- * Le compte Riot : un état, et les gestes que cet état autorise.
- *
- * <p><strong>Il n'y a pas de bouton « délier ».</strong> Ce n'est pas un oubli : une équipe
- * référence ses membres par leur compte, et retirer le lien laisserait ces places sans personne
- * derrière. Le geste offert est le <em>changement</em>, qui remplace sans jamais laisser vide —
- * et il est annoncé pour ce qu'il coûte, parce qu'il repart de zéro.</p>
- */
 function RiotAccountCard({
   profile,
   onChanged,
@@ -160,19 +139,12 @@ function RiotAccountCard({
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [isRetrying, setIsRetrying] = useState<boolean>(false);
 
-  /**
-   * Relancer la résolution, en rejouant le même Riot ID.
-   *
-   * <p>La route est idempotente et c'est tout l'intérêt : il n'existe pas de « réessayer »
-   * séparé à écrire côté serveur, la liaison en tient lieu. Un échec laisse l'état tel quel —
-   * c'est-à-dire en attente, ce qu'il était déjà.</p>
-   */
   const onRetry = async (riotId: string) => {
     setIsRetrying(true);
     try {
       onChanged(await linkRiotAccountApi(riotId));
     } catch {
-      // L'état affiché reste le bon : la déclaration est conservée, elle attend toujours.
+      // La déclaration reste conservée, en attente.
     } finally {
       setIsRetrying(false);
     }
@@ -205,8 +177,6 @@ function RiotAccountCard({
           </Text>
         )}
 
-        {/* L'état intermédiaire mérite une explication, pas un badge orange muet : la saisie est
-            conservée, et rejouer le même Riot ID relance la résolution. */}
         {riot.state === "EN_ATTENTE_DE_RESOLUTION" && (
           <Alert severity="warning">
             <Stack spacing={1}>
@@ -246,13 +216,6 @@ function RiotAccountCard({
   );
 }
 
-/**
- * L'avancement de la collecte.
- *
- * <p>Trois cas, et pas deux : en cours, terminée, et **inconnue**. Le dernier arrive quand le
- * connecteur Riot ne répond pas ; le confondre avec « terminée » ferait disparaître l'indicateur
- * exactement quand on ne sait plus rien.</p>
- */
 function IngestState({ profile }: { profile: ProfileDto }) {
   const { t } = useTranslation("profile");
   const { formatDateTime } = useLocaleFormat();

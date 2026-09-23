@@ -10,51 +10,14 @@ import { useAuthStore } from "../stores/authStore";
 import { useProfileStore } from "../stores/profileStore";
 import type { Permission } from "../types/permission";
 
-/**
- * L'URL du profil LinkedIn — la seule fournie à ce jour.
- *
- * <p>Discord reste <strong>délibérément vide</strong> : le pied de page l'
- * affiche inertes et signalés comme à compléter, en attendant les adresses. Les retirer les
- * ferait oublier ; les inventer serait pire.</p>
- */
 const LINKEDIN_URL = "https://www.linkedin.com/in/thomas-schultz-abab10181/";
 
-/**
- * Le dépôt public, repris du contenu du portfolio — où il est **déduit** de l'origine Git et
- * signalé comme tel. Une seule source pour les deux endroits : le pied de page et la fiche
- * projet ne peuvent pas diverger.
- */
 const GITHUB_URL = PORTFOLIO.fr.repositoryUrl;
 
-/** Le Storybook est servi en statique par le nginx du front, hors du routeur React. */
 const STORYBOOK_PATH = "/storybook";
 
-/**
- * Les écrans qui ont besoin de largeur : cinq colonnes de statistiques, un catalogue d'icônes,
- * un tableau de parties.
- *
- * <p>La largeur se décide ici et pas dans les écrans, pour la même raison que le menu : c'est le
- * seul endroit qui connaisse les routes. Ailleurs, chaque page redéciderait de sa marge et elles
- * divergeraient.</p>
- *
- * <p>`/lol` n'y est plus : c'est devenu une page de texte, et une ligne de prose en `xl` se
- * relit mal. Les deux écrans denses sont nommés un par un.</p>
- */
 const ECRANS_LARGES = ["/lol/teams", "/lol/stats"];
 
-/**
- * La coquille, remplie.
- *
- * <p>C'est ici, et nulle part ailleurs, que les permissions décident du menu. La règle tenue :
- * <strong>une entrée n'existe que si la permission qu'elle exige est présente</strong> — un menu
- * qui mène à un 403 est un menu de trop. Le design system, lui, ne connaît pas le modèle de
- * droits : il affiche ce qu'on lui donne.</p>
- *
- * <p>Les entrées de configuration ne se contentent pas d'exiger la permission de lecture de
- * l'écran : elles exigent celle qui rend l'écran <em>utile</em>. Un compte qui ne peut que
- * regarder la liste des serveurs n'a rien à faire dans un menu d'administration — il a la page
- * d'accueil pour ça.</p>
- */
 export function AppLayout({ children }: { children: ReactNode }) {
   const { t } = useTranslation();
   const { connected, profile, canAny, logout, discordLoginFailed, dismissDiscordLoginFailure } =
@@ -97,38 +60,15 @@ export function AppLayout({ children }: { children: ReactNode }) {
     return [{ key: "configuration", label: t("shell.configuration"), items: allowed }];
   }, [connected, canAny, localize, t]);
 
-  /**
-   * Les entrées permanentes du bandeau, plus celle des équipes.
-   *
-   * <p><strong>Deux entrées pour League of Legends, et ce n'est pas un doublon.</strong>
-   * `/lol` est la vitrine publique — ce que l'outil fait, lisible sans compte — et
-   * `/lol/teams` est l'outil lui-même. Fondre les deux rendrait l'une des deux inatteignable :
-   * masquer la vitrine à un compte connecté, ou montrer à un visiteur une entrée qui mène à un
-   * écran de connexion.</p>
-   *
-   * <p>L'entrée des équipes est exigée en `TEAM_CREATE` <strong>ou</strong> `TEAM_VIEW`, et non
-   * en `TEAM_VIEW` seule : cette dernière est à <em>portée d'équipe</em>, un capitaine ne la porte pas dans son
-   * jeton, il la tient de son équipe (plan §A.1). L'exiger masquerait l'entrée à exactement ceux
-   * qui s'en servent. `TEAM_CREATE`, elle, est globale et va à tous les rôles système.</p>
-   */
   const navItems = useMemo<AppShellNavItem[]>(() => {
     const items: AppShellNavItem[] = [
       { key: "home", label: t("shell.home"), to: localize("/") },
       { key: "servers", label: t("shell.servers"), to: localize("/servers") },
-      // La vitrine LoL est publique et reste dans le bandeau pour tout le monde : c'est la
-      // page qui dit ce que l'outil fait, et elle ne sert à rien si seul un compte la trouve.
       { key: "lolPublic", label: t("shell.lolPublic"), to: localize("/lol") },
       { key: "contact", label: t("shell.contact"), to: localize("/contact") },
     ];
 
     if (connected) {
-      // À gauche d'*Équipes LoL*, et grisée tant qu'aucun compte Riot n'est lié.
-      //
-      // Elle n'est pas masquée : la masquer ferait croire que la fonctionnalité n'existe pas,
-      // alors que ce qui manque est une action à la portée de la personne. Elle n'est pas non
-      // plus désactivée : un bouton mort ne dit pas pourquoi. Grisée, expliquée au survol et à
-      // la lecture, elle reste un lien — et l'écran au bout redit la raison avec le chemin vers
-      // le profil, parce qu'une URL se tape à la main.
       items.push({
         key: "stats",
         label: t("shell.stats"),
@@ -151,8 +91,6 @@ export function AppLayout({ children }: { children: ReactNode }) {
 
   const footerLinks = useMemo<AppShellFooterLink[]>(
     () => [
-      // `to` et non `href` : ce sont des routes de l'application, et un rechargement complet
-      // pour aller lire deux pages de texte n'a aucune raison d'être.
       { key: "terms", label: t("shell.terms"), to: localize("/terms") },
       { key: "privacy", label: t("shell.privacy"), to: localize("/privacy") },
       { key: "storybook", label: t("shell.storybook"), href: STORYBOOK_PATH, external: false },
@@ -179,20 +117,13 @@ export function AppLayout({ children }: { children: ReactNode }) {
       signInLabel={t("signIn", { ns: "auth" })}
       signOutLabel={t("logout", { ns: "auth" })}
       onSignIn={() => navigate("/login")}
-      // La déconnexion attend la réponse du BFF avant de quitter l'écran : c'est lui qui efface
-      // le cookie `httpOnly`, et naviguer avant sa réponse rendrait l'utilisateur à l'accueil
-      // encore authentifié. `logout` vide l'état local même en cas d'échec, donc on n'attend
-      // jamais pour rien.
       onSignOut={() => {
         void logout().then(() => navigate("/", { replace: true }));
       }}
       footerLinks={footerLinks}
       footerNote={t("shell.footerNote")}
     >
-      {/* L'échec de la connexion Discord s'annonce ici, et pas sur l'écran de connexion : le BFF
-          renvoie le navigateur sur la page d'accueil (`DISCORD_OAUTH_POST_LOGIN_REDIRECT`, `/`
-          par défaut), pas sur `/login`. Le message doit donc survivre à l'endroit où l'on
-          atterrit, et la coquille est le seul endroit qui les couvre tous. */}
+      {/* Le BFF renvoie un échec OAuth sur l'accueil, pas sur /login : le message s'affiche donc dans la coquille. */}
       {discordLoginFailed ? (
         <Stack spacing={3}>
           <Alert severity="warning" onClose={dismissDiscordLoginFailure}>

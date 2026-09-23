@@ -2,10 +2,6 @@ import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { MultiSelect, type MultiSelectOption } from "./MultiSelect";
 
-/**
- * Comptes entièrement inventés. La règle du Storybook public : aucun pseudo Discord réel,
- * aucune adresse, aucun port.
- */
 const OPTIONS: MultiSelectOption[] = [
   { value: "u1", label: "capitaine.nemo", description: "Modérateur" },
   { value: "u2", label: "vega.orbitale", description: "Administrateur" },
@@ -36,11 +32,6 @@ export const Vide: Story = { args: { values: [] } };
 
 export const PlusieursRetenus: Story = { args: { values: ["u1", "u2", "u3"] } };
 
-/**
- * Une valeur absente du catalogue **reste affichée**, telle quelle. C'est un identifiant de
- * compte qui ne désigne plus personne : la faire disparaître retirerait silencieusement un
- * administrateur d'une fiche à la première sauvegarde.
- */
 export const AvecValeurOrpheline: Story = {
   args: { values: ["u1", "compte-supprime-42"] },
 };

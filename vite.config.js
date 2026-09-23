@@ -9,9 +9,7 @@ const TYPES = { ".html": "text/html", ".js": "text/javascript", ".css": "text/cs
   ".json": "application/json", ".svg": "image/svg+xml", ".png": "image/png",
   ".woff2": "font/woff2", ".map": "application/json" };
 
-// nginx sert le Storybook sous /storybook en production (voir nginx.conf). Le serveur de dev ne
-// connaissait que le SPA : /storybook tombait sur la route attrape-tout du routeur, qui renvoie à
-// l'accueil. Un lien mort qui n'a l'air de rien.
+// nginx sert /storybook en prod ; sans ce middleware, le dev le renvoyait à l'accueil.
 const storybookEnDev = () => ({
   name: "storybook-en-dev",
   configureServer(server) {
@@ -35,22 +33,11 @@ const storybookEnDev = () => ({
 });
 import react from "@vitejs/plugin-react";
 
-// Le client appelle l'API en relatif ("/api"), parce qu'en production nginx sert le
-// bundle et relaie /api/ vers le BFF sur la même origine. Le serveur de développement
-// de Vite ne sait pas faire ça tout seul : sans ce proxy, chaque appel du navigateur
-// retombe sur le serveur de dev, qui répond l'index.html au lieu du JSON attendu.
-//
-// La cible vient de l'environnement pour que la même configuration serve en local
-// (http://localhost:18082) comme dans la stack de dev (http://dev-schub-bff:8080).
+// En prod nginx relaie /api/ vers le BFF sur la même origine ; ce proxy reproduit ce relais en dev.
 const apiProxyTarget = process.env.API_PROXY_TARGET ?? "http://localhost:18082";
 
-// Vite refuse les requêtes dont l'en-tête Host lui est inconnu (403 « Blocked request »).
-// Le serveur de dev est joint par deux noms qui ne sont ni localhost ni une IP : son nom
-// de service sur le réseau Docker, et le domaine public servi par le tunnel Cloudflare.
-//
-// Note : ce réglage ne concerne QUE l'en-tête Host. L'en-tête Origin, lui, est relayé
-// tel quel au BFF, qui applique sa propre liste (auth.cors.allowed-origins) — c'est là
-// qu'il faut déclarer les origines, pas ici.
+// Vite refuse un Host inconnu (403 « Blocked request »). L'Origin, lui, est filtré par le BFF
+// (auth.cors.allowed-origins).
 const allowedHosts = (process.env.DEV_ALLOWED_HOSTS ?? "dev-schub-front,dev.schultz-thomas.fr")
   .split(",")
   .map((host) => host.trim())
@@ -64,8 +51,7 @@ export default defineConfig({
       "/api": {
         target: apiProxyTarget,
         changeOrigin: true,
-        // nginx relaie « /api/ » vers « / » du BFF ; on reproduit la même réécriture,
-        // sinon les chemins seraient décalés d'un segment entre dev et prod.
+        // Même réécriture que nginx (/api/ → /).
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
     },

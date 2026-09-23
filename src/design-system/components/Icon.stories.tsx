@@ -18,10 +18,6 @@ type Story = StoryObj<typeof meta>;
 
 export const ParDefaut: Story = {};
 
-/**
- * Le répertoire entier. C'est la raison d'être de cette story : avant d'ajouter une icône, on
- * regarde ici si l'action a déjà la sienne.
- */
 export const LeRepertoire: Story = {
   render: () => (
     <Stack direction="row" spacing={3} flexWrap="wrap" useFlexGap>
@@ -37,10 +33,6 @@ export const LeRepertoire: Story = {
   ),
 };
 
-/**
- * Avec un `label`, l'icône devient une image annoncée aux lecteurs d'écran ; sans, elle est
- * décorative et masquée. Le second cas est le bon quand un libellé voisin dit déjà la chose.
- */
 export const DecorativeOuAnnoncee: Story = {
   render: () => (
     <Stack direction="row" spacing={2} alignItems="center">

@@ -10,8 +10,4 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/**
- * Toujours indéterminée : aucun appel de cette application ne sait dire où il en est, et une
- * barre qui prétendrait le contraire mentirait.
- */
 export const EnCours: Story = {};

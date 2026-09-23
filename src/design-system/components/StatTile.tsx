@@ -4,26 +4,13 @@ import { chartColors } from "../tokens";
 
 export interface StatTileProps {
   label: string;
-  /** Déjà mis en forme par l'appelant : lui seul connaît la locale et l'unité. */
   value: string;
-  /** Sur quoi porte le chiffre — nombre de parties, période. */
   hint?: string;
-  /** L'écart, signe compris. Sans signe, il se lit comme une valeur absolue. */
   delta?: string;
   deltaTone?: "positive" | "negative" | "neutral";
-  /** Ce à quoi l'écart se compare, en toutes lettres. */
   deltaHint?: string;
 }
 
-/**
- * Un chiffre, et ce sur quoi il porte.
- *
- * <p>`hint` n'est pas décoratif : un taux calculé sur trois parties se lit exactement comme un
- * taux calculé sur trois cents si rien ne dit lequel des deux on regarde.</p>
- *
- * <p>La couleur de l'écart est une redite : le signe le porte déjà, et c'est ce qui le rend
- * lisible sans distinguer le vert du rouge.</p>
- */
 export function StatTile({
   label,
   value,

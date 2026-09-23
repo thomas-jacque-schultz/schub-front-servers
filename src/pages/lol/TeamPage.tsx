@@ -24,16 +24,6 @@ import { RosterPanel } from "./RosterPanel";
 
 type PanelKey = "roster" | "players" | "team" | "pool" | "draft";
 
-/**
- * La page d'une équipe, à panneaux.
- *
- * <p>L'effectif prend le premier onglet — il faut bien un endroit où l'équipe se compose — puis
- * viennent les quatre panneaux du plan §D.2 bis : joueurs, parties d'équipe, pool de champions et
- * préparateur de draft.</p>
- *
- * <p>Seul le panneau actif est monté : ouvrir une équipe ne va pas chercher les compositions
- * tant qu'on n'ouvre pas le préparateur.</p>
- */
 function TeamPage() {
   const { t } = useTranslation("teams");
   const { id = "" } = useParams<{ id: string }>();
@@ -168,8 +158,6 @@ function TeamPage() {
 
       {error && <Alert severity="error">{error}</Alert>}
 
-      {/* Un membre voit tout et n'écrit rien : on le dit, plutôt que de laisser croire à des
-          boutons perdus. C'est la règle de portée du plan §A.1, pas un incident. */}
       {!team.viewerCanEdit && (
         <Text variant="caption" tone="secondary">
           {t("team.readOnly")}

@@ -3,10 +3,6 @@ import AddIcon from "@mui/icons-material/Add";
 import Stack from "@mui/material/Stack";
 import { Button } from "./Button";
 
-/**
- * Les données de cette story sont inventées : le Storybook est public, aucune valeur réelle
- * (pseudo, IP, port) n'y figure.
- */
 const meta = {
   title: "Primitives/Button",
   component: Button,
@@ -38,7 +34,6 @@ export const Danger: Story = {
   args: { variant: "danger", children: "Supprimer la règle" },
 };
 
-/** Le bouton dit qu'il travaille au lieu de se griser sans explication. */
 export const EnChargement: Story = {
   args: { loading: true, children: "Enregistrement…" },
 };
@@ -51,7 +46,6 @@ export const AvecIcone: Story = {
   args: { startIcon: <AddIcon />, children: "Ajouter" },
 };
 
-/** Les quatre intentions côte à côte : c'est la vue utile pour arbitrer une hiérarchie visuelle. */
 export const ToutesLesVariantes: Story = {
   render: (args) => (
     <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>

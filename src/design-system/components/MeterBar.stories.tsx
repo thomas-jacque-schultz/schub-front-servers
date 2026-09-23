@@ -16,7 +16,6 @@ export const AvecAppui: Story = {
   args: { hint: "69 victoires sur 128 parties" },
 };
 
-/** Sans dénominateur, la barre reste là et reste vide : un vide n'est pas un zéro. */
 export const SansValeur: Story = {
   args: { value: null, valueLabel: "—", hint: "aucune partie sur la période" },
 };

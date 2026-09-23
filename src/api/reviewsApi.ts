@@ -5,14 +5,6 @@ import type {
   GameReviewsDto,
 } from "../types/review";
 
-/**
- * Les notes d'une partie d'équipe.
- *
- * <p>Le chemin porte l'équipe et la partie : une note n'existe pas sans les deux, et c'est
- * l'équipe qui porte les droits. Le cœur refuse une partie qui n'est pas une partie de cette
- * équipe — un 404 — et répond 503 quand il n'a pas pu le vérifier.</p>
- */
-
 const base = (teamId: string, matchId: string) =>
   `/teams/${teamId}/games/${matchId}/reviews`;
 

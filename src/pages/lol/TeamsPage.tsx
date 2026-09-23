@@ -21,18 +21,6 @@ import { useLocalizedNavigate } from "../../i18n/navigation";
 import { useAuthStore } from "../../stores/authStore";
 import type { TeamSummaryDto } from "../../types/team";
 
-/**
- * Mes équipes — celles que j'ai créées, et celles où l'on m'a donné une place.
- *
- * <p>Il n'y a rien à filtrer ici : le cœur ne sert que les équipes de l'appelant. C'est cette
- * route, et elle seule, qui réalise « les joueurs ajoutés voient l'équipe apparaître sur leur
- * compte » (plan §D.2 bis).</p>
- *
- * <p><strong>Les badges de chaque ligne viennent des projections, pas d'un calcul local.</strong>
- * `viewerCanEdit` et `viewerMemberId` sont des faits sur le lecteur, portés par le résumé
- * précisément pour qu'une liste n'ait pas besoin d'un appel par ligne — ni d'une comparaison
- * d'identifiants qui répondrait faux (plan §A.5 bis).</p>
- */
 function TeamsPage() {
   const { t } = useTranslation("teams");
   const { formatDateTime } = useLocaleFormat();
@@ -77,8 +65,6 @@ function TeamsPage() {
       const created = await createTeamApi(newName.trim());
       setIsCreating(false);
       setNewName("");
-      // On ouvre l'équipe créée plutôt que de revenir à la liste : la seule chose qu'on veuille
-      // faire d'une équipe vide est d'y mettre des joueurs.
       navigate(`/lol/teams/${created.id}`);
     } catch (createError) {
       setError(createError instanceof Error ? createError.message : t("create.failed"));
@@ -87,13 +73,6 @@ function TeamsPage() {
     }
   };
 
-  /**
-   * Revendiquer les places laissées à son Riot ID.
-   *
-   * <p>Le bouton est là dès maintenant parce qu'il est le pendant exact de l'ajout d'un membre
-   * libre. Tant que la liaison du compte Riot n'est pas livrée (lot D.3), il répond honnêtement
-   * « aucune place ne vous attendait » — ce qui est vrai, et non une panne.</p>
-   */
   const onClaim = async () => {
     setIsClaiming(true);
     setError("");

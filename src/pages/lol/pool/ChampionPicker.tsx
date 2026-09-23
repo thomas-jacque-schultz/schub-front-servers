@@ -15,23 +15,12 @@ export interface ChampionPickerProps {
   open: boolean;
   role: GameRole | null;
   catalog: ChampionCatalogEntryDto[];
-  /** Les clés déjà retenues à ce poste. */
   selected: string[];
   saving: boolean;
   onClose: () => void;
   onConfirm: (championKeys: string[]) => void;
 }
 
-/**
- * Le catalogue entier, en icônes, où l'on choisit ce que l'équipe accepte d'aligner à un poste.
- *
- * <p>Une grille d'icônes et non une liste déroulante : on reconnaît un champion à son portrait
- * bien avant son nom, et le geste demandé est « clique ceux que tu veux », pas « ouvre, cherche,
- * valide, recommence ». Le filtre reste là pour qui connaît le nom.</p>
- *
- * <p>Le choix n'est envoyé qu'à la validation — un aller-retour par clic ferait de chaque
- * hésitation une écriture, et un réseau lent rendrait la grille inutilisable.</p>
- */
 export function ChampionPicker({
   open,
   role,
@@ -47,9 +36,7 @@ export function ChampionPicker({
   const [retenus, setRetenus] = useState<string[]>(selected);
   const [filtre, setFiltre] = useState<string>("");
 
-  // `selected` est un tableau reconstruit à chaque rendu du parent : en dépendre réinitialisait
-  // la sélection à chaque re-rendu, et donc l'effaçait quand une écriture échouait. On ne repart
-  // de l'état du serveur qu'à l'ouverture.
+  // Ne pas dépendre de selected (recréé à chaque rendu) : la sélection était effacée après une écriture refusée.
   useEffect(() => {
     if (open) {
       setRetenus(selected);
@@ -119,11 +106,6 @@ export function ChampionPicker({
   );
 }
 
-/**
- * Un vrai bouton, et {@code aria-pressed} plutôt qu'une icône « cochée » : sans lui, un lecteur
- * d'écran annonce le nom du champion sans dire s'il est retenu, et la grille devient illisible
- * pour qui ne voit pas le liseré.
- */
 function ChampionChoice({
   champion,
   selected,

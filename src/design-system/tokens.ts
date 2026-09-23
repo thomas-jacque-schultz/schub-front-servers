@@ -1,36 +1,8 @@
-/**
- * Tokens du design system — la source de vérité unique des couleurs, espacements, rayons,
- * ombres et typographie de Schub.
- *
- * <p>Avant ce fichier, deux systèmes de couleur coexistaient sans se parler : `theme.ts`
- * déclarait une palette claire pendant que `LandingPage`, `Login`, `Dashboard` et
- * `GameServerFormPage` peignaient des dégradés sombres en dur. Le sombre a été retenu comme
- * thème canonique (décision n°5 du plan du 18-09) ; les dégradés en question sont la matière
- * première de `backdrops.dark`, transposés ici une fois pour toutes.</p>
- *
- * <p>Règle d'usage : aucune valeur de couleur, de rayon ou d'ombre ne s'écrit ailleurs. Un
- * composant qui a besoin d'une nuance absente de ce fichier l'ajoute ici, il ne l'improvise pas
- * dans son `sx`.</p>
- */
-
-/** Les deux schémas de couleur servis par le thème. */
 export type ColorSchemeName = "light" | "dark";
 
-/**
- * Les quatre statuts d'un serveur de jeu, tels que le cœur les expose.
- *
- * <p>Le design system redéclare ce type plutôt que d'importer `types/server` : une primitive ne
- * dépend pas du domaine, c'est ce qui la rend réutilisable par le portfolio et l'app d'équipe.</p>
- */
 export type ServerStatusToken =
   "online" | "offline" | "unknown" | "unreachable";
 
-/**
- * Couleurs de marque, indépendantes du schéma.
- *
- * <p>`teal` vient de la palette claire historique (`#0b7a6c`), `amber` de sa couleur secondaire
- * (`#d56c11`), `abyss` et `deepBlue` des dégradés sombres qui étaient codés en dur.</p>
- */
 export const brand = {
   teal: "#0b7a6c",
   tealBright: "#2fa08f",
@@ -41,7 +13,6 @@ export const brand = {
   abyss: "#071019",
 } as const;
 
-/** Une palette complète, déclinée par schéma de couleur. */
 export interface PaletteTokens {
   primary: { main: string; light: string; dark: string; contrastText: string };
   secondary: {
@@ -57,14 +28,9 @@ export interface PaletteTokens {
   background: { default: string; paper: string; raised: string };
   text: { primary: string; secondary: string; disabled: string };
   divider: string;
-  /** Teinte des bordures de cartes et de tableaux, plus discrète que `divider`. */
   outline: string;
 }
 
-/**
- * Palette sombre — **canonique**. C'est elle qu'on dessine en premier ; la claire en est la
- * transposition, pas l'inverse.
- */
 export const darkPalette: PaletteTokens = {
   primary: {
     main: "#2fa08f",
@@ -96,9 +62,6 @@ export const darkPalette: PaletteTokens = {
   outline: "rgba(159, 178, 193, 0.16)",
 };
 
-/**
- * Palette claire — reprise de `theme.ts`, conservée en alternative consultable.
- */
 export const lightPalette: PaletteTokens = {
   primary: {
     main: brand.teal,
@@ -130,18 +93,11 @@ export const lightPalette: PaletteTokens = {
   outline: "#e2eae6",
 };
 
-/** Les deux palettes, indexées par schéma. */
 export const palettes: Record<ColorSchemeName, PaletteTokens> = {
   dark: darkPalette,
   light: lightPalette,
 };
 
-/**
- * Fonds de page.
- *
- * <p>C'est la transposition en token des `radial-gradient(...)` qui traînaient dans quatre
- * écrans. `page` habille les écrans pleine hauteur, `panel` les zones internes plus calmes.</p>
- */
 export const backdrops: Record<
   ColorSchemeName,
   { page: string; panel: string }
@@ -162,7 +118,6 @@ export const backdrops: Record<
   },
 };
 
-/** Couleur de chaque statut de serveur, par schéma. */
 export const statusColors: Record<
   ColorSchemeName,
   Record<ServerStatusToken, string>
@@ -181,13 +136,8 @@ export const statusColors: Record<
   },
 };
 
-/**
- * Échelle d'espacement : un pas de 8 px, comme MUI. Les composants parlent en pas
- * (`spacing(2)` = 16 px), jamais en pixels.
- */
 export const spacingUnit = 8;
 
-/** Rayons de bordure. `pill` sert aux puces et aux badges. */
 export const radii = {
   sm: 6,
   md: 10,
@@ -195,10 +145,6 @@ export const radii = {
   pill: 999,
 } as const;
 
-/**
- * Ombres. Elles diffèrent par schéma : sur fond sombre, une ombre noire ne se voit pas — c'est
- * le liseré clair qui donne le relief.
- */
 export const elevations: Record<
   ColorSchemeName,
   { sm: string; md: string; lg: string }
@@ -215,7 +161,6 @@ export const elevations: Record<
   },
 };
 
-/** Typographie. Une seule famille, déclarée une seule fois. */
 export const typographyTokens = {
   fontFamily: "'Segoe UI', 'Noto Sans', 'Helvetica Neue', Arial, sans-serif",
   monospaceFontFamily: "'JetBrains Mono', 'Fira Mono', 'Consolas', monospace",
@@ -232,27 +177,12 @@ export const typographyTokens = {
   },
 } as const;
 
-/** Durées d'animation, pour que deux composants ne choisissent pas deux vitesses. */
 export const motion = {
   fast: 120,
   normal: 200,
   slow: 320,
 } as const;
 
-/**
- * Couleurs des graphiques.
- *
- * <p>Une seule teinte de marque, jamais une palette catégorielle : tous les graphiques d'ici sont
- * à série unique, et deux teintes voisines du thème (`primary` et `success`) sont
- * indistinguables pour une vision deutéranope — vérifié, pas supposé.</p>
- *
- * <p>`mark` en clair n'est pas `primary.main` : le teal de marque tombe juste sous le plancher de
- * saturation d'une marque graphique sur fond blanc et se lit gris. `#0a8a74` est le même teal,
- * remonté jusqu'à passer.</p>
- *
- * <p>Un écart se lit au signe et à la valeur avant de se lire à la couleur : `positive` et
- * `negative` accompagnent un texte, ils ne le remplacent jamais.</p>
- */
 export const chartColors: Record<
   ColorSchemeName,
   {

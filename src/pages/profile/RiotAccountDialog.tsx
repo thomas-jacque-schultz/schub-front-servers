@@ -10,28 +10,11 @@ import type { ProfileDto, RiotAccountChangeDto } from "../../types/profile";
 
 interface RiotAccountDialogProps {
   open: boolean;
-  /** Le compte actuellement lié, ou `null`. Sa présence fait de ce dialogue un *changement*. */
   currentRiotId: string | null;
   onClose: () => void;
   onLinked: (profile: ProfileDto) => void;
 }
 
-/**
- * Lier — ou changer — son compte Riot.
- *
- * <p>La zone de saisie, la liste et le bouton « demander à Riot » vivent dans
- * {@link RiotAccountPicker} : l'écran d'ajout d'un membre d'équipe pose exactement la même
- * question, et l'API n'y répond que d'une façon. Ce qui reste ici est ce qui n'appartient qu'au
- * profil — le changement et ses conséquences.</p>
- *
- * <h2>Le changement se confirme sur les faits du cœur</h2>
- *
- * <p>Il n'existe pas de route de prévisualisation : un envoi sans `confirmChange` répond 409
- * <em>en portant</em> ce que le remplacement emporte. Le refus est donc l'information, et l'écran
- * ne peut pas proposer de confirmer un changement dont il n'a pas reçu les conséquences. Deux 409
- * possibles, qui se distinguent par la présence de ces conséquences — « déjà pris par quelqu'un
- * d'autre » n'en porte pas, et demande un geste opposé.</p>
- */
 export function RiotAccountDialog({
   open,
   currentRiotId,
@@ -40,7 +23,6 @@ export function RiotAccountDialog({
 }: RiotAccountDialogProps) {
   const { t } = useTranslation("profile");
 
-  /** Le compte qu'on ne peut lier qu'en assumant ce que le cœur a renvoyé avec son refus. */
   const [pending, setPending] = useState<{ riotId: string; change: RiotAccountChangeDto } | null>(
     null,
   );
@@ -50,8 +32,7 @@ export function RiotAccountDialog({
   const isChange = currentRiotId !== null;
 
   const messageDeRefus = (cause: unknown): string => {
-    // Le statut, et non le texte du serveur : le cœur répond en français, et le reprendre tel
-    // quel afficherait une phrase française sur le site anglais.
+    // Le statut et non le texte du serveur : le cœur répond en français.
     if (cause instanceof ApiError && cause.status === 409) {
       return t("riot.link.conflict");
     }
@@ -65,9 +46,7 @@ export function RiotAccountDialog({
     try {
       const profil = await linkRiotAccountApi(riotId, confirmChange);
 
-      // Le cœur le demande explicitement après un succès : c'est cet appel qui rattache les
-      // places d'effectif laissées à ce Riot ID, et qui les resynchronise après un changement.
-      // Son échec ne remet pas la liaison en cause — elle, elle a abouti.
+      // Rattache les places d'effectif laissées à ce Riot ID ; son échec n'annule pas la liaison.
       await claimTeamsApi().catch(() => undefined);
 
       onLinked(profil);
@@ -100,7 +79,6 @@ export function RiotAccountDialog({
 
         {pending ? (
           <Stack spacing={2}>
-            {/* Revenir à la liste sans perdre la recherche déjà faite. */}
             <Stack direction="row">
               <Button
                 variant="ghost"
@@ -129,13 +107,6 @@ export function RiotAccountDialog({
   );
 }
 
-/**
- * Ce que le remplacement emporte — **les faits que le cœur a renvoyés**, et rien d'autre.
- *
- * <p>Un champ absent ou faux ne produit aucune ligne. C'est délibéré : inventer « environ vingt
- * minutes » quand le serveur ne l'a pas dit donnerait un chiffre qu'on lirait comme vrai, et qui
- * survivrait à celui qui l'a écrit.</p>
- */
 function ChangeConsequences({ change }: { change: RiotAccountChangeDto }) {
   const { t } = useTranslation("profile");
 

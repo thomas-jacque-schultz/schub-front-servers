@@ -9,15 +9,12 @@ import { Avatar } from "./Avatar";
 export interface MultiSelectOption {
   value: string;
   label: string;
-  /** Portrait facultatif : c'est ce qui fait reconnaître un compte plus vite qu'un pseudo. */
   avatarUrl?: string | null;
-  /** Une ligne secondaire sous le libellé — un identifiant, un rôle. */
   description?: string | null;
 }
 
 export interface MultiSelectProps {
   label: string;
-  /** Les valeurs retenues. Une valeur absente des options reste retenue et s'affiche telle quelle. */
   values: string[];
   onChange: (values: string[]) => void;
   options: MultiSelectOption[];
@@ -28,14 +25,6 @@ export interface MultiSelectProps {
   error?: boolean;
 }
 
-/**
- * Le sélecteur multiple, avec portrait et libellé.
- *
- * <p>Une valeur **inconnue du catalogue reste affichée** au lieu de disparaître : c'est le cas
- * d'un identifiant de compte qui ne désigne plus personne. La faire disparaître retirerait
- * silencieusement un administrateur d'une fiche à la première sauvegarde ; la montrer telle
- * quelle la rend corrigeable.</p>
- */
 export function MultiSelect({
   label,
   values,

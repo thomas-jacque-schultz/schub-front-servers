@@ -20,7 +20,6 @@ interface ServersDashboardProps {
   isLoading: boolean;
   error: string;
   connected: boolean;
-  /** Le lecteur peut-il démarrer et arrêter ? Vient du rôle, donc vaut pour tous les serveurs. */
   canControl?: boolean;
   canEdit?: boolean;
   lastRefreshedAt?: Date | null;
@@ -32,14 +31,6 @@ interface ServersDashboardProps {
   pendingServerSlug?: string | null;
 }
 
-/**
- * La liste des serveurs, telle qu'elle s'affiche sur `/servers` et dans les écrans
- * d'administration.
- *
- * <p>Démarrer et arrêter s'affichent dès que le rôle les porte : c'est ici que le modérateur les
- * trouve, sur la page qu'il ouvre pour voir l'état de ses serveurs. Ils n'ont jamais été
- * atteignables depuis l'onglet Configuration, qu'il ne voit pas.</p>
- */
 function ServersDashboard({
   servers,
   isLoading,

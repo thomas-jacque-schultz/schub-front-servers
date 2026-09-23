@@ -23,10 +23,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Confirmation: Story = {};
 
-/**
- * Une notification convient à ce qu'on peut manquer sans conséquence. Une erreur qu'il faut
- * corriger reste sur l'écran, dans un `Alert` — sinon elle disparaît avant d'être lue.
- */
 export const Erreur: Story = {
   args: { severity: "error", message: "Le cœur a refusé : ce rôle est plus puissant que le vôtre.", autoHideMs: 8000 },
 };

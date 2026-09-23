@@ -14,15 +14,6 @@ import {
 import { PORTFOLIO } from "../../content/portfolio";
 import { useCurrentLanguage, useLocalizedNavigate, useLocalizedPath } from "../../i18n/navigation";
 
-/**
- * Le contenu personnel : accroche, projets, parcours, formation, langues.
- *
- * <p>Il vit sur `/contact` depuis les retours d'usage : l'accueil est la page produit de Schub,
- * et tout ce qui parle de la personne se lit au même endroit que le moyen de la joindre. Le
- * formulaire est en bas de cette même page.</p>
- *
- * <p>Aucun texte ici : tout vient de `src/content/portfolio.ts`.</p>
- */
 export function PortfolioSections() {
   const { t } = useTranslation("portfolio");
   const language = useCurrentLanguage();
@@ -33,8 +24,6 @@ export function PortfolioSections() {
   return (
     <Stack spacing={4}>
       <Stack direction="responsive" spacing={3} align="start">
-        {/* La colonne du portrait ne se dessine que si une photo existe. Voir `portrait` dans le
-            contenu : la place est réservée dans le code, pas par un cadre vide à l'écran. */}
         {content.portrait.src && (
           <Avatar src={content.portrait.src} name={content.portrait.alt} size="medium" />
         )}
@@ -54,8 +43,6 @@ export function PortfolioSections() {
         </Stack>
       </Stack>
 
-      {/* Le seul paragraphe manquant, affiché et signalé. Tant que cette alerte est là, la page
-          n'est pas publiable — c'est le premier bloc que lit un visiteur. */}
       <Alert severity="warning" title={content.currentRoleGap.heading}>
         {content.currentRoleGap.placeholder}
       </Alert>
