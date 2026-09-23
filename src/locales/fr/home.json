@@ -6,10 +6,11 @@
   "hero": {
     "eyebrow": "Schub",
     "title": "Des serveurs de jeu qui s'allument quand on en a besoin",
-    "subtitle": "Et, pour League of Legends, de quoi faire vivre une équipe."
+    "subtitle": "Le hub de la communauté Discord Miam — et, pour League of Legends, de quoi faire vivre une équipe."
   },
   "about": {
     "title": "Ce que fait Schub",
+    "community": "Schub sert de hub à la communauté Discord Miam : ses serveurs de jeu, ses équipes League of Legends et les outils qui vont avec. Il s'ouvrira peut-être un jour à un cercle plus large, une fois les outils éprouvés et stabilisés — pour l'instant, il est fait pour nous.",
     "servers": "Les serveurs de jeu sont hébergés à la maison et pilotés depuis le site ou depuis Discord : leur état est visible en direct, et démarrer ou arrêter est un bouton. Les redirections de ports s'ouvrent et se referment toutes seules avec le serveur.",
     "lol": "Côté League of Legends, Schub lit tes parties par l'API de Riot : statistiques personnelles et d'équipe, pool de champions par poste, préparateur de draft et débrief d'après-match.",
     "identity": "L'identité passe par Discord. Il n'y a pas de mot de passe à retenir, et les droits suivent le rôle.",

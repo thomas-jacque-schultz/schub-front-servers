@@ -8,6 +8,7 @@ export { AppShell } from "./components/AppShell";
 export type {
   AppShellFooterLink,
   AppShellMenu,
+  AppShellNavEntry,
   AppShellNavItem,
   AppShellProps,
 } from "./components/AppShell";

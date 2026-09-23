@@ -1,7 +1,7 @@
 import { type ReactNode, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Alert, AppShell, Stack } from "../design-system";
-import type { AppShellFooterLink, AppShellMenu, AppShellNavItem } from "../design-system";
+import type { AppShellFooterLink, AppShellNavEntry, AppShellNavItem } from "../design-system";
 import { PORTFOLIO } from "../content/portfolio";
 import { useLocation } from "react-router-dom";
 import { pathWithoutLanguage } from "../i18n/config";
@@ -30,7 +30,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
   const route = pathWithoutLanguage(pathname);
   const largeur = ECRANS_LARGES.some((prefixe) => route.startsWith(prefixe)) ? "xl" : "lg";
 
-  const menus = useMemo<AppShellMenu[]>(() => {
+  const configuration = useMemo<AppShellNavItem[]>(() => {
     if (!connected) {
       return [];
     }
@@ -53,23 +53,17 @@ export function AppLayout({ children }: { children: ReactNode }) {
       },
     ];
 
-    const allowed = entries
+    return entries
       .filter((entry) => canAny(...entry.permissions))
       .map(({ key, label, to }) => ({ key, label, to: localize(to) }));
-
-    return [{ key: "configuration", label: t("shell.configuration"), items: allowed }];
   }, [connected, canAny, localize, t]);
 
-  const navItems = useMemo<AppShellNavItem[]>(() => {
-    const items: AppShellNavItem[] = [
-      { key: "home", label: t("shell.home"), to: localize("/") },
-      { key: "servers", label: t("shell.servers"), to: localize("/servers") },
-      { key: "lolPublic", label: t("shell.lolPublic"), to: localize("/lol") },
-      { key: "contact", label: t("shell.contact"), to: localize("/contact") },
+  const navItems = useMemo<AppShellNavEntry[]>(() => {
+    const lol: AppShellNavItem[] = [
+      { key: "lolPublic", label: t("shell.lolPresentation"), to: localize("/lol") },
     ];
-
     if (connected) {
-      items.push({
+      lol.push({
         key: "stats",
         label: t("shell.stats"),
         to: localize("/lol/stats"),
@@ -77,25 +71,30 @@ export function AppLayout({ children }: { children: ReactNode }) {
         hint: riotLinked ? undefined : t("shell.statsLocked"),
       });
     }
-
     if (connected && canAny("TEAM_CREATE", "TEAM_VIEW")) {
-      items.push({ key: "lol", label: t("shell.lol"), to: localize("/lol/teams") });
+      lol.push({ key: "teams", label: t("shell.lolTeams"), to: localize("/lol/teams") });
     }
 
+    const entries: AppShellNavEntry[] = [
+      { key: "home", label: t("shell.home"), to: localize("/") },
+      { key: "servers", label: t("shell.servers"), to: localize("/servers") },
+      { key: "lol", label: t("shell.lolMenu"), items: lol },
+    ];
     if (connected) {
-      items.push({ key: "profile", label: t("shell.profile"), to: localize("/profile") });
+      entries.push({ key: "profile", label: t("shell.profile"), to: localize("/profile") });
     }
-
-    return items;
-  }, [connected, canAny, localize, riotLinked, t]);
+    entries.push({ key: "configuration", label: t("shell.configuration"), items: configuration });
+    return entries;
+  }, [connected, canAny, configuration, localize, riotLinked, t]);
 
   const footerLinks = useMemo<AppShellFooterLink[]>(
     () => [
+      { key: "creator", label: t("shell.creator"), to: localize("/contact"), accent: true },
+      { key: "feedback", label: t("shell.feedback"), to: localize("/contact#feedback"), accent: true },
       { key: "terms", label: t("shell.terms"), to: localize("/terms") },
       { key: "privacy", label: t("shell.privacy"), to: localize("/privacy") },
       { key: "storybook", label: t("shell.storybook"), href: STORYBOOK_PATH, external: false },
       { key: "linkedin", label: t("shell.linkedin"), href: LINKEDIN_URL },
-      { key: "discord", label: t("shell.discord"), href: null, pendingLabel: t("shell.toComplete") },
       { key: "github", label: t("shell.github"), href: GITHUB_URL },
     ],
     [localize, t],
@@ -108,7 +107,6 @@ export function AppLayout({ children }: { children: ReactNode }) {
       brandTagline={t("app.tagline")}
       maxWidth={largeur}
       navItems={navItems}
-      menus={menus}
       connected={connected}
       username={profile?.username}
       connectedAsLabel={

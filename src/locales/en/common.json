@@ -39,8 +39,6 @@
   "shell": {
     "home": "Home",
     "servers": "Servers",
-    "lol": "LoL teams",
-    "lolPublic": "League of Legends",
     "configuration": "Configuration",
     "configServers": "Servers",
     "configPorts": "Ports",
@@ -49,15 +47,18 @@
     "configDiscord": "Discord channels",
     "storybook": "Design system",
     "linkedin": "LinkedIn",
-    "discord": "Discord",
     "github": "GitHub",
     "terms": "Terms of use",
     "privacy": "Privacy",
-    "toComplete": "URL to be provided",
     "footerNote": "Schub — game server control",
     "contact": "Contact",
     "profile": "My profile",
     "stats": "My stats",
-    "statsLocked": "Link your Riot account to open it"
+    "statsLocked": "Link your Riot account to open it",
+    "lolMenu": "League of Legends",
+    "lolPresentation": "Overview",
+    "lolTeams": "Teams",
+    "creator": "Creator",
+    "feedback": "Feedback"
   }
 }

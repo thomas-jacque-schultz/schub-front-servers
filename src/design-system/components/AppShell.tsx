@@ -32,6 +32,10 @@ export interface AppShellMenu {
   items: AppShellNavItem[];
 }
 
+export type AppShellNavEntry = AppShellNavItem | AppShellMenu;
+
+const estUnMenu = (entry: AppShellNavEntry): entry is AppShellMenu => "items" in entry;
+
 export interface AppShellFooterLink {
   key: string;
   label: string;
@@ -39,14 +43,16 @@ export interface AppShellFooterLink {
   href?: string | null;
   pendingLabel?: string;
   external?: boolean;
+  /** Dans la couleur d'accent. Deux liens au plus : au-delà, plus rien ne ressort. */
+  accent?: boolean;
 }
 
 export interface AppShellProps {
   brand: string;
   brandTo: string;
   brandTagline?: string;
-  navItems?: AppShellNavItem[];
-  menus?: AppShellMenu[];
+  /** Entrées et menus déroulants, dans l'ordre d'affichage. */
+  navItems?: AppShellNavEntry[];
   connected: boolean;
   username?: string | null;
   signInLabel: string;
@@ -65,7 +71,6 @@ export function AppShell({
   brandTo,
   brandTagline,
   navItems = [],
-  menus = [],
   connected,
   username,
   signInLabel,
@@ -138,70 +143,77 @@ export function AppShell({
             </MuiStack>
 
             <MuiStack direction="row" spacing={0.5} alignItems="center" sx={{ flexGrow: 1, flexWrap: "wrap" }}>
-              {navItems.map((item) => {
-                const bouton = (
-                  <MuiButton
-                    component={RouterLink}
-                    to={item.to}
-                    color="inherit"
-                    aria-current={pathname === item.to ? "page" : undefined}
-                    aria-label={item.hint ? `${item.label} — ${item.hint}` : undefined}
-                    sx={{
-                      fontWeight: pathname === item.to ? 700 : 500,
-                      color: item.muted ? "text.disabled" : undefined,
-                    }}
-                  >
-                    {item.label}
-                  </MuiButton>
-                );
+              {navItems.map((entry) => {
+                if (!estUnMenu(entry)) {
+                  const bouton = (
+                    <MuiButton
+                      component={RouterLink}
+                      to={entry.to}
+                      color="inherit"
+                      aria-current={pathname === entry.to ? "page" : undefined}
+                      aria-label={entry.hint ? `${entry.label} — ${entry.hint}` : undefined}
+                      sx={{
+                        fontWeight: pathname === entry.to ? 700 : 500,
+                        color: entry.muted ? "text.disabled" : undefined,
+                      }}
+                    >
+                      {entry.label}
+                    </MuiButton>
+                  );
+                  return entry.hint ? (
+                    <Tooltip key={entry.key} title={entry.hint}>
+                      <Box component="span">{bouton}</Box>
+                    </Tooltip>
+                  ) : (
+                    <Box key={entry.key} component="span">
+                      {bouton}
+                    </Box>
+                  );
+                }
 
-                return item.hint ? (
-                  <Tooltip key={item.key} title={item.hint}>
-                    <Box component="span">{bouton}</Box>
-                  </Tooltip>
-                ) : (
-                  <Box key={item.key} component="span">
-                    {bouton}
-                  </Box>
-                );
-              })}
-
-              {menus
-                .filter((menu) => menu.items.length > 0)
-                .map((menu) => (
-                  <Box key={menu.key} component="span">
+                if (entry.items.length === 0) {
+                  return null;
+                }
+                const courant = entry.items.some((item) => pathname.startsWith(item.to));
+                return (
+                  <Box key={entry.key} component="span">
                     <MuiButton
                       color="inherit"
                       endIcon={<KeyboardArrowDownIcon />}
                       aria-haspopup="menu"
-                      aria-expanded={openMenuKey === menu.key}
+                      aria-expanded={openMenuKey === entry.key}
+                      sx={{ fontWeight: courant ? 700 : 500 }}
                       onClick={(event) => {
                         setAnchor(event.currentTarget);
-                        setOpenMenuKey(menu.key);
+                        setOpenMenuKey(entry.key);
                       }}
                     >
-                      {menu.label}
+                      {entry.label}
                     </MuiButton>
                     <Menu
                       anchorEl={anchor}
-                      open={openMenuKey === menu.key}
+                      open={openMenuKey === entry.key}
                       onClose={closeMenu}
-                      slotProps={{ list: { "aria-label": menu.label } }}
+                      slotProps={{ list: { "aria-label": entry.label } }}
                     >
-                      {menu.items.map((item) => (
+                      {entry.items.map((item) => (
                         <MenuItem
                           key={item.key}
                           component={RouterLink}
                           to={item.to}
                           onClick={closeMenu}
                           selected={pathname === item.to}
+                          aria-label={item.hint ? `${item.label} — ${item.hint}` : undefined}
+                          title={item.hint}
+                          sx={item.muted ? { color: "text.disabled" } : undefined}
                         >
                           {item.label}
                         </MenuItem>
                       ))}
                     </Menu>
                   </Box>
-                ))}
+                );
+              })}
             </MuiStack>
 
             <MuiStack direction="row" spacing={1} alignItems="center">
@@ -241,16 +253,17 @@ export function AppShell({
             justifyContent="space-between"
             alignItems={{ xs: "flex-start", sm: "center" }}
           >
-            <MuiStack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
-              {footerLinks.map((link) =>
+            <MuiStack direction="row" spacing={2} flexWrap="wrap" useFlexGap alignItems="center">
+              {[...footerLinks].sort((a, b) => Number(Boolean(b.accent)) - Number(Boolean(a.accent))).map((link) =>
                 link.to ? (
                   <Link
                     key={link.key}
                     component={RouterLink}
                     to={link.to}
-                    color="text.secondary"
+                    color={link.accent ? "primary.main" : "text.secondary"}
                     underline="hover"
                     variant="body2"
+                    sx={link.accent ? { fontWeight: 700 } : undefined}
                   >
                     {link.label}
                   </Link>
@@ -258,7 +271,7 @@ export function AppShell({
                   <Link
                     key={link.key}
                     href={link.href}
-                    color="text.secondary"
+                    color={link.accent ? "primary.main" : "text.secondary"}
                     underline="hover"
                     variant="body2"
                     target={link.external === false ? undefined : "_blank"}
