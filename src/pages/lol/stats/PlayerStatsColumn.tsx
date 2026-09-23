@@ -6,26 +6,33 @@ import {
   Divider,
   MeterBar,
   Stack,
+  StatGrid,
   StatTile,
   Text,
 } from "../../../design-system";
-import type { PlayerStatsDto } from "../../../types/stats";
-import { ChampionLines } from "./ChampionLines";
+import type { MetricScaleDto, PlayerStatsDto } from "../../../types/stats";
+import { ChampionStatCard } from "./ChampionStatCard";
+import { useMetrics } from "./metrics";
+import { PlayerRadar } from "./PlayerRadar";
+import { rangDeReference } from "./rank";
 import { RankedStandings } from "./RankedStandings";
 import { StatsStateNote } from "./StatsStateNote";
 import { useStatsFormat } from "./statsFormat";
 
+const CHAMPIONS_PAR_COLONNE = 3;
+
 export interface PlayerStatsColumnProps {
   player: PlayerStatsDto;
   isViewer: boolean;
+  scale: MetricScaleDto | null;
+  /** Le radar ne se lit pas dans une colonne étroite : le panneau décide s'il a la place. */
+  showRadar: boolean;
 }
 
-export function PlayerStatsColumn({
-  player,
-  isViewer,
-}: PlayerStatsColumnProps) {
+export function PlayerStatsColumn({ player, isViewer, scale, showRadar }: PlayerStatsColumnProps) {
   const { t } = useTranslation("stats");
   const format = useStatsFormat();
+  const { tuiles } = useMetrics();
   const overall = player.overall;
 
   return (
@@ -34,22 +41,15 @@ export function PlayerStatsColumn({
         <Stack direction="row" spacing={1} align="center">
           <Avatar src={player.avatarUrl} name={player.displayName ?? "?"} />
           <Stack spacing={0}>
-            <Text variant="subtitle">
-              {player.displayName ?? t("player.unnamed")}
-            </Text>
+            <Text variant="subtitle">{player.displayName ?? t("player.unnamed")}</Text>
             <Text variant="caption" tone="secondary">
               {player.roles.length > 0
                 ? player.roles.map((role) => t(`roles.${role}`, { ns: "teams" })).join(" · ")
                 : t("player.noRole")}
             </Text>
           </Stack>
+          {isViewer && <Chip label={t("player.you")} tone="primary" size="small" />}
         </Stack>
-
-        {isViewer && (
-          <Stack direction="row" spacing={0.5} wrap>
-            <Chip label={t("player.you")} tone="primary" size="small" />
-          </Stack>
-        )}
 
         <RankedStandings standings={player.rankings} />
 
@@ -63,81 +63,46 @@ export function PlayerStatsColumn({
               valueLabel={format.taux(overall.winRate)}
               hint={format.assise(player.coverage) ?? undefined}
             />
-
-            <Stack direction="row" spacing={2} wrap>
-              <StatTile
-                label={t("metric.kda")}
-                value={format.ratio(overall.kda)}
-                hint={t("metric.kdaDetail", {
-                  kills: format.ratio(overall.killsPerGame),
-                  deaths: format.ratio(overall.deathsPerGame),
-                  assists: format.ratio(overall.assistsPerGame),
-                })}
-                delta={
-                  player.versusTeammates
-                    ? (format.ecartRatio(player.versusTeammates.kdaDelta) ??
-                      undefined)
-                    : undefined
-                }
-                deltaTone={format.tonDeLEcart(player.versusTeammates?.kdaDelta)}
-                deltaHint={
-                  player.versusTeammates
-                    ? t("delta.versusTeammates", {
-                        count: player.versusTeammates.comparedWith,
-                      })
-                    : undefined
-                }
-              />
-              <StatTile
-                label={t("metric.cs")}
-                value={format.ratio(overall.csPerMinute)}
-              />
-              <StatTile
-                label={t("metric.gold")}
-                value={format.entier(overall.goldPerMinute)}
-                delta={
-                  player.versusTeammates
-                    ? (format.ecartRatio(
-                        player.versusTeammates.goldPerMinuteDelta,
-                      ) ?? undefined)
-                    : undefined
-                }
-                deltaTone={format.tonDeLEcart(
-                  player.versusTeammates?.goldPerMinuteDelta,
-                )}
-              />
-              <StatTile
-                label={t("metric.vision")}
-                value={format.ratio(overall.visionPerMinute)}
-                delta={
-                  player.versusTeammates
-                    ? (format.ecartRatio(
-                        player.versusTeammates.visionPerMinuteDelta,
-                      ) ?? undefined)
-                    : undefined
-                }
-                deltaTone={format.tonDeLEcart(
-                  player.versusTeammates?.visionPerMinuteDelta,
-                )}
-              />
-            </Stack>
-
             {player.versusTeammates && (
               <StatTile
+                size="small"
                 label={t("delta.winRateVersusTeammates")}
-                value={
-                  format.ecartEnPoints(player.versusTeammates.winRateDelta) ??
-                  format.absent
-                }
-                hint={t("delta.versusTeammates", {
-                  count: player.versusTeammates.comparedWith,
-                })}
+                value={format.ecartEnPoints(player.versusTeammates.winRateDelta) ?? format.absent}
+                hint={t("delta.versusTeammates", { count: player.versusTeammates.comparedWith })}
+              />
+            )}
+
+            <StatGrid
+              items={tuiles(overall, { compact: true, versus: player.versusTeammates })}
+              size="small"
+              minWidth={92}
+              divided
+            />
+
+            {showRadar && (
+              <PlayerRadar
+                radar={player.radar}
+                scale={scale}
+                rank={rangDeReference(player.rankings)}
               />
             )}
 
             <Divider />
 
-            <ChampionLines lines={player.champions} />
+            <Text variant="caption" tone="secondary">
+              {t("section.champions")}
+            </Text>
+            {player.champions.length === 0 ? (
+              <Text variant="caption" tone="disabled">
+                {t("section.noChampion")}
+              </Text>
+            ) : (
+              <Stack spacing={1}>
+                {player.champions.slice(0, CHAMPIONS_PAR_COLONNE).map((line) => (
+                  <ChampionStatCard key={line.key} line={line} compact />
+                ))}
+              </Stack>
+            )}
 
             {player.queues.length > 0 && (
               <Stack spacing={0.5}>
@@ -149,12 +114,9 @@ export function PlayerStatsColumn({
                     key={queue.key}
                     label={format.file(queue.key)}
                     value={queue.winRate}
-                    valueLabel={`${format.taux(queue.winRate)} · ${t(
-                      "coverage.gamesShort",
-                      {
-                        count: queue.games,
-                      },
-                    )}`}
+                    valueLabel={`${format.taux(queue.winRate)} · ${t("coverage.gamesShort", {
+                      count: queue.games,
+                    })}`}
                   />
                 ))}
               </Stack>
