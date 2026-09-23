@@ -12,7 +12,8 @@ import {
   Text,
 } from "../../../design-system";
 import type { TeamPlayersStatsDto } from "../../../types/stats";
-import { PlayerStatsColumn } from "./PlayerStatsColumn";
+import { PlayerHeader, PlayerStatsColumn } from "./PlayerStatsColumn";
+import { PlayerStatsView } from "./PlayerStatsView";
 import { useWindowOptions } from "./windows";
 
 export interface PlayersPanelProps {
@@ -105,6 +106,19 @@ export function PlayersPanel({ teamId }: PlayersPanelProps) {
             {t("emptyRoster")}
           </Text>
         </Card>
+      ) : visibles.length === 1 ? (
+        // Un seul joueur retenu : la même vue que Mes stats.
+        <Stack spacing={2}>
+          <Card>
+            <PlayerHeader player={visibles[0]} isViewer={visibles[0].memberId === stats?.viewerMemberId} />
+          </Card>
+          <PlayerStatsView
+            data={visibles[0]}
+            scale={stats?.scale ?? null}
+            layout="full"
+            versusTeammates={visibles[0].versusTeammates}
+          />
+        </Stack>
       ) : (
         <Columns minWidth={220} count={Math.max(1, Math.min(6, visibles.length))}>
           {visibles.map((player) => (

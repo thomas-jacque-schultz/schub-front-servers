@@ -231,7 +231,7 @@
   },
   "players": {
     "filter": "Joueurs affichés",
-    "filterHint": "Cliquez sur un avatar pour ne garder que certains joueurs.",
+    "filterHint": "Cliquez sur un avatar pour ne garder que certains joueurs. Un seul joueur retenu s'affiche en détail, comme Mes stats.",
     "radarHint": "Choisissez {{count}} joueurs au plus pour voir leurs profils radar côte à côte."
   },
   "rankGap": {
@@ -262,7 +262,7 @@
     "ganksSucceeded": "Ganks réussis {{count}}"
   },
   "opposition": {
-    "tab": "Niveau adverse",
+    "tab": "Stratégie",
     "title": "Jusqu'où l'équipe gagne",
     "intro": "Le taux de victoire selon le niveau des adversaires. Les rangs sont ceux relevés à la collecte : pour une partie ancienne, c'est le rang d'aujourd'hui.",
     "coverage": "{{withRanks}} partie(s) sur {{games}} ont leurs rangs relevés ; relevé médian {{lag}} jour(s) après la partie.",
@@ -291,5 +291,9 @@
     "goldDiff15": "Or à 15 min",
     "csDiff15": "CS à 15 min",
     "pending": "Les rangs des adversaires sont en cours de relevé : la section se remplira au fil de la collecte."
+  },
+  "strategy": {
+    "summary": "Bilan de l'équipe",
+    "opposition": "Niveau adverse"
   }
 }

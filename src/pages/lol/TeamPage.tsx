@@ -17,7 +17,7 @@ import {
 import { useLocalizedNavigate } from "../../i18n/navigation";
 import type { TeamDto } from "../../types/team";
 import { PoolPanel } from "./pool/PoolPanel";
-import { OppositionPanel } from "./stats/OppositionPanel";
+import { StrategyPanel } from "./stats/StrategyPanel";
 import { PlayersPanel } from "./stats/PlayersPanel";
 import { TeamGamesPanel } from "./stats/TeamGamesPanel";
 import { DraftPanel } from "./DraftPanel";
@@ -182,7 +182,7 @@ function TeamPage() {
             avatars={Object.fromEntries(team.members.map((member) => [member.memberId, member.avatarUrl]))}
           />
         )}
-        {panel === "opposition" && <OppositionPanel teamId={team.id} />}
+        {panel === "opposition" && <StrategyPanel teamId={team.id} />}
         {panel === "pool" && <PoolPanel teamId={team.id} />}
         {panel === "draft" && <DraftPanel team={team} />}
       </Tabs>
