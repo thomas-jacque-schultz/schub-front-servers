@@ -1,7 +1,7 @@
 {
   "app": {
     "name": "Schub",
-    "tagline": "Game server control"
+    "tagline": "The Miam community toolkit"
   },
   "actions": {
     "add": "Add",
@@ -50,7 +50,7 @@
     "github": "GitHub",
     "terms": "Terms of use",
     "privacy": "Privacy",
-    "footerNote": "Schub — game server control",
+    "footerNote": "Schub — the Miam community toolkit",
     "contact": "Contact",
     "profile": "My profile",
     "stats": "My stats",

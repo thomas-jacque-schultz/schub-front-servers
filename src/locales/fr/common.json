@@ -1,7 +1,7 @@
 {
   "app": {
     "name": "Schub",
-    "tagline": "Pilotage de serveurs de jeu"
+    "tagline": "La boîte à outils de la communauté Miam"
   },
   "actions": {
     "add": "Ajouter",
@@ -50,7 +50,7 @@
     "github": "GitHub",
     "terms": "Conditions d’utilisation",
     "privacy": "Confidentialité",
-    "footerNote": "Schub — pilotage de serveurs de jeu",
+    "footerNote": "Schub — la boîte à outils de la communauté Miam",
     "contact": "Contact",
     "profile": "Mon profil",
     "stats": "Mes stats",

@@ -1,16 +1,16 @@
 {
   "meta": {
-    "title": "Schub — game server hosting and control",
-    "description": "Schub hosts game servers, starts them on demand, and equips a League of Legends team: roster, statistics, champion pool and draft preparation."
+    "title": "Schub — the Miam community toolkit",
+    "description": "Schub gathers the tools of the Miam Discord community: game servers started on demand, and what it takes to keep a League of Legends team going — roster, statistics, champion pool, draft preparation."
   },
   "hero": {
     "eyebrow": "Schub",
-    "title": "Game servers that switch on when you need them",
-    "subtitle": "The hub of the Miam Discord community — and, for League of Legends, what it takes to keep a team going."
+    "title": "The Miam community toolkit",
+    "subtitle": "Game servers that switch on when you need them and, for League of Legends, what it takes to keep a team going."
   },
   "about": {
     "title": "What Schub does",
-    "community": "Schub is the hub of the Miam Discord community: its game servers, its League of Legends teams and the tools around them. It may open to a wider circle one day, once the tools are proven and stable — for now, it is built for us.",
+    "community": "Schub is the toolkit of the Miam Discord community: its game servers, its League of Legends teams, and the tools added as needs arise. It may open to a wider circle one day, once the tools are proven and stable — for now, it is built for us.",
     "servers": "Game servers are hosted at home and driven from the site or from Discord: their state is visible live, and starting or stopping one is a button. Port forwarding opens and closes along with the server.",
     "lol": "On the League of Legends side, Schub reads your games through Riot's API: personal and team statistics, champion pool by role, draft preparation and post-game review.",
     "identity": "Identity goes through Discord. There is no password to remember, and rights follow your role.",
