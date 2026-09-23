@@ -14,7 +14,7 @@ import type {
 import { type MetricKey, useMetrics } from "./metrics";
 import { type RadarReference, referenceParDefaut } from "./radar";
 import { useStatsFormat } from "./statsFormat";
-import { noter } from "./grading";
+import { groupeDePalier, noter } from "./grading";
 import { useReferenceGrid } from "./useReferenceGrid";
 
 const AXES: MetricKey[] = [
@@ -95,42 +95,65 @@ export function PlayerRadar({
     if (!references) {
       return { line: null, bornes: {}, vide: t("radar.empty.noGames") };
     }
-    const ref = choisie === "met" ? references.met : references.league;
-    const vide =
-      choisie === "met"
-        ? t("radar.empty.met", { position: poste })
-        : references.tier
-          ? t("radar.empty.leagueThin", {
-              tier: t(`tier.${references.tier}`, {
-                defaultValue: references.tier,
-              }),
-              position: poste,
-            })
-          : t("radar.empty.unranked");
+    if (choisie === "league") {
+      const groupe = groupeDePalier(references.tier);
+      const population = groupe
+        ? grille?.metrics.kda?.tiers[groupe]
+        : undefined;
+      const palier = references.tier
+        ? t(`tier.${references.tier}`, { defaultValue: references.tier })
+        : "";
+      if (!references.tier) {
+        return { line: null, bornes: {}, vide: t("radar.empty.unranked") };
+      }
+      if (!grille || !population) {
+        return {
+          line: null,
+          bornes: {},
+          vide: t("radar.empty.leagueThin", { tier: palier, position: poste }),
+        };
+      }
+      return {
+        line: auPoste,
+        bornes: {},
+        note: t("radar.note.league", {
+          position: poste,
+          games: auPoste?.games ?? 0,
+          count: population.count,
+          tier: palier,
+          patches: grille.patches.join(", "),
+        }),
+        vide: t("radar.empty.leagueThin", { tier: palier, position: poste }),
+      };
+    }
+    const ref = references.met;
     if (!ref) {
-      return { line: null, bornes: {}, vide };
+      return {
+        line: null,
+        bornes: {},
+        vide: t("radar.empty.met", { position: poste }),
+      };
     }
     return {
       line: auPoste,
       bornes: ref.bounds,
-      note: t(choisie === "met" ? "radar.note.met" : "radar.note.league", {
+      note: t("radar.note.met", {
         position: poste,
         games: auPoste?.games ?? 0,
         count: ref.population,
         min: ref.minimumGames,
-        tier: ref.tier ? t(`tier.${ref.tier}`, { defaultValue: ref.tier }) : "",
       }),
-      vide,
+      vide: t("radar.empty.met", { position: poste }),
     };
   })();
 
-  // Palier : le percentile dans sa grille quand elle existe, plutôt qu'une règle entre p5 et p95 qui écrase les extrêmes.
+  // Palier : le percentile dans sa grille. Adversaires et équipe : une règle entre leurs bornes.
   const normalise = (key: MetricKey, value: number | null | undefined) => {
-    if (choisie === "league" && grille && references) {
-      const grade = noter(value, grille.metrics[key], grille, references.tier);
-      if (grade?.inTier !== null && grade?.inTier !== undefined) {
-        return grade.inTier;
-      }
+    if (choisie === "league") {
+      return grille && references
+        ? (noter(value, grille.metrics[key], grille, references.tier)?.inTier ??
+            null)
+        : null;
     }
     const borne = vue.bornes[key];
     if (value === null || value === undefined || !borne) {

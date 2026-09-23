@@ -261,13 +261,13 @@
     "note": {
       "team": "Centre : le plus bas de l'équipe, bord : le plus haut, sur la même période que le tableau de bord.",
       "met": "Au poste {{position}}, {{games}} partie(s). Centre : 5e percentile de {{count}} adversaires directs (au moins {{min}} parties chacun), bord : 95e.",
-      "league": "Au poste {{position}}, {{games}} partie(s). Centre : 5e percentile de {{count}} joueurs {{tier}} collectés à ce poste (au moins {{min}} parties), bord : 95e. Le palier est le rang d'aujourd'hui."
+      "league": "Au poste {{position}}, {{games}} partie(s). Chaque axe est votre percentile parmi {{count}} joueurs {{tier}} à ce poste, patchs {{patches}} : centre 0, bord 100."
     },
     "empty": {
       "noGames": "Aucune partie sur la Faille sur la période.",
       "team": "Il faut au moins deux joueurs avec des statistiques.",
       "met": "Pas encore assez d'adversaires directs connus au poste {{position}} : il en faut dix, avec au moins cinq parties chacun. Le référentiel grossit avec la collecte.",
-      "leagueThin": "Pas encore assez de joueurs {{tier}} collectés au poste {{position}} : il en faut dix. Le référentiel grossit avec la collecte.",
+      "leagueThin": "Pas encore de référentiel {{tier}} au poste {{position}} : il se calcule chaque jour sur les joueurs classés collectés.",
       "unranked": "Joueur non classé : pas de palier auquel se comparer."
     }
   },

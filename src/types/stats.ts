@@ -96,11 +96,10 @@ export interface MetricReferenceDto {
   bounds: Partial<Record<string, MetricBoundDto>>;
 }
 
-/** Référentiels du poste le plus joué sur la période ; `league` : même palier, `met` : adversaires directs. */
+/** Poste le plus joué et palier du joueur (pour lire sa grille) ; `met` : ses adversaires directs. */
 export interface RadarReferencesDto {
   position: string;
   tier: string | null;
-  league: MetricReferenceDto | null;
   met: MetricReferenceDto | null;
 }
 
