@@ -261,13 +261,13 @@
     "note": {
       "team": "Centre: the team's lowest, edge: its highest, over the same period as the dashboard.",
       "met": "As {{position}}, {{games}} game(s). Centre: 5th percentile of {{count}} direct opponents (at least {{min}} games each), edge: 95th.",
-      "league": "As {{position}}, {{games}} game(s). Centre: 5th percentile of {{count}} collected {{tier}} players in this role (at least {{min}} games), edge: 95th. The tier is today's rank."
+      "league": "In the {{position}} role, {{games}} game(s). Each axis is your percentile among {{count}} {{tier}} players in that role, patches {{patches}}: centre 0, edge 100."
     },
     "empty": {
       "noGames": "No Summoner's Rift game over the period.",
       "team": "At least two players with statistics are needed.",
       "met": "Not enough known direct opponents as {{position}} yet: ten are needed, with at least five games each. The reference grows with collection.",
-      "leagueThin": "Not enough collected {{tier}} players as {{position}} yet: ten are needed. The reference grows with collection.",
+      "leagueThin": "No {{tier}} reference in the {{position}} role yet: it is computed daily from the ranked players collected.",
       "unranked": "Unranked player: no tier to compare with."
     }
   },
