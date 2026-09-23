@@ -35,13 +35,6 @@ import frStats from "../locales/fr/stats.json";
 import frTeams from "../locales/fr/teams.json";
 import frUsers from "../locales/fr/users.json";
 
-/**
- * Les catalogues, **un fichier par langue et par domaine**.
- *
- * <p>Ce découpage n'est pas cosmétique : deux fenêtres de travail qui touchent des écrans
- * différents modifient des fichiers différents et ne se marchent pas dessus. Ajouter un domaine,
- * c'est ajouter deux fichiers et deux lignes ici.</p>
- */
 export const resources = {
   fr: {
     common: frCommon,
@@ -85,7 +78,6 @@ export const resources = {
   },
 } as const;
 
-/** Le domaine implicite : `t("actions.back")` sans préfixe lit `common`. */
 export const defaultNS = "common" as const;
 
 export const namespaces = [

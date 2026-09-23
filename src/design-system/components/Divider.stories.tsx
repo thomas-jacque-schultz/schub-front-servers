@@ -21,7 +21,6 @@ export const Simple: Story = {
   ),
 };
 
-/** Avec un intitulé, il découpe une liste longue en sections que l'œil retrouve. */
 export const AvecIntitule: Story = {
   render: () => (
     <Stack spacing={2}>

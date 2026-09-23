@@ -5,14 +5,6 @@ import { type AppLanguage, SUPPORTED_LANGUAGES, pathForLanguage } from "./config
 
 const HREFLANG_MARKER = "data-schub-hreflang";
 
-/**
- * Le nœud racine d'une langue : il aligne i18next, l'attribut `lang` du document et les balises
- * `hreflang` sur la langue que porte l'URL.
- *
- * <p>Les `hreflang` sont ce qui fait exister la version anglaise pour un moteur de recherche :
- * sans elles, les deux URL sont vues comme deux pages sans rapport, et l'une des deux est
- * traitée comme du contenu dupliqué. `x-default` désigne le français, qui occupe la racine.</p>
- */
 export function LocalizedRoot({ language, children }: { language: AppLanguage; children: ReactNode }) {
   const { i18n } = useTranslation();
   const location = useLocation();

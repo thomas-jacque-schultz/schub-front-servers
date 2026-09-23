@@ -29,31 +29,9 @@ import type { KnownRiotAccountDto } from "../../types/profile";
 
 export interface RosterPanelProps {
   team: TeamDto;
-  /** Les écritures rendent l'équipe entière : un seul appel suffit à redessiner l'écran. */
   onTeamChange: (team: TeamDto) => void;
 }
 
-/**
- * L'effectif : qui est dans l'équipe, à quels postes, et à quel titre.
- *
- * <h2>Un membre tient plusieurs postes</h2>
- *
- * <p>C'est la règle, pas l'exception : il apparaît alors dans plusieurs colonnes du pool et reste
- * éligible à plusieurs lignes d'une composition. Le premier poste déclaré est le poste habituel —
- * c'est lui qui range l'effectif.</p>
- *
- * <h2>Le compte se choisit, il ne se saisit pas</h2>
- *
- * <p>Deux champs libres « pseudo » et « TAG » laissaient écrire un Riot ID qui n'existe pas, et
- * le refus n'arrivait qu'à l'enregistrement. {@link RiotAccountPicker} — le même qu'au profil —
- * propose ce qu'on connaît déjà et fait confirmer le reste par Riot avant qu'on clique.</p>
- *
- * <h2>Ce qui décide de l'affichage des boutons</h2>
- *
- * <p>{@code team.viewerCanEdit}, servi par le cœur, et rien d'autre. La seule comparaison que
- * l'écran se permette est {@code memberId === team.viewerMemberId} pour se surligner — un fait
- * sur le lecteur, pas la liste des ayants droit (plan §A.5 bis).</p>
- */
 export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
   const { t } = useTranslation("teams");
 
@@ -80,13 +58,6 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
     label: t(`status.${status}`),
   }));
 
-  /**
-   * Un coach ne tient pas de poste — le cœur refuse le contraire en 400.
-   *
-   * <p>L'écran le rejoue pour ne pas *proposer* ce qui sera refusé : les postes tombent au moment
-   * où le statut passe à coach, et on le dit. Découvrir la règle par un message d'erreur après
-   * coup se lit comme une panne.</p>
-   */
   const rolesFor = (status: MemberStatus, roles: string[]): GameRole[] =>
     status === "COACH" ? [] : (roles as GameRole[]);
 

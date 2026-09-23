@@ -27,16 +27,6 @@ export interface PoolPanelProps {
   teamId: string;
 }
 
-/**
- * <strong>Panneau « pool de champions »</strong> — cinq colonnes, une par poste.
- *
- * <p>Il répond « qu'est-ce qu'on peut aligner à ce poste ? » et non « qu'est-ce que chacun
- * maîtrise ? ». On choisit des champions dans le catalogue, et sous chacun viennent les membres
- * qui tiennent le poste et le maîtrisent assez.</p>
- *
- * <p>Le plancher est celui de l'équipe. On peut en essayer un autre pour voir : la lecture
- * n'écrit rien, et l'écran dit lequel des deux il montre.</p>
- */
 export function PoolPanel({ teamId }: PoolPanelProps) {
   const { t } = useTranslation("pool");
   const { t: tTeams } = useTranslation("teams");
@@ -47,7 +37,6 @@ export function PoolPanel({ teamId }: PoolPanelProps) {
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
-  /** Le plancher regardé, `null` tant qu'on s'en tient à celui de l'équipe. */
   const [apercu, setApercu] = useState<number | null>(null);
   const [saisie, setSaisie] = useState<string>("");
   const [posteChoisi, setPosteChoisi] = useState<GameRole | null>(null);
@@ -139,8 +128,6 @@ export function PoolPanel({ teamId }: PoolPanelProps) {
 
       {error && <Alert severity="warning">{error}</Alert>}
 
-      {/* Pas de patch, pas un seul champion : c'est la règle du cœur, et elle se dit une fois pour
-          tout le panneau plutôt que cinq fois dans cinq colonnes. */}
       {!pool.patch && (
         <Alert severity="warning" title={t("patch.missingTitle")}>
           {t("patch.missingDescription")}
@@ -245,8 +232,6 @@ function PoolColumn({
         </Text>
       )}
 
-      {/* Un membre dont on ne sait pas les maîtrises ne disparaît pas de son poste : il est dit
-          une fois pour la colonne, avec la raison. */}
       {column.unavailableMembers.length > 0 && (
         <Card title={t("unavailable.title")} description={t("unavailable.description")}>
           <Stack spacing={0.5}>

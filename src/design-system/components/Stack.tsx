@@ -7,15 +7,12 @@ export type StackJustify = "start" | "center" | "end" | "between";
 
 export interface StackProps {
   children: ReactNode;
-  /** `responsive` empile sur mobile et aligne en ligne à partir de `sm`. */
   direction?: StackDirection;
-  /** En pas de l'échelle d'espacement, jamais en pixels. */
   spacing?: number;
   align?: StackAlign;
   justify?: StackJustify;
   wrap?: boolean;
   fullWidth?: boolean;
-  /** Pour rendre un `form`, un `ul`, un `section`… sans quitter le design system. */
   component?: ElementType;
   onSubmit?: (event: React.FormEvent<HTMLFormElement>) => void;
 }
@@ -35,14 +32,6 @@ const JUSTIFY: Record<StackJustify, string> = {
   between: "space-between",
 };
 
-/**
- * L'empilement — la seule façon d'espacer deux blocs.
- *
- * <p>Il existe pour fermer une porte : sans lui, un écran a besoin du `Stack` de MUI, donc d'un
- * import interdit, donc d'une dérogation. Les propriétés exposées sont volontairement moins
- * nombreuses que celles de MUI, et il n'y a **pas de `sx`** : une mise en page qui ne s'exprime
- * pas avec ces axes est une mise en page à ajouter ici, pas à improviser dans un écran.</p>
- */
 export function Stack({
   children,
   direction = "column",

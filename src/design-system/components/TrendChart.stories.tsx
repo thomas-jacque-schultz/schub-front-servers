@@ -25,7 +25,6 @@ type Story = StoryObj<typeof meta>;
 
 export const ParMois: Story = {};
 
-/** Le repère est la moyenne du joueur sur toute la période : on se compare à soi. */
 export const AvecRepere: Story = {
   args: {
     reference: 0.52,
@@ -33,7 +32,6 @@ export const AvecRepere: Story = {
   },
 };
 
-/** Un mois sans partie garde sa place et ne dessine rien — zéro dirait « tout perdu ». */
 export const AvecTrous: Story = {
   args: {
     points: [

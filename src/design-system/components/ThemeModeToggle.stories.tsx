@@ -4,11 +4,6 @@ import Typography from "@mui/material/Typography";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { ThemeModeToggle } from "./ThemeModeToggle";
 
-/**
- * Les deux bascules de l'interface. Attention en les relisant : dans Storybook, la barre
- * d'outils pilote déjà le thème et la langue, donc ces contrôles agissent sur le même état.
- * C'est dans l'application qu'ils se jugent pour de bon.
- */
 const meta = {
   title: "Fondations/Bascules",
   component: ThemeModeToggle,

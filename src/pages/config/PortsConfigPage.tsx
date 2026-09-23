@@ -5,7 +5,6 @@ import { PageHeader, Stack } from "../../design-system";
 import { useAuthStore } from "../../stores/authStore";
 import { usePortForwardingStore } from "../../stores/portForwardingStore";
 
-/** Les redirections du routeur. `PORT_VIEW` pour lire, `PORT_RULE_EDIT` pour écrire. */
 function PortsConfigPage() {
   const { t } = useTranslation("servers");
   const { can } = useAuthStore();

@@ -34,7 +34,6 @@ export interface DraftPanelProps {
   team: TeamDto;
 }
 
-/** Une ligne en cours d'édition. Tout est chaîne : c'est ce que rendent les champs. */
 interface SlotDraft {
   role: GameRole;
   championId: string;
@@ -56,23 +55,6 @@ const slotsOf = (composition: CompositionDto): SlotDraft[] =>
     };
   });
 
-/**
- * Le préparateur de draft — **des brouillons, et rien d'autre**.
- *
- * <p>Pas de bans, pas d'ordre de pick, pas de minuteur : le plan est explicite, ce qui a été
- * demandé n'est pas un simulateur de draft mais un outil de proposition. On prépare une
- * composition, on l'enregistre, on la montre à l'équipe. Construire la mécanique d'une draft
- * jouée aurait été bâtir autre chose que ce qui est demandé, et la rendre difficile à retirer.</p>
- *
- * <p>Trois règles du cœur sont rejouées avant l'envoi, pour ne pas faire découvrir la contrainte
- * par un 400 : un nom, cinq champions — le champion est obligatoire, le joueur non — et jamais
- * deux fois le même joueur. Le coach, lui, n'est pas proposé : le cœur refuse de le retenir.</p>
- *
- * <p>Le champion se saisit à la main, en clé Data Dragon. C'est assumé et temporaire : le
- * catalogue des champions arrive avec le panneau « pool », qui dépend du branchement Riot en
- * cours dans le cœur. Une liste déroulante alimentée par une liste de champions recopiée ici
- * serait fausse au patch suivant.</p>
- */
 export function DraftPanel({ team }: DraftPanelProps) {
   const { t } = useTranslation("teams");
   const { formatDateTime } = useLocaleFormat();
@@ -82,7 +64,6 @@ export function DraftPanel({ team }: DraftPanelProps) {
   const [error, setError] = useState<string>("");
   const [isSaving, setIsSaving] = useState<boolean>(false);
 
-  /** `null` = fermé, `"new"` = création, sinon la composition modifiée. */
   const [editing, setEditing] = useState<CompositionDto | "new" | null>(null);
   const [name, setName] = useState<string>("");
   const [patch, setPatch] = useState<string>("");
@@ -135,7 +116,6 @@ export function DraftPanel({ team }: DraftPanelProps) {
     );
   };
 
-  /** Les règles du cœur, rejouées ici pour que le refus soit lisible avant l'envoi. */
   const invalidReason = (): string | null => {
     if (!name.trim()) {
       return t("draft.validation.nameRequired");
@@ -224,14 +204,6 @@ export function DraftPanel({ team }: DraftPanelProps) {
     },
   ];
 
-  /**
-   * Les joueurs proposés à un poste : ceux qui le tiennent d'abord, les autres ensuite.
-   *
-   * <p>Un membre tient plusieurs postes, donc il est candidat à plusieurs lignes — mais une même
-   * composition ne le retient qu'une fois, et le cœur le refuse. Les autres ne sont pas retirés :
-   * une rotation se prépare avec quelqu'un hors de son poste habituel, et l'IHM ne doit pas
-   * proposer moins que ce que le serveur accepte sans raison.</p>
-   */
   const playerOptionsFor = (role: GameRole) => {
     const duPoste = players.filter((member) => member.roles.includes(role));
     const autres = players.filter((member) => !member.roles.includes(role));

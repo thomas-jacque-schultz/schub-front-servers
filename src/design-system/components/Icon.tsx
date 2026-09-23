@@ -19,16 +19,7 @@ import HourglassIcon from "@mui/icons-material/HourglassEmpty";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
-/**
- * Le répertoire des icônes — **fermé, et c'est le but**.
- *
- * <p>`@mui/icons-material` expose plus de deux mille dessins. Laisser un écran piocher dedans
- * rouvrirait exactement la porte que le design system ferme : deux écrans choisiraient deux
- * icônes différentes pour la même action. Ici, une action a une icône, décidée une fois.</p>
- *
- * <p>Ajouter une entrée est normal ; l'important est que ça se fasse dans ce fichier, où l'on
- * voit d'un coup d'œil ce qui existe déjà.</p>
- */
+// Répertoire fermé : ajouter une icône ici plutôt qu'importer @mui/icons-material ailleurs.
 const ICONS = {
   add: AddIcon,
   chevron: ChevronRightIcon,
@@ -57,14 +48,9 @@ export type IconName = keyof typeof ICONS;
 export interface IconProps {
   name: IconName;
   size?: "small" | "medium";
-  /**
-   * L'alternative textuelle. Absente, l'icône est déclarée décorative et masquée aux lecteurs
-   * d'écran — ce qui est le bon comportement à côté d'un libellé qui dit déjà la même chose.
-   */
   label?: string;
 }
 
-/** Une icône du répertoire. Les écrans ne connaissent que des noms, jamais des imports MUI. */
 export function Icon({ name, size = "medium", label }: IconProps) {
   const Component = ICONS[name];
   return (
@@ -77,5 +63,4 @@ export function Icon({ name, size = "medium", label }: IconProps) {
   );
 }
 
-/** La liste des noms disponibles — utilisée par la story, et pratique à la revue. */
 export const ICON_NAMES = Object.keys(ICONS) as IconName[];

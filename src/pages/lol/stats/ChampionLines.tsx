@@ -7,14 +7,6 @@ export interface ChampionLinesProps {
   lines: StatLineDto[];
 }
 
-/**
- * Le pool joué, champion par champion.
- *
- * <p>Chaque ligne porte son écart <strong>au reste des parties du même joueur</strong> : « 55 %
- * sur Jayce » ne veut rien dire seul, « 55 % sur Jayce contre 41 % sur le reste » en dit
- * beaucoup. Il n'existe pas de référence mondiale à laquelle se mesurer, et en inventer une
- * serait pire que de ne rien comparer.</p>
- */
 export function ChampionLines({ lines }: ChampionLinesProps) {
   const { t } = useTranslation("stats");
   const format = useStatsFormat();

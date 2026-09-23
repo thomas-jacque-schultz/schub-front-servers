@@ -5,10 +5,6 @@ import { ChoiceList } from "./ChoiceList";
 import { Chip } from "./Chip";
 import { EmptyState } from "./EmptyState";
 
-/**
- * Les comptes affichés ici sont **inventés** : le Storybook est public, aucune donnée réelle n'y
- * entre — ni pseudo, ni Riot ID existant.
- */
 const HOMONYMES = [
   {
     id: "1",
@@ -51,10 +47,6 @@ type Story = StoryObj<typeof meta>;
 
 export const ParDefaut: Story = {};
 
-/**
- * Le cas qui justifie le composant : trois options de libellé presque identique, qu'on ne
- * départage qu'en les comparant. Une liste déroulante n'en montrerait qu'une à la fois.
- */
 export const AvecSelection: Story = {
   render: (args) => {
     const [selectedId, setSelectedId] = useState<string | null>("1");
@@ -67,7 +59,6 @@ export const AvecSelection: Story = {
   },
 };
 
-/** Sans option, la liste laisse la place à ce qu'on lui donne — elle ne disparaît pas en silence. */
 export const Vide: Story = {
   args: {
     options: [],
@@ -80,7 +71,6 @@ export const Vide: Story = {
   },
 };
 
-/** Pendant qu'un choix est traité : la liste reste lisible, elle ne se reclique pas. */
 export const Occupee: Story = {
   args: {
     disabled: true,

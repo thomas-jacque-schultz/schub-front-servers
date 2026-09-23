@@ -54,11 +54,7 @@ const DEFAULT_VALUES: GameServerFormValues = {
   ports: "",
 };
 
-/**
- * Les déploiements de jeu suivent tous la convention de nommage `gaming-*`.
- * Le filtre est volontairement côté client : le connecteur, lui, liste tout sans savoir
- * lesquelles sont des serveurs de jeu — c est au consommateur de trier (plan §6).
- */
+// Convention de nommage des déploiements de jeu : gaming-*. Le connecteur liste tout, le tri se fait ici.
 const GAME_DEPLOYMENT_MARKER = "gaming";
 
 const REQUIRED_FIELDS: Array<keyof GameServerFormValues> = ["slug", "name"];
@@ -67,12 +63,7 @@ const PORT_ENTRY_PATTERN = /^(tcp|udp):(\d{1,5})(?::(\d{1,5}))?$/i;
 
 const isValidPort = (port: number) => Number.isInteger(port) && port >= 1 && port <= 65535;
 
-/**
- * Parse "tcp:15007, udp:8211" en redirections Freebox.
- * Chaque entrée est proto:portWan[:portLan] ; portLan vaut portWan par défaut.
- * Le port indiqué est celui publié sur le nœud Swarm, pas le port interne au conteneur.
- * Renvoie null dès qu'une entrée est mal formée, pour que le formulaire puisse le signaler.
- */
+// proto:portWan[:portLan], portLan = portWan par défaut. Port publié sur le nœud Swarm, pas le port du conteneur.
 const parsePorts = (raw: string): GameServerPortDto[] | null => {
   const parsed: GameServerPortDto[] = [];
 
@@ -101,13 +92,7 @@ const formatPorts = (ports?: GameServerPortDto[]): string =>
     )
     .join(", ");
 
-/**
- * Le corps de la requête.
- *
- * <p>`ports` est **omis** quand l'acteur ne voit pas l'infrastructure : le cœur laisse alors la
- * liste existante intacte. L'envoyer vide — ce qu'un formulaire qui ne l'a jamais reçue ferait
- * naturellement — effacerait des redirections que l'acteur n'avait même pas le droit de lire.</p>
- */
+// ports omis sans SERVER_INFRA_VIEW : un tableau vide effacerait des redirections que l'acteur ne voit pas.
 const toPayload = (
   values: GameServerFormValues,
   seesInfrastructure: boolean,
@@ -121,7 +106,6 @@ const toPayload = (
   installation: values.installation.trim() || undefined,
   version: values.version.trim() || undefined,
   description: values.description.trim() || undefined,
-  // champ vidé = toutes les redirections du serveur sont retirées
   ports: seesInfrastructure ? parsePorts(values.ports) || [] : undefined,
 });
 
@@ -135,13 +119,6 @@ const resolveMode = (pathname: string): GameServerFormMode => {
   return "creation";
 };
 
-/**
- * La fiche d'un serveur.
- *
- * <p>Elle sait être servie **amputée** : un acteur sans `SERVER_INFRA_VIEW` reçoit la projection
- * membre, ni ports ni déploiement. Ce n'est pas une erreur de chargement, et la fiche le dit au
- * lieu d'afficher des champs vides qui laisseraient croire à des données perdues.</p>
- */
 function GameServerFormPage() {
   const navigate = useLocalizedNavigate();
   const { t } = useTranslation("servers");
@@ -154,7 +131,6 @@ function GameServerFormPage() {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [deployments, setDeployments] = useState<DeploymentDto[]>([]);
   const [deploymentsError, setDeploymentsError] = useState<string>("");
-  /** Ce que **cette fiche** a livré : une création part du principe qu'on voit tout. */
   const [seesInfrastructure, setSeesInfrastructure] = useState<boolean>(
     can("SERVER_INFRA_VIEW"),
   );
@@ -163,8 +139,6 @@ function GameServerFormPage() {
   const isReadOnly = mode === "visualisation";
   const pageTitle = t(`form.title.${mode}`);
 
-  // Le catalogue des déploiements sert à lier la fiche au sien sans le saisir. En consultation,
-  // le champ est figé : inutile d'interroger le cœur pour une liste qu'on ne peut pas ouvrir.
   useEffect(() => {
     if (mode === "visualisation" || !can("SERVER_INFRA_VIEW")) {
       return;
@@ -180,7 +154,6 @@ function GameServerFormPage() {
         }
       } catch (error) {
         if (active) {
-          // Non bloquant : la fiche reste remplissable, seule la liste manque.
           setDeploymentsError(
             error instanceof Error ? error.message : t("form.errors.deploymentsUnavailable"),
           );
@@ -254,16 +227,11 @@ function GameServerFormPage() {
     setGlobalError("");
   };
 
-  // La fiche stocke l'identifiant du déploiement, pas le déploiement : on le retrouve dans le
-  // catalogue. Null tant qu'il n'est pas chargé, ou si le déploiement lié a disparu du cœur —
-  // auquel cas le champ apparaît vide, ce qui est la vérité à afficher.
   const selectedDeployment = useMemo(
     () => deployments.find((deployment) => String(deployment.id) === values.deploymentId) ?? null,
     [deployments, values.deploymentId],
   );
 
-  // Le déploiement déjà lié reste proposé même s'il ne porte pas le marqueur : une fiche
-  // existante ne doit pas voir son champ se vider parce que la convention a changé.
   const deploymentOptions = useMemo(() => {
     const games = deployments.filter((deployment) =>
       deployment.name.toLowerCase().includes(GAME_DEPLOYMENT_MARKER),
@@ -279,9 +247,6 @@ function GameServerFormPage() {
     setValues((current) => ({
       ...current,
       deploymentId,
-      // L'identifiant n'est dérivé qu'à la création. En édition il reste tel quel : c'est la clé
-      // d'unicité de la fiche, le propriétaire de ses règles de ports et l'argument des commandes
-      // Discord. Le recalculer orphelinerait les redirections et casserait les commandes connues.
       slug: mode === "creation" && deployment ? slugFromDeploymentName(deployment.name) : current.slug,
     }));
     setErrors((current) => ({ ...current, deploymentId: "", slug: "" }));
@@ -297,8 +262,6 @@ function GameServerFormPage() {
       }
     });
 
-    // Le slug n'est plus saisi : il vient du déploiement choisi. Le message doit donc
-    // désigner le geste manquant, pas un champ que l'utilisateur ne voit plus.
     if (nextErrors.slug) {
       nextErrors.slug = t("form.errors.deploymentRequired");
     }
@@ -377,7 +340,6 @@ function GameServerFormPage() {
       {isLoading && <ProgressBar label={pageTitle} />}
       {globalError && <Alert severity="error">{globalError}</Alert>}
 
-      {/* Une absence attendue, pas une panne : on le dit, plutôt que d'afficher des trous. */}
       {!seesInfrastructure && <Alert severity="info">{t("form.infraHidden")}</Alert>}
 
       {deploymentsError && (

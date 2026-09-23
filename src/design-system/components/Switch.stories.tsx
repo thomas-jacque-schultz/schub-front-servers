@@ -11,10 +11,6 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/**
- * Le libellé s'écrit à l'état, pas à l'action — « Notifications activées », jamais « Activer » :
- * sinon on ne sait plus si on lit l'état courant ou le bouton qui le change.
- */
 export const Activee: Story = {};
 export const Desactivee: Story = { args: { checked: false } };
 export const Figee: Story = { args: { disabled: true } };

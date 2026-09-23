@@ -1,26 +1,5 @@
 import type { AppLanguage } from "../i18n/config";
 
-/**
- * Le contenu du portfolio — **en données, pas en JSX**.
- *
- * <p>C'est la recommandation explicite du §4 du plan, et elle a une raison précise : un SPA Vite
- * n'est indexé que partiellement. Le jour où le pré-rendu de `/` devient souhaitable, il se
- * branche sur cette structure sans rouvrir une seule page. Du contenu écrit en JSX aurait exigé
- * de tout réécrire.</p>
- *
- * <p><strong>Pourquoi ici et pas dans `src/locales/`</strong> — le reste de l'interface passe par
- * `t("…")`, et c'est la règle du dépôt. Elle vise les libellés : des chaînes courtes, nombreuses,
- * qui se ressemblent d'un écran à l'autre. Le portfolio est l'inverse : quelques longs blocs de
- * prose, structurés, où l'ordre et les relations comptent autant que les mots. Les mettre en JSON
- * les priverait de commentaires — or c'est exactement ici qu'il faut pouvoir écrire « ce
- * paragraphe manque et la page ne se publie pas sans lui ». Les deux langues sont donc côte à
- * côte dans ce fichier, ce qui rend aussi visible d'un coup d'œil ce qui n'a pas été traduit.</p>
- *
- * <p>Les libellés de l'interface du formulaire de contact, eux, restent dans `locales/` : ce sont
- * bien des libellés.</p>
- */
-
-/** Un lien sortant. `href` à `null` : l'adresse n'a pas encore été fournie, on le dit. */
 export interface PortfolioLink {
   key: string;
   label: string;
@@ -30,11 +9,8 @@ export interface PortfolioLink {
 export interface PortfolioProject {
   key: string;
   name: string;
-  /** Une ligne qui dit ce que c'est, avant toute explication. */
   tagline: string;
-  /** Un ou plusieurs paragraphes. */
   body: string[];
-  /** Les technologies réellement employées — pas une liste de vœux. */
   stack: string[];
   links: PortfolioLink[];
 }
@@ -45,15 +21,6 @@ export interface PortfolioRole {
   title: string;
   organisation: string;
   place: string;
-  /**
-   * Ce que le poste a produit.
-   *
-   * <p><strong>`null` est un état documenté, pas un oubli</strong> : le PDF LinkedIn dont vient
-   * ce parcours ne porte que des intitulés et des dates. Inventer une description serait écrire
-   * à la place de quelqu'un sur sa propre expérience. Les postes passés s'affichent donc avec
-   * leur seule vérité vérifiable ; le poste <em>actuel</em>, lui, est traité à part
-   * (voir {@link PortfolioContent.currentRoleGap}).</p>
-   */
   summary: string | null;
   current?: boolean;
 }
@@ -68,7 +35,6 @@ export interface PortfolioEducation {
 export interface PortfolioLanguageSkill {
   key: string;
   name: string;
-  /** Absent quand la source ne le précise pas — on ne devine pas un niveau à la place de quelqu'un. */
   level?: string;
 }
 
@@ -77,18 +43,10 @@ export interface PortfolioContent {
     eyebrow: string;
     name: string;
     title: string;
-    /** L'accroche : le fil conducteur que le parcours seul ne raconte pas. */
     lede: string;
     body: string;
     ctaServers: string;
   };
-  /**
-   * Le trou assumé : le paragraphe sur le poste actuel n'a pas été fourni.
-   *
-   * <p>Il est affiché en clair, signalé comme manquant, parce que c'est le premier paragraphe que
-   * lit un visiteur. <strong>La page ne se publie pas tant qu'il est là.</strong> Le masquer
-   * l'aurait fait oublier ; le remplir d'à-peu-près aurait été pire.</p>
-   */
   currentRoleGap: {
     heading: string;
     placeholder: string;
@@ -99,14 +57,7 @@ export interface PortfolioContent {
     education: { title: string };
     languages: { title: string };
   };
-  /** L'emplacement réservé au portrait — décidé sans photo, mais la place est gardée. */
   portrait: {
-    /**
-     * Le portrait, **absent et assumé** (décidé le 18-09). La place lui est réservée ici plutôt
-     * que dans une maquette : le jour où une photo existe, elle se pose en renseignant cette
-     * adresse, sans toucher à la mise en page. Tant qu'elle vaut `null`, la colonne ne se
-     * dessine pas — un cadre vide sur une page publiée se lit comme une image cassée.
-     */
     src: string | null;
     alt: string;
   };
@@ -114,19 +65,9 @@ export interface PortfolioContent {
   experience: PortfolioRole[];
   education: PortfolioEducation[];
   languages: PortfolioLanguageSkill[];
-  /** Le dépôt public, déduit de l'adresse du dépôt Git. Voir la note du fichier. */
   repositoryUrl: string | null;
 }
 
-/**
- * L'adresse du dépôt public.
- *
- * <p>Elle n'a pas été fournie ; elle est <strong>déduite de l'origine Git des sept dépôts</strong>
- * (`git@github.com:thomas-jacque-schultz/…`). C'est une hypothèse vérifiable en un clic, et elle
- * porte une condition : les liens vers `docs/` ne valent que si le dépôt est <em>public</em>.
- * S'il ne l'est pas, mettre cette constante à `null` suffit — les liens s'affichent alors comme
- * à fournir au lieu de mener à une page d'erreur.</p>
- */
 const REPOSITORY_URL = "https://github.com/thomas-jacque-schultz";
 
 const PLAN_URL = `${REPOSITORY_URL}/Schub/blob/main/docs/evolutions-2026-09.md`;
@@ -474,11 +415,5 @@ const en: PortfolioContent = {
 
 export const PORTFOLIO: Record<AppLanguage, PortfolioContent> = { fr, en };
 
-/**
- * L'adresse e-mail n'est **pas** publiée, et ce n'est pas un oubli.
- *
- * <p>Une adresse en clair sur une page indexée finit dans les listes de diffusion. Le formulaire
- * de contact existe pour ça : il écrit directement en message privé sur Discord, sans exposer
- * quoi que ce soit.</p>
- */
+// Adresse e-mail volontairement non publiée : le formulaire de contact en tient lieu.
 export const PUBLISHES_EMAIL = false;

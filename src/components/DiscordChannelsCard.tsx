@@ -23,13 +23,6 @@ interface DiscordChannelsCardProps {
 
 const channelKey = (guildId: string, channelId: string) => `${guildId}:${channelId}`;
 
-/**
- * L'abonnement des salons Discord.
- *
- * <p>Migrée vers les primitives au lot B.5. L'accordéon devient {@link Disclosure}, dont
- * l'ouverture est contrôlée par l'écran — le composant ne garde plus son propre état
- * d'ouverture caché.</p>
- */
 function DiscordChannelsCard({
   guilds,
   isLoading,

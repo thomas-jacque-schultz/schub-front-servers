@@ -5,14 +5,6 @@ import Tooltip from "@mui/material/Tooltip";
 import { useColorScheme } from "@mui/material/styles";
 import { useTranslation } from "react-i18next";
 
-/**
- * La bascule clair / sombre.
- *
- * <p>Elle ne gère ni état ni `localStorage` : `useColorScheme` s'en charge, et c'est ce qui rend
- * le choix persistant sans une ligne de code ici. Tant que MUI n'a pas résolu le schéma — le
- * temps d'un rendu — le bouton reste inerte plutôt que d'afficher une icône qui changerait
- * aussitôt.</p>
- */
 export function ThemeModeToggle({ size = "medium" }: { size?: "small" | "medium" }) {
   const { mode, systemMode, setMode } = useColorScheme();
   const { t } = useTranslation();

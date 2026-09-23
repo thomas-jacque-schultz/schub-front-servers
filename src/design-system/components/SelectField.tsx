@@ -8,7 +8,6 @@ import { type ReactNode, useId } from "react";
 export interface SelectOption {
   value: string;
   label: string;
-  /** Une option qu'on montre sans la proposer : le refus s'explique alors dans `helperText`. */
   disabled?: boolean;
 }
 
@@ -25,13 +24,6 @@ export interface SelectFieldProps {
   size?: "small" | "medium";
 }
 
-/**
- * La liste déroulante à choix unique.
- *
- * <p>Les options sont **données**, pas passées en enfants : c'est ce qui évite qu'un écran ait
- * besoin du `MenuItem` de MUI, donc d'un import interdit. Une option indisponible se désactive
- * plutôt que de disparaître, quand son absence serait inexplicable pour qui la cherche.</p>
- */
 export function SelectField({
   label,
   value,

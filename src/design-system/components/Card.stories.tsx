@@ -22,7 +22,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Standard: Story = {};
 
-/** Sans en-tête : la carte n'est plus qu'une surface. */
 export const SansEnTete: Story = {
   args: { title: undefined, description: undefined },
 };
@@ -33,7 +32,6 @@ export const AvecActions: Story = {
   },
 };
 
-/** Pour un tableau qui doit toucher les bords de la carte. */
 export const SansGouttiere: Story = {
   args: { disablePadding: true, title: undefined, description: undefined },
 };

@@ -27,10 +27,6 @@ export const SurUnBouton: Story = {
   ),
 };
 
-/**
- * Le cas qui justifie l'enveloppe `span` : un bouton désactivé n'émet pas d'événement de survol.
- * Sans elle, l'infobulle qui explique le refus ne s'afficherait jamais.
- */
 export const SurUnBoutonDesactive: Story = {
   render: () => (
     <Tooltip title="Cette redirection vient d'un serveur : elle se retire depuis sa fiche.">
@@ -41,7 +37,6 @@ export const SurUnBoutonDesactive: Story = {
   ),
 };
 
-/** Un titre vide rend l'enfant seul : pas d'infobulle fantôme. */
 export const TitreVide: Story = {
   render: () => (
     <Stack direction="row" spacing={2}>

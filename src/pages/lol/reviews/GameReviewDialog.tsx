@@ -24,19 +24,10 @@ import type { TeamGameDto } from "../../../types/stats";
 
 export interface GameReviewDialogProps {
   teamId: string;
-  /** La partie ouverte, ou `null` quand le dialogue est fermé. */
   game: TeamGameDto | null;
   onClose: () => void;
 }
 
-/**
- * Le débrief d'une partie : les notes déjà écrites, et celle qu'on peut ajouter.
- *
- * <p>Sur qui l'on peut écrire vient de deux faits servis par le cœur — `viewerCanReviewAnyone` et
- * `viewerMemberId` — jamais d'une comparaison d'identifiants. Le choix des sujets est restreint
- * aux joueurs présents dans cette partie : le serveur en accepterait davantage, mais noter
- * quelqu'un sur une partie qu'il n'a pas jouée n'est pas un débrief.</p>
- */
 export function GameReviewDialog({
   teamId,
   game,
@@ -80,7 +71,6 @@ export function GameReviewDialog({
     void load();
   }, [load]);
 
-  /** Les places notables : celles qui ont joué cette partie, bornées à soi sans TEAM_EDIT. */
   const sujets = useMemo(() => {
     if (!game || !reviews) {
       return [];

@@ -17,11 +17,9 @@ import { useStatsFormat } from "./statsFormat";
 
 export interface PlayerStatsColumnProps {
   player: PlayerStatsDto;
-  /** Le lecteur, pour qu'il se reconnaisse. Un fait sur lui, pas une comparaison d'identifiants. */
   isViewer: boolean;
 }
 
-/** Une colonne du panneau « joueurs ». */
 export function PlayerStatsColumn({
   player,
   isViewer,
@@ -53,7 +51,6 @@ export function PlayerStatsColumn({
           </Stack>
         )}
 
-        {/* Tous les rangs, pas le premier : un joueur classé en solo et en flex en a deux. */}
         <RankedStandings standings={player.rankings} />
 
         {player.state !== "STATISTIQUES_CONNUES" || !overall ? (

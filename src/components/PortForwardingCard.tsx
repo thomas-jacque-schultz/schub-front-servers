@@ -27,24 +27,9 @@ interface PortForwardingCardProps {
   onRefresh: () => Promise<void>;
   onCreate: (rule: StaticPortRuleDto) => Promise<void>;
   onDelete: (id: string) => Promise<void>;
-  /**
-   * Faux pour `PORT_VIEW` sans `PORT_RULE_EDIT` : la carte se lit, elle ne s'écrit pas.
-   *
-   * <p>Les deux permissions sont distinctes côté cœur, et modifier une redirection est un
-   * pouvoir global — c'est écrire dans la table du routeur. Montrer les boutons à qui n'a que
-   * la lecture ne ferait que produire des 403 en série.</p>
-   */
   canEdit?: boolean;
 }
 
-/**
- * Une ligne de la liste : ce que le routeur porte, plus ce que l'application en sait.
- *
- * `staticId` n'est renseigné que pour une règle permanente ; c'est lui qui décide de
- * l'affichage du bouton supprimer. Une règle dérivée d'un serveur n'en a pas : elle se
- * retire en modifiant le serveur, jamais ici, sans quoi le réconciliateur la remettrait
- * à son prochain passage.
- */
 interface DisplayRow {
   key: string;
   label: string;
@@ -69,13 +54,6 @@ const emptyDraft = (): StaticPortRuleDto => ({
 
 const portRange = (start: number, end: number) => (start === end ? String(start) : `${start}-${end}`);
 
-/**
- * Les redirections de ports.
- *
- * <p>Migrée vers les primitives au lot B.5 : le tableau écrit en JSX devient un
- * {@link DataTable} à colonnes déclarées, et la boîte de dialogue le {@link Dialog} du design
- * system. C'est le dernier des trois écrans du bloc « dette à résorber ».</p>
- */
 function PortForwardingCard({
   routerRules,
   staticRules,
@@ -88,8 +66,6 @@ function PortForwardingCard({
 }: PortForwardingCardProps) {
   const { t } = useTranslation("ports");
 
-  // Seul l'état d'interface vit ici : la boîte de dialogue, le brouillon en cours de saisie
-  // et les messages consécutifs à une action. Les redirections, elles, appartiennent au store.
   const [notice, setNotice] = useState<string>("");
   const [actionError, setActionError] = useState<string>("");
 
@@ -130,9 +106,6 @@ function PortForwardingCard({
       };
     });
 
-    // Une règle permanente enregistrée mais absente du routeur : le dry-run est actif, ou la
-    // réconciliation n'est pas encore passée. La masquer donnerait l'impression que l'ajout
-    // a échoué.
     const pending: DisplayRow[] = staticRules
       .filter((rule) => !seenStatic.has(rule.name))
       .map((rule) => ({

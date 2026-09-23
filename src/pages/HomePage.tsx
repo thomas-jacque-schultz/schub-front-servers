@@ -18,16 +18,6 @@ import { useAuthStore } from "../stores/authStore";
 import { useProfileStore } from "../stores/profileStore";
 import { useDocumentMeta } from "../seo/useDocumentMeta";
 
-/**
- * La racine : ce qu'est Schub, puis ce qu'il reste à faire pour s'en servir.
- *
- * <p>Le contenu personnel a déménagé sur `/contact`. Ce qui restait ici — l'encadré Schub — est
- * devenu la page : un visiteur qui arrive sur le domaine doit lire à quoi sert ce site, et un
- * compte connecté doit voir ce qui l'empêche encore d'en profiter.</p>
- *
- * <p>Les actions sont <strong>déduites de `GET /me`</strong>, jamais devinées. Un visiteur non
- * connecté n'a pas de liste vide : il a la seule action qui le concerne, se connecter.</p>
- */
 function HomePage() {
   const { t } = useTranslation("home");
   const navigate = useLocalizedNavigate();
@@ -78,9 +68,6 @@ function HomePage() {
       items.push({ key: "riot", label: t("onboarding.riotLinked"), state: "done" });
     }
 
-    // La collecte n'est pas une action : rien n'est demandé, il n'y a qu'à attendre. Elle est
-    // listée quand même, parce que des statistiques vides pendant ce temps se lisent comme une
-    // panne si personne ne dit qu'elles se remplissent.
     if (ingestInFlight) {
       items.push({
         key: "ingest",

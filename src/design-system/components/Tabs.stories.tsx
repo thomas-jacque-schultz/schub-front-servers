@@ -3,10 +3,6 @@ import type { Meta, StoryObj } from "@storybook/react";
 import Typography from "@mui/material/Typography";
 import { Tabs, type TabItem } from "./Tabs";
 
-/**
- * Les libellés et les contenus sont **fictifs**. Le Storybook est public : aucune donnée réelle
- * n'y entre, pas plus un pseudo qu'un nom d'équipe existant.
- */
 const ITEMS: TabItem[] = [
   { key: "premier", label: "Premier onglet" },
   { key: "deuxieme", label: "Deuxième onglet" },
@@ -20,8 +16,6 @@ const meta = {
   args: {
     items: ITEMS,
     value: "premier",
-    // Une story est un état figé : le rappel existe pour satisfaire le contrat, la variante
-    // interactive plus bas est celle qui montre le changement d'onglet.
     onChange: () => {},
     ariaLabel: "Exemple de barre d'onglets",
     children: (
@@ -37,12 +31,10 @@ type Story = StoryObj<typeof meta>;
 
 export const Standard: Story = {};
 
-/** L'étiquette « à venir » se lit sans ouvrir l'onglet : c'est sa raison d'être. */
 export const SurUnOngletAVenir: Story = {
   args: { value: "aVenir" },
 };
 
-/** En situation : l'onglet actif change, et le panneau avec lui. */
 export const Interactif: Story = {
   render: (args) => {
     const Demo = () => {

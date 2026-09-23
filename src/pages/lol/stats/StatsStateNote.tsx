@@ -4,7 +4,6 @@ import type { StatsState } from "../../../types/stats";
 
 export interface StatsStateNoteProps {
   state: StatsState;
-  /** Discret dans une colonne étroite, en alerte quand c'est tout le panneau qui est vide. */
   variant?: "inline" | "block";
 }
 
@@ -17,13 +16,6 @@ const SEVERITE: Record<StatsState, "info" | "warning"> = {
   CONNECTEUR_INDISPONIBLE: "warning",
 };
 
-/**
- * Pourquoi c'est vide.
- *
- * <p>Les cinq raisons n'appellent pas le même geste : lier un compte, attendre, compléter
- * l'effectif, revenir plus tard, ou rien du tout parce qu'il n'y a réellement aucune partie. Un
- * message unique les confondrait toutes en panne.</p>
- */
 export function StatsStateNote({
   state,
   variant = "inline",

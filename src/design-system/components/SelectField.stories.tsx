@@ -2,7 +2,6 @@ import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { SelectField } from "./SelectField";
 
-/** Rôles inventés : ceux du projet portent d'autres noms, et le Storybook est public. */
 const OPTIONS = [
   { value: "r1", label: "Visiteur" },
   { value: "r2", label: "Modérateur" },
@@ -21,10 +20,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Simple: Story = {};
 
-/**
- * Une option indisponible se désactive plutôt que de disparaître : chercher en vain un rôle
- * qu'on sait exister est plus déroutant que de le voir grisé.
- */
 export const AvecOptionInterdite: Story = {
   args: { helperText: "Le rôle réservé n'est attribuable par personne." },
 };

@@ -28,22 +28,6 @@ interface PermissionRow {
 const sameSet = (left: Permission[], right: Permission[]): boolean =>
   left.length === right.length && left.every((permission) => right.includes(permission));
 
-/**
- * La matrice rôles × permissions — la fenêtre réservée.
- *
- * <p>Deux absences sont le sujet même de l'écran, et elles sont volontaires :</p>
- * <ul>
- *   <li><strong>la permission d'administration des rôles n'a pas de ligne.</strong> Le cœur la
- *       retire silencieusement de tout rôle qu'on lui envoie ; une case qui se décocherait
- *       d'elle-même à l'enregistrement serait pire qu'une case absente ;</li>
- *   <li><strong>la colonne {@code OWNER} ne se coche pas.</strong> Elle reste visible — la
- *       masquer laisserait croire que ce rôle n'a aucune permission — mais l'amputer fermerait
- *       l'administration à tout le monde, définitivement.</li>
- * </ul>
- *
- * <p>C'est ce qui rend « accessible seulement à moi-même » vrai par construction plutôt que par
- * convention (décision n°2 du 18-09).</p>
- */
 function RolesPage() {
   const { t } = useTranslation("roles");
 
@@ -102,8 +86,6 @@ function RolesPage() {
     setIsSaving(true);
     setError("");
     try {
-      // Un appel par rôle modifié : le cœur n'expose pas d'écriture de lot, et en inventer une
-      // pour trois rôles coûterait plus que les trois requêtes.
       const saved = await Promise.all(
         changedRoles.map((role) =>
           updateRoleApi(role.id, {

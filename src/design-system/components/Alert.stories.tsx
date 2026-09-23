@@ -24,10 +24,6 @@ export const AvecTitre: Story = {
   },
 };
 
-/**
- * La distinction qui compte : `warning` — ça marche, mais amputé — contre `error` — ça n'a pas
- * eu lieu. Les confondre apprend au lecteur à ignorer les deux.
- */
 export const LesQuatreNiveaux: Story = {
   render: () => (
     <Stack spacing={1.5}>

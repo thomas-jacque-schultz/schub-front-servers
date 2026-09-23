@@ -22,7 +22,6 @@ type Story = StoryObj<typeof meta>;
 
 export const ParDefaut: Story = {};
 
-/** Les six intentions, pleines puis en contour. */
 export const LesIntentions: Story = {
   render: () => (
     <Stack spacing={1.5}>
@@ -46,7 +45,6 @@ export const LesIntentions: Story = {
   ),
 };
 
-/** Avec une icône du répertoire — ici le décompte des serveurs en ligne. */
 export const AvecIcone: Story = {
   render: () => (
     <Chip label="2 serveurs en ligne sur 5" tone="success" icon={<Icon name="memory" />} />

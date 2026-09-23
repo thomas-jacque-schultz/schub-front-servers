@@ -9,7 +9,6 @@ import { Button } from "./Button";
 export interface DialogProps {
   open: boolean;
   title: string;
-  /** Ce que l'action va faire, en une phrase. Une confirmation sans énoncé ne confirme rien. */
   description?: ReactNode;
   children?: ReactNode;
   confirmLabel?: string;
@@ -18,17 +17,10 @@ export interface DialogProps {
   onClose: () => void;
   confirmDisabled?: boolean;
   confirmLoading?: boolean;
-  /** Peint l'action en rouge : à réserver à ce qui détruit ou retire un droit. */
   destructive?: boolean;
   maxWidth?: "xs" | "sm" | "md";
 }
 
-/**
- * La boîte de dialogue : une question, et deux réponses.
- *
- * <p>Le bouton d'annulation est **obligatoire** et son libellé aussi : une modale sans sortie
- * visible est un piège, et la croix seule ne se voit pas au clavier.</p>
- */
 export function Dialog({
   open,
   title,

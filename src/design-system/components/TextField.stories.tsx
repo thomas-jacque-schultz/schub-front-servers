@@ -17,7 +17,6 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/** Champ contrôlé, pour que la saisie se teste vraiment dans Storybook. */
 const Controlled = (props: React.ComponentProps<typeof TextField>) => {
   const [value, setValue] = useState(props.value);
   return <TextField {...props} value={value} onChange={setValue} />;
@@ -41,7 +40,6 @@ export const Desactive: Story = {
   render: (args) => <Controlled {...args} value="serveur-de-demonstration" disabled />,
 };
 
-/** Consultation : la valeur reste sélectionnable, ce qu'un champ désactivé interdit. */
 export const LectureSeule: Story = {
   render: (args) => (
     <Controlled {...args} value="serveur-de-demonstration" readOnly helperText="Fiche en consultation." />

@@ -6,24 +6,13 @@ import Typography from "@mui/material/Typography";
 import { Icon } from "./Icon";
 
 export interface DisclosureProps {
-  /** L'intitulé toujours visible, celui sur lequel on clique. */
   title: string;
-  /** Une mention secondaire à droite du titre — un compte, un état. */
   meta?: ReactNode;
   open: boolean;
   onToggle: (open: boolean) => void;
   children: ReactNode;
 }
 
-/**
- * Le bloc repliable.
- *
- * <p>Il est **contrôlé** : l'ouverture appartient à l'écran, pas au composant. C'est ce qui
- * permet de réagir à l'ouverture — charger une liste, par exemple — sans dupliquer l'état.</p>
- *
- * <p>Le contenu replié reste dans le DOM : replier n'est pas masquer une information sensible,
- * c'est ranger une liste longue.</p>
- */
 export function Disclosure({ title, meta, open, onToggle, children }: DisclosureProps) {
   return (
     <Accordion

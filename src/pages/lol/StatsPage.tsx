@@ -26,18 +26,8 @@ import { StatsStateNote } from "./stats/StatsStateNote";
 import { useStatsFormat } from "./stats/statsFormat";
 import { useWindowOptions } from "./stats/windows";
 
-/** Tant qu'une collecte tourne, une échéance figée à l'ouverture de l'écran annonce un passé. */
 const INGEST_POLL_MS = 30_000;
 
-/**
- * Mes stats.
- *
- * <p>La garde est ici autant que dans le menu : une URL se tape à la main, et l'écran refuse
- * lui-même en disant ce qui débloque.</p>
- *
- * <p>Tout ce qui s'affiche vient de {@code GET /me/stats}, une route sans cible. Il n'existe pas
- * d'écran équivalent pour les statistiques de quelqu'un d'autre, et ce n'est pas un manque.</p>
- */
 function StatsPage() {
   const { t } = useTranslation("stats");
   const format = useStatsFormat();
@@ -339,7 +329,6 @@ function StatsPage() {
 const detail = (line: StatLineDto, format: ReturnType<typeof useStatsFormat>) =>
   `${format.taux(line.winRate)} · ${line.games}`;
 
-/** La clé est `yyyy-MM` ; on en tire un mois abrégé plutôt que de réécrire une date à la main. */
 const etiquetteDuMois = (key: string, formatMonth: (value: Date) => string) => {
   const [annee, mois] = key.split("-").map(Number);
   if (!annee || !mois) {

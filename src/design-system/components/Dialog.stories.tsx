@@ -26,10 +26,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Confirmation: Story = {};
 
-/**
- * Le bouton d'annulation est obligatoire, libellé compris : une modale sans sortie visible est
- * un piège, et la croix seule ne se voit pas au clavier.
- */
 export const Destructive: Story = {
   args: {
     title: "Supprimer ce rôle",
@@ -51,7 +47,6 @@ export const AvecFormulaire: Story = {
   },
 };
 
-/** Le cycle complet, pour vérifier la fermeture au clavier et au clic extérieur. */
 export const Ouvrable: Story = {
   args: { open: false },
   render: function Ouvrable(args) {

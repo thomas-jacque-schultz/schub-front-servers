@@ -17,16 +17,10 @@ export const Cochee: Story = {};
 export const Decochee: Story = { args: { checked: false } };
 export const Desactivee: Story = { args: { disabled: true } };
 
-/**
- * Sans libellé visible — le cas d'une matrice où l'en-tête de colonne porte le sens — un
- * `aria-label` est obligatoire : une case nue est illisible au lecteur d'écran, qui n'a pas la
- * grille sous les yeux.
- */
 export const SansLibelleVisible: Story = {
   args: { label: undefined, "aria-label": "Démarrer un serveur pour le rôle Modérateur" },
 };
 
-/** Le comportement réel : la case suit ce qu'on lui rend, elle ne décide de rien. */
 export const Interactive: Story = {
   render: function Interactive() {
     const [checked, setChecked] = useState(false);

@@ -5,15 +5,6 @@ import { RiotDisclaimer } from "./RiotDisclaimer";
 import { useLocalizedPath } from "../../i18n/navigation";
 import { useDocumentMeta } from "../../seo/useDocumentMeta";
 
-/**
- * Les conditions d'utilisation — publiques, et rédigées d'après ce que le service fait.
- *
- * <p>Elles ne recopient pas un modèle : chaque clause décrit un comportement qui existe dans le
- * code — identification par Discord seule, remplacement du compte de jeu sans déliaison, revues
- * visibles des seuls membres de l'équipe, hébergement à domicile sans garantie. Ce qui ne peut
- * pas être déduit du code — le nom légal de l'éditeur, son adresse, la juridiction — reste
- * <strong>entre crochets</strong> plutôt que d'être inventé.</p>
- */
 function TermsPage() {
   const { t } = useTranslation("legal");
   const localize = useLocalizedPath();

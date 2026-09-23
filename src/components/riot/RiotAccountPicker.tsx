@@ -19,51 +19,24 @@ import { isRiotIdComplete } from "../../pages/profile/riotId";
 import { RIOT_POSITIONS } from "../../types/profile";
 import type { KnownRiotAccountDto, RiotPosition } from "../../types/profile";
 
-/** Le temps laissé à la frappe avant d'interroger : une requête par pause, pas par caractère. */
 const SEARCH_DEBOUNCE_MS = 300;
 
-/** En dessous, toute saisie ressemble à tout : on n'interroge pas. */
 const MIN_QUERY_LENGTH = 3;
 
-/** Au-delà, l'observation date d'une saison précédente : le Riot ID a pu changer de main. */
 const PEREMPTION_MS = 180 * 24 * 60 * 60 * 1000;
 
 const estPosteConnu = (position: string): position is RiotPosition =>
   (RIOT_POSITIONS as readonly string[]).includes(position);
 
-/**
- * La partie gauche d'un `Pseudo#TAG`, ou la saisie entière si elle n'en porte pas.
- *
- * <p>C'est elle, et jamais la saisie complète, qui part en recherche : le cœur traite un Riot ID
- * complet comme une demande de vérification et appelle Riot. Le tag n'est pas un critère de
- * recherche ici, c'est ce qui désigne un compte précis — donc l'affaire du bouton.</p>
- */
+// La partie gauche seulement : une saisie complète déclencherait un appel à Riot.
 const pseudoDe = (saisie: string): string => saisie.split("#")[0].trim();
 
 export interface RiotAccountPickerProps {
-  /** Ce qu'on fait du compte choisi. Le sélecteur ne lie ni n'ajoute rien lui-même. */
   onPick: (account: KnownRiotAccountDto) => void;
-  /** Vrai pendant que l'appelant traite le choix : le clic ne se répète pas. */
   busy?: boolean;
-  /** Remis à zéro quand il change : fermer et rouvrir ne garde pas la recherche précédente. */
   resetKey?: unknown;
 }
 
-/**
- * Une zone, une liste, un geste : on écrit, la liste se remplit depuis nos données à partir de
- * trois caractères, et <strong>on choisit en cliquant dedans</strong>.
- *
- * <p><strong>L'API Riot n'a aucune recherche par pseudo partiel.</strong> Ce n'est pas une
- * limitation qu'on contourne, c'est une opération qui n'existe pas chez eux : la liste vient
- * donc de nos données, et au démarrage elle est vide. Le bouton est la réponse à ça — il écrit
- * un `Pseudo#TAG` entier à Riot, qui répond s'il existe, et le compte <em>rejoint la liste</em>.
- * Il ne choisit rien : c'est toujours le clic qui le fait, et le compte vérifié profite à tout le
- * monde puisqu'il reste dans l'index.</p>
- *
- * <p>Il sert les deux écrans qui désignent un compte Riot — lier le sien, ajouter un membre à
- * une équipe. Les deux posent la même question et l'API ne sait y répondre que d'une façon ;
- * deux copies auraient divergé sur la première correction.</p>
- */
 export function RiotAccountPicker({ onPick, busy = false, resetKey }: RiotAccountPickerProps) {
   const { t } = useTranslation("riot");
   const { formatDateTime } = useLocaleFormat();
@@ -73,7 +46,6 @@ export function RiotAccountPicker({ onPick, busy = false, resetKey }: RiotAccoun
   const [isSearching, setIsSearching] = useState<boolean>(false);
   const [hasSearched, setHasSearched] = useState<boolean>(false);
   const [isVerifying, setIsVerifying] = useState<boolean>(false);
-  /** Le Riot ID que Riot vient de confirmer. Il est dans la liste ; reste à le choisir. */
   const [verified, setVerified] = useState<string | null>(null);
   const [error, setError] = useState<string>("");
 
@@ -85,7 +57,6 @@ export function RiotAccountPicker({ onPick, busy = false, resetKey }: RiotAccoun
     setError("");
   }, [resetKey]);
 
-  /** La recherche, temporisée, et sur le pseudo seul : la frappe n'appelle jamais Riot. */
   useEffect(() => {
     const cherche = pseudoDe(query);
 
@@ -119,10 +90,6 @@ export function RiotAccountPicker({ onPick, busy = false, resetKey }: RiotAccoun
     };
   }, [query]);
 
-  /**
-   * Un poste inconnu s'affiche <strong>brut</strong> plutôt que de rendre une clé de traduction
-   * manquante : un `position.NOUVEAU` affiché à l'écran serait pire que le mot d'origine.
-   */
   const nomDePoste = useCallback(
     (position: string): string =>
       estPosteConnu(position) ? t(`position.${position}`) : position,
@@ -144,7 +111,6 @@ export function RiotAccountPicker({ onPick, busy = false, resetKey }: RiotAccoun
     [t],
   );
 
-  /** Demander à Riot. Ce geste n'engage rien : il fait exister le compte dans la liste. */
   const verifier = async () => {
     const riotId = query.trim();
     setIsVerifying(true);
@@ -184,9 +150,6 @@ export function RiotAccountPicker({ onPick, busy = false, resetKey }: RiotAccoun
                 }),
           meta: (
             <>
-              {/* Des faits servis par le cœur, pas des déductions : se reconnaître sans comparer
-                  d'identifiants, savoir avant de cliquer qu'un compte est déjà pris, et voir
-                  qu'une identité est vieille plutôt que de la croire courante. */}
               {account.mine && <Chip label={t("suggestion.mine")} tone="success" />}
               {account.alreadyLinked && !account.mine && (
                 <Chip label={t("suggestion.alreadyLinked")} tone="warning" variant="outline" />
@@ -244,9 +207,6 @@ export function RiotAccountPicker({ onPick, busy = false, resetKey }: RiotAccoun
         )}
       </Stack>
 
-      {/* Le bouton ne cherche pas : il demande à Riot si ce Riot ID existe, et le fait entrer
-          dans la liste. Il ne s'active que sur un `Pseudo#TAG` entier, parce que c'est la seule
-          forme que Riot sache résoudre. */}
       <Stack spacing={1}>
         <Stack direction="row" justify="end">
           <Button

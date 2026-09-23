@@ -5,7 +5,6 @@ import DiscordChannelsCard from "../../components/DiscordChannelsCard";
 import { PageHeader, Stack } from "../../design-system";
 import type { DiscordChannelSelection, DiscordGuildChannelsDto } from "../../types/discord";
 
-/** Les salons qui reçoivent les changements d'état. Réservé à `DISCORD_CHANNEL_MANAGE`. */
 function DiscordConfigPage() {
   const { t } = useTranslation("servers");
   const [guilds, setGuilds] = useState<DiscordGuildChannelsDto[]>([]);

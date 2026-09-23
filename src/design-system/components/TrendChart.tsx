@@ -5,42 +5,23 @@ import { chartColors, radii } from "../tokens";
 
 export interface TrendPoint {
   key: string;
-  /** L'étiquette d'axe. Une sur deux est affichée quand la série est longue. */
   label: string;
-  /** `null` = pas de mesure sur ce pas. Ce n'est pas zéro. */
   value: number | null;
-  /** Le détail au survol : valeur mise en forme et assise. */
   title: string;
 }
 
 export interface TrendChartProps {
-  /** Ce que la série mesure, affiché en titre et repris dans le tableau équivalent. */
   label: string;
   points: TrendPoint[];
-  /** Haut de l'échelle. Par défaut le maximum observé, au minimum 1. */
   scaleMax?: number;
-  /** Repère horizontal, dans l'unité des valeurs — par exemple la moyenne du joueur. */
   reference?: number | null;
   referenceLabel?: string;
-  /** En-tête de la colonne des valeurs dans le tableau équivalent. */
   valueHeader: string;
   emptyLabel: string;
 }
 
 const HAUTEUR = 96;
 
-/**
- * Une évolution, à série unique.
- *
- * <p>Une seule teinte, parce qu'il n'y a qu'une grandeur : une deuxième couleur ferait croire à
- * une deuxième série. Pas de second axe, jamais.</p>
- *
- * <p>Un pas sans mesure ne dessine pas de barre et garde sa place. L'écraser à zéro ferait lire
- * « il a tout perdu ce mois-là » là où il n'a rien joué.</p>
- *
- * <p>Le tableau équivalent n'est pas une option d'accessibilité : c'est le seul chemin vers ces
- * chiffres pour qui ne voit pas la hauteur des barres, et il porte les mêmes valeurs.</p>
- */
 export function TrendChart({
   label,
   points,
@@ -177,7 +158,6 @@ export function TrendChart({
   );
 }
 
-/** Le tableau existe pour les lecteurs d'écran ; le masquer par `display: none` l'en priverait. */
 const visuallyHidden = {
   position: "absolute",
   width: 1,

@@ -10,18 +10,6 @@ import { LocalizedRoot } from "./i18n/LocalizedRoot";
 import { useAuthStore } from "./stores/authStore";
 import type { Permission } from "./types/permission";
 
-/**
- * Le découpage du chargement — **la racine d'abord**.
- *
- * <p>Avant le chantier C, l'application tenait en un seul fichier JavaScript : ouvrir la page
- * d'accueil téléchargeait les cinq écrans d'administration, leurs formulaires et leur
- * validation. C'était sans conséquence tant que la racine servait un tableau de bord derrière
- * une authentification. Ça n'en est plus une quand elle est la racine d'un domaine personnel,
- * destinée à être indexée et partagée — y compris depuis un téléphone sur un réseau lent.</p>
- *
- * <p>Seule la racine est chargée d'emblée. Tout le reste arrive à la demande, y compris l'état
- * des serveurs et le contenu personnel, qui est la page la plus lourde du site.</p>
- */
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const GameServerFormPage = lazy(() => import("./pages/GameServerFormPage"));
 const LandingPage = lazy(() => import("./pages/LandingPage"));
@@ -48,17 +36,6 @@ function RequireAuth({ children }: GuardProps) {
   return connected ? <>{children}</> : <LocalizedNavigate to="/login" replace />;
 }
 
-/**
- * La garde par permission — le pendant du menu.
- *
- * <p>Le menu n'affiche que ce qui est autorisé, mais une URL se tape à la main et se met en
- * favori : sans cette garde, un écran refusé s'ouvrirait quand même et n'afficherait que des
- * erreurs venues du serveur. L'autorité reste le back — c'est lui qui refuse vraiment — ce qui
- * se joue ici est la lisibilité.</p>
- *
- * <p>Une seule des permissions suffit : plusieurs écrans s'ouvrent à qui détient l'une ou
- * l'autre, exactement comme les routes du BFF le prévoient.</p>
- */
 function RequirePermission({ anyOf, children }: GuardProps & { anyOf: Permission[] }) {
   const { connected, canAny } = useAuthStore();
 
@@ -86,7 +63,6 @@ function SessionCheckScreen() {
   );
 }
 
-/** L'attente d'un écran chargé à la demande. Même forme que la vérification de session. */
 function RouteLoadingScreen() {
   const { t } = useTranslation();
 
@@ -99,15 +75,6 @@ function RouteLoadingScreen() {
   );
 }
 
-/**
- * Les écrans, une fois la langue connue.
- *
- * <p>Les chemins sont **relatifs** : c'est ce qui permet au même arbre de routes de servir la
- * racine en français et `/en/…` en anglais sans dupliquer une seule déclaration.</p>
- *
- * <p>Tout passe par {@link AppLayout} : l'en-tête et le pied de page sont le cadre de
- * l'application, pas un morceau recopié dans chaque page.</p>
- */
 function LocalizedRoutes() {
   const { isCheckingSession } = useAuthStore();
 
@@ -118,18 +85,12 @@ function LocalizedRoutes() {
       ) : (
         <Suspense fallback={<RouteLoadingScreen />}>
           <Routes>
-            {/* La racine est la page produit de Schub, plus la liste d'onboarding. Le contenu
-                personnel vit sur /contact depuis les retours d'usage. */}
             <Route index element={<HomePage />} />
 
-            {/* L'état des serveurs : c'était la racine jusqu'ici, c'est une section désormais.
-                La page elle-même n'a pas bougé — elle ne sait pas à quelle adresse on la sert. */}
             <Route path="servers" element={<LandingPage />} />
             <Route path="contact" element={<ContactPage />} />
 
-            {/* Les deux pages de texte, publiques et liées en pied de page. Riot exige qu'un
-                produit tiers les expose ; elles sont aussi la seule réponse honnête à « que
-                gardez-vous, et comment le fait-on effacer ». */}
+            {/* Exigées par Riot pour un produit tiers. */}
             <Route path="terms" element={<TermsPage />} />
             <Route path="privacy" element={<PrivacyPage />} />
 
@@ -142,8 +103,6 @@ function LocalizedRoutes() {
               }
             />
 
-            {/* L'ancien tableau de bord est devenu le menu Configuration : on garde l'adresse
-                vivante pour les liens et les favoris déjà posés. */}
             <Route path="dashboard" element={<LocalizedNavigate to="/config/servers" replace />} />
             <Route path="config" element={<LocalizedNavigate to="/config/servers" replace />} />
 
@@ -213,11 +172,6 @@ function LocalizedRoutes() {
               }
             />
 
-            {/* Mon profil : Discord, nom sur le site, compte Riot.
-
-                RequireAuth et rien de plus : la ressource est le lecteur. Exiger une permission
-                reviendrait à pouvoir refuser à quelqu'un l'accès à son propre nom, et fermerait
-                l'écran à un compte tout juste créé — donc à tout le monde, au premier jour. */}
             <Route
               path="profile"
               element={
@@ -227,9 +181,6 @@ function LocalizedRoutes() {
               }
             />
 
-            {/* Mes stats : l'écran décide lui-même s'il s'ouvre, à partir de l'état du compte
-                Riot. Aucune permission ne peut porter cette condition — ce n'est pas un droit,
-                c'est un prérequis de donnée. Le menu grise l'entrée, la route explique. */}
             <Route
               path="lol/stats"
               element={
@@ -239,18 +190,8 @@ function LocalizedRoutes() {
               }
             />
 
-            {/* L'app d'équipe LoL (chantier D).
-
-                RequireAuth, et non RequirePermission : TEAM_VIEW est une permission à PORTÉE
-                D'ÉQUIPE — elle est accordée par l'appartenance à une équipe, pas par le rôle,
-                et le jeton ne peut donc pas la porter. L'exiger ici fermerait la porte à un
-                capitaine devant sa propre équipe. Le tri est fait par le cœur, qui ne sert que
-                les équipes de l'appelant et refuse les autres en 403 ; le menu, lui, n'affiche
-                l'entrée que si une permission la rend utile (voir AppLayout). */}
-            {/* /lol est PUBLIQUE, et c'est le point de ce lot. Derrière une session, elle ne
-                montrait qu'un écran de connexion — donc rien du produit — à qui ne l'a jamais
-                utilisé, examinateur du portail développeur de Riot compris. La liste des
-                équipes a pris l'adresse qui la décrit. */}
+            {/* RequireAuth et non RequirePermission : TEAM_VIEW est à portée d'équipe, le jeton ne la porte pas. */}
+            {/* Publique : l'examinateur du portail développeur Riot doit voir le produit sans compte. */}
             <Route path="lol" element={<LolLandingPage />} />
             <Route
               path="lol/teams"
@@ -285,13 +226,6 @@ function LanguageBranch({ language }: { language: AppLanguage }) {
   );
 }
 
-/**
- * Le routage de premier niveau : une branche par langue.
- *
- * <p>« Une URL par langue » se décide ici et nulle part ailleurs. Le français occupe la racine
- * parce que c'est la langue de rédaction du site ; l'anglais vit sous `/en`, ce qui le rend
- * indexable au lieu de le cacher derrière un état d'interface.</p>
- */
 function App() {
   return (
     <Routes>

@@ -22,18 +22,6 @@ import { useAuthStore } from "../../stores/authStore";
 import { OWNER_ROLE_NAME, RESERVED_PERMISSION } from "../../types/permission";
 import { riotAccountOf, userLabelOf, type RoleDto, type UserDto } from "../../types/user";
 
-/**
- * L'écran des utilisateurs.
- *
- * <p><strong>La règle anti-élévation est appliquée par le cœur</strong> — on n'attribue qu'un
- * rôle dont les permissions sont incluses dans les siennes. L'IHM la rejoue pour ne pas
- * *proposer* ce que le serveur refusera : découvrir l'interdit par un message d'erreur après
- * coup est la façon la plus sûre de faire croire à une panne.</p>
- *
- * <p>Deux garde-fous anti-verrouillage se lisent ici sans appel au serveur : on ne modifie pas
- * son propre rôle, et on ne rétrograde pas le dernier {@code OWNER}. Le cœur refuse les deux de
- * son côté ; l'écran explique pourquoi le bouton n'est pas là.</p>
- */
 function UsersPage() {
   const { t } = useTranslation("users");
   const { formatDateTime } = useLocaleFormat();
@@ -78,12 +66,6 @@ function UsersPage() {
     [ownerRole, users],
   );
 
-  /**
-   * Les rôles que l'acteur peut réellement attribuer.
-   *
-   * <p>Trois filtres, dans l'ordre où le cœur les applique : jamais `OWNER`, jamais un rôle
-   * portant la permission réservée, et jamais un rôle plus puissant que le sien.</p>
-   */
   const assignableRoles = useMemo(
     () =>
       roles.filter(
@@ -95,7 +77,6 @@ function UsersPage() {
     [roles, permissions],
   );
 
-  /** Pourquoi ce compte n'est pas modifiable, ou `null` s'il l'est. */
   const blockedReason = useCallback(
     (user: UserDto): string | null => {
       if (profile && user.discordId === profile.actorId) {
@@ -187,8 +168,6 @@ function UsersPage() {
       render: (user) => {
         const reason = blockedReason(user);
         if (reason) {
-          // La raison remplace le bouton plutôt que de le griser : un bouton inerte sans
-          // explication se lit comme une panne, et le refus est ici une règle, pas un incident.
           return (
             <Text variant="caption" tone="disabled">
               {reason}

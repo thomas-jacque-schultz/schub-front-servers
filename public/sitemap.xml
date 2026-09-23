@@ -1,26 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  Les douze pages publiques : six en français, leurs six équivalentes en anglais.
-
-  La racine est la page produit de Schub. /lol est la vitrine de l'outil League of Legends,
-  publique depuis le lot des pages légales : c'est elle qu'un examinateur du portail développeur
-  de Riot ouvre, et elle n'existerait pas dans un index si elle restait derrière une session.
-  Le parcours, les projets et le formulaire vivent sur /contact.
-
-  /terms et /privacy changent rarement, d'où le `yearly`, mais elles sont indexables à dessein :
-  Riot exige qu'un produit tiers les expose, et une page exigée qu'on ne trouve pas ne vaut rien.
-
-  Chaque URL déclare ses alternatives `hreflang`, y compris elle-même — c'est ce que demande la
-  spécification, et c'est ce qui évite que les deux versions soient traitées comme du contenu
-  dupliqué.
-
-  Le Storybook (/storybook) n'y figure pas volontairement : il est public et lié en pied de
-  page, mais c'est une documentation technique, pas une page du site. Il reste crawlable ; il
-  n'est simplement pas proposé à l'indexation.
-
-  Les écrans qui exigent une session — /lol/teams, /lol/stats, /profile, /config — n'y sont pas
-  non plus : indexés, ils ne produiraient que des redirections vers la connexion.
--->
+<!-- Le Storybook n'y figure pas volontairement : documentation technique, pas une page du site. -->
 <urlset
   xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"

@@ -5,21 +5,6 @@ import { RiotDisclaimer } from "./RiotDisclaimer";
 import { useLocalizedPath } from "../../i18n/navigation";
 import { useDocumentMeta } from "../../seo/useDocumentMeta";
 
-/**
- * La politique de confidentialité — écrite depuis les collections, pas depuis un modèle.
- *
- * <p>Trois faits qu'un modèle générique aurait tus, et qui sont ici en toutes lettres :</p>
- *
- * <ul>
- *   <li><strong>Les parties collectées survivent à l'historique de Riot.</strong> Riot n'en sert
- *     qu'un millier par joueur ; celles déjà lues restent chez nous. C'est voulu, et c'est
- *     exactement ce qui donne un sens à une demande de suppression.</li>
- *   <li><strong>Les neuf autres joueurs d'une partie sont enregistrés eux aussi</strong>, sans
- *     avoir de compte ici. La voie de suppression leur est donc ouverte au même titre.</li>
- *   <li><strong>Il n'existe aucun bouton de suppression de compte.</strong> C'est dit comme un
- *     engagement à traiter la demande à la main, jamais comme une fonctionnalité.</li>
- * </ul>
- */
 function PrivacyPage() {
   const { t } = useTranslation("legal");
   const localize = useLocalizedPath();

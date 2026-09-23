@@ -29,7 +29,6 @@ type Story = StoryObj<typeof meta>;
 
 export const AFaire: Story = {};
 
-/** « En attente » n'est pas « à faire » : rien n'est demandé, il n'y a qu'à patienter. */
 export const EnAttente: Story = {
   args: {
     items: [
@@ -44,7 +43,6 @@ export const EnAttente: Story = {
   },
 };
 
-/** Ce qui est fait reste affiché : une liste qui raccourcit sans rien dire laisse douter. */
 export const Melange: Story = {
   args: {
     items: [

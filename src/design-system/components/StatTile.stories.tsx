@@ -16,7 +16,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Simple: Story = {};
 
-/** Un écart se lit au signe d'abord : la couleur ne fait que le confirmer. */
 export const AvecEcart: Story = {
   args: {
     delta: "+13 pts",
@@ -34,7 +33,6 @@ export const EcartNegatif: Story = {
   },
 };
 
-/** Trois parties et trois cents parties donnent le même chiffre : seul l'appui les distingue. */
 export const AssiseFaible: Story = {
   args: { value: "67 %", hint: "sur 3 parties" },
 };

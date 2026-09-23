@@ -16,9 +16,7 @@ import i18n from "../i18n";
 import type { PortRuleDto, StaticPortRuleDto } from "../types/portForwarding";
 
 interface PortForwardingStoreValue {
-  /** Ce que le routeur porte réellement, redirections manuelles comprises. */
   routerRules: PortRuleDto[];
-  /** Les règles permanentes détenues par l'application — les seules supprimables. */
   staticRules: StaticPortRuleDto[];
   isLoading: boolean;
   error: string;
@@ -43,12 +41,6 @@ export const PortForwardingStoreProvider = ({ children }: { children: ReactNode 
     setError("");
 
     try {
-      // Les deux listes disent des choses différentes : l'une l'état du routeur, l'autre ce
-      // que l'application détient. Il faut les deux pour savoir quoi afficher et quoi permettre.
-      //
-      // L'état du routeur est facultatif : il répond 503 quand le pilotage est désactivé, et
-      // échoue si la box est injoignable. Les règles permanentes, elles, restent lisibles —
-      // perdre toute la vue parce que le routeur se tait serait disproportionné.
       const [rules, statics] = await Promise.all([
         getPortRulesApi().catch(() => [] as PortRuleDto[]),
         getStaticPortRulesApi(),
@@ -67,8 +59,6 @@ export const PortForwardingStoreProvider = ({ children }: { children: ReactNode 
     }
   }, []);
 
-  // Les mutations relisent l'état plutôt que de le deviner : le back réconcilie dans la
-  // foulée, et lui seul sait ce que le routeur a réellement accepté.
   const createStaticRule = useCallback(
     async (rule: StaticPortRuleDto) => {
       await createStaticPortRuleApi(rule);
