@@ -1,10 +1,11 @@
 import { useTranslation } from "react-i18next";
 import { Card, ChampionIcon, Stack, StatGrid, Text } from "../../../design-system";
 import type { StatLineDto } from "../../../types/stats";
-import { type MetricKey, useMetrics } from "./metrics";
+import { KPI_ORDER, type MetricKey, useMetrics } from "./metrics";
 import { useStatsFormat } from "./statsFormat";
 
 const COMPACT: MetricKey[] = ["kda", "goldPerMinute", "damagePerMinute", "damageTakenPerMinute", "visionPerMinute"];
+const COMPLET = KPI_ORDER.filter((key) => key !== "winRate");
 
 export interface ChampionStatCardProps {
   line: StatLineDto;
@@ -38,7 +39,7 @@ export function ChampionStatCard({ line, compact = false }: ChampionStatCardProp
           </Text>
         </Stack>
         <StatGrid
-          items={tuiles(line, { compact: true, keys: compact ? COMPACT : undefined })}
+          items={tuiles(line, { compact: true, keys: compact ? COMPACT : COMPLET })}
           size="small"
           minWidth={compact ? 52 : 78}
           divided

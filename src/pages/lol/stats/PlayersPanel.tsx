@@ -2,17 +2,18 @@ import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { getTeamPlayersStatsApi } from "../../../api/statsApi";
 import {
+  AlignedColumns,
   Alert,
   AvatarToggleGroup,
   Card,
-  Columns,
   ProgressBar,
   SelectField,
   Stack,
   Text,
 } from "../../../design-system";
 import type { TeamPlayersStatsDto } from "../../../types/stats";
-import { PlayerHeader, PlayerStatsColumn } from "./PlayerStatsColumn";
+import { playerColumn } from "./playerColumn";
+import { PlayerHeader } from "./PlayerStatsColumn";
 import { PlayerStatsView } from "./PlayerStatsView";
 import { useWindowOptions } from "./windows";
 
@@ -115,22 +116,21 @@ export function PlayersPanel({ teamId }: PlayersPanelProps) {
           <PlayerStatsView
             data={visibles[0]}
             scale={stats?.scale ?? null}
-            layout="full"
             versusTeammates={visibles[0].versusTeammates}
           />
         </Stack>
       ) : (
-        <Columns minWidth={220} count={Math.max(1, Math.min(6, visibles.length))}>
-          {visibles.map((player) => (
-            <PlayerStatsColumn
-              key={player.memberId}
-              player={player}
-              isViewer={player.memberId === stats?.viewerMemberId}
-              scale={stats?.scale ?? null}
-              showRadar={visibles.length <= RADAR_JUSQU_A}
-            />
-          ))}
-        </Columns>
+        <AlignedColumns
+          minWidth={220}
+          count={Math.max(1, Math.min(6, visibles.length))}
+          columns={visibles.map((player) =>
+            playerColumn(player, {
+              isViewer: player.memberId === stats?.viewerMemberId,
+              scale: stats?.scale ?? null,
+              showRadar: visibles.length <= RADAR_JUSQU_A,
+            }),
+          )}
+        />
       )}
     </Stack>
   );

@@ -10,12 +10,16 @@ import type {
 
 const fenetre = (days?: number | null) => (days ? `?days=${days}` : "");
 
+// 30 : le maximum du cœur, le choix de champions porte sur tout ce qui a été joué.
+const avecChampions = (days?: number | null) =>
+  `?${new URLSearchParams({ ...(days ? { days: String(days) } : {}), champions: "30" })}`;
+
 export const getTeamPlayersStatsApi = async (
   teamId: string,
   days?: number | null,
 ): Promise<TeamPlayersStatsDto> =>
   requestJson<TeamPlayersStatsDto>(
-    `/teams/${teamId}/stats/players${fenetre(days)}`,
+    `/teams/${teamId}/stats/players${avecChampions(days)}`,
     {
       method: "GET",
     },
@@ -33,7 +37,7 @@ export const getTeamGamesStatsApi = async (
 export const getMyStatsApi = async (
   days?: number | null,
 ): Promise<MyStatsDto> =>
-  requestJson<MyStatsDto>(`/me/stats${fenetre(days)}`, { method: "GET" });
+  requestJson<MyStatsDto>(`/me/stats${avecChampions(days)}`, { method: "GET" });
 
 export const getTeamGameDetailApi = async (
   teamId: string,

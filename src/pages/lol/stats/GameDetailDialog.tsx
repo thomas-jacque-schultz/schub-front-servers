@@ -154,45 +154,21 @@ function FaceAFace({
     const ecart = (valeur: number) => (valeur > 0 ? "success" : valeur < 0 ? "error" : "neutral");
     const or = nous.gold - eux.gold;
     const cs = nous.cs - eux.cs;
-    // Le jungler n'a pas de couloir : ses ganks réussis remplacent l'état de la lane.
-    const jungle = ligne.position === "JUNGLE";
-    const reussis = nous.ganksSucceeded;
-    const subis = nous.ganksSuffered;
     return (
       <Stack spacing={0.25}>
         <Stack direction="row" spacing={0.5} wrap>
-          {!jungle && (
-            <>
-              <Chip
-                label={`${t("detail.goldDiff")} ${signe(or)}`}
-                tone={ecart(or)}
-                variant="outline"
-                size="small"
-              />
-              <Chip
-                label={`${t("detail.csDiff")} ${signe(cs)}`}
-                tone={ecart(cs)}
-                variant="outline"
-                size="small"
-              />
-            </>
-          )}
-          {reussis !== null && (
-            <Chip
-              label={t("detail.ganksSucceeded", { count: reussis })}
-              tone={reussis > 0 ? "success" : "neutral"}
-              variant="outline"
-              size="small"
-            />
-          )}
-          {!jungle && subis !== null && (
-            <Chip
-              label={t("detail.ganksSuffered", { count: subis })}
-              tone={subis > 0 ? "error" : "success"}
-              variant="outline"
-              size="small"
-            />
-          )}
+          <Chip
+            label={`${t("detail.goldDiff")} ${signe(or)}`}
+            tone={ecart(or)}
+            variant="outline"
+            size="small"
+          />
+          <Chip
+            label={`${t("detail.csDiff")} ${signe(cs)}`}
+            tone={ecart(cs)}
+            variant="outline"
+            size="small"
+          />
         </Stack>
         <Text variant="caption" tone="secondary" mono>
           {`${t("detail.kdaAt15")} ${nous.kills}/${nous.deaths}/${nous.assists} – ${eux.kills}/${eux.deaths}/${eux.assists}`}

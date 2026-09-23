@@ -57,6 +57,18 @@
     "versusTeammates": "contre la moyenne de {{count}} coéquipier(s)",
     "winRateVersusTeammates": "Écart de taux de victoire"
   },
+  "championChoice": {
+    "button": "Choisir",
+    "buttonCount": "{{count}} choisi(s)",
+    "title": "Champions à afficher",
+    "selected": "{{count}} champion(s) retenu(s)",
+    "default": "Aucun choix : les {{count}} plus joués.",
+    "reset": "Revenir aux plus joués",
+    "search": "Rechercher un champion",
+    "noResult": "Aucun champion joué ne correspond.",
+    "confirm": "Afficher",
+    "cancel": "Annuler"
+  },
   "section": {
     "champions": "Champions les plus joués",
     "noChampion": "Aucun champion sur la période.",
@@ -257,9 +269,7 @@
     "noMatchups": "Membres dans les deux camps : pas de face-à-face.",
     "loadFailed": "Le détail de la partie n'a pas pu être chargé.",
     "close": "Fermer",
-    "shortGame": "Partie finie avant 15 minutes : il n'y a pas d'état des couloirs à 15 minutes.",
-    "ganksSuffered": "Ganks subis {{count}}",
-    "ganksSucceeded": "Ganks réussis {{count}}"
+    "shortGame": "Partie finie avant 15 minutes : il n'y a pas d'état des couloirs à 15 minutes."
   },
   "opposition": {
     "tab": "Stratégie",
