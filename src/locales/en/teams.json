@@ -111,7 +111,7 @@
   },
   "draft": {
     "title": "Prepared compositions",
-    "description": "Drafts, to show the team: five positions, one champion each, a player once decided. No bans, no pick order, no timer — this is not a draft simulator.",
+    "description": "Drafts, to show the team: one champion and one player per position, substitutes, and the planned bans. No pick order, no timer — this is not a draft simulator.",
     "emptyTitle": "No composition",
     "emptyDescription": "Prepare one: all five positions are there, even if the roster is not.",
     "loadFailed": "Could not load the compositions",
@@ -119,10 +119,13 @@
     "noPatch": "Patch not stated",
     "updated": "Updated on {{date}}",
     "unassigned": "Player to decide",
+    "bans": "Bans",
+    "noBans": "No planned ban",
     "columns": {
       "role": "Position",
       "champion": "Champion",
-      "player": "Player"
+      "player": "Player",
+      "alternatives": "Substitutes"
     },
     "create": {
       "action": "New composition",
@@ -146,21 +149,26 @@
       "name": "Composition name",
       "nameHelper": "60 characters at most.",
       "patch": "Patch",
-      "patchHelper": "The version at the time of preparation, for example 15.18. Optional, but a composition reread in three months without its version speaks of champions that have changed.",
+      "patchHelper": "The version at the time of preparation, prefilled with the catalogue's. A composition reread in three months without its version speaks of champions that have changed.",
       "notes": "Notes",
       "notesHelper": "What the composition is trying to do. Optional.",
-      "champion": "Champion ({{role}})",
-      "championHelper": "The Data Dragon key: Ahri, MonkeyKing, LeeSin. The champion catalogue will arrive with the pool.",
-      "player": "Player ({{role}})",
-      "playerNone": "To decide",
-      "playerOffRole": "{{name}} — {{roles}}",
-      "playerNoRole": "no declared position",
-      "playerHelper": "Players of this position first. The others stay available: the core accepts them, and a composition is also prepared with a rotation."
+      "championChoose": "Choose the champion ({{role}})",
+      "players": "Player ({{role}})",
+      "playerOffRole": "{{name}} — off position: {{roles}}",
+      "playerNoRole": "{{name}} — no declared position",
+      "playerTaken": "{{name}} — already at {{role}}; a click brings them here",
+      "alternativesAdd": "Substitutes ({{role}})",
+      "bans": "Bans {{count}}/{{max}}",
+      "bansAdd": "Choose the bans",
+      "bansHelper": "A banned champion can no longer be picked, neither as a starter nor as a substitute.",
+      "search": "Search a champion",
+      "searchPlaceholder": "Ahri, Lee Sin…",
+      "noResult": "No champion matches.",
+      "catalogMissing": "The champion catalogue could not be loaded: no champion can be chosen for now."
     },
     "validation": {
       "nameRequired": "A composition has a name.",
-      "championRequired": "Every position carries a champion: that is what makes a composition.",
-      "duplicatePlayer": "The same player cannot hold two positions."
+      "championRequired": "Every position carries a champion: that is what makes a composition."
     }
   },
   "roles": {

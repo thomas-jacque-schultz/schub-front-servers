@@ -49,6 +49,7 @@ export interface CompositionSlotDto {
   championId: string | null;
   memberId: string | null;
   playerDisplayName: string | null;
+  alternatives: string[];
 }
 
 export interface CompositionDto {
@@ -56,6 +57,7 @@ export interface CompositionDto {
   teamId: string;
   name: string;
   slots: CompositionSlotDto[];
+  bans: string[];
   patch: string | null;
   notes: string | null;
   createdAt: string;
@@ -86,11 +88,13 @@ export interface CompositionSlotRequest {
   role: GameRole;
   championId: string;
   memberId: string | null;
+  alternatives: string[];
 }
 
 export interface CompositionRequest {
   name: string;
   slots: CompositionSlotRequest[];
+  bans: string[];
   patch: string | null;
   notes: string | null;
 }
