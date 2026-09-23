@@ -1,16 +1,16 @@
 {
   "meta": {
-    "title": "Schub — hébergement et pilotage de serveurs de jeu",
-    "description": "Schub héberge des serveurs de jeu, les démarre à la demande et outille une équipe League of Legends : effectif, statistiques, pool de champions et préparation de draft."
+    "title": "Schub — la boîte à outils de la communauté Miam",
+    "description": "Schub rassemble les outils de la communauté Discord Miam : des serveurs de jeu démarrés à la demande, et de quoi faire vivre une équipe League of Legends — effectif, statistiques, pool de champions, préparation de draft."
   },
   "hero": {
     "eyebrow": "Schub",
-    "title": "Des serveurs de jeu qui s'allument quand on en a besoin",
-    "subtitle": "Le hub de la communauté Discord Miam — et, pour League of Legends, de quoi faire vivre une équipe."
+    "title": "La boîte à outils de la communauté Miam",
+    "subtitle": "Des serveurs de jeu qui s'allument quand on en a besoin et, pour League of Legends, de quoi faire vivre une équipe."
   },
   "about": {
     "title": "Ce que fait Schub",
-    "community": "Schub sert de hub à la communauté Discord Miam : ses serveurs de jeu, ses équipes League of Legends et les outils qui vont avec. Il s'ouvrira peut-être un jour à un cercle plus large, une fois les outils éprouvés et stabilisés — pour l'instant, il est fait pour nous.",
+    "community": "Schub est la boîte à outils de la communauté Discord Miam : ses serveurs de jeu, ses équipes League of Legends, et les outils qui s'y ajoutent au fil des besoins. Il s'ouvrira peut-être un jour à un cercle plus large, une fois les outils éprouvés et stabilisés — pour l'instant, il est fait pour nous.",
     "servers": "Les serveurs de jeu sont hébergés à la maison et pilotés depuis le site ou depuis Discord : leur état est visible en direct, et démarrer ou arrêter est un bouton. Les redirections de ports s'ouvrent et se referment toutes seules avec le serveur.",
     "lol": "Côté League of Legends, Schub lit tes parties par l'API de Riot : statistiques personnelles et d'équipe, pool de champions par poste, préparateur de draft et débrief d'après-match.",
     "identity": "L'identité passe par Discord. Il n'y a pas de mot de passe à retenir, et les droits suivent le rôle.",

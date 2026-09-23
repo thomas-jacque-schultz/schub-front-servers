@@ -116,7 +116,7 @@ const fr: PortfolioContent = {
     {
       key: "schub",
       name: "Schub",
-      tagline: "Une plateforme d'hébergement et de pilotage de serveurs de jeu, en production.",
+      tagline: "La boîte à outils de la communauté Miam — serveurs de jeu, équipes League of Legends —, en production.",
       body: [
         "Sept dépôts, un cœur métier et quatre connecteurs, déployés en Docker Swarm derrière " +
           "un tunnel Cloudflare. L'interface est un SPA React bilingue adossé à un BFF Spring " +
@@ -284,7 +284,7 @@ const en: PortfolioContent = {
     {
       key: "schub",
       name: "Schub",
-      tagline: "A game server hosting and control platform, running in production.",
+      tagline: "The Miam community toolkit — game servers, League of Legends teams — running in production.",
       body: [
         "Seven repositories — one business core and four connectors — deployed on Docker Swarm " +
           "behind a Cloudflare tunnel. The interface is a bilingual React SPA backed by a Spring " +

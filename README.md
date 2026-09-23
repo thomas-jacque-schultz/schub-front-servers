@@ -1,6 +1,6 @@
 # Front
 
-Front React + Vite + MUI pour la gestion des serveurs.
+Front de Schub, la boîte à outils de la communauté Miam : React + Vite + MUI.
 
 ## Installation
 

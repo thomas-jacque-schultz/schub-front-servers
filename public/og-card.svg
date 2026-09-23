@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  La source de la vignette de partage, aux dimensions attendues par OpenGraph (1200 × 630).
+  Source de la vignette OpenGraph (1200 × 630). `index.html` sert le PNG : Discord, LinkedIn et X
+  ne lisent pas le SVG. Liberation Sans a les métriques d'Helvetica ; sans elle, le curseur
+  chevauche le « b ».
 
-  Elle n'est PAS référencée par `index.html` : Discord, LinkedIn et X ne lisent pas le SVG comme
-  `og:image`. Il faut en produire un PNG — ce dépôt n'embarque aucun outil d'image, la
-  conversion se fait donc à la main :
-
-      rsvg-convert -w 1200 -h 630 public/og-card.svg -o public/og-card.png
-
-  Les couleurs viennent des tokens (`brand.obsidian`, `brand.prune`, `brand.gold`). Les polices
-  du design system ne sont pas installées sur la machine qui convertit : la vignette tient son
-  identité de ses couleurs et de sa mise en page, pas de sa fonte.
+      docker run --rm -i alpine:3.20 sh -c 'apk add -q rsvg-convert font-liberation \
+        font-jetbrains-mono && rsvg-convert -w 1200 -h 630 -f png' \
+        < public/og-card.svg > public/og-card.png
 -->
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
@@ -45,13 +41,13 @@
 
   <text x="80" y="300" font-family="Helvetica, Arial, sans-serif" font-size="112" font-weight="bold"
     fill="#F2E9EE" letter-spacing="-3">Schub</text>
-  <rect x="368" y="248" width="22" height="52" fill="#C9A227" />
+  <rect x="420" y="248" width="22" height="52" fill="#C9A227" />
 
   <text x="80" y="386" font-family="Helvetica, Arial, sans-serif" font-size="36" fill="#B6A3B4">
-    Des serveurs de jeu qui s'allument quand on en a besoin,
+    La boîte à outils de la communauté Miam :
   </text>
   <text x="80" y="438" font-family="Helvetica, Arial, sans-serif" font-size="36" fill="#B6A3B4">
-    et de quoi faire vivre une équipe League of Legends.
+    serveurs de jeu et équipes League of Legends.
   </text>
 
   <rect x="80" y="516" width="1040" height="1" fill="#C9A227" fill-opacity="0.22" />
