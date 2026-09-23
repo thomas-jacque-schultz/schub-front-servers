@@ -34,7 +34,9 @@ export const rangDeReference = (standings: RankedStandingDto[]): RankedStandingD
 export const useRankLabel = () => {
   const { t } = useTranslation("stats");
   const format = useStatsFormat();
-  return (standing: Pick<RankedStandingDto, "tier" | "division" | "leaguePoints"> | null | undefined) =>
+  return (
+    standing: Pick<RankedStandingDto, "tier" | "division" | "leaguePoints"> | null | undefined,
+  ) =>
     standing?.tier
       ? t("ranked.rank", {
           tier: t(`tier.${standing.tier}`, { defaultValue: standing.tier }),
@@ -55,9 +57,22 @@ export const useAverageRankLabel = () => {
 };
 
 /** Un écart de rang, en divisions et signé : « +1,5 div. ». */
-export const useRankGapLabel = () => {
+// Le camp avantagé est nommé : un signe obligerait à retenir dans quel sens se fait la soustraction.
+export const useRankGap = () => {
   const { t } = useTranslation("stats");
   const format = useStatsFormat();
-  return (gap: number | null | undefined) =>
-    gap === null || gap === undefined ? format.absent : t("rankGap", { value: format.ecartRatio(gap) });
+  return (
+    gap: number | null | undefined,
+  ): { label: string; tone: "success" | "error" | "neutral" } | null => {
+    if (gap === null || gap === undefined) {
+      return null;
+    }
+    const valeur = format.ratio(Math.abs(gap));
+    if (valeur === format.ratio(0)) {
+      return { label: t("rankGap.even"), tone: "neutral" };
+    }
+    return gap > 0
+      ? { label: t("rankGap.ours", { value: valeur }), tone: "success" }
+      : { label: t("rankGap.theirs", { value: valeur }), tone: "error" };
+  };
 };

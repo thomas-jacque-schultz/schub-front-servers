@@ -170,6 +170,8 @@ export interface At15Dto {
   assists: number;
   /** Morts avant 15 min impliquant le jungler adverse ; null si les postes sont inconnus. */
   ganksSuffered: number | null;
+  /** Kills sur un laner adverse avec le jungler allié ; pour le jungler, tous ses ganks réussis. */
+  ganksSucceeded: number | null;
 }
 
 /** Moyenne des joueurs classés seulement ; `value` sur l'échelle Fer IV = 0 … Challenger = 30. */
