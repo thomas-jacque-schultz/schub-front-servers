@@ -293,6 +293,14 @@ qu'à l'enregistrement.
   tableau de bord), les adversaires directs ou le palier — ces deux-là au poste le plus joué, en 5e et
   95e percentiles de joueurs collectés. Un référentiel de moins de dix joueurs est absent, et l'écran dit
   pourquoi. Plusieurs colonnes partagent le même référentiel.
+- **Un historique de parties est un accordéon, un joueur une fenêtre.** La ligne se déplie sur le
+  face-à-face, le début de partie et, en équipe, les notes ; cliquer un joueur ouvre ses indicateurs de la
+  partie famille par famille (`ComparisonTile` : la partie, sa moyenne au même poste sur la période, le
+  rang). Le rang est l'échelle du ladder de la grille **GAME** du poste — une valeur de partie se lit sur
+  des parties, jamais sur des moyennes. Mes stats a le même historique, toutes files confondues ; sa liste
+  ne réclame aucun enrichissement, seule l'ouverture d'une partie le fait.
+- **Une requête qui dépend d'un filtre passe par `useRequest`** : une réponse dépassée par une plus
+  récente est jetée, sinon changer vite de période affiche la plus lente.
 - **Le début de partie se dit depuis notre camp** : un gank de leur jungler qui tue chez nous est rouge,
   le même par le nôtre est vert. Les ganks sans kill ne sont vus qu'à l'image de chaque minute :
   l'écran le dit, ils sont sous-comptés.
@@ -373,8 +381,8 @@ connecté — seule réponse portant le slug — et la vue publique sinon.
 
 ## La revue par joueur
 
-Une note s'attache à **une partie d'équipe** et à **une place** de l'effectif ; elle vit dans la
-fenêtre *Détail* d'une partie du panneau *Matchs*, sous le face-à-face par poste.
+Une note s'attache à **une partie d'équipe** et à **une place** de l'effectif ; elle vit dans le
+détail déplié d'une partie du panneau *Matchs*, sous le face-à-face par poste.
 
 - **Qui écrit sur qui vient de deux faits sur le lecteur** — `viewerCanReviewAnyone` et
   `viewerMemberId` — plus `viewerCanEdit` sur chaque note. Aucune comparaison d'identifiants, et

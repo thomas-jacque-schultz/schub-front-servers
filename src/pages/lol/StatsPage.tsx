@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { getMyStatsApi } from "../../api/statsApi";
+import { messageOf, useRequest } from "../../api/useRequest";
 import {
   Alert,
   Button,
@@ -11,64 +12,55 @@ import {
   ProgressBar,
   SelectField,
   Stack,
+  Tabs,
   Text,
 } from "../../design-system";
 import { useLocaleFormat } from "../../i18n/format";
 import { useLocalizedNavigate } from "../../i18n/navigation";
 import { useProfileStore } from "../../stores/profileStore";
-import type { MyStatsDto } from "../../types/stats";
+import { MyGamesPanel } from "./stats/MyGamesPanel";
 import { PlayerStatsView } from "./stats/PlayerStatsView";
 import { StatsStateNote } from "./stats/StatsStateNote";
 import { useWindowOptions } from "./stats/windows";
 
 const INGEST_POLL_MS = 30_000;
 
+type Onglet = "overview" | "history";
+
 function StatsPage() {
   const { t } = useTranslation("stats");
   const { formatDateTime } = useLocaleFormat();
   const navigate = useLocalizedNavigate();
   const fenetres = useWindowOptions();
-  const { profile, isLoading, reload, ingestInFlight } = useProfileStore();
+  const {
+    profile,
+    isLoading,
+    reload: reloadProfile,
+    ingestInFlight,
+  } = useProfileStore();
 
   const [periode, setPeriode] = useState<string>("");
-  const [stats, setStats] = useState<MyStatsDto | null>(null);
-  const [error, setError] = useState<string>("");
-  const [isFetching, setIsFetching] = useState<boolean>(false);
+  const [onglet, setOnglet] = useState<Onglet>("overview");
 
   const riot = profile?.riot;
   const ouvert = Boolean(riot && riot.state === "RESOLU");
-
-  const load = useCallback(async () => {
-    if (!ouvert) {
-      return;
-    }
-    setIsFetching(true);
-    setError("");
-    try {
-      setStats(await getMyStatsApi(periode));
-    } catch (loadError) {
-      setError(
-        loadError instanceof Error ? loadError.message : t("loadFailed"),
-      );
-    } finally {
-      setIsFetching(false);
-    }
-  }, [ouvert, periode, t]);
-
-  useEffect(() => {
-    void load();
-  }, [load]);
+  const {
+    data: stats,
+    error,
+    isLoading: isFetching,
+    reload,
+  } = useRequest(ouvert ? `me/${periode}` : null, () => getMyStatsApi(periode));
 
   useEffect(() => {
     if (!ingestInFlight) {
       return;
     }
     const timer = setInterval(() => {
+      void reloadProfile();
       void reload();
-      void load();
     }, INGEST_POLL_MS);
     return () => clearInterval(timer);
-  }, [ingestInFlight, reload, load]);
+  }, [ingestInFlight, reloadProfile, reload]);
 
   if (isLoading && !profile) {
     return <ProgressBar label={t("title")} />;
@@ -120,15 +112,6 @@ function StatsPage() {
     );
   }
 
-  if (isFetching && !stats) {
-    return (
-      <Stack spacing={3}>
-        {header}
-        <ProgressBar label={t("loading")} />
-      </Stack>
-    );
-  }
-
   const overall = stats?.overall;
 
   return (
@@ -148,43 +131,72 @@ function StatsPage() {
         </Text>
       </Stack>
 
-      {error && <Alert severity="error">{error}</Alert>}
-
-      {stats && stats.state === "INGESTION_EN_COURS" && stats.ingest && (
-        <Card title={t("waiting.title")} description={t("waiting.description")}>
-          <Stack spacing={1.5}>
-            <ProgressBar label={t("waiting.progressLabel")} />
-            <Text variant="caption" tone="secondary">
-              {t("waiting.pending", { count: stats.ingest.pending })}
-            </Text>
-            <Text variant="subtitle">
-              {stats.ingest.estimatedReadyAt
-                ? t("waiting.readyAt", {
-                    date: formatDateTime(
-                      new Date(stats.ingest.estimatedReadyAt),
-                    ),
-                  })
-                : t("waiting.readyUnknown")}
-            </Text>
-          </Stack>
-        </Card>
-      )}
-
-      {stats &&
-        stats.state !== "STATISTIQUES_CONNUES" &&
-        stats.state !== "INGESTION_EN_COURS" && (
-          <StatsStateNote state={stats.state} variant="block" />
+      <Tabs
+        items={[
+          { key: "overview", label: t("tabs.overview") },
+          { key: "history", label: t("tabs.history") },
+        ]}
+        value={onglet}
+        onChange={(key) => setOnglet(key as Onglet)}
+        ariaLabel={t("tabs.ariaLabel")}
+      >
+        {onglet === "history" && (
+          <MyGamesPanel
+            periode={periode}
+            avatar={profile?.discord.avatarUrl ?? null}
+          />
         )}
+        {onglet === "overview" && (
+          <Stack spacing={3}>
+            {isFetching && !stats && <ProgressBar label={t("loading")} />}
 
-      {stats && overall && stats.state === "STATISTIQUES_CONNUES" && (
-        <>
-          <PlayerStatsView data={stats} />
-          <Divider />
-          <Text variant="caption" tone="secondary">
-            {t("footnote")}
-          </Text>
-        </>
-      )}
+            {error !== null && (
+              <Alert severity="error">
+                {messageOf(error, t("loadFailed"))}
+              </Alert>
+            )}
+
+            {stats && stats.state === "INGESTION_EN_COURS" && stats.ingest && (
+              <Card
+                title={t("waiting.title")}
+                description={t("waiting.description")}
+              >
+                <Stack spacing={1.5}>
+                  <ProgressBar label={t("waiting.progressLabel")} />
+                  <Text variant="caption" tone="secondary">
+                    {t("waiting.pending", { count: stats.ingest.pending })}
+                  </Text>
+                  <Text variant="subtitle">
+                    {stats.ingest.estimatedReadyAt
+                      ? t("waiting.readyAt", {
+                          date: formatDateTime(
+                            new Date(stats.ingest.estimatedReadyAt),
+                          ),
+                        })
+                      : t("waiting.readyUnknown")}
+                  </Text>
+                </Stack>
+              </Card>
+            )}
+
+            {stats &&
+              stats.state !== "STATISTIQUES_CONNUES" &&
+              stats.state !== "INGESTION_EN_COURS" && (
+                <StatsStateNote state={stats.state} variant="block" />
+              )}
+
+            {stats && overall && stats.state === "STATISTIQUES_CONNUES" && (
+              <>
+                <PlayerStatsView data={stats} />
+                <Divider />
+                <Text variant="caption" tone="secondary">
+                  {t("footnote")}
+                </Text>
+              </>
+            )}
+          </Stack>
+        )}
+      </Tabs>
     </Stack>
   );
 }

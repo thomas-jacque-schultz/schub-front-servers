@@ -13,13 +13,22 @@ export type {
   AppShellProps,
 } from "./components/AppShell";
 export { AlignedColumns } from "./components/AlignedColumns";
-export type { AlignedColumn, AlignedColumnsProps } from "./components/AlignedColumns";
+export type {
+  AlignedColumn,
+  AlignedColumnsProps,
+} from "./components/AlignedColumns";
 export { Avatar } from "./components/Avatar";
 export { AvatarToggleGroup } from "./components/AvatarToggleGroup";
-export type { AvatarToggleGroupProps, AvatarToggleOption } from "./components/AvatarToggleGroup";
+export type {
+  AvatarToggleGroupProps,
+  AvatarToggleOption,
+} from "./components/AvatarToggleGroup";
 export type { AvatarProps } from "./components/Avatar";
 export { AvatarSelect } from "./components/AvatarSelect";
-export type { AvatarSelectOption, AvatarSelectProps } from "./components/AvatarSelect";
+export type {
+  AvatarSelectOption,
+  AvatarSelectProps,
+} from "./components/AvatarSelect";
 export { Button } from "./components/Button";
 export type {
   ButtonProps,
@@ -39,7 +48,10 @@ export type { ChampionIconProps } from "./components/ChampionIcon";
 export { ChampionPickButton } from "./components/ChampionPickButton";
 export type { ChampionPickButtonProps } from "./components/ChampionPickButton";
 export { ChampionSelector } from "./components/ChampionSelector";
-export type { ChampionSelectorEntry, ChampionSelectorProps } from "./components/ChampionSelector";
+export type {
+  ChampionSelectorEntry,
+  ChampionSelectorProps,
+} from "./components/ChampionSelector";
 export { Chip } from "./components/Chip";
 export type { ChipProps, ChipTone } from "./components/Chip";
 export { ChoiceList } from "./components/ChoiceList";
@@ -54,6 +66,8 @@ export type { DataTableColumn, DataTableProps } from "./components/DataTable";
 export { Dialog } from "./components/Dialog";
 export type { DialogProps } from "./components/Dialog";
 export { Disclosure } from "./components/Disclosure";
+export { Expandable } from "./components/Expandable";
+export type { ExpandableProps } from "./components/Expandable";
 export type { DisclosureProps } from "./components/Disclosure";
 export { Divider } from "./components/Divider";
 export type { DividerProps } from "./components/Divider";
@@ -78,7 +92,10 @@ export type {
   MultiSelectProps,
 } from "./components/MultiSelect";
 export { SegmentedControl } from "./components/SegmentedControl";
-export type { SegmentedControlOption, SegmentedControlProps } from "./components/SegmentedControl";
+export type {
+  SegmentedControlOption,
+  SegmentedControlProps,
+} from "./components/SegmentedControl";
 export { SplitBar } from "./components/SplitBar";
 export type { SplitBarProps, SplitBarSegment } from "./components/SplitBar";
 export { PageBackdrop } from "./components/PageBackdrop";
@@ -88,7 +105,12 @@ export type { PageHeaderProps } from "./components/PageHeader";
 export { ProgressBar } from "./components/ProgressBar";
 export type { ProgressBarProps } from "./components/ProgressBar";
 export { RadarChart } from "./components/RadarChart";
-export type { RadarAxis, RadarChartProps, RadarEmphasis, RadarSeries } from "./components/RadarChart";
+export type {
+  RadarAxis,
+  RadarChartProps,
+  RadarEmphasis,
+  RadarSeries,
+} from "./components/RadarChart";
 export { SelectField } from "./components/SelectField";
 export type { SelectFieldProps, SelectOption } from "./components/SelectField";
 export { MeterBar } from "./components/MeterBar";
@@ -96,7 +118,11 @@ export type { MeterBarProps } from "./components/MeterBar";
 export { Spinner } from "./components/Spinner";
 export type { SpinnerProps } from "./components/Spinner";
 export { TaskList } from "./components/TaskList";
-export type { TaskListItem, TaskListProps, TaskState } from "./components/TaskList";
+export type {
+  TaskListItem,
+  TaskListProps,
+  TaskState,
+} from "./components/TaskList";
 export { Stack } from "./components/Stack";
 export type {
   StackAlign,
@@ -106,6 +132,11 @@ export type {
 } from "./components/Stack";
 export { StatGrid } from "./components/StatGrid";
 export type { StatGridItem, StatGridProps } from "./components/StatGrid";
+export { ComparisonTile } from "./components/ComparisonTile";
+export type {
+  ComparisonEntry,
+  ComparisonTileProps,
+} from "./components/ComparisonTile";
 export { StatTile } from "./components/StatTile";
 export type { StatTileProps } from "./components/StatTile";
 export { StatusChip } from "./components/StatusChip";

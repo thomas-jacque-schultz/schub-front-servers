@@ -229,13 +229,40 @@ export interface MatchupDto {
 }
 
 export interface TeamGameDetailDto {
-  teamId: string;
+  /** Null dans l'historique personnel. */
+  teamId: string | null;
   game: TeamGameDto;
   matchups: MatchupDto[];
   timelineAvailable: boolean;
   ranksObservedAt: string | null;
   early: EarlyGameDto | null;
   viewerMemberId: string | null;
+  days: number | null;
+  metrics: GamePlayerMetricsDto[];
+}
+
+/** Un joueur d'une partie, désigné par son camp et son champion. */
+export interface GamePlayerMetricsDto {
+  side: number;
+  championId: number;
+  position: string | null;
+  /** Palier tenu à la date de la partie. */
+  tier: string | null;
+  tierEstimated: boolean;
+  /** Clé de métrique → valeur sur la partie, calculée comme la grille GAME du poste. */
+  game: Record<string, number | null>;
+  /** Sa moyenne au même poste sur la période ; absente hors Faille. */
+  average: StatLineDto | null;
+}
+
+export interface MyGamesDto {
+  days: number | null;
+  state: StatsState;
+  games: TeamGameDto[];
+  totalGames: number;
+  truncated: boolean;
+  viewerMemberId: string | null;
+  generatedAt: string;
 }
 
 export type Lane = "TOP" | "MID" | "BOT";

@@ -1,6 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { getTeamGamesStatsApi } from "../../../api/statsApi";
+import {
+  getTeamGameDetailApi,
+  getTeamGamesStatsApi,
+} from "../../../api/statsApi";
+import { messageOf, useRequest } from "../../../api/useRequest";
 import {
   Alert,
   Card,
@@ -9,9 +13,9 @@ import {
   Stack,
   Text,
 } from "../../../design-system";
-import type { TeamGameDto, TeamGamesStatsDto } from "../../../types/stats";
-import { GameDetailDialog } from "./GameDetailDialog";
-import { TeamGameRow } from "./TeamGameRow";
+import { GameReviews } from "../reviews/GameReviews";
+import { GameDetail } from "./GameDetail";
+import { GameHistoryList } from "./GameHistoryList";
 import { StatsStateNote } from "./StatsStateNote";
 import { useWindowOptions } from "./windows";
 
@@ -25,35 +29,20 @@ export function TeamGamesPanel({ teamId, avatars }: TeamGamesPanelProps) {
   const { t } = useTranslation("stats");
   const fenetres = useWindowOptions();
   const [periode, setPeriode] = useState<string>("");
-  const [stats, setStats] = useState<TeamGamesStatsDto | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string>("");
-  const [reviewed, setReviewed] = useState<TeamGameDto | null>(null);
-
-  const load = useCallback(async () => {
-    setIsLoading(true);
-    setError("");
-    try {
-      setStats(await getTeamGamesStatsApi(teamId, periode));
-    } catch (loadError) {
-      setError(
-        loadError instanceof Error ? loadError.message : t("loadFailed"),
-      );
-    } finally {
-      setIsLoading(false);
-    }
-  }, [teamId, periode, t]);
-
-  useEffect(() => {
-    void load();
-  }, [load]);
+  const {
+    data: stats,
+    error,
+    isLoading,
+  } = useRequest(`${teamId}/${periode}`, () =>
+    getTeamGamesStatsApi(teamId, periode),
+  );
 
   if (isLoading && !stats) {
     return <ProgressBar label={t("loading")} />;
   }
 
-  if (error && !stats) {
-    return <Alert severity="error">{error}</Alert>;
+  if (error !== null && !stats) {
+    return <Alert severity="error">{messageOf(error, t("loadFailed"))}</Alert>;
   }
 
   if (!stats) {
@@ -78,7 +67,9 @@ export function TeamGamesPanel({ teamId, avatars }: TeamGamesPanelProps) {
         </Text>
       </Stack>
 
-      {error && <Alert severity="warning">{error}</Alert>}
+      {error !== null && (
+        <Alert severity="warning">{messageOf(error, t("loadFailed"))}</Alert>
+      )}
 
       {stats.state !== "STATISTIQUES_CONNUES" ? (
         <StatsStateNote state={stats.state} variant="block" />
@@ -88,27 +79,27 @@ export function TeamGamesPanel({ teamId, avatars }: TeamGamesPanelProps) {
             <Alert severity="info">{t("team.truncated")}</Alert>
           )}
 
-          <Card title={t("section.games")}>
-            <Stack spacing={1}>
-              {stats.games.map((game) => (
-                <TeamGameRow
-                  key={game.matchId}
-                  game={game}
+          <Card
+            title={t("section.games")}
+            description={t("games.accordionHelper")}
+          >
+            <GameHistoryList
+              games={stats.games}
+              avatars={avatars}
+              renderDetail={(game) => (
+                <GameDetail
+                  requestKey={`${teamId}/${game.matchId}/${periode}`}
+                  load={() =>
+                    getTeamGameDetailApi(teamId, game.matchId, periode)
+                  }
                   avatars={avatars}
-                  onOpen={() => setReviewed(game)}
+                  footer={<GameReviews teamId={teamId} game={game} />}
                 />
-              ))}
-            </Stack>
+              )}
+            />
           </Card>
         </>
       )}
-
-      <GameDetailDialog
-        teamId={teamId}
-        game={reviewed}
-        avatars={avatars}
-        onClose={() => setReviewed(null)}
-      />
     </Stack>
   );
 }
