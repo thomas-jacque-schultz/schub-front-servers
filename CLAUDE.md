@@ -85,8 +85,13 @@ vers le bas. Elle se peint **sous** le contenu, ce qui oblige `<main>` et `<foot
 
 ## La coquille
 
-`AppShell` (design system) porte l'en-tête, le menu *Configuration*, le pied de page et le fond de
-marque. Un écran ne repose ni `ThemeModeToggle`, ni `LanguageSwitcher`, ni `PageBackdrop` :
+`AppShell` (design system) porte l'en-tête, les menus déroulants (`navItems` mêle entrées et menus,
+dans l'ordre d'affichage : *League of Legends*, *Configuration*), le pied de page et le fond de
+marque. Contact n'est plus dans le bandeau : *Créateur* et *Feedback* (`/contact#feedback`) sont en
+pied de page, en couleur d'accent — deux liens, pas davantage.
+
+**Aucun `useMemo` sur des libellés traduits.** Avec react-i18next 15, `t` garde sa référence quand
+la langue change, et `/` démarre dans la langue du navigateur avant de prendre celle de l'URL. Un écran ne repose ni `ThemeModeToggle`, ni `LanguageSwitcher`, ni `PageBackdrop` :
 il rend un titre et du contenu. `AppShell` ne teste aucune permission — c'est `AppLayout` qui
 
 **La largeur du bandeau est décidée par `AppLayout`, pas par les écrans.** `/lol/teams` et
@@ -211,7 +216,14 @@ ne pas défaire :
   menu ne peuvent les exiger — la route demande d'être connecté, le menu se contente de
   `TEAM_CREATE` ou `TEAM_VIEW`. Le BFF fait de même et le cœur tranche.
 
-Cinq onglets : effectif, joueurs, équipe, pool de champions, préparateur de draft — tous servis.
+Six onglets : effectif, joueurs, équipe, niveau adverse, pool de champions, préparateur de draft.
+Un coach peut aussi être titulaire ou remplaçant (`coach`, à part du statut) ; sa ligne est
+encadrée. Le statut `COACH` seul désigne un coach qui ne joue pas.
+
+**Les rangs d'une partie d'équipe sont relevés à la collecte** (`riot_match_rank`), avec la
+timeline (`riot_match_timeline`, chiffres à 15 minutes dans `riot_match_early`). Riot ne sert que
+le rang courant : pour une partie ancienne, c'est le rang d'aujourd'hui, et le niveau adverse dit
+l'écart médian entre la partie et le relevé. Une moyenne de rang ne compte que les classés.
 **Aucune donnée simulée n'entre nulle part**, ni dans un panneau, ni dans une story : un chiffre
 inventé est lu comme vrai, et il survit à celui qui l'a posé.
 
@@ -261,9 +273,16 @@ qu'à l'enregistrement.
   `queue.<MODE>`. Plusieurs identifiants donnent le même mode — l'arène en a deux — donc le
   regroupement se fait sur le mode. Un mode inconnu de cette version rend « autre mode », pas une
   clé brute.
-- **Les graphiques sont à série unique**, une seule teinte — l'or (`chartColors` dans les tokens).
-  Aucune palette catégorielle : deux teintes voisines du thème seraient indistinguables pour une
-  vision deutéranope, et un écart se lit à son signe avant sa couleur.
+- **Trois séries au plus, distinguées par le trait autant que par la teinte.** `mark` (or, trait
+  plein), `markSecondary` (prune, pointillés — validée contre l'or : ΔE deutan 17,7 sombre, 14,3
+  clair), `markMuted` (pointillé discret). Aucune palette catégorielle au-delà.
+- **Un seul catalogue d'indicateurs : `pages/lol/stats/metrics.ts`.** Ordre, libellés, format et
+  sens de l'écart. Mes stats, les joueurs d'équipe, les cartes champion et le radar le lisent :
+  deux écrans qui divergent ici ne se comparent plus.
+- **Les indicateurs par minute portent sur la Faille** (classées, normales, Clash). Les files, elles,
+  restent toutes comptées. Le poste « indéterminé » n'existe plus : c'était l'ARAM et l'Arène.
+- **Les bornes du radar sont locales** : 5e et 95e percentiles des joueurs croisés dans nos parties
+  (au moins dix parties sur la Faille), servies par le cœur avec les stats. L'écran le dit.
 
 ## Mon profil et le compte Riot
 
@@ -341,8 +360,8 @@ connecté — seule réponse portant le slug — et la vue publique sinon.
 
 ## La revue par joueur
 
-Une note s'attache à **une partie d'équipe** et à **une place** de l'effectif ; elle s'ouvre
-depuis le tableau des parties du panneau *Équipe*.
+Une note s'attache à **une partie d'équipe** et à **une place** de l'effectif ; elle vit dans la
+fenêtre *Détail* d'une partie du panneau *Équipe*, sous le face-à-face par poste.
 
 - **Qui écrit sur qui vient de deux faits sur le lecteur** — `viewerCanReviewAnyone` et
   `viewerMemberId` — plus `viewerCanEdit` sur chaque note. Aucune comparaison d'identifiants, et
