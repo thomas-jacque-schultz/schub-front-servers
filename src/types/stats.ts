@@ -307,3 +307,10 @@ export interface MyStatsDto {
   scale: MetricScaleDto | null;
   generatedAt: string;
 }
+
+/** nextAllowedAt : null quand une mise à jour peut être demandée tout de suite. */
+export interface StatsRefreshDto {
+  triggered: boolean;
+  playersQueued: number;
+  nextAllowedAt: string | null;
+}

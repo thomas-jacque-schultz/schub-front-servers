@@ -291,5 +291,13 @@
     "goldDiff15": "Gold at 15 min",
     "csDiff15": "CS at 15 min",
     "pending": "Opponent ranks are being collected: this section will fill in as collection goes."
+  },
+  "refresh": {
+    "action": "Update stats",
+    "wait": "Update possible in {{time}}",
+    "done_one": "New games requested for {{count}} player: they will appear as collection proceeds.",
+    "done_other": "New games requested for {{count}} players: they will appear as collection proceeds.",
+    "tooSoon": "An update was just requested: try again in a few minutes.",
+    "failed": "The update failed"
   }
 }
