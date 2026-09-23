@@ -98,7 +98,7 @@ export function OppositionPanel({ teamId }: OppositionPanelProps) {
     {
       key: "lane",
       header: t("opposition.laneWon"),
-      width: 150,
+      width: 210,
       align: "right",
       render: (l) =>
         l.laneGames === 0
@@ -195,7 +195,7 @@ export function OppositionPanel({ teamId }: OppositionPanelProps) {
             </Card>
           </Columns>
 
-          <Card title={t("opposition.byPosition")} description={t("opposition.byPositionHelper")} disablePadding>
+          <Card title={t("opposition.byPosition")} description={t("opposition.byPositionHelper")}>
             <DataTable
               columns={colonnes}
               rows={dto.byPosition}
@@ -204,7 +204,7 @@ export function OppositionPanel({ teamId }: OppositionPanelProps) {
               emptyTitle={t("opposition.pending")}
               dense
               layout="fixed"
-              minWidth={950}
+              minWidth={1010}
             />
           </Card>
         </>

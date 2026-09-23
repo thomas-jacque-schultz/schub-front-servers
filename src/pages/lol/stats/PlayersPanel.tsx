@@ -106,7 +106,7 @@ export function PlayersPanel({ teamId }: PlayersPanelProps) {
           </Text>
         </Card>
       ) : (
-        <Columns minWidth={260} count={Math.max(1, Math.min(5, visibles.length))}>
+        <Columns minWidth={220} count={Math.max(1, Math.min(6, visibles.length))}>
           {visibles.map((player) => (
             <PlayerStatsColumn
               key={player.memberId}

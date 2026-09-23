@@ -248,7 +248,8 @@
     "noTimeline": "Timeline en cours de collecte : les chiffres à 15 minutes arriveront avec elle.",
     "noMatchups": "Membres dans les deux camps : pas de face-à-face.",
     "loadFailed": "Le détail de la partie n'a pas pu être chargé.",
-    "close": "Fermer"
+    "close": "Fermer",
+    "shortGame": "Partie finie avant 15 minutes : il n'y a pas d'état des couloirs à 15 minutes."
   },
   "opposition": {
     "tab": "Niveau adverse",

@@ -53,6 +53,7 @@ export const useStatsFormat = () => {
       minimumFractionDigits: 1,
       maximumFractionDigits: 1,
     });
+    const compacte = new Intl.NumberFormat(locale, { notation: "compact", maximumFractionDigits: 0 });
     const absent = "—";
 
     const points = (value: number | null | undefined) =>
@@ -62,6 +63,8 @@ export const useStatsFormat = () => {
       absent,
       taux: (value: number | null | undefined) =>
         value === null || value === undefined ? absent : pourcent.format(value),
+      compact: (value: number | null | undefined) =>
+        value === null || value === undefined ? absent : compacte.format(value),
       ratio: (value: number | null | undefined) =>
         value === null || value === undefined ? absent : decimal.format(value),
       entier: (value: number | null | undefined) =>

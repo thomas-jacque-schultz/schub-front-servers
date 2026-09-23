@@ -158,15 +158,15 @@ function FaceAFace({
 
   const colonnes: Array<DataTableColumn<MatchupDto>> = [
     { key: "position", header: t("detail.position"), width: 90, render: (l) => format.poste(l.position) },
-    { key: "ally", header: t("detail.ally"), width: 300, render: (l) => cote(l.ally, true) },
+    { key: "ally", header: t("detail.ally"), width: 290, render: (l) => cote(l.ally, true) },
     {
       key: "gap",
       header: t("detail.gap"),
-      width: 100,
+      width: 130,
       align: "right",
       render: (l) => ecartDeRang(l.rankGap),
     },
-    { key: "enemy", header: t("detail.enemy"), width: 300, render: (l) => cote(l.enemy, false) },
+    { key: "enemy", header: t("detail.enemy"), width: 290, render: (l) => cote(l.enemy, false) },
     { key: "at15", header: t("detail.at15"), width: 280, render: a15 },
   ];
 
@@ -176,7 +176,11 @@ function FaceAFace({
       <Text variant="caption" tone="secondary">
         {t("detail.matchupsHelper")}
       </Text>
-      {!detail.timelineAvailable && <Alert severity="info">{t("detail.noTimeline")}</Alert>}
+      {!detail.timelineAvailable ? (
+        <Alert severity="info">{t("detail.noTimeline")}</Alert>
+      ) : (
+        detail.game.durationSeconds < QUINZE * 60 && <Alert severity="info">{t("detail.shortGame")}</Alert>
+      )}
       <DataTable
         columns={colonnes}
         rows={detail.matchups}
