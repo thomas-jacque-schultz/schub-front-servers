@@ -16,6 +16,8 @@ export { Avatar } from "./components/Avatar";
 export { AvatarToggleGroup } from "./components/AvatarToggleGroup";
 export type { AvatarToggleGroupProps, AvatarToggleOption } from "./components/AvatarToggleGroup";
 export type { AvatarProps } from "./components/Avatar";
+export { AvatarSelect } from "./components/AvatarSelect";
+export type { AvatarSelectOption, AvatarSelectProps } from "./components/AvatarSelect";
 export { Button } from "./components/Button";
 export type {
   ButtonProps,
@@ -32,6 +34,10 @@ export { Checkbox } from "./components/Checkbox";
 export type { CheckboxProps } from "./components/Checkbox";
 export { ChampionIcon } from "./components/ChampionIcon";
 export type { ChampionIconProps } from "./components/ChampionIcon";
+export { ChampionPickButton } from "./components/ChampionPickButton";
+export type { ChampionPickButtonProps } from "./components/ChampionPickButton";
+export { ChampionSelector } from "./components/ChampionSelector";
+export type { ChampionSelectorEntry, ChampionSelectorProps } from "./components/ChampionSelector";
 export { Chip } from "./components/Chip";
 export type { ChipProps, ChipTone } from "./components/Chip";
 export { ChoiceList } from "./components/ChoiceList";

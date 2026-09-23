@@ -111,7 +111,7 @@
   },
   "draft": {
     "title": "Les compositions préparées",
-    "description": "Des brouillons, à montrer à l'équipe : cinq postes, un champion par poste, un joueur quand il est décidé. Ni bans, ni ordre de pick, ni minuteur — ce n'est pas un simulateur de draft.",
+    "description": "Des brouillons, à montrer à l'équipe : un champion et un joueur par poste, des remplaçants, et les bans prévus. Ni ordre de pick ni minuteur — ce n'est pas un simulateur de draft.",
     "emptyTitle": "Aucune composition",
     "emptyDescription": "Préparez-en une : les cinq postes y sont, même si l'effectif ne l'est pas encore.",
     "loadFailed": "Impossible de charger les compositions",
@@ -119,10 +119,13 @@
     "noPatch": "Patch non précisé",
     "updated": "Modifiée le {{date}}",
     "unassigned": "Joueur à décider",
+    "bans": "Bans",
+    "noBans": "Aucun ban prévu",
     "columns": {
       "role": "Poste",
       "champion": "Champion",
-      "player": "Joueur"
+      "player": "Joueur",
+      "alternatives": "Remplaçants"
     },
     "create": {
       "action": "Nouvelle composition",
@@ -146,21 +149,26 @@
       "name": "Nom de la composition",
       "nameHelper": "60 caractères au plus.",
       "patch": "Patch",
-      "patchHelper": "La version au moment de la préparation, par exemple 15.18. Facultative, mais une composition relue dans trois mois sans sa version parle de champions qui ont changé.",
+      "patchHelper": "La version au moment de la préparation, pré-remplie avec celle du catalogue. Une composition relue dans trois mois sans sa version parle de champions qui ont changé.",
       "notes": "Notes",
       "notesHelper": "Ce que la composition cherche à faire. Facultatif.",
-      "champion": "Champion ({{role}})",
-      "championHelper": "La clé Data Dragon : Ahri, MonkeyKing, LeeSin. Le catalogue des champions arrivera avec le pool.",
-      "player": "Joueur ({{role}})",
-      "playerNone": "À décider",
-      "playerOffRole": "{{name}} — {{roles}}",
-      "playerNoRole": "sans poste déclaré",
-      "playerHelper": "Les joueurs de ce poste d’abord. Les autres restent proposés : le cœur les accepte, et une composition se prépare aussi avec une rotation."
+      "championChoose": "Choisir le champion ({{role}})",
+      "players": "Joueur ({{role}})",
+      "playerOffRole": "{{name}} — hors poste : {{roles}}",
+      "playerNoRole": "{{name}} — sans poste déclaré",
+      "playerTaken": "{{name}} — déjà au poste {{role}} ; un clic l'amène ici",
+      "alternativesAdd": "Remplaçants ({{role}})",
+      "bans": "Bans {{count}}/{{max}}",
+      "bansAdd": "Choisir les bans",
+      "bansHelper": "Un champion banni ne peut plus être choisi, ni en titulaire ni en remplaçant.",
+      "search": "Rechercher un champion",
+      "searchPlaceholder": "Ahri, Lee Sin…",
+      "noResult": "Aucun champion ne correspond.",
+      "catalogMissing": "Le catalogue des champions n'a pas pu être chargé : impossible de choisir un champion pour l'instant."
     },
     "validation": {
       "nameRequired": "Une composition a un nom.",
-      "championRequired": "Chaque poste porte un champion : c'est ce qui fait une composition.",
-      "duplicatePlayer": "Un même joueur ne peut pas tenir deux postes."
+      "championRequired": "Chaque poste porte un champion : c'est ce qui fait une composition."
     }
   },
   "roles": {
