@@ -22,6 +22,7 @@ const StatsPage = lazy(() => import("./pages/lol/StatsPage"));
 const TeamPage = lazy(() => import("./pages/lol/TeamPage"));
 const TeamsPage = lazy(() => import("./pages/lol/TeamsPage"));
 const DiscordConfigPage = lazy(() => import("./pages/config/DiscordConfigPage"));
+const IngestConfigPage = lazy(() => import("./pages/config/IngestConfigPage"));
 const PortsConfigPage = lazy(() => import("./pages/config/PortsConfigPage"));
 const RolesPage = lazy(() => import("./pages/config/RolesPage"));
 const ServersConfigPage = lazy(() => import("./pages/config/ServersConfigPage"));
@@ -143,6 +144,14 @@ function LocalizedRoutes() {
               element={
                 <RequirePermission anyOf={["DISCORD_CHANNEL_MANAGE"]}>
                   <DiscordConfigPage />
+                </RequirePermission>
+              }
+            />
+            <Route
+              path="config/ingest"
+              element={
+                <RequirePermission anyOf={["INGEST_VIEW"]}>
+                  <IngestConfigPage />
                 </RequirePermission>
               }
             />

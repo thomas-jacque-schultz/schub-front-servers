@@ -67,6 +67,12 @@ export function AppLayout({ children }: { children: ReactNode }) {
       to: "/config/discord",
       permissions: ["DISCORD_CHANNEL_MANAGE"],
     },
+    {
+      key: "ingest",
+      label: t("shell.configIngest"),
+      to: "/config/ingest",
+      permissions: ["INGEST_VIEW"],
+    },
   ];
   const configuration: AppShellNavItem[] = connected
     ? configurationEntries
