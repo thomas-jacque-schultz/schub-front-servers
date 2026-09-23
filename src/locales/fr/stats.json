@@ -234,7 +234,11 @@
     "filterHint": "Cliquez sur un avatar pour ne garder que certains joueurs.",
     "radarHint": "Choisissez {{count}} joueurs au plus pour voir leurs profils radar côte à côte."
   },
-  "rankGap": "{{value}} div.",
+  "rankGap": {
+    "ours": "Nous +{{value}} div.",
+    "theirs": "Eux +{{value}} div.",
+    "even": "Même niveau"
+  },
   "detail": {
     "title": "Partie du {{date}}",
     "matchups": "Face-à-face par poste",
@@ -254,7 +258,8 @@
     "loadFailed": "Le détail de la partie n'a pas pu être chargé.",
     "close": "Fermer",
     "shortGame": "Partie finie avant 15 minutes : il n'y a pas d'état des couloirs à 15 minutes.",
-    "ganksSuffered": "Ganks subis {{ally}} – {{enemy}}"
+    "ganksSuffered": "Ganks subis {{count}}",
+    "ganksSucceeded": "Ganks réussis {{count}}"
   },
   "opposition": {
     "tab": "Niveau adverse",
