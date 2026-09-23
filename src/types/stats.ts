@@ -40,6 +40,10 @@ export interface StatLineDto {
   damagePerMinute: number | null;
   damageTakenPerMinute: number | null;
   visionPerMinute: number | null;
+  /** (kills + assists) / kills de l'équipe. */
+  killParticipation: number | null;
+  /** Morts / morts de l'équipe. */
+  deathShare: number | null;
   afkGames: number;
   secondsPlayed: number;
   firstPlayedAt: string | null;
@@ -164,6 +168,8 @@ export interface At15Dto {
   kills: number;
   deaths: number;
   assists: number;
+  /** Morts avant 15 min impliquant le jungler adverse ; null si les postes sont inconnus. */
+  ganksSuffered: number | null;
 }
 
 /** Moyenne des joueurs classés seulement ; `value` sur l'échelle Fer IV = 0 … Challenger = 30. */

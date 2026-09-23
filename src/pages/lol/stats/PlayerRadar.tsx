@@ -14,6 +14,8 @@ const AXES: MetricKey[] = [
   "goldPerMinute",
   "damageTakenPerMinute",
   "kda",
+  "killParticipation",
+  "deathShare",
   "visionPerMinute",
   "winRate",
 ];
@@ -36,7 +38,9 @@ export function PlayerRadar({ radar, scale, rank, label }: PlayerRadarProps) {
     if (value === null || value === undefined || !borne || borne.high <= borne.low) {
       return null;
     }
-    return (value - borne.low) / (borne.high - borne.low);
+    const position = (value - borne.low) / (borne.high - borne.low);
+    // Le bord du radar reste le bon côté : moins de morts de l'équipe, c'est mieux.
+    return definitions[key].polarity === "lower" ? 1 - position : position;
   };
 
   const rang = rangNumerique(rank);

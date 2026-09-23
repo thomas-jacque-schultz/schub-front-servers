@@ -47,7 +47,9 @@
     "vision": "Vision par minute",
     "dpm": "Dégâts par minute",
     "damageTaken": "Dégâts subis par minute",
-    "games": "Parties"
+    "games": "Parties",
+    "kp": "Participation aux kills",
+    "dp": "Part des morts de l'équipe"
   },
   "delta": {
     "points": "{{value}} pts",
@@ -200,7 +202,9 @@
     "damageTaken": "Subis/min",
     "vision": "Vision/min",
     "rank": "Rang",
-    "games": "Parties"
+    "games": "Parties",
+    "kp": "KP",
+    "dp": "DP"
   },
   "radar": {
     "title": "Profil",
@@ -249,7 +253,8 @@
     "noMatchups": "Membres dans les deux camps : pas de face-à-face.",
     "loadFailed": "Le détail de la partie n'a pas pu être chargé.",
     "close": "Fermer",
-    "shortGame": "Partie finie avant 15 minutes : il n'y a pas d'état des couloirs à 15 minutes."
+    "shortGame": "Partie finie avant 15 minutes : il n'y a pas d'état des couloirs à 15 minutes.",
+    "ganksSuffered": "Ganks subis {{ally}} – {{enemy}}"
   },
   "opposition": {
     "tab": "Niveau adverse",

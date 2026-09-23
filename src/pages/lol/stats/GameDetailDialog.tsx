@@ -144,6 +144,13 @@ function FaceAFace({
             size="small"
           />
           <Chip label={`${t("detail.csDiff")} ${signe(nous.cs - eux.cs)}`} variant="outline" size="small" />
+          {nous.ganksSuffered !== null && eux.ganksSuffered !== null && (
+            <Chip
+              label={t("detail.ganksSuffered", { ally: nous.ganksSuffered, enemy: eux.ganksSuffered })}
+              variant="outline"
+              size="small"
+            />
+          )}
         </Stack>
         <Text variant="caption" tone="secondary" mono>
           {`${t("detail.kdaAt15")} ${nous.kills}/${nous.deaths}/${nous.assists} – ${eux.kills}/${eux.deaths}/${
