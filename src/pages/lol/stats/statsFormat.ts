@@ -36,7 +36,6 @@ const POSTES = [
   "MIDDLE",
   "BOTTOM",
   "UTILITY",
-  "UNKNOWN",
 ] as const;
 
 type Poste = (typeof POSTES)[number];
@@ -102,13 +101,10 @@ export const useStatsFormat = () => {
           mode && (MODES as readonly string[]).includes(mode) ? (mode as Mode) : "OTHER";
         return t(`queue.${cle}`);
       },
-      poste: (position: string | null | undefined) => {
-        const cle: Poste =
-          position && (POSTES as readonly string[]).includes(position)
-            ? (position as Poste)
-            : "UNKNOWN";
-        return t(`position.${cle}`);
-      },
+      poste: (position: string | null | undefined) =>
+        position && (POSTES as readonly string[]).includes(position)
+          ? t(`position.${position as Poste}`)
+          : absent,
       cote: (side: number) => t(side === 200 ? "side.red" : "side.blue"),
       assise: (coverage: StatsCoverageDto | null | undefined) => {
         if (!coverage) {

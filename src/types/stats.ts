@@ -38,6 +38,7 @@ export interface StatLineDto {
   csPerMinute: number | null;
   goldPerMinute: number | null;
   damagePerMinute: number | null;
+  damageTakenPerMinute: number | null;
   visionPerMinute: number | null;
   afkGames: number;
   secondsPlayed: number;
@@ -59,12 +60,34 @@ export interface RankedStandingDto {
   observedAt: string | null;
 }
 
+export interface RadarDto {
+  recentPatches: string[];
+  previousPatches: string[];
+  recent: StatLineDto | null;
+  previous: StatLineDto | null;
+}
+
+export interface MetricBoundDto {
+  low: number;
+  high: number;
+}
+
+/** Bornes des axes : 5e et 95e percentiles des joueurs croisés. Une population locale. */
+export interface MetricScaleDto {
+  computedAt: string;
+  population: number;
+  minimumGames: number;
+  bounds: Partial<Record<string, MetricBoundDto>>;
+}
+
 export interface TeamComparisonDto {
   comparedWith: number;
   winRateDelta: number | null;
   kdaDelta: number | null;
+  csPerMinuteDelta: number | null;
   goldPerMinuteDelta: number | null;
   damagePerMinuteDelta: number | null;
+  damageTakenPerMinuteDelta: number | null;
   visionPerMinuteDelta: number | null;
 }
 
@@ -85,6 +108,7 @@ export interface PlayerStatsDto {
   queues: StatLineDto[];
   months: StatLineDto[];
   rankings: RankedStandingDto[];
+  radar: RadarDto | null;
   versusTeammates: TeamComparisonDto | null;
 }
 
@@ -94,6 +118,7 @@ export interface TeamPlayersStatsDto {
   days: number | null;
   championsPerPlayer: number;
   players: PlayerStatsDto[];
+  scale: MetricScaleDto | null;
   viewerMemberId: string | null;
   generatedAt: string;
 }
@@ -189,5 +214,7 @@ export interface MyStatsDto {
   queues: StatLineDto[];
   months: StatLineDto[];
   rankings: RankedStandingDto[];
+  radar: RadarDto | null;
+  scale: MetricScaleDto | null;
   generatedAt: string;
 }
