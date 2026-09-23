@@ -72,7 +72,6 @@
       "actions": "Actions"
     },
     "you": "vous",
-    "captain": "Capitaine",
     "linked": "Lié",
     "free": "Libre",
     "linkedHelp": "Ce Riot ID correspond à un compte Schub.",
@@ -106,7 +105,8 @@
       "roles": "Postes",
       "rolesHelper": "Plusieurs postes sont possibles. Le premier est le poste habituel — c'est lui qui range l'effectif. Laissez vide si le poste n'est pas encore décidé.",
       "status": "Statut",
-      "coachHasNoRole": "Un coach ne tient pas de poste : les postes sont retirés."
+      "coachHasNoRole": "Un coach qui ne joue pas ne tient pas de poste : les postes sont retirés.",
+      "statusHelper": "Coach se cumule avec Titulaire ou Remplaçant. Coach seul : il ne joue pas."
     }
   },
   "draft": {

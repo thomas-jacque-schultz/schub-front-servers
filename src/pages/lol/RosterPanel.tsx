@@ -12,14 +12,16 @@ import {
   type DataTableColumn,
   Dialog,
   MultiSelect,
-  SelectField,
   Stack,
   Text,
 } from "../../design-system";
 import {
+  choisitStatuts,
   GAME_ROLES,
   MEMBER_STATUSES,
   riotIdOf,
+  statutsOf,
+  versRequete,
   type GameRole,
   type MemberStatus,
   type TeamDto,
@@ -41,11 +43,11 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
   const [isAdding, setIsAdding] = useState<boolean>(false);
   const [chosen, setChosen] = useState<KnownRiotAccountDto | null>(null);
   const [newRoles, setNewRoles] = useState<string[]>([]);
-  const [newStatus, setNewStatus] = useState<MemberStatus>("TITULAIRE");
+  const [newStatuts, setNewStatuts] = useState<MemberStatus[]>(["TITULAIRE"]);
 
   const [edited, setEdited] = useState<TeamMemberDto | null>(null);
   const [editedRoles, setEditedRoles] = useState<string[]>([]);
-  const [editedStatus, setEditedStatus] = useState<MemberStatus>("TITULAIRE");
+  const [editedStatuts, setEditedStatuts] = useState<MemberStatus[]>(["TITULAIRE"]);
 
   const [removed, setRemoved] = useState<TeamMemberDto | null>(null);
 
@@ -58,14 +60,16 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
     label: t(`status.${status}`),
   }));
 
-  const rolesFor = (status: MemberStatus, roles: string[]): GameRole[] =>
-    status === "COACH" ? [] : (roles as GameRole[]);
+  const coachSeul = (statuts: MemberStatus[]) => statuts.length === 1 && statuts[0] === "COACH";
+
+  const rolesFor = (statuts: MemberStatus[], roles: string[]): GameRole[] =>
+    coachSeul(statuts) ? [] : (roles as GameRole[]);
 
   const fermerAjout = () => {
     setIsAdding(false);
     setChosen(null);
     setNewRoles([]);
-    setNewStatus("TITULAIRE");
+    setNewStatuts(["TITULAIRE"]);
   };
 
   const onAdd = async () => {
@@ -79,8 +83,8 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
         await addTeamMemberApi(team.id, {
           riotGameName: chosen.gameName,
           riotTagLine: chosen.tagLine,
-          roles: rolesFor(newStatus, newRoles),
-          status: newStatus,
+          roles: rolesFor(newStatuts, newRoles),
+          ...versRequete(newStatuts),
         }),
       );
       fermerAjout();
@@ -100,8 +104,8 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
     try {
       onTeamChange(
         await updateTeamMemberApi(team.id, edited.memberId, {
-          roles: rolesFor(editedStatus, editedRoles),
-          status: editedStatus,
+          roles: rolesFor(editedStatuts, editedRoles),
+          ...versRequete(editedStatuts),
         }),
       );
       setEdited(null);
@@ -136,13 +140,10 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
       render: (member) => (
         <Stack direction="row" spacing={1.5} align="center">
           <Avatar src={member.avatarUrl} name={member.displayName} size="small" />
-          <Stack spacing={0.5}>
-            <Text>
-              {member.displayName}
-              {member.memberId === team.viewerMemberId ? ` (${t("roster.you")})` : ""}
-            </Text>
-            {member.captain && <Chip label={t("roster.captain")} tone="primary" variant="outline" />}
-          </Stack>
+          <Text>
+            {member.displayName}
+            {member.memberId === team.viewerMemberId ? ` (${t("roster.you")})` : ""}
+          </Text>
         </Stack>
       ),
     },
@@ -178,7 +179,19 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
       key: "status",
       header: t("roster.columns.status"),
       width: "12%",
-      render: (member) => <Text tone="secondary">{t(`status.${member.status}`)}</Text>,
+      render: (member) => (
+        <Stack direction="row" spacing={0.5} wrap>
+          {statutsOf(member).map((statut) => (
+            <Chip
+              key={statut}
+              label={t(`status.${statut}`)}
+              tone={statut === "COACH" ? "primary" : "neutral"}
+              variant="outline"
+              size="small"
+            />
+          ))}
+        </Stack>
+      ),
     },
     {
       key: "account",
@@ -208,7 +221,7 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
             onClick={() => {
               setEdited(member);
               setEditedRoles([...member.roles]);
-              setEditedStatus(member.status);
+              setEditedStatuts(statutsOf(member));
             }}
           >
             {t("roster.edit.action")}
@@ -239,6 +252,7 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
           emptyDescription={t("roster.emptyDescription")}
           layout="fixed"
           minWidth={840}
+          rowAccent={(member) => member.coach}
         />
       </Card>
 
@@ -248,6 +262,7 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
         description={t("roster.add.description")}
         cancelLabel={t("actions.cancel", { ns: "common" })}
         confirmLabel={chosen ? t("roster.add.confirm") : undefined}
+        confirmDisabled={newStatuts.length === 0}
         confirmLoading={isSaving}
         onClose={fermerAjout}
         onConfirm={chosen ? () => void onAdd() : undefined}
@@ -259,20 +274,21 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
                 {t("roster.add.changeAccount")}
               </Button>
             </Alert>
-            <SelectField
+            <MultiSelect
               label={t("roster.fields.status")}
-              value={newStatus}
-              onChange={(value) => setNewStatus(value as MemberStatus)}
+              values={newStatuts}
+              onChange={(values) => setNewStatuts(choisitStatuts(newStatuts, values as MemberStatus[]))}
               options={statusOptions}
+              helperText={t("roster.fields.statusHelper")}
             />
             <MultiSelect
               label={t("roster.fields.roles")}
-              values={newStatus === "COACH" ? [] : newRoles}
+              values={coachSeul(newStatuts) ? [] : newRoles}
               onChange={setNewRoles}
               options={roleOptions}
-              disabled={newStatus === "COACH"}
+              disabled={coachSeul(newStatuts)}
               helperText={
-                newStatus === "COACH" ? t("roster.fields.coachHasNoRole") : t("roster.fields.rolesHelper")
+                coachSeul(newStatuts) ? t("roster.fields.coachHasNoRole") : t("roster.fields.rolesHelper")
               }
             />
           </Stack>
@@ -287,25 +303,27 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
         description={t("roster.edit.description")}
         cancelLabel={t("actions.cancel", { ns: "common" })}
         confirmLabel={t("roster.edit.confirm")}
+        confirmDisabled={editedStatuts.length === 0}
         confirmLoading={isSaving}
         onClose={() => setEdited(null)}
         onConfirm={() => void onEdit()}
       >
         <Stack spacing={2}>
-          <SelectField
+          <MultiSelect
             label={t("roster.fields.status")}
-            value={editedStatus}
-            onChange={(value) => setEditedStatus(value as MemberStatus)}
+            values={editedStatuts}
+            onChange={(values) => setEditedStatuts(choisitStatuts(editedStatuts, values as MemberStatus[]))}
             options={statusOptions}
+            helperText={t("roster.fields.statusHelper")}
           />
           <MultiSelect
             label={t("roster.fields.roles")}
-            values={editedStatus === "COACH" ? [] : editedRoles}
+            values={coachSeul(editedStatuts) ? [] : editedRoles}
             onChange={setEditedRoles}
             options={roleOptions}
-            disabled={editedStatus === "COACH"}
+            disabled={coachSeul(editedStatuts)}
             helperText={
-              editedStatus === "COACH" ? t("roster.fields.coachHasNoRole") : t("roster.fields.rolesHelper")
+              coachSeul(editedStatuts) ? t("roster.fields.coachHasNoRole") : t("roster.fields.rolesHelper")
             }
           />
         </Stack>

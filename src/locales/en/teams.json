@@ -72,7 +72,6 @@
       "actions": "Actions"
     },
     "you": "you",
-    "captain": "Captain",
     "linked": "Linked",
     "free": "Open",
     "linkedHelp": "This Riot ID matches a Schub account.",
@@ -106,7 +105,8 @@
       "roles": "Positions",
       "rolesHelper": "Several positions are allowed. The first one is the usual position — it is what orders the roster. Leave empty if the position is not decided yet.",
       "status": "Status",
-      "coachHasNoRole": "A coach holds no position: positions are cleared."
+      "coachHasNoRole": "A non-playing coach holds no position: positions are cleared.",
+      "statusHelper": "Coach combines with Starter or Substitute. Coach alone: does not play."
     }
   },
   "draft": {

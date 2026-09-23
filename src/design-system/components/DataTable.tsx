@@ -26,6 +26,8 @@ export interface DataTableProps<Row> {
   dense?: boolean;
   layout?: "auto" | "fixed";
   minWidth?: number;
+  /** Encadre une ligne dans la couleur d'accent : à réserver à une ligne par tableau, ou presque. */
+  rowAccent?: (row: Row) => boolean;
 }
 
 export function DataTable<Row>({
@@ -38,6 +40,7 @@ export function DataTable<Row>({
   dense = false,
   layout = "auto",
   minWidth,
+  rowAccent,
 }: DataTableProps<Row>) {
   if (rows.length === 0) {
     return <EmptyState title={emptyTitle} description={emptyDescription} />;
@@ -85,7 +88,15 @@ export function DataTable<Row>({
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <TableRow key={rowKey(row)} hover>
+            <TableRow
+              key={rowKey(row)}
+              hover
+              sx={
+                rowAccent?.(row)
+                  ? { outline: "1px solid", outlineColor: "primary.main", outlineOffset: "-1px" }
+                  : undefined
+              }
+            >
               {columns.map((column) => (
                 <TableCell
                   key={column.key}
