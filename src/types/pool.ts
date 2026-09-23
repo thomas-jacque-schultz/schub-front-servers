@@ -25,6 +25,9 @@ export interface ChampionPoolMemberDto {
   state: PoolState;
   masteryLevel: number | null;
   masteryPoints: number | null;
+  /** Parties sur la Faille avec ce champion ; null si le connecteur n'a pas répondu. */
+  games: number | null;
+  winRate: number | null;
   lastPlayedAt: string | null;
   observedAt: string | null;
 }

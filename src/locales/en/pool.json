@@ -28,12 +28,12 @@
   },
   "champion": {
     "nobody": "Nobody above the floor",
-    "setAside": "{{count}} set aside by the floor",
     "neverPicked": "No player of this position has played it",
     "outOfCatalog": "Not in this patch's catalogue",
-    "mastery": "{{points}} points",
-    "masteryWithLevel": "Level {{level}} · {{points}} points",
-    "lastPlayed": "Played on {{date}}"
+    "lastPlayed": "Played on {{date}}",
+    "line": "Lvl {{level}} · {{points}} pts · {{winRate}}",
+    "more": "+{{count}}",
+    "winRateDetail": "{{rate}} over {{count}} game(s)"
   },
   "unavailable": {
     "title": "No readable masteries",

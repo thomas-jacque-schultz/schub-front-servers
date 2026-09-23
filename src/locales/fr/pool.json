@@ -28,12 +28,12 @@
   },
   "champion": {
     "nobody": "Personne au-dessus du plancher",
-    "setAside": "{{count}} écarté(s) par le plancher",
     "neverPicked": "Aucun joueur de ce poste ne l'a joué",
     "outOfCatalog": "Hors du catalogue de ce patch",
-    "mastery": "{{points}} points",
-    "masteryWithLevel": "Niveau {{level}} · {{points}} points",
-    "lastPlayed": "Joué le {{date}}"
+    "lastPlayed": "Joué le {{date}}",
+    "line": "Niv. {{level}} · {{points}} pts · {{winRate}}",
+    "more": "+{{count}}",
+    "winRateDetail": "{{rate}} sur {{count}} partie(s)"
   },
   "unavailable": {
     "title": "Sans maîtrises lisibles",

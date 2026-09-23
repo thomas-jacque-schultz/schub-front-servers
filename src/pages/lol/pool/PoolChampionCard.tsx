@@ -1,32 +1,54 @@
 import { useTranslation } from "react-i18next";
-import { Avatar, Card, ChampionIcon, Chip, Stack, Text } from "../../../design-system";
+import { Avatar, Card, ChampionIcon, Chip, Stack, Text, Tooltip } from "../../../design-system";
 import { useLocaleFormat } from "../../../i18n/format";
-import type { ChampionPoolEntryDto } from "../../../types/pool";
+import type { ChampionPoolEntryDto, ChampionPoolMemberDto } from "../../../types/pool";
+import { useStatsFormat } from "../stats/statsFormat";
 
 export interface PoolChampionCardProps {
   champion: ChampionPoolEntryDto;
   viewerMemberId: string | null;
 }
 
+const JOUEURS_VISIBLES = 3;
+// En-tête + trois lignes joueur : toutes les cartes d'une colonne font la même hauteur.
+const HAUTEUR = 204;
+
 export function PoolChampionCard({ champion, viewerMemberId }: PoolChampionCardProps) {
   const { t } = useTranslation("pool");
   const { formatNumber } = useLocaleFormat();
+  const format = useStatsFormat();
 
   const nom = champion.name ?? champion.championKey;
+  const visibles = champion.players.slice(0, JOUEURS_VISIBLES);
+  const caches = champion.players.slice(JOUEURS_VISIBLES);
+
+  const ligne = (joueur: ChampionPoolMemberDto) =>
+    t("champion.line", {
+      level: joueur.masteryLevel ?? format.absent,
+      points: formatNumber(joueur.masteryPoints ?? 0),
+      winRate: format.taux(joueur.winRate),
+    });
 
   return (
-    <Card>
+    <Card minHeight={HAUTEUR}>
       <Stack spacing={1}>
         <Stack direction="row" spacing={1} align="center">
           <ChampionIcon src={champion.iconUrl} name={nom} />
-          <Stack spacing={0}>
-            <Text variant="subtitle">{nom}</Text>
+          <Stack spacing={0} fullWidth>
+            <Text variant="subtitle" truncate>
+              {nom}
+            </Text>
             {!champion.name && (
               <Text variant="caption" tone="disabled">
                 {t("champion.outOfCatalog")}
               </Text>
             )}
           </Stack>
+          {caches.length > 0 && (
+            <Tooltip title={caches.map((joueur) => joueur.displayName ?? joueur.riotGameName).join(", ")}>
+              <Chip label={t("champion.more", { count: caches.length })} variant="outline" size="small" />
+            </Tooltip>
+          )}
         </Stack>
 
         {champion.players.length === 0 ? (
@@ -34,25 +56,29 @@ export function PoolChampionCard({ champion, viewerMemberId }: PoolChampionCardP
             {champion.setAsideByFloor > 0 ? t("champion.nobody") : t("champion.neverPicked")}
           </Text>
         ) : (
-          <Stack spacing={0.5}>
-            {champion.players.map((joueur) => (
+          <Stack spacing={0.75}>
+            {visibles.map((joueur) => (
               <Stack key={joueur.memberId} direction="row" spacing={1} align="center">
                 <Avatar src={joueur.avatarUrl} name={joueur.displayName ?? "?"} size="small" />
-                <Stack spacing={0}>
-                  <Text variant="body">
+                <Stack spacing={0} fullWidth>
+                  <Text variant="body" truncate>
                     {joueur.displayName ?? joueur.riotGameName}
                     {joueur.memberId === viewerMemberId ? ` (${t("member.viewer")})` : ""}
                   </Text>
-                  <Text variant="caption" tone="secondary">
-                    {joueur.masteryLevel === null
-                      ? t("champion.mastery", {
-                          points: formatNumber(joueur.masteryPoints ?? 0),
-                        })
-                      : t("champion.masteryWithLevel", {
-                          level: joueur.masteryLevel,
-                          points: formatNumber(joueur.masteryPoints ?? 0),
-                        })}
-                  </Text>
+                  <Tooltip
+                    title={
+                      joueur.games
+                        ? t("champion.winRateDetail", {
+                            rate: format.taux(joueur.winRate),
+                            count: joueur.games,
+                          })
+                        : ""
+                    }
+                  >
+                    <Text variant="caption" tone="secondary" mono>
+                      {ligne(joueur)}
+                    </Text>
+                  </Tooltip>
                 </Stack>
                 {joueur.status === "REMPLACANT" && (
                   <Chip label={t("member.substitute")} variant="outline" size="small" />
@@ -60,12 +86,6 @@ export function PoolChampionCard({ champion, viewerMemberId }: PoolChampionCardP
               </Stack>
             ))}
           </Stack>
-        )}
-
-        {champion.setAsideByFloor > 0 && (
-          <Text variant="caption" tone="disabled">
-            {t("champion.setAside", { count: champion.setAsideByFloor })}
-          </Text>
         )}
       </Stack>
     </Card>
