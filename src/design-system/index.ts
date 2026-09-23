@@ -12,6 +12,8 @@ export type {
   AppShellProps,
 } from "./components/AppShell";
 export { Avatar } from "./components/Avatar";
+export { AvatarToggleGroup } from "./components/AvatarToggleGroup";
+export type { AvatarToggleGroupProps, AvatarToggleOption } from "./components/AvatarToggleGroup";
 export type { AvatarProps } from "./components/Avatar";
 export { Button } from "./components/Button";
 export type {
@@ -68,6 +70,8 @@ export { PageHeader } from "./components/PageHeader";
 export type { PageHeaderProps } from "./components/PageHeader";
 export { ProgressBar } from "./components/ProgressBar";
 export type { ProgressBarProps } from "./components/ProgressBar";
+export { RadarChart } from "./components/RadarChart";
+export type { RadarAxis, RadarChartProps, RadarEmphasis, RadarSeries } from "./components/RadarChart";
 export { SelectField } from "./components/SelectField";
 export type { SelectFieldProps, SelectOption } from "./components/SelectField";
 export { MeterBar } from "./components/MeterBar";
@@ -83,6 +87,8 @@ export type {
   StackJustify,
   StackProps,
 } from "./components/Stack";
+export { StatGrid } from "./components/StatGrid";
+export type { StatGridItem, StatGridProps } from "./components/StatGrid";
 export { StatTile } from "./components/StatTile";
 export type { StatTileProps } from "./components/StatTile";
 export { StatusChip } from "./components/StatusChip";

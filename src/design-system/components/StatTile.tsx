@@ -9,6 +9,7 @@ export interface StatTileProps {
   delta?: string;
   deltaTone?: "positive" | "negative" | "neutral";
   deltaHint?: string;
+  size?: "medium" | "small";
 }
 
 export function StatTile({
@@ -18,6 +19,7 @@ export function StatTile({
   delta,
   deltaTone = "neutral",
   deltaHint,
+  size = "medium",
 }: StatTileProps) {
   return (
     <Box>
@@ -25,7 +27,7 @@ export function StatTile({
         {label}
       </Typography>
       <Typography
-        variant="h6"
+        variant={size === "small" ? "subtitle1" : "h6"}
         component="p"
         sx={{
           fontWeight: 700,
