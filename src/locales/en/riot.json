@@ -36,5 +36,40 @@
     "BOTTOM": "Bot",
     "UTILITY": "Support",
     "UNKNOWN": "Undetermined role"
+  },
+  "ingest": {
+    "eyebrow": "Configuration",
+    "title": "Riot collection",
+    "subtitle": "What the Riot connector collects, how fast, and how much it weighs.",
+    "loadFailed": "Could not read the collection state",
+    "toggleFailed": "The toggle failed",
+    "unavailable": "The Riot connector does not answer: the collection state is unknown.",
+    "gigabytes": "{{value}} GB",
+    "queue": {
+      "title": "Collection queue",
+      "description": "All requests together: players, team games and background collection.",
+      "pending": "Pending",
+      "running": "Running",
+      "failed": "Failed",
+      "rate": "Allowed calls/min",
+      "readyAt": "Queue drained around"
+    },
+    "crawler": {
+      "title": "Background collection",
+      "description": "It reads the history of accounts met in our games, most recent first, so a new player finds their games already there. It always comes after players' requests.",
+      "toggle": "Background collection on",
+      "toggleHelper": "Setting for this environment only. In production it runs permanently.",
+      "alwaysOn": "Always on in this environment.",
+      "storageAlert": "The database passed the {{threshold}} threshold: background collection is suspended.",
+      "known": "Known accounts",
+      "tracked": "Accounts read",
+      "backlog": "Pending (background)",
+      "lastRound": "Last round",
+      "lastRoundAccounts_one": "{{count}} account queued",
+      "lastRoundAccounts_other": "{{count}} accounts queued",
+      "storage": "Riot database size",
+      "storageValue": "{{used}} of {{threshold}}",
+      "storageHint": "Past the threshold, background collection suspends itself."
+    }
   }
 }

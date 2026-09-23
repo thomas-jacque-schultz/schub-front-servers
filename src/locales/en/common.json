@@ -45,6 +45,7 @@
     "configUsers": "Users",
     "configRoles": "Roles",
     "configDiscord": "Discord channels",
+    "configIngest": "Riot collection",
     "storybook": "Design system",
     "linkedin": "LinkedIn",
     "github": "GitHub",

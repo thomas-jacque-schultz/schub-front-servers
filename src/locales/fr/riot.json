@@ -36,5 +36,40 @@
     "BOTTOM": "Bas",
     "UTILITY": "Support",
     "UNKNOWN": "Poste indéterminé"
+  },
+  "ingest": {
+    "eyebrow": "Configuration",
+    "title": "Collecte Riot",
+    "subtitle": "Ce que le connecteur Riot collecte, à quel rythme, et ce que ça pèse.",
+    "loadFailed": "Impossible de lire l'état de la collecte",
+    "toggleFailed": "La bascule a échoué",
+    "unavailable": "Le connecteur Riot ne répond pas : l'état de la collecte est inconnu.",
+    "gigabytes": "{{value}} Go",
+    "queue": {
+      "title": "File de collecte",
+      "description": "Toutes demandes confondues : joueurs, parties d'équipe et collecte de fond.",
+      "pending": "En attente",
+      "running": "En cours",
+      "failed": "En échec",
+      "rate": "Appels/min autorisés",
+      "readyAt": "File vidée vers"
+    },
+    "crawler": {
+      "title": "Collecte de fond",
+      "description": "Elle relève l'historique des comptes croisés dans nos parties, les plus récents d'abord, pour qu'un nouveau joueur trouve ses parties déjà là. Elle passe toujours après les demandes des joueurs.",
+      "toggle": "Collecte de fond active",
+      "toggleHelper": "Réglage de cet environnement uniquement. En production, elle tourne en permanence.",
+      "alwaysOn": "Toujours active dans cet environnement.",
+      "storageAlert": "La base a dépassé le seuil de {{threshold}} : la collecte de fond est suspendue.",
+      "known": "Comptes connus",
+      "tracked": "Comptes relevés",
+      "backlog": "En attente (fond)",
+      "lastRound": "Dernier tour",
+      "lastRoundAccounts_one": "{{count}} compte empilé",
+      "lastRoundAccounts_other": "{{count}} comptes empilés",
+      "storage": "Volume de la base Riot",
+      "storageValue": "{{used}} sur {{threshold}}",
+      "storageHint": "Au-delà du seuil, la collecte de fond se suspend d'elle-même."
+    }
   }
 }
