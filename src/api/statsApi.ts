@@ -1,5 +1,6 @@
 import { requestJson } from "./httpClient";
 import type {
+  ChampionGridDto,
   MyStatsDto,
   ReferenceGridDto,
   ReferenceScope,
@@ -95,4 +96,16 @@ export const getReferenceGridApi = async (
     { method: "GET" },
   );
   return grille.metrics ? (grille as ReferenceGridDto) : null;
+};
+
+/** Null : pas encore de référentiel pour ce champion. */
+export const getChampionGridApi = async (
+  championId: string,
+  tier: string,
+): Promise<ChampionGridDto | null> => {
+  const grille = await requestJson<Partial<ChampionGridDto>>(
+    `/lol/references/champions/${championId}?${new URLSearchParams({ tier })}`,
+    { method: "GET" },
+  );
+  return grille.metrics ? (grille as ChampionGridDto) : null;
 };

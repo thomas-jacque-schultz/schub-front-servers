@@ -100,7 +100,14 @@ export function Champions({ player }: { player: PlayerStatsDto }) {
         </Text>
       ) : (
         championsAffiches(player.champions, choisis, CHAMPIONS_EN_COLONNE).map(
-          (line) => <ChampionStatCard key={line.key} line={line} compact />,
+          (line) => (
+            <ChampionStatCard
+              key={line.key}
+              line={line}
+              compact
+              references={player.references}
+            />
+          ),
         )
       )}
     </Stack>

@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { SelectField, Stack, Text } from "../../../design-system";
 import { OppositionPanel } from "./OppositionPanel";
 import { TeamEarlyGame } from "./TeamEarlyGame";
+import { TeamLevelCard } from "./TeamLevelCard";
 import { TeamSummary } from "./TeamSummary";
 import { useTeamOpposition } from "./useTeamOpposition";
 import { useWindowOptions } from "./windows";
@@ -39,6 +40,7 @@ export function StrategyPanel({ teamId }: StrategyPanelProps) {
         <Stack spacing={2}>
           <Text variant="section">{t("strategy.early")}</Text>
           <TeamEarlyGame early={opposition.dto.early} />
+          <TeamLevelCard level={opposition.dto.level} />
         </Stack>
       )}
     </Stack>

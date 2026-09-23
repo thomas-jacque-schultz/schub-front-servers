@@ -336,6 +336,8 @@ export interface TeamOppositionDto {
   ceilingTier: string | null;
   ceilingMinimumGames: number;
   early: TeamEarlyGameDto | null;
+  /** Début de partie de l'équipe noté contre les parties de son palier. */
+  level: TeamLevelDto | null;
   generatedAt: string;
 }
 
@@ -425,4 +427,39 @@ export interface ReferenceMetricDto {
   /** Absente tant qu'un palier manque : pas d'icône de rang sans elle. */
   ladder: number[] | null;
   missingTiers: string[];
+}
+
+/** Moyennes des joueurs d'un champion dans un groupe de paliers. Métrique absente : pas assez de joueurs. */
+export interface ChampionGridDto {
+  championId: number;
+  group: string | null;
+  patches: string[];
+  computedAt: string;
+  percentiles: number[];
+  metrics: Record<
+    string,
+    {
+      polarity: "HIGHER" | "LOWER" | "NEUTRAL";
+      count: number;
+      values: number[];
+    }
+  >;
+}
+
+export interface TeamLevelDto {
+  games: number;
+  tier: string | null;
+  patches: string[];
+  metrics: TeamLevelMetricDto[];
+}
+
+export interface TeamLevelMetricDto {
+  key: string;
+  polarity: "HIGHER" | "LOWER" | "NEUTRAL" | null;
+  games: number;
+  mean: number | null;
+  /** Moyenne des percentiles de chaque partie dans son palier, « plus haut = mieux ». */
+  inTier: number | null;
+  ladder: number | null;
+  level: string | null;
 }

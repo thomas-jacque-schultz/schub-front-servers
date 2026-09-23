@@ -170,7 +170,11 @@ export function PlayerStatsView({
               choisis,
               CHAMPIONS_PLEINE_LARGEUR,
             ).map((line) => (
-              <ChampionStatCard key={line.key} line={line} />
+              <ChampionStatCard
+                key={line.key}
+                line={line}
+                references={data.references}
+              />
             ))}
           </Columns>
         )}

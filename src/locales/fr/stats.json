@@ -456,6 +456,33 @@
     "inTierGame": "{{rank}}e percentile des parties des {{tier}} au poste {{position}}.",
     "noLadder": "Échelle du ladder pas encore disponible : il manque des paliers dans l’échantillon.",
     "basis": "Calculé sur vos parties au poste {{position}}, comparées aux joueurs classés des patchs {{patches}}.",
-    "short": "p{{rank}}"
+    "short": "p{{rank}}",
+    "champion": "{{rank}}e percentile des joueurs de {{champion}} en {{group}}, sur leurs moyennes ({{count}} joueurs à 5 parties ou plus).",
+    "championFallback": "Pas encore assez de joueurs de {{champion}} en {{group}} : comparé à tous les joueurs {{tier}} au poste {{position}}.",
+    "team": "En moyenne sur {{games}} partie(s) : {{rank}}e percentile des parties de même palier.",
+    "teamLevel": "Niveau {{tier}} à l’échelle du ladder."
+  },
+  "group": {
+    "IRON_BRONZE": "Fer–Bronze",
+    "SILVER_GOLD": "Argent–Or",
+    "PLATINUM_EMERALD": "Platine–Émeraude",
+    "DIAMOND": "Diamant",
+    "MASTER_PLUS": "Maître+"
+  },
+  "teamLevel": {
+    "title": "Notre début de partie, noté",
+    "helper": "Chaque partie d’équipe à timeline se situe parmi les parties classées du même palier ; la note est la moyenne de ces positions.",
+    "empty": "Pas encore de partie d’équipe à timeline sur la période.",
+    "basis": "{{games}} partie(s) analysée(s) · palier moyen : {{tier}}",
+    "metric": {
+      "goldDiffAt15": "Écart d’or à 15 min",
+      "xpDiffAt15": "Écart d’XP à 15 min",
+      "killsDiffAt15": "Écart de kills à 15 min",
+      "dragons": "Dragons avant 15 min",
+      "grubs": "Larves avant 15 min",
+      "heralds": "Hérauts avant 15 min",
+      "ganksDecisive": "Ganks décisifs faits",
+      "ganksConceded": "Ganks décisifs subis"
+    }
   }
 }

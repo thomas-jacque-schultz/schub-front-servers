@@ -1,26 +1,8 @@
 import { useTranslation } from "react-i18next";
 import { Text, Tooltip } from "../../../design-system";
-import bronze from "../../../assets/ranks/bronze.svg";
-import diamond from "../../../assets/ranks/diamond.svg";
-import emerald from "../../../assets/ranks/emerald.svg";
-import gold from "../../../assets/ranks/gold.svg";
-import iron from "../../../assets/ranks/iron.svg";
-import master from "../../../assets/ranks/master.svg";
-import platinum from "../../../assets/ranks/platinum.svg";
-import silver from "../../../assets/ranks/silver.svg";
+import { EMBLEMES } from "./emblems";
 import type { Grade } from "./grading";
 import { useStatsFormat } from "./statsFormat";
-
-const EMBLEMES: Record<string, string> = {
-  IRON: iron,
-  BRONZE: bronze,
-  SILVER: silver,
-  GOLD: gold,
-  PLATINUM: platinum,
-  EMERALD: emerald,
-  DIAMOND: diamond,
-  MASTER_PLUS: master,
-};
 
 export interface LevelCrestProps {
   grade: Grade;
@@ -77,6 +59,24 @@ export function LevelCrest({
           {t("grade.short", { rank: Math.round((grade.inTier ?? 0) * 100) })}
         </Text>
       )}
+    </Tooltip>
+  );
+}
+
+/** Sans échelle du ladder (champion, groupe trop mince) : le percentile seul, expliqué au survol. */
+export function PercentileMark({
+  value,
+  title,
+}: {
+  value: number;
+  title: string;
+}) {
+  const { t } = useTranslation("stats");
+  return (
+    <Tooltip title={title}>
+      <Text variant="caption" tone="secondary">
+        {t("grade.short", { rank: Math.round(value * 100) })}
+      </Text>
     </Tooltip>
   );
 }
