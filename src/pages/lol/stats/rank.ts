@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import type { RankedStandingDto } from "../../../types/stats";
+import type { AverageRankDto, RankedStandingDto } from "../../../types/stats";
 import { useStatsFormat } from "./statsFormat";
 
 const PALIERS = ["IRON", "BRONZE", "SILVER", "GOLD", "PLATINUM", "EMERALD", "DIAMOND"] as const;
@@ -42,4 +42,22 @@ export const useRankLabel = () => {
           lp: format.entier(standing.leaguePoints),
         })
       : format.absent;
+};
+
+/** « Or II » pour une moyenne : les LP d'une moyenne n'ont pas de sens. */
+export const useAverageRankLabel = () => {
+  const { t } = useTranslation("stats");
+  const format = useStatsFormat();
+  return (rank: AverageRankDto | null | undefined) =>
+    rank
+      ? `${t(`tier.${rank.tier}`, { defaultValue: rank.tier })}${rank.division ? ` ${rank.division}` : ""}`
+      : format.absent;
+};
+
+/** Un écart de rang, en divisions et signé : « +1,5 div. ». */
+export const useRankGapLabel = () => {
+  const { t } = useTranslation("stats");
+  const format = useStatsFormat();
+  return (gap: number | null | undefined) =>
+    gap === null || gap === undefined ? format.absent : t("rankGap", { value: format.ecartRatio(gap) });
 };

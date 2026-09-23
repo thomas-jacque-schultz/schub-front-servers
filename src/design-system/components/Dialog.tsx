@@ -18,7 +18,7 @@ export interface DialogProps {
   confirmDisabled?: boolean;
   confirmLoading?: boolean;
   destructive?: boolean;
-  maxWidth?: "xs" | "sm" | "md";
+  maxWidth?: "xs" | "sm" | "md" | "lg";
 }
 
 export function Dialog({

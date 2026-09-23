@@ -10,7 +10,6 @@ import {
   Alert,
   Button,
   Card,
-  Dialog,
   Divider,
   ProgressBar,
   SelectField,
@@ -22,17 +21,12 @@ import { useLocaleFormat } from "../../../i18n/format";
 import type { GameReviewsDto } from "../../../types/review";
 import type { TeamGameDto } from "../../../types/stats";
 
-export interface GameReviewDialogProps {
+export interface GameReviewsProps {
   teamId: string;
-  game: TeamGameDto | null;
-  onClose: () => void;
+  game: TeamGameDto;
 }
 
-export function GameReviewDialog({
-  teamId,
-  game,
-  onClose,
-}: GameReviewDialogProps) {
+export function GameReviews({ teamId, game }: GameReviewsProps) {
   const { t } = useTranslation("reviews");
   const { formatDateTime } = useLocaleFormat();
 
@@ -44,7 +38,7 @@ export function GameReviewDialog({
   const [editedId, setEditedId] = useState<string>("");
   const [isSaving, setIsSaving] = useState<boolean>(false);
 
-  const matchId = game?.matchId ?? "";
+  const matchId = game.matchId;
 
   const load = useCallback(async () => {
     if (!matchId) {
@@ -146,15 +140,11 @@ export function GameReviewDialog({
   const peutEcrire = sujets.length > 0;
 
   return (
-    <Dialog
-      open={game !== null}
-      title={t("title")}
-      description={t("description")}
-      cancelLabel={t("close")}
-      onClose={onClose}
-      maxWidth="md"
-    >
       <Stack spacing={2}>
+        <Text variant="section">{t("title")}</Text>
+        <Text variant="caption" tone="secondary">
+          {t("description")}
+        </Text>
         {isLoading && !reviews && <ProgressBar label={t("loading")} />}
         {error && <Alert severity="error">{error}</Alert>}
 
@@ -261,6 +251,5 @@ export function GameReviewDialog({
           </Stack>
         )}
       </Stack>
-    </Dialog>
   );
 }

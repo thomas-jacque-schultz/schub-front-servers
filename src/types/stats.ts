@@ -145,7 +145,38 @@ export interface TeamGamePlayerDto {
   kills: number;
   deaths: number;
   assists: number;
+  goldEarned: number;
+  damageToChampions: number;
+  damageTaken: number;
+  minionsKilled: number;
+  visionScore: number;
   afk: boolean;
+  soloRank: RankedStandingDto | null;
+  flexRank: RankedStandingDto | null;
+  at15: At15Dto | null;
+}
+
+export interface At15Dto {
+  gold: number;
+  xp: number;
+  cs: number;
+  damageToChampions: number;
+  kills: number;
+  deaths: number;
+  assists: number;
+}
+
+/** Moyenne des joueurs classés seulement ; `value` sur l'échelle Fer IV = 0 … Challenger = 30. */
+export interface AverageRankDto {
+  value: number;
+  tier: string;
+  division: string | null;
+  counted: number;
+}
+
+export interface SideRanksDto {
+  solo: AverageRankDto | null;
+  flex: AverageRankDto | null;
 }
 
 export interface TeamGameDto {
@@ -159,6 +190,56 @@ export interface TeamGameDto {
   splitSides: boolean;
   win: boolean | null;
   players: TeamGamePlayerDto[];
+  allies: TeamGamePlayerDto[];
+  enemies: TeamGamePlayerDto[];
+  allyRanks: SideRanksDto | null;
+  enemyRanks: SideRanksDto | null;
+  /** Relevé des rangs, souvent après la partie : Riot ne sert que le rang courant. */
+  ranksObservedAt: string | null;
+}
+
+export interface MatchupDto {
+  position: string;
+  ally: TeamGamePlayerDto | null;
+  enemy: TeamGamePlayerDto | null;
+  /** En divisions, notre joueur moins son vis-à-vis. */
+  rankGap: number | null;
+}
+
+export interface TeamGameDetailDto {
+  teamId: string;
+  game: TeamGameDto;
+  matchups: MatchupDto[];
+  timelineAvailable: boolean;
+  ranksObservedAt: string | null;
+  viewerMemberId: string | null;
+}
+
+export interface PositionOppositionDto {
+  position: string;
+  games: number;
+  averageGap: number | null;
+  versusStronger: TeamRecordDto;
+  versusWeaker: TeamRecordDto;
+  laneGames: number;
+  laneWinRate: number | null;
+  averageGoldDiff15: number | null;
+  averageCsDiff15: number | null;
+}
+
+export interface TeamOppositionDto {
+  teamId: string;
+  days: number | null;
+  state: StatsState;
+  games: number;
+  gamesWithRanks: number;
+  medianLagDays: number | null;
+  byEnemyTier: TeamRecordDto[];
+  byGap: TeamRecordDto[];
+  byPosition: PositionOppositionDto[];
+  ceilingTier: string | null;
+  ceilingMinimumGames: number;
+  generatedAt: string;
 }
 
 export interface TeamMemberPresenceDto {
