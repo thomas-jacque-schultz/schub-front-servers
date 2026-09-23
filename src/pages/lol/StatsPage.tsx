@@ -13,7 +13,7 @@ import {
   ProgressBar,
   SelectField,
   Stack,
-  StatTile,
+  StatGrid,
   Text,
   TrendChart,
 } from "../../design-system";
@@ -21,7 +21,11 @@ import { useLocaleFormat } from "../../i18n/format";
 import { useLocalizedNavigate } from "../../i18n/navigation";
 import { useProfileStore } from "../../stores/profileStore";
 import type { MyStatsDto, StatLineDto } from "../../types/stats";
-import { ChampionLines } from "./stats/ChampionLines";
+import { ChampionStatCard } from "./stats/ChampionStatCard";
+import { useMetrics } from "./stats/metrics";
+import { PlayerRadar } from "./stats/PlayerRadar";
+import { rangDeReference } from "./stats/rank";
+import { RankedStandings } from "./stats/RankedStandings";
 import { StatsStateNote } from "./stats/StatsStateNote";
 import { useStatsFormat } from "./stats/statsFormat";
 import { useWindowOptions } from "./stats/windows";
@@ -34,6 +38,7 @@ function StatsPage() {
   const { formatDateTime, formatMonth } = useLocaleFormat();
   const navigate = useLocalizedNavigate();
   const fenetres = useWindowOptions();
+  const { tuiles } = useMetrics();
   const { profile, isLoading, reload, ingestInFlight } = useProfileStore();
 
   const [days, setDays] = useState<string>("");
@@ -184,43 +189,73 @@ function StatsPage() {
 
       {stats && overall && stats.state === "STATISTIQUES_CONNUES" && (
         <>
-          <Columns minWidth={220}>
-            <Card>
+          <Card>
+            <Stack spacing={2}>
               <MeterBar
                 label={t("metric.winRate")}
                 value={overall.winRate}
                 valueLabel={format.taux(overall.winRate)}
                 hint={format.assise(stats.coverage) ?? undefined}
               />
-            </Card>
-            <Card>
-              <StatTile
-                label={t("metric.kda")}
-                value={format.ratio(overall.kda)}
-                hint={t("metric.kdaDetail", {
-                  kills: format.ratio(overall.killsPerGame),
-                  deaths: format.ratio(overall.deathsPerGame),
-                  assists: format.ratio(overall.assistsPerGame),
-                })}
-              />
-            </Card>
-            <Card>
-              <StatTile
-                label={t("metric.cs")}
-                value={format.ratio(overall.csPerMinute)}
-              />
-            </Card>
-            <Card>
-              <StatTile
-                label={t("metric.vision")}
-                value={format.ratio(overall.visionPerMinute)}
-              />
-            </Card>
-          </Columns>
+              <StatGrid items={tuiles(overall)} minWidth={130} divided />
+              <Text variant="caption" tone="secondary">
+                {t("scope.rift")}
+              </Text>
+            </Stack>
+          </Card>
 
           {stats.coverage && !stats.coverage.tracked && (
             <Alert severity="info">{t("coverage.untracked")}</Alert>
           )}
+
+          <Columns minWidth={320}>
+            <Card title={t("radar.title")} description={t("radar.helper")}>
+              <PlayerRadar
+                radar={stats.radar}
+                scale={stats.scale}
+                rank={rangDeReference(stats.rankings)}
+              />
+            </Card>
+            <Stack spacing={2}>
+              <Card title={t("section.rankings")}>
+                <RankedStandings standings={stats.rankings} />
+              </Card>
+              <Card title={t("section.positions")}>
+                <Stack spacing={0.75}>
+                  {stats.positions.map((position) => (
+                    <MeterBar
+                      key={position.key}
+                      label={format.poste(position.key)}
+                      value={position.winRate}
+                      valueLabel={detail(position, format)}
+                      hint={
+                        position.versusRest
+                          ? (t("delta.versusRest", {
+                              delta: format.ecartEnPoints(position.versusRest.winRateDelta),
+                              count: position.versusRest.referenceGames,
+                            }) ?? undefined)
+                          : undefined
+                      }
+                    />
+                  ))}
+                </Stack>
+              </Card>
+            </Stack>
+          </Columns>
+
+          <Card title={t("section.champions")}>
+            {stats.champions.length === 0 ? (
+              <Text variant="caption" tone="secondary">
+                {t("section.noChampion")}
+              </Text>
+            ) : (
+              <Columns minWidth={280}>
+                {stats.champions.map((line) => (
+                  <ChampionStatCard key={line.key} line={line} />
+                ))}
+              </Columns>
+            )}
+          </Card>
 
           <Card
             title={t("section.trend")}
@@ -248,73 +283,18 @@ function StatsPage() {
             />
           </Card>
 
-          <Columns minWidth={280}>
-            <Card title={t("section.champions")}>
-              <ChampionLines lines={stats.champions} />
-            </Card>
-            <Card title={t("section.positions")}>
-              <Stack spacing={0.75}>
-                {stats.positions.map((position) => (
-                  <MeterBar
-                    key={position.key}
-                    label={format.poste(position.key)}
-                    value={position.winRate}
-                    valueLabel={detail(position, format)}
-                    hint={
-                      position.versusRest
-                        ? (t("delta.versusRest", {
-                            delta: format.ecartEnPoints(
-                              position.versusRest.winRateDelta,
-                            ),
-                            count: position.versusRest.referenceGames,
-                          }) ?? undefined)
-                        : undefined
-                    }
-                  />
-                ))}
-              </Stack>
-            </Card>
-            <Card
-              title={t("section.queues")}
-              description={t("section.queuesHelper")}
-            >
-              <Stack spacing={0.75}>
-                {stats.queues.map((queue) => (
-                  <MeterBar
-                    key={queue.key}
-                    label={format.file(queue.key)}
-                    value={queue.winRate}
-                    valueLabel={detail(queue, format)}
-                  />
-                ))}
-              </Stack>
-            </Card>
-          </Columns>
-
-          {stats.rankings.length > 0 && (
-            <Card title={t("section.rankings")}>
-              <Stack spacing={1}>
-                {stats.rankings.map((standing) => (
-                  <Stack key={standing.queue ?? "?"} spacing={0}>
-                    <Text variant="caption" tone="secondary">
-                      {format.file(standing.queue)}
-                    </Text>
-                    <Text variant="subtitle">
-                      {`${standing.tier ?? format.absent} ${standing.division ?? ""} · ${format.entier(
-                        standing.leaguePoints,
-                      )} LP`}
-                    </Text>
-                    <Text variant="caption" tone="secondary">
-                      {t("section.rankingDetail", {
-                        wins: standing.wins,
-                        losses: standing.losses,
-                      })}
-                    </Text>
-                  </Stack>
-                ))}
-              </Stack>
-            </Card>
-          )}
+          <Card title={t("section.queues")} description={t("section.queuesHelper")}>
+            <Stack spacing={0.75}>
+              {stats.queues.map((queue) => (
+                <MeterBar
+                  key={queue.key}
+                  label={format.file(queue.key)}
+                  value={queue.winRate}
+                  valueLabel={detail(queue, format)}
+                />
+              ))}
+            </Stack>
+          </Card>
 
           <Divider />
           <Text variant="caption" tone="secondary">

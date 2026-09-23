@@ -44,7 +44,10 @@
     "kdaDetail": "{{kills}} / {{deaths}} / {{assists}} per game",
     "cs": "CS per minute",
     "gold": "Gold per minute",
-    "vision": "Vision per minute"
+    "vision": "Vision per minute",
+    "dpm": "Damage per minute",
+    "damageTaken": "Damage taken per minute",
+    "games": "Games"
   },
   "delta": {
     "points": "{{value}} pts",
@@ -130,8 +133,7 @@
     "JUNGLE": "Jungle",
     "MIDDLE": "Mid",
     "BOTTOM": "Bot",
-    "UTILITY": "Support",
-    "UNKNOWN": "Unknown role"
+    "UTILITY": "Support"
   },
   "side": {
     "blue": "Blue",
@@ -178,5 +180,39 @@
     "record": "{{wins}}W – {{losses}}L",
     "hotStreak": "Hot streak",
     "inactive": "Inactive"
+  },
+  "metricShort": {
+    "winRate": "Win rate",
+    "kda": "KDA",
+    "cs": "CS/min",
+    "gold": "Gold/min",
+    "dpm": "DPM",
+    "damageTaken": "Taken/min",
+    "vision": "Vision/min",
+    "rank": "Rank",
+    "games": "Games"
+  },
+  "radar": {
+    "title": "Profile",
+    "helper": "Two periods on the same axes: the last two patches against the two before.",
+    "series": "Patches {{patches}}",
+    "empty": "No Summoner's Rift game in the last four patches.",
+    "scaleNote": "Centre: 5th percentile of the {{count}} players met in our games (at least {{min}} Rift games), edge: 95th. A local population, not a global average. Rank: Iron IV to Challenger.",
+    "noScale": "Axis bounds are not computed yet."
+  },
+  "tier": {
+    "IRON": "Iron",
+    "BRONZE": "Bronze",
+    "SILVER": "Silver",
+    "GOLD": "Gold",
+    "PLATINUM": "Platinum",
+    "EMERALD": "Emerald",
+    "DIAMOND": "Diamond",
+    "MASTER": "Master",
+    "GRANDMASTER": "Grandmaster",
+    "CHALLENGER": "Challenger"
+  },
+  "scope": {
+    "rift": "Figures computed on Summoner's Rift (ranked, normals, Clash): ARAM and Arena would skew per-minute numbers."
   }
 }

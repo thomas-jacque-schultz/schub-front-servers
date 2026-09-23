@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { Chip, Stack, Text } from "../../../design-system";
 import type { RankedStandingDto } from "../../../types/stats";
+import { RankBadge } from "./RankBadge";
 import { useStatsFormat } from "./statsFormat";
 
 export interface RankedStandingsProps {
@@ -34,15 +35,7 @@ export function RankedStandings({ standings }: RankedStandingsProps) {
           <Text variant="caption" tone="secondary">
             {nomDeFile(standing, format.file)}
           </Text>
-          <Chip
-            label={t("ranked.rank", {
-              tier: standing.tier,
-              division: standing.division ?? "",
-              lp: format.entier(standing.leaguePoints),
-            })}
-            variant="outline"
-            size="small"
-          />
+          <RankBadge standing={standing} />
           <Text variant="caption" tone="disabled">
             {t("ranked.record", { wins: standing.wins, losses: standing.losses })}
           </Text>

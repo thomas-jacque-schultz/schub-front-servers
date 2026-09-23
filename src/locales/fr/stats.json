@@ -44,7 +44,10 @@
     "kdaDetail": "{{kills}} / {{deaths}} / {{assists}} par partie",
     "cs": "CS par minute",
     "gold": "Or par minute",
-    "vision": "Vision par minute"
+    "vision": "Vision par minute",
+    "dpm": "Dégâts par minute",
+    "damageTaken": "Dégâts subis par minute",
+    "games": "Parties"
   },
   "delta": {
     "points": "{{value}} pts",
@@ -130,8 +133,7 @@
     "JUNGLE": "Jungle",
     "MIDDLE": "Milieu",
     "BOTTOM": "Bas",
-    "UTILITY": "Support",
-    "UNKNOWN": "Poste indéterminé"
+    "UTILITY": "Support"
   },
   "side": {
     "blue": "Bleu",
@@ -178,5 +180,39 @@
     "record": "{{wins}}V – {{losses}}D",
     "hotStreak": "Série en cours",
     "inactive": "Inactif"
+  },
+  "metricShort": {
+    "winRate": "Victoires",
+    "kda": "KDA",
+    "cs": "CS/min",
+    "gold": "Or/min",
+    "dpm": "DPM",
+    "damageTaken": "Subis/min",
+    "vision": "Vision/min",
+    "rank": "Rang",
+    "games": "Parties"
+  },
+  "radar": {
+    "title": "Profil",
+    "helper": "Deux périodes comparées sur les mêmes axes : les deux derniers patchs contre les deux précédents.",
+    "series": "Patchs {{patches}}",
+    "empty": "Pas de partie sur la Faille pendant les quatre derniers patchs.",
+    "scaleNote": "Centre : 5e percentile des {{count}} joueurs croisés dans nos parties (au moins {{min}} parties sur la Faille), bord : 95e. Une population locale, pas une moyenne mondiale. Rang : de Fer IV à Challenger.",
+    "noScale": "Les bornes des axes ne sont pas encore calculées."
+  },
+  "tier": {
+    "IRON": "Fer",
+    "BRONZE": "Bronze",
+    "SILVER": "Argent",
+    "GOLD": "Or",
+    "PLATINUM": "Platine",
+    "EMERALD": "Émeraude",
+    "DIAMOND": "Diamant",
+    "MASTER": "Maître",
+    "GRANDMASTER": "Grand maître",
+    "CHALLENGER": "Challenger"
+  },
+  "scope": {
+    "rift": "Indicateurs calculés sur la Faille (classées, normales, Clash) : l'ARAM et l'Arène fausseraient les chiffres par minute."
   }
 }
