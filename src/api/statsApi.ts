@@ -1,6 +1,7 @@
 import { requestJson } from "./httpClient";
 import type {
   MyStatsDto,
+  StatsRefreshDto,
   TeamGameDetailDto,
   TeamGamesStatsDto,
   TeamOppositionDto,
@@ -49,3 +50,9 @@ export const getTeamOppositionApi = async (
   requestJson<TeamOppositionDto>(`/teams/${teamId}/stats/opposition${fenetre(days)}`, {
     method: "GET",
   });
+
+export const getStatsRefreshApi = async (teamId: string): Promise<StatsRefreshDto> =>
+  requestJson<StatsRefreshDto>(`/teams/${teamId}/stats/refresh`, { method: "GET" });
+
+export const refreshTeamStatsApi = async (teamId: string): Promise<StatsRefreshDto> =>
+  requestJson<StatsRefreshDto>(`/teams/${teamId}/stats/refresh`, { method: "POST" });
