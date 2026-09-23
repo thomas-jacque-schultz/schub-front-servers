@@ -218,7 +218,8 @@ ne pas défaire :
   menu ne peuvent les exiger — la route demande d'être connecté, le menu se contente de
   `TEAM_CREATE` ou `TEAM_VIEW`. Le BFF fait de même et le cœur tranche.
 
-Six onglets : effectif, joueurs, équipe, niveau adverse, pool de champions, préparateur de draft.
+Six onglets : effectif, joueurs, matchs (la liste des parties), stratégie (bilan de l'équipe et niveau
+adverse, sous une seule fenêtre de dates), pool de champions, préparateur de draft.
 Un coach peut aussi être titulaire ou remplaçant (`coach`, à part du statut) ; sa ligne est
 encadrée. Le statut `COACH` seul désigne un coach qui ne joue pas.
 
@@ -284,6 +285,8 @@ qu'à l'enregistrement.
   deux écrans qui divergent ici ne se comparent plus.
 - **Les indicateurs par minute portent sur la Faille** (classées, normales, Clash). Les files, elles,
   restent toutes comptées. Le poste « indéterminé » n'existe plus : c'était l'ARAM et l'Arène.
+- **Mes stats et l'onglet Joueurs partagent `PlayerStatsView`** : mise en page pleine ou en colonne.
+  Un seul joueur retenu dans Joueurs prend la vue pleine, la même que Mes stats.
 - **Les bornes du radar sont locales** : 5e et 95e percentiles des joueurs croisés dans nos parties
   (au moins dix parties sur la Faille), servies par le cœur avec les stats. L'écran le dit.
 
@@ -364,7 +367,7 @@ connecté — seule réponse portant le slug — et la vue publique sinon.
 ## La revue par joueur
 
 Une note s'attache à **une partie d'équipe** et à **une place** de l'effectif ; elle vit dans la
-fenêtre *Détail* d'une partie du panneau *Équipe*, sous le face-à-face par poste.
+fenêtre *Détail* d'une partie du panneau *Matchs*, sous le face-à-face par poste.
 
 - **Qui écrit sur qui vient de deux faits sur le lecteur** — `viewerCanReviewAnyone` et
   `viewerMemberId` — plus `viewerCanEdit` sur chaque note. Aucune comparaison d'identifiants, et
