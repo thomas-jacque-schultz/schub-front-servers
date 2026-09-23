@@ -1,7 +1,23 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Avatar, Card, Chip, Stack, Text } from "../../../design-system";
-import type { MetricScaleDto, PlayerStatsDto } from "../../../types/stats";
-import { PlayerStatsView } from "./PlayerStatsView";
+import {
+  Avatar,
+  Chip,
+  Divider,
+  MeterBar,
+  Stack,
+  StatGrid,
+  Text,
+} from "../../../design-system";
+import type { PlayerStatsDto } from "../../../types/stats";
+import { ChampionChoice } from "./ChampionChoice";
+import { championsAffiches } from "./champions";
+import { ChampionStatCard } from "./ChampionStatCard";
+import { useMetrics } from "./metrics";
+import { VersusTeammates } from "./PlayerStatsView";
+import { useStatsFormat } from "./statsFormat";
+
+const CHAMPIONS_EN_COLONNE = 3;
 
 export function PlayerHeader({ player, isViewer }: { player: PlayerStatsDto; isViewer: boolean }) {
   const { t } = useTranslation("stats");
@@ -21,26 +37,79 @@ export function PlayerHeader({ player, isViewer }: { player: PlayerStatsDto; isV
   );
 }
 
-export interface PlayerStatsColumnProps {
-  player: PlayerStatsDto;
-  isViewer: boolean;
-  scale: MetricScaleDto | null;
-  showRadar: boolean;
+export function Tableau({ player }: { player: PlayerStatsDto }) {
+  const format = useStatsFormat();
+  const { tuiles } = useMetrics();
+  if (!player.overall) {
+    return null;
+  }
+  return (
+    <Stack spacing={1.5}>
+      <VersusTeammates versus={player.versusTeammates} compact />
+      <StatGrid
+        items={tuiles(player.overall, { compact: true, versus: player.versusTeammates })}
+        size="small"
+        minWidth={92}
+        divided
+      />
+      {format.assise(player.coverage) && (
+        <Text variant="caption" tone="secondary">
+          {format.assise(player.coverage)}
+        </Text>
+      )}
+    </Stack>
+  );
 }
 
-export function PlayerStatsColumn({ player, isViewer, scale, showRadar }: PlayerStatsColumnProps) {
+export function Champions({ player }: { player: PlayerStatsDto }) {
+  const { t } = useTranslation("stats");
+  const [choisis, setChoisis] = useState<string[]>([]);
   return (
-    <Card>
-      <Stack spacing={1.5}>
-        <PlayerHeader player={player} isViewer={isViewer} />
-        <PlayerStatsView
-          data={player}
-          scale={scale}
-          layout="column"
-          versusTeammates={player.versusTeammates}
-          showRadar={showRadar}
+    <Stack spacing={1}>
+      <Divider />
+      <Stack direction="row" spacing={1} align="center" justify="between">
+        <Text variant="caption" tone="secondary">
+          {t("section.champions")}
+        </Text>
+        <ChampionChoice
+          champions={player.champions}
+          selected={choisis}
+          onChange={setChoisis}
+          defaultCount={CHAMPIONS_EN_COLONNE}
         />
       </Stack>
-    </Card>
+      {player.champions.length === 0 ? (
+        <Text variant="caption" tone="disabled">
+          {t("section.noChampion")}
+        </Text>
+      ) : (
+        championsAffiches(player.champions, choisis, CHAMPIONS_EN_COLONNE).map((line) => (
+          <ChampionStatCard key={line.key} line={line} compact />
+        ))
+      )}
+    </Stack>
+  );
+}
+
+export function Files({ player }: { player: PlayerStatsDto }) {
+  const { t } = useTranslation("stats");
+  const format = useStatsFormat();
+  if (player.queues.length === 0) {
+    return null;
+  }
+  return (
+    <Stack spacing={0.5}>
+      <Text variant="caption" tone="secondary">
+        {t("section.queues")}
+      </Text>
+      {player.queues.map((queue) => (
+        <MeterBar
+          key={queue.key}
+          label={format.file(queue.key)}
+          value={queue.winRate}
+          valueLabel={`${format.taux(queue.winRate)} · ${t("coverage.gamesShort", { count: queue.games })}`}
+        />
+      ))}
+    </Stack>
   );
 }

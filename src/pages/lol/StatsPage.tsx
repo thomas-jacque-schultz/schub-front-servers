@@ -178,7 +178,7 @@ function StatsPage() {
 
       {stats && overall && stats.state === "STATISTIQUES_CONNUES" && (
         <>
-          <PlayerStatsView data={stats} scale={stats.scale} layout="full" />
+          <PlayerStatsView data={stats} scale={stats.scale} />
           <Divider />
           <Text variant="caption" tone="secondary">
             {t("footnote")}

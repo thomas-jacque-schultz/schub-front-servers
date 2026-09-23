@@ -1,9 +1,9 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Alert,
   Card,
   Columns,
-  Divider,
   MeterBar,
   Stack,
   StatGrid,
@@ -13,6 +13,8 @@ import {
 } from "../../../design-system";
 import { useLocaleFormat } from "../../../i18n/format";
 import type { MyStatsDto, MetricScaleDto, StatLineDto, TeamComparisonDto } from "../../../types/stats";
+import { ChampionChoice } from "./ChampionChoice";
+import { championsAffiches } from "./champions";
 import { ChampionStatCard } from "./ChampionStatCard";
 import { useMetrics } from "./metrics";
 import { PlayerRadar } from "./PlayerRadar";
@@ -21,7 +23,7 @@ import { RankedStandings } from "./RankedStandings";
 import { StatsStateNote } from "./StatsStateNote";
 import { useStatsFormat } from "./statsFormat";
 
-const CHAMPIONS_EN_COLONNE = 3;
+const CHAMPIONS_PLEINE_LARGEUR = 6;
 
 /** Ce que Mes stats et un joueur d'équipe ont en commun. */
 export type PlayerStatsData = Pick<
@@ -32,22 +34,15 @@ export type PlayerStatsData = Pick<
 export interface PlayerStatsViewProps {
   data: PlayerStatsData;
   scale: MetricScaleDto | null;
-  /** « full » : un joueur sur toute la largeur. « column » : plusieurs joueurs côte à côte. */
-  layout: "full" | "column";
   versusTeammates?: TeamComparisonDto | null;
-  /** Colonne seulement : le radar ne se lit pas quand les colonnes sont trop étroites. */
-  showRadar?: boolean;
 }
 
-export function PlayerStatsView(props: PlayerStatsViewProps) {
-  return props.layout === "full" ? <Pleine {...props} /> : <Colonne {...props} />;
-}
-
-function Pleine({ data, scale, versusTeammates }: PlayerStatsViewProps) {
+export function PlayerStatsView({ data, scale, versusTeammates }: PlayerStatsViewProps) {
   const { t } = useTranslation("stats");
   const format = useStatsFormat();
   const { formatMonth } = useLocaleFormat();
   const { tuiles } = useMetrics();
+  const [choisis, setChoisis] = useState<string[]>([]);
   const overall = data.overall;
 
   if (data.state !== "STATISTIQUES_CONNUES" || !overall) {
@@ -58,16 +53,10 @@ function Pleine({ data, scale, versusTeammates }: PlayerStatsViewProps) {
     <Stack spacing={3}>
       <Card>
         <Stack spacing={2}>
-          <MeterBar
-            label={t("metric.winRate")}
-            value={overall.winRate}
-            valueLabel={format.taux(overall.winRate)}
-            hint={format.assise(data.coverage) ?? undefined}
-          />
           <VersusTeammates versus={versusTeammates} />
           <StatGrid items={tuiles(overall, { versus: versusTeammates })} minWidth={130} divided />
           <Text variant="caption" tone="secondary">
-            {t("scope.rift")}
+            {[format.assise(data.coverage), t("scope.rift")].filter(Boolean).join(" · ")}
           </Text>
         </Stack>
       </Card>
@@ -105,14 +94,24 @@ function Pleine({ data, scale, versusTeammates }: PlayerStatsViewProps) {
         </Stack>
       </Columns>
 
-      <Card title={t("section.champions")}>
+      <Card
+        title={t("section.champions")}
+        actions={
+          <ChampionChoice
+            champions={data.champions}
+            selected={choisis}
+            onChange={setChoisis}
+            defaultCount={CHAMPIONS_PLEINE_LARGEUR}
+          />
+        }
+      >
         {data.champions.length === 0 ? (
           <Text variant="caption" tone="secondary">
             {t("section.noChampion")}
           </Text>
         ) : (
           <Columns minWidth={280}>
-            {data.champions.map((line) => (
+            {championsAffiches(data.champions, choisis, CHAMPIONS_PLEINE_LARGEUR).map((line) => (
               <ChampionStatCard key={line.key} line={line} />
             ))}
           </Columns>
@@ -156,74 +155,7 @@ function Pleine({ data, scale, versusTeammates }: PlayerStatsViewProps) {
   );
 }
 
-function Colonne({ data, scale, versusTeammates, showRadar = true }: PlayerStatsViewProps) {
-  const { t } = useTranslation("stats");
-  const format = useStatsFormat();
-  const { tuiles } = useMetrics();
-  const overall = data.overall;
-
-  return (
-    <Stack spacing={1.5}>
-      <RankedStandings standings={data.rankings} />
-      {data.state !== "STATISTIQUES_CONNUES" || !overall ? (
-        <StatsStateNote state={data.state} />
-      ) : (
-        <>
-          <MeterBar
-            label={t("metric.winRate")}
-            value={overall.winRate}
-            valueLabel={format.taux(overall.winRate)}
-            hint={format.assise(data.coverage) ?? undefined}
-          />
-          <VersusTeammates versus={versusTeammates} compact />
-          <StatGrid
-            items={tuiles(overall, { compact: true, versus: versusTeammates })}
-            size="small"
-            minWidth={92}
-            divided
-          />
-          {showRadar && (
-            <PlayerRadar radar={data.radar} scale={scale} rank={rangDeReference(data.rankings)} />
-          )}
-          <Divider />
-          <Text variant="caption" tone="secondary">
-            {t("section.champions")}
-          </Text>
-          {data.champions.length === 0 ? (
-            <Text variant="caption" tone="disabled">
-              {t("section.noChampion")}
-            </Text>
-          ) : (
-            <Stack spacing={1}>
-              {data.champions.slice(0, CHAMPIONS_EN_COLONNE).map((line) => (
-                <ChampionStatCard key={line.key} line={line} compact />
-              ))}
-            </Stack>
-          )}
-          {data.queues.length > 0 && (
-            <Stack spacing={0.5}>
-              <Text variant="caption" tone="secondary">
-                {t("section.queues")}
-              </Text>
-              {data.queues.map((queue) => (
-                <MeterBar
-                  key={queue.key}
-                  label={format.file(queue.key)}
-                  value={queue.winRate}
-                  valueLabel={`${format.taux(queue.winRate)} · ${t("coverage.gamesShort", {
-                    count: queue.games,
-                  })}`}
-                />
-              ))}
-            </Stack>
-          )}
-        </>
-      )}
-    </Stack>
-  );
-}
-
-function VersusTeammates({ versus, compact = false }: { versus?: TeamComparisonDto | null; compact?: boolean }) {
+export function VersusTeammates({ versus, compact = false }: { versus?: TeamComparisonDto | null; compact?: boolean }) {
   const { t } = useTranslation("stats");
   const format = useStatsFormat();
   if (!versus) {
