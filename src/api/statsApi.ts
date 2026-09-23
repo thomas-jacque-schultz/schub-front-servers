@@ -1,25 +1,31 @@
 import { requestJson } from "./httpClient";
 import type {
   MyStatsDto,
+  ReferenceGridDto,
+  ReferenceScope,
   StatsRefreshDto,
   TeamGameDetailDto,
   TeamGamesStatsDto,
   TeamOppositionDto,
   TeamPlayersStatsDto,
 } from "../types/stats";
+import { fenetreParams, type StatsWindow } from "../pages/lol/stats/windows";
 
-const fenetre = (days?: number | null) => (days ? `?days=${days}` : "");
+const fenetre = (periode?: StatsWindow | null) => {
+  const params = new URLSearchParams(fenetreParams(periode)).toString();
+  return params ? `?${params}` : "";
+};
 
 // 30 : le maximum du cœur, le choix de champions porte sur tout ce qui a été joué.
-const avecChampions = (days?: number | null) =>
-  `?${new URLSearchParams({ ...(days ? { days: String(days) } : {}), champions: "30" })}`;
+const avecChampions = (periode?: StatsWindow | null) =>
+  `?${new URLSearchParams({ ...fenetreParams(periode), champions: "30" })}`;
 
 export const getTeamPlayersStatsApi = async (
   teamId: string,
-  days?: number | null,
+  periode?: StatsWindow | null,
 ): Promise<TeamPlayersStatsDto> =>
   requestJson<TeamPlayersStatsDto>(
-    `/teams/${teamId}/stats/players${avecChampions(days)}`,
+    `/teams/${teamId}/stats/players${avecChampions(periode)}`,
     {
       method: "GET",
     },
@@ -27,36 +33,66 @@ export const getTeamPlayersStatsApi = async (
 
 export const getTeamGamesStatsApi = async (
   teamId: string,
-  days?: number | null,
+  periode?: StatsWindow | null,
 ): Promise<TeamGamesStatsDto> =>
   requestJson<TeamGamesStatsDto>(
-    `/teams/${teamId}/stats/team${fenetre(days)}`,
+    `/teams/${teamId}/stats/team${fenetre(periode)}`,
     { method: "GET" },
   );
 
 export const getMyStatsApi = async (
-  days?: number | null,
+  periode?: StatsWindow | null,
 ): Promise<MyStatsDto> =>
-  requestJson<MyStatsDto>(`/me/stats${avecChampions(days)}`, { method: "GET" });
+  requestJson<MyStatsDto>(`/me/stats${avecChampions(periode)}`, {
+    method: "GET",
+  });
 
 export const getTeamGameDetailApi = async (
   teamId: string,
   matchId: string,
 ): Promise<TeamGameDetailDto> =>
-  requestJson<TeamGameDetailDto>(`/teams/${teamId}/stats/games/${encodeURIComponent(matchId)}`, {
-    method: "GET",
-  });
+  requestJson<TeamGameDetailDto>(
+    `/teams/${teamId}/stats/games/${encodeURIComponent(matchId)}`,
+    {
+      method: "GET",
+    },
+  );
 
 export const getTeamOppositionApi = async (
   teamId: string,
-  days?: number | null,
+  periode?: StatsWindow | null,
 ): Promise<TeamOppositionDto> =>
-  requestJson<TeamOppositionDto>(`/teams/${teamId}/stats/opposition${fenetre(days)}`, {
+  requestJson<TeamOppositionDto>(
+    `/teams/${teamId}/stats/opposition${fenetre(periode)}`,
+    {
+      method: "GET",
+    },
+  );
+
+export const getStatsRefreshApi = async (
+  teamId: string,
+): Promise<StatsRefreshDto> =>
+  requestJson<StatsRefreshDto>(`/teams/${teamId}/stats/refresh`, {
     method: "GET",
   });
 
-export const getStatsRefreshApi = async (teamId: string): Promise<StatsRefreshDto> =>
-  requestJson<StatsRefreshDto>(`/teams/${teamId}/stats/refresh`, { method: "GET" });
+export const refreshTeamStatsApi = async (
+  teamId: string,
+): Promise<StatsRefreshDto> =>
+  requestJson<StatsRefreshDto>(`/teams/${teamId}/stats/refresh`, {
+    method: "POST",
+  });
 
-export const refreshTeamStatsApi = async (teamId: string): Promise<StatsRefreshDto> =>
-  requestJson<StatsRefreshDto>(`/teams/${teamId}/stats/refresh`, { method: "POST" });
+/** Null : pas encore de référentiel pour ce poste (le serveur répond 204). */
+export const getReferenceGridApi = async (
+  position: string,
+  scope: ReferenceScope,
+  tier?: string | null,
+): Promise<ReferenceGridDto | null> => {
+  const params = new URLSearchParams({ scope, ...(tier ? { tier } : {}) });
+  const grille = await requestJson<Partial<ReferenceGridDto>>(
+    `/lol/references/${position}?${params}`,
+    { method: "GET" },
+  );
+  return grille.metrics ? (grille as ReferenceGridDto) : null;
+};

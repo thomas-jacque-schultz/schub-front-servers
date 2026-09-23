@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { chartColors, typographyTokens } from "../tokens";
@@ -10,6 +11,8 @@ export interface StatTileProps {
   deltaTone?: "positive" | "negative" | "neutral";
   deltaHint?: string;
   size?: "medium" | "small";
+  /** À droite du chiffre : une icône de niveau, par exemple. */
+  adornment?: ReactNode;
 }
 
 export function StatTile({
@@ -20,25 +23,29 @@ export function StatTile({
   deltaTone = "neutral",
   deltaHint,
   size = "medium",
+  adornment,
 }: StatTileProps) {
   return (
     <Box>
       <Typography variant="caption" color="text.secondary" component="p">
         {label}
       </Typography>
-      <Typography
-        variant={size === "small" ? "subtitle1" : "h6"}
-        component="p"
-        sx={{
-          fontWeight: 700,
-          lineHeight: 1.2,
-          fontFamily: typographyTokens.monospaceFontFamily,
-          fontVariantNumeric: "tabular-nums",
-          letterSpacing: "-0.01em",
-        }}
-      >
-        {value}
-      </Typography>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
+        <Typography
+          variant={size === "small" ? "subtitle1" : "h6"}
+          component="p"
+          sx={{
+            fontWeight: 700,
+            lineHeight: 1.2,
+            fontFamily: typographyTokens.monospaceFontFamily,
+            fontVariantNumeric: "tabular-nums",
+            letterSpacing: "-0.01em",
+          }}
+        >
+          {value}
+        </Typography>
+        {adornment}
+      </Box>
       {delta && (
         <Typography
           variant="body2"

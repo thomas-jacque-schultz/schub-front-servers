@@ -36,3 +36,20 @@ export const EcartNegatif: Story = {
 export const AssiseFaible: Story = {
   args: { value: "67 %", hint: "sur 3 parties" },
 };
+
+export const AvecIcone: Story = {
+  args: {
+    value: "7,4",
+    adornment: (
+      <span
+        aria-label="niveau"
+        style={{
+          width: 20,
+          height: 15,
+          borderRadius: 3,
+          background: "#c8aa6e",
+        }}
+      />
+    ),
+  },
+};

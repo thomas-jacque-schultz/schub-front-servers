@@ -16,19 +16,30 @@ import { ChampionStatCard } from "./ChampionStatCard";
 import { useMetrics } from "./metrics";
 import { VersusTeammates } from "./PlayerStatsView";
 import { useStatsFormat } from "./statsFormat";
+import { useGradeAdornment } from "./useGrades";
 
 const CHAMPIONS_EN_COLONNE = 3;
 
-export function PlayerHeader({ player, isViewer }: { player: PlayerStatsDto; isViewer: boolean }) {
+export function PlayerHeader({
+  player,
+  isViewer,
+}: {
+  player: PlayerStatsDto;
+  isViewer: boolean;
+}) {
   const { t } = useTranslation("stats");
   return (
     <Stack direction="row" spacing={1} align="center">
       <Avatar src={player.avatarUrl} name={player.displayName ?? "?"} />
       <Stack spacing={0}>
-        <Text variant="subtitle">{player.displayName ?? t("player.unnamed")}</Text>
+        <Text variant="subtitle">
+          {player.displayName ?? t("player.unnamed")}
+        </Text>
         <Text variant="caption" tone="secondary">
           {player.roles.length > 0
-            ? player.roles.map((role) => t(`roles.${role}`, { ns: "teams" })).join(" · ")
+            ? player.roles
+                .map((role) => t(`roles.${role}`, { ns: "teams" }))
+                .join(" · ")
             : t("player.noRole")}
         </Text>
       </Stack>
@@ -40,6 +51,7 @@ export function PlayerHeader({ player, isViewer }: { player: PlayerStatsDto; isV
 export function Tableau({ player }: { player: PlayerStatsDto }) {
   const format = useStatsFormat();
   const { tuiles } = useMetrics();
+  const adornment = useGradeAdornment(player.references, player.positions);
   if (!player.overall) {
     return null;
   }
@@ -47,7 +59,11 @@ export function Tableau({ player }: { player: PlayerStatsDto }) {
     <Stack spacing={1.5}>
       <VersusTeammates versus={player.versusTeammates} compact />
       <StatGrid
-        items={tuiles(player.overall, { compact: true, versus: player.versusTeammates })}
+        items={tuiles(player.overall, {
+          compact: true,
+          versus: player.versusTeammates,
+          adornment,
+        })}
         size="small"
         minWidth={92}
         divided
@@ -83,9 +99,9 @@ export function Champions({ player }: { player: PlayerStatsDto }) {
           {t("section.noChampion")}
         </Text>
       ) : (
-        championsAffiches(player.champions, choisis, CHAMPIONS_EN_COLONNE).map((line) => (
-          <ChampionStatCard key={line.key} line={line} compact />
-        ))
+        championsAffiches(player.champions, choisis, CHAMPIONS_EN_COLONNE).map(
+          (line) => <ChampionStatCard key={line.key} line={line} compact />,
+        )
       )}
     </Stack>
   );

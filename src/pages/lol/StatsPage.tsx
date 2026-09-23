@@ -30,7 +30,7 @@ function StatsPage() {
   const fenetres = useWindowOptions();
   const { profile, isLoading, reload, ingestInFlight } = useProfileStore();
 
-  const [days, setDays] = useState<string>("");
+  const [periode, setPeriode] = useState<string>("");
   const [stats, setStats] = useState<MyStatsDto | null>(null);
   const [error, setError] = useState<string>("");
   const [isFetching, setIsFetching] = useState<boolean>(false);
@@ -45,7 +45,7 @@ function StatsPage() {
     setIsFetching(true);
     setError("");
     try {
-      setStats(await getMyStatsApi(days ? Number(days) : null));
+      setStats(await getMyStatsApi(periode));
     } catch (loadError) {
       setError(
         loadError instanceof Error ? loadError.message : t("loadFailed"),
@@ -53,7 +53,7 @@ function StatsPage() {
     } finally {
       setIsFetching(false);
     }
-  }, [ouvert, days, t]);
+  }, [ouvert, periode, t]);
 
   useEffect(() => {
     void load();
@@ -138,8 +138,8 @@ function StatsPage() {
       <Stack direction="row" spacing={2} align="center" wrap>
         <SelectField
           label={t("window.label")}
-          value={days}
-          onChange={setDays}
+          value={periode}
+          onChange={setPeriode}
           options={fenetres}
           helperText={t("window.helper")}
         />

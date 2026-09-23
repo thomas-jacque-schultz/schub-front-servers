@@ -1,10 +1,21 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { RadarChart, SegmentedControl, Stack, type RadarSeries } from "../../../design-system";
-import type { MetricBoundDto, RadarReferencesDto, StatLineDto } from "../../../types/stats";
+import {
+  RadarChart,
+  SegmentedControl,
+  Stack,
+  type RadarSeries,
+} from "../../../design-system";
+import type {
+  MetricBoundDto,
+  RadarReferencesDto,
+  StatLineDto,
+} from "../../../types/stats";
 import { type MetricKey, useMetrics } from "./metrics";
 import { type RadarReference, referenceParDefaut } from "./radar";
 import { useStatsFormat } from "./statsFormat";
+import { noter } from "./grading";
+import { useReferenceGrid } from "./useReferenceGrid";
 
 const AXES: MetricKey[] = [
   "damagePerMinute",
@@ -39,14 +50,28 @@ export function PlayerRadar({
   const { t } = useTranslation("stats");
   const { definitions } = useMetrics();
   const format = useStatsFormat();
-  const [locale, setLocale] = useState<RadarReference>(referenceParDefaut(teamLines));
+  const [locale, setLocale] = useState<RadarReference>(
+    referenceParDefaut(teamLines),
+  );
   const choisie = reference ?? locale;
+  const grille = useReferenceGrid(
+    references?.position,
+    "MEAN",
+    references?.tier,
+  );
   const equipePossible = Boolean(teamLines && teamLines.length >= 2);
 
-  const auPoste = references ? positions.find((line) => line.key === references.position) ?? null : null;
+  const auPoste = references
+    ? (positions.find((line) => line.key === references.position) ?? null)
+    : null;
   const poste = references ? format.poste(references.position) : format.absent;
 
-  const vue = ((): { line: StatLineDto | null; bornes: Partial<Record<string, MetricBoundDto>>; note?: string; vide: string } => {
+  const vue = ((): {
+    line: StatLineDto | null;
+    bornes: Partial<Record<string, MetricBoundDto>>;
+    note?: string;
+    vide: string;
+  } => {
     if (choisie === "team") {
       const bornes: Partial<Record<string, MetricBoundDto>> = {};
       AXES.forEach((axe) => {
@@ -54,7 +79,10 @@ export function PlayerRadar({
           .map((line) => line[axe])
           .filter((v): v is number => v !== null && v !== undefined);
         if (valeurs.length >= 2) {
-          bornes[axe] = { low: Math.min(...valeurs), high: Math.max(...valeurs) };
+          bornes[axe] = {
+            low: Math.min(...valeurs),
+            high: Math.max(...valeurs),
+          };
         }
       });
       return {
@@ -72,7 +100,12 @@ export function PlayerRadar({
       choisie === "met"
         ? t("radar.empty.met", { position: poste })
         : references.tier
-          ? t("radar.empty.leagueThin", { tier: t(`tier.${references.tier}`, { defaultValue: references.tier }), position: poste })
+          ? t("radar.empty.leagueThin", {
+              tier: t(`tier.${references.tier}`, {
+                defaultValue: references.tier,
+              }),
+              position: poste,
+            })
           : t("radar.empty.unranked");
     if (!ref) {
       return { line: null, bornes: {}, vide };
@@ -91,12 +124,22 @@ export function PlayerRadar({
     };
   })();
 
+  // Palier : le percentile dans sa grille quand elle existe, plutôt qu'une règle entre p5 et p95 qui écrase les extrêmes.
   const normalise = (key: MetricKey, value: number | null | undefined) => {
+    if (choisie === "league" && grille && references) {
+      const grade = noter(value, grille.metrics[key], grille, references.tier);
+      if (grade?.inTier !== null && grade?.inTier !== undefined) {
+        return grade.inTier;
+      }
+    }
     const borne = vue.bornes[key];
     if (value === null || value === undefined || !borne) {
       return null;
     }
-    const position = borne.high > borne.low ? (value - borne.low) / (borne.high - borne.low) : 0.5;
+    const position =
+      borne.high > borne.low
+        ? (value - borne.low) / (borne.high - borne.low)
+        : 0.5;
     return definitions[key].polarity === "lower" ? 1 - position : position;
   };
 
@@ -104,7 +147,10 @@ export function PlayerRadar({
     ? [
         {
           key: choisie,
-          label: choisie === "team" ? t("radar.series.period") : t("radar.series.position", { position: poste }),
+          label:
+            choisie === "team"
+              ? t("radar.series.period")
+              : t("radar.series.position", { position: poste }),
           emphasis: "primary",
           values: AXES.map((axe) => normalise(axe, vue.line?.[axe])),
           display: AXES.map((axe) => definitions[axe].format(vue.line?.[axe])),
@@ -148,7 +194,9 @@ export function RadarReferenceSelector({
       value={value}
       onChange={onChange}
       options={[
-        ...(teamAvailable ? [{ value: "team", label: t("radar.reference.team") }] : []),
+        ...(teamAvailable
+          ? [{ value: "team", label: t("radar.reference.team") }]
+          : []),
         { value: "met", label: t("radar.reference.met") },
         { value: "league", label: t("radar.reference.league") },
       ]}

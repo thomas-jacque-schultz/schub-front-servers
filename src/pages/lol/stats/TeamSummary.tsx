@@ -17,11 +17,11 @@ import { useStatsFormat } from "./statsFormat";
 
 export interface TeamSummaryProps {
   teamId: string;
-  days: string;
+  periode: string;
 }
 
 /** Le bilan des parties d'équipe : taux de victoire, files, côtés, patchs et présence. */
-export function TeamSummary({ teamId, days }: TeamSummaryProps) {
+export function TeamSummary({ teamId, periode }: TeamSummaryProps) {
   const { t } = useTranslation("stats");
   const format = useStatsFormat();
   const [stats, setStats] = useState<TeamGamesStatsDto | null>(null);
@@ -30,11 +30,13 @@ export function TeamSummary({ teamId, days }: TeamSummaryProps) {
   const load = useCallback(async () => {
     setError("");
     try {
-      setStats(await getTeamGamesStatsApi(teamId, days ? Number(days) : null));
+      setStats(await getTeamGamesStatsApi(teamId, periode));
     } catch (loadError) {
-      setError(loadError instanceof Error ? loadError.message : t("loadFailed"));
+      setError(
+        loadError instanceof Error ? loadError.message : t("loadFailed"),
+      );
     }
-  }, [teamId, days, t]);
+  }, [teamId, periode, t]);
 
   useEffect(() => {
     void load();
@@ -50,7 +52,10 @@ export function TeamSummary({ teamId, days }: TeamSummaryProps) {
   return (
     <Stack spacing={2}>
       <Text variant="caption" tone="secondary">
-        {t("team.definition", { count: stats.minimumPlayers, roster: stats.rosterSize })}
+        {t("team.definition", {
+          count: stats.minimumPlayers,
+          roster: stats.rosterSize,
+        })}
       </Text>
       {error && <Alert severity="warning">{error}</Alert>}
       {stats.state !== "STATISTIQUES_CONNUES" ? (
@@ -88,7 +93,10 @@ export function TeamSummary({ teamId, days }: TeamSummaryProps) {
           </Columns>
 
           <Columns minWidth={260}>
-            <Card title={t("section.byQueue")} description={t("section.byQueueHelper")}>
+            <Card
+              title={t("section.byQueue")}
+              description={t("section.byQueueHelper")}
+            >
               <Stack spacing={0.75}>
                 {stats.byQueue.map((record) => (
                   <MeterBar
@@ -126,7 +134,10 @@ export function TeamSummary({ teamId, days }: TeamSummaryProps) {
             </Card>
           </Columns>
 
-          <Card title={t("section.presence")} description={t("section.presenceHelper")}>
+          <Card
+            title={t("section.presence")}
+            description={t("section.presenceHelper")}
+          >
             <Stack spacing={0.75}>
               {stats.presence.map((member) => (
                 <Stack key={member.memberId} spacing={0}>
@@ -156,5 +167,7 @@ export function TeamSummary({ teamId, days }: TeamSummaryProps) {
   );
 }
 
-const libelle = (record: TeamRecordDto, format: ReturnType<typeof useStatsFormat>) =>
-  `${format.taux(record.winRate)} · ${record.wins}-${record.losses}`;
+const libelle = (
+  record: TeamRecordDto,
+  format: ReturnType<typeof useStatsFormat>,
+) => `${format.taux(record.winRate)} · ${record.wins}-${record.losses}`;

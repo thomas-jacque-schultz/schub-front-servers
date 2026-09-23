@@ -1,7 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { getTeamGamesStatsApi } from "../../../api/statsApi";
-import { Alert, Card, ProgressBar, SelectField, Stack, Text } from "../../../design-system";
+import {
+  Alert,
+  Card,
+  ProgressBar,
+  SelectField,
+  Stack,
+  Text,
+} from "../../../design-system";
 import type { TeamGameDto, TeamGamesStatsDto } from "../../../types/stats";
 import { GameDetailDialog } from "./GameDetailDialog";
 import { TeamGameRow } from "./TeamGameRow";
@@ -17,7 +24,7 @@ export interface TeamGamesPanelProps {
 export function TeamGamesPanel({ teamId, avatars }: TeamGamesPanelProps) {
   const { t } = useTranslation("stats");
   const fenetres = useWindowOptions();
-  const [days, setDays] = useState<string>("");
+  const [periode, setPeriode] = useState<string>("");
   const [stats, setStats] = useState<TeamGamesStatsDto | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
@@ -27,13 +34,15 @@ export function TeamGamesPanel({ teamId, avatars }: TeamGamesPanelProps) {
     setIsLoading(true);
     setError("");
     try {
-      setStats(await getTeamGamesStatsApi(teamId, days ? Number(days) : null));
+      setStats(await getTeamGamesStatsApi(teamId, periode));
     } catch (loadError) {
-      setError(loadError instanceof Error ? loadError.message : t("loadFailed"));
+      setError(
+        loadError instanceof Error ? loadError.message : t("loadFailed"),
+      );
     } finally {
       setIsLoading(false);
     }
-  }, [teamId, days, t]);
+  }, [teamId, periode, t]);
 
   useEffect(() => {
     void load();
@@ -56,8 +65,8 @@ export function TeamGamesPanel({ teamId, avatars }: TeamGamesPanelProps) {
       <Stack direction="row" spacing={2} align="center" wrap>
         <SelectField
           label={t("window.label")}
-          value={days}
-          onChange={setDays}
+          value={periode}
+          onChange={setPeriode}
           options={fenetres}
           helperText={t("window.helper")}
         />
@@ -75,7 +84,9 @@ export function TeamGamesPanel({ teamId, avatars }: TeamGamesPanelProps) {
         <StatsStateNote state={stats.state} variant="block" />
       ) : (
         <>
-          {stats.truncated && <Alert severity="info">{t("team.truncated")}</Alert>}
+          {stats.truncated && (
+            <Alert severity="info">{t("team.truncated")}</Alert>
+          )}
 
           <Card title={t("section.games")}>
             <Stack spacing={1}>
