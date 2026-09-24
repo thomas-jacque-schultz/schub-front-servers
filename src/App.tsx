@@ -1,4 +1,4 @@
-import { type ReactNode, Suspense, lazy } from "react";
+import { type ReactNode, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { AppLayout } from "./components/AppLayout";
@@ -9,25 +9,30 @@ import { LocalizedNavigate } from "./i18n/LocalizedNavigate";
 import { LocalizedRoot } from "./i18n/LocalizedRoot";
 import { LolRoutes } from "./lol";
 import { RequireAuth, RequirePermission } from "./routing/guards";
+import { lazyPage } from "./routing/lazyPage";
 import { useAuthStore } from "./stores/authStore";
 
-const ContactPage = lazy(() => import("./pages/ContactPage"));
-const GameServerFormPage = lazy(() => import("./pages/GameServerFormPage"));
-const LandingPage = lazy(() => import("./pages/LandingPage"));
-const PrivacyPage = lazy(() => import("./pages/legal/PrivacyPage"));
-const TermsPage = lazy(() => import("./pages/legal/TermsPage"));
-const LoginPage = lazy(() => import("./pages/Login"));
-const ProfilePage = lazy(() => import("./pages/profile/ProfilePage"));
-const DiscordConfigPage = lazy(
+const ContactPage = lazyPage(() => import("./pages/ContactPage"));
+const GameServerFormPage = lazyPage(() => import("./pages/GameServerFormPage"));
+const LandingPage = lazyPage(() => import("./pages/LandingPage"));
+const PrivacyPage = lazyPage(() => import("./pages/legal/PrivacyPage"));
+const TermsPage = lazyPage(() => import("./pages/legal/TermsPage"));
+const LoginPage = lazyPage(() => import("./pages/Login"));
+const ProfilePage = lazyPage(() => import("./pages/profile/ProfilePage"));
+const DiscordConfigPage = lazyPage(
   () => import("./pages/config/DiscordConfigPage"),
 );
-const IngestConfigPage = lazy(() => import("./pages/config/IngestConfigPage"));
-const PortsConfigPage = lazy(() => import("./pages/config/PortsConfigPage"));
-const RolesPage = lazy(() => import("./pages/config/RolesPage"));
-const ServersConfigPage = lazy(
+const IngestConfigPage = lazyPage(
+  () => import("./pages/config/IngestConfigPage"),
+);
+const PortsConfigPage = lazyPage(
+  () => import("./pages/config/PortsConfigPage"),
+);
+const RolesPage = lazyPage(() => import("./pages/config/RolesPage"));
+const ServersConfigPage = lazyPage(
   () => import("./pages/config/ServersConfigPage"),
 );
-const UsersPage = lazy(() => import("./pages/config/UsersPage"));
+const UsersPage = lazyPage(() => import("./pages/config/UsersPage"));
 
 function RedirectIfAuthenticated({ children }: { children: ReactNode }) {
   const { connected } = useAuthStore();

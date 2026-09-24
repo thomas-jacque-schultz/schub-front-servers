@@ -1,14 +1,14 @@
-import { lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import { LocalizedNavigate } from "../i18n/LocalizedNavigate";
 import { RequireAuth } from "../routing/guards";
+import { lazyPage } from "../routing/lazyPage";
 
 export const LOL_ROOT = "/lol";
 
-const LolLandingPage = lazy(() => import("./pages/LolLandingPage"));
-const StatsPage = lazy(() => import("./pages/StatsPage"));
-const TeamPage = lazy(() => import("./pages/TeamPage"));
-const TeamsPage = lazy(() => import("./pages/TeamsPage"));
+const LolLandingPage = lazyPage(() => import("./pages/LolLandingPage"));
+const StatsPage = lazyPage(() => import("./pages/StatsPage"));
+const TeamPage = lazyPage(() => import("./pages/TeamPage"));
+const TeamsPage = lazyPage(() => import("./pages/TeamsPage"));
 
 /** Les routes de l'application League of Legends, montées sous /lol. */
 export function LolRoutes() {
