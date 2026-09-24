@@ -161,9 +161,6 @@ se retire sans en ajouter une autre.**
 
 ## Ce qui n'existe pas encore, et qu'il ne faut pas improviser
 
-- **Le retrait du compte local** : lot A.6. `POST /auth/login` et le formulaire mot de passe
-  existent encore, volontairement — c'est la porte de service, et elle ne se démonte qu'une
-  fois la connexion Discord vérifiée EN PROD.
 - **Storybook est destiné à être public.** Aucune donnée réelle dans une story : pas de pseudo
   Discord, pas d'IP, pas de numéro de port réel.
 
@@ -369,8 +366,8 @@ défaire :
   `/auth/me` d'un visiteur anonyme répond 401, et c'est la réponse normale.
 
 La connexion Discord (`GET /auth/discord`) est une **navigation de navigateur**, jamais un
-`fetch` : la route répond une 302 vers discord.com. Le formulaire mot de passe reste en place
-jusqu'au lot A.6.
+`fetch` : la route répond une 302 vers discord.com. C'est la seule entrée : le compte local et son
+formulaire mot de passe ont disparu au lot A.6.
 
 ## Les droits liés à un serveur
 

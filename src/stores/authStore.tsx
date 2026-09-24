@@ -9,7 +9,7 @@ import {
   useState,
 } from "react";
 import i18n from "../i18n";
-import { discordLoginUrl, getMeApi, loginApi, logoutApi } from "../api/authApi";
+import { discordLoginUrl, getMeApi, logoutApi } from "../api/authApi";
 import { configureSessionListeners } from "../api/httpClient";
 import type { AuthenticatedUser } from "../types/auth";
 import type { Permission } from "../types/permission";
@@ -44,14 +44,11 @@ interface AuthStoreValue {
   can: (permission: Permission) => boolean;
   canAny: (...permissions: Permission[]) => boolean;
   isCheckingSession: boolean;
-  isSubmitting: boolean;
   error: string;
   discordLoginFailed: boolean;
   dismissDiscordLoginFailure: () => void;
   loginWithDiscord: () => void;
-  login: (username: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
-  clearError: () => void;
 }
 
 const AuthStoreContext = createContext<AuthStoreValue | undefined>(undefined);
@@ -59,7 +56,6 @@ const AuthStoreContext = createContext<AuthStoreValue | undefined>(undefined);
 export const AuthStoreProvider = ({ children }: { children: ReactNode }) => {
   const [profile, setProfile] = useState<AuthenticatedUser | null>(null);
   const [isCheckingSession, setIsCheckingSession] = useState<boolean>(true);
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [discordLoginFailed, setDiscordLoginFailed] = useState<boolean>(false);
 
@@ -68,10 +64,6 @@ export const AuthStoreProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     wasConnectedRef.current = profile !== null;
   }, [profile]);
-
-  const clearError = useCallback(() => {
-    setError("");
-  }, []);
 
   const dismissDiscordLoginFailure = useCallback(() => {
     setDiscordLoginFailed(false);
@@ -85,23 +77,6 @@ export const AuthStoreProvider = ({ children }: { children: ReactNode }) => {
     } finally {
       setProfile(null);
       setError("");
-    }
-  }, []);
-
-  const login = useCallback(async (username: string, password: string) => {
-    setIsSubmitting(true);
-    setError("");
-
-    try {
-      await loginApi({ username, password });
-      setProfile(await getMeApi());
-    } catch (loginError) {
-      const message =
-        loginError instanceof Error ? loginError.message : i18n.t("errors.loginFailed", { ns: "auth" });
-      setError(message);
-      throw loginError;
-    } finally {
-      setIsSubmitting(false);
     }
   }, []);
 
@@ -180,14 +155,11 @@ export const AuthStoreProvider = ({ children }: { children: ReactNode }) => {
       can,
       canAny,
       isCheckingSession,
-      isSubmitting,
       error,
       discordLoginFailed,
       dismissDiscordLoginFailure,
       loginWithDiscord,
-      login,
       logout,
-      clearError,
     }),
     [
       profile,
@@ -195,14 +167,11 @@ export const AuthStoreProvider = ({ children }: { children: ReactNode }) => {
       can,
       canAny,
       isCheckingSession,
-      isSubmitting,
       error,
       discordLoginFailed,
       dismissDiscordLoginFailure,
       loginWithDiscord,
-      login,
       logout,
-      clearError,
     ],
   );
 
