@@ -74,8 +74,8 @@ vers le bas. Elle se peint **sous** le contenu, ce qui oblige `<main>` et `<foot
 - **`useAuthStore().can("PERMISSION")`, jamais une comparaison de nom de rôle.** Un rôle est
   éditable en base : son nom ne dit plus rien de ce qu'il permet. `isAdmin` n'existe plus.
 - **Une entrée de menu n'apparaît que si sa permission est présente**, et la route porte la même
-  condition — une URL se tape à la main. La liste vit dans `src/components/AppLayout.tsx`, à un
-  seul endroit.
+  condition — une URL se tape à la main. La liste vit à un seul endroit par application :
+  `src/components/AppLayout.tsx` pour Schub, `src/lol/shell.ts` pour League of Legends.
 - **L'IHM ne propose pas ce que le serveur refusera** : les rôles attribuables sont filtrés par la
   règle du sous-ensemble, on ne modifie pas son propre rôle et on ne rétrograde pas le dernier
   `OWNER`. C'est le cœur qui tranche ; l'écran évite d'avoir à découvrir le refus.
@@ -83,11 +83,27 @@ vers le bas. Elle se peint **sous** le contenu, ce qui oblige `<main>` et `<foot
   membre — ni ports, ni déploiement. On le dit à l'écran, et on **omet** ces champs du
   corps envoyé plutôt que de les poster vides.
 
+## Deux applications : Schub et League of Legends
+
+L'outil LoL deviendra une application à part entière. En attendant, **la frontière se tient dans ce
+dépôt**, et c'est ESLint qui la tient (`sortieDeLol` et `PORTE_DE_LOL` dans `eslint.config.js`) :
+
+- **Tout ce qui est propre au LoL vit dans `src/lol/`** — pages, API, types, composants Riot,
+  emblèmes de rang. Le reste du front n'y entre **que par `src/lol/index.ts`** : cette liste dit ce
+  que Schub lui emprunte, et c'est elle qui se relira le jour de la séparation.
+- **`src/lol/` n'emprunte au reste que les briques communes** — design system, i18n, seo,
+  `routing/`, client HTTP, session et profil. Tout le reste, y compris un fichier Schub ajouté
+  demain, lui est refusé d'office : c'est une liste blanche.
+- **Un bandeau par application.** Schub : Accueil, Serveurs, Configuration. Sous `/lol` : Présentation,
+  Mes stats, Équipes. On passe de l'une à l'autre par **l'icône de profil**, en haut à droite, qui
+  ouvre Mon profil puis les applications. Le profil reste sous le bandeau de Schub.
+- Les traductions restent dans `src/locales/` (typées depuis `i18n/resources.ts`) ; le bandeau LoL
+  lit les siennes sous `lol:shell`.
+
 ## La coquille
 
-`AppShell` (design system) porte l'en-tête, les menus déroulants (`navItems` mêle entrées et menus,
-dans l'ordre d'affichage : *League of Legends*, *Configuration*), le pied de page et le fond de
-marque. Contact n'est plus dans le bandeau : *Créateur* et *Feedback* (`/contact#feedback`) sont en
+`AppShell` (design system) porte l'en-tête, les menus déroulants (`navItems` mêle entrées et menus),
+le menu de compte, le pied de page et le fond de marque. Contact n'est plus dans le bandeau : *Créateur* et *Feedback* (`/contact#feedback`) sont en
 pied de page, en couleur d'accent — deux liens, pas davantage.
 
 **Aucun `useMemo` sur des libellés traduits.** Avec react-i18next 15, `t` garde sa référence quand
@@ -96,8 +112,8 @@ la langue change, et `/` démarre dans la langue du navigateur avant de prendre 
 Un écran ne repose ni `ThemeModeToggle`, ni `LanguageSwitcher`, ni `PageBackdrop` :
 il rend un titre et du contenu. `AppShell` ne teste aucune permission — c'est `AppLayout` qui
 
-**La largeur du bandeau est décidée par `AppLayout`, pas par les écrans.** `/lol/teams` et
-`/lol/stats` reçoivent `xl` —
+**La largeur du bandeau est décidée par la coquille de l'application, pas par les écrans.** Dans
+l'application LoL (`src/lol/shell.ts`), `/lol/teams` et `/lol/stats` reçoivent `xl` —
 cinq colonnes de statistiques et un tableau de parties deviennent illisibles resserrés dans `lg` ;
 les pages de texte, `/contact` en tête, restent en `lg` parce qu'une ligne de prose trop longue se
 relit mal. Élargir partout aurait échangé un défaut contre un autre.
@@ -123,7 +139,7 @@ décide de ce qu'elle reçoit.
 | `/lol` | la vitrine de l'outil League of Legends | **public**, à la demande |
 | `/lol/teams`, `/lol/teams/:id` | les équipes LoL | connecté, à la demande |
 | `/terms`, `/privacy` | conditions d'utilisation et confidentialité | public, à la demande |
-| `/profile` | Mon profil : Discord, nom, compte Riot | connecté, à la demande |
+| `/profile` | Mon profil : Discord, nom, compte Riot — ouvert par l'icône de profil | connecté, à la demande |
 | `/lol/stats` | Mes stats — ses parties, ses champions, ses postes | connecté, à la demande |
 
 **Seule la racine est dans le fichier JavaScript initial.** Tout le reste passe par
@@ -277,7 +293,7 @@ qu'à l'enregistrement.
 - **Trois séries au plus, distinguées par le trait autant que par la teinte.** `mark` (or, trait
   plein), `markSecondary` (prune, pointillés — validée contre l'or : ΔE deutan 17,7 sombre, 14,3
   clair), `markMuted` (pointillé discret). Aucune palette catégorielle au-delà.
-- **Un seul catalogue d'indicateurs : `pages/lol/stats/metrics.ts`.** Ordre, libellés, format et
+- **Un seul catalogue d'indicateurs : `lol/pages/stats/metrics.ts`.** Ordre, libellés, format et
   sens de l'écart. Mes stats, les joueurs d'équipe, les cartes champion et le radar le lisent :
   deux écrans qui divergent ici ne se comparent plus.
 - **Les indicateurs par minute portent sur la Faille** (classées, normales, Clash). Les files, elles,

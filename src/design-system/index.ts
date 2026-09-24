@@ -6,6 +6,8 @@ export { Alert } from "./components/Alert";
 export type { AlertProps, AlertSeverity } from "./components/Alert";
 export { AppShell } from "./components/AppShell";
 export type {
+  AppShellAccount,
+  AppShellAccountItem,
   AppShellFooterLink,
   AppShellMenu,
   AppShellNavEntry,

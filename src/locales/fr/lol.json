@@ -3,6 +3,13 @@
     "title": "Schub pour League of Legends — statistiques, pool de champions et draft d'équipe",
     "description": "Schub outille une équipe League of Legends : effectif, historique des parties jouées ensemble, statistiques par joueur et par équipe, pool de champions par poste, préparation des compositions et revue d'après-partie."
   },
+  "shell": {
+    "tagline": "League of Legends",
+    "presentation": "Présentation",
+    "stats": "Mes stats",
+    "statsLocked": "Liez votre compte Riot pour y accéder",
+    "teams": "Équipes"
+  },
   "hero": {
     "eyebrow": "League of Legends",
     "title": "L'outil d'équipe de Schub",

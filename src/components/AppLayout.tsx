@@ -1,11 +1,18 @@
 import { type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { Alert, AppShell, Stack } from "../design-system";
-import type { AppShellFooterLink, AppShellNavEntry, AppShellNavItem } from "../design-system";
+import type {
+  AppShellAccount,
+  AppShellAccountItem,
+  AppShellFooterLink,
+  AppShellNavEntry,
+  AppShellNavItem,
+} from "../design-system";
 import { PORTFOLIO } from "../content/portfolio";
 import { useLocation } from "react-router-dom";
 import { pathWithoutLanguage } from "../i18n/config";
 import { useLocalizedNavigate, useLocalizedPath } from "../i18n/navigation";
+import { LOL_ROOT, useLolShell } from "../lol";
 import { useAuthStore } from "../stores/authStore";
 import { useProfileStore } from "../stores/profileStore";
 import type { Permission } from "../types/permission";
@@ -16,19 +23,25 @@ const GITHUB_URL = PORTFOLIO.fr.repositoryUrl;
 
 const STORYBOOK_PATH = "/storybook";
 
-const ECRANS_LARGES = ["/lol/teams", "/lol/stats"];
-
 export function AppLayout({ children }: { children: ReactNode }) {
   const { t } = useTranslation();
-  const { connected, profile, canAny, logout, discordLoginFailed, dismissDiscordLoginFailure } =
-    useAuthStore();
-  const { riotLinked } = useProfileStore();
+  const {
+    connected,
+    profile,
+    canAny,
+    logout,
+    discordLoginFailed,
+    dismissDiscordLoginFailure,
+  } = useAuthStore();
+  const { profile: moi } = useProfileStore();
   const localize = useLocalizedPath();
   const navigate = useLocalizedNavigate();
   const { pathname } = useLocation();
 
   const route = pathWithoutLanguage(pathname);
-  const largeur = ECRANS_LARGES.some((prefixe) => route.startsWith(prefixe)) ? "xl" : "lg";
+  // Deux applications, un bandeau chacune : Schub partout, League of Legends sous /lol.
+  const dansLol = route === LOL_ROOT || route.startsWith(`${LOL_ROOT}/`);
+  const lol = useLolShell(route);
 
   // Pas de useMemo sur des libellés : `t` garde la même référence quand la langue change.
   const configurationEntries: Array<{
@@ -80,49 +93,50 @@ export function AppLayout({ children }: { children: ReactNode }) {
         .map(({ key, label, to }) => ({ key, label, to: localize(to) }))
     : [];
 
-  const lol: AppShellNavItem[] = [
-    {
-      key: "lolPublic",
-      label: t("shell.lolPresentation"),
-      to: localize("/lol"),
-    },
-  ];
-  if (connected) {
-    lol.push({
-      key: "stats",
-      label: t("shell.stats"),
-      to: localize("/lol/stats"),
-      muted: !riotLinked,
-      hint: riotLinked ? undefined : t("shell.statsLocked"),
-    });
-  }
-  if (connected && canAny("TEAM_CREATE", "TEAM_VIEW")) {
-    lol.push({
-      key: "teams",
-      label: t("shell.lolTeams"),
-      to: localize("/lol/teams"),
-    });
-  }
-
-  const navItems: AppShellNavEntry[] = [
+  const schubNav: AppShellNavEntry[] = [
     { key: "home", label: t("shell.home"), to: localize("/") },
     { key: "servers", label: t("shell.servers"), to: localize("/servers") },
-    { key: "lol", label: t("shell.lolMenu"), items: lol },
-    ...(connected
-      ? [
-          {
-            key: "profile",
-            label: t("shell.profile"),
-            to: localize("/profile"),
-          },
-        ]
-      : []),
     {
       key: "configuration",
       label: t("shell.configuration"),
       items: configuration,
     },
   ];
+
+  const applications: AppShellAccountItem[] = [
+    {
+      key: "schub",
+      label: t("shell.appSchub"),
+      to: localize("/"),
+      current: !dansLol,
+    },
+    {
+      key: "lol",
+      label: t("shell.appLol"),
+      to: localize(LOL_ROOT),
+      current: dansLol,
+    },
+  ];
+  const account: AppShellAccount = connected
+    ? {
+        label: t("shell.account"),
+        caption: profile
+          ? t("connectedAs", { ns: "auth", username: profile.username })
+          : undefined,
+        avatarUrl: moi?.discord.avatarUrl,
+        groups: [
+          [
+            {
+              key: "profile",
+              label: t("shell.profile"),
+              to: localize("/profile"),
+              current: route === "/profile",
+            },
+          ],
+          applications,
+        ],
+      }
+    : { label: t("shell.apps"), groups: [applications] };
 
   const footerLinks: AppShellFooterLink[] = [
     {
@@ -152,15 +166,13 @@ export function AppLayout({ children }: { children: ReactNode }) {
   return (
     <AppShell
       brand={t("app.name")}
-      brandTo={localize("/")}
-      brandTagline={t("app.tagline")}
-      maxWidth={largeur}
-      navItems={navItems}
+      brandTo={dansLol ? lol.brandTo : localize("/")}
+      brandTagline={dansLol ? lol.tagline : t("app.tagline")}
+      maxWidth={dansLol ? lol.maxWidth : "lg"}
+      navItems={dansLol ? lol.navItems : schubNav}
       connected={connected}
       username={profile?.username}
-      connectedAsLabel={
-        profile ? t("connectedAs", { ns: "auth", username: profile.username }) : undefined
-      }
+      account={account}
       signInLabel={t("signIn", { ns: "auth" })}
       signOutLabel={t("logout", { ns: "auth" })}
       onSignIn={() => navigate("/login")}

@@ -7,49 +7,35 @@ import { Card, ProgressBar, Stack } from "./design-system";
 import type { AppLanguage } from "./i18n/config";
 import { LocalizedNavigate } from "./i18n/LocalizedNavigate";
 import { LocalizedRoot } from "./i18n/LocalizedRoot";
+import { LolRoutes } from "./lol";
+import { RequireAuth, RequirePermission } from "./routing/guards";
 import { useAuthStore } from "./stores/authStore";
-import type { Permission } from "./types/permission";
 
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const GameServerFormPage = lazy(() => import("./pages/GameServerFormPage"));
 const LandingPage = lazy(() => import("./pages/LandingPage"));
-const LolLandingPage = lazy(() => import("./pages/lol/LolLandingPage"));
 const PrivacyPage = lazy(() => import("./pages/legal/PrivacyPage"));
 const TermsPage = lazy(() => import("./pages/legal/TermsPage"));
 const LoginPage = lazy(() => import("./pages/Login"));
 const ProfilePage = lazy(() => import("./pages/profile/ProfilePage"));
-const StatsPage = lazy(() => import("./pages/lol/StatsPage"));
-const TeamPage = lazy(() => import("./pages/lol/TeamPage"));
-const TeamsPage = lazy(() => import("./pages/lol/TeamsPage"));
-const DiscordConfigPage = lazy(() => import("./pages/config/DiscordConfigPage"));
+const DiscordConfigPage = lazy(
+  () => import("./pages/config/DiscordConfigPage"),
+);
 const IngestConfigPage = lazy(() => import("./pages/config/IngestConfigPage"));
 const PortsConfigPage = lazy(() => import("./pages/config/PortsConfigPage"));
 const RolesPage = lazy(() => import("./pages/config/RolesPage"));
-const ServersConfigPage = lazy(() => import("./pages/config/ServersConfigPage"));
+const ServersConfigPage = lazy(
+  () => import("./pages/config/ServersConfigPage"),
+);
 const UsersPage = lazy(() => import("./pages/config/UsersPage"));
 
-interface GuardProps {
-  children: ReactNode;
-}
-
-function RequireAuth({ children }: GuardProps) {
+function RedirectIfAuthenticated({ children }: { children: ReactNode }) {
   const { connected } = useAuthStore();
-  return connected ? <>{children}</> : <LocalizedNavigate to="/login" replace />;
-}
-
-function RequirePermission({ anyOf, children }: GuardProps & { anyOf: Permission[] }) {
-  const { connected, canAny } = useAuthStore();
-
-  if (!connected) {
-    return <LocalizedNavigate to="/login" replace />;
-  }
-
-  return canAny(...anyOf) ? <>{children}</> : <LocalizedNavigate to="/" replace />;
-}
-
-function RedirectIfAuthenticated({ children }: GuardProps) {
-  const { connected } = useAuthStore();
-  return connected ? <LocalizedNavigate to="/config/servers" replace /> : <>{children}</>;
+  return connected ? (
+    <LocalizedNavigate to="/config/servers" replace />
+  ) : (
+    <>{children}</>
+  );
 }
 
 function SessionCheckScreen() {
@@ -104,13 +90,21 @@ function LocalizedRoutes() {
               }
             />
 
-            <Route path="dashboard" element={<LocalizedNavigate to="/config/servers" replace />} />
-            <Route path="config" element={<LocalizedNavigate to="/config/servers" replace />} />
+            <Route
+              path="dashboard"
+              element={<LocalizedNavigate to="/config/servers" replace />}
+            />
+            <Route
+              path="config"
+              element={<LocalizedNavigate to="/config/servers" replace />}
+            />
 
             <Route
               path="config/servers"
               element={
-                <RequirePermission anyOf={["SERVER_CREATE", "SERVER_EDIT", "SERVER_INFRA_VIEW"]}>
+                <RequirePermission
+                  anyOf={["SERVER_CREATE", "SERVER_EDIT", "SERVER_INFRA_VIEW"]}
+                >
                   <ServersConfigPage />
                 </RequirePermission>
               }
@@ -190,34 +184,7 @@ function LocalizedRoutes() {
               }
             />
 
-            <Route
-              path="lol/stats"
-              element={
-                <RequireAuth>
-                  <StatsPage />
-                </RequireAuth>
-              }
-            />
-
-            {/* RequireAuth et non RequirePermission : TEAM_VIEW est à portée d'équipe, le jeton ne la porte pas. */}
-            {/* Publique : l'examinateur du portail développeur Riot doit voir le produit sans compte. */}
-            <Route path="lol" element={<LolLandingPage />} />
-            <Route
-              path="lol/teams"
-              element={
-                <RequireAuth>
-                  <TeamsPage />
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="lol/teams/:id"
-              element={
-                <RequireAuth>
-                  <TeamPage />
-                </RequireAuth>
-              }
-            />
+            <Route path="lol/*" element={<LolRoutes />} />
 
             <Route path="*" element={<LocalizedNavigate to="/" replace />} />
           </Routes>
