@@ -121,6 +121,7 @@ function Familles({ metrics }: { metrics: GamePlayerMetricsDto }) {
         position={position}
         patches={grille?.patches ?? []}
         scope="GAME"
+        format={definitions[key].format}
       />
     ) : (
       format.absent

@@ -10,33 +10,31 @@ export interface LevelCrestProps {
   patches: string[];
   /** Une partie isolée, ou la moyenne d'un joueur : la phrase du percentile n'est pas la même. */
   scope: "GAME" | "MEAN";
+  /** Met en forme une valeur de la métrique : les médianes de l'infobulle se lisent dans son unité. */
+  format: (value: number) => string;
 }
 
-/** L'icône dit le niveau à l'échelle du ladder ; l'infobulle ajoute le percentile dans son propre palier. */
+/** L'icône du palier dont la valeur est la plus proche ; sans lui, sa place dans son propre palier. */
 export function LevelCrest({
   grade,
   position,
   patches,
   scope,
+  format,
 }: LevelCrestProps) {
   const { t } = useTranslation("stats");
-  const titre = useGradeTitle()(grade, position, patches, scope);
-  const palier = (tier: string) => t(`tier.${tier}`, { defaultValue: tier });
-
+  const titre = useGradeTitle()(grade, position, patches, scope, format);
+  if (!grade.level) {
+    return <PercentileMark value={grade.inTier ?? 0} title={titre} />;
+  }
   return (
     <Tooltip title={titre}>
-      {grade.level ? (
-        <img
-          src={EMBLEMES[grade.level]}
-          alt={palier(grade.level)}
-          width={20}
-          height={15}
-        />
-      ) : (
-        <Text variant="caption" tone="secondary">
-          {t("grade.short", { rank: Math.round((grade.inTier ?? 0) * 100) })}
-        </Text>
-      )}
+      <img
+        src={EMBLEMES[grade.level]}
+        alt={t(`tier.${grade.level}`, { defaultValue: grade.level })}
+        width={20}
+        height={15}
+      />
     </Tooltip>
   );
 }
@@ -47,9 +45,10 @@ export function GradeLabel({
   position,
   patches,
   scope,
+  format,
 }: LevelCrestProps) {
   const { t } = useTranslation("stats");
-  const titre = useGradeTitle()(grade, position, patches, scope);
+  const titre = useGradeTitle()(grade, position, patches, scope, format);
   if (!grade.level) {
     return <PercentileMark value={grade.inTier ?? 0} title={titre} />;
   }
@@ -64,7 +63,7 @@ export function GradeLabel({
   );
 }
 
-/** Sans échelle du ladder (champion, groupe trop mince) : le percentile seul, expliqué au survol. */
+/** Une métrique qui ne suit pas le rang : la part des joueurs de son palier qui font moins bien, en « top x % ». */
 export function PercentileMark({
   value,
   title,
@@ -76,7 +75,7 @@ export function PercentileMark({
   return (
     <Tooltip title={title}>
       <Text variant="caption" tone="secondary">
-        {t("grade.short", { rank: Math.round(value * 100) })}
+        {t("grade.short", { top: Math.max(1, Math.round((1 - value) * 100)) })}
       </Text>
     </Tooltip>
   );

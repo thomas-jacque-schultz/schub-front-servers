@@ -433,25 +433,25 @@ export interface StatsRefreshDto {
 
 export type ReferenceScope = "GAME" | "MEAN";
 
-/** Répartition d'une métrique : une grille de quantiles par palier, et celle du ladder entier. */
+/** Répartition d'une métrique : une grille de quantiles par palier. */
 export interface ReferenceGridDto {
   patches: string[];
   scope: ReferenceScope;
   position: string;
   computedAt: string;
-  distribution: string;
   /** Rangs des quantiles de chaque grille, de 0 à 1. */
   percentiles: number[];
-  /** Percentile à partir duquel commence chaque palier, du plus bas au plus haut. */
-  levels: { tier: string; fromPercentile: number }[];
   metrics: Record<string, ReferenceMetricDto>;
 }
 
 export interface ReferenceMetricDto {
   polarity: "HIGHER" | "LOWER" | "NEUTRAL";
   tiers: Record<string, { count: number; values: number[] }>;
-  /** Absente tant qu'un palier manque : pas d'icône de rang sans elle. */
-  ladder: number[] | null;
+  /**
+   * Médiane par partie de chaque palier, du plus bas au plus haut. Absente quand la métrique ne suit pas le
+   * rang (le KDA : chacun joue contre son propre niveau) ou que trop peu de paliers sont assez fournis.
+   */
+  rankMedians: Record<string, number> | null;
   missingTiers: string[];
 }
 
@@ -486,6 +486,6 @@ export interface TeamLevelMetricDto {
   mean: number | null;
   /** Moyenne des percentiles de chaque partie dans son palier, « plus haut = mieux ». */
   inTier: number | null;
-  ladder: number | null;
+  /** Palier dont la médiane est la plus proche de la moyenne, quand la métrique suit le rang. */
   level: string | null;
 }
