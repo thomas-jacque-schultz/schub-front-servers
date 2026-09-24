@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { useTheme } from "@mui/material/styles";
-import { chartColors, typographyTokens } from "../tokens";
+import { useChartScheme } from "./useChartScheme";
+import { typographyTokens } from "../tokens";
 
 export type LaneMapKey = "TOP" | "MID" | "BOT";
 
@@ -43,9 +43,7 @@ const COULOIRS = [
 ];
 
 export function LaneMap({ label, zones, highlight }: LaneMapProps) {
-  const theme = useTheme();
-  const couleurs =
-    chartColors[theme.palette.mode === "light" ? "light" : "dark"];
+  const { chart: couleurs, palette } = useChartScheme();
   const total = zones.reduce(
     (somme, zone) => somme + Math.max(0, zone.value),
     0,
@@ -92,7 +90,7 @@ export function LaneMap({ label, zones, highlight }: LaneMapProps) {
               stroke={
                 zone.key === highlight
                   ? couleurs.mark
-                  : theme.palette.background.paper
+                  : palette.background.paper
               }
               strokeWidth={zone.key === highlight ? 1.5 : 1}
               strokeLinejoin="round"
@@ -104,7 +102,7 @@ export function LaneMap({ label, zones, highlight }: LaneMapProps) {
             key={d}
             d={d}
             fill="none"
-            stroke={theme.palette.text.disabled}
+            stroke={palette.text.disabled}
             strokeWidth="0.8"
             strokeDasharray="2 2"
           />
@@ -118,7 +116,7 @@ export function LaneMap({ label, zones, highlight }: LaneMapProps) {
                 y={y - 2}
                 textAnchor="middle"
                 fontSize="6.5"
-                fill={theme.palette.text.secondary}
+                fill={palette.text.secondary}
               >
                 {zone.label}
               </text>
@@ -129,7 +127,7 @@ export function LaneMap({ label, zones, highlight }: LaneMapProps) {
                 fontSize="9"
                 fontWeight="700"
                 fontFamily={typographyTokens.monospaceFontFamily}
-                fill={theme.palette.text.primary}
+                fill={palette.text.primary}
               >
                 {zone.valueLabel}
               </text>
