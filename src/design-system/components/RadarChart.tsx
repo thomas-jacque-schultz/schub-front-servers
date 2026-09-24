@@ -2,8 +2,8 @@ import { Fragment } from "react";
 import Box from "@mui/material/Box";
 import MuiTooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import { useTheme } from "@mui/material/styles";
-import { chartColors, typographyTokens } from "../tokens";
+import { useChartScheme } from "./useChartScheme";
+import { typographyTokens } from "../tokens";
 
 export interface RadarAxis {
   key: string;
@@ -39,11 +39,15 @@ const RAYON = 104;
 const ANNEAUX = [0.25, 0.5, 0.75, 1];
 const ORDRE: RadarEmphasis[] = ["muted", "secondary", "primary"];
 
-const angle = (index: number, total: number) => -Math.PI / 2 + (2 * Math.PI * index) / total;
+const angle = (index: number, total: number) =>
+  -Math.PI / 2 + (2 * Math.PI * index) / total;
 
 const point = (index: number, total: number, ratio: number) => {
   const a = angle(index, total);
-  return { x: CX + Math.cos(a) * RAYON * ratio, y: CY + Math.sin(a) * RAYON * ratio };
+  return {
+    x: CX + Math.cos(a) * RAYON * ratio,
+    y: CY + Math.sin(a) * RAYON * ratio,
+  };
 };
 
 const borne = (value: number) => Math.min(1, Math.max(0, value));
@@ -74,11 +78,18 @@ const polygone = (values: Array<number | null>) =>
     })
     .join(" ");
 
-export function RadarChart({ label, axes, series, emptyLabel, scaleNote }: RadarChartProps) {
-  const theme = useTheme();
-  const couleurs = chartColors[theme.palette.mode === "light" ? "light" : "dark"];
-  const surface = theme.palette.background.paper;
-  const visibles = series.filter((serie) => serie.values.some((value) => value !== null));
+export function RadarChart({
+  label,
+  axes,
+  series,
+  emptyLabel,
+  scaleNote,
+}: RadarChartProps) {
+  const { chart: couleurs, palette } = useChartScheme();
+  const surface = palette.background.paper;
+  const visibles = series.filter((serie) =>
+    serie.values.some((value) => value !== null),
+  );
 
   const trait = (emphasis: RadarEmphasis) =>
     emphasis === "primary"
@@ -107,7 +118,10 @@ export function RadarChart({ label, axes, series, emptyLabel, scaleNote }: Radar
         {visibles.map((serie) => {
           const style = trait(serie.emphasis);
           return (
-            <Box key={serie.key} sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
+            <Box
+              key={serie.key}
+              sx={{ display: "flex", alignItems: "center", gap: 0.75 }}
+            >
               <svg width="22" height="8" aria-hidden>
                 <line
                   x1="1"
@@ -132,7 +146,13 @@ export function RadarChart({ label, axes, series, emptyLabel, scaleNote }: Radar
         viewBox={`0 0 ${LARGEUR} ${HAUTEUR}`}
         role="img"
         aria-label={label}
-        sx={{ width: "100%", maxWidth: 440, height: "auto", display: "block", mx: "auto" }}
+        sx={{
+          width: "100%",
+          maxWidth: 440,
+          height: "auto",
+          display: "block",
+          mx: "auto",
+        }}
       >
         {ANNEAUX.map((ratio) => (
           <polygon
@@ -149,7 +169,14 @@ export function RadarChart({ label, axes, series, emptyLabel, scaleNote }: Radar
           const cos = Math.cos(angle(index, n));
           return (
             <Fragment key={axe.key}>
-              <line x1={CX} y1={CY} x2={bout.x} y2={bout.y} stroke={couleurs.grid} strokeWidth={1} />
+              <line
+                x1={CX}
+                y1={CY}
+                x2={bout.x}
+                y2={bout.y}
+                stroke={couleurs.grid}
+                strokeWidth={1}
+              />
               <text
                 x={etiquette.x}
                 y={etiquette.y}
@@ -157,7 +184,7 @@ export function RadarChart({ label, axes, series, emptyLabel, scaleNote }: Radar
                 dominantBaseline="middle"
                 fontSize={11}
                 fontFamily={typographyTokens.monospaceFontFamily}
-                fill={theme.palette.text.secondary}
+                fill={palette.text.secondary}
               >
                 {axe.label}
               </text>
@@ -174,7 +201,11 @@ export function RadarChart({ label, axes, series, emptyLabel, scaleNote }: Radar
               return (
                 <g key={serie.key}>
                   {complet && emphasis === "primary" && (
-                    <polygon points={polygone(serie.values)} fill={couleurs.markSoft} stroke="none" />
+                    <polygon
+                      points={polygone(serie.values)}
+                      fill={couleurs.markSoft}
+                      stroke="none"
+                    />
                   )}
                   <path
                     d={segments(serie.values)}
@@ -211,7 +242,11 @@ export function RadarChart({ label, axes, series, emptyLabel, scaleNote }: Radar
               arrow
               title={
                 <Box>
-                  <Typography variant="caption" sx={{ fontWeight: 700 }} component="p">
+                  <Typography
+                    variant="caption"
+                    sx={{ fontWeight: 700 }}
+                    component="p"
+                  >
                     {axe.label}
                   </Typography>
                   {visibles.map((serie) => (
@@ -229,7 +264,12 @@ export function RadarChart({ label, axes, series, emptyLabel, scaleNote }: Radar
       </Box>
 
       {scaleNote && (
-        <Typography variant="caption" color="text.secondary" component="p" sx={{ mt: 0.5 }}>
+        <Typography
+          variant="caption"
+          color="text.secondary"
+          component="p"
+          sx={{ mt: 0.5 }}
+        >
           {scaleNote}
         </Typography>
       )}
