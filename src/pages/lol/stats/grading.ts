@@ -19,11 +19,25 @@ export interface Grade {
   inTier: number | null;
   tier: string | null;
   tierCount: number;
-  /** Tous paliers confondus, pondérés par le ladder. */
-  ladder: number | null;
-  /** Palier de l'échelle du ladder où tombe la valeur : c'est l'icône. */
+  /** Palier dont la médiane par partie est la plus proche, quand la métrique suit le rang : c'est l'icône. */
   level: string | null;
+  /** Les médianes par partie de chaque palier, du plus bas au plus haut ; vide si la métrique ne suit pas le rang. */
+  medians: { tier: string; value: number }[];
 }
+
+/** Le palier dont la médiane est la plus proche de la valeur. */
+export const niveau = (
+  valeur: number,
+  medianes: { tier: string; value: number }[],
+): string | null =>
+  medianes.reduce<{ tier: string; value: number } | null>(
+    (proche, palier) =>
+      proche === null ||
+      Math.abs(palier.value - valeur) < Math.abs(proche.value - valeur)
+        ? palier
+        : proche,
+    null,
+  )?.tier ?? null;
 
 /** Maître, GM et Challenger ne forment qu'un palier tant que la population ne permet pas de les séparer. */
 export const groupeDePalier = (
@@ -80,23 +94,18 @@ export const noter = (
   const inTier = sienne
     ? sens(repartition(grille.percentiles, sienne.values, valeur))
     : null;
-  const ladder = metrique.ladder
-    ? sens(repartition(grille.percentiles, metrique.ladder, valeur))
-    : null;
-  const level =
-    ladder === null
-      ? null
-      : ([...grille.levels]
-          .reverse()
-          .find((niveau) => ladder >= niveau.fromPercentile)?.tier ?? null);
-  if (inTier === null && ladder === null) {
+  const medians = Object.entries(metrique.rankMedians ?? {}).map(
+    ([palier, value]) => ({ tier: palier, value }),
+  );
+  const level = niveau(valeur, medians);
+  if (inTier === null && level === null) {
     return null;
   }
   return {
     inTier,
     tier: sienne ? groupe : null,
     tierCount: sienne?.count ?? 0,
-    ladder,
     level,
+    medians,
   };
 };

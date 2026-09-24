@@ -452,16 +452,17 @@
     "laningBasis": "Differences against the direct opponent, over {{count}} game(s) with a timeline."
   },
   "grade": {
-    "level": "{{tier}} level on the ladder scale: better than {{ladder}} of players in the {{position}} role, all ranks.",
-    "inTier": "{{rank}}th percentile of {{tier}} players in the {{position}} role ({{count}} players).",
-    "inTierGame": "{{rank}}th percentile of {{tier}} games in the {{position}} role.",
-    "noLadder": "Ladder scale not available yet: some tiers are missing from the sample.",
+    "level": "{{tier}} level in the {{position}} role: the value is closest to their per-game median ({{median}}).",
+    "neighbours": "Neighbouring tiers: {{list}}.",
+    "noRank": "No tier for this stat: it barely changes from one rank to the next, since everyone plays against their own level — or the sample is still too thin.",
+    "inTier": "Better than {{rank}}% of {{tier}} players in the {{position}} role ({{count}} players).",
+    "inTierGame": "Better than {{rank}}% of {{tier}} games in the {{position}} role.",
     "basis": "Based on your games in the {{position}} role, compared with ranked players on patches {{patches}}.",
-    "short": "p{{rank}}",
-    "champion": "{{rank}}th percentile of {{champion}} players in {{group}}, on their averages ({{count}} players with 5+ games).",
+    "short": "Top {{top}}%",
+    "champion": "Better than {{rank}}% of {{champion}} players in {{group}}, on their averages ({{count}} players with 5+ games).",
     "championFallback": "Not enough {{champion}} players in {{group}} yet: compared with all {{tier}} players in the {{position}} role.",
-    "team": "Averaged over {{games}} game(s): {{rank}}th percentile of games at the same tier.",
-    "teamLevel": "{{tier}} level on the ladder scale."
+    "team": "Averaged over {{games}} game(s): better than {{rank}}% of games at the same tier.",
+    "teamLevel": "Average at {{tier}} level: closest to their per-game median."
   },
   "group": {
     "IRON_BRONZE": "Iron–Bronze",
@@ -507,6 +508,6 @@
     "tier": "Rank held at the time of the game: {{tier}}.",
     "tierEstimated": "Rank estimated from the game's lobby: {{tier}}.",
     "noMetrics": "This game's numbers are not computed yet.",
-    "rankHelper": "Rank: the tier the game value matches on the ladder scale, among ranked games at the same position. A dash: not enough games per tier yet to tell."
+    "rankHelper": "Rank: the tier whose per-game median, in the same role, is closest to the value — only for stats that rise with rank. The others (KDA, deaths, 15-minute differences…) are given as “top x%” of your tier. A dash: not enough games yet to tell."
   }
 }
