@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import type { RadarReferencesDto, StatLineDto } from "../../../types/stats";
 import { noter } from "./grading";
 import { LevelCrest } from "./LevelCrest";
-import type { MetricKey } from "./metrics";
+import { type MetricKey, useMetrics } from "./metrics";
 import { useReferenceGrid } from "./useReferenceGrid";
 
 const PARTIES_MINIMUM = 5;
@@ -26,6 +26,7 @@ export const useGradeAdornment = (
     "MEAN",
     references?.tier,
   );
+  const { definitions } = useMetrics();
   const ligne = positions.find((line) => line.key === references?.position);
   return (key) => {
     if (!grille || !ligne || !references || ligne.games < PARTIES_MINIMUM) {
@@ -49,6 +50,7 @@ export const useGradeAdornment = (
         position={references.position}
         patches={grille.patches}
         scope="MEAN"
+        format={definitions[key].format}
       />
     ) : undefined;
   };
