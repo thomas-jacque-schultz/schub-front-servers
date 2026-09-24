@@ -452,7 +452,7 @@
     "laningBasis": "Écarts face à l’adversaire direct, sur {{count}} partie(s) dont on a la timeline."
   },
   "grade": {
-    "level": "Au niveau des {{tier}} au poste {{position}} : c’est de leur médiane par partie ({{median}}) que la valeur est la plus proche.",
+    "level": "Au niveau des {{tier}} au poste {{position}} : c’est de leur moyenne par partie ({{mean}}) que la valeur est la plus proche.",
     "neighbours": "Paliers voisins : {{list}}.",
     "noRank": "Pas de palier pour cette stat : elle varie trop peu d’un rang à l’autre, chacun jouant contre son niveau — ou l’échantillon est encore trop mince.",
     "inTier": "Mieux que {{rank}} % des {{tier}} au poste {{position}} ({{count}} joueurs).",
@@ -462,7 +462,7 @@
     "champion": "Mieux que {{rank}} % des joueurs de {{champion}} en {{group}}, sur leurs moyennes ({{count}} joueurs à 5 parties ou plus).",
     "championFallback": "Pas encore assez de joueurs de {{champion}} en {{group}} : comparé à tous les joueurs {{tier}} au poste {{position}}.",
     "team": "En moyenne sur {{games}} partie(s) : mieux que {{rank}} % des parties de même palier.",
-    "teamLevel": "Moyenne au niveau des {{tier}} : c’est de leur médiane par partie qu’elle est la plus proche."
+    "teamLevel": "Moyenne au niveau des {{tier}} : c’est de leur moyenne par partie qu’elle est la plus proche."
   },
   "group": {
     "IRON_BRONZE": "Fer–Bronze",
@@ -508,6 +508,6 @@
     "tier": "Rang tenu à la date de la partie : {{tier}}.",
     "tierEstimated": "Rang estimé d'après le lobby de la partie : {{tier}}.",
     "noMetrics": "Les chiffres de cette partie ne sont pas encore calculés.",
-    "rankHelper": "Rang : le palier dont la médiane par partie, au même poste, est la plus proche de la valeur — seulement pour les stats qui montent avec le rang. Les autres (KDA, morts, écarts à 15 min…) se disent en « top x % » de votre palier. Un tiret : pas encore assez de parties pour le dire."
+    "rankHelper": "Rang : le palier dont la moyenne par partie, au même poste, est la plus proche de la valeur — seulement pour les stats qui montent avec le rang. Les autres (KDA, morts, écarts à 15 min…) se disent en « top x % » de votre palier. Un tiret : pas encore assez de parties pour le dire."
   }
 }

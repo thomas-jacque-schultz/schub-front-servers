@@ -14,8 +14,8 @@ export const useGradeTitle = () => {
   ) => {
     const poste = format.poste(position);
     const palier = (tier: string) => t(`tier.${tier}`, { defaultValue: tier });
-    const rang = grade.medians.findIndex((m) => m.tier === grade.level);
-    const voisins = grade.medians
+    const rang = grade.means.findIndex((m) => m.tier === grade.level);
+    const voisins = grade.means
       .filter((_, i) => Math.abs(i - rang) === 1)
       .map((m) => `${palier(m.tier)} ${valeur(m.value)}`)
       .join(" · ");
@@ -23,7 +23,7 @@ export const useGradeTitle = () => {
       grade.level
         ? t("grade.level", {
             tier: palier(grade.level),
-            median: valeur(grade.medians[rang].value),
+            mean: valeur(grade.means[rang].value),
             position: poste,
           })
         : t("grade.noRank"),
