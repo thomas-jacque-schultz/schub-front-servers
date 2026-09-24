@@ -448,10 +448,10 @@ export interface ReferenceMetricDto {
   polarity: "HIGHER" | "LOWER" | "NEUTRAL";
   tiers: Record<string, { count: number; values: number[] }>;
   /**
-   * Médiane par partie de chaque palier, du plus bas au plus haut. Absente quand la métrique ne suit pas le
+   * Moyenne par partie de chaque palier, du plus bas au plus haut. Absente quand la métrique ne suit pas le
    * rang (le KDA : chacun joue contre son propre niveau) ou que trop peu de paliers sont assez fournis.
    */
-  rankMedians: Record<string, number> | null;
+  rankMeans: Record<string, number> | null;
   missingTiers: string[];
 }
 
@@ -486,6 +486,6 @@ export interface TeamLevelMetricDto {
   mean: number | null;
   /** Moyenne des percentiles de chaque partie dans son palier, « plus haut = mieux ». */
   inTier: number | null;
-  /** Palier dont la médiane est la plus proche de la moyenne, quand la métrique suit le rang. */
+  /** Palier dont la moyenne par partie est la plus proche de celle de l’équipe, quand la métrique suit le rang. */
   level: string | null;
 }

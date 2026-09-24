@@ -298,11 +298,11 @@ qu'à l'enregistrement.
   partie famille par famille (`ComparisonTile` : la partie, sa moyenne au même poste sur la période, le
   rang). Mes stats a le même historique, toutes files confondues ; sa liste
   ne réclame aucun enrichissement, seule l'ouverture d'une partie le fait.
-- **Le rang d'une stat est le palier dont la médiane par partie est la plus proche** (« 7 CS/min, c'est
-  Gold »), et seulement quand la stat monte avec le rang : le connecteur ne sert `rankMedians` que dans ce
+- **Le rang d'une stat est le palier dont la moyenne par partie est la plus proche** (« 7 CS/min, c'est
+  Gold »), et seulement quand la stat monte avec le rang : le connecteur ne sert `rankMeans` que dans ce
   cas. Le KDA, les morts, les écarts à 15 min ne bougent presque pas d'Iron à Maître — chacun joue contre
   son niveau — et une icône y serait du bruit : ils se disent en « top x % » de son palier. Une moyenne
-  sur la période se situe aussi parmi les médianes **par partie**, plus fournies que celles des joueurs.
+  sur la période se situe aussi parmi les moyennes **par partie**, plus fournies que celles des joueurs.
 - **Une requête qui dépend d'un filtre passe par `useRequest`** : une réponse dépassée par une plus
   récente est jetée, sinon changer vite de période affiche la plus lente.
 - **Le début de partie se dit depuis notre camp** : un gank de leur jungler qui tue chez nous est rouge,

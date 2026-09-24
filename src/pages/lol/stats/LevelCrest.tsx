@@ -10,7 +10,7 @@ export interface LevelCrestProps {
   patches: string[];
   /** Une partie isolée, ou la moyenne d'un joueur : la phrase du percentile n'est pas la même. */
   scope: "GAME" | "MEAN";
-  /** Met en forme une valeur de la métrique : les médianes de l'infobulle se lisent dans son unité. */
+  /** Met en forme une valeur de la métrique : les moyennes de l'infobulle se lisent dans son unité. */
   format: (value: number) => string;
 }
 
