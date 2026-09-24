@@ -13,10 +13,19 @@ export interface StatGridProps {
   size?: StatTileProps["size"];
   /** Un liseré entre les tuiles, pour une rangée de chiffres posée seule sur une carte. */
   divided?: boolean;
+  align?: StatTileProps["align"];
+  labelLines?: StatTileProps["labelLines"];
 }
 
 // Même ordre, même largeur de colonne partout : deux rangées de chiffres se comparent verticalement.
-export function StatGrid({ items, minWidth = 110, size = "medium", divided = false }: StatGridProps) {
+export function StatGrid({
+  items,
+  minWidth = 110,
+  size = "medium",
+  divided = false,
+  align,
+  labelLines,
+}: StatGridProps) {
   return (
     <Box
       sx={{
@@ -34,7 +43,12 @@ export function StatGrid({ items, minWidth = 110, size = "medium", divided = fal
               : undefined
           }
         >
-          <StatTile {...tile} size={size} />
+          <StatTile
+            {...tile}
+            size={size}
+            align={align}
+            labelLines={labelLines}
+          />
         </Box>
       ))}
     </Box>

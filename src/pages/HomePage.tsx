@@ -20,7 +20,7 @@ import { useDocumentMeta } from "../seo/useDocumentMeta";
 function HomePage() {
   const { t } = useTranslation("home");
   const navigate = useLocalizedNavigate();
-  const { connected, canAny } = useAuthStore();
+  const { connected } = useAuthStore();
   const { profile, isLoading, error, ingestInFlight } = useProfileStore();
   const [equipes, setEquipes] = useState<TeamSummaryDto[]>([]);
 
@@ -38,7 +38,10 @@ function HomePage() {
     };
   }, [connected]);
 
-  useDocumentMeta({ title: t("meta.title"), description: t("meta.description") });
+  useDocumentMeta({
+    title: t("meta.title"),
+    description: t("meta.description"),
+  });
 
   const taches = useMemo<TaskListItem[]>(() => {
     if (!profile) {
@@ -64,7 +67,11 @@ function HomePage() {
         href: "/profile",
       });
     } else {
-      items.push({ key: "riot", label: t("onboarding.riotLinked"), state: "done" });
+      items.push({
+        key: "riot",
+        label: t("onboarding.riotLinked"),
+        state: "done",
+      });
     }
 
     if (ingestInFlight) {
@@ -77,15 +84,21 @@ function HomePage() {
       });
     }
 
-    items.push(equipes.length === 0
-      ? {
-          key: "team",
-          label: t("onboarding.teamAbsent"),
-          description: t("onboarding.teamAbsentHint"),
-          state: "todo",
-          href: "/lol/teams",
-        }
-      : { key: "team", label: t("onboarding.teamJoined", { count: equipes.length }), state: "done" });
+    items.push(
+      equipes.length === 0
+        ? {
+            key: "team",
+            label: t("onboarding.teamAbsent"),
+            description: t("onboarding.teamAbsentHint"),
+            state: "todo",
+            href: "/lol/teams",
+          }
+        : {
+            key: "team",
+            label: t("onboarding.teamJoined", { count: equipes.length }),
+            state: "done",
+          },
+    );
 
     return items;
   }, [profile, ingestInFlight, equipes, t]);
@@ -107,12 +120,12 @@ function HomePage() {
           <Text>{t("about.lol")}</Text>
           <Text>{t("about.identity")}</Text>
           <Stack direction="responsive" spacing={1.5}>
-            <Button onClick={() => navigate("/servers")}>{t("about.ctaServers")}</Button>
-            {connected && canAny("TEAM_CREATE", "TEAM_VIEW") && (
-              <Button variant="secondary" onClick={() => navigate("/lol/teams")}>
-                {t("about.ctaTeams")}
-              </Button>
-            )}
+            <Button onClick={() => navigate("/servers")}>
+              {t("about.ctaServers")}
+            </Button>
+            <Button onClick={() => navigate("/lol")}>
+              {t("about.ctaLol")}
+            </Button>
           </Stack>
         </Stack>
       </Card>
@@ -120,8 +133,12 @@ function HomePage() {
       {connected ? (
         <Card title={t("onboarding.title")} description={t("onboarding.intro")}>
           <Stack spacing={2}>
-            {isLoading && !profile && <ProgressBar label={t("onboarding.loading")} />}
-            {error && !profile && <Alert severity="warning">{t("onboarding.unavailable")}</Alert>}
+            {isLoading && !profile && (
+              <ProgressBar label={t("onboarding.loading")} />
+            )}
+            {error && !profile && (
+              <Alert severity="warning">{t("onboarding.unavailable")}</Alert>
+            )}
             <TaskList
               items={taches}
               onSelect={(href) => navigate(href)}
@@ -137,7 +154,9 @@ function HomePage() {
           <Stack spacing={2}>
             <Text>{t("onboarding.signedOutBody")}</Text>
             <Stack direction="row">
-              <Button onClick={() => navigate("/login")}>{t("onboarding.signIn")}</Button>
+              <Button onClick={() => navigate("/login")}>
+                {t("onboarding.signIn")}
+              </Button>
             </Stack>
           </Stack>
         </Card>

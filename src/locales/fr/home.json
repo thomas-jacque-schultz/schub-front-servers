@@ -15,7 +15,7 @@
     "lol": "Côté League of Legends, Schub lit tes parties par l'API de Riot : statistiques personnelles et d'équipe, pool de champions par poste, préparateur de draft et débrief d'après-match.",
     "identity": "L'identité passe par Discord. Il n'y a pas de mot de passe à retenir, et les droits suivent le rôle.",
     "ctaServers": "Voir l'état des serveurs",
-    "ctaTeams": "Mes équipes"
+    "ctaLol": "Voir l’outil League of Legends"
   },
   "onboarding": {
     "title": "Pour être opérationnel",

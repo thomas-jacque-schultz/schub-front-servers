@@ -42,6 +42,8 @@ export function AppLayout({ children }: { children: ReactNode }) {
   // Deux applications, un bandeau chacune : Schub partout, League of Legends sous /lol.
   const dansLol = route === LOL_ROOT || route.startsWith(`${LOL_ROOT}/`);
   const lol = useLolShell(route);
+  // Mon profil est commun aux deux applications : aucun des deux bandeaux ne lui revient.
+  const surProfil = route === "/profile";
 
   // Pas de useMemo sur des libellés : `t` garde la même référence quand la langue change.
   const configurationEntries: Array<{
@@ -169,7 +171,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
       brandTo={dansLol ? lol.brandTo : localize("/")}
       brandTagline={dansLol ? lol.tagline : t("app.tagline")}
       maxWidth={dansLol ? lol.maxWidth : "lg"}
-      navItems={dansLol ? lol.navItems : schubNav}
+      navItems={surProfil ? [] : dansLol ? lol.navItems : schubNav}
       connected={connected}
       username={profile?.username}
       account={account}

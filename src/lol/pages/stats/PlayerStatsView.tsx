@@ -20,7 +20,8 @@ import type {
 import { ChampionChoice } from "./ChampionChoice";
 import { championsAffiches } from "./champions";
 import { ChampionStatCard } from "./ChampionStatCard";
-import { FAMILLES, useMetrics } from "./metrics";
+import { GameAnalysis } from "./GameAnalysis";
+import { useMetrics } from "./metrics";
 import { PlayerRadar } from "./PlayerRadar";
 import { RankedStandings } from "./RankedStandings";
 import { StatsStateNote } from "./StatsStateNote";
@@ -76,8 +77,10 @@ export function PlayerStatsView({
             items={tuiles(overall, { versus: versusTeammates, adornment })}
             minWidth={130}
             divided
+            align="center"
+            labelLines={2}
           />
-          <Text variant="caption" tone="secondary">
+          <Text variant="caption" tone="secondary" align="center">
             {[format.assise(data.coverage), t("scope.rift")]
               .filter(Boolean)
               .join(" · ")}
@@ -89,26 +92,11 @@ export function PlayerStatsView({
         <Alert severity="info">{t("coverage.untracked")}</Alert>
       )}
 
-      <Card title={t("family.title")}>
-        <Stack spacing={2.5}>
-          {FAMILLES.map((famille) => (
-            <Stack key={famille.key} spacing={1}>
-              <Text variant="subtitle">
-                {t(`family.${famille.key}`, { defaultValue: famille.key })}
-              </Text>
-              <StatGrid
-                items={tuiles(overall, { keys: famille.metrics, adornment })}
-                minWidth={150}
-              />
-              {famille.key === "laning" && (
-                <Text variant="caption" tone="secondary">
-                  {t("family.laningBasis", { count: overall.laningGames })}
-                </Text>
-              )}
-            </Stack>
-          ))}
-        </Stack>
-      </Card>
+      <GameAnalysis
+        overall={overall}
+        references={data.references}
+        positions={data.positions}
+      />
 
       <Columns minWidth={320}>
         <Card title={t("radar.title")} description={t("radar.helper")}>

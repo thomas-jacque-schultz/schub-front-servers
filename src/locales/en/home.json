@@ -15,7 +15,7 @@
     "lol": "On the League of Legends side, Schub reads your games through Riot's API: personal and team statistics, champion pool by role, draft preparation and post-game review.",
     "identity": "Identity goes through Discord. There is no password to remember, and rights follow your role.",
     "ctaServers": "See server status",
-    "ctaTeams": "My teams"
+    "ctaLol": "Open the League of Legends tool"
   },
   "onboarding": {
     "title": "To get up and running",

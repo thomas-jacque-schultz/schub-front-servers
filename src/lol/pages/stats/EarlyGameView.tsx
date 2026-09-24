@@ -4,21 +4,37 @@ import {
   Chip,
   type ChipTone,
   Columns,
-  SplitBar,
+  LaneMap,
   Stack,
   StatGrid,
   Text,
   Tooltip,
 } from "../../../design-system";
-import type { EarlyGameDto, GankDto, GankOutcome, JunglePresenceDto, Lane } from "../../types/stats";
+import type {
+  EarlyGameDto,
+  GankDto,
+  GankOutcome,
+  JunglePresenceDto,
+  Lane,
+} from "../../types/stats";
 import { useStatsFormat } from "./statsFormat";
 
 const COULOIRS: Lane[] = ["TOP", "MID", "BOT"];
 
 // Toujours depuis notre camp : un kill de leur jungler chez nous est rouge, le même kill par le nôtre est vert.
 const TON: Record<"ours" | "theirs", Record<GankOutcome, ChipTone>> = {
-  theirs: { KILL: "error", TRADE: "warning", SURVIVED: "success", COUNTER: "success" },
-  ours: { KILL: "success", TRADE: "warning", SURVIVED: "neutral", COUNTER: "error" },
+  theirs: {
+    KILL: "error",
+    TRADE: "warning",
+    SURVIVED: "success",
+    COUNTER: "success",
+  },
+  ours: {
+    KILL: "success",
+    TRADE: "warning",
+    SURVIVED: "neutral",
+    COUNTER: "error",
+  },
 };
 
 export interface EarlyGameViewProps {
@@ -42,11 +58,18 @@ export function EarlyGameView({ early, names }: EarlyGameViewProps) {
         {COULOIRS.map((couloir) => (
           <Card key={couloir}>
             <Stack spacing={1}>
-              <Stack direction="row" spacing={1} align="center" justify="between">
+              <Stack
+                direction="row"
+                spacing={1}
+                align="center"
+                justify="between"
+              >
                 <Text variant="subtitle">{t(`early.lane.${couloir}`)}</Text>
                 {couloir !== "MID" && fort !== "BALANCED" && (
                   <Chip
-                    label={couloir === fort ? t("early.strong") : t("early.weak")}
+                    label={
+                      couloir === fort ? t("early.strong") : t("early.weak")
+                    }
                     tone={couloir === fort ? "primary" : "warning"}
                     variant="outline"
                     size="small"
@@ -55,12 +78,16 @@ export function EarlyGameView({ early, names }: EarlyGameViewProps) {
               </Stack>
               <Venues
                 title={t("early.theirs")}
-                ganks={early.ganks.filter((gank) => gank.lane === couloir && !gank.ours)}
+                ganks={early.ganks.filter(
+                  (gank) => gank.lane === couloir && !gank.ours,
+                )}
                 names={names}
               />
               <Venues
                 title={t("early.ours")}
-                ganks={early.ganks.filter((gank) => gank.lane === couloir && gank.ours)}
+                ganks={early.ganks.filter(
+                  (gank) => gank.lane === couloir && gank.ours,
+                )}
                 names={names}
               />
             </Stack>
@@ -77,8 +104,14 @@ export function EarlyGameView({ early, names }: EarlyGameViewProps) {
           : t("early.balancedSummary")}
       </Text>
       <Columns minWidth={240} count={3}>
-        <Presence title={t("early.presence.ours")} presence={early.ourJungler} />
-        <Presence title={t("early.presence.theirs")} presence={early.theirJungler} />
+        <Presence
+          title={t("early.presence.ours")}
+          presence={early.ourJungler}
+        />
+        <Presence
+          title={t("early.presence.theirs")}
+          presence={early.theirJungler}
+        />
         <Stack spacing={0.5}>
           <Text variant="caption" tone="secondary">
             {t("early.objectives.title")}
@@ -98,7 +131,15 @@ export function EarlyGameView({ early, names }: EarlyGameViewProps) {
   );
 }
 
-function Venues({ title, ganks, names }: { title: string; ganks: GankDto[]; names: Record<string, string> }) {
+function Venues({
+  title,
+  ganks,
+  names,
+}: {
+  title: string;
+  ganks: GankDto[];
+  names: Record<string, string>;
+}) {
   const { t } = useTranslation("stats");
   const format = useStatsFormat();
   return (
@@ -120,11 +161,22 @@ function Venues({ title, ganks, names }: { title: string; ganks: GankDto[]; name
               ...(gank.objectiveFollowUp ? [t("early.objective")] : []),
             ].join(" · ");
             const chip = (
-              <Chip key={gank.second} label={label} tone={TON[camp][gank.outcome]} variant="outline" size="small" />
+              <Chip
+                key={gank.second}
+                label={label}
+                tone={TON[camp][gank.outcome]}
+                variant="outline"
+                size="small"
+              />
             );
-            const morts = gank.fallenMemberIds.map((id) => names[id]).filter(Boolean);
+            const morts = gank.fallenMemberIds
+              .map((id) => names[id])
+              .filter(Boolean);
             return morts.length > 0 ? (
-              <Tooltip key={gank.second} title={t("early.fallen", { names: morts.join(", ") })}>
+              <Tooltip
+                key={gank.second}
+                title={t("early.fallen", { names: morts.join(", ") })}
+              >
                 {chip}
               </Tooltip>
             ) : (
@@ -137,20 +189,43 @@ function Venues({ title, ganks, names }: { title: string; ganks: GankDto[]; name
   );
 }
 
-function Presence({ title, presence }: { title: string; presence: JunglePresenceDto | null }) {
+function Presence({
+  title,
+  presence,
+}: {
+  title: string;
+  presence: JunglePresenceDto | null;
+}) {
   const { t } = useTranslation("stats");
   if (!presence) {
     return null;
   }
   const minutes = (count: number) => t("early.presence.minutes", { count });
   return (
-    <SplitBar
+    <LaneMap
       label={title}
-      highlight={presence.strongSide === "BALANCED" ? null : presence.strongSide}
-      segments={[
-        { key: "TOP", label: t("early.lane.TOP"), value: presence.topMinutes, valueLabel: minutes(presence.topMinutes) },
-        { key: "MID", label: t("early.lane.MID"), value: presence.midMinutes, valueLabel: minutes(presence.midMinutes) },
-        { key: "BOT", label: t("early.lane.BOT"), value: presence.botMinutes, valueLabel: minutes(presence.botMinutes) },
+      highlight={
+        presence.strongSide === "BALANCED" ? null : presence.strongSide
+      }
+      zones={[
+        {
+          key: "TOP",
+          label: t("early.lane.TOP"),
+          value: presence.topMinutes,
+          valueLabel: minutes(presence.topMinutes),
+        },
+        {
+          key: "MID",
+          label: t("early.lane.MID"),
+          value: presence.midMinutes,
+          valueLabel: minutes(presence.midMinutes),
+        },
+        {
+          key: "BOT",
+          label: t("early.lane.BOT"),
+          value: presence.botMinutes,
+          valueLabel: minutes(presence.botMinutes),
+        },
       ]}
     />
   );

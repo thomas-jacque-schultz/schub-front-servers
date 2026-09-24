@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import type { RadarReferencesDto, StatLineDto } from "../../types/stats";
-import { noter } from "./grading";
-import { LevelCrest } from "./LevelCrest";
+import { type Grade, noter } from "./grading";
+import { GradeLabel, LevelCrest, type LevelCrestProps } from "./LevelCrest";
 import { type MetricKey, useMetrics } from "./metrics";
 import { useReferenceGrid } from "./useReferenceGrid";
 
@@ -15,12 +15,12 @@ const METRIQUES_A_TIMELINE: MetricKey[] = [
 
 /**
  * Note chaque indicateur sur les parties du joueur à son poste principal : un CS/min de support et un
- * de tireur ne se comparent pas. Sans assez de parties à ce poste, pas d'icône plutôt qu'une fausse.
+ * de tireur ne se comparent pas. Sans assez de parties à ce poste, pas de note plutôt qu'une fausse.
  */
-export const useGradeAdornment = (
+export const useGrades = (
   references: RadarReferencesDto | null | undefined,
   positions: StatLineDto[],
-): ((key: MetricKey) => ReactNode | undefined) => {
+) => {
   const grille = useReferenceGrid(
     references?.position,
     "MEAN",
@@ -28,30 +28,50 @@ export const useGradeAdornment = (
   );
   const { definitions } = useMetrics();
   const ligne = positions.find((line) => line.key === references?.position);
-  return (key) => {
+
+  const grade = (key: MetricKey): Grade | null => {
     if (!grille || !ligne || !references || ligne.games < PARTIES_MINIMUM) {
-      return undefined;
+      return null;
     }
     if (
       METRIQUES_A_TIMELINE.includes(key) &&
       ligne.laningGames < PARTIES_MINIMUM
     ) {
-      return undefined;
+      return null;
     }
-    const grade = noter(
-      ligne[key],
-      grille.metrics[key],
-      grille,
-      references.tier,
-    );
-    return grade ? (
-      <LevelCrest
-        grade={grade}
-        position={references.position}
-        patches={grille.patches}
-        scope="MEAN"
-        format={definitions[key].format}
-      />
-    ) : undefined;
+    return noter(ligne[key], grille.metrics[key], grille, references.tier);
+  };
+
+  const proprietes = (key: MetricKey): LevelCrestProps | null => {
+    const note = grade(key);
+    return note && grille && references
+      ? {
+          grade: note,
+          position: references.position,
+          patches: grille.patches,
+          scope: "MEAN",
+          format: definitions[key].format,
+        }
+      : null;
+  };
+
+  return {
+    grade,
+    /** L'icône seule, à côté d'un chiffre. */
+    crest: (key: MetricKey): ReactNode | undefined => {
+      const props = proprietes(key);
+      return props ? <LevelCrest {...props} /> : undefined;
+    },
+    /** L'icône et le nom du palier, lisibles sans survol. */
+    label: (key: MetricKey): ReactNode | undefined => {
+      const props = proprietes(key);
+      return props ? <GradeLabel {...props} /> : undefined;
+    },
   };
 };
+
+export const useGradeAdornment = (
+  references: RadarReferencesDto | null | undefined,
+  positions: StatLineDto[],
+): ((key: MetricKey) => ReactNode | undefined) =>
+  useGrades(references, positions).crest;
