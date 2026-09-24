@@ -452,7 +452,7 @@
     "laningBasis": "Differences against the direct opponent, over {{count}} game(s) with a timeline."
   },
   "grade": {
-    "level": "{{tier}} level in the {{position}} role: the value is closest to their per-game median ({{median}}).",
+    "level": "{{tier}} level in the {{position}} role: the value is closest to their per-game average ({{mean}}).",
     "neighbours": "Neighbouring tiers: {{list}}.",
     "noRank": "No tier for this stat: it barely changes from one rank to the next, since everyone plays against their own level — or the sample is still too thin.",
     "inTier": "Better than {{rank}}% of {{tier}} players in the {{position}} role ({{count}} players).",
@@ -462,7 +462,7 @@
     "champion": "Better than {{rank}}% of {{champion}} players in {{group}}, on their averages ({{count}} players with 5+ games).",
     "championFallback": "Not enough {{champion}} players in {{group}} yet: compared with all {{tier}} players in the {{position}} role.",
     "team": "Averaged over {{games}} game(s): better than {{rank}}% of games at the same tier.",
-    "teamLevel": "Average at {{tier}} level: closest to their per-game median."
+    "teamLevel": "Average at {{tier}} level: closest to their per-game average."
   },
   "group": {
     "IRON_BRONZE": "Iron–Bronze",
@@ -508,6 +508,6 @@
     "tier": "Rank held at the time of the game: {{tier}}.",
     "tierEstimated": "Rank estimated from the game's lobby: {{tier}}.",
     "noMetrics": "This game's numbers are not computed yet.",
-    "rankHelper": "Rank: the tier whose per-game median, in the same role, is closest to the value — only for stats that rise with rank. The others (KDA, deaths, 15-minute differences…) are given as “top x%” of your tier. A dash: not enough games yet to tell."
+    "rankHelper": "Rank: the tier whose per-game average, in the same role, is closest to the value — only for stats that rise with rank. The others (KDA, deaths, 15-minute differences…) are given as “top x%” of your tier. A dash: not enough games yet to tell."
   }
 }

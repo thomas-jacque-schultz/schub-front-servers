@@ -19,18 +19,18 @@ export interface Grade {
   inTier: number | null;
   tier: string | null;
   tierCount: number;
-  /** Palier dont la médiane par partie est la plus proche, quand la métrique suit le rang : c'est l'icône. */
+  /** Palier dont la moyenne par partie est la plus proche, quand la métrique suit le rang : c'est l'icône. */
   level: string | null;
-  /** Les médianes par partie de chaque palier, du plus bas au plus haut ; vide si la métrique ne suit pas le rang. */
-  medians: { tier: string; value: number }[];
+  /** Les moyennes par partie de chaque palier, du plus bas au plus haut ; vide si la métrique ne suit pas le rang. */
+  means: { tier: string; value: number }[];
 }
 
-/** Le palier dont la médiane est la plus proche de la valeur. */
+/** Le palier dont la moyenne est la plus proche de la valeur. */
 export const niveau = (
   valeur: number,
-  medianes: { tier: string; value: number }[],
+  moyennes: { tier: string; value: number }[],
 ): string | null =>
-  medianes.reduce<{ tier: string; value: number } | null>(
+  moyennes.reduce<{ tier: string; value: number } | null>(
     (proche, palier) =>
       proche === null ||
       Math.abs(palier.value - valeur) < Math.abs(proche.value - valeur)
@@ -94,10 +94,10 @@ export const noter = (
   const inTier = sienne
     ? sens(repartition(grille.percentiles, sienne.values, valeur))
     : null;
-  const medians = Object.entries(metrique.rankMedians ?? {}).map(
+  const means = Object.entries(metrique.rankMeans ?? {}).map(
     ([palier, value]) => ({ tier: palier, value }),
   );
-  const level = niveau(valeur, medians);
+  const level = niveau(valeur, means);
   if (inTier === null && level === null) {
     return null;
   }
@@ -106,6 +106,6 @@ export const noter = (
     tier: sienne ? groupe : null,
     tierCount: sienne?.count ?? 0,
     level,
-    medians,
+    means,
   };
 };
