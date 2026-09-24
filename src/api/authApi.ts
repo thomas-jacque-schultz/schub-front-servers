@@ -1,7 +1,7 @@
 import { apiUrl, requestJson } from "./httpClient";
 import { isPermission } from "../types/permission";
 import type { Permission } from "../types/permission";
-import type { AuthMeResponse, AuthenticatedUser, LoginRequest } from "../types/auth";
+import type { AuthMeResponse, AuthenticatedUser } from "../types/auth";
 
 const normalizeRoles = (roles: AuthMeResponse["roles"]): string[] =>
   roles
@@ -21,13 +21,6 @@ const normalizeRoles = (roles: AuthMeResponse["roles"]): string[] =>
 // Une permission inconnue du front est ignorée : le cœur peut en ajouter avant que le front sache quoi en faire.
 const normalizePermissions = (permissions?: string[]): Permission[] =>
   (permissions ?? []).filter(isPermission);
-
-export const loginApi = async (payload: LoginRequest): Promise<void> => {
-  await requestJson<unknown>("/auth/login", {
-    method: "POST",
-    body: JSON.stringify(payload),
-  });
-};
 
 export const getMeApi = async (): Promise<AuthenticatedUser> => {
   const response = await requestJson<AuthMeResponse>("/auth/me", { method: "GET" });
