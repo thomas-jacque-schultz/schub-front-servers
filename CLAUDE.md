@@ -25,6 +25,9 @@ PR de la connexion Discord retire de son côté : **le bloc, et la constante ave
   en forme manuelle.
 - **Aucune couleur, aucun rayon, aucune ombre en dur.** Tout vient de
   `src/design-system/tokens.ts`. Une nuance qui manque s'ajoute là-bas.
+- **Un graphique SVG lit ses couleurs par `useChartScheme()`, jamais par `useTheme()`.** Avec les
+  variables CSS de MUI, `useTheme()` rend toujours le schéma par défaut : un `fill` ne suivrait pas le
+  passage en clair (texte blanc sur fond clair). Les `sx` n'ont pas ce problème.
 
 ## L'identité : prune, or et noir
 
@@ -96,7 +99,8 @@ dépôt**, et c'est ESLint qui la tient (`sortieDeLol` et `PORTE_DE_LOL` dans `e
   demain, lui est refusé d'office : c'est une liste blanche.
 - **Un bandeau par application.** Schub : Accueil, Serveurs, Configuration. Sous `/lol` : Présentation,
   Mes stats, Équipes. On passe de l'une à l'autre par **l'icône de profil**, en haut à droite, qui
-  ouvre Mon profil puis les applications. Le profil reste sous le bandeau de Schub.
+  ouvre Mon profil puis les applications. **Mon profil n'a pas de bandeau** : il est commun aux deux,
+  et lui donner celui de la dernière application visitée le rendrait incohérent.
 - Les traductions restent dans `src/locales/` (typées depuis `i18n/resources.ts`) ; le bandeau LoL
   lit les siennes sous `lol:shell`.
 
@@ -318,6 +322,9 @@ qu'à l'enregistrement.
   sur la période se situe aussi parmi les moyennes **par partie**, plus fournies que celles des joueurs.
 - **Une requête qui dépend d'un filtre passe par `useRequest`** : une réponse dépassée par une plus
   récente est jetée, sinon changer vite de période affiche la plus lente.
+- **La présence d'un jungler se lit sur une mini-carte** (`LaneMap`) : haut, milieu et bas à leur place
+  sur la Faille, teintés selon le temps passé, le côté fort cerné. La barre empilée ne reste que dans le
+  tableau d'équipe, où elle tient dans une cellule.
 - **Le début de partie se dit depuis notre camp** : un gank de leur jungler qui tue chez nous est rouge,
   le même par le nôtre est vert. Les ganks sans kill ne sont vus qu'à l'image de chaque minute :
   l'écran le dit, ils sont sous-comptés.
