@@ -2,8 +2,10 @@ import { type ElementType, type ReactNode } from "react";
 import Typography from "@mui/material/Typography";
 import { typographyTokens } from "../tokens";
 
-export type TextVariant = "title" | "section" | "subtitle" | "body" | "caption" | "overline";
-export type TextTone = "default" | "secondary" | "disabled" | "primary" | "error";
+export type TextVariant =
+  "title" | "section" | "subtitle" | "body" | "caption" | "overline";
+export type TextTone =
+  "default" | "secondary" | "disabled" | "primary" | "error";
 
 export interface TextProps {
   children: ReactNode;
@@ -13,6 +15,7 @@ export interface TextProps {
   truncate?: boolean;
   /** Chasse fixe : pour un chiffre ou un identifiant, jamais pour de la prose. */
   mono?: boolean;
+  align?: "left" | "center" | "right";
 }
 
 const VARIANT = {
@@ -48,6 +51,7 @@ export function Text({
   component,
   truncate = false,
   mono = false,
+  align,
 }: TextProps) {
   return (
     <Typography
@@ -55,9 +59,13 @@ export function Text({
       component={component ?? COMPONENT[variant]}
       color={TONE[tone]}
       noWrap={truncate}
+      align={align}
       sx={
         mono
-          ? { fontFamily: typographyTokens.monospaceFontFamily, fontVariantNumeric: "tabular-nums" }
+          ? {
+              fontFamily: typographyTokens.monospaceFontFamily,
+              fontVariantNumeric: "tabular-nums",
+            }
           : undefined
       }
     >

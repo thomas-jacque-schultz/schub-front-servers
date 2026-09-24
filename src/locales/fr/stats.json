@@ -442,7 +442,11 @@
     }
   },
   "family": {
-    "title": "Le détail, famille par famille",
+    "title": "Analyse de mon jeu",
+    "helper": "Chaque chiffre face aux {{tier}} au poste {{position}}, sur leurs moyennes. La jauge dit la part qu’il dépasse ; l’emblème, le palier dont il se rapproche quand la stat monte avec le rang.",
+    "helperNoTier": "Sans rang connu ni poste principal, les chiffres se lisent seuls : pas de jauge ni d’emblème.",
+    "average": "Top {{top}} % en moyenne",
+    "better": "Mieux que {{rank}} % de son palier",
     "income": "Revenus",
     "laning": "Phase de couloir",
     "fights": "Combats",

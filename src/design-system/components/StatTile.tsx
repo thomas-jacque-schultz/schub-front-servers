@@ -13,6 +13,10 @@ export interface StatTileProps {
   size?: "medium" | "small";
   /** À droite du chiffre : une icône de niveau, par exemple. */
   adornment?: ReactNode;
+  /** Centrée, la tuile porte sa note sous le chiffre plutôt qu'à côté. */
+  align?: "start" | "center";
+  /** Lignes réservées au libellé : dans une rangée, les chiffres tombent alors à la même hauteur. */
+  labelLines?: number;
 }
 
 export function StatTile({
@@ -24,13 +28,37 @@ export function StatTile({
   deltaHint,
   size = "medium",
   adornment,
+  align = "start",
+  labelLines,
 }: StatTileProps) {
+  const centree = align === "center";
   return (
-    <Box>
-      <Typography variant="caption" color="text.secondary" component="p">
+    <Box sx={centree ? { textAlign: "center" } : undefined}>
+      <Typography
+        variant="caption"
+        color="text.secondary"
+        component="p"
+        sx={
+          labelLines
+            ? {
+                minHeight: `${labelLines * 1.66}em`,
+                display: "flex",
+                alignItems: "flex-end",
+                justifyContent: centree ? "center" : "flex-start",
+              }
+            : undefined
+        }
+      >
         {label}
       </Typography>
-      <Box sx={{ display: "flex", alignItems: "center", gap: 0.75 }}>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          gap: 0.75,
+          ...(centree ? { flexDirection: "column", gap: 0.25 } : {}),
+        }}
+      >
         <Typography
           variant={size === "small" ? "subtitle1" : "h6"}
           component="p"

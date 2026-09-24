@@ -99,6 +99,10 @@ export type {
   SegmentedControlProps,
 } from "./components/SegmentedControl";
 export { SplitBar } from "./components/SplitBar";
+export { LaneMap } from "./components/LaneMap";
+export type { LaneMapKey, LaneMapProps, LaneMapZone } from "./components/LaneMap";
+export { ScoreRow } from "./components/ScoreRow";
+export type { ScoreRowProps } from "./components/ScoreRow";
 export type { SplitBarProps, SplitBarSegment } from "./components/SplitBar";
 export { PageBackdrop } from "./components/PageBackdrop";
 export type { PageBackdropProps } from "./components/PageBackdrop";

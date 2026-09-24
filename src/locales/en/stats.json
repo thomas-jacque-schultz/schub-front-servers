@@ -442,7 +442,11 @@
     }
   },
   "family": {
-    "title": "The detail, family by family",
+    "title": "My game, analysed",
+    "helper": "Each figure against {{tier}} players in the {{position}} role, on their averages. The gauge shows the share it beats; the emblem, the tier it is closest to when the stat rises with rank.",
+    "helperNoTier": "With no known rank or main role, the figures stand alone: no gauge, no emblem.",
+    "average": "Top {{top}}% on average",
+    "better": "Better than {{rank}}% of their tier",
     "income": "Income",
     "laning": "Laning phase",
     "fights": "Fights",
