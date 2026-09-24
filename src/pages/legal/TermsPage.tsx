@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { BulletList, Card, Link, PageHeader, Stack, Text } from "../../design-system";
 import { DraftNotice } from "./DraftNotice";
-import { RiotDisclaimer } from "./RiotDisclaimer";
+import { RiotDisclaimer } from "../../lol";
 import { useLocalizedPath } from "../../i18n/navigation";
 import { useDocumentMeta } from "../../seo/useDocumentMeta";
 

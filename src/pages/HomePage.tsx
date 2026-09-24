@@ -11,8 +11,7 @@ import {
   type TaskListItem,
   Text,
 } from "../design-system";
-import { getMyTeamsApi } from "../api/teamsApi";
-import type { TeamSummaryDto } from "../types/team";
+import { getMyTeamsApi, type TeamSummaryDto } from "../lol";
 import { useLocalizedNavigate } from "../i18n/navigation";
 import { useAuthStore } from "../stores/authStore";
 import { useProfileStore } from "../stores/profileStore";

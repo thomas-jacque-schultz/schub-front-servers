@@ -3,6 +3,13 @@
     "title": "Schub for League of Legends — team stats, champion pool and draft preparation",
     "description": "Schub equips a League of Legends team: roster, history of the games played together, per-player and per-team statistics, champion pool by position, composition planning and post-game reviews."
   },
+  "shell": {
+    "tagline": "League of Legends",
+    "presentation": "Overview",
+    "stats": "My stats",
+    "statsLocked": "Link your Riot account to open it",
+    "teams": "Teams"
+  },
   "hero": {
     "eyebrow": "League of Legends",
     "title": "Schub's team toolkit",

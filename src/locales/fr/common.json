@@ -54,12 +54,11 @@
     "footerNote": "Schub — la boîte à outils de la communauté Miam",
     "contact": "Contact",
     "profile": "Mon profil",
-    "stats": "Mes stats",
-    "statsLocked": "Liez votre compte Riot pour y accéder",
-    "lolMenu": "League of Legends",
-    "lolPresentation": "Présentation",
-    "lolTeams": "Équipes",
     "creator": "Créateur",
-    "feedback": "Feedback"
+    "feedback": "Feedback",
+    "account": "Compte et applications",
+    "apps": "Applications",
+    "appSchub": "Schub",
+    "appLol": "League of Legends"
   }
 }
