@@ -20,6 +20,7 @@ interface PortForwardingStoreValue {
   staticRules: StaticPortRuleDto[];
   isLoading: boolean;
   error: string;
+  routerError: string | null;
   lastRefreshedAt: Date | null;
   loadPortForwarding: () => Promise<void>;
   createStaticRule: (rule: StaticPortRuleDto) => Promise<void>;
@@ -34,6 +35,7 @@ export const PortForwardingStoreProvider = ({ children }: { children: ReactNode 
   const [staticRules, setStaticRules] = useState<StaticPortRuleDto[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
+  const [routerError, setRouterError] = useState<string | null>(null);
   const [lastRefreshedAt, setLastRefreshedAt] = useState<Date | null>(null);
 
   const loadPortForwarding = useCallback(async () => {
@@ -42,7 +44,15 @@ export const PortForwardingStoreProvider = ({ children }: { children: ReactNode 
 
     try {
       const [rules, statics] = await Promise.all([
-        getPortRulesApi().catch(() => [] as PortRuleDto[]),
+        getPortRulesApi()
+          .then((loaded) => {
+            setRouterError(null);
+            return loaded;
+          })
+          .catch((unavailable: unknown) => {
+            setRouterError(unavailable instanceof Error ? unavailable.message : "");
+            return [] as PortRuleDto[];
+          }),
         getStaticPortRulesApi(),
       ]);
       setRouterRules(rules);
@@ -79,6 +89,7 @@ export const PortForwardingStoreProvider = ({ children }: { children: ReactNode 
     setRouterRules([]);
     setStaticRules([]);
     setError("");
+    setRouterError(null);
     setLastRefreshedAt(null);
   }, []);
 
@@ -88,6 +99,7 @@ export const PortForwardingStoreProvider = ({ children }: { children: ReactNode 
       staticRules,
       isLoading,
       error,
+      routerError,
       lastRefreshedAt,
       loadPortForwarding,
       createStaticRule,
@@ -99,6 +111,7 @@ export const PortForwardingStoreProvider = ({ children }: { children: ReactNode 
       staticRules,
       isLoading,
       error,
+      routerError,
       lastRefreshedAt,
       loadPortForwarding,
       createStaticRule,

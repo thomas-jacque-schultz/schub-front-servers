@@ -22,7 +22,8 @@
   "state": {
     "open": "ouvert",
     "closed": "fermé",
-    "notOnRouter": "pas encore posée sur le routeur"
+    "notOnRouter": "pas encore posée sur le routeur",
+    "routerUnknown": "présence sur le routeur inconnue"
   },
   "row": {
     "deleteStatic": "Supprimer cette règle permanente",
@@ -56,6 +57,8 @@
     "deleteFailed": "La suppression a échoué"
   },
   "errors": {
-    "loadFailed": "Impossible de lire les redirections"
+    "loadFailed": "Impossible de lire les redirections",
+    "routerUnavailableTitle": "État du routeur indisponible",
+    "routerUnavailable": "Les redirections actives du routeur n'ont pas pu être lues. Les règles permanentes ci-dessous restent enregistrées ; elles seront réappliquées dès que le routeur répondra."
   }
 }
