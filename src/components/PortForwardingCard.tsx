@@ -24,6 +24,7 @@ interface PortForwardingCardProps {
   staticRules: StaticPortRuleDto[];
   isLoading: boolean;
   error: string;
+  routerError?: string | null;
   onRefresh: () => Promise<void>;
   onCreate: (rule: StaticPortRuleDto) => Promise<void>;
   onDelete: (id: string) => Promise<void>;
@@ -59,6 +60,7 @@ function PortForwardingCard({
   staticRules,
   isLoading,
   error,
+  routerError = null,
   onRefresh,
   onCreate,
   onDelete,
@@ -187,7 +189,7 @@ function PortForwardingCard({
           <Text variant="caption">{row.label}</Text>
           {!row.onRouter && (
             <Text variant="caption" tone="secondary">
-              {t("state.notOnRouter")}
+              {routerError !== null ? t("state.routerUnknown") : t("state.notOnRouter")}
             </Text>
           )}
         </>
@@ -269,6 +271,21 @@ function PortForwardingCard({
     >
       <Stack spacing={2}>
         {error && <Alert severity="error">{error}</Alert>}
+        {routerError !== null && !isLoading && (
+          <Alert severity="warning" title={t("errors.routerUnavailableTitle")}>
+            <Stack spacing={1} align="start">
+              <Text>{t("errors.routerUnavailable")}</Text>
+              {routerError && (
+                <Text variant="caption" tone="secondary">
+                  {routerError}
+                </Text>
+              )}
+              <Button variant="ghost" onClick={() => void onRefresh()}>
+                {t("card.refresh")}
+              </Button>
+            </Stack>
+          </Alert>
+        )}
         {actionError && (
           <Alert severity="error" onClose={() => setActionError("")}>
             {actionError}

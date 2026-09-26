@@ -13,6 +13,7 @@ function PortsConfigPage() {
     staticRules,
     isLoading,
     error,
+    routerError,
     loadPortForwarding,
     createStaticRule,
     deleteStaticRule,
@@ -34,6 +35,7 @@ function PortsConfigPage() {
         staticRules={staticRules}
         isLoading={isLoading}
         error={error}
+        routerError={routerError}
         canEdit={can("PORT_RULE_EDIT")}
         onRefresh={() => loadPortForwarding()}
         onCreate={(rule) => createStaticRule(rule)}

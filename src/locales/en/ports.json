@@ -22,7 +22,8 @@
   "state": {
     "open": "open",
     "closed": "closed",
-    "notOnRouter": "not applied to the router yet"
+    "notOnRouter": "not applied to the router yet",
+    "routerUnknown": "presence on the router unknown"
   },
   "row": {
     "deleteStatic": "Delete this permanent rule",
@@ -56,6 +57,8 @@
     "deleteFailed": "The rule could not be deleted"
   },
   "errors": {
-    "loadFailed": "Port forwardings could not be read"
+    "loadFailed": "Port forwardings could not be read",
+    "routerUnavailableTitle": "Router status unavailable",
+    "routerUnavailable": "The router's active forwardings could not be read. The permanent rules below are still saved; they will be applied again as soon as the router answers."
   }
 }
