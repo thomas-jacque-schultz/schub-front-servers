@@ -26,9 +26,14 @@ const params = (extra: Record<string, string>) => {
 export const getPlayerApi = async (
   slug: string,
   periode?: StatsWindow | null,
+  light = false,
 ): Promise<SearchedPlayerDto> =>
   requestJson<SearchedPlayerDto>(
-    `${base(slug)}${params({ ...fenetreParams(periode), champions: "30" })}`,
+    `${base(slug)}${params({
+      ...fenetreParams(periode),
+      champions: "30",
+      ...(light ? { light: "true" } : {}),
+    })}`,
     { method: "GET" },
   );
 

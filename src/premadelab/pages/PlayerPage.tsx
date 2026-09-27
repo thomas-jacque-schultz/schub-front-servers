@@ -65,7 +65,13 @@ function PlayerPage() {
     isLoading,
     reload,
   } = useRequest(slug ? `player/${slug}/${periode}` : null, () =>
-    getPlayerApi(slug, periode),
+    // Les rafraîchissements ne redemandent ni le rang ni les maîtrises à Riot : la carte de profil les garde.
+    getPlayerApi(slug, periode, true),
+  );
+
+  const { data: profil, reload: reloadProfil } = useRequest(
+    slug ? `player-profile/${slug}` : null,
+    () => getPlayerApi(slug, null),
   );
 
   const riotId = page
@@ -123,6 +129,15 @@ function PlayerPage() {
     (page.collecting || Date.now() - debut.current < DEMARRAGE_MS) &&
     Date.now() - debut.current < POLL_MAX_MS;
 
+  // La collecte finie, le profil se relit une fois : un rang refusé faute de quota arrive alors.
+  const collecteAvant = useRef<boolean>(false);
+  useEffect(() => {
+    if (collecteAvant.current && !collecte) {
+      void reloadProfil();
+    }
+    collecteAvant.current = collecte;
+  }, [collecte, reloadProfil]);
+
   useEffect(() => {
     if (!collecte) {
       return;
@@ -168,12 +183,12 @@ function PlayerPage() {
 
       <Stack direction="responsive" spacing={2} align="start">
         <Card title={t("player.ranked")}>
-          <RankedStandings standings={page.rankings} />
+          <RankedStandings standings={profil?.rankings ?? []} />
         </Card>
-        {page.masteries.length > 0 && (
+        {profil && profil.masteries.length > 0 && (
           <Card title={t("player.masteries")}>
             <Stack direction="row" spacing={2} wrap>
-              {page.masteries.map((m) => (
+              {profil.masteries.map((m) => (
                 <Stack key={m.championId} spacing={0.5} align="center">
                   <ChampionIcon
                     src={m.iconUrl}
