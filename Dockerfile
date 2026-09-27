@@ -19,6 +19,7 @@ FROM nginx:1.27-alpine
 COPY --from=build-app /app/dist /usr/share/nginx/html
 COPY --from=build-storybook /app/storybook-static /usr/share/nginx/html/storybook
 COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx-shared.conf /etc/nginx/shared.conf
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

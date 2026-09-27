@@ -2,7 +2,7 @@
 
 ## La règle qui prime sur toutes les autres
 
-**Tout ce qui s'affiche passe par `src/design-system/`. `@mui/material` et `@mui/icons-material`
+**Tout ce qui s'affiche passe par `src/common/design-system/`. `@mui/material` et `@mui/icons-material`
 ne s'importent nulle part ailleurs.**
 
 Un écran qui a besoin d'un composant absent du design system l'**ajoute au design system**, avec
@@ -19,12 +19,12 @@ PR de la connexion Discord retire de son côté : **le bloc, et la constante ave
 ## Les deux autres habitudes à ne pas perdre
 
 - **Aucune chaîne en dur dans l'interface.** Tout texte affiché vient de `t("…")` et vit dans
-  `src/locales/{fr,en}/<domaine>.json` — un fichier par langue **et par domaine**. Les clés sont
+  `src/common/locales/{fr,en}/<domaine>.json` — un fichier par langue **et par domaine**. Les clés sont
   typées : une clé inexistante est une erreur de compilation, pas une chaîne affichée telle
   quelle. Les dates et les nombres passent par `useLocaleFormat()` (`Intl`), jamais par une mise
   en forme manuelle.
 - **Aucune couleur, aucun rayon, aucune ombre en dur.** Tout vient de
-  `src/design-system/tokens.ts`. Une nuance qui manque s'ajoute là-bas.
+  `src/common/design-system/tokens.ts`. Une nuance qui manque s'ajoute là-bas.
 - **Un graphique SVG lit ses couleurs par `useChartScheme()`, jamais par `useTheme()`.** Avec les
   variables CSS de MUI, `useTheme()` rend toujours le schéma par défaut : un `fill` ne suivrait pas le
   passage en clair (texte blanc sur fond clair). Les `sx` n'ont pas ce problème.
@@ -78,7 +78,7 @@ vers le bas. Elle se peint **sous** le contenu, ce qui oblige `<main>` et `<foot
   éditable en base : son nom ne dit plus rien de ce qu'il permet. `isAdmin` n'existe plus.
 - **Une entrée de menu n'apparaît que si sa permission est présente**, et la route porte la même
   condition — une URL se tape à la main. La liste vit à un seul endroit par application :
-  `src/components/AppLayout.tsx` pour Schub, `src/lol/shell.ts` pour League of Legends.
+  `src/schub/components/AppLayout.tsx` pour Schub, `src/premadelab/shell.ts` pour PremadeLab.
 - **L'IHM ne propose pas ce que le serveur refusera** : les rôles attribuables sont filtrés par la
   règle du sous-ensemble, on ne modifie pas son propre rôle et on ne rétrograde pas le dernier
   `OWNER`. C'est le cœur qui tranche ; l'écran évite d'avoir à découvrir le refus.
@@ -86,23 +86,30 @@ vers le bas. Elle se peint **sous** le contenu, ce qui oblige `<main>` et `<foot
   membre — ni ports, ni déploiement. On le dit à l'écran, et on **omet** ces champs du
   corps envoyé plutôt que de les poster vides.
 
-## Deux applications : Schub et League of Legends
+## Deux applications, trois zones : Schub, PremadeLab, common
 
-L'outil LoL deviendra une application à part entière. En attendant, **la frontière se tient dans ce
-dépôt**, et c'est ESLint qui la tient (`sortieDeLol` et `PORTE_DE_LOL` dans `eslint.config.js`) :
+Schub (l'administration, `schultz-thomas.fr`) et PremadeLab (l'app LoL, `premadelab.eu`) vivent
+dans ce dépôt, sur une base commune. **ESLint tient les pactes** (`pacte(...)` dans `eslint.config.js`) :
 
-- **Tout ce qui est propre au LoL vit dans `src/lol/`** — pages, API, types, composants Riot,
-  emblèmes de rang. Le reste du front n'y entre **que par `src/lol/index.ts`** : cette liste dit ce
-  que Schub lui emprunte, et c'est elle qui se relira le jour de la séparation.
-- **`src/lol/` n'emprunte au reste que les briques communes** — design system, i18n, seo,
-  `routing/`, client HTTP, session et profil. Tout le reste, y compris un fichier Schub ajouté
-  demain, lui est refusé d'office : c'est une liste blanche.
-- **Un bandeau par application.** Schub : Accueil, Serveurs, Configuration. Sous `/lol` : Présentation,
-  Mes stats, Équipes. On passe de l'une à l'autre par **l'icône de profil**, en haut à droite, qui
-  ouvre Mon profil puis les applications. **Mon profil n'a pas de bandeau** : il est commun aux deux,
-  et lui donner celui de la dernière application visitée le rendrait incohérent.
-- Les traductions restent dans `src/locales/` (typées depuis `i18n/resources.ts`) ; le bandeau LoL
-  lit les siennes sous `lol:shell`.
+- `src/schub/` et `src/premadelab/` **n'entrent dans `src/common/` que par `src/common/index.ts`**.
+  Ce fichier est le pacte : un changement de ce qui est partagé se lit dans son diff.
+- **Elles ne s'importent jamais l'une l'autre**, et **`common` n'importe ni l'une ni l'autre.**
+- Un lien de l'une à l'autre est une **URL absolue** (`APP_URLS`, déduites du sous-domaine `dev.` ou
+  de `VITE_SCHUB_URL` / `VITE_PREMADELAB_URL`) : ce sont deux domaines, donc deux sessions.
+- **Deux pages HTML, un build** : `index.html` (Schub) et `premadelab.html`, entrées d'un même
+  `vite build`. nginx choisit la page par le **nom de domaine** (deux blocs `server`), le serveur
+  de dev par un middleware sur l'hôte (`PREMADELAB_HOSTS`). Un seul service front sert donc les deux.
+- **Critère de la séparation** : depuis `index.html`, aucun chunk d'écran LoL n'est atteignable ;
+  depuis `premadelab.html`, aucun écran de configuration. Se vérifie en suivant les imports des
+  chunks de `dist/`, pas en lisant le code.
+- **Mon profil, la connexion et les pages légales sont communs** (`ProfilePage`, `LoginPage`,
+  `TermsPage`, `PrivacyPage` exportés paresseusement par `common`) : chaque application les monte
+  dans ses routes. Le composant de choix d'un compte Riot est commun pour la même raison.
+- **Une identité par application** : `AppThemeProvider brand="premadelab"` change les couleurs
+  (`identities` dans `tokens.ts`), rien d'autre. Un composant qui lit une couleur de marque passe par
+  `useIdentity()` ou `useChartScheme()`, jamais par un import direct de `chartColors`.
+- Les anciennes URL `/lol/…` de Schub redirigent vers la même page de PremadeLab.
+- Les traductions restent dans `src/common/locales/` (typées depuis `i18n/resources.ts`).
 
 ## La coquille
 
@@ -117,7 +124,7 @@ Un écran ne repose ni `ThemeModeToggle`, ni `LanguageSwitcher`, ni `PageBackdro
 il rend un titre et du contenu. `AppShell` ne teste aucune permission — c'est `AppLayout` qui
 
 **La largeur du bandeau est décidée par la coquille de l'application, pas par les écrans.** Dans
-l'application LoL (`src/lol/shell.ts`), `/lol/teams` et `/lol/stats` reçoivent `xl` —
+PremadeLab (`src/premadelab/shell.ts`), `/teams`, `/stats` et `/players` reçoivent `xl` —
 cinq colonnes de statistiques et un tableau de parties deviennent illisibles resserrés dans `lg` ;
 les pages de texte, `/contact` en tête, restent en `lg` parce qu'une ligne de prose trop longue se
 relit mal. Élargir partout aurait échangé un défaut contre un autre.
@@ -133,18 +140,26 @@ décide de ce qu'elle reçoit.
 
 ## Les routes, et ce que chacune coûte à charger
 
+**Schub** (`src/schub/App.tsx`)
+
 | Route | Contenu | Accès |
 |---|---|---|
-| `/` | la page produit de Schub, plus la liste d'onboarding | public, **chargé d'emblée** |
+| `/` | la page produit de Schub, qui renvoie vers ses outils | public, **chargé d'emblée** |
 | `/servers` | l'état des serveurs, et démarrer/arrêter | public, à la demande |
 | `/contact` | le contenu personnel, puis le formulaire en bas | public, à la demande |
 | `/storybook` | le design system | public, **hors du routeur React** (nginx) |
 | `/config/*` | l'administration | connecté + permission, à la demande |
-| `/lol` | la vitrine de l'outil League of Legends | **public**, à la demande |
-| `/lol/teams`, `/lol/teams/:id` | les équipes LoL | connecté, à la demande |
-| `/terms`, `/privacy` | conditions d'utilisation et confidentialité | public, à la demande |
-| `/profile` | Mon profil : Discord, nom, compte Riot — ouvert par l'icône de profil | connecté, à la demande |
-| `/lol/stats` | Mes stats — ses parties, ses champions, ses postes | connecté, à la demande |
+| `/lol/*` | redirection vers la même page de PremadeLab | — |
+
+**PremadeLab** (`src/premadelab/routes.tsx`)
+
+| Route | Contenu | Accès |
+|---|---|---|
+| `/presentation` | la vitrine du produit, lue par l'examinateur de Riot | **public**, à la demande |
+| `/stats` | Mes stats — ses parties, ses champions, ses postes | connecté, à la demande |
+| `/teams`, `/teams/:id` | les équipes | connecté, à la demande |
+
+**Communes** : `/profile` (connecté), `/login`, `/terms`, `/privacy` (publiques).
 
 **Seule la racine est dans le fichier JavaScript initial.** Tout le reste passe par
 `React.lazy` dans `App.tsx`. Un écran neuf s'ajoute de la même façon : une visite sur `/` ne doit
@@ -186,11 +201,11 @@ se retire sans en ajouter une autre.**
 
 ## Les pages de texte, et la mention Riot
 
-**`/lol` est publique, et ce n'est pas un détail d'ergonomie.** Elle servait la liste des équipes
+**La présentation est publique, et ce n'est pas un détail d'ergonomie.** Elle servait la liste des équipes
 derrière une session : un visiteur — l'examinateur du portail développeur de Riot en particulier —
 n'y lisait qu'un écran de connexion, donc rien de ce que le produit fait. Riot écrit noir sur blanc
 « si votre site n'est pas complet, il est peu probable que nous approuvions votre produit ». La
-liste des équipes a donc pris `/lol/teams`, et `/lol` décrit l'outil.
+liste des équipes a donc pris `/teams`, et `/presentation` décrit l'outil.
 
 **Cette page ne décrit que ce qui existe.** La section des limites — historique Riot borné à mille
 parties, aucune moyenne mondiale, aucun sondage de l'historique d'un inconnu, rien en direct — est
@@ -223,7 +238,7 @@ doivent pas disparaître à la prochaine retouche :
 
 ## Les équipes (chantier D)
 
-`/lol/teams` liste mes équipes, `/lol/teams/:id` ouvre la page à quatre panneaux. Deux choses à
+`/teams` liste mes équipes, `/teams/:id` ouvre la page à quatre panneaux. Deux choses à
 ne pas défaire :
 
 - **Ce qu'un écran propose vient des `viewerCanEdit`, `viewerCanEditCompositions` et

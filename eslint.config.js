@@ -18,33 +18,22 @@ const MUI_HORS_DESIGN_SYSTEM = {
     "ou ajoutez-en une (avec sa story) si elle manque.",
 };
 
-// L'application League of Legends deviendra une application à part : la frontière se tient dès maintenant.
-// Le reste du front n'y entre que par src/lol/index.ts…
-const PORTE_DE_LOL = {
-  regex: "(^|/)lol/.",
-  message:
-    "Hors de src/lol/, l'application League of Legends ne s'importe que par son point d'entrée (src/lol/index.ts).",
+// Trois zones, un pacte (src/common/index.ts). Schub et PremadeLab n'entrent dans common que par
+// sa porte d'entrée, ne s'importent jamais l'un l'autre, et common n'importe ni l'un ni l'autre.
+const PORTE_DE_COMMON = {
+  regex: "(^|/)common/.",
+  message: "src/common ne s'importe que par sa porte d'entrée (src/common/index.ts) : c'est le pacte.",
 };
-
-// …et elle n'emprunte au reste que les briques communes, pas ce qui est propre à Schub.
-const COMMUN =
-  "design-system|i18n|seo|routing|api/(httpClient|useRequest|profileApi)|stores/(authStore|profileStore)|types/(permission|profile)";
-const sortieDeLol = (profondeur) => ({
-  files: [`src/lol/${"*/".repeat(profondeur - 1)}*.{ts,tsx}`],
+const vers = (zone) => ({
+  regex: `(^|/)${zone}(/|$)`,
+  message: `Schub et PremadeLab sont deux applications : ${zone} ne s'importe pas d'ici.`,
+});
+const pacte = (fichiers, motifs) => ({
+  files: fichiers,
   rules: {
     "@typescript-eslint/no-restricted-imports": [
       "error",
-      {
-        patterns: [
-          MUI_HORS_DESIGN_SYSTEM,
-          {
-            regex: `^(\\.\\./){${profondeur}}(?!(${COMMUN})(/|$))`,
-            message:
-              "src/lol/ n'emprunte au reste du front que les briques communes (design system, i18n, seo, routing, " +
-              "client HTTP, session, profil). Ce qui est propre à Schub reste hors de sa portée.",
-          },
-        ],
-      },
+      { patterns: [MUI_HORS_DESIGN_SYSTEM, ...motifs] },
     ],
   },
 });
@@ -75,11 +64,13 @@ export default tseslint.config(
       "no-restricted-imports": "off",
       "@typescript-eslint/no-restricted-imports": [
         "error",
-        { patterns: [MUI_HORS_DESIGN_SYSTEM, PORTE_DE_LOL] },
+        { patterns: [MUI_HORS_DESIGN_SYSTEM] },
       ],
     },
   },
-  ...[1, 2, 3, 4].map(sortieDeLol),
+  pacte(["src/schub/**/*.{ts,tsx}"], [PORTE_DE_COMMON, vers("premadelab")]),
+  pacte(["src/premadelab/**/*.{ts,tsx}"], [PORTE_DE_COMMON, vers("schub")]),
+  pacte(["src/common/**/*.{ts,tsx}"], [vers("schub"), vers("premadelab")]),
   {
     files: ["*.config.js", "*.config.ts"],
     languageOptions: {
@@ -87,13 +78,13 @@ export default tseslint.config(
     },
   },
   {
-    files: ["src/stores/**/*.tsx", ".storybook/**/*.{ts,tsx}"],
+    files: ["src/**/stores/**/*.tsx", ".storybook/**/*.{ts,tsx}"],
     rules: {
       "react-refresh/only-export-components": "off",
     },
   },
   {
-    files: ["src/design-system/**/*.{ts,tsx}"],
+    files: ["src/common/design-system/**/*.{ts,tsx}"],
     rules: {
       "@typescript-eslint/no-restricted-imports": "off",
     },
