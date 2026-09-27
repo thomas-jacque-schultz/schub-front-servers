@@ -30,6 +30,11 @@ function LolLandingPage() {
 
   const fonctionnalites = [
     {
+      key: "search",
+      title: t("features.search.title"),
+      body: t("features.search.body"),
+    },
+    {
       key: "roster",
       title: t("features.roster.title"),
       body: t("features.roster.body"),

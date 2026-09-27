@@ -39,4 +39,5 @@ export { RiotAccountPicker } from "./riot/RiotAccountPicker";
 export { RiotDisclaimer } from "./riot/RiotDisclaimer";
 
 export { APP_URLS } from "./apps";
+export { ProductProvider, useProductName } from "./product";
 export { LoginPage, PrivacyPage, ProfilePage, TermsPage } from "./pages";

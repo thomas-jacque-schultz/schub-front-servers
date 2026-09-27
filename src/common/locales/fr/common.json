@@ -59,6 +59,7 @@
     "account": "Compte et applications",
     "apps": "Applications",
     "appSchub": "Schub",
-    "appPremadelab": "PremadeLab"
+    "appPremadelab": "PremadeLab",
+    "configPremadelab": "PremadeLab"
   }
 }

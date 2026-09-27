@@ -89,5 +89,19 @@
       "queue": "Collection queue",
       "empty": "Computation traces will show up here as analyses arrive."
     }
+  },
+  "premadelab": {
+    "title": "PremadeLab",
+    "subtitle": "Settings of the LoL application, managed from Schub.",
+    "loadFailed": "Could not read PremadeLab settings",
+    "saveFailed": "Saving failed",
+    "save": "Save",
+    "saved": "Settings saved.",
+    "budget": {
+      "title": "Player lookup",
+      "description": "A visitor gets this many unknown players collected quickly per window; beyond that, their games trickle in, with no refusal message. Counted per account, or per IP address without an account.",
+      "players": "Unknown players per window",
+      "window": "Window (minutes)"
+    }
   }
 }

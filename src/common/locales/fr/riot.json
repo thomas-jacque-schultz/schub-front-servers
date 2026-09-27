@@ -89,5 +89,19 @@
       "queue": "File de collecte",
       "empty": "Les traces des calculs arriveront ici au fil des analyses."
     }
+  },
+  "premadelab": {
+    "title": "PremadeLab",
+    "subtitle": "Les réglages de l’application LoL, tenus depuis Schub.",
+    "loadFailed": "Impossible de lire les réglages de PremadeLab",
+    "saveFailed": "L’enregistrement a échoué",
+    "save": "Enregistrer",
+    "saved": "Réglages enregistrés.",
+    "budget": {
+      "title": "Recherche de joueurs",
+      "description": "Un visiteur fait collecter vite ce nombre de joueurs inconnus par fenêtre ; au-delà, leurs parties arrivent au compte-gouttes, sans message de refus. Compté par compte, ou par adresse IP sans compte.",
+      "players": "Joueurs inconnus par fenêtre",
+      "window": "Fenêtre (minutes)"
+    }
   }
 }

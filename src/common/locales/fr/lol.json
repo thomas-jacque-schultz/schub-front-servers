@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "Schub pour League of Legends — statistiques, pool de champions et draft d'équipe",
-    "description": "Schub outille une équipe League of Legends : effectif, historique des parties jouées ensemble, statistiques par joueur et par équipe, pool de champions par poste, préparation des compositions et revue d'après-partie."
+    "title": "Présentation de PremadeLab — statistiques, pool de champions et draft d’équipe",
+    "description": "PremadeLab outille une équipe League of Legends : recherche de joueurs, effectif, historique des parties jouées ensemble, statistiques par joueur et par équipe, pool de champions par poste, préparation des compositions et revue d’après-partie."
   },
   "shell": {
     "tagline": "Les stats de ton premade",
@@ -9,18 +9,19 @@
     "stats": "Mes stats",
     "statsLocked": "Liez votre compte Riot pour y accéder",
     "teams": "Équipes",
-    "footerNote": "PremadeLab — les stats et le théorycraft de ton équipe League of Legends"
+    "footerNote": "PremadeLab — les stats et le théorycraft de ton équipe League of Legends",
+    "search": "Rechercher"
   },
   "hero": {
     "eyebrow": "League of Legends",
-    "title": "L'outil d'équipe de Schub",
-    "subtitle": "Constituer un effectif, réunir l'historique des parties jouées ensemble, et s'en servir pour préparer la suivante."
+    "title": "PremadeLab, l’outil de ton premade",
+    "subtitle": "Chercher un joueur, constituer un effectif, réunir l’historique des parties jouées ensemble, et s’en servir pour préparer la suivante."
   },
   "intro": {
     "title": "À quoi ça sert",
-    "p1": "Une équipe amateur joue ensemble sans jamais pouvoir relire ce qu'elle a joué : l'historique du client de jeu est individuel, court, et ne dit rien de ce que le groupe fait quand il est au complet. Schub rassemble ces parties au même endroit et les rend lisibles à l'échelle de l'équipe.",
-    "p2": "Le site sert un usage privé : un petit groupe de joueurs, ses équipes, et le propriétaire du domaine qui l'héberge. Il n'y a ni publicité, ni compte payant, ni classement public.",
-    "p3": "Les données de jeu viennent de l'API de Riot Games. Schub ne lit que des parties déjà publiques, et seulement pour les comptes que leurs propriétaires ont eux-mêmes déclarés."
+    "p1": "Une équipe amateur joue ensemble sans jamais pouvoir relire ce qu’elle a joué : l’historique du client de jeu est individuel, court, et ne dit rien de ce que le groupe fait quand il est au complet. PremadeLab rassemble ces parties au même endroit et les rend lisibles à l’échelle de l’équipe.",
+    "p2": "PremadeLab est gratuit, sans publicité ni compte payant. Chercher un joueur ne demande pas de compte ; monter une équipe, si.",
+    "p3": "Les données de jeu viennent de l’API de Riot Games. PremadeLab ne lit que des parties publiques : celles des comptes que leurs propriétaires ont déclarés, et les dernières parties d’un joueur que quelqu’un recherche."
   },
   "features": {
     "title": "Ce que fait l'outil aujourd'hui",
@@ -31,7 +32,7 @@
     },
     "collect": {
       "title": "Collecter l'historique des parties jouées ensemble",
-      "body": "Une fois un compte déclaré, Schub lit son historique par l'API de Riot et repère les parties où l'équipe était présente. Une partie compte pour l'équipe dès que quatre de ses membres y figurent, toutes files confondues."
+      "body": "Une fois un compte déclaré, PremadeLab lit son historique par l’API de Riot et repère les parties où l’équipe était présente. Une partie compte pour l’équipe dès que quatre de ses membres y figurent, toutes files confondues."
     },
     "playerStats": {
       "title": "Statistiques par joueur",
@@ -43,7 +44,7 @@
     },
     "pool": {
       "title": "Pool de champions par poste",
-      "body": "L'équipe déclare, poste par poste, les champions qu'elle est prête à aligner. Sous chaque champion, Schub montre qui du poste l'a déjà joué et à quel niveau de maîtrise, à partir d'un plancher fixé par l'équipe."
+      "body": "L’équipe déclare, poste par poste, les champions qu’elle est prête à aligner. Sous chaque champion, PremadeLab montre qui du poste l’a déjà joué et à quel niveau de maîtrise, à partir d’un plancher fixé par l’équipe."
     },
     "draft": {
       "title": "Préparation des compositions",
@@ -52,16 +53,20 @@
     "reviews": {
       "title": "Revue d'après-partie",
       "body": "Depuis le tableau des parties, chaque membre reçoit une note écrite rattachée à cette partie-là. Une note par auteur, par joueur et par partie ; elle se modifie, elle ne se double pas."
+    },
+    "search": {
+      "title": "Chercher un joueur",
+      "body": "Un Riot ID suffit : son rang, ses champions les plus maîtrisés, puis les statistiques de ses dix dernières parties, collectées à la demande."
     }
   },
   "limits": {
     "title": "Ce que l'outil ne fait pas",
     "intro": "Dit ici plutôt que découvert à l'usage.",
-    "history": "L'historique servi par Riot est borné à environ mille parties par joueur. Au-delà, Schub n'a rien à lire — seulement ce qu'il a déjà collecté.",
-    "noWorldStats": "Aucune moyenne mondiale, aucun percentile : ces chiffres ne sont pas accessibles et ne sont pas inventés. Un joueur se compare au reste de ses propres parties et à ses coéquipiers.",
-    "noProbe": "Il n'existe aucune façon de consulter l'historique d'un joueur qu'on ne côtoie pas : les statistiques d'un membre ne s'ouvrent que depuis une équipe à laquelle on appartient.",
+    "history": "L’historique servi par Riot est borné à environ mille parties par joueur. Au-delà, PremadeLab n’a rien à lire — seulement ce qu’il a déjà collecté.",
+    "noWorldStats": "Aucune moyenne mondiale : les comparaisons se font aux joueurs du même palier, à partir des parties que PremadeLab a lui-même collectées, et chaque chiffre dit sur combien de parties il porte.",
+    "noProbe": "La page d’un joueur recherché ne montre que ce que Riot rend public : son rang, ses champions et ses parties. Les notes d’équipe, les compositions et les revues restent réservées aux membres de l’équipe.",
     "noLive": "Rien en direct : pas de suivi de partie en cours, pas d'overlay, aucune interaction avec le client de jeu.",
-    "collectTime": "La première collecte prend du temps — le quota de l'API de Riot la limite. L'écran de profil dit où elle en est."
+    "collectTime": "La première collecte prend du temps — le quota de l’API de Riot la limite. L’écran de profil dit où elle en est."
   },
   "access": {
     "title": "Entrer dans l'outil",
@@ -75,8 +80,50 @@
   },
   "legal": {
     "title": "Mentions",
-    "data": "Ce que Schub conserve, combien de temps, et comment en demander la suppression est décrit dans la politique de confidentialité.",
+    "data": "Ce que PremadeLab conserve, combien de temps, et comment en demander la suppression est décrit dans la politique de confidentialité.",
     "terms": "Conditions d'utilisation",
     "privacy": "Politique de confidentialité"
+  },
+  "search": {
+    "metaTitle": "PremadeLab — cherche un joueur League of Legends",
+    "metaDescription": "Cherche un Riot ID : rang, champions et stats de ses dernières parties, puis monte ton premade.",
+    "eyebrow": "PremadeLab",
+    "title": "Cherche un joueur",
+    "subtitle": "Un Riot ID suffit : son rang, ses champions et les stats de ses dernières parties.",
+    "label": "Riot ID",
+    "placeholder": "Pseudo#TAG",
+    "helper": "Le pseudo et le tag, séparés par #.",
+    "invalid": "Il manque le tag : écris-le sous la forme Pseudo#TAG.",
+    "submit": "Voir le joueur",
+    "known": "Joueurs déjà connus",
+    "suggestionMeta_one": "{{count}} partie connue",
+    "suggestionMeta_other": "{{count}} parties connues"
+  },
+  "cta": {
+    "title": "Crée ton premade",
+    "body": "Connecte-toi pour monter ton équipe, tester vos compos et voir ce qui marche à cinq.",
+    "button": "Crée ton premade"
+  },
+  "player": {
+    "eyebrow": "Joueur",
+    "subtitle": "Ce que Riot rend public sur ce compte : rang, champions et parties récentes.",
+    "metaTitle": "{{riotId}} — stats, duos et parties en premade | PremadeLab",
+    "metaDescription": "Rang, champions les plus joués et statistiques des dernières parties de {{riotId}} sur League of Legends.",
+    "loading": "Chargement du joueur",
+    "loadFailed": "Impossible de charger ce joueur",
+    "refreshing": "Mise à jour…",
+    "ranked": "Classement",
+    "masteries": "Champions les plus maîtrisés",
+    "masteryPoints": "{{points}} pts",
+    "collecting": {
+      "title": "Collecte des parties…",
+      "description": "Ses dernières parties arrivent une à une : les statistiques se complètent au fur et à mesure.",
+      "progress": "{{count}} partie(s) sur {{total}}"
+    },
+    "notFound": {
+      "title": "Ce Riot ID n’existe pas",
+      "description": "Riot ne connaît aucun compte à ce nom et ce tag.",
+      "hint": "Vérifie l’orthographe du pseudo et le tag, sans oublier le #."
+    }
   }
 }

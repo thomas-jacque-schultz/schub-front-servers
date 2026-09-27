@@ -17,7 +17,9 @@ export const usePremadeLabShell = (route: string) => {
   const riotLinked = moi ? riotResolu : links.riot;
   const localize = useLocalizedPath();
 
-  const navItems: AppShellNavItem[] = [];
+  const navItems: AppShellNavItem[] = [
+    { key: "search", label: t("shell.search"), to: localize("/") },
+  ];
   if (connected) {
     navItems.push({
       key: "stats",

@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next";
-import { getMyGameDetailApi, getMyGamesApi } from "../../api/statsApi";
 import {
   Alert,
   Card,
@@ -11,20 +10,25 @@ import {
 import { GameDetail } from "./GameDetail";
 import { GameHistoryList } from "./GameHistoryList";
 import { StatsStateNote } from "./StatsStateNote";
+import type { MyGamesDto, TeamGameDetailDto } from "../../types/stats";
 
-export interface MyGamesPanelProps {
-  periode: string;
+export interface GamesPanelProps {
+  /** Clé de cache : change avec le joueur et la période. */
+  requestKey: string;
+  load: () => Promise<MyGamesDto>;
+  loadDetail: (matchId: string) => Promise<TeamGameDetailDto>;
   avatar: string | null;
 }
 
-/** Toutes mes parties, toutes files confondues, comme l'historique d'une équipe dont je serais le seul membre. */
-export function MyGamesPanel({ periode, avatar }: MyGamesPanelProps) {
+/** Toutes les parties d'un joueur, toutes files confondues, comme l'historique d'une équipe dont il serait le seul membre. */
+export function GamesPanel({
+  requestKey,
+  load,
+  loadDetail,
+  avatar,
+}: GamesPanelProps) {
   const { t } = useTranslation("stats");
-  const {
-    data: historique,
-    error,
-    isLoading,
-  } = useRequest(`me/${periode}`, () => getMyGamesApi(periode));
+  const { data: historique, error, isLoading } = useRequest(requestKey, load);
 
   if (isLoading && !historique) {
     return <ProgressBar label={t("loading")} />;
@@ -63,8 +67,8 @@ export function MyGamesPanel({ periode, avatar }: MyGamesPanelProps) {
           showPresence={false}
           renderDetail={(game) => (
             <GameDetail
-              requestKey={`me/${game.matchId}/${periode}`}
-              load={() => getMyGameDetailApi(game.matchId, periode)}
+              requestKey={`${requestKey}/${game.matchId}`}
+              load={() => loadDetail(game.matchId)}
               avatars={avatars}
             />
           )}

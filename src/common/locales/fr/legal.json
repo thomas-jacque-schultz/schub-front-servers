@@ -6,8 +6,8 @@
   },
   "riot": {
     "title": "Mention exigée par Riot Games",
-    "intro": "Riot Games impose à tout produit tiers d'afficher la mention suivante à un endroit visible des joueurs. Elle est reproduite telle quelle, en anglais, parce que c'est sa formulation officielle. Elle dit que Schub n'est pas endossé par Riot Games et ne reflète ni les vues ni les opinions de Riot Games, ni de quiconque participe officiellement à la production ou à la gestion de ses propriétés.",
-    "text": "Schub isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.",
+    "intro": "Riot Games impose à tout produit tiers d'afficher la mention suivante à un endroit visible des joueurs. Elle est reproduite telle quelle, en anglais, parce que c'est sa formulation officielle. Elle dit que {{product}} n'est pas endossé par Riot Games et ne reflète ni les vues ni les opinions de Riot Games, ni de quiconque participe officiellement à la production ou à la gestion de ses propriétés.",
+    "text": "{{product}} isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.",
     "sourceLabel": "Riot Games — General Policies"
   },
   "updated": "Dernière mise à jour : 22 septembre 2026.",

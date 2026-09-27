@@ -30,6 +30,9 @@ const DiscordConfigPage = lazyPage(
 const IngestConfigPage = lazyPage(
   () => import("./pages/config/IngestConfigPage"),
 );
+const PremadeLabConfigPage = lazyPage(
+  () => import("./pages/config/PremadeLabConfigPage"),
+);
 const PortsConfigPage = lazyPage(
   () => import("./pages/config/PortsConfigPage"),
 );
@@ -163,6 +166,14 @@ function LocalizedRoutes() {
               element={
                 <RequirePermission anyOf={["DISCORD_CHANNEL_MANAGE"]}>
                   <DiscordConfigPage />
+                </RequirePermission>
+              }
+            />
+            <Route
+              path="config/premadelab"
+              element={
+                <RequirePermission anyOf={["INGEST_VIEW"]}>
+                  <PremadeLabConfigPage />
                 </RequirePermission>
               }
             />
