@@ -2,7 +2,7 @@ import type { Permission } from "./permission";
 
 export interface UserDto {
   id: string;
-  discordId: string;
+  discordId: string | null;
   discordUsername?: string | null;
   avatarUrl?: string | null;
   roleId?: string | null;
@@ -25,7 +25,10 @@ export interface AssignRoleRequest {
 }
 
 export const riotAccountOf = (user: UserDto): string | null =>
-  user.riotGameName ? `${user.riotGameName}#${user.riotTagLine ?? ""}`.replace(/#$/, "") : null;
+  user.riotGameName
+    ? `${user.riotGameName}#${user.riotTagLine ?? ""}`.replace(/#$/, "")
+    : null;
 
-export const userLabelOf = (user: Pick<UserDto, "id" | "discordUsername">): string =>
-  user.discordUsername?.trim() || user.id;
+export const userLabelOf = (
+  user: Pick<UserDto, "id" | "discordUsername">,
+): string => user.discordUsername?.trim() || user.id;
