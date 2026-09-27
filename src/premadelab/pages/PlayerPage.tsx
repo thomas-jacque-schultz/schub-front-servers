@@ -34,11 +34,12 @@ import { RankedStandings } from "./stats/RankedStandings";
 import { StatsStateNote } from "./stats/StatsStateNote";
 import { useWindowOptions } from "./stats/windows";
 
-const APERCU = 10;
 const POLL_MS = 5_000;
-// La voie lente livre une partie par minute : au-delà, on cesse d'interroger.
+// La voie lente livre une partie par minute : au-delà, on cesse d'interroger. DEMARRAGE : le temps que
+// la demande de collecte soit prise en compte par le connecteur.
 const POLL_MAX_MS = 12 * 60_000;
 const RETRY_MS = 15_000;
+const DEMARRAGE_MS = 10_000;
 
 type Onglet = "overview" | "history";
 
@@ -93,7 +94,10 @@ function PlayerPage() {
     demande.current = slug;
     debut.current = Date.now();
     collectPlayerApi(slug)
-      .then((reponse) => setLane(reponse.lane))
+      .then((reponse) => {
+        setLane(reponse.lane);
+        void reload();
+      })
       // Quota Riot saturé : on redemande plus tard, sans jamais l'annoncer comme un refus.
       .catch(() => {
         setTimeout(() => {
@@ -116,7 +120,7 @@ function PlayerPage() {
   const collecte =
     page !== null &&
     (lane === "FAST" || lane === "SLOW") &&
-    page.knownGames < APERCU &&
+    (page.collecting || Date.now() - debut.current < DEMARRAGE_MS) &&
     Date.now() - debut.current < POLL_MAX_MS;
 
   useEffect(() => {
@@ -193,15 +197,9 @@ function PlayerPage() {
           description={t("player.collecting.description")}
         >
           <Stack spacing={1}>
-            <ProgressBar
-              label={t("player.collecting.title")}
-              value={Math.min(page.knownGames, APERCU) / APERCU}
-            />
+            <ProgressBar label={t("player.collecting.title")} />
             <Text variant="caption" tone="secondary">
-              {t("player.collecting.progress", {
-                count: Math.min(page.knownGames, APERCU),
-                total: APERCU,
-              })}
+              {t("player.collecting.progress", { count: page.knownGames })}
             </Text>
           </Stack>
         </Card>
