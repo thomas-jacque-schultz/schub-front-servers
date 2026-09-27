@@ -1,0 +1,64 @@
+{
+  "app": {
+    "name": "Schub",
+    "tagline": "La boîte à outils de la communauté Miam"
+  },
+  "actions": {
+    "add": "Ajouter",
+    "adding": "Ajout…",
+    "back": "Retour",
+    "cancel": "Annuler",
+    "create": "Créer",
+    "delete": "Supprimer",
+    "refresh": "Actualiser",
+    "save": "Sauvegarder",
+    "validate": "Valider",
+    "confirm": "Confirmer",
+    "close": "Fermer"
+  },
+  "serverStatus": {
+    "online": "En ligne",
+    "offline": "Hors ligne",
+    "unknown": "Inconnu",
+    "unreachable": "Inaccessible"
+  },
+  "theme": {
+    "label": "Thème",
+    "dark": "Sombre",
+    "light": "Clair",
+    "switchToDark": "Passer au thème sombre",
+    "switchToLight": "Passer au thème clair"
+  },
+  "language": {
+    "label": "Langue",
+    "fr": "Français",
+    "en": "English",
+    "switchTo": "Afficher le site en {{language}}"
+  },
+  "loading": "Chargement…",
+  "shell": {
+    "home": "Accueil",
+    "servers": "Serveurs",
+    "configuration": "Configuration",
+    "configServers": "Serveurs",
+    "configPorts": "Ports",
+    "configUsers": "Utilisateurs",
+    "configRoles": "Rôles",
+    "configDiscord": "Salons Discord",
+    "configIngest": "Collecte Riot",
+    "storybook": "Design system",
+    "linkedin": "LinkedIn",
+    "github": "GitHub",
+    "terms": "Conditions d’utilisation",
+    "privacy": "Confidentialité",
+    "footerNote": "Schub — la boîte à outils de la communauté Miam",
+    "contact": "Contact",
+    "profile": "Mon profil",
+    "creator": "Créateur",
+    "feedback": "Feedback",
+    "account": "Compte et applications",
+    "apps": "Applications",
+    "appSchub": "Schub",
+    "appPremadelab": "PremadeLab"
+  }
+}

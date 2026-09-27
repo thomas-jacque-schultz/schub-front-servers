@@ -5,8 +5,8 @@ import { useColorScheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import { MemoryRouter } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { AppThemeProvider } from "../src/design-system";
-import "../src/i18n";
+import { AppThemeProvider } from "../src/common/design-system";
+import "../src/common/i18n";
 
 // withThemeByDataAttribute ne change que l'attribut CSS : sans ceci, theme.palette.mode lu en JS reste sur l'ancien schéma.
 function ColorSchemeSync({ scheme }: { scheme: "light" | "dark" }) {

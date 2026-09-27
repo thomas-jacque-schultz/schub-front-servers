@@ -1,0 +1,117 @@
+import { type ReactNode } from "react";
+import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
+import {
+  Alert,
+  APP_URLS,
+  AppShell,
+  pathWithoutLanguage,
+  Stack,
+  useAuthStore,
+  useCurrentLanguage,
+  useLocalizedNavigate,
+  useLocalizedPath,
+  useProfileStore,
+  type AppShellAccount,
+  type AppShellAccountItem,
+  type AppShellFooterLink,
+} from "../../common";
+import { usePremadeLabShell } from "../shell";
+
+const GITHUB_URL = "https://github.com/thomas-jacque-schultz";
+
+export function PremadeLabLayout({ children }: { children: ReactNode }) {
+  const { t } = useTranslation();
+  const {
+    connected,
+    profile,
+    logout,
+    discordLoginFailed,
+    dismissDiscordLoginFailure,
+  } = useAuthStore();
+  const { profile: moi } = useProfileStore();
+  const localize = useLocalizedPath();
+  const navigate = useLocalizedNavigate();
+  const language = useCurrentLanguage();
+  const { pathname } = useLocation();
+
+  const route = pathWithoutLanguage(pathname);
+  const shell = usePremadeLabShell(route);
+  const surProfil = route === "/profile";
+  const schub = (path: string) =>
+    `${APP_URLS.schub}${language === "en" ? "/en" : ""}${path === "/" ? "" : path}`;
+
+  const applications: AppShellAccountItem[] = [
+    {
+      key: "premadelab",
+      label: t("shell.appPremadelab"),
+      to: localize("/"),
+      current: true,
+    },
+    { key: "schub", label: t("shell.appSchub"), to: "/", href: schub("/") },
+  ];
+  const account: AppShellAccount = connected
+    ? {
+        label: t("shell.account"),
+        caption: profile
+          ? t("connectedAs", { ns: "auth", username: profile.username })
+          : undefined,
+        avatarUrl: moi?.discord.avatarUrl,
+        groups: [
+          [
+            {
+              key: "profile",
+              label: t("shell.profile"),
+              to: localize("/profile"),
+              current: surProfil,
+            },
+          ],
+          applications,
+        ],
+      }
+    : { label: t("shell.apps"), groups: [applications] };
+
+  const footerLinks: AppShellFooterLink[] = [
+    {
+      key: "feedback",
+      label: t("shell.feedback"),
+      href: schub("/contact#feedback"),
+      accent: true,
+    },
+    { key: "terms", label: t("shell.terms"), to: localize("/terms") },
+    { key: "privacy", label: t("shell.privacy"), to: localize("/privacy") },
+    { key: "github", label: t("shell.github"), href: GITHUB_URL },
+  ];
+
+  return (
+    <AppShell
+      brand={t("shell.appPremadelab")}
+      brandTo={shell.brandTo}
+      brandTagline={shell.tagline}
+      maxWidth={shell.maxWidth}
+      navItems={surProfil ? [] : shell.navItems}
+      connected={connected}
+      username={profile?.username}
+      account={account}
+      signInLabel={t("signIn", { ns: "auth" })}
+      signOutLabel={t("logout", { ns: "auth" })}
+      onSignIn={() => navigate("/login")}
+      onSignOut={() => {
+        void logout().then(() => navigate("/", { replace: true }));
+      }}
+      footerLinks={footerLinks}
+      footerNote={t("shell.footerNote", { ns: "lol" })}
+    >
+      {discordLoginFailed ? (
+        <Stack spacing={3}>
+          <Alert severity="warning" onClose={dismissDiscordLoginFailure}>
+            {t("errors.discordAborted", { ns: "auth" })}
+          </Alert>
+          {children}
+        </Stack>
+      ) : (
+        children
+      )}
+    </AppShell>
+  );
+}

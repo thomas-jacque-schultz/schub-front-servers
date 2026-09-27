@@ -49,18 +49,49 @@ const storybookEnDev = () => ({
 });
 import react from "@vitejs/plugin-react";
 
+// Deux applications, un serveur : PremadeLab se reconnaît à son hôte, comme derrière nginx en prod.
+const premadelabHosts = (process.env.PREMADELAB_HOSTS ?? "dev.premadelab.eu,premadelab.localhost")
+  .split(",")
+  .map((host) => host.trim())
+  .filter(Boolean);
+
+const premadelabParHote = () => ({
+  name: "premadelab-par-hote",
+  configureServer(server) {
+    server.middlewares.use((req, _res, next) => {
+      const hote = String(req.headers["x-forwarded-host"] ?? req.headers.host ?? "").split(":")[0];
+      const chemin = (req.url ?? "/").split("?")[0];
+      const page = String(req.headers.accept ?? "").includes("text/html") && !path.extname(chemin);
+      if (page && premadelabHosts.includes(hote)) {
+        req.url = "/premadelab.html";
+      }
+      next();
+    });
+  },
+});
+
 // En prod nginx relaie /api/ vers le BFF sur la même origine ; ce proxy reproduit ce relais en dev.
 const apiProxyTarget = process.env.API_PROXY_TARGET ?? "http://localhost:18082";
 
 // Vite refuse un Host inconnu (403 « Blocked request »). L'Origin, lui, est filtré par le BFF
 // (auth.cors.allowed-origins).
-const allowedHosts = (process.env.DEV_ALLOWED_HOSTS ?? "dev-schub-front,dev.schultz-thomas.fr")
+const allowedHosts = (
+  process.env.DEV_ALLOWED_HOSTS ?? "dev-schub-front,dev.schultz-thomas.fr,dev.premadelab.eu"
+)
   .split(",")
   .map((host) => host.trim())
   .filter(Boolean);
 
 export default defineConfig({
-  plugins: [react(), storybookEnDev()],
+  plugins: [react(), storybookEnDev(), premadelabParHote()],
+  build: {
+    rollupOptions: {
+      input: {
+        schub: path.join(racineProjet, "index.html"),
+        premadelab: path.join(racineProjet, "premadelab.html"),
+      },
+    },
+  },
   server: {
     allowedHosts,
     proxy: {
