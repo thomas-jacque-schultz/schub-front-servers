@@ -69,6 +69,12 @@ export default defineConfig({
         changeOrigin: true,
         // Même réécriture que nginx (/api/ → /).
         rewrite: (path) => path.replace(/^\/api/, ""),
+        // changeOrigin réécrit Host : le BFF reconnaît le front à cet en-tête.
+        configure: (proxy) => {
+          proxy.on("proxyReq", (proxyReq, req) => {
+            if (req.headers.host) proxyReq.setHeader("X-Forwarded-Host", req.headers.host);
+          });
+        },
       },
     },
   },
