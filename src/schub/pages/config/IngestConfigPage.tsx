@@ -21,6 +21,7 @@ import {
   useAuthStore,
   useLocaleFormat,
 } from "../../../common";
+import { AugurTrace } from "../../components/AugurTrace";
 import type {
   CrawlerDto,
   IngestCountsDto,
@@ -277,7 +278,11 @@ function IngestConfigPage() {
                   },
                 ]}
               />
-              <Text tone="secondary">{t("ingest.debug.empty")}</Text>
+              {can("INGEST_MANAGE") ? (
+                <AugurTrace />
+              ) : (
+                <Text tone="secondary">{t("ingest.debug.empty")}</Text>
+              )}
             </Stack>
           </Disclosure>
         </>

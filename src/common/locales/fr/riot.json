@@ -103,5 +103,56 @@
       "players": "Joueurs inconnus par fenêtre",
       "window": "Fenêtre (minutes)"
     }
+  },
+  "augur": {
+    "title": "Règles du moteur de constats",
+    "description": "Chaque règle lit des signaux (valeur ou centile du palier) et produit un constat avec sa preuve. Une version active ne change jamais : écris un brouillon, mesure ce qu’il changerait, puis active-le. Chaque geste porte un commentaire.",
+    "failed": "L’opération a échoué",
+    "empty": "Aucune règle",
+    "label": "Règle",
+    "key": "Clé",
+    "scope": "Portée",
+    "scopes": {
+      "GAME": "Une partie",
+      "HABIT": "Habitude"
+    },
+    "version": "Version",
+    "status": {
+      "DRAFT": "brouillon",
+      "ACTIVE": "active",
+      "RETIRED": "retirée"
+    },
+    "open": "Ouvrir",
+    "new": "Nouvelle règle",
+    "history": "Historique",
+    "content": "Contenu de la version",
+    "contentHelp": "Conditions en rampes : de « from » (degré 0) à « to » (degré 1). unit : VALUE ou PERCENTILE. Un signal « pattern:clé » lit le degré d’une autre règle. Phrase : {signal.value}, {signal.percentile}, {position}, {tier}.",
+    "comment": "Commentaire",
+    "commentHelp": "Pourquoi cette version : obligatoire pour enregistrer, activer ou revenir en arrière.",
+    "invalidJson": "Le contenu n’est pas un JSON valide.",
+    "saveDraft": "Enregistrer le brouillon",
+    "drafted": "Brouillon enregistré.",
+    "impact": "Mesurer l’impact",
+    "measured": "Impact mesuré sur un échantillon de sujets déjà évalués.",
+    "activate": "Activer ce brouillon",
+    "activated": "Version active : ses constats se recalculent en tâche de fond.",
+    "rollback": "Revenir à la version précédente",
+    "rolledBack": "Version précédente réactivée.",
+    "sampled": "Sujets échantillonnés",
+    "appearing": "Constats qui apparaissent",
+    "disappearing": "Constats qui disparaissent",
+    "unchanged": "Inchangés"
+  },
+  "trace": {
+    "title": "Trace du moteur",
+    "description": "Toutes les règles actives évaluées sur un joueur (ses habitudes) ou sur une de ses parties, émises ou non : de quoi régler les seuils.",
+    "riotId": "Riot ID",
+    "matchId": "Partie (facultatif)",
+    "run": "Tracer",
+    "failed": "Trace indisponible",
+    "empty": "Aucune règle évaluée",
+    "pattern": "Règle",
+    "degree": "Degré",
+    "conditions": "Conditions (observé [rampe] = degré)"
   }
 }

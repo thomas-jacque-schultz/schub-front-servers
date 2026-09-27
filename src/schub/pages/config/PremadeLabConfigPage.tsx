@@ -16,6 +16,7 @@ import {
   getPremadeLabSettingsApi,
   updatePremadeLabSettingsApi,
 } from "../../api/premadelabApi";
+import { PatternEditor } from "../../components/PatternEditor";
 
 /** La configuration de PremadeLab, tenue depuis Schub. */
 function PremadeLabConfigPage() {
@@ -115,6 +116,7 @@ function PremadeLabConfigPage() {
           </Stack>
         </Card>
       )}
+      {can("AUGUR_PATTERN_EDIT") && <PatternEditor />}
     </Stack>
   );
 }
