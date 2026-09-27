@@ -58,6 +58,16 @@ interface MetricDefinition {
   polarity: "higher" | "lower" | "neutral";
 }
 
+// Écarts à l'adversaire direct : leur moyenne vaut zéro par construction. Jamais notés contre les autres,
+// lus contre soi-même (Schub#12).
+export const SOMME_NULLE: MetricKey[] = [
+  "goldDiffAt15",
+  "csDiffAt15",
+  "xpDiffAt15",
+  "killsDiffAt15",
+  "platesDiff",
+];
+
 export const KPI_ORDER: MetricKey[] = [
   "winRate",
   "kda",

@@ -513,5 +513,14 @@
     "tierEstimated": "Rang estimé d'après le lobby de la partie : {{tier}}.",
     "noMetrics": "Les chiffres de cette partie ne sont pas encore calculés.",
     "rankHelper": "Rang : le palier dont la moyenne par partie, au même poste, est la plus proche de la valeur — seulement pour les stats qui montent avec le rang. Les autres (KDA, morts, écarts à 15 min…) se disent en « top x % » de votre palier. Un tiret : pas encore assez de parties pour le dire."
+  },
+  "conclusion": {
+    "better": "Mieux que {{part}} % des {{position}} {{tier}}.",
+    "worse": "En dessous de {{part}} % des {{position}} {{tier}}.",
+    "trend": {
+      "up": "En progrès : {{now}} ce mois-ci, contre {{before}} le mois d’avant.",
+      "down": "En recul : {{now}} ce mois-ci, contre {{before}} le mois d’avant.",
+      "stable": "Stable : {{now}} ce mois-ci, {{before}} le mois d’avant."
+    }
   }
 }

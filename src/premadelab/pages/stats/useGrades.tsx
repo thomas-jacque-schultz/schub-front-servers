@@ -2,10 +2,11 @@ import type { ReactNode } from "react";
 import type { RadarReferencesDto, StatLineDto } from "../../types/stats";
 import { type Grade, noter } from "./grading";
 import { GradeLabel, LevelCrest, type LevelCrestProps } from "./LevelCrest";
-import { type MetricKey, useMetrics } from "./metrics";
+import { type MetricKey, SOMME_NULLE, useMetrics } from "./metrics";
 import { useReferenceGrid } from "./useReferenceGrid";
 
 const PARTIES_MINIMUM = 5;
+
 const METRIQUES_A_TIMELINE: MetricKey[] = [
   "goldDiffAt15",
   "csDiffAt15",
@@ -31,6 +32,10 @@ export const useGrades = (
 
   const grade = (key: MetricKey): Grade | null => {
     if (!grille || !ligne || !references || ligne.games < PARTIES_MINIMUM) {
+      return null;
+    }
+    // Un écart à l'adversaire direct ne se note pas contre les autres : leur moyenne vaut zéro (Schub#12).
+    if (SOMME_NULLE.includes(key)) {
       return null;
     }
     if (

@@ -3,12 +3,15 @@ import { Card, Columns, Frame, ScoreRow, Stack, Text } from "../../../common";
 import type { RadarReferencesDto, StatLineDto } from "../../types/stats";
 import { FAMILLES, useMetrics } from "./metrics";
 import { useStatsFormat } from "./statsFormat";
+import { useKpiSentence } from "./kpiSentence";
 import { useGrades } from "./useGrades";
 
 export interface GameAnalysisProps {
   overall: StatLineDto;
   references: RadarReferencesDto | null | undefined;
   positions: StatLineDto[];
+  /** Pour lire les écarts à somme nulle contre soi-même, d'un mois sur l'autre. */
+  months?: StatLineDto[];
 }
 
 /**
@@ -19,11 +22,13 @@ export function GameAnalysis({
   overall,
   references,
   positions,
+  months = [],
 }: GameAnalysisProps) {
   const { t } = useTranslation("stats");
   const format = useStatsFormat();
   const { tuiles } = useMetrics();
   const grades = useGrades(references, positions);
+  const conclusion = useKpiSentence(references, positions, months);
 
   return (
     <Card
@@ -80,7 +85,11 @@ export function GameAnalysis({
                         key={ligne.key}
                         label={ligne.label}
                         value={ligne.value}
-                        hint={ligne.hint}
+                        hint={
+                          conclusion(
+                            ligne.key as (typeof famille.metrics)[number],
+                          ) ?? ligne.hint
+                        }
                         score={rang}
                         scoreLabel={
                           rang === null
