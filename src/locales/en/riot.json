@@ -70,6 +70,24 @@
       "storage": "Riot database size",
       "storageValue": "{{used}} of {{threshold}}",
       "storageHint": "Past the threshold, background collection suspends itself."
+    },
+    "summary": {
+      "title": "What the collection produced",
+      "description": "Games and profiles, not tasks: one game produces up to four tasks.",
+      "kind": "",
+      "retrieved": "Retrieved",
+      "retrievedHint": "Stored in the database: a game’s detail, a profile’s history read at least once.",
+      "analysed": "Analysed",
+      "analysedHint": "Ready for computations: no timeline nor rank left to fetch for the game, nothing queued for the profile.",
+      "pending": "Pending",
+      "pendingHint": "In the collection queue, not retrieved yet.",
+      "matches": "Games",
+      "profiles": "Profiles"
+    },
+    "debug": {
+      "title": "Computation debugging",
+      "queue": "Collection queue",
+      "empty": "Computation traces will show up here as analyses arrive."
     }
   }
 }

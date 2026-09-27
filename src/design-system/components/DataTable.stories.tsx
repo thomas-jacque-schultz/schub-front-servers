@@ -84,3 +84,13 @@ export const DansUneCarte: Story = {
 export const LigneEncadree: Story = {
   args: { rowAccent: (ligne: LigneDemo) => ligne.id === "2" },
 };
+
+export const EnTeteExplique: Story = {
+  args: {
+    columns: COLONNES.map((colonne) =>
+      colonne.key === "statut"
+        ? { ...colonne, headerHint: "Dernier état observé par la sonde, toutes les minutes." }
+        : colonne,
+    ),
+  },
+};
