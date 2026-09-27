@@ -124,6 +124,7 @@
       "title": "This Riot ID does not exist",
       "description": "Riot knows no account with this name and tag.",
       "hint": "Check the spelling of the name and the tag, including the #."
-    }
+    },
+    "busy": "Riot is very busy: trying again in a few seconds…"
   }
 }
