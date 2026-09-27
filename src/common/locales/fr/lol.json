@@ -126,6 +126,49 @@
       "description": "Riot ne connaît aucun compte à ce nom et ce tag.",
       "hint": "Vérifie l’orthographe du pseudo et le tag, sans oublier le #."
     },
-    "busy": "Riot est très sollicité : nouvel essai dans quelques secondes…"
+    "busy": "Riot est très sollicité : nouvel essai dans quelques secondes…",
+    "style": "Style de jeu"
+  },
+  "findings": {
+    "title": "Constats",
+    "none": "Rien de marquant ici.",
+    "absent": "non mesuré",
+    "percentile": "{{value}}e centile",
+    "confidence": "Confiance : {{value}} %",
+    "ramp": "0 à {{from}}, pleinement vrai à {{to}}",
+    "role": {
+      "REQUIRED": "Condition",
+      "OPTIONAL": "Renfort",
+      "EXCEPTION": "Exception"
+    }
+  },
+  "behaviour": {
+    "tab": "Comportement",
+    "strengths": "Tes points forts",
+    "weaknesses": "Tes points faibles",
+    "toWork": "À travailler",
+    "toWorkHint": "Les trois constats les plus nets parmi tes faiblesses, classés par confiance. Chacun se déplie sur ce qui le justifie.",
+    "style": "Ton style de jeu",
+    "actions": "Ce que tu fais",
+    "actionsHint": "Tes choix : vision, farm, placement, présence.",
+    "consequences": "Ce qui en découle",
+    "consequencesHint": "Leurs effets : avance en phase de lane, part des dégâts, résultats.",
+    "habits": "Habitudes",
+    "habitsHint": "Ton taux de victoire selon l’heure de la partie, et juste après deux défaites d’affilée.",
+    "slot": {
+      "morning": "Matin (6 h – 12 h)",
+      "afternoon": "Après-midi (12 h – 18 h)",
+      "evening": "Soirée (18 h – minuit)",
+      "night": "Nuit (minuit – 6 h)"
+    },
+    "games_one": "{{count}} partie",
+    "games_other": "{{count}} parties",
+    "afterTwoLosses": "Après deux défaites",
+    "versusAll": "contre {{value}} sur l’ensemble",
+    "nextTier": "Pour passer en {{tier}}",
+    "nextTierHint": "Les indicateurs qui montent avec le rang et où tu es sous la moyenne du palier au-dessus, à ton poste.",
+    "nextTierNone": "À ton poste, tu es déjà au niveau de la moyenne du palier au-dessus sur tous les indicateurs qui suivent le rang.",
+    "gap": "{{metric}} : {{value}}, contre {{target}} en moyenne au palier au-dessus.",
+    "unobservable": "Le gel de vague et le placement en combat ne se lisent pas dans les données de Riot : ils ne sont pas évalués ici."
   }
 }

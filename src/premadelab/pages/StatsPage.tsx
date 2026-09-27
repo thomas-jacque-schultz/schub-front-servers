@@ -23,6 +23,8 @@ import {
   useProfileStore,
   useRequest,
 } from "../../common";
+import { getMyFindingsApi, getMyGameFindingsApi } from "../api/findingsApi";
+import { BehaviourPanel, FindingsSummary } from "./stats/BehaviourPanel";
 import { GamesPanel } from "./stats/GamesPanel";
 import { PlayerStatsView } from "./stats/PlayerStatsView";
 import { StatsStateNote } from "./stats/StatsStateNote";
@@ -30,7 +32,7 @@ import { useWindowOptions } from "./stats/windows";
 
 const INGEST_POLL_MS = 30_000;
 
-type Onglet = "overview" | "history";
+type Onglet = "overview" | "history" | "behaviour";
 
 function StatsPage() {
   const { t } = useTranslation("stats");
@@ -55,6 +57,15 @@ function StatsPage() {
     isLoading: isFetching,
     reload,
   } = useRequest(ouvert ? `me/${periode}` : null, () => getMyStatsApi(periode));
+  const { data: constats } = useRequest(
+    ouvert ? `findings/${periode}` : null,
+    () => getMyFindingsApi(periode),
+  );
+  const { data: parties } = useRequest(
+    ouvert && onglet === "behaviour" ? `me/games/${periode}` : null,
+    () => getMyGamesApi(periode),
+  );
+  const { t: tl } = useTranslation("lol");
 
   useEffect(() => {
     if (!ingestInFlight) {
@@ -140,16 +151,25 @@ function StatsPage() {
         items={[
           { key: "overview", label: t("tabs.overview") },
           { key: "history", label: t("tabs.history") },
+          { key: "behaviour", label: tl("behaviour.tab") },
         ]}
         value={onglet}
         onChange={(key) => setOnglet(key as Onglet)}
         ariaLabel={t("tabs.ariaLabel")}
       >
+        {onglet === "behaviour" && (
+          <BehaviourPanel
+            findings={constats ?? []}
+            stats={stats}
+            games={parties?.games ?? []}
+          />
+        )}
         {onglet === "history" && (
           <GamesPanel
             requestKey={`me/${periode}`}
             load={() => getMyGamesApi(periode)}
             loadDetail={(matchId) => getMyGameDetailApi(matchId, periode)}
+            loadFindings={getMyGameFindingsApi}
             avatar={profile?.discord.avatarUrl ?? null}
           />
         )}
@@ -194,6 +214,7 @@ function StatsPage() {
 
             {stats && overall && stats.state === "STATISTIQUES_CONNUES" && (
               <>
+                <FindingsSummary findings={constats ?? []} />
                 <PlayerStatsView data={stats} />
                 <Divider />
                 <Text variant="caption" tone="secondary">

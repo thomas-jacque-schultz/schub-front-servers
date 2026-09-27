@@ -10,6 +10,7 @@ import {
 import { GameDetail } from "./GameDetail";
 import { GameHistoryList } from "./GameHistoryList";
 import { StatsStateNote } from "./StatsStateNote";
+import type { FindingDto } from "../../types/findings";
 import type { MyGamesDto, TeamGameDetailDto } from "../../types/stats";
 
 export interface GamesPanelProps {
@@ -17,6 +18,7 @@ export interface GamesPanelProps {
   requestKey: string;
   load: () => Promise<MyGamesDto>;
   loadDetail: (matchId: string) => Promise<TeamGameDetailDto>;
+  loadFindings?: (matchId: string) => Promise<FindingDto[]>;
   avatar: string | null;
 }
 
@@ -25,6 +27,7 @@ export function GamesPanel({
   requestKey,
   load,
   loadDetail,
+  loadFindings,
   avatar,
 }: GamesPanelProps) {
   const { t } = useTranslation("stats");
@@ -69,6 +72,9 @@ export function GamesPanel({
             <GameDetail
               requestKey={`${requestKey}/${game.matchId}`}
               load={() => loadDetail(game.matchId)}
+              loadFindings={
+                loadFindings ? () => loadFindings(game.matchId) : undefined
+              }
               avatars={avatars}
             />
           )}
