@@ -25,3 +25,15 @@ export interface CrawlerDto {
   lastRoundAt: string | null;
   lastRoundAccounts: number;
 }
+
+export interface IngestCountsDto {
+  retrieved: number;
+  analysed: number;
+  pending: number;
+}
+
+export interface IngestSummaryDto {
+  available: boolean;
+  matches: IngestCountsDto;
+  profiles: IngestCountsDto;
+}

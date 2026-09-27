@@ -70,6 +70,24 @@
       "storage": "Volume de la base Riot",
       "storageValue": "{{used}} sur {{threshold}}",
       "storageHint": "Au-delà du seuil, la collecte de fond se suspend d'elle-même."
+    },
+    "summary": {
+      "title": "Ce que la collecte a produit",
+      "description": "Des parties et des profils, pas des tâches : une partie produit jusqu’à quatre tâches.",
+      "kind": "",
+      "retrieved": "Récupérés",
+      "retrievedHint": "Stockés dans la base : le détail d’une partie, l’historique relevé au moins une fois d’un profil.",
+      "analysed": "Analysés",
+      "analysedHint": "Prêts pour les calculs : plus aucune timeline ni aucun rang en attente pour la partie, plus rien en file pour le profil.",
+      "pending": "En attente",
+      "pendingHint": "Dans la file de collecte, pas encore récupérés.",
+      "matches": "Parties",
+      "profiles": "Profils"
+    },
+    "debug": {
+      "title": "Débogage des calculs",
+      "queue": "File de collecte",
+      "empty": "Les traces des calculs arriveront ici au fil des analyses."
     }
   }
 }

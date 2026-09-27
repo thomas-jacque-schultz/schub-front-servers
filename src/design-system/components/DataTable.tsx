@@ -1,4 +1,5 @@
 import { type ReactNode } from "react";
+import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -7,10 +8,13 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { typographyTokens } from "../tokens";
 import { EmptyState } from "./EmptyState";
+import { Tooltip } from "./Tooltip";
 
 export interface DataTableColumn<Row> {
   key: string;
   header: string;
+  /** Définition de la colonne, en infobulle sur son en-tête. */
+  headerHint?: string;
   align?: "left" | "center" | "right";
   width?: number | string;
   render: (row: Row) => ReactNode;
@@ -81,7 +85,22 @@ export function DataTable<Row>({
                   textOverflow: "ellipsis",
                 }}
               >
-                {column.header}
+                {column.headerHint ? (
+                  <Tooltip title={column.headerHint}>
+                    <Box
+                      component="span"
+                      sx={{
+                        borderBottom: 1,
+                        borderBottomStyle: "dotted",
+                        cursor: "help",
+                      }}
+                    >
+                      {column.header}
+                    </Box>
+                  </Tooltip>
+                ) : (
+                  column.header
+                )}
               </TableCell>
             ))}
           </TableRow>
@@ -93,7 +112,11 @@ export function DataTable<Row>({
               hover
               sx={
                 rowAccent?.(row)
-                  ? { outline: "1px solid", outlineColor: "primary.main", outlineOffset: "-1px" }
+                  ? {
+                      outline: "1px solid",
+                      outlineColor: "primary.main",
+                      outlineOffset: "-1px",
+                    }
                   : undefined
               }
             >
