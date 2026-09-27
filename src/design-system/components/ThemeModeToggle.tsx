@@ -5,7 +5,11 @@ import Tooltip from "@mui/material/Tooltip";
 import { useColorScheme } from "@mui/material/styles";
 import { useTranslation } from "react-i18next";
 
-export function ThemeModeToggle({ size = "medium" }: { size?: "small" | "medium" }) {
+export function ThemeModeToggle({
+  size = "medium",
+}: {
+  size?: "small" | "medium";
+}) {
   const { mode, systemMode, setMode } = useColorScheme();
   const { t } = useTranslation();
 
@@ -15,12 +19,17 @@ export function ThemeModeToggle({ size = "medium" }: { size?: "small" | "medium"
   }
 
   const next = resolved === "dark" ? "light" : "dark";
-  const label = next === "dark" ? t("theme.switchToDark") : t("theme.switchToLight");
+  const label =
+    next === "dark" ? t("theme.switchToDark") : t("theme.switchToLight");
 
   return (
     <Tooltip title={label}>
       <IconButton size={size} onClick={() => setMode(next)} aria-label={label}>
-        {resolved === "dark" ? <LightModeOutlinedIcon fontSize="small" /> : <DarkModeOutlinedIcon fontSize="small" />}
+        {resolved === "dark" ? (
+          <LightModeOutlinedIcon fontSize="small" />
+        ) : (
+          <DarkModeOutlinedIcon fontSize="small" />
+        )}
       </IconButton>
     </Tooltip>
   );

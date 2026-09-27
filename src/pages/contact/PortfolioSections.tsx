@@ -12,7 +12,11 @@ import {
   Text,
 } from "../../design-system";
 import { PORTFOLIO } from "../../content/portfolio";
-import { useCurrentLanguage, useLocalizedNavigate, useLocalizedPath } from "../../i18n/navigation";
+import {
+  useCurrentLanguage,
+  useLocalizedNavigate,
+  useLocalizedPath,
+} from "../../i18n/navigation";
 
 export function PortfolioSections() {
   const { t } = useTranslation("portfolio");
@@ -25,7 +29,11 @@ export function PortfolioSections() {
     <Stack spacing={4}>
       <Stack direction="responsive" spacing={3} align="start">
         {content.portrait.src && (
-          <Avatar src={content.portrait.src} name={content.portrait.alt} size="medium" />
+          <Avatar
+            src={content.portrait.src}
+            name={content.portrait.alt}
+            size="medium"
+          />
         )}
         <Stack spacing={3}>
           <PageHeader
@@ -52,7 +60,11 @@ export function PortfolioSections() {
         <Text tone="secondary">{content.sections.projects.intro}</Text>
 
         {content.projects.map((project) => (
-          <Card key={project.key} title={project.name} description={project.tagline}>
+          <Card
+            key={project.key}
+            title={project.name}
+            description={project.tagline}
+          >
             <Stack spacing={2}>
               {project.body.map((paragraph, index) => (
                 <Text key={`${project.key}-p${index}`}>{paragraph}</Text>
@@ -69,7 +81,11 @@ export function PortfolioSections() {
                   link.href ? (
                     <Link
                       key={link.key}
-                      href={link.href.startsWith("/") ? localize(link.href) : link.href}
+                      href={
+                        link.href.startsWith("/")
+                          ? localize(link.href)
+                          : link.href
+                      }
                     >
                       {link.label}
                     </Link>
@@ -94,16 +110,25 @@ export function PortfolioSections() {
             {content.experience.map((role, index) => (
               <Stack key={role.key} spacing={2}>
                 {index > 0 && <Divider />}
-                <Stack direction="responsive" spacing={2} justify="between" align="start">
+                <Stack
+                  direction="responsive"
+                  spacing={2}
+                  justify="between"
+                  align="start"
+                >
                   <Stack spacing={0.5}>
                     <Text variant="subtitle">{role.title}</Text>
                     <Text variant="caption" tone="secondary">
                       {role.organisation} · {role.place}
                     </Text>
-                    {role.summary && <Text variant="caption">{role.summary}</Text>}
+                    {role.summary && (
+                      <Text variant="caption">{role.summary}</Text>
+                    )}
                   </Stack>
                   <Stack direction="row" spacing={1} align="center">
-                    {role.current && <Chip tone="primary" label={t("currentRole")} />}
+                    {role.current && (
+                      <Chip tone="primary" label={t("currentRole")} />
+                    )}
                     <Text variant="caption" tone="secondary">
                       {role.period}
                     </Text>
@@ -135,7 +160,9 @@ export function PortfolioSections() {
               <Chip
                 key={entry.key}
                 variant="outline"
-                label={entry.level ? `${entry.name} — ${entry.level}` : entry.name}
+                label={
+                  entry.level ? `${entry.name} — ${entry.level}` : entry.name
+                }
               />
             ))}
           </Stack>

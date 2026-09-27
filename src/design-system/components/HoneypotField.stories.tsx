@@ -7,7 +7,12 @@ import { HoneypotField } from "./HoneypotField";
 const meta = {
   title: "Primitives/HoneypotField",
   component: HoneypotField,
-  args: { name: "website", value: "", onChange: () => {}, label: "Ne pas remplir" },
+  args: {
+    name: "website",
+    value: "",
+    onChange: () => {},
+    label: "Ne pas remplir",
+  },
 } satisfies Meta<typeof HoneypotField>;
 
 export default meta;
@@ -19,12 +24,14 @@ export const Invisible: Story = {
     return (
       <Stack spacing={2}>
         <Typography variant="body2">
-          Un champ visible, pour comparer. Le leurre est juste en dessous, hors de l&apos;écran.
+          Un champ visible, pour comparer. Le leurre est juste en dessous, hors
+          de l&apos;écran.
         </Typography>
         <input aria-label="Champ visible" placeholder="Champ visible" />
         <HoneypotField {...args} value={value} onChange={setValue} />
         <Typography variant="caption" color="text.secondary">
-          Valeur du leurre : {value === "" ? "(vide — un humain)" : `« ${value} » — rejeté`}
+          Valeur du leurre :{" "}
+          {value === "" ? "(vide — un humain)" : `« ${value} » — rejeté`}
         </Typography>
       </Stack>
     );

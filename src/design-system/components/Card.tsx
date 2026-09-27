@@ -26,7 +26,9 @@ export function Card({
 
   return (
     <MuiCard sx={minHeight ? { minHeight } : undefined}>
-      <CardContent sx={disablePadding ? { p: 0, "&:last-child": { pb: 0 } } : undefined}>
+      <CardContent
+        sx={disablePadding ? { p: 0, "&:last-child": { pb: 0 } } : undefined}
+      >
         <Stack spacing={2}>
           {hasHeader && (
             <Stack
@@ -47,7 +49,11 @@ export function Card({
                   </Typography>
                 )}
               </Stack>
-              {actions && <Stack direction="row" spacing={1}>{actions}</Stack>}
+              {actions && (
+                <Stack direction="row" spacing={1}>
+                  {actions}
+                </Stack>
+              )}
             </Stack>
           )}
           {children}

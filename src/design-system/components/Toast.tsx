@@ -10,7 +10,13 @@ export interface ToastProps {
   autoHideMs?: number;
 }
 
-export function Toast({ open, message, severity = "success", onClose, autoHideMs = 4000 }: ToastProps) {
+export function Toast({
+  open,
+  message,
+  severity = "success",
+  onClose,
+  autoHideMs = 4000,
+}: ToastProps) {
   return (
     <Snackbar
       open={open}
@@ -18,7 +24,12 @@ export function Toast({ open, message, severity = "success", onClose, autoHideMs
       onClose={onClose}
       anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
     >
-      <MuiAlert severity={severity} variant="filled" onClose={onClose} role="status">
+      <MuiAlert
+        severity={severity}
+        variant="filled"
+        onClose={onClose}
+        role="status"
+      >
         {message}
       </MuiAlert>
     </Snackbar>

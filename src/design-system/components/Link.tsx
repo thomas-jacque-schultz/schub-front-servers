@@ -10,7 +10,12 @@ export interface LinkProps {
   tone?: "default" | "muted";
 }
 
-export function Link({ href, children, external, tone = "default" }: LinkProps) {
+export function Link({
+  href,
+  children,
+  external,
+  tone = "default",
+}: LinkProps) {
   const goesOutside = external ?? /^https?:\/\//.test(href);
 
   if (goesOutside) {

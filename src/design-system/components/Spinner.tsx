@@ -12,5 +12,7 @@ const SIZE: Record<NonNullable<SpinnerProps["size"]>, number> = {
 };
 
 export function Spinner({ label, size = "medium" }: SpinnerProps) {
-  return <CircularProgress size={SIZE[size]} role="status" aria-label={label} />;
+  return (
+    <CircularProgress size={SIZE[size]} role="status" aria-label={label} />
+  );
 }

@@ -47,7 +47,12 @@ export const Melange: Story = {
   args: {
     items: [
       { key: "a", label: "Compte de jeu lié", state: "done" },
-      { key: "b", label: "Choisir son nom d'affichage", state: "todo", href: "/profil" },
+      {
+        key: "b",
+        label: "Choisir son nom d'affichage",
+        state: "todo",
+        href: "/profil",
+      },
     ],
   },
 };

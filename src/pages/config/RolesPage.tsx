@@ -26,7 +26,8 @@ interface PermissionRow {
 }
 
 const sameSet = (left: Permission[], right: Permission[]): boolean =>
-  left.length === right.length && left.every((permission) => right.includes(permission));
+  left.length === right.length &&
+  left.every((permission) => right.includes(permission));
 
 function RolesPage() {
   const { t } = useTranslation("roles");
@@ -44,9 +45,15 @@ function RolesPage() {
     try {
       const loaded = await getRolesApi();
       setRoles(loaded);
-      setDraft(Object.fromEntries(loaded.map((role) => [role.id, [...role.permissions]])));
+      setDraft(
+        Object.fromEntries(
+          loaded.map((role) => [role.id, [...role.permissions]]),
+        ),
+      );
     } catch (loadError) {
-      setError(loadError instanceof Error ? loadError.message : t("errors.loadFailed"));
+      setError(
+        loadError instanceof Error ? loadError.message : t("errors.loadFailed"),
+      );
     } finally {
       setIsLoading(false);
     }
@@ -63,7 +70,9 @@ function RolesPage() {
 
   const changedRoles = useMemo(
     () =>
-      editableRoles.filter((role) => !sameSet(draft[role.id] ?? [], role.permissions)),
+      editableRoles.filter(
+        (role) => !sameSet(draft[role.id] ?? [], role.permissions),
+      ),
     [draft, editableRoles],
   );
 
@@ -95,7 +104,9 @@ function RolesPage() {
         ),
       );
       setRoles((current) =>
-        current.map((role) => saved.find((updated) => updated.id === role.id) ?? role),
+        current.map(
+          (role) => saved.find((updated) => updated.id === role.id) ?? role,
+        ),
       );
       setDraft((current) => {
         const next = { ...current };
@@ -106,21 +117,29 @@ function RolesPage() {
       });
       setToast(t("feedback.saved"));
     } catch (saveError) {
-      setError(saveError instanceof Error ? saveError.message : t("feedback.saveFailed"));
+      setError(
+        saveError instanceof Error
+          ? saveError.message
+          : t("feedback.saveFailed"),
+      );
     } finally {
       setIsSaving(false);
     }
   };
 
   const onReset = () => {
-    setDraft(Object.fromEntries(roles.map((role) => [role.id, [...role.permissions]])));
+    setDraft(
+      Object.fromEntries(roles.map((role) => [role.id, [...role.permissions]])),
+    );
   };
 
   const columns: Array<DataTableColumn<PermissionRow>> = [
     {
       key: "permission",
       header: t("table.permission"),
-      render: (row) => <Text variant="caption">{t(`permissions.${row.permission}`)}</Text>,
+      render: (row) => (
+        <Text variant="caption">{t(`permissions.${row.permission}`)}</Text>
+      ),
     },
     ...roles.map((role) => ({
       key: role.id,
@@ -156,7 +175,11 @@ function RolesPage() {
             >
               {t("actions.reset")}
             </Button>
-            <Button onClick={onSave} disabled={changedRoles.length === 0} loading={isSaving}>
+            <Button
+              onClick={onSave}
+              disabled={changedRoles.length === 0}
+              loading={isSaving}
+            >
               {t("actions.save")}
             </Button>
           </>
@@ -190,7 +213,11 @@ function RolesPage() {
         </Card>
       )}
 
-      <Toast open={Boolean(toast)} message={toast} onClose={() => setToast("")} />
+      <Toast
+        open={Boolean(toast)}
+        message={toast}
+        onClose={() => setToast("")}
+      />
     </Stack>
   );
 }

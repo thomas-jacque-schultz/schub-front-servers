@@ -9,7 +9,11 @@ export interface StatusChipProps {
   size?: "small" | "medium";
 }
 
-export function StatusChip({ status, label, size = "medium" }: StatusChipProps) {
+export function StatusChip({
+  status,
+  label,
+  size = "medium",
+}: StatusChipProps) {
   const { t } = useTranslation();
   const text = label ?? t(`serverStatus.${status}`);
 

@@ -36,14 +36,24 @@ function Swatch({ name, value }: { name: string; value: string }) {
       <Typography variant="caption" fontWeight={600}>
         {name}
       </Typography>
-      <Typography variant="caption" color="text.secondary" sx={{ fontFamily: typographyTokens.monospaceFontFamily }}>
+      <Typography
+        variant="caption"
+        color="text.secondary"
+        sx={{ fontFamily: typographyTokens.monospaceFontFamily }}
+      >
         {value}
       </Typography>
     </Stack>
   );
 }
 
-function PaletteBoard({ title, palette }: { title: string; palette: typeof darkPalette }) {
+function PaletteBoard({
+  title,
+  palette,
+}: {
+  title: string;
+  palette: typeof darkPalette;
+}) {
   return (
     <Card title={title}>
       <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
@@ -64,14 +74,20 @@ function PaletteBoard({ title, palette }: { title: string; palette: typeof darkP
 export const Marque: Story = {
   render: () => (
     <Stack spacing={3}>
-      <Card title="Or" description="L'accent. Rare par principe : l'action principale, la marque d'un graphique, les liserés.">
+      <Card
+        title="Or"
+        description="L'accent. Rare par principe : l'action principale, la marque d'un graphique, les liserés."
+      >
         <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
           <Swatch name="goldBright" value={brand.goldBright} />
           <Swatch name="gold" value={brand.gold} />
           <Swatch name="goldDeep" value={brand.goldDeep} />
         </Stack>
       </Card>
-      <Card title="Prune" description="Le volume : fonds, halos, surfaces, second rôle.">
+      <Card
+        title="Prune"
+        description="Le volume : fonds, halos, surfaces, second rôle."
+      >
         <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
           <Swatch name="pruneBright" value={brand.pruneBright} />
           <Swatch name="prune" value={brand.prune} />
@@ -79,20 +95,46 @@ export const Marque: Story = {
           <Swatch name="pruneInk" value={brand.pruneInk} />
         </Stack>
       </Card>
-      <Card title="Noir" description="Violacé et non bleuté : c'est ce qui le met dans la même famille que la prune.">
+      <Card
+        title="Noir"
+        description="Violacé et non bleuté : c'est ce qui le met dans la même famille que la prune."
+      >
         <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
           <Swatch name="obsidian" value={brand.obsidian} />
         </Stack>
       </Card>
-      <Card title="Fonds de page" description="Deux halos dans les angles, et la trame par-dessus (posée par PageBackdrop).">
+      <Card
+        title="Fonds de page"
+        description="Deux halos dans les angles, et la trame par-dessus (posée par PageBackdrop)."
+      >
         <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
           <Stack spacing={0.5} sx={{ width: 320 }}>
-            <Box sx={{ height: 160, borderRadius: `${radii.lg}px`, border: "1px solid", borderColor: "divider", background: backdrops.dark.page }} />
-            <Typography variant="caption" fontWeight={600}>backdrops.dark.page</Typography>
+            <Box
+              sx={{
+                height: 160,
+                borderRadius: `${radii.lg}px`,
+                border: "1px solid",
+                borderColor: "divider",
+                background: backdrops.dark.page,
+              }}
+            />
+            <Typography variant="caption" fontWeight={600}>
+              backdrops.dark.page
+            </Typography>
           </Stack>
           <Stack spacing={0.5} sx={{ width: 320 }}>
-            <Box sx={{ height: 160, borderRadius: `${radii.lg}px`, border: "1px solid", borderColor: "divider", background: backdrops.light.page }} />
-            <Typography variant="caption" fontWeight={600}>backdrops.light.page</Typography>
+            <Box
+              sx={{
+                height: 160,
+                borderRadius: `${radii.lg}px`,
+                border: "1px solid",
+                borderColor: "divider",
+                background: backdrops.light.page,
+              }}
+            />
+            <Typography variant="caption" fontWeight={600}>
+              backdrops.light.page
+            </Typography>
           </Stack>
         </Stack>
       </Card>
@@ -112,9 +154,18 @@ function contraste(a: string, b: string): number {
   return (clair + 0.05) / (sombre + 0.05);
 }
 
-function LigneContraste({ nom, avant, arriere }: { nom: string; avant: string; arriere: string }) {
+function LigneContraste({
+  nom,
+  avant,
+  arriere,
+}: {
+  nom: string;
+  avant: string;
+  arriere: string;
+}) {
   const ratio = contraste(avant, arriere);
-  const verdict = ratio >= 4.5 ? "AA" : ratio >= 3 ? "AA gros seulement" : "insuffisant";
+  const verdict =
+    ratio >= 4.5 ? "AA" : ratio >= 3 ? "AA gros seulement" : "insuffisant";
   return (
     <Stack direction="row" spacing={2} alignItems="center">
       <Box
@@ -138,13 +189,25 @@ function LigneContraste({ nom, avant, arriere }: { nom: string; avant: string; a
       </Typography>
       <Typography
         variant="body2"
-        sx={{ fontFamily: typographyTokens.monospaceFontFamily, width: 72, textAlign: "right" }}
+        sx={{
+          fontFamily: typographyTokens.monospaceFontFamily,
+          width: 72,
+          textAlign: "right",
+        }}
       >
         {ratio.toFixed(2)}:1
       </Typography>
       <Typography
         variant="caption"
-        sx={{ width: 150, color: ratio >= 4.5 ? "success.main" : ratio >= 3 ? "warning.main" : "error.main" }}
+        sx={{
+          width: 150,
+          color:
+            ratio >= 4.5
+              ? "success.main"
+              : ratio >= 3
+                ? "warning.main"
+                : "error.main",
+        }}
       >
         {verdict}
       </Typography>
@@ -157,25 +220,85 @@ export const Contrastes: Story = {
     <Stack spacing={3}>
       <Card title="Schéma sombre">
         <Stack spacing={1}>
-          <LigneContraste nom="primary (or) sur le fond" avant={darkPalette.primary.main} arriere={darkPalette.background.default} />
-          <LigneContraste nom="texte du bouton primaire" avant={darkPalette.primary.contrastText} arriere={darkPalette.primary.main} />
-          <LigneContraste nom="texte du bouton secondaire" avant={darkPalette.secondary.contrastText} arriere={darkPalette.secondary.main} />
-          <LigneContraste nom="text.primary" avant={darkPalette.text.primary} arriere={darkPalette.background.default} />
-          <LigneContraste nom="text.secondary" avant={darkPalette.text.secondary} arriere={darkPalette.background.default} />
-          <LigneContraste nom="text.disabled" avant={darkPalette.text.disabled} arriere={darkPalette.background.default} />
-          <LigneContraste nom="success" avant={darkPalette.success.main} arriere={darkPalette.background.default} />
-          <LigneContraste nom="warning (orange, pas ambre)" avant={darkPalette.warning.main} arriere={darkPalette.background.default} />
-          <LigneContraste nom="error" avant={darkPalette.error.main} arriere={darkPalette.background.default} />
-          <LigneContraste nom="info" avant={darkPalette.info.main} arriere={darkPalette.background.default} />
+          <LigneContraste
+            nom="primary (or) sur le fond"
+            avant={darkPalette.primary.main}
+            arriere={darkPalette.background.default}
+          />
+          <LigneContraste
+            nom="texte du bouton primaire"
+            avant={darkPalette.primary.contrastText}
+            arriere={darkPalette.primary.main}
+          />
+          <LigneContraste
+            nom="texte du bouton secondaire"
+            avant={darkPalette.secondary.contrastText}
+            arriere={darkPalette.secondary.main}
+          />
+          <LigneContraste
+            nom="text.primary"
+            avant={darkPalette.text.primary}
+            arriere={darkPalette.background.default}
+          />
+          <LigneContraste
+            nom="text.secondary"
+            avant={darkPalette.text.secondary}
+            arriere={darkPalette.background.default}
+          />
+          <LigneContraste
+            nom="text.disabled"
+            avant={darkPalette.text.disabled}
+            arriere={darkPalette.background.default}
+          />
+          <LigneContraste
+            nom="success"
+            avant={darkPalette.success.main}
+            arriere={darkPalette.background.default}
+          />
+          <LigneContraste
+            nom="warning (orange, pas ambre)"
+            avant={darkPalette.warning.main}
+            arriere={darkPalette.background.default}
+          />
+          <LigneContraste
+            nom="error"
+            avant={darkPalette.error.main}
+            arriere={darkPalette.background.default}
+          />
+          <LigneContraste
+            nom="info"
+            avant={darkPalette.info.main}
+            arriere={darkPalette.background.default}
+          />
         </Stack>
       </Card>
       <Card title="Schéma clair">
         <Stack spacing={1}>
-          <LigneContraste nom="primary (prune) sur papier" avant={lightPalette.primary.main} arriere={lightPalette.background.paper} />
-          <LigneContraste nom="secondary (or profond) sur papier" avant={lightPalette.secondary.main} arriere={lightPalette.background.paper} />
-          <LigneContraste nom="text.primary" avant={lightPalette.text.primary} arriere={lightPalette.background.default} />
-          <LigneContraste nom="text.secondary" avant={lightPalette.text.secondary} arriere={lightPalette.background.default} />
-          <LigneContraste nom="or de marque sur blanc — doit rester rouge" avant={brand.gold} arriere={lightPalette.background.paper} />
+          <LigneContraste
+            nom="primary (prune) sur papier"
+            avant={lightPalette.primary.main}
+            arriere={lightPalette.background.paper}
+          />
+          <LigneContraste
+            nom="secondary (or profond) sur papier"
+            avant={lightPalette.secondary.main}
+            arriere={lightPalette.background.paper}
+          />
+          <LigneContraste
+            nom="text.primary"
+            avant={lightPalette.text.primary}
+            arriere={lightPalette.background.default}
+          />
+          <LigneContraste
+            nom="text.secondary"
+            avant={lightPalette.text.secondary}
+            arriere={lightPalette.background.default}
+          />
+          <LigneContraste
+            nom="or de marque sur blanc — doit rester rouge"
+            avant={brand.gold}
+            arriere={lightPalette.background.paper}
+          />
         </Stack>
       </Card>
     </Stack>
@@ -186,7 +309,10 @@ export const Palettes: Story = {
   render: () => (
     <Stack spacing={3}>
       <PaletteBoard title="Palette sombre (canonique)" palette={darkPalette} />
-      <PaletteBoard title="Palette claire (alternative)" palette={lightPalette} />
+      <PaletteBoard
+        title="Palette claire (alternative)"
+        palette={lightPalette}
+      />
     </Stack>
   ),
 };
@@ -226,7 +352,14 @@ export const Espacements: Story = {
             <Typography variant="caption" sx={{ width: 96 }}>
               spacing({step})
             </Typography>
-            <Box sx={{ height: 12, width: step * spacingUnit, bgcolor: "primary.main", borderRadius: 1 }} />
+            <Box
+              sx={{
+                height: 12,
+                width: step * spacingUnit,
+                bgcolor: "primary.main",
+                borderRadius: 1,
+              }}
+            />
             <Typography variant="caption" color="text.secondary">
               {step * spacingUnit}px
             </Typography>
@@ -250,7 +383,9 @@ export const Ombres: Story = {
                 borderRadius: `${radii.md}px`,
                 bgcolor: "background.paper",
                 boxShadow:
-                  theme.palette.mode === "light" ? elevations.light[name] : elevations.dark[name],
+                  theme.palette.mode === "light"
+                    ? elevations.light[name]
+                    : elevations.dark[name],
               })}
             />
             <Typography variant="caption">{name}</Typography>
@@ -265,13 +400,16 @@ export const Typographie: Story = {
   render: () => (
     <Card title="Typographie">
       <Stack spacing={1.5}>
-        <Typography variant="overline" color="primary">Surtitre</Typography>
+        <Typography variant="overline" color="primary">
+          Surtitre
+        </Typography>
         <Typography variant="h3">Titre h3</Typography>
         <Typography variant="h4">Titre h4</Typography>
         <Typography variant="h5">Titre h5</Typography>
         <Typography variant="h6">Titre h6</Typography>
         <Typography variant="body1">
-          Corps de texte : interface web pour superviser des instances et suivre leur statut.
+          Corps de texte : interface web pour superviser des instances et suivre
+          leur statut.
         </Typography>
         <Typography variant="body2" color="text.secondary">
           Texte secondaire, pour une précision qui ne doit pas capter le regard.

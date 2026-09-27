@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ChampionSelector, Dialog, EmptyState, Stack, Text } from "../../../design-system";
+import {
+  ChampionSelector,
+  Dialog,
+  EmptyState,
+  Stack,
+  Text,
+} from "../../../design-system";
 import type { ChampionCatalogEntryDto } from "../../types/pool";
 import type { GameRole } from "../../types/team";
 import { selectorEntries } from "./catalog";
@@ -50,7 +56,10 @@ export function ChampionPicker({
     >
       <Stack spacing={2}>
         {catalog.length === 0 ? (
-          <EmptyState title={t("patch.missingTitle")} description={t("picker.catalogEmpty")} />
+          <EmptyState
+            title={t("patch.missingTitle")}
+            description={t("picker.catalogEmpty")}
+          />
         ) : (
           <>
             <Text variant="caption" tone="secondary">

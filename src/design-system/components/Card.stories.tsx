@@ -8,10 +8,12 @@ const meta = {
   component: Card,
   args: {
     title: "Redirections de ports",
-    description: "Ce que le routeur expose. Données d'exemple : rien ici ne vient d'un vrai réseau.",
+    description:
+      "Ce que le routeur expose. Données d'exemple : rien ici ne vient d'un vrai réseau.",
     children: (
       <Typography variant="body2" color="text.secondary">
-        Le contenu de la carte prend place ici : un tableau, un formulaire, une liste.
+        Le contenu de la carte prend place ici : un tableau, un formulaire, une
+        liste.
       </Typography>
     ),
   },
@@ -28,7 +30,11 @@ export const SansEnTete: Story = {
 
 export const AvecActions: Story = {
   args: {
-    actions: <Button size="small" variant="secondary">Actualiser</Button>,
+    actions: (
+      <Button size="small" variant="secondary">
+        Actualiser
+      </Button>
+    ),
   },
 };
 

@@ -51,7 +51,11 @@ export function ChampionSelector({
       onChange(selected.includes(key) ? [] : [key]);
       return;
     }
-    onChange(selected.includes(key) ? selected.filter((k) => k !== key) : [...selected, key]);
+    onChange(
+      selected.includes(key)
+        ? selected.filter((k) => k !== key)
+        : [...selected, key],
+    );
   };
 
   return (

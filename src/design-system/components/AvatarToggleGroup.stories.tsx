@@ -2,7 +2,13 @@ import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { AvatarToggleGroup } from "./AvatarToggleGroup";
 
-const options = ["Joueur A", "Joueur B", "Joueur C", "Joueur D", "Joueur E"].map((name) => ({
+const options = [
+  "Joueur A",
+  "Joueur B",
+  "Joueur C",
+  "Joueur D",
+  "Joueur E",
+].map((name) => ({
   value: name,
   name,
 }));
@@ -10,7 +16,12 @@ const options = ["Joueur A", "Joueur B", "Joueur C", "Joueur D", "Joueur E"].map
 const meta = {
   title: "Formulaires/AvatarToggleGroup",
   component: AvatarToggleGroup,
-  args: { label: "Joueurs affichés", options, values: [], onChange: () => undefined },
+  args: {
+    label: "Joueurs affichés",
+    options,
+    values: [],
+    onChange: () => undefined,
+  },
 } satisfies Meta<typeof AvatarToggleGroup>;
 
 export default meta;

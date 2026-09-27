@@ -6,11 +6,23 @@ import { Icon } from "./Icon";
 const meta = {
   title: "Primitives/Chip",
   component: Chip,
-  args: { label: "Permanente", tone: "primary", variant: "filled", size: "small" },
+  args: {
+    label: "Permanente",
+    tone: "primary",
+    variant: "filled",
+    size: "small",
+  },
   argTypes: {
     tone: {
       control: "inline-radio",
-      options: ["neutral", "primary", "secondary", "success", "warning", "error"],
+      options: [
+        "neutral",
+        "primary",
+        "secondary",
+        "success",
+        "warning",
+        "error",
+      ],
     },
     variant: { control: "inline-radio", options: ["filled", "outline"] },
     size: { control: "inline-radio", options: ["small", "medium"] },
@@ -47,6 +59,10 @@ export const LesIntentions: Story = {
 
 export const AvecIcone: Story = {
   render: () => (
-    <Chip label="2 serveurs en ligne sur 5" tone="success" icon={<Icon name="memory" />} />
+    <Chip
+      label="2 serveurs en ligne sur 5"
+      tone="success"
+      icon={<Icon name="memory" />}
+    />
   ),
 };

@@ -12,7 +12,9 @@ const meta = {
     title: "2 guildes disponibles",
     open: true,
     onToggle: () => {},
-    children: <Typography variant="body2">Le contenu du bloc, déplié.</Typography>,
+    children: (
+      <Typography variant="body2">Le contenu du bloc, déplié.</Typography>
+    ),
   },
 } satisfies Meta<typeof Disclosure>;
 

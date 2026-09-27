@@ -12,7 +12,11 @@ import {
   StatTile,
   Text,
 } from "../../../design-system";
-import type { PositionOppositionDto, TeamOppositionDto, TeamRecordDto } from "../../types/stats";
+import type {
+  PositionOppositionDto,
+  TeamOppositionDto,
+  TeamRecordDto,
+} from "../../types/stats";
 import { useRankGap } from "./rank";
 import { StatsStateNote } from "./StatsStateNote";
 import { useStatsFormat } from "./statsFormat";
@@ -24,7 +28,11 @@ export interface OppositionPanelProps {
 }
 
 /** Le niveau adverse : où l'équipe gagne encore, et où elle bute. */
-export function OppositionPanel({ dto, error, isLoading }: OppositionPanelProps) {
+export function OppositionPanel({
+  dto,
+  error,
+  isLoading,
+}: OppositionPanelProps) {
   const { t } = useTranslation("stats");
   const format = useStatsFormat();
   const ecart = useRankGap();
@@ -67,7 +75,12 @@ export function OppositionPanel({ dto, error, isLoading }: OppositionPanelProps)
       render: (l) => {
         const valeur = ecart(l.averageGap);
         return valeur ? (
-          <Chip label={valeur.label} tone={valeur.tone} variant="outline" size="small" />
+          <Chip
+            label={valeur.label}
+            tone={valeur.tone}
+            variant="outline"
+            size="small"
+          />
         ) : (
           format.absent
         );
@@ -124,7 +137,8 @@ export function OppositionPanel({ dto, error, isLoading }: OppositionPanelProps)
 
       {error && <Alert severity="warning">{error}</Alert>}
 
-      {dto.state !== "STATISTIQUES_CONNUES" && dto.state !== "INGESTION_EN_COURS" ? (
+      {dto.state !== "STATISTIQUES_CONNUES" &&
+      dto.state !== "INGESTION_EN_COURS" ? (
         <StatsStateNote state={dto.state} variant="block" />
       ) : dto.gamesWithRanks === 0 ? (
         <Alert severity="info">{t("opposition.pending")}</Alert>
@@ -132,7 +146,10 @@ export function OppositionPanel({ dto, error, isLoading }: OppositionPanelProps)
         <>
           <Text variant="caption" tone="secondary">
             {dto.medianLagDays === null
-              ? t("opposition.coverageNoLag", { withRanks: dto.gamesWithRanks, games: dto.games })
+              ? t("opposition.coverageNoLag", {
+                  withRanks: dto.gamesWithRanks,
+                  games: dto.games,
+                })
               : t("opposition.coverage", {
                   withRanks: dto.gamesWithRanks,
                   games: dto.games,
@@ -143,19 +160,30 @@ export function OppositionPanel({ dto, error, isLoading }: OppositionPanelProps)
           <Columns minWidth={300}>
             <Card
               title={t("opposition.ceiling")}
-              description={t("opposition.ceilingHelper", { count: dto.ceilingMinimumGames })}
+              description={t("opposition.ceilingHelper", {
+                count: dto.ceilingMinimumGames,
+              })}
             >
               <StatTile
                 label={t("opposition.title")}
-                value={dto.ceilingTier ? palier(dto.ceilingTier) : format.absent}
+                value={
+                  dto.ceilingTier ? palier(dto.ceilingTier) : format.absent
+                }
                 hint={
                   dto.ceilingTier
-                    ? t("opposition.ceilingValue", { tier: palier(dto.ceilingTier) })
-                    : t("opposition.ceilingNone", { count: dto.ceilingMinimumGames })
+                    ? t("opposition.ceilingValue", {
+                        tier: palier(dto.ceilingTier),
+                      })
+                    : t("opposition.ceilingNone", {
+                        count: dto.ceilingMinimumGames,
+                      })
                 }
               />
             </Card>
-            <Card title={t("opposition.byGap")} description={t("opposition.byGapHelper")}>
+            <Card
+              title={t("opposition.byGap")}
+              description={t("opposition.byGapHelper")}
+            >
               <Stack spacing={0.75}>
                 {dto.byGap.map((record) => (
                   <MeterBar
@@ -167,7 +195,10 @@ export function OppositionPanel({ dto, error, isLoading }: OppositionPanelProps)
                 ))}
               </Stack>
             </Card>
-            <Card title={t("opposition.byTier")} description={t("opposition.byTierHelper")}>
+            <Card
+              title={t("opposition.byTier")}
+              description={t("opposition.byTierHelper")}
+            >
               <Stack spacing={0.75}>
                 {dto.byEnemyTier.map((record) => (
                   <MeterBar
@@ -181,7 +212,10 @@ export function OppositionPanel({ dto, error, isLoading }: OppositionPanelProps)
             </Card>
           </Columns>
 
-          <Card title={t("opposition.byPosition")} description={t("opposition.byPositionHelper")}>
+          <Card
+            title={t("opposition.byPosition")}
+            description={t("opposition.byPositionHelper")}
+          >
             <DataTable
               columns={colonnes}
               rows={dto.byPosition}

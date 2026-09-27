@@ -12,7 +12,13 @@ const OPTIONS = [
 const meta = {
   title: "Primitives/SelectField",
   component: SelectField,
-  args: { label: "Rôle", value: "r2", options: OPTIONS, fullWidth: true, onChange: () => {} },
+  args: {
+    label: "Rôle",
+    value: "r2",
+    options: OPTIONS,
+    fullWidth: true,
+    onChange: () => {},
+  },
 } satisfies Meta<typeof SelectField>;
 
 export default meta;

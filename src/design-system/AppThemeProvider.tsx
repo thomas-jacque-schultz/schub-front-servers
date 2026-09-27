@@ -11,7 +11,11 @@ export function AppThemeProvider({
   defaultMode?: "light" | "dark" | "system";
 }) {
   return (
-    <ThemeProvider theme={appTheme} defaultMode={defaultMode} modeStorageKey={THEME_MODE_STORAGE_KEY}>
+    <ThemeProvider
+      theme={appTheme}
+      defaultMode={defaultMode}
+      modeStorageKey={THEME_MODE_STORAGE_KEY}
+    >
       <CssBaseline enableColorScheme />
       {children}
     </ThemeProvider>

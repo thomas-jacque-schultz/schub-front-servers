@@ -36,7 +36,11 @@ function ProfilePage() {
 
   return (
     <Stack spacing={3}>
-      <PageHeader eyebrow={t("eyebrow")} title={t("title")} subtitle={t("subtitle")} />
+      <PageHeader
+        eyebrow={t("eyebrow")}
+        title={t("title")}
+        subtitle={t("subtitle")}
+      />
 
       <DiscordCard profile={profile} />
       <DisplayNameCard
@@ -48,7 +52,11 @@ function ProfilePage() {
       />
       <RiotAccountCard profile={profile} onChanged={setProfile} />
 
-      <Toast open={Boolean(toast)} message={toast} onClose={() => setToast("")} />
+      <Toast
+        open={Boolean(toast)}
+        message={toast}
+        onClose={() => setToast("")}
+      />
     </Stack>
   );
 }
@@ -59,7 +67,10 @@ function DiscordCard({ profile }: { profile: ProfileDto }) {
   return (
     <Card title={t("discord.title")} description={t("discord.description")}>
       <Stack direction="responsive" spacing={2} align="center">
-        <Avatar src={profile.discord.avatarUrl} name={profile.discord.username} />
+        <Avatar
+          src={profile.discord.avatarUrl}
+          name={profile.discord.username}
+        />
         <Stack spacing={0.5} fullWidth>
           <Text variant="subtitle">{profile.discord.username}</Text>
           <Text variant="caption" tone="secondary">
@@ -69,7 +80,11 @@ function DiscordCard({ profile }: { profile: ProfileDto }) {
             {t("discord.idHelper")}
           </Text>
         </Stack>
-        <Chip label={`${t("discord.role")} : ${profile.role.name}`} tone="secondary" variant="outline" />
+        <Chip
+          label={`${t("discord.role")} : ${profile.role.name}`}
+          tone="secondary"
+          variant="outline"
+        />
       </Stack>
     </Card>
   );
@@ -96,14 +111,21 @@ function DisplayNameCard({
     try {
       onSaved(await updateDisplayNameApi(value.trim()));
     } catch (saveError) {
-      setError(saveError instanceof Error ? saveError.message : t("displayName.failed"));
+      setError(
+        saveError instanceof Error
+          ? saveError.message
+          : t("displayName.failed"),
+      );
     } finally {
       setIsSaving(false);
     }
   };
 
   return (
-    <Card title={t("displayName.title")} description={t("displayName.description")}>
+    <Card
+      title={t("displayName.title")}
+      description={t("displayName.description")}
+    >
       <Stack spacing={2}>
         {error && <Alert severity="error">{error}</Alert>}
         <TextField
@@ -111,7 +133,9 @@ function DisplayNameCard({
           value={value}
           onChange={setValue}
           error={tooLong}
-          helperText={tooLong ? t("displayName.tooLong") : t("displayName.helper")}
+          helperText={
+            tooLong ? t("displayName.tooLong") : t("displayName.helper")
+          }
         />
         <Stack direction="row" justify="end">
           <Button
@@ -153,27 +177,41 @@ function RiotAccountCard({
   const { riot } = profile;
   const linked = riot.state !== "ABSENT";
 
-  const tone = riot.state === "RESOLU" ? "success" : riot.state === "ABSENT" ? "neutral" : "warning";
+  const tone =
+    riot.state === "RESOLU"
+      ? "success"
+      : riot.state === "ABSENT"
+        ? "neutral"
+        : "warning";
 
   return (
     <Card
       title={t("riot.title")}
       description={t("riot.description")}
       actions={
-        <Button variant={linked ? "secondary" : "primary"} onClick={() => setIsDialogOpen(true)}>
+        <Button
+          variant={linked ? "secondary" : "primary"}
+          onClick={() => setIsDialogOpen(true)}
+        >
           {linked ? t("riot.change.action") : t("riot.link.action")}
         </Button>
       }
     >
       <Stack spacing={2}>
         <Stack direction="row" spacing={1} align="center" wrap>
-          <Chip label={t(`riot.state.${riot.state}`)} tone={tone} variant="outline" />
+          <Chip
+            label={t(`riot.state.${riot.state}`)}
+            tone={tone}
+            variant="outline"
+          />
           {riot.riotId && <Text variant="subtitle">{riot.riotId}</Text>}
         </Stack>
 
         {riot.linkedAt && (
           <Text variant="caption" tone="secondary">
-            {t("riot.linkedAt", { date: formatDateTime(new Date(riot.linkedAt)) })}
+            {t("riot.linkedAt", {
+              date: formatDateTime(new Date(riot.linkedAt)),
+            })}
           </Text>
         )}
 

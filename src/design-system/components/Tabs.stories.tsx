@@ -42,7 +42,8 @@ export const Interactif: Story = {
       return (
         <Tabs {...args} value={actif} onChange={setActif}>
           <Typography variant="body2" color="text.secondary">
-            Panneau de l'onglet « {ITEMS.find((item) => item.key === actif)?.label} ».
+            Panneau de l'onglet «{" "}
+            {ITEMS.find((item) => item.key === actif)?.label} ».
           </Typography>
         </Tabs>
       );

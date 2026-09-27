@@ -39,7 +39,13 @@ export function SelectField({
   const labelId = useId();
 
   return (
-    <FormControl fullWidth={fullWidth} error={error} disabled={disabled} required={required} size={size}>
+    <FormControl
+      fullWidth={fullWidth}
+      error={error}
+      disabled={disabled}
+      required={required}
+      size={size}
+    >
       <InputLabel id={labelId}>{label}</InputLabel>
       <Select
         labelId={labelId}
@@ -48,7 +54,11 @@ export function SelectField({
         onChange={(event) => onChange(String(event.target.value))}
       >
         {options.map((option) => (
-          <MenuItem key={option.value} value={option.value} disabled={option.disabled}>
+          <MenuItem
+            key={option.value}
+            value={option.value}
+            disabled={option.disabled}
+          >
             {option.label}
           </MenuItem>
         ))}

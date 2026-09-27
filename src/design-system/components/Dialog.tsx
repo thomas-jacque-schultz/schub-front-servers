@@ -39,7 +39,9 @@ export function Dialog({
     <MuiDialog open={open} onClose={onClose} fullWidth maxWidth={maxWidth}>
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>
-        {description && <DialogContentText sx={{ mb: 2 }}>{description}</DialogContentText>}
+        {description && (
+          <DialogContentText sx={{ mb: 2 }}>{description}</DialogContentText>
+        )}
         {children}
       </DialogContent>
       <DialogActions>

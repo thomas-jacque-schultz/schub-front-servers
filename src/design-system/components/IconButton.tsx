@@ -32,7 +32,11 @@ export function IconButton({
         color={destructive ? "error" : "default"}
         aria-busy={loading || undefined}
       >
-        {loading ? <Spinner size="small" label={label} /> : <Icon name={icon} size={size} />}
+        {loading ? (
+          <Spinner size="small" label={label} />
+        ) : (
+          <Icon name={icon} size={size} />
+        )}
       </MuiIconButton>
     </Tooltip>
   );

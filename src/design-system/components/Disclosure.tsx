@@ -13,7 +13,13 @@ export interface DisclosureProps {
   children: ReactNode;
 }
 
-export function Disclosure({ title, meta, open, onToggle, children }: DisclosureProps) {
+export function Disclosure({
+  title,
+  meta,
+  open,
+  onToggle,
+  children,
+}: DisclosureProps) {
   return (
     <Accordion
       disableGutters

@@ -8,7 +8,9 @@ export const getChampionPoolApi = async (
 ): Promise<ChampionPoolDto> =>
   requestJson<ChampionPoolDto>(
     `/teams/${teamId}/champion-pool${
-      masteryFloor === null || masteryFloor === undefined ? "" : `?masteryFloor=${masteryFloor}`
+      masteryFloor === null || masteryFloor === undefined
+        ? ""
+        : `?masteryFloor=${masteryFloor}`
     }`,
     { method: "GET" },
   );

@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ApiError } from "../../api/httpClient";
-import { RiotAccountChangeRequired, linkRiotAccountApi } from "../../api/profileApi";
+import {
+  RiotAccountChangeRequired,
+  linkRiotAccountApi,
+} from "../../api/profileApi";
 import { claimTeamsApi, RiotAccountPicker } from "../../lol";
 import { Alert, Button, Dialog, Stack, Text } from "../../design-system";
 import { durationToMinutes } from "./duration";
@@ -22,9 +25,10 @@ export function RiotAccountDialog({
 }: RiotAccountDialogProps) {
   const { t } = useTranslation("profile");
 
-  const [pending, setPending] = useState<{ riotId: string; change: RiotAccountChangeDto } | null>(
-    null,
-  );
+  const [pending, setPending] = useState<{
+    riotId: string;
+    change: RiotAccountChangeDto;
+  } | null>(null);
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
@@ -65,7 +69,9 @@ export function RiotAccountDialog({
     <Dialog
       open={open}
       title={isChange ? t("riot.change.title") : t("riot.link.title")}
-      description={isChange && !pending ? t("riot.change.description") : undefined}
+      description={
+        isChange && !pending ? t("riot.change.description") : undefined
+      }
       cancelLabel={t("actions.cancel", { ns: "common" })}
       confirmLabel={pending ? t("riot.change.confirm") : undefined}
       confirmLoading={isSaving}
@@ -90,7 +96,8 @@ export function RiotAccountDialog({
               </Button>
             </Stack>
             <Text variant="caption" tone="secondary">
-              {t("riot.change.from")} : {currentRiotId} — {t("riot.change.to")} : {pending.riotId}
+              {t("riot.change.from")} : {currentRiotId} — {t("riot.change.to")}{" "}
+              : {pending.riotId}
             </Text>
             <ChangeConsequences change={pending.change} />
           </Stack>
@@ -120,7 +127,9 @@ function ChangeConsequences({ change }: { change: RiotAccountChangeDto }) {
     lines.push(t("riot.change.ingestRestarted"));
   }
   if (change.estimatedMatches > 0) {
-    lines.push(t("riot.change.estimatedMatches", { count: change.estimatedMatches }));
+    lines.push(
+      t("riot.change.estimatedMatches", { count: change.estimatedMatches }),
+    );
   }
   if (minutes !== null && minutes > 0) {
     lines.push(t("riot.change.estimatedDuration", { count: minutes }));
@@ -130,7 +139,9 @@ function ChangeConsequences({ change }: { change: RiotAccountChangeDto }) {
   }
 
   if (lines.length === 0) {
-    return <Alert severity="warning">{t("riot.change.unknownConsequences")}</Alert>;
+    return (
+      <Alert severity="warning">{t("riot.change.unknownConsequences")}</Alert>
+    );
   }
 
   return (

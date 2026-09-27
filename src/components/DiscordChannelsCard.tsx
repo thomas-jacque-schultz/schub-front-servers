@@ -12,7 +12,10 @@ import {
   Stack,
   Text,
 } from "../design-system";
-import type { DiscordChannelSelection, DiscordGuildChannelsDto } from "../types/discord";
+import type {
+  DiscordChannelSelection,
+  DiscordGuildChannelsDto,
+} from "../types/discord";
 
 interface DiscordChannelsCardProps {
   guilds: DiscordGuildChannelsDto[];
@@ -21,7 +24,8 @@ interface DiscordChannelsCardProps {
   onSubmitSelection: (selection: DiscordChannelSelection[]) => Promise<void>;
 }
 
-const channelKey = (guildId: string, channelId: string) => `${guildId}:${channelId}`;
+const channelKey = (guildId: string, channelId: string) =>
+  `${guildId}:${channelId}`;
 
 function DiscordChannelsCard({
   guilds,
@@ -30,7 +34,9 @@ function DiscordChannelsCard({
   onSubmitSelection,
 }: DiscordChannelsCardProps) {
   const { t } = useTranslation("discord");
-  const [selected, setSelected] = useState<Record<string, DiscordChannelSelection>>({});
+  const [selected, setSelected] = useState<
+    Record<string, DiscordChannelSelection>
+  >({});
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [submitError, setSubmitError] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string>("");
@@ -94,7 +100,9 @@ function DiscordChannelsCard({
       setSuccessMessage(t("channels.success"));
     } catch (submitException) {
       setSubmitError(
-        submitException instanceof Error ? submitException.message : t("channels.errors.save"),
+        submitException instanceof Error
+          ? submitException.message
+          : t("channels.errors.save"),
       );
     } finally {
       setIsSubmitting(false);
@@ -108,7 +116,9 @@ function DiscordChannelsCard({
       actions={
         <Chip
           tone="primary"
-          label={t("channels.selectionCount", { count: effectiveSelection.length })}
+          label={t("channels.selectionCount", {
+            count: effectiveSelection.length,
+          })}
         />
       }
     >
@@ -137,7 +147,12 @@ function DiscordChannelsCard({
                         key={channel.id}
                         checked={isChecked(guild.guildId, channel.id)}
                         onChange={(checked) =>
-                          onToggleChannel(guild.guildId, channel.id, channel.name, checked)
+                          onToggleChannel(
+                            guild.guildId,
+                            channel.id,
+                            channel.name,
+                            checked,
+                          )
                         }
                         label={`#${channel.name}`}
                       />

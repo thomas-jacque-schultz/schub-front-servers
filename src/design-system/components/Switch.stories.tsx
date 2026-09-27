@@ -5,7 +5,12 @@ import { Switch } from "./Switch";
 const meta = {
   title: "Primitives/Switch",
   component: Switch,
-  args: { checked: true, label: "Notifications activées", disabled: false, onChange: () => {} },
+  args: {
+    checked: true,
+    label: "Notifications activées",
+    disabled: false,
+    onChange: () => {},
+  },
 } satisfies Meta<typeof Switch>;
 
 export default meta;

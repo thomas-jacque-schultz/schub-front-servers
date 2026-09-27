@@ -32,17 +32,29 @@ export const Rempli: Story = {
 
 export const EnErreur: Story = {
   render: (args) => (
-    <Controlled {...args} value="" error helperText="Ce champ est obligatoire." />
+    <Controlled
+      {...args}
+      value=""
+      error
+      helperText="Ce champ est obligatoire."
+    />
   ),
 };
 
 export const Desactive: Story = {
-  render: (args) => <Controlled {...args} value="serveur-de-demonstration" disabled />,
+  render: (args) => (
+    <Controlled {...args} value="serveur-de-demonstration" disabled />
+  ),
 };
 
 export const LectureSeule: Story = {
   render: (args) => (
-    <Controlled {...args} value="serveur-de-demonstration" readOnly helperText="Fiche en consultation." />
+    <Controlled
+      {...args}
+      value="serveur-de-demonstration"
+      readOnly
+      helperText="Fiche en consultation."
+    />
   ),
 };
 
@@ -61,7 +73,13 @@ export const Multiligne: Story = {
 
 export const ListeDeroulante: Story = {
   render: (args) => (
-    <Controlled {...args} label="Protocole" value="tcp" select helperText={undefined}>
+    <Controlled
+      {...args}
+      label="Protocole"
+      value="tcp"
+      select
+      helperText={undefined}
+    >
       <MenuItem value="tcp">tcp</MenuItem>
       <MenuItem value="udp">udp</MenuItem>
     </Controlled>
@@ -72,7 +90,12 @@ export const UnFormulaire: Story = {
   render: (args) => (
     <Stack spacing={2} sx={{ maxWidth: 480 }}>
       <Controlled {...args} label="Nom" value="serveur-de-demonstration" />
-      <Controlled {...args} label="Jeu" value="Jeu d'exemple" helperText={undefined} />
+      <Controlled
+        {...args}
+        label="Jeu"
+        value="Jeu d'exemple"
+        helperText={undefined}
+      />
       <Controlled
         {...args}
         label="Joueurs max"

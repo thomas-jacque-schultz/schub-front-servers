@@ -10,11 +10,23 @@ export interface EmptyStateProps {
   action?: ReactNode;
 }
 
-export function EmptyState({ title, description, icon, action }: EmptyStateProps) {
+export function EmptyState({
+  title,
+  description,
+  icon,
+  action,
+}: EmptyStateProps) {
   return (
-    <Stack spacing={1.5} alignItems="center" sx={{ py: 5, px: 3, textAlign: "center" }}>
+    <Stack
+      spacing={1.5}
+      alignItems="center"
+      sx={{ py: 5, px: 3, textAlign: "center" }}
+    >
       {icon && (
-        <Box aria-hidden sx={{ color: "text.disabled", display: "flex", fontSize: 40 }}>
+        <Box
+          aria-hidden
+          sx={{ color: "text.disabled", display: "flex", fontSize: 40 }}
+        >
           {icon}
         </Box>
       )}
@@ -22,7 +34,11 @@ export function EmptyState({ title, description, icon, action }: EmptyStateProps
         {title}
       </Typography>
       {description && (
-        <Typography variant="body2" color="text.secondary" sx={{ maxWidth: 420 }}>
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{ maxWidth: 420 }}
+        >
           {description}
         </Typography>
       )}

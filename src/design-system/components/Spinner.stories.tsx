@@ -6,7 +6,9 @@ const meta = {
   title: "Primitives/Spinner",
   component: Spinner,
   args: { label: "Chargement des salons", size: "medium" },
-  argTypes: { size: { control: "inline-radio", options: ["small", "medium", "large"] } },
+  argTypes: {
+    size: { control: "inline-radio", options: ["small", "medium", "large"] },
+  },
 } satisfies Meta<typeof Spinner>;
 
 export default meta;

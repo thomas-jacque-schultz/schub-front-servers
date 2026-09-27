@@ -12,7 +12,10 @@ const meta = {
     children: <Button variant="secondary">Actualiser</Button>,
   },
   argTypes: {
-    placement: { control: "inline-radio", options: ["top", "bottom", "left", "right"] },
+    placement: {
+      control: "inline-radio",
+      options: ["top", "bottom", "left", "right"],
+    },
   },
 } satisfies Meta<typeof Tooltip>;
 

@@ -53,7 +53,11 @@ export const AvecSelection: Story = {
 
     return (
       <Stack sx={{ maxWidth: 480 }}>
-        <ChoiceList {...args} selectedId={selectedId} onSelect={setSelectedId} />
+        <ChoiceList
+          {...args}
+          selectedId={selectedId}
+          onSelect={setSelectedId}
+        />
       </Stack>
     );
   },

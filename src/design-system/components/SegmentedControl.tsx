@@ -14,7 +14,12 @@ export interface SegmentedControlProps {
   onChange: (value: string) => void;
 }
 
-export function SegmentedControl({ label, options, value, onChange }: SegmentedControlProps) {
+export function SegmentedControl({
+  label,
+  options,
+  value,
+  onChange,
+}: SegmentedControlProps) {
   return (
     <ToggleButtonGroup
       exclusive

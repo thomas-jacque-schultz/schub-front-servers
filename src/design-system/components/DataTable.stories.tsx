@@ -14,13 +14,27 @@ interface LigneDemo {
 }
 
 const LIGNES: LigneDemo[] = [
-  { id: "1", nom: "Atelier des dunes", jeu: "Jeu de bac à sable", statut: "online" },
+  {
+    id: "1",
+    nom: "Atelier des dunes",
+    jeu: "Jeu de bac à sable",
+    statut: "online",
+  },
   { id: "2", nom: "Vallée close", jeu: "Jeu de survie", statut: "offline" },
-  { id: "3", nom: "Phare nord", jeu: "Jeu d'exploration", statut: "unreachable" },
+  {
+    id: "3",
+    nom: "Phare nord",
+    jeu: "Jeu d'exploration",
+    statut: "unreachable",
+  },
 ];
 
 const COLONNES = [
-  { key: "nom", header: "Nom", render: (ligne: LigneDemo) => <Text>{ligne.nom}</Text> },
+  {
+    key: "nom",
+    header: "Nom",
+    render: (ligne: LigneDemo) => <Text>{ligne.nom}</Text>,
+  },
   {
     key: "jeu",
     header: "Jeu",
@@ -33,7 +47,9 @@ const COLONNES = [
   {
     key: "statut",
     header: "État",
-    render: (ligne: LigneDemo) => <StatusChip status={ligne.statut} size="small" />,
+    render: (ligne: LigneDemo) => (
+      <StatusChip status={ligne.statut} size="small" />
+    ),
   },
   {
     key: "actions",
@@ -57,7 +73,8 @@ const meta = {
     rowKey: (ligne: LigneDemo) => ligne.id,
     caption: "Serveurs de démonstration",
     emptyTitle: "Aucun serveur",
-    emptyDescription: "Les fiches créées depuis la configuration apparaîtront ici.",
+    emptyDescription:
+      "Les fiches créées depuis la configuration apparaîtront ici.",
     dense: false,
   },
 } satisfies Meta<typeof DataTable<LigneDemo>>;
@@ -73,7 +90,10 @@ export const Vide: Story = { args: { rows: [] } };
 
 export const DansUneCarte: Story = {
   render: (args) => (
-    <Card title="État des serveurs" description="Trois fiches de démonstration.">
+    <Card
+      title="État des serveurs"
+      description="Trois fiches de démonstration."
+    >
       <Stack spacing={0}>
         <DataTable {...args} />
       </Stack>
@@ -89,7 +109,11 @@ export const EnTeteExplique: Story = {
   args: {
     columns: COLONNES.map((colonne) =>
       colonne.key === "statut"
-        ? { ...colonne, headerHint: "Dernier état observé par la sonde, toutes les minutes." }
+        ? {
+            ...colonne,
+            headerHint:
+              "Dernier état observé par la sonde, toutes les minutes.",
+          }
         : colonne,
     ),
   },

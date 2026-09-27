@@ -8,10 +8,19 @@ const meta = {
   component: Stack,
   args: { direction: "column", spacing: 2, children: null },
   argTypes: {
-    direction: { control: "inline-radio", options: ["column", "row", "responsive"] },
+    direction: {
+      control: "inline-radio",
+      options: ["column", "row", "responsive"],
+    },
     spacing: { control: { type: "range", min: 0, max: 6, step: 0.5 } },
-    align: { control: "inline-radio", options: [undefined, "start", "center", "end", "stretch"] },
-    justify: { control: "inline-radio", options: [undefined, "start", "center", "end", "between"] },
+    align: {
+      control: "inline-radio",
+      options: [undefined, "start", "center", "end", "stretch"],
+    },
+    justify: {
+      control: "inline-radio",
+      options: [undefined, "start", "center", "end", "between"],
+    },
   },
 } satisfies Meta<typeof Stack>;
 

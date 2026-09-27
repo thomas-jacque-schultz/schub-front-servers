@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Button, ChampionSelector, Dialog, Stack, Text } from "../../../design-system";
+import {
+  Button,
+  ChampionSelector,
+  Dialog,
+  Stack,
+  Text,
+} from "../../../design-system";
 import type { StatLineDto } from "../../types/stats";
 
 export interface ChampionChoiceProps {
@@ -10,7 +16,12 @@ export interface ChampionChoiceProps {
   defaultCount: number;
 }
 
-export function ChampionChoice({ champions, selected, onChange, defaultCount }: ChampionChoiceProps) {
+export function ChampionChoice({
+  champions,
+  selected,
+  onChange,
+  defaultCount,
+}: ChampionChoiceProps) {
   const { t } = useTranslation("stats");
   const [ouvert, setOuvert] = useState<boolean>(false);
   const [retenus, setRetenus] = useState<string[]>(selected);
@@ -50,7 +61,11 @@ export function ChampionChoice({ champions, selected, onChange, defaultCount }: 
                 : t("championChoice.default", { count: defaultCount })}
             </Text>
             {retenus.length > 0 && (
-              <Button variant="ghost" size="small" onClick={() => setRetenus([])}>
+              <Button
+                variant="ghost"
+                size="small"
+                onClick={() => setRetenus([])}
+              >
                 {t("championChoice.reset")}
               </Button>
             )}

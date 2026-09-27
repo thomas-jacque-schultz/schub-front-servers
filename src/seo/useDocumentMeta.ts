@@ -9,8 +9,14 @@ export interface DocumentMeta {
 
 const MARKER = "data-schub-meta";
 
-const setMeta = (attribute: "name" | "property", key: string, value: string) => {
-  const existing = document.head.querySelector<HTMLMetaElement>(`meta[${attribute}="${key}"]`);
+const setMeta = (
+  attribute: "name" | "property",
+  key: string,
+  value: string,
+) => {
+  const existing = document.head.querySelector<HTMLMetaElement>(
+    `meta[${attribute}="${key}"]`,
+  );
   const node = existing ?? document.createElement("meta");
   node.setAttribute(attribute, key);
   node.setAttribute("content", value);
@@ -43,7 +49,9 @@ export function useDocumentMeta({ title, description, image }: DocumentMeta) {
       setMeta("name", "twitter:image", image);
     }
 
-    const existingCanonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    const existingCanonical = document.head.querySelector<HTMLLinkElement>(
+      'link[rel="canonical"]',
+    );
     const canonical = existingCanonical ?? document.createElement("link");
     canonical.setAttribute("rel", "canonical");
     canonical.setAttribute("href", canonicalUrl);

@@ -119,7 +119,10 @@ export const backdrops: Record<
   },
 };
 
-export const textures: Record<ColorSchemeName, { grid: string; gridSize: number }> = {
+export const textures: Record<
+  ColorSchemeName,
+  { grid: string; gridSize: number }
+> = {
   dark: { grid: "rgba(201, 162, 39, 0.055)", gridSize: 32 },
   light: { grid: "rgba(107, 40, 83, 0.055)", gridSize: 32 },
 };

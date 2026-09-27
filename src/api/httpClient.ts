@@ -22,7 +22,9 @@ interface SessionListeners {
 
 let sessionListeners: SessionListeners = {};
 
-export const configureSessionListeners = (listeners: SessionListeners): (() => void) => {
+export const configureSessionListeners = (
+  listeners: SessionListeners,
+): (() => void) => {
   sessionListeners = listeners;
   return () => {
     sessionListeners = {};

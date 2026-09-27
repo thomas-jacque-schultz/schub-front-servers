@@ -51,7 +51,9 @@ export function MultiSelect({
       noOptionsText={noOptionsText}
       onChange={(_event, next) => onChange(next.map((option) => option.value))}
       getOptionLabel={(option) => option.label}
-      isOptionEqualToValue={(option, candidate) => option.value === candidate.value}
+      isOptionEqualToValue={(option, candidate) =>
+        option.value === candidate.value
+      }
       renderOption={(props, option) => {
         const { key, ...optionProps } = props as typeof props & { key: string };
         return (
@@ -78,7 +80,13 @@ export function MultiSelect({
               key={key}
               {...tagProps}
               size="small"
-              avatar={<Avatar src={option.avatarUrl} name={option.label} size="small" />}
+              avatar={
+                <Avatar
+                  src={option.avatarUrl}
+                  name={option.label}
+                  size="small"
+                />
+              }
               label={option.label}
             />
           );

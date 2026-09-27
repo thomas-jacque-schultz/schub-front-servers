@@ -18,13 +18,18 @@ export const playerColumn = (
   player: PlayerStatsDto,
   { isViewer, showRadar, teamLines, reference }: PlayerColumnOptions,
 ): AlignedColumn => {
-  const connu = player.state === "STATISTIQUES_CONNUES" && player.overall !== null;
+  const connu =
+    player.state === "STATISTIQUES_CONNUES" && player.overall !== null;
   return {
     key: player.memberId,
     sections: [
       <PlayerHeader key="header" player={player} isViewer={isViewer} />,
       <RankedStandings key="ranks" standings={player.rankings} />,
-      connu ? <Tableau key="kpi" player={player} /> : <StatsStateNote key="kpi" state={player.state} />,
+      connu ? (
+        <Tableau key="kpi" player={player} />
+      ) : (
+        <StatsStateNote key="kpi" state={player.state} />
+      ),
       ...(showRadar
         ? [
             connu ? (

@@ -8,7 +8,11 @@ export interface BulletListProps {
   tone?: "default" | "secondary";
 }
 
-export function BulletList({ items, ordered = false, tone = "default" }: BulletListProps) {
+export function BulletList({
+  items,
+  ordered = false,
+  tone = "default",
+}: BulletListProps) {
   return (
     <Box
       component={ordered ? "ol" : "ul"}

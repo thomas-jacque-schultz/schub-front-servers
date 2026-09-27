@@ -53,7 +53,8 @@ const emptyDraft = (): StaticPortRuleDto => ({
   enabled: true,
 });
 
-const portRange = (start: number, end: number) => (start === end ? String(start) : `${start}-${end}`);
+const portRange = (start: number, end: number) =>
+  start === end ? String(start) : `${start}-${end}`;
 
 function PortForwardingCard({
   routerRules,
@@ -131,7 +132,11 @@ function PortForwardingCard({
       setFormError(t("feedback.labelRequired"));
       return;
     }
-    if (!draft.wanPortStart || draft.wanPortStart < 1 || draft.wanPortStart > 65535) {
+    if (
+      !draft.wanPortStart ||
+      draft.wanPortStart < 1 ||
+      draft.wanPortStart > 65535
+    ) {
       setFormError(t("feedback.wanPortInvalid"));
       return;
     }
@@ -161,7 +166,9 @@ function PortForwardingCard({
       await onDelete(row.staticId);
       setNotice(t("feedback.deleted", { label: row.label }));
     } catch (e) {
-      setActionError(e instanceof Error ? e.message : t("feedback.deleteFailed"));
+      setActionError(
+        e instanceof Error ? e.message : t("feedback.deleteFailed"),
+      );
     } finally {
       setDeletingId("");
     }
@@ -189,7 +196,9 @@ function PortForwardingCard({
           <Text variant="caption">{row.label}</Text>
           {!row.onRouter && (
             <Text variant="caption" tone="secondary">
-              {routerError !== null ? t("state.routerUnknown") : t("state.notOnRouter")}
+              {routerError !== null
+                ? t("state.routerUnknown")
+                : t("state.notOnRouter")}
             </Text>
           )}
         </>
@@ -348,14 +357,18 @@ function PortForwardingCard({
               label={t("dialog.fields.wanPort")}
               type="number"
               value={draft.wanPortStart ? String(draft.wanPortStart) : ""}
-              onChange={(value) => setDraft({ ...draft, wanPortStart: Number(value) })}
+              onChange={(value) =>
+                setDraft({ ...draft, wanPortStart: Number(value) })
+              }
               fullWidth
             />
             <TextField
               label={t("dialog.fields.wanPortEnd")}
               type="number"
               value={draft.wanPortEnd != null ? String(draft.wanPortEnd) : ""}
-              onChange={(value) => setDraft({ ...draft, wanPortEnd: value ? Number(value) : null })}
+              onChange={(value) =>
+                setDraft({ ...draft, wanPortEnd: value ? Number(value) : null })
+              }
               helperText={t("dialog.helpers.optional")}
               fullWidth
             />
@@ -372,7 +385,9 @@ function PortForwardingCard({
               label={t("dialog.fields.lanPort")}
               type="number"
               value={draft.lanPort != null ? String(draft.lanPort) : ""}
-              onChange={(value) => setDraft({ ...draft, lanPort: value ? Number(value) : null })}
+              onChange={(value) =>
+                setDraft({ ...draft, lanPort: value ? Number(value) : null })
+              }
               helperText={t("dialog.helpers.lanPort")}
               fullWidth
             />

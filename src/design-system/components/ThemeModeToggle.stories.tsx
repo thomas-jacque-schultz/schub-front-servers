@@ -22,7 +22,8 @@ export const LesDeux: Story = {
   render: () => (
     <Stack spacing={2}>
       <Typography variant="body2" color="text.secondary">
-        Le sélecteur de langue change l'URL : « / » en français, « /en » en anglais.
+        Le sélecteur de langue change l'URL : « / » en français, « /en » en
+        anglais.
       </Typography>
       <Stack direction="row" spacing={1} alignItems="center">
         <ThemeModeToggle />

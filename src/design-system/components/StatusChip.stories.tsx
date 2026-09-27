@@ -7,7 +7,10 @@ const meta = {
   component: StatusChip,
   args: { status: "online", size: "medium" },
   argTypes: {
-    status: { control: "inline-radio", options: ["online", "offline", "unknown", "unreachable"] },
+    status: {
+      control: "inline-radio",
+      options: ["online", "offline", "unknown", "unreachable"],
+    },
     size: { control: "inline-radio", options: ["small", "medium"] },
   },
 } satisfies Meta<typeof StatusChip>;

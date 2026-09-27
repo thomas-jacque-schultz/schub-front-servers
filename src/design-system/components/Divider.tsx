@@ -5,5 +5,7 @@ export interface DividerProps {
 }
 
 export function Divider({ label }: DividerProps) {
-  return <MuiDivider role={label ? "separator" : "presentation"}>{label}</MuiDivider>;
+  return (
+    <MuiDivider role={label ? "separator" : "presentation"}>{label}</MuiDivider>
+  );
 }

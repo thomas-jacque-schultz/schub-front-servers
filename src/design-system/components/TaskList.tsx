@@ -47,7 +47,14 @@ export function TaskList({ items, onSelect, doneLabel }: TaskListProps) {
     <List disablePadding sx={{ display: "grid", gap: 1 }}>
       {items.map((item) => {
         const content = (
-          <Box sx={{ display: "flex", gap: 1.5, alignItems: "flex-start", width: "100%" }}>
+          <Box
+            sx={{
+              display: "flex",
+              gap: 1.5,
+              alignItems: "flex-start",
+              width: "100%",
+            }}
+          >
             <Box sx={{ display: "flex", color: TONES[item.state], mt: 0.25 }}>
               <Icon name={ICONS[item.state]} size="small" />
             </Box>
@@ -59,7 +66,11 @@ export function TaskList({ items, onSelect, doneLabel }: TaskListProps) {
                 {item.label}
               </Typography>
               {item.description && (
-                <Typography variant="caption" color="text.secondary" component="p">
+                <Typography
+                  variant="caption"
+                  color="text.secondary"
+                  component="p"
+                >
                   {item.description}
                 </Typography>
               )}

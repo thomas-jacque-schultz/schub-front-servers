@@ -20,10 +20,18 @@ const normalizeStatus = (rawStatus?: string): ServerStatus => {
   }
 
   const normalized = rawStatus.toLowerCase();
-  if (normalized.includes("up") || normalized.includes("running") || normalized.includes("online")) {
+  if (
+    normalized.includes("up") ||
+    normalized.includes("running") ||
+    normalized.includes("online")
+  ) {
     return "online";
   }
-  if (normalized.includes("down") || normalized.includes("stopped") || normalized.includes("offline")) {
+  if (
+    normalized.includes("down") ||
+    normalized.includes("stopped") ||
+    normalized.includes("offline")
+  ) {
     return "offline";
   }
   if (normalized.includes("unreachable")) {
@@ -36,12 +44,15 @@ const normalizeStatus = (rawStatus?: string): ServerStatus => {
 const toDisplayedServer = (server: GameServerDto): DisplayedServer => ({
   id: server.id,
   slug: server.slug,
-  name: server.name || server.slug || i18n.t("errors.unnamed", { ns: "servers" }),
+  name:
+    server.name || server.slug || i18n.t("errors.unnamed", { ns: "servers" }),
   status: normalizeStatus(server.status),
   lastStatusCheckAt: server.lastStatusCheckAt,
 });
 
-const toPublicDisplayedServer = (server: PublicServerStatusDto): DisplayedServer => ({
+const toPublicDisplayedServer = (
+  server: PublicServerStatusDto,
+): DisplayedServer => ({
   name: server.name || i18n.t("errors.unnamed", { ns: "servers" }),
   status: normalizeStatus(server.status),
 });
@@ -50,9 +61,13 @@ export const getGameServersApi = async (): Promise<GameServerDto[]> =>
   requestJson<GameServerDto[]>("/game-servers", { method: "GET" });
 
 // Le cœur ne résout que l'identifiant Mongo sur GET /game-servers/{id} : la recherche par slug se fait ici.
-export const getGameServerByIdApi = async (id: string): Promise<GameServerDto | null> => {
+export const getGameServerByIdApi = async (
+  id: string,
+): Promise<GameServerDto | null> => {
   const servers = await getGameServersApi();
-  return servers.find((server) => server.id === id || server.slug === id) || null;
+  return (
+    servers.find((server) => server.id === id || server.slug === id) || null
+  );
 };
 
 export const createGameServerApi = async (
@@ -86,11 +101,16 @@ export const getDisplayedServersApi = async (): Promise<DisplayedServer[]> => {
   }
 };
 
-export const getPublicDisplayedServersApi = async (): Promise<DisplayedServer[]> => {
+export const getPublicDisplayedServersApi = async (): Promise<
+  DisplayedServer[]
+> => {
   try {
-    const response = await requestJson<PublicServerStatusDto[]>("/game-servers/public-status", {
-      method: "GET",
-    });
+    const response = await requestJson<PublicServerStatusDto[]>(
+      "/game-servers/public-status",
+      {
+        method: "GET",
+      },
+    );
 
     return response.map(toPublicDisplayedServer);
   } catch (error) {

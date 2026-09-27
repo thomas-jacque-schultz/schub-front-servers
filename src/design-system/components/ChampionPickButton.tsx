@@ -42,7 +42,11 @@ export function ChampionPickButton({
         }}
       >
         {champion ? (
-          <ChampionIcon src={champion.iconUrl} name={champion.name} size={size} />
+          <ChampionIcon
+            src={champion.iconUrl}
+            name={champion.name}
+            size={size}
+          />
         ) : (
           <Box
             sx={{

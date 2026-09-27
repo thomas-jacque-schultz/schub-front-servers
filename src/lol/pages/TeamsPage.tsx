@@ -45,7 +45,9 @@ function TeamsPage() {
     try {
       setTeams(await getMyTeamsApi());
     } catch (loadError) {
-      setError(loadError instanceof Error ? loadError.message : t("errors.loadFailed"));
+      setError(
+        loadError instanceof Error ? loadError.message : t("errors.loadFailed"),
+      );
     } finally {
       setIsLoading(false);
     }
@@ -67,7 +69,9 @@ function TeamsPage() {
       setNewName("");
       navigate(`/lol/teams/${created.id}`);
     } catch (createError) {
-      setError(createError instanceof Error ? createError.message : t("create.failed"));
+      setError(
+        createError instanceof Error ? createError.message : t("create.failed"),
+      );
     } finally {
       setIsSaving(false);
     }
@@ -78,12 +82,20 @@ function TeamsPage() {
     setError("");
     try {
       const claimed = await claimTeamsApi();
-      setToast(claimed.length === 0 ? t("list.claimNone") : t("list.claimDone", { count: claimed.length }));
+      setToast(
+        claimed.length === 0
+          ? t("list.claimNone")
+          : t("list.claimDone", { count: claimed.length }),
+      );
       if (claimed.length > 0) {
         await load();
       }
     } catch (claimError) {
-      setError(claimError instanceof Error ? claimError.message : t("errors.loadFailed"));
+      setError(
+        claimError instanceof Error
+          ? claimError.message
+          : t("errors.loadFailed"),
+      );
     } finally {
       setIsClaiming(false);
     }
@@ -97,7 +109,13 @@ function TeamsPage() {
         <Stack spacing={0.5}>
           <Text>{team.name}</Text>
           <Stack direction="row" spacing={1} wrap>
-            {team.viewerCanEdit && <Chip label={t("list.canEdit")} tone="primary" variant="outline" />}
+            {team.viewerCanEdit && (
+              <Chip
+                label={t("list.canEdit")}
+                tone="primary"
+                variant="outline"
+              />
+            )}
             {!team.viewerCanEdit && team.viewerMemberId && (
               <Chip label={t("list.isMember")} variant="outline" />
             )}
@@ -108,7 +126,11 @@ function TeamsPage() {
     {
       key: "members",
       header: t("list.membersHeader"),
-      render: (team) => <Text tone="secondary">{t("list.memberCount", { count: team.memberCount })}</Text>,
+      render: (team) => (
+        <Text tone="secondary">
+          {t("list.memberCount", { count: team.memberCount })}
+        </Text>
+      ),
     },
     {
       key: "updated",
@@ -125,7 +147,11 @@ function TeamsPage() {
       align: "right",
       width: 160,
       render: (team) => (
-        <Button size="small" variant="secondary" onClick={() => navigate(`/lol/teams/${team.id}`)}>
+        <Button
+          size="small"
+          variant="secondary"
+          onClick={() => navigate(`/lol/teams/${team.id}`)}
+        >
           {t("list.open")}
         </Button>
       ),
@@ -140,10 +166,18 @@ function TeamsPage() {
         subtitle={t("list.subtitle")}
         actions={
           <Stack direction="row" spacing={1} wrap>
-            <Button variant="ghost" onClick={() => void onClaim()} loading={isClaiming}>
+            <Button
+              variant="ghost"
+              onClick={() => void onClaim()}
+              loading={isClaiming}
+            >
               {t("list.claim")}
             </Button>
-            {canCreate && <Button onClick={() => setIsCreating(true)}>{t("create.action")}</Button>}
+            {canCreate && (
+              <Button onClick={() => setIsCreating(true)}>
+                {t("create.action")}
+              </Button>
+            )}
           </Stack>
         }
       />
@@ -189,7 +223,11 @@ function TeamsPage() {
         />
       </Dialog>
 
-      <Toast open={Boolean(toast)} message={toast} onClose={() => setToast("")} />
+      <Toast
+        open={Boolean(toast)}
+        message={toast}
+        onClose={() => setToast("")}
+      />
     </Stack>
   );
 }

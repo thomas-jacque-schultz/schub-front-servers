@@ -30,4 +30,5 @@ export const originOf = (owner?: string | null): PortRuleOrigin => {
   return owner.startsWith(STATIC_OWNER_PREFIX) ? "static" : "server";
 };
 
-export const staticNameOf = (owner: string): string => owner.slice(STATIC_OWNER_PREFIX.length);
+export const staticNameOf = (owner: string): string =>
+  owner.slice(STATIC_OWNER_PREFIX.length);
