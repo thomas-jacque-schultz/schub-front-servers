@@ -124,6 +124,7 @@
       "title": "Ce Riot ID n’existe pas",
       "description": "Riot ne connaît aucun compte à ce nom et ce tag.",
       "hint": "Vérifie l’orthographe du pseudo et le tag, sans oublier le #."
-    }
+    },
+    "busy": "Riot est très sollicité : nouvel essai dans quelques secondes…"
   }
 }

@@ -38,6 +38,7 @@ const APERCU = 10;
 const POLL_MS = 5_000;
 // La voie lente livre une partie par minute : au-delà, on cesse d'interroger.
 const POLL_MAX_MS = 12 * 60_000;
+const RETRY_MS = 15_000;
 
 type Onglet = "overview" | "history";
 
@@ -93,8 +94,24 @@ function PlayerPage() {
     debut.current = Date.now();
     collectPlayerApi(slug)
       .then((reponse) => setLane(reponse.lane))
-      .catch(() => setLane(null));
-  }, [page, slug]);
+      // Quota Riot saturé : on redemande plus tard, sans jamais l'annoncer comme un refus.
+      .catch(() => {
+        setTimeout(() => {
+          demande.current = null;
+          void reload();
+        }, RETRY_MS);
+      });
+  }, [page, slug, reload]);
+
+  const occupe =
+    error instanceof ApiError && (error.status === 429 || error.status === 503);
+  useEffect(() => {
+    if (!occupe) {
+      return;
+    }
+    const timer = setTimeout(() => void reload(), RETRY_MS);
+    return () => clearTimeout(timer);
+  }, [occupe, reload]);
 
   const collecte =
     page !== null &&
@@ -126,10 +143,10 @@ function PlayerPage() {
   }
 
   if (!page) {
-    return error ? (
+    return error && !occupe ? (
       <Alert severity="error">{messageOf(error, t("player.loadFailed"))}</Alert>
     ) : (
-      <ProgressBar label={t("player.loading")} />
+      <ProgressBar label={occupe ? t("player.busy") : t("player.loading")} />
     );
   }
 
