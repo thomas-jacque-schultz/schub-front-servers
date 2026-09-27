@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { SelectField, Stack, Text } from "../../../common";
 import { OppositionPanel } from "./OppositionPanel";
+import { SynergyPanel } from "./SynergyPanel";
 import { TeamEarlyGame } from "./TeamEarlyGame";
 import { TeamLevelCard } from "./TeamLevelCard";
 import { TeamSummary } from "./TeamSummary";
@@ -35,6 +36,10 @@ export function StrategyPanel({ teamId }: StrategyPanelProps) {
       <Stack spacing={2}>
         <Text variant="section">{t("strategy.opposition")}</Text>
         <OppositionPanel {...opposition} />
+      </Stack>
+      <Stack spacing={2}>
+        <Text variant="section">{t("synergy.title")}</Text>
+        <SynergyPanel teamId={teamId} periode={periode} />
       </Stack>
       {opposition.dto?.state === "STATISTIQUES_CONNUES" && (
         <Stack spacing={2}>

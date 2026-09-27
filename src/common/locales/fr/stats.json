@@ -522,5 +522,26 @@
       "down": "En recul : {{now}} ce mois-ci, contre {{before}} le mois d’avant.",
       "stable": "Stable : {{now}} ce mois-ci, {{before}} le mois d’avant."
     }
+  },
+  "synergy": {
+    "title": "Duos et ressources",
+    "duos": "Les duos de l’effectif",
+    "duosHint": "Chaque case : l’écart entre le taux de victoire de la paire et ce qu’on attendrait d’elle (la moyenne de chacun sans l’autre), sur les parties d’équipe. Paires à {{count}} parties ensemble au moins.",
+    "games_one": "{{count}} partie",
+    "games_other": "{{count}} parties",
+    "noDuo": "Aucune paire n’a encore {{count}} parties d’équipe ensemble sur cette période.",
+    "duoUp_one": "{{a}} et {{b}} gagnent {{points}} points de plus qu’attendu ensemble ({{count}} partie).",
+    "duoUp_other": "{{a}} et {{b}} gagnent {{points}} points de plus qu’attendu ensemble ({{count}} parties).",
+    "duoDown_one": "{{a}} et {{b}} gagnent {{points}} points de moins qu’attendu ensemble ({{count}} partie).",
+    "duoDown_other": "{{a}} et {{b}} gagnent {{points}} points de moins qu’attendu ensemble ({{count}} parties).",
+    "resources": "Qui reçoit l’or, et est-ce que ça paie",
+    "resourcesHint": "Part de l’or et des dégâts de l’équipe tenue par chaque poste, en victoire puis en défaite. Toutes files confondues.",
+    "noResources": "Pas encore de partie d’équipe sur cette période.",
+    "position": "Poste",
+    "goldShare": "Or (V / D)",
+    "damageShare": "Dégâts (V / D)",
+    "conversion": "Dégâts − or",
+    "resourceSentence": "Quand votre {{position}} a plus de {{threshold}} de l’or, vous gagnez {{above}} des parties ({{gamesAbove}}) ; en dessous, {{below}} ({{gamesBelow}}).",
+    "notConverting": "Votre {{position}} reçoit plus d’or qu’il ne rend en dégâts."
   }
 }

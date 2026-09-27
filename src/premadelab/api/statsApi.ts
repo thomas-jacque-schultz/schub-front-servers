@@ -10,6 +10,7 @@ import type {
   TeamGamesStatsDto,
   TeamOppositionDto,
   TeamPlayersStatsDto,
+  TeamSynergyDto,
 } from "../types/stats";
 import { fenetreParams, type StatsWindow } from "../pages/stats/windows";
 
@@ -125,3 +126,14 @@ export const getChampionGridApi = async (
   );
   return grille.metrics ? (grille as ChampionGridDto) : null;
 };
+
+export const getTeamSynergyApi = async (
+  teamId: string,
+  periode?: StatsWindow | null,
+): Promise<TeamSynergyDto> =>
+  requestJson<TeamSynergyDto>(
+    `/teams/${teamId}/stats/synergy${fenetre(periode)}`,
+    {
+      method: "GET",
+    },
+  );

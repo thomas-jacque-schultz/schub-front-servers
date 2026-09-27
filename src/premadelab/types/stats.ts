@@ -489,3 +489,40 @@ export interface TeamLevelMetricDto {
   /** Palier dont la moyenne par partie est la plus proche de celle de l’équipe, quand la métrique suit le rang. */
   level: string | null;
 }
+
+export interface DuoDto {
+  memberA: string;
+  nameA: string | null;
+  memberB: string;
+  nameB: string | null;
+  games: number;
+  wins: number;
+  winRate: number | null;
+  /** Moyenne des taux de victoire de chacun sans l'autre, sur les mêmes parties d'équipe. */
+  expected: number | null;
+  delta: number | null;
+}
+
+export interface ResourceDto {
+  position: string;
+  games: number;
+  goldShareInWins: number | null;
+  goldShareInLosses: number | null;
+  damageShareInWins: number | null;
+  damageShareInLosses: number | null;
+  /** Médiane de l'équipe : le seuil vient des données, pas d'une valeur fixe. */
+  goldShareThreshold: number | null;
+  gamesAbove: number;
+  winRateAbove: number | null;
+  gamesBelow: number;
+  winRateBelow: number | null;
+  /** Part des dégâts moins part de l'or : négatif, le poste reçoit plus qu'il ne rend. */
+  conversion: number | null;
+}
+
+export interface TeamSynergyDto {
+  games: number;
+  minimumDuoGames: number;
+  duos: DuoDto[];
+  resources: ResourceDto[];
+}
