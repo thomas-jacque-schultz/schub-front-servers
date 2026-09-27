@@ -118,7 +118,8 @@
     "collecting": {
       "title": "Collecte des parties…",
       "description": "Ses dernières parties arrivent une à une : les statistiques se complètent au fur et à mesure.",
-      "progress": "{{count}} partie(s) sur {{total}}"
+      "progress_one": "{{count}} partie déjà là",
+      "progress_other": "{{count}} parties déjà là"
     },
     "notFound": {
       "title": "Ce Riot ID n’existe pas",

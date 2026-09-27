@@ -118,7 +118,8 @@
     "collecting": {
       "title": "Collecting games…",
       "description": "Their latest games arrive one by one: the stats fill in as they do.",
-      "progress": "{{count}} game(s) out of {{total}}"
+      "progress_one": "{{count}} game already in",
+      "progress_other": "{{count}} games already in"
     },
     "notFound": {
       "title": "This Riot ID does not exist",

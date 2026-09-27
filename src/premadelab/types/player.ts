@@ -16,6 +16,8 @@ export interface SearchedPlayerDto {
   /** Son historique a déjà été relevé : rien à collecter. */
   known: boolean;
   knownGames: number;
+  /** Son aperçu est en cours de collecte : ses dernières parties arrivent. */
+  collecting: boolean;
   rankings: RankedStandingDto[];
   masteries: MasteryDto[];
   stats: MyStatsDto;
