@@ -2,7 +2,9 @@
 // WRITE_DURATIONS_AS_TIMESTAMPS : les deux formes sont lues.
 const ISO_DURATION = /^P(?:(\d+)D)?(?:T(?:(\d+)H)?(?:(\d+)M)?(?:([\d.]+)S)?)?$/;
 
-export const durationToMinutes = (value: string | number | null | undefined): number | null => {
+export const durationToMinutes = (
+  value: string | number | null | undefined,
+): number | null => {
   if (value === null || value === undefined) {
     return null;
   }

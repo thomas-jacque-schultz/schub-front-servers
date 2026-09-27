@@ -62,16 +62,28 @@ export const appTheme = createTheme({
   },
   typography: {
     fontFamily: typographyTokens.fontFamily,
-    h3: { fontWeight: typographyTokens.weights.heavy, letterSpacing: typographyTokens.letterSpacing.tight },
-    h4: { fontWeight: typographyTokens.weights.bold, letterSpacing: typographyTokens.letterSpacing.tight },
-    h5: { fontWeight: typographyTokens.weights.bold, letterSpacing: typographyTokens.letterSpacing.tight },
+    h3: {
+      fontWeight: typographyTokens.weights.heavy,
+      letterSpacing: typographyTokens.letterSpacing.tight,
+    },
+    h4: {
+      fontWeight: typographyTokens.weights.bold,
+      letterSpacing: typographyTokens.letterSpacing.tight,
+    },
+    h5: {
+      fontWeight: typographyTokens.weights.bold,
+      letterSpacing: typographyTokens.letterSpacing.tight,
+    },
     h6: { fontWeight: typographyTokens.weights.medium },
     overline: {
       fontFamily: typographyTokens.monospaceFontFamily,
       letterSpacing: typographyTokens.letterSpacing.wide,
       fontWeight: typographyTokens.weights.medium,
     },
-    button: { textTransform: "none", fontWeight: typographyTokens.weights.bold },
+    button: {
+      textTransform: "none",
+      fontWeight: typographyTokens.weights.bold,
+    },
   },
   components: {
     MuiCssBaseline: {
@@ -153,7 +165,8 @@ export const gridOverlaySx = {
   pointerEvents: "none",
   backgroundImage: trame(textures.dark.grid, textures.dark.gridSize),
   maskImage: "linear-gradient(180deg, rgba(0,0,0,0.9) 0%, transparent 38%)",
-  WebkitMaskImage: "linear-gradient(180deg, rgba(0,0,0,0.9) 0%, transparent 38%)",
+  WebkitMaskImage:
+    "linear-gradient(180deg, rgba(0,0,0,0.9) 0%, transparent 38%)",
   "[data-mui-color-scheme='light'] &": {
     backgroundImage: trame(textures.light.grid, textures.light.gridSize),
   },

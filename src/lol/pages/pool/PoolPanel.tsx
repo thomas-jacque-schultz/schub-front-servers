@@ -49,7 +49,9 @@ export function PoolPanel({ teamId }: PoolPanelProps) {
       setPool(reponse);
       setSaisie(String(reponse.masteryFloor));
     } catch (loadError) {
-      setError(loadError instanceof Error ? loadError.message : t("loadFailed"));
+      setError(
+        loadError instanceof Error ? loadError.message : t("loadFailed"),
+      );
     } finally {
       setIsLoading(false);
     }
@@ -69,7 +71,9 @@ export function PoolPanel({ teamId }: PoolPanelProps) {
       setApercu(null);
       setPosteChoisi(null);
     } catch (saveError) {
-      setError(saveError instanceof Error ? saveError.message : t("saveFailed"));
+      setError(
+        saveError instanceof Error ? saveError.message : t("saveFailed"),
+      );
     } finally {
       setIsSaving(false);
     }
@@ -89,7 +93,9 @@ export function PoolPanel({ teamId }: PoolPanelProps) {
 
   const plancherSaisi = Number(saisie);
   const plancherValide = Number.isFinite(plancherSaisi) && plancherSaisi >= 0;
-  const colonneChoisie = pool.columns.find((colonne) => colonne.role === posteChoisi);
+  const colonneChoisie = pool.columns.find(
+    (colonne) => colonne.role === posteChoisi,
+  );
 
   return (
     <Stack spacing={2}>
@@ -112,18 +118,27 @@ export function PoolPanel({ teamId }: PoolPanelProps) {
           <Button
             disabled={!plancherValide}
             loading={isSaving}
-            onClick={() => void ecrit(() => setPoolMasteryFloorApi(teamId, plancherSaisi))}
+            onClick={() =>
+              void ecrit(() => setPoolMasteryFloorApi(teamId, plancherSaisi))
+            }
           >
             {t("floor.save")}
           </Button>
         )}
-        {pool.patch && <Text variant="caption" tone="secondary">{t("patch.label", { version: pool.patch })}</Text>}
+        {pool.patch && (
+          <Text variant="caption" tone="secondary">
+            {t("patch.label", { version: pool.patch })}
+          </Text>
+        )}
       </Stack>
 
       <Text variant="caption" tone="secondary">
         {pool.masteryFloor === pool.teamMasteryFloor
           ? t("floor.saved", { count: pool.teamMasteryFloor })
-          : t("floor.preview", { count: pool.masteryFloor, team: pool.teamMasteryFloor })}
+          : t("floor.preview", {
+              count: pool.masteryFloor,
+              team: pool.teamMasteryFloor,
+            })}
       </Text>
 
       {error && <Alert severity="warning">{error}</Alert>}
@@ -135,7 +150,9 @@ export function PoolPanel({ teamId }: PoolPanelProps) {
       )}
 
       {pool.columns.every(
-        (colonne) => colonne.champions.length === 0 && colonne.unavailableMembers.length === 0,
+        (colonne) =>
+          colonne.champions.length === 0 &&
+          colonne.unavailableMembers.length === 0,
       ) && pool.catalog.length === 0 ? (
         <Card>
           <EmptyState
@@ -166,11 +183,16 @@ export function PoolPanel({ teamId }: PoolPanelProps) {
         open={posteChoisi !== null}
         role={posteChoisi}
         catalog={pool.catalog}
-        selected={colonneChoisie?.champions.map((champion) => champion.championKey) ?? []}
+        selected={
+          colonneChoisie?.champions.map((champion) => champion.championKey) ??
+          []
+        }
         saving={isSaving}
         onClose={() => setPosteChoisi(null)}
         onConfirm={(cles) =>
-          void ecrit(() => setPoolChampionsApi(teamId, posteChoisi as GameRole, cles))
+          void ecrit(() =>
+            setPoolChampionsApi(teamId, posteChoisi as GameRole, cles),
+          )
         }
       />
     </Stack>
@@ -233,13 +255,18 @@ function PoolColumn({
       )}
 
       {column.unavailableMembers.length > 0 && (
-        <Card title={t("unavailable.title")} description={t("unavailable.description")}>
+        <Card
+          title={t("unavailable.title")}
+          description={t("unavailable.description")}
+        >
           <Stack spacing={0.5}>
             {column.unavailableMembers.map((membre) => (
               <Stack key={membre.memberId} spacing={0}>
                 <Text variant="body">
                   {membre.displayName ?? membre.riotGameName}
-                  {membre.memberId === viewerMemberId ? ` (${t("member.viewer")})` : ""}
+                  {membre.memberId === viewerMemberId
+                    ? ` (${t("member.viewer")})`
+                    : ""}
                 </Text>
                 <PoolStateNote state={membre.state} />
               </Stack>

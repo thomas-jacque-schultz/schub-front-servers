@@ -9,7 +9,13 @@ export interface SwitchProps {
   disabled?: boolean;
 }
 
-export function Switch({ checked, onChange, label, helperText, disabled = false }: SwitchProps) {
+export function Switch({
+  checked,
+  onChange,
+  label,
+  helperText,
+  disabled = false,
+}: SwitchProps) {
   return (
     <FormControlLabel
       control={

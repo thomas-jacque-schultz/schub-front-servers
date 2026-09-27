@@ -36,7 +36,10 @@ export const pathWithoutLanguage = (pathname: string): string => {
   return stripped.startsWith("/") ? stripped : `/${stripped}`;
 };
 
-export const pathForLanguage = (pathname: string, language: AppLanguage): string => {
+export const pathForLanguage = (
+  pathname: string,
+  language: AppLanguage,
+): string => {
   const neutral = pathWithoutLanguage(pathname);
   const prefix = LANGUAGE_PATH_PREFIX[language];
   if (!prefix) {

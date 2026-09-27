@@ -83,7 +83,10 @@ export function GameReviews({ teamId, game }: GameReviewsProps) {
   }, [game, reviews]);
 
   useEffect(() => {
-    if (sujets.length > 0 && !sujets.some((option) => option.value === subject)) {
+    if (
+      sujets.length > 0 &&
+      !sujets.some((option) => option.value === subject)
+    ) {
       setSubject(sujets[0].value);
     }
   }, [sujets, subject]);
@@ -140,116 +143,116 @@ export function GameReviews({ teamId, game }: GameReviewsProps) {
   const peutEcrire = sujets.length > 0;
 
   return (
-      <Stack spacing={2}>
-        <Text variant="section">{t("title")}</Text>
-        <Text variant="caption" tone="secondary">
-          {t("description")}
+    <Stack spacing={2}>
+      <Text variant="section">{t("title")}</Text>
+      <Text variant="caption" tone="secondary">
+        {t("description")}
+      </Text>
+      {isLoading && !reviews && <ProgressBar label={t("loading")} />}
+      {error && <Alert severity="error">{error}</Alert>}
+
+      {reviews && reviews.reviews.length === 0 && (
+        <Text variant="body" tone="secondary">
+          {t("empty")}
         </Text>
-        {isLoading && !reviews && <ProgressBar label={t("loading")} />}
-        {error && <Alert severity="error">{error}</Alert>}
+      )}
 
-        {reviews && reviews.reviews.length === 0 && (
-          <Text variant="body" tone="secondary">
-            {t("empty")}
-          </Text>
-        )}
-
-        {reviews?.reviews.map((review) => (
-          <Card key={review.id}>
-            <Stack spacing={0.5}>
-              <Text variant="subtitle">{review.subjectDisplayName}</Text>
-              <Text variant="caption" tone="secondary">
-                {t("author", {
-                  name: review.authorDisplayName ?? t("unknownAuthor"),
-                })}
-                {" · "}
-                {review.updatedAt !== review.createdAt
-                  ? t("updated", {
-                      date: formatDateTime(new Date(review.updatedAt)),
-                    })
-                  : t("written", {
-                      date: formatDateTime(new Date(review.createdAt)),
-                    })}
-              </Text>
-              <Text variant="body">{review.content}</Text>
-              {review.viewerCanEdit && (
-                <Stack direction="row" spacing={1} wrap>
-                  <Button
-                    variant="ghost"
-                    size="small"
-                    onClick={() => {
-                      setEditedId(review.id);
-                      setContent(review.content);
-                    }}
-                  >
-                    {t("edit.action")}
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="small"
-                    onClick={() => void onDelete(review.id)}
-                  >
-                    {t("remove.action")}
-                  </Button>
-                </Stack>
-              )}
-            </Stack>
-          </Card>
-        ))}
-
-        {reviews && <Divider />}
-
-        {reviews && !peutEcrire && (
-          <Text variant="caption" tone="secondary">
-            {t("readOnly")}
-          </Text>
-        )}
-
-        {reviews && peutEcrire && (
-          <Stack spacing={1.5}>
-            {!reviews.viewerCanReviewAnyone && (
-              <Text variant="caption" tone="secondary">
-                {t("onlyYourself")}
-              </Text>
-            )}
-            {!editedId && (
-              <SelectField
-                label={t("form.subject")}
-                value={subject}
-                onChange={setSubject}
-                options={sujets}
-              />
-            )}
-            <TextField
-              label={editedId ? t("edit.title") : t("form.content")}
-              value={content}
-              onChange={setContent}
-              helperText={t("form.contentHelper")}
-              multiline
-              minRows={3}
-            />
-            <Stack direction="row" spacing={1} wrap>
-              <Button
-                onClick={() => void onSave()}
-                disabled={!content.trim()}
-                loading={isSaving}
-              >
-                {editedId ? t("edit.confirm") : t("form.submit")}
-              </Button>
-              {editedId && (
+      {reviews?.reviews.map((review) => (
+        <Card key={review.id}>
+          <Stack spacing={0.5}>
+            <Text variant="subtitle">{review.subjectDisplayName}</Text>
+            <Text variant="caption" tone="secondary">
+              {t("author", {
+                name: review.authorDisplayName ?? t("unknownAuthor"),
+              })}
+              {" · "}
+              {review.updatedAt !== review.createdAt
+                ? t("updated", {
+                    date: formatDateTime(new Date(review.updatedAt)),
+                  })
+                : t("written", {
+                    date: formatDateTime(new Date(review.createdAt)),
+                  })}
+            </Text>
+            <Text variant="body">{review.content}</Text>
+            {review.viewerCanEdit && (
+              <Stack direction="row" spacing={1} wrap>
                 <Button
                   variant="ghost"
+                  size="small"
                   onClick={() => {
-                    setEditedId("");
-                    setContent("");
+                    setEditedId(review.id);
+                    setContent(review.content);
                   }}
                 >
-                  {t("close")}
+                  {t("edit.action")}
                 </Button>
-              )}
-            </Stack>
+                <Button
+                  variant="ghost"
+                  size="small"
+                  onClick={() => void onDelete(review.id)}
+                >
+                  {t("remove.action")}
+                </Button>
+              </Stack>
+            )}
           </Stack>
-        )}
-      </Stack>
+        </Card>
+      ))}
+
+      {reviews && <Divider />}
+
+      {reviews && !peutEcrire && (
+        <Text variant="caption" tone="secondary">
+          {t("readOnly")}
+        </Text>
+      )}
+
+      {reviews && peutEcrire && (
+        <Stack spacing={1.5}>
+          {!reviews.viewerCanReviewAnyone && (
+            <Text variant="caption" tone="secondary">
+              {t("onlyYourself")}
+            </Text>
+          )}
+          {!editedId && (
+            <SelectField
+              label={t("form.subject")}
+              value={subject}
+              onChange={setSubject}
+              options={sujets}
+            />
+          )}
+          <TextField
+            label={editedId ? t("edit.title") : t("form.content")}
+            value={content}
+            onChange={setContent}
+            helperText={t("form.contentHelper")}
+            multiline
+            minRows={3}
+          />
+          <Stack direction="row" spacing={1} wrap>
+            <Button
+              onClick={() => void onSave()}
+              disabled={!content.trim()}
+              loading={isSaving}
+            >
+              {editedId ? t("edit.confirm") : t("form.submit")}
+            </Button>
+            {editedId && (
+              <Button
+                variant="ghost"
+                onClick={() => {
+                  setEditedId("");
+                  setContent("");
+                }}
+              >
+                {t("close")}
+              </Button>
+            )}
+          </Stack>
+        </Stack>
+      )}
+    </Stack>
   );
 }

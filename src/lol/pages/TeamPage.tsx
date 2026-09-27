@@ -181,7 +181,9 @@ function TeamPage() {
         {panel === "team" && (
           <TeamGamesPanel
             teamId={team.id}
-            avatars={Object.fromEntries(team.members.map((member) => [member.memberId, member.avatarUrl]))}
+            avatars={Object.fromEntries(
+              team.members.map((member) => [member.memberId, member.avatarUrl]),
+            )}
           />
         )}
         {panel === "opposition" && <StrategyPanel teamId={team.id} />}

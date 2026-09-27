@@ -18,7 +18,10 @@ export interface SplitBarProps {
 
 // Une seule barre, découpée en parts : la part se lit à la longueur, pas à la teinte.
 export function SplitBar({ label, segments, highlight }: SplitBarProps) {
-  const total = segments.reduce((somme, segment) => somme + Math.max(0, segment.value), 0);
+  const total = segments.reduce(
+    (somme, segment) => somme + Math.max(0, segment.value),
+    0,
+  );
   return (
     <Box>
       <Typography variant="caption" color="text.secondary" component="p">
@@ -46,18 +49,28 @@ export function SplitBar({ label, segments, highlight }: SplitBarProps) {
               <Box
                 key={segment.key}
                 sx={(theme) => {
-                  const scheme = theme.palette.mode === "light" ? "light" : "dark";
+                  const scheme =
+                    theme.palette.mode === "light" ? "light" : "dark";
                   return {
                     flexGrow: segment.value,
                     flexBasis: 0,
                     backgroundColor:
-                      segment.key === highlight ? chartColors[scheme].mark : chartColors[scheme].markMuted,
+                      segment.key === highlight
+                        ? chartColors[scheme].mark
+                        : chartColors[scheme].markMuted,
                   };
                 }}
               />
             ))}
       </Box>
-      <Box sx={{ display: "flex", justifyContent: "space-between", gap: 1, mt: 0.25 }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          gap: 1,
+          mt: 0.25,
+        }}
+      >
         {segments.map((segment) => (
           <Typography
             key={segment.key}
@@ -65,7 +78,8 @@ export function SplitBar({ label, segments, highlight }: SplitBarProps) {
             sx={{
               fontFamily: typographyTokens.monospaceFontFamily,
               fontWeight: segment.key === highlight ? 700 : 400,
-              color: segment.key === highlight ? "text.primary" : "text.secondary",
+              color:
+                segment.key === highlight ? "text.primary" : "text.secondary",
             }}
           >
             {`${segment.label} ${segment.valueLabel ?? segment.value}`}

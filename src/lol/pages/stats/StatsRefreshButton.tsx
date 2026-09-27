@@ -13,19 +13,25 @@ export function StatsRefreshButton({ teamId }: StatsRefreshButtonProps) {
   const [prochaine, setProchaine] = useState<number | null>(null);
   const [maintenant, setMaintenant] = useState<number>(Date.now());
   const [enCours, setEnCours] = useState<boolean>(false);
-  const [message, setMessage] = useState<{ text: string; severity: "success" | "error" } | null>(
-    null,
-  );
+  const [message, setMessage] = useState<{
+    text: string;
+    severity: "success" | "error";
+  } | null>(null);
 
   useEffect(() => {
     getStatsRefreshApi(teamId)
       .then((reponse) =>
-        setProchaine(reponse.nextAllowedAt ? Date.parse(reponse.nextAllowedAt) : null),
+        setProchaine(
+          reponse.nextAllowedAt ? Date.parse(reponse.nextAllowedAt) : null,
+        ),
       )
       .catch(() => setProchaine(null));
   }, [teamId]);
 
-  const restant = prochaine === null ? 0 : Math.max(0, Math.ceil((prochaine - maintenant) / 1000));
+  const restant =
+    prochaine === null
+      ? 0
+      : Math.max(0, Math.ceil((prochaine - maintenant) / 1000));
 
   useEffect(() => {
     if (restant <= 0) {
@@ -40,7 +46,9 @@ export function StatsRefreshButton({ teamId }: StatsRefreshButtonProps) {
     try {
       const reponse = await refreshTeamStatsApi(teamId);
       setMaintenant(Date.now());
-      setProchaine(reponse.nextAllowedAt ? Date.parse(reponse.nextAllowedAt) : null);
+      setProchaine(
+        reponse.nextAllowedAt ? Date.parse(reponse.nextAllowedAt) : null,
+      );
       setMessage({
         text: reponse.triggered
           ? t("refresh.done", { count: reponse.playersQueued })
@@ -49,7 +57,10 @@ export function StatsRefreshButton({ teamId }: StatsRefreshButtonProps) {
       });
     } catch (refreshError) {
       setMessage({
-        text: refreshError instanceof Error ? refreshError.message : t("refresh.failed"),
+        text:
+          refreshError instanceof Error
+            ? refreshError.message
+            : t("refresh.failed"),
         severity: "error",
       });
     } finally {
@@ -68,7 +79,9 @@ export function StatsRefreshButton({ teamId }: StatsRefreshButtonProps) {
         loading={enCours}
         disabled={restant > 0}
       >
-        {restant > 0 ? t("refresh.wait", { time: `${minutes}:${secondes}` }) : t("refresh.action")}
+        {restant > 0
+          ? t("refresh.wait", { time: `${minutes}:${secondes}` })
+          : t("refresh.action")}
       </Button>
       <Toast
         open={message !== null}

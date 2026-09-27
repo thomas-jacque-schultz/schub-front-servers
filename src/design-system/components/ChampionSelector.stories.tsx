@@ -47,6 +47,8 @@ export const ChoixMultiple: Story = {
   args: { mode: "multiple" },
   render: (args) => {
     const [selected, setSelected] = useState<string[]>(["Jax", "LeeSin"]);
-    return <ChampionSelector {...args} selected={selected} onChange={setSelected} />;
+    return (
+      <ChampionSelector {...args} selected={selected} onChange={setSelected} />
+    );
   },
 };

@@ -11,9 +11,17 @@ const REFRESH_INTERVAL_MS = 30_000;
 function LandingPage() {
   const { t } = useTranslation("servers");
   const { connected, can } = useAuthStore();
-  const { servers, isLoading, error, lastRefreshedAt, loadServers, loadPublicServers } =
-    useServersStore();
-  const [pendingServerSlug, setPendingServerSlug] = useState<string | null>(null);
+  const {
+    servers,
+    isLoading,
+    error,
+    lastRefreshedAt,
+    loadServers,
+    loadPublicServers,
+  } = useServersStore();
+  const [pendingServerSlug, setPendingServerSlug] = useState<string | null>(
+    null,
+  );
 
   const refresh = useCallback(() => {
     void (connected ? loadServers() : loadPublicServers());
@@ -27,7 +35,10 @@ function LandingPage() {
 
   const canControl = can("SERVER_START") && can("SERVER_STOP");
 
-  const runServerAction = async (slug: string, action: (slug: string) => Promise<void>) => {
+  const runServerAction = async (
+    slug: string,
+    action: (slug: string) => Promise<void>,
+  ) => {
     setPendingServerSlug(slug);
     try {
       await action(slug);
@@ -54,7 +65,9 @@ function LandingPage() {
           canControl={canControl}
           lastRefreshedAt={lastRefreshedAt}
           onRefresh={refresh}
-          onStartServer={(slug) => void runServerAction(slug, startGameServerApi)}
+          onStartServer={(slug) =>
+            void runServerAction(slug, startGameServerApi)
+          }
           onStopServer={(slug) => void runServerAction(slug, stopGameServerApi)}
           pendingServerSlug={pendingServerSlug}
         />

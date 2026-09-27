@@ -1,7 +1,8 @@
 import { type ReactNode } from "react";
 import MuiChip from "@mui/material/Chip";
 
-export type ChipTone = "neutral" | "primary" | "secondary" | "success" | "warning" | "error";
+export type ChipTone =
+  "neutral" | "primary" | "secondary" | "success" | "warning" | "error";
 
 export interface ChipProps {
   label: string;
@@ -11,15 +12,17 @@ export interface ChipProps {
   icon?: ReactNode;
 }
 
-const TONE: Record<ChipTone, "default" | "primary" | "secondary" | "success" | "warning" | "error"> =
-  {
-    neutral: "default",
-    primary: "primary",
-    secondary: "secondary",
-    success: "success",
-    warning: "warning",
-    error: "error",
-  };
+const TONE: Record<
+  ChipTone,
+  "default" | "primary" | "secondary" | "success" | "warning" | "error"
+> = {
+  neutral: "default",
+  primary: "primary",
+  secondary: "secondary",
+  success: "success",
+  warning: "warning",
+  error: "error",
+};
 
 export function Chip({
   label,

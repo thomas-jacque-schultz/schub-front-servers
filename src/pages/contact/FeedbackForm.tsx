@@ -144,7 +144,12 @@ export function FeedbackForm() {
 
           <TurnstileWidget onToken={onToken} />
 
-          <Stack direction="responsive" spacing={2} justify="between" align="center">
+          <Stack
+            direction="responsive"
+            spacing={2}
+            justify="between"
+            align="center"
+          >
             <Text variant="caption" tone="secondary">
               {t("privacy")}
             </Text>

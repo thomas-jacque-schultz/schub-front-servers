@@ -12,7 +12,9 @@ export interface ContactAck {
   delivered: boolean;
 }
 
-export const sendContactMessageApi = async (payload: ContactMessage): Promise<ContactAck> =>
+export const sendContactMessageApi = async (
+  payload: ContactMessage,
+): Promise<ContactAck> =>
   requestJson<ContactAck>("/contact", {
     method: "POST",
     body: JSON.stringify(payload),

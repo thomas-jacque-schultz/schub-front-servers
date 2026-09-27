@@ -10,7 +10,9 @@ import type {
 export const getProfileApi = async (): Promise<ProfileDto> =>
   requestJson<ProfileDto>("/me", { method: "GET" });
 
-export const updateDisplayNameApi = async (displayName: string): Promise<ProfileDto> =>
+export const updateDisplayNameApi = async (
+  displayName: string,
+): Promise<ProfileDto> =>
   requestJson<ProfileDto>("/me/display-name", {
     method: "PUT",
     body: JSON.stringify({ displayName } satisfies DisplayNameRequest),
@@ -43,7 +45,10 @@ export const linkRiotAccountApi = async (
   try {
     return await requestJson<ProfileDto>("/users/me/riot-account", {
       method: "PUT",
-      body: JSON.stringify({ riotId, confirmChange } satisfies RiotAccountRequest),
+      body: JSON.stringify({
+        riotId,
+        confirmChange,
+      } satisfies RiotAccountRequest),
     });
   } catch (error) {
     if (error instanceof ApiError && error.status === 409) {
@@ -65,7 +70,10 @@ export const searchKnownRiotAccountsApi = async (
   limit = 8,
 ): Promise<KnownRiotAccountDto[]> => {
   try {
-    return await requestJson<KnownRiotAccountDto[]>(suggestionsPath(query, limit), { method: "GET" });
+    return await requestJson<KnownRiotAccountDto[]>(
+      suggestionsPath(query, limit),
+      { method: "GET" },
+    );
   } catch (error) {
     if (error instanceof ApiError && error.status === 401) {
       throw error;
@@ -78,4 +86,6 @@ export const verifyRiotAccountApi = async (
   riotId: string,
   limit = 8,
 ): Promise<KnownRiotAccountDto[]> =>
-  requestJson<KnownRiotAccountDto[]>(suggestionsPath(riotId, limit), { method: "GET" });
+  requestJson<KnownRiotAccountDto[]>(suggestionsPath(riotId, limit), {
+    method: "GET",
+  });

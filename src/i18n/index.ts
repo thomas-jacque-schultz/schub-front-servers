@@ -1,6 +1,10 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import { DEFAULT_LANGUAGE, detectPreferredLanguage, languageFromPathname } from "./config";
+import {
+  DEFAULT_LANGUAGE,
+  detectPreferredLanguage,
+  languageFromPathname,
+} from "./config";
 import { defaultNS, namespaces, resources } from "./resources";
 
 const initialLanguage =

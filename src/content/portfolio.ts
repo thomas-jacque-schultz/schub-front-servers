@@ -106,7 +106,8 @@ const fr: PortfolioContent = {
     },
     experience: {
       title: "Parcours",
-      intro: "Le détail chronologique, pour qui veut le lire après les projets.",
+      intro:
+        "Le détail chronologique, pour qui veut le lire après les projets.",
     },
     education: { title: "Formation" },
     languages: { title: "Langues" },
@@ -116,7 +117,8 @@ const fr: PortfolioContent = {
     {
       key: "schub",
       name: "Schub",
-      tagline: "La boîte à outils de la communauté Miam — serveurs de jeu, équipes League of Legends —, en production.",
+      tagline:
+        "La boîte à outils de la communauté Miam — serveurs de jeu, équipes League of Legends —, en production.",
       body: [
         "Sept dépôts, un cœur métier et quatre connecteurs, déployés en Docker Swarm derrière " +
           "un tunnel Cloudflare. L'interface est un SPA React bilingue adossé à un BFF Spring " +
@@ -142,13 +144,18 @@ const fr: PortfolioContent = {
       links: [
         { key: "repo", label: "Les dépôts", href: REPOSITORY_URL },
         { key: "plan", label: "Le plan des évolutions", href: PLAN_URL },
-        { key: "migration", label: "La découpe en microservices", href: MIGRATION_URL },
+        {
+          key: "migration",
+          label: "La découpe en microservices",
+          href: MIGRATION_URL,
+        },
       ],
     },
     {
       key: "design-system",
       name: "Le design system de Schub",
-      tagline: "Une contrainte outillée, pas une bibliothèque de composants de plus.",
+      tagline:
+        "Une contrainte outillée, pas une bibliothèque de composants de plus.",
       body: [
         "Vingt primitives documentées dans un Storybook public. L'intérêt n'est pas la " +
           "collection : c'est la règle ESLint qui interdit d'importer MUI ailleurs que dans le " +
@@ -157,7 +164,13 @@ const fr: PortfolioContent = {
           "chaîne de construction — et il tient en vingt lignes de configuration.",
       ],
       stack: ["Storybook", "MUI", "ESLint", "react-i18next"],
-      links: [{ key: "storybook", label: "Consulter le Storybook", href: "/storybook" }],
+      links: [
+        {
+          key: "storybook",
+          label: "Consulter le Storybook",
+          href: "/storybook",
+        },
+      ],
     },
   ],
   experience: [
@@ -230,7 +243,12 @@ const fr: PortfolioContent = {
       title: "DUT informatique, IUT Robert Schuman",
       place: "Illkirch",
     },
-    { key: "mpsi", period: "2015 — 2016", title: "MPSI, lycée Kléber", place: "Strasbourg" },
+    {
+      key: "mpsi",
+      period: "2015 — 2016",
+      title: "MPSI, lycée Kléber",
+      place: "Strasbourg",
+    },
   ],
   languages: [
     { key: "fr", name: "Français", level: "Langue maternelle" },
@@ -284,7 +302,8 @@ const en: PortfolioContent = {
     {
       key: "schub",
       name: "Schub",
-      tagline: "The Miam community toolkit — game servers, League of Legends teams — running in production.",
+      tagline:
+        "The Miam community toolkit — game servers, League of Legends teams — running in production.",
       body: [
         "Seven repositories — one business core and four connectors — deployed on Docker Swarm " +
           "behind a Cloudflare tunnel. The interface is a bilingual React SPA backed by a Spring " +
@@ -309,7 +328,11 @@ const en: PortfolioContent = {
       links: [
         { key: "repo", label: "The repositories", href: REPOSITORY_URL },
         { key: "plan", label: "The evolution plan", href: PLAN_URL },
-        { key: "migration", label: "The microservices split", href: MIGRATION_URL },
+        {
+          key: "migration",
+          label: "The microservices split",
+          href: MIGRATION_URL,
+        },
       ],
     },
     {
@@ -324,7 +347,9 @@ const en: PortfolioContent = {
           "build chain — and it fits in twenty lines of configuration.",
       ],
       stack: ["Storybook", "MUI", "ESLint", "react-i18next"],
-      links: [{ key: "storybook", label: "Browse the Storybook", href: "/storybook" }],
+      links: [
+        { key: "storybook", label: "Browse the Storybook", href: "/storybook" },
+      ],
     },
   ],
   experience: [
@@ -394,7 +419,8 @@ const en: PortfolioContent = {
     {
       key: "iut",
       period: "2016 — 2018",
-      title: "Two-year technical degree in computer science, IUT Robert Schuman",
+      title:
+        "Two-year technical degree in computer science, IUT Robert Schuman",
       place: "Illkirch, France",
     },
     {

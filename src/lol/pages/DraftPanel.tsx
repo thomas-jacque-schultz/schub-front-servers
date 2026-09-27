@@ -49,7 +49,8 @@ interface SlotDraft {
   alternatives: string[];
 }
 
-type Selecteur = { kind: "pick" | "alternatives"; role: GameRole } | { kind: "bans" };
+type Selecteur =
+  { kind: "pick" | "alternatives"; role: GameRole } | { kind: "bans" };
 
 const BANS_MAX = 5;
 
@@ -108,7 +109,11 @@ export function DraftPanel({ team }: DraftPanelProps) {
     if (compos.status === "fulfilled") {
       setCompositions(compos.value);
     } else {
-      setError(compos.reason instanceof Error ? compos.reason.message : t("draft.loadFailed"));
+      setError(
+        compos.reason instanceof Error
+          ? compos.reason.message
+          : t("draft.loadFailed"),
+      );
     }
     if (pool.status === "fulfilled") {
       setCatalog(pool.value.catalog);
@@ -150,7 +155,9 @@ export function DraftPanel({ team }: DraftPanelProps) {
 
   const setSlot = (role: GameRole, patchSlot: Partial<SlotDraft>) => {
     setSlots((current) =>
-      current.map((slot) => (slot.role === role ? { ...slot, ...patchSlot } : slot)),
+      current.map((slot) =>
+        slot.role === role ? { ...slot, ...patchSlot } : slot,
+      ),
     );
   };
 
@@ -160,7 +167,9 @@ export function DraftPanel({ team }: DraftPanelProps) {
         if (slot.role === role) {
           return { ...slot, memberId };
         }
-        return memberId !== null && slot.memberId === memberId ? { ...slot, memberId: null } : slot;
+        return memberId !== null && slot.memberId === memberId
+          ? { ...slot, memberId: null }
+          : slot;
       }),
     );
   };
@@ -169,7 +178,8 @@ export function DraftPanel({ team }: DraftPanelProps) {
     setSelecteur((courant) =>
       courant &&
       courant.kind === cible.kind &&
-      (cible.kind === "bans" || (courant.kind !== "bans" && courant.role === cible.role))
+      (cible.kind === "bans" ||
+        (courant.kind !== "bans" && courant.role === cible.role))
         ? null
         : cible,
     );
@@ -179,7 +189,9 @@ export function DraftPanel({ team }: DraftPanelProps) {
     selecteur.kind === kind &&
     (selecteur.kind === "bans" || selecteur.role === role);
 
-  const picks = slots.map((slot) => slot.championId).filter((key): key is string => key !== null);
+  const picks = slots
+    .map((slot) => slot.championId)
+    .filter((key): key is string => key !== null);
 
   const indisponibles = (cible: Selecteur): string[] => {
     if (cible.kind === "bans") {
@@ -214,7 +226,9 @@ export function DraftPanel({ team }: DraftPanelProps) {
             ? t("draft.fields.playerNoRole", { name: member.displayName })
             : t("draft.fields.playerOffRole", {
                 name: member.displayName,
-                roles: member.roles.map((autre) => t(`roles.${autre}`)).join(" · "),
+                roles: member.roles
+                  .map((autre) => t(`roles.${autre}`))
+                  .join(" · "),
               });
       }
       return {
@@ -266,7 +280,11 @@ export function DraftPanel({ team }: DraftPanelProps) {
       setEditing(null);
       await load();
     } catch (saveError) {
-      setFormError(saveError instanceof Error ? saveError.message : t("draft.create.failed"));
+      setFormError(
+        saveError instanceof Error
+          ? saveError.message
+          : t("draft.create.failed"),
+      );
     } finally {
       setIsSaving(false);
     }
@@ -283,7 +301,11 @@ export function DraftPanel({ team }: DraftPanelProps) {
       setRemoved(null);
       await load();
     } catch (deleteError) {
-      setError(deleteError instanceof Error ? deleteError.message : t("draft.delete.failed"));
+      setError(
+        deleteError instanceof Error
+          ? deleteError.message
+          : t("draft.delete.failed"),
+      );
     } finally {
       setIsSaving(false);
     }
@@ -367,12 +389,17 @@ export function DraftPanel({ team }: DraftPanelProps) {
         title={t("draft.title")}
         description={t("draft.description")}
         actions={
-          canEdit ? <Button onClick={openCreate}>{t("draft.create.action")}</Button> : undefined
+          canEdit ? (
+            <Button onClick={openCreate}>{t("draft.create.action")}</Button>
+          ) : undefined
         }
       >
         {isLoading && <ProgressBar label={t("draft.title")} />}
         {!isLoading && compositions.length === 0 && (
-          <EmptyState title={t("draft.emptyTitle")} description={t("draft.emptyDescription")} />
+          <EmptyState
+            title={t("draft.emptyTitle")}
+            description={t("draft.emptyDescription")}
+          />
         )}
       </Card>
 
@@ -381,15 +408,25 @@ export function DraftPanel({ team }: DraftPanelProps) {
           key={composition.id}
           title={composition.name}
           description={`${
-            composition.patch ? t("draft.patch", { patch: composition.patch }) : t("draft.noPatch")
+            composition.patch
+              ? t("draft.patch", { patch: composition.patch })
+              : t("draft.noPatch")
           } · ${t("draft.updated", { date: formatDateTime(new Date(composition.updatedAt)) })}`}
           actions={
             composition.viewerCanEdit ? (
               <Stack direction="row" spacing={1}>
-                <Button size="small" variant="ghost" onClick={() => openEdit(composition)}>
+                <Button
+                  size="small"
+                  variant="ghost"
+                  onClick={() => openEdit(composition)}
+                >
                   {t("draft.edit.action")}
                 </Button>
-                <Button size="small" variant="ghost" onClick={() => setRemoved(composition)}>
+                <Button
+                  size="small"
+                  variant="ghost"
+                  onClick={() => setRemoved(composition)}
+                >
                   {t("draft.delete.action")}
                 </Button>
               </Stack>
@@ -417,7 +454,9 @@ export function DraftPanel({ team }: DraftPanelProps) {
                 icones(composition.bans)
               )}
             </Stack>
-            {composition.notes && <Text tone="secondary">{composition.notes}</Text>}
+            {composition.notes && (
+              <Text tone="secondary">{composition.notes}</Text>
+            )}
           </Stack>
         </Card>
       ))}
@@ -431,7 +470,11 @@ export function DraftPanel({ team }: DraftPanelProps) {
         }
         maxWidth="lg"
         cancelLabel={t("actions.cancel", { ns: "common" })}
-        confirmLabel={editing === "new" ? t("draft.create.confirm") : t("draft.edit.confirm")}
+        confirmLabel={
+          editing === "new"
+            ? t("draft.create.confirm")
+            : t("draft.edit.confirm")
+        }
         confirmLoading={isSaving}
         onClose={() => setEditing(null)}
         onConfirm={() => void onSave()}
@@ -464,27 +507,41 @@ export function DraftPanel({ team }: DraftPanelProps) {
               <Frame
                 key={slot.role}
                 dense
-                accent={estOuvert("pick", slot.role) || estOuvert("alternatives", slot.role)}
+                accent={
+                  estOuvert("pick", slot.role) ||
+                  estOuvert("alternatives", slot.role)
+                }
               >
                 <Stack spacing={1.5}>
-                  <Stack direction="responsive" spacing={2} align="center" justify="between">
+                  <Stack
+                    direction="responsive"
+                    spacing={2}
+                    align="center"
+                    justify="between"
+                  >
                     <Stack direction="row" spacing={2} align="center">
                       <Text variant="overline" mono>
                         {poste}
                       </Text>
                       <ChampionPickButton
-                        champion={slot.championId ? champion(slot.championId) : null}
+                        champion={
+                          slot.championId ? champion(slot.championId) : null
+                        }
                         label={t("draft.fields.championChoose", {
                           role: poste,
                         })}
-                        onClick={() => bascule({ kind: "pick", role: slot.role })}
+                        onClick={() =>
+                          bascule({ kind: "pick", role: slot.role })
+                        }
                         active={estOuvert("pick", slot.role)}
                       />
                       <AvatarSelect
                         label={t("draft.fields.players", { role: poste })}
                         options={playerOptionsFor(slot.role)}
                         value={slot.memberId}
-                        onChange={(memberId) => assignPlayer(slot.role, memberId)}
+                        onChange={(memberId) =>
+                          assignPlayer(slot.role, memberId)
+                        }
                       />
                     </Stack>
                     <Stack direction="row" spacing={1} align="center">
@@ -497,7 +554,9 @@ export function DraftPanel({ team }: DraftPanelProps) {
                         label={t("draft.fields.alternativesAdd", {
                           role: poste,
                         })}
-                        onClick={() => bascule({ kind: "alternatives", role: slot.role })}
+                        onClick={() =>
+                          bascule({ kind: "alternatives", role: slot.role })
+                        }
                         active={estOuvert("alternatives", slot.role)}
                       />
                     </Stack>
@@ -542,7 +601,8 @@ export function DraftPanel({ team }: DraftPanelProps) {
               <Text variant="caption" tone="secondary">
                 {t("draft.fields.bansHelper")}
               </Text>
-              {estOuvert("bans") && selecteurDe({ kind: "bans" }, bans, setBans)}
+              {estOuvert("bans") &&
+                selecteurDe({ kind: "bans" }, bans, setBans)}
             </Stack>
           </Frame>
 

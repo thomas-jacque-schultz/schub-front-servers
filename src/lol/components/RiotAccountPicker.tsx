@@ -1,7 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ApiError } from "../../api/httpClient";
-import { searchKnownRiotAccountsApi, verifyRiotAccountApi } from "../../api/profileApi";
+import {
+  searchKnownRiotAccountsApi,
+  verifyRiotAccountApi,
+} from "../../api/profileApi";
 import {
   Alert,
   Button,
@@ -37,7 +40,11 @@ export interface RiotAccountPickerProps {
   resetKey?: unknown;
 }
 
-export function RiotAccountPicker({ onPick, busy = false, resetKey }: RiotAccountPickerProps) {
+export function RiotAccountPicker({
+  onPick,
+  busy = false,
+  resetKey,
+}: RiotAccountPickerProps) {
   const { t } = useTranslation("riot");
   const { formatDateTime } = useLocaleFormat();
 
@@ -136,7 +143,8 @@ export function RiotAccountPicker({ onPick, busy = false, resetKey }: RiotAccoun
   const options = useMemo<ChoiceListOption[]>(
     () =>
       suggestions.map((account) => {
-        const perimee = Date.now() - new Date(account.observedAt).getTime() > PEREMPTION_MS;
+        const perimee =
+          Date.now() - new Date(account.observedAt).getTime() > PEREMPTION_MS;
         return {
           id: account.riotId,
           label: account.riotId,
@@ -150,11 +158,23 @@ export function RiotAccountPicker({ onPick, busy = false, resetKey }: RiotAccoun
                 }),
           meta: (
             <>
-              {account.mine && <Chip label={t("suggestion.mine")} tone="success" />}
-              {account.alreadyLinked && !account.mine && (
-                <Chip label={t("suggestion.alreadyLinked")} tone="warning" variant="outline" />
+              {account.mine && (
+                <Chip label={t("suggestion.mine")} tone="success" />
               )}
-              {perimee && <Chip label={t("suggestion.stale")} tone="warning" variant="outline" />}
+              {account.alreadyLinked && !account.mine && (
+                <Chip
+                  label={t("suggestion.alreadyLinked")}
+                  tone="warning"
+                  variant="outline"
+                />
+              )}
+              {perimee && (
+                <Chip
+                  label={t("suggestion.stale")}
+                  tone="warning"
+                  variant="outline"
+                />
+              )}
               <Chip
                 label={
                   account.matchCount === 0
@@ -223,7 +243,11 @@ export function RiotAccountPicker({ onPick, busy = false, resetKey }: RiotAccoun
             ? t("verify.needsFullId")
             : t("verify.helper")}
         </Text>
-        {verified && <Alert severity="success">{t("verify.done", { riotId: verified })}</Alert>}
+        {verified && (
+          <Alert severity="success">
+            {t("verify.done", { riotId: verified })}
+          </Alert>
+        )}
       </Stack>
 
       {hasSearched && !isSearching && (

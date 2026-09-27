@@ -7,7 +7,12 @@ import { Text } from "./Text";
 const meta = {
   title: "Primitives/Checkbox",
   component: Checkbox,
-  args: { checked: true, label: "Démarrer un serveur", disabled: false, onChange: () => {} },
+  args: {
+    checked: true,
+    label: "Démarrer un serveur",
+    disabled: false,
+    onChange: () => {},
+  },
 } satisfies Meta<typeof Checkbox>;
 
 export default meta;
@@ -18,7 +23,10 @@ export const Decochee: Story = { args: { checked: false } };
 export const Desactivee: Story = { args: { disabled: true } };
 
 export const SansLibelleVisible: Story = {
-  args: { label: undefined, "aria-label": "Démarrer un serveur pour le rôle Modérateur" },
+  args: {
+    label: undefined,
+    "aria-label": "Démarrer un serveur pour le rôle Modérateur",
+  },
 };
 
 export const Interactive: Story = {
@@ -26,7 +34,11 @@ export const Interactive: Story = {
     const [checked, setChecked] = useState(false);
     return (
       <Stack spacing={1}>
-        <Checkbox checked={checked} onChange={setChecked} label="Arrêter un serveur" />
+        <Checkbox
+          checked={checked}
+          onChange={setChecked}
+          label="Arrêter un serveur"
+        />
         <Text variant="caption" tone="secondary">
           {checked ? "Permission accordée" : "Permission retirée"}
         </Text>

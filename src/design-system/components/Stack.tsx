@@ -51,7 +51,9 @@ export function Stack({
       component={component ?? "div"}
       onSubmit={onSubmit}
       id={id}
-      direction={direction === "responsive" ? { xs: "column", sm: "row" } : direction}
+      direction={
+        direction === "responsive" ? { xs: "column", sm: "row" } : direction
+      }
       spacing={spacing}
       alignItems={align ? ALIGN[align] : undefined}
       justifyContent={justify ? JUSTIFY[justify] : undefined}

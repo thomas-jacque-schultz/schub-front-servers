@@ -11,12 +11,17 @@ function ContactPage() {
 
   const { hash } = useLocation();
 
-  useDocumentMeta({ title: t("meta.title"), description: t("meta.description") });
+  useDocumentMeta({
+    title: t("meta.title"),
+    description: t("meta.description"),
+  });
 
   // Le routeur ne suit pas les ancres : le lien « Feedback » du pied de page atterrirait en haut.
   useEffect(() => {
     if (hash) {
-      document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: "smooth", block: "start" });
+      document
+        .getElementById(hash.slice(1))
+        ?.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [hash]);
 

@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from "react";
 
 const SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY as string | undefined;
 
-const SCRIPT_URL = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+const SCRIPT_URL =
+  "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
 const SCRIPT_ID = "cf-turnstile-script";
 
 interface TurnstileApi {
@@ -47,7 +48,11 @@ const loadScript = (): Promise<void> =>
     document.head.appendChild(script);
   });
 
-export function TurnstileWidget({ onToken }: { onToken: (token: string) => void }) {
+export function TurnstileWidget({
+  onToken,
+}: {
+  onToken: (token: string) => void;
+}) {
   const container = useRef<HTMLDivElement | null>(null);
   const [failed, setFailed] = useState(false);
 

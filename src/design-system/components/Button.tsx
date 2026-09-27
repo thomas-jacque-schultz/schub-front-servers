@@ -43,12 +43,20 @@ export function Button({
     <MuiButton
       type={type}
       variant={MUI_VARIANT[variant]}
-      color={variant === "danger" ? "error" : variant === "secondary" ? "inherit" : "primary"}
+      color={
+        variant === "danger"
+          ? "error"
+          : variant === "secondary"
+            ? "inherit"
+            : "primary"
+      }
       size={size}
       disabled={disabled || loading}
       fullWidth={fullWidth}
       onClick={onClick}
-      startIcon={loading ? <CircularProgress size={16} color="inherit" /> : startIcon}
+      startIcon={
+        loading ? <CircularProgress size={16} color="inherit" /> : startIcon
+      }
       endIcon={endIcon}
       aria-busy={loading || undefined}
       aria-label={rest["aria-label"]}

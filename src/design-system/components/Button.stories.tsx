@@ -12,7 +12,10 @@ const meta = {
     size: "medium",
   },
   argTypes: {
-    variant: { control: "inline-radio", options: ["primary", "secondary", "ghost", "danger"] },
+    variant: {
+      control: "inline-radio",
+      options: ["primary", "secondary", "ghost", "danger"],
+    },
     size: { control: "inline-radio", options: ["small", "medium", "large"] },
   },
 } satisfies Meta<typeof Button>;
@@ -49,10 +52,18 @@ export const AvecIcone: Story = {
 export const ToutesLesVariantes: Story = {
   render: (args) => (
     <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
-      <Button {...args} variant="primary">Principale</Button>
-      <Button {...args} variant="secondary">Secondaire</Button>
-      <Button {...args} variant="ghost">Discrète</Button>
-      <Button {...args} variant="danger">Destructive</Button>
+      <Button {...args} variant="primary">
+        Principale
+      </Button>
+      <Button {...args} variant="secondary">
+        Secondaire
+      </Button>
+      <Button {...args} variant="ghost">
+        Discrète
+      </Button>
+      <Button {...args} variant="danger">
+        Destructive
+      </Button>
     </Stack>
   ),
 };

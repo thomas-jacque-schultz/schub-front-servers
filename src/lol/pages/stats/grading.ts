@@ -1,7 +1,4 @@
-import type {
-  ReferenceGridDto,
-  ReferenceMetricDto,
-} from "../../types/stats";
+import type { ReferenceGridDto, ReferenceMetricDto } from "../../types/stats";
 
 export const PALIERS_NOTES = [
   "IRON",

@@ -10,7 +10,8 @@ const meta = {
   args: {
     open: true,
     title: "Changer le rôle de ce compte",
-    description: "Le nouveau rôle prend effet à la prochaine requête du compte concerné.",
+    description:
+      "Le nouveau rôle prend effet à la prochaine requête du compte concerné.",
     confirmLabel: "Enregistrer",
     cancelLabel: "Annuler",
     destructive: false,
@@ -18,7 +19,9 @@ const meta = {
     onClose: () => {},
     onConfirm: () => {},
   },
-  argTypes: { maxWidth: { control: "inline-radio", options: ["xs", "sm", "md"] } },
+  argTypes: {
+    maxWidth: { control: "inline-radio", options: ["xs", "sm", "md"] },
+  },
 } satisfies Meta<typeof Dialog>;
 
 export default meta;
@@ -29,7 +32,8 @@ export const Confirmation: Story = {};
 export const Destructive: Story = {
   args: {
     title: "Supprimer ce rôle",
-    description: "Cette suppression est définitive. Un rôle encore porté par un compte ne peut pas être supprimé.",
+    description:
+      "Cette suppression est définitive. Un rôle encore porté par un compte ne peut pas être supprimé.",
     confirmLabel: "Supprimer",
     destructive: true,
   },
@@ -41,7 +45,12 @@ export const AvecFormulaire: Story = {
     const [nom, setNom] = useState("");
     return (
       <Dialog {...args}>
-        <TextField label="Nom du rôle" value={nom} onChange={setNom} autoFocus />
+        <TextField
+          label="Nom du rôle"
+          value={nom}
+          onChange={setNom}
+          autoFocus
+        />
       </Dialog>
     );
   },
@@ -53,8 +62,15 @@ export const Ouvrable: Story = {
     const [open, setOpen] = useState(false);
     return (
       <>
-        <Button onClick={() => setOpen(true)}>Ouvrir la boîte de dialogue</Button>
-        <Dialog {...args} open={open} onClose={() => setOpen(false)} onConfirm={() => setOpen(false)} />
+        <Button onClick={() => setOpen(true)}>
+          Ouvrir la boîte de dialogue
+        </Button>
+        <Dialog
+          {...args}
+          open={open}
+          onClose={() => setOpen(false)}
+          onConfirm={() => setOpen(false)}
+        />
       </>
     );
   },

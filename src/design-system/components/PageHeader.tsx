@@ -10,7 +10,12 @@ export interface PageHeaderProps {
   actions?: ReactNode;
 }
 
-export function PageHeader({ title, eyebrow, subtitle, actions }: PageHeaderProps) {
+export function PageHeader({
+  title,
+  eyebrow,
+  subtitle,
+  actions,
+}: PageHeaderProps) {
   return (
     <Stack
       direction={{ xs: "column", md: "row" }}
@@ -21,7 +26,14 @@ export function PageHeader({ title, eyebrow, subtitle, actions }: PageHeaderProp
       <Stack spacing={1}>
         {eyebrow && (
           <Stack direction="row" spacing={1} alignItems="center">
-            <Box sx={{ width: 18, height: 2, bgcolor: "primary.main", flexShrink: 0 }} />
+            <Box
+              sx={{
+                width: 18,
+                height: 2,
+                bgcolor: "primary.main",
+                flexShrink: 0,
+              }}
+            />
             <Typography variant="overline" color="primary" lineHeight={1.6}>
               {eyebrow}
             </Typography>
@@ -31,7 +43,11 @@ export function PageHeader({ title, eyebrow, subtitle, actions }: PageHeaderProp
           {title}
         </Typography>
         {subtitle && (
-          <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 700 }}>
+          <Typography
+            variant="body1"
+            color="text.secondary"
+            sx={{ maxWidth: 700 }}
+          >
             {subtitle}
           </Typography>
         )}

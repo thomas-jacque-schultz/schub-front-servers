@@ -11,7 +11,12 @@ export interface AlertProps {
   onClose?: () => void;
 }
 
-export function Alert({ severity = "info", title, children, onClose }: AlertProps) {
+export function Alert({
+  severity = "info",
+  title,
+  children,
+  onClose,
+}: AlertProps) {
   return (
     <MuiAlert severity={severity} onClose={onClose} variant="outlined">
       {title && <AlertTitle>{title}</AlertTitle>}

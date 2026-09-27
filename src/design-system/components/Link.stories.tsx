@@ -6,7 +6,9 @@ const meta = {
   title: "Primitives/Link",
   component: Link,
   args: { href: "/servers", children: "L'état des serveurs", tone: "default" },
-  argTypes: { tone: { control: "inline-radio", options: ["default", "muted"] } },
+  argTypes: {
+    tone: { control: "inline-radio", options: ["default", "muted"] },
+  },
 } satisfies Meta<typeof Link>;
 
 export default meta;
@@ -15,7 +17,10 @@ type Story = StoryObj<typeof meta>;
 export const Interne: Story = {};
 
 export const Sortant: Story = {
-  args: { href: "https://example.org/un-document", children: "Un document public" },
+  args: {
+    href: "https://example.org/un-document",
+    children: "Un document public",
+  },
 };
 
 export const LesDeuxTons: Story = {

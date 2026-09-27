@@ -22,7 +22,11 @@ export function Avatar({ src, name, size = "medium" }: AvatarProps) {
       src={src ?? undefined}
       alt=""
       aria-hidden
-      sx={{ width: SIZE[size], height: SIZE[size], fontSize: size === "small" ? 11 : 13 }}
+      sx={{
+        width: SIZE[size],
+        height: SIZE[size],
+        fontSize: size === "small" ? 11 : 13,
+      }}
     >
       {initialsOf(name)}
     </MuiAvatar>

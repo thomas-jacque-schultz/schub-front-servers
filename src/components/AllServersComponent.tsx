@@ -48,7 +48,9 @@ function ServersDashboard({
 }: ServersDashboardProps) {
   const { t } = useTranslation("servers");
   const { formatTime } = useLocaleFormat();
-  const onlineCount = servers.filter((server) => server.status === "online").length;
+  const onlineCount = servers.filter(
+    (server) => server.status === "online",
+  ).length;
 
   const refreshLabel = lastRefreshedAt
     ? t("list.lastRefresh", { time: formatTime(lastRefreshedAt) })
@@ -62,7 +64,10 @@ function ServersDashboard({
           <Chip
             tone="success"
             icon={<Icon name="memory" size="small" />}
-            label={t("list.onlineCount", { online: onlineCount, total: servers.length })}
+            label={t("list.onlineCount", {
+              online: onlineCount,
+              total: servers.length,
+            })}
           />
           {connected && onRefresh && (
             <Tooltip title={refreshLabel}>
@@ -88,7 +93,10 @@ function ServersDashboard({
 
       {!isLoading && connected && servers.length === 0 && (
         <Card>
-          <EmptyState title={t("list.emptyTitle")} description={t("list.emptyDescription")} />
+          <EmptyState
+            title={t("list.emptyTitle")}
+            description={t("list.emptyDescription")}
+          />
         </Card>
       )}
 
@@ -134,7 +142,12 @@ function ServersDashboard({
                   </Button>
                 )}
                 {canEdit && (
-                  <Button size="small" onClick={() => onEditServer?.(server.id || server.slug || "")}>
+                  <Button
+                    size="small"
+                    onClick={() =>
+                      onEditServer?.(server.id || server.slug || "")
+                    }
+                  >
                     {t("list.actions.edit")}
                   </Button>
                 )}

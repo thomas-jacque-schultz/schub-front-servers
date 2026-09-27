@@ -28,9 +28,15 @@ interface PortForwardingStoreValue {
   resetPortForwarding: () => void;
 }
 
-const PortForwardingStoreContext = createContext<PortForwardingStoreValue | undefined>(undefined);
+const PortForwardingStoreContext = createContext<
+  PortForwardingStoreValue | undefined
+>(undefined);
 
-export const PortForwardingStoreProvider = ({ children }: { children: ReactNode }) => {
+export const PortForwardingStoreProvider = ({
+  children,
+}: {
+  children: ReactNode;
+}) => {
   const [routerRules, setRouterRules] = useState<PortRuleDto[]>([]);
   const [staticRules, setStaticRules] = useState<StaticPortRuleDto[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -50,7 +56,9 @@ export const PortForwardingStoreProvider = ({ children }: { children: ReactNode 
             return loaded;
           })
           .catch((unavailable: unknown) => {
-            setRouterError(unavailable instanceof Error ? unavailable.message : "");
+            setRouterError(
+              unavailable instanceof Error ? unavailable.message : "",
+            );
             return [] as PortRuleDto[];
           }),
         getStaticPortRulesApi(),
@@ -130,7 +138,9 @@ export const PortForwardingStoreProvider = ({ children }: { children: ReactNode 
 export const usePortForwardingStore = (): PortForwardingStoreValue => {
   const context = useContext(PortForwardingStoreContext);
   if (!context) {
-    throw new Error("usePortForwardingStore must be used inside PortForwardingStoreProvider");
+    throw new Error(
+      "usePortForwardingStore must be used inside PortForwardingStoreProvider",
+    );
   }
 
   return context;

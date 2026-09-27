@@ -1,11 +1,21 @@
 import { type ReactNode, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { type AppLanguage, SUPPORTED_LANGUAGES, pathForLanguage } from "./config";
+import {
+  type AppLanguage,
+  SUPPORTED_LANGUAGES,
+  pathForLanguage,
+} from "./config";
 
 const HREFLANG_MARKER = "data-schub-hreflang";
 
-export function LocalizedRoot({ language, children }: { language: AppLanguage; children: ReactNode }) {
+export function LocalizedRoot({
+  language,
+  children,
+}: {
+  language: AppLanguage;
+  children: ReactNode;
+}) {
   const { i18n } = useTranslation();
   const location = useLocation();
 
@@ -18,14 +28,21 @@ export function LocalizedRoot({ language, children }: { language: AppLanguage; c
 
   useEffect(() => {
     const head = document.head;
-    head.querySelectorAll(`link[${HREFLANG_MARKER}]`).forEach((node) => node.remove());
+    head
+      .querySelectorAll(`link[${HREFLANG_MARKER}]`)
+      .forEach((node) => node.remove());
 
     const origin = window.location.origin;
-    const entries: Array<[string, string]> = SUPPORTED_LANGUAGES.map((candidate) => [
-      candidate,
-      `${origin}${pathForLanguage(location.pathname, candidate)}`,
+    const entries: Array<[string, string]> = SUPPORTED_LANGUAGES.map(
+      (candidate) => [
+        candidate,
+        `${origin}${pathForLanguage(location.pathname, candidate)}`,
+      ],
+    );
+    entries.push([
+      "x-default",
+      `${origin}${pathForLanguage(location.pathname, "fr")}`,
     ]);
-    entries.push(["x-default", `${origin}${pathForLanguage(location.pathname, "fr")}`]);
 
     for (const [hreflang, href] of entries) {
       const link = document.createElement("link");
@@ -37,7 +54,9 @@ export function LocalizedRoot({ language, children }: { language: AppLanguage; c
     }
 
     return () => {
-      head.querySelectorAll(`link[${HREFLANG_MARKER}]`).forEach((node) => node.remove());
+      head
+        .querySelectorAll(`link[${HREFLANG_MARKER}]`)
+        .forEach((node) => node.remove());
     };
   }, [location.pathname]);
 

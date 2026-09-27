@@ -13,8 +13,11 @@ function ServersConfigPage() {
   const { t } = useTranslation("servers");
   const navigate = useLocalizedNavigate();
   const { connected, can } = useAuthStore();
-  const { servers, isLoading, error, lastRefreshedAt, loadServers } = useServersStore();
-  const [pendingServerSlug, setPendingServerSlug] = useState<string | null>(null);
+  const { servers, isLoading, error, lastRefreshedAt, loadServers } =
+    useServersStore();
+  const [pendingServerSlug, setPendingServerSlug] = useState<string | null>(
+    null,
+  );
 
   const refresh = useCallback(() => {
     void loadServers();
@@ -28,7 +31,10 @@ function ServersConfigPage() {
 
   const canControl = can("SERVER_START") && can("SERVER_STOP");
 
-  const runServerAction = async (slug: string, action: (slug: string) => Promise<void>) => {
+  const runServerAction = async (
+    slug: string,
+    action: (slug: string) => Promise<void>,
+  ) => {
     setPendingServerSlug(slug);
     try {
       await action(slug);
@@ -46,12 +52,16 @@ function ServersConfigPage() {
         subtitle={t("config.serversSubtitle")}
         actions={
           can("SERVER_CREATE") ? (
-            <Button onClick={() => navigate("/gameServeur/create")}>{t("admin.createServer")}</Button>
+            <Button onClick={() => navigate("/gameServeur/create")}>
+              {t("admin.createServer")}
+            </Button>
           ) : undefined
         }
       />
 
-      {!can("SERVER_INFRA_VIEW") && <Alert severity="info">{t("list.memberView")}</Alert>}
+      {!can("SERVER_INFRA_VIEW") && (
+        <Alert severity="info">{t("list.memberView")}</Alert>
+      )}
 
       <ServersDashboard
         servers={servers}

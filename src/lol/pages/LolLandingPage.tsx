@@ -22,16 +22,47 @@ function LolLandingPage() {
   const { connected, canAny } = useAuthStore();
   const { riotLinked } = useProfileStore();
 
-  useDocumentMeta({ title: t("meta.title"), description: t("meta.description") });
+  useDocumentMeta({
+    title: t("meta.title"),
+    description: t("meta.description"),
+  });
 
   const fonctionnalites = [
-    { key: "roster", title: t("features.roster.title"), body: t("features.roster.body") },
-    { key: "collect", title: t("features.collect.title"), body: t("features.collect.body") },
-    { key: "playerStats", title: t("features.playerStats.title"), body: t("features.playerStats.body") },
-    { key: "teamStats", title: t("features.teamStats.title"), body: t("features.teamStats.body") },
-    { key: "pool", title: t("features.pool.title"), body: t("features.pool.body") },
-    { key: "draft", title: t("features.draft.title"), body: t("features.draft.body") },
-    { key: "reviews", title: t("features.reviews.title"), body: t("features.reviews.body") },
+    {
+      key: "roster",
+      title: t("features.roster.title"),
+      body: t("features.roster.body"),
+    },
+    {
+      key: "collect",
+      title: t("features.collect.title"),
+      body: t("features.collect.body"),
+    },
+    {
+      key: "playerStats",
+      title: t("features.playerStats.title"),
+      body: t("features.playerStats.body"),
+    },
+    {
+      key: "teamStats",
+      title: t("features.teamStats.title"),
+      body: t("features.teamStats.body"),
+    },
+    {
+      key: "pool",
+      title: t("features.pool.title"),
+      body: t("features.pool.body"),
+    },
+    {
+      key: "draft",
+      title: t("features.draft.title"),
+      body: t("features.draft.body"),
+    },
+    {
+      key: "reviews",
+      title: t("features.reviews.title"),
+      body: t("features.reviews.body"),
+    },
   ];
 
   return (
@@ -83,14 +114,22 @@ function LolLandingPage() {
             )}
             <Stack direction="responsive" spacing={1.5}>
               {canAny("TEAM_CREATE", "TEAM_VIEW") && (
-                <Button onClick={() => navigate("/lol/teams")}>{t("access.ctaTeams")}</Button>
+                <Button onClick={() => navigate("/lol/teams")}>
+                  {t("access.ctaTeams")}
+                </Button>
               )}
               {riotLinked ? (
-                <Button variant="secondary" onClick={() => navigate("/lol/stats")}>
+                <Button
+                  variant="secondary"
+                  onClick={() => navigate("/lol/stats")}
+                >
                   {t("access.ctaStats")}
                 </Button>
               ) : (
-                <Button variant="secondary" onClick={() => navigate("/profile")}>
+                <Button
+                  variant="secondary"
+                  onClick={() => navigate("/profile")}
+                >
                   {t("access.ctaProfile")}
                 </Button>
               )}
@@ -100,7 +139,9 @@ function LolLandingPage() {
           <Stack spacing={2}>
             <Text>{t("access.signedOutBody")}</Text>
             <Stack direction="row">
-              <Button onClick={() => navigate("/login")}>{t("access.ctaSignIn")}</Button>
+              <Button onClick={() => navigate("/login")}>
+                {t("access.ctaSignIn")}
+              </Button>
             </Stack>
           </Stack>
         )}

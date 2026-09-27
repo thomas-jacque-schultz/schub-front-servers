@@ -16,8 +16,15 @@ export interface AlignedColumnsProps {
 }
 
 // Subgrid : chaque carte s'étend sur autant de rangées que de sections, la section n de chaque colonne partage donc sa rangée.
-export function AlignedColumns({ columns, minWidth = 220, count }: AlignedColumnsProps) {
-  const rangees = Math.max(0, ...columns.map((column) => column.sections.length));
+export function AlignedColumns({
+  columns,
+  minWidth = 220,
+  count,
+}: AlignedColumnsProps) {
+  const rangees = Math.max(
+    0,
+    ...columns.map((column) => column.sections.length),
+  );
   const replie = `repeat(auto-fit, minmax(min(${minWidth}px, 100%), 1fr))`;
   const tenu = count ? `repeat(${count}, minmax(0, 1fr))` : replie;
 

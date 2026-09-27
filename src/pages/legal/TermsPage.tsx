@@ -1,5 +1,12 @@
 import { useTranslation } from "react-i18next";
-import { BulletList, Card, Link, PageHeader, Stack, Text } from "../../design-system";
+import {
+  BulletList,
+  Card,
+  Link,
+  PageHeader,
+  Stack,
+  Text,
+} from "../../design-system";
 import { DraftNotice } from "./DraftNotice";
 import { RiotDisclaimer } from "../../lol";
 import { useLocalizedPath } from "../../i18n/navigation";
@@ -9,7 +16,10 @@ function TermsPage() {
   const { t } = useTranslation("legal");
   const localize = useLocalizedPath();
 
-  useDocumentMeta({ title: t("terms.meta.title"), description: t("terms.meta.description") });
+  useDocumentMeta({
+    title: t("terms.meta.title"),
+    description: t("terms.meta.description"),
+  });
 
   return (
     <Stack spacing={4}>
@@ -60,7 +70,11 @@ function TermsPage() {
           <Text>{t("terms.content.p1")}</Text>
           <Text>{t("terms.content.p2")}</Text>
           <BulletList
-            items={[t("terms.content.i1"), t("terms.content.i2"), t("terms.content.i3")]}
+            items={[
+              t("terms.content.i1"),
+              t("terms.content.i2"),
+              t("terms.content.i3"),
+            ]}
           />
           <Text>{t("terms.content.p3")}</Text>
         </Stack>

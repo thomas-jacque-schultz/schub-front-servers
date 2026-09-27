@@ -7,7 +7,10 @@ import {
   useState,
 } from "react";
 import i18n from "../i18n";
-import { getDisplayedServersApi, getPublicDisplayedServersApi } from "../api/serversApi";
+import {
+  getDisplayedServersApi,
+  getPublicDisplayedServersApi,
+} from "../api/serversApi";
 import type { DisplayedServer } from "../types/server";
 
 interface ServersStoreValue {
@@ -20,7 +23,9 @@ interface ServersStoreValue {
   resetServers: () => void;
 }
 
-const ServersStoreContext = createContext<ServersStoreValue | undefined>(undefined);
+const ServersStoreContext = createContext<ServersStoreValue | undefined>(
+  undefined,
+);
 
 export const ServersStoreProvider = ({ children }: { children: ReactNode }) => {
   const [servers, setServers] = useState<DisplayedServer[]>([]);
@@ -85,7 +90,15 @@ export const ServersStoreProvider = ({ children }: { children: ReactNode }) => {
       loadPublicServers,
       resetServers,
     }),
-    [servers, isLoading, error, lastRefreshedAt, loadServers, loadPublicServers, resetServers],
+    [
+      servers,
+      isLoading,
+      error,
+      lastRefreshedAt,
+      loadServers,
+      loadPublicServers,
+      resetServers,
+    ],
   );
 
   return (

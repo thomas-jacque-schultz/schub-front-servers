@@ -19,4 +19,5 @@ export const parseRiotId = (raw: string): ParsedRiotId | null => {
   return { gameName, tagLine };
 };
 
-export const isRiotIdComplete = (raw: string): boolean => parseRiotId(raw) !== null;
+export const isRiotIdComplete = (raw: string): boolean =>
+  parseRiotId(raw) !== null;

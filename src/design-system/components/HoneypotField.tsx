@@ -7,7 +7,12 @@ export interface HoneypotFieldProps {
   label: string;
 }
 
-export function HoneypotField({ name, value, onChange, label }: HoneypotFieldProps) {
+export function HoneypotField({
+  name,
+  value,
+  onChange,
+  label,
+}: HoneypotFieldProps) {
   return (
     <Box
       aria-hidden="true"

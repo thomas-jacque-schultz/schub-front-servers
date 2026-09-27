@@ -1,9 +1,15 @@
 import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { getDiscordGuildChannelsApi, subscribeDiscordChannelsApi } from "../../api/discordApi";
+import {
+  getDiscordGuildChannelsApi,
+  subscribeDiscordChannelsApi,
+} from "../../api/discordApi";
 import DiscordChannelsCard from "../../components/DiscordChannelsCard";
 import { PageHeader, Stack } from "../../design-system";
-import type { DiscordChannelSelection, DiscordGuildChannelsDto } from "../../types/discord";
+import type {
+  DiscordChannelSelection,
+  DiscordGuildChannelsDto,
+} from "../../types/discord";
 
 function DiscordConfigPage() {
   const { t } = useTranslation("servers");

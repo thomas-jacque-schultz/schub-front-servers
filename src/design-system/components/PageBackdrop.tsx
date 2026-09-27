@@ -8,7 +8,11 @@ export interface PageBackdropProps {
   children: ReactNode;
 }
 
-export function PageBackdrop({ variant = "page", centered = false, children }: PageBackdropProps) {
+export function PageBackdrop({
+  variant = "page",
+  centered = false,
+  children,
+}: PageBackdropProps) {
   return (
     <Box
       sx={{

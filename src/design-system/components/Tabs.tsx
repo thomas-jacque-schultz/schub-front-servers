@@ -19,7 +19,13 @@ export interface TabsProps {
   children?: ReactNode;
 }
 
-export function Tabs({ items, value, onChange, ariaLabel, children }: TabsProps) {
+export function Tabs({
+  items,
+  value,
+  onChange,
+  ariaLabel,
+  children,
+}: TabsProps) {
   return (
     <Box>
       <MuiTabs
@@ -39,7 +45,11 @@ export function Tabs({ items, value, onChange, ariaLabel, children }: TabsProps)
             aria-controls={`panel-${item.key}`}
             disabled={item.disabled}
             iconPosition="end"
-            icon={item.badge ? <Chip label={item.badge} tone="secondary" variant="outline" /> : undefined}
+            icon={
+              item.badge ? (
+                <Chip label={item.badge} tone="secondary" variant="outline" />
+              ) : undefined
+            }
             label={item.label}
           />
         ))}

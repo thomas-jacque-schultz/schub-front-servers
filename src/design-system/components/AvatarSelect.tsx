@@ -21,9 +21,18 @@ export interface AvatarSelectProps {
 }
 
 // Choix unique. Recliquer sur l'élu le retire : « personne » est un choix légitime.
-export function AvatarSelect({ label, options, value, onChange }: AvatarSelectProps) {
+export function AvatarSelect({
+  label,
+  options,
+  value,
+  onChange,
+}: AvatarSelectProps) {
   return (
-    <Box role="radiogroup" aria-label={label} sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+    <Box
+      role="radiogroup"
+      aria-label={label}
+      sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}
+    >
       {options.map((option) => {
         const elu = option.value === value;
         return (

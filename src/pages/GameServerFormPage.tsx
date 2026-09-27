@@ -61,13 +61,17 @@ const REQUIRED_FIELDS: Array<keyof GameServerFormValues> = ["slug", "name"];
 
 const PORT_ENTRY_PATTERN = /^(tcp|udp):(\d{1,5})(?::(\d{1,5}))?$/i;
 
-const isValidPort = (port: number) => Number.isInteger(port) && port >= 1 && port <= 65535;
+const isValidPort = (port: number) =>
+  Number.isInteger(port) && port >= 1 && port <= 65535;
 
 // proto:portWan[:portLan], portLan = portWan par défaut. Port publié sur le nœud Swarm, pas le port du conteneur.
 const parsePorts = (raw: string): GameServerPortDto[] | null => {
   const parsed: GameServerPortDto[] = [];
 
-  for (const entry of raw.split(",").map((item) => item.trim()).filter(Boolean)) {
+  for (const entry of raw
+    .split(",")
+    .map((item) => item.trim())
+    .filter(Boolean)) {
     const match = PORT_ENTRY_PATTERN.exec(entry);
     if (!match) {
       return null;
@@ -98,11 +102,15 @@ const toPayload = (
   seesInfrastructure: boolean,
 ): UpsertGameServerPayload => ({
   slug: values.slug.trim(),
-  deploymentId: values.deploymentId.trim() ? Number(values.deploymentId.trim()) : undefined,
+  deploymentId: values.deploymentId.trim()
+    ? Number(values.deploymentId.trim())
+    : undefined,
   name: values.name.trim(),
   urlConnection: values.urlConnection.trim() || undefined,
   game: values.game.trim() || undefined,
-  playersMax: values.playersMax.trim() ? Number(values.playersMax.trim()) : undefined,
+  playersMax: values.playersMax.trim()
+    ? Number(values.playersMax.trim())
+    : undefined,
   installation: values.installation.trim() || undefined,
   version: values.version.trim() || undefined,
   description: values.description.trim() || undefined,
@@ -155,7 +163,9 @@ function GameServerFormPage() {
       } catch (error) {
         if (active) {
           setDeploymentsError(
-            error instanceof Error ? error.message : t("form.errors.deploymentsUnavailable"),
+            error instanceof Error
+              ? error.message
+              : t("form.errors.deploymentsUnavailable"),
           );
         }
       }
@@ -191,12 +201,17 @@ function GameServerFormPage() {
         setSeesInfrastructure(hasInfrastructureView(server));
         setValues({
           slug: server.slug || "",
-          deploymentId: typeof server.deploymentId === "number" ? String(server.deploymentId) : "",
+          deploymentId:
+            typeof server.deploymentId === "number"
+              ? String(server.deploymentId)
+              : "",
           name: server.name || "",
           urlConnection: server.urlConnection || "",
           game: server.game || "",
           playersMax:
-            typeof server.playersMax === "number" ? String(server.playersMax) : "",
+            typeof server.playersMax === "number"
+              ? String(server.playersMax)
+              : "",
           installation: server.installation || "",
           version: server.version || "",
           description: server.description || "",
@@ -206,7 +221,9 @@ function GameServerFormPage() {
         if (!active) {
           return;
         }
-        setGlobalError(error instanceof Error ? error.message : t("form.errors.loadFailed"));
+        setGlobalError(
+          error instanceof Error ? error.message : t("form.errors.loadFailed"),
+        );
       } finally {
         if (active) {
           setIsLoading(false);
@@ -228,7 +245,10 @@ function GameServerFormPage() {
   };
 
   const selectedDeployment = useMemo(
-    () => deployments.find((deployment) => String(deployment.id) === values.deploymentId) ?? null,
+    () =>
+      deployments.find(
+        (deployment) => String(deployment.id) === values.deploymentId,
+      ) ?? null,
     [deployments, values.deploymentId],
   );
 
@@ -236,18 +256,26 @@ function GameServerFormPage() {
     const games = deployments.filter((deployment) =>
       deployment.name.toLowerCase().includes(GAME_DEPLOYMENT_MARKER),
     );
-    if (selectedDeployment && !games.some((deployment) => deployment.id === selectedDeployment.id)) {
+    if (
+      selectedDeployment &&
+      !games.some((deployment) => deployment.id === selectedDeployment.id)
+    ) {
       return [selectedDeployment, ...games];
     }
     return games;
   }, [deployments, selectedDeployment]);
 
   const onDeploymentChange = (deploymentId: string) => {
-    const deployment = deployments.find((candidate) => String(candidate.id) === deploymentId) ?? null;
+    const deployment =
+      deployments.find((candidate) => String(candidate.id) === deploymentId) ??
+      null;
     setValues((current) => ({
       ...current,
       deploymentId,
-      slug: mode === "creation" && deployment ? slugFromDeploymentName(deployment.name) : current.slug,
+      slug:
+        mode === "creation" && deployment
+          ? slugFromDeploymentName(deployment.name)
+          : current.slug,
     }));
     setErrors((current) => ({ ...current, deploymentId: "", slug: "" }));
     setGlobalError("");
@@ -307,7 +335,9 @@ function GameServerFormPage() {
 
       navigate("/config/servers", { replace: true });
     } catch (error) {
-      setGlobalError(error instanceof Error ? error.message : t("form.errors.saveFailed"));
+      setGlobalError(
+        error instanceof Error ? error.message : t("form.errors.saveFailed"),
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -340,7 +370,9 @@ function GameServerFormPage() {
       {isLoading && <ProgressBar label={pageTitle} />}
       {globalError && <Alert severity="error">{globalError}</Alert>}
 
-      {!seesInfrastructure && <Alert severity="info">{t("form.infraHidden")}</Alert>}
+      {!seesInfrastructure && (
+        <Alert severity="info">{t("form.infraHidden")}</Alert>
+      )}
 
       {deploymentsError && (
         <Alert severity="warning">

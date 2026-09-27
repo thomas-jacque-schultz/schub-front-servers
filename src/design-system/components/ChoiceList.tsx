@@ -47,13 +47,23 @@ export function ChoiceList({
               {option.label}
             </Typography>
             {option.description && (
-              <Typography variant="caption" color="text.secondary" component="div">
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                component="div"
+              >
                 {option.description}
               </Typography>
             )}
           </MuiStack>
           {option.meta && (
-            <MuiStack direction="row" spacing={0.5} alignItems="center" flexWrap="wrap" useFlexGap>
+            <MuiStack
+              direction="row"
+              spacing={0.5}
+              alignItems="center"
+              flexWrap="wrap"
+              useFlexGap
+            >
               {option.meta}
             </MuiStack>
           )}

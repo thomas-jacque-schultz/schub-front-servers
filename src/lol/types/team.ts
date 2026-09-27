@@ -107,13 +107,20 @@ export const riotIdOf = (member: TeamMemberDto): string | null =>
 export const playableMembers = (members: TeamMemberDto[]): TeamMemberDto[] =>
   members.filter((member) => member.status !== "COACH");
 
-export const statutsOf = (member: Pick<TeamMemberDto, "status" | "coach">): MemberStatus[] => [
+export const statutsOf = (
+  member: Pick<TeamMemberDto, "status" | "coach">,
+): MemberStatus[] => [
   ...(member.status === "COACH" ? [] : [member.status]),
-  ...(member.coach || member.status === "COACH" ? (["COACH"] as MemberStatus[]) : []),
+  ...(member.coach || member.status === "COACH"
+    ? (["COACH"] as MemberStatus[])
+    : []),
 ];
 
 /** Titulaire et remplaçant s'excluent : le dernier coché l'emporte. */
-export const choisitStatuts = (avant: MemberStatus[], apres: MemberStatus[]): MemberStatus[] => {
+export const choisitStatuts = (
+  avant: MemberStatus[],
+  apres: MemberStatus[],
+): MemberStatus[] => {
   const ajoute = apres.find((statut) => !avant.includes(statut));
   if (ajoute === "TITULAIRE") {
     return apres.filter((statut) => statut !== "REMPLACANT");
@@ -124,7 +131,9 @@ export const choisitStatuts = (avant: MemberStatus[], apres: MemberStatus[]): Me
   return apres;
 };
 
-export const versRequete = (statuts: MemberStatus[]): { status: MemberStatus; coach: boolean } => ({
+export const versRequete = (
+  statuts: MemberStatus[],
+): { status: MemberStatus; coach: boolean } => ({
   status: statuts.includes("TITULAIRE")
     ? "TITULAIRE"
     : statuts.includes("REMPLACANT")

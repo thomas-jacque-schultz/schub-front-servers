@@ -1,5 +1,12 @@
 import { useTranslation } from "react-i18next";
-import { BulletList, Card, Link, PageHeader, Stack, Text } from "../../design-system";
+import {
+  BulletList,
+  Card,
+  Link,
+  PageHeader,
+  Stack,
+  Text,
+} from "../../design-system";
 import { DraftNotice } from "./DraftNotice";
 import { RiotDisclaimer } from "../../lol";
 import { useLocalizedPath } from "../../i18n/navigation";
@@ -9,17 +16,52 @@ function PrivacyPage() {
   const { t } = useTranslation("legal");
   const localize = useLocalizedPath();
 
-  useDocumentMeta({ title: t("privacy.meta.title"), description: t("privacy.meta.description") });
+  useDocumentMeta({
+    title: t("privacy.meta.title"),
+    description: t("privacy.meta.description"),
+  });
 
   const collecte = [
-    { key: "discord", title: t("privacy.collected.discordTitle"), body: t("privacy.collected.discord") },
-    { key: "account", title: t("privacy.collected.accountTitle"), body: t("privacy.collected.account") },
-    { key: "riot", title: t("privacy.collected.riotTitle"), body: t("privacy.collected.riot") },
-    { key: "matches", title: t("privacy.collected.matchesTitle"), body: t("privacy.collected.matches") },
-    { key: "others", title: t("privacy.collected.othersTitle"), body: t("privacy.collected.others") },
-    { key: "teams", title: t("privacy.collected.teamsTitle"), body: t("privacy.collected.teams") },
-    { key: "reviews", title: t("privacy.collected.reviewsTitle"), body: t("privacy.collected.reviews") },
-    { key: "contact", title: t("privacy.collected.contactTitle"), body: t("privacy.collected.contact") },
+    {
+      key: "discord",
+      title: t("privacy.collected.discordTitle"),
+      body: t("privacy.collected.discord"),
+    },
+    {
+      key: "account",
+      title: t("privacy.collected.accountTitle"),
+      body: t("privacy.collected.account"),
+    },
+    {
+      key: "riot",
+      title: t("privacy.collected.riotTitle"),
+      body: t("privacy.collected.riot"),
+    },
+    {
+      key: "matches",
+      title: t("privacy.collected.matchesTitle"),
+      body: t("privacy.collected.matches"),
+    },
+    {
+      key: "others",
+      title: t("privacy.collected.othersTitle"),
+      body: t("privacy.collected.others"),
+    },
+    {
+      key: "teams",
+      title: t("privacy.collected.teamsTitle"),
+      body: t("privacy.collected.teams"),
+    },
+    {
+      key: "reviews",
+      title: t("privacy.collected.reviewsTitle"),
+      body: t("privacy.collected.reviews"),
+    },
+    {
+      key: "contact",
+      title: t("privacy.collected.contactTitle"),
+      body: t("privacy.collected.contact"),
+    },
   ];
 
   return (
@@ -102,7 +144,9 @@ function PrivacyPage() {
             <Text>{t("privacy.retention.caches")}</Text>
           </Stack>
           <Stack spacing={0.5}>
-            <Text variant="section">{t("privacy.retention.permanentTitle")}</Text>
+            <Text variant="section">
+              {t("privacy.retention.permanentTitle")}
+            </Text>
             <Text>{t("privacy.retention.permanent")}</Text>
             <Text>{t("privacy.retention.riotPurge")}</Text>
           </Stack>
@@ -118,7 +162,11 @@ function PrivacyPage() {
           <Text>{t("privacy.sharing.p1")}</Text>
           <Text>{t("privacy.sharing.p2")}</Text>
           <BulletList
-            items={[t("privacy.sharing.i1"), t("privacy.sharing.i2"), t("privacy.sharing.i3")]}
+            items={[
+              t("privacy.sharing.i1"),
+              t("privacy.sharing.i2"),
+              t("privacy.sharing.i3"),
+            ]}
           />
           <Text>{t("privacy.sharing.p3")}</Text>
         </Stack>
@@ -146,7 +194,9 @@ function PrivacyPage() {
             <Text variant="section">{t("privacy.rights.howTitle")}</Text>
             <Text>{t("privacy.rights.how")}</Text>
             <Text>{t("privacy.rights.thirdParty")}</Text>
-            <Link href={localize("/contact")}>{t("shell.contact", { ns: "common" })}</Link>
+            <Link href={localize("/contact")}>
+              {t("shell.contact", { ns: "common" })}
+            </Link>
           </Stack>
         </Stack>
       </Card>

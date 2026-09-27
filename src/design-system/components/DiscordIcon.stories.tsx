@@ -9,7 +9,10 @@ const meta = {
   component: DiscordIcon,
   args: { fontSize: "medium" },
   argTypes: {
-    fontSize: { control: "inline-radio", options: ["small", "medium", "large", "inherit"] },
+    fontSize: {
+      control: "inline-radio",
+      options: ["small", "medium", "large", "inherit"],
+    },
   },
 } satisfies Meta<typeof DiscordIcon>;
 

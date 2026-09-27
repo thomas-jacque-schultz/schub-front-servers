@@ -4,8 +4,12 @@ import type {
   DiscordGuildChannelsDto,
 } from "../types/discord";
 
-export const getDiscordGuildChannelsApi = async (): Promise<DiscordGuildChannelsDto[]> =>
-  requestJson<DiscordGuildChannelsDto[]>("/discord/guilds/channels", { method: "GET" });
+export const getDiscordGuildChannelsApi = async (): Promise<
+  DiscordGuildChannelsDto[]
+> =>
+  requestJson<DiscordGuildChannelsDto[]>("/discord/guilds/channels", {
+    method: "GET",
+  });
 
 export const subscribeDiscordChannelsApi = async (
   channels: DiscordChannelSelection[],

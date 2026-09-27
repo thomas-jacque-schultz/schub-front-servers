@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { addTeamMemberApi, removeTeamMemberApi, updateTeamMemberApi } from "../api/teamsApi";
+import {
+  addTeamMemberApi,
+  removeTeamMemberApi,
+  updateTeamMemberApi,
+} from "../api/teamsApi";
 import { RiotAccountPicker } from "../components/RiotAccountPicker";
 import {
   Alert,
@@ -47,20 +51,26 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
 
   const [edited, setEdited] = useState<TeamMemberDto | null>(null);
   const [editedRoles, setEditedRoles] = useState<string[]>([]);
-  const [editedStatuts, setEditedStatuts] = useState<MemberStatus[]>(["TITULAIRE"]);
+  const [editedStatuts, setEditedStatuts] = useState<MemberStatus[]>([
+    "TITULAIRE",
+  ]);
 
   const [removed, setRemoved] = useState<TeamMemberDto | null>(null);
 
   const canEdit = team.viewerCanEdit;
 
-  const roleOptions = GAME_ROLES.map((role) => ({ value: role, label: t(`roles.${role}`) }));
+  const roleOptions = GAME_ROLES.map((role) => ({
+    value: role,
+    label: t(`roles.${role}`),
+  }));
 
   const statusOptions = MEMBER_STATUSES.map((status) => ({
     value: status,
     label: t(`status.${status}`),
   }));
 
-  const coachSeul = (statuts: MemberStatus[]) => statuts.length === 1 && statuts[0] === "COACH";
+  const coachSeul = (statuts: MemberStatus[]) =>
+    statuts.length === 1 && statuts[0] === "COACH";
 
   const rolesFor = (statuts: MemberStatus[], roles: string[]): GameRole[] =>
     coachSeul(statuts) ? [] : (roles as GameRole[]);
@@ -89,7 +99,9 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
       );
       fermerAjout();
     } catch (addError) {
-      setError(addError instanceof Error ? addError.message : t("roster.add.failed"));
+      setError(
+        addError instanceof Error ? addError.message : t("roster.add.failed"),
+      );
     } finally {
       setIsSaving(false);
     }
@@ -110,7 +122,11 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
       );
       setEdited(null);
     } catch (editError) {
-      setError(editError instanceof Error ? editError.message : t("roster.edit.failed"));
+      setError(
+        editError instanceof Error
+          ? editError.message
+          : t("roster.edit.failed"),
+      );
     } finally {
       setIsSaving(false);
     }
@@ -126,7 +142,11 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
       onTeamChange(await removeTeamMemberApi(team.id, removed.memberId));
       setRemoved(null);
     } catch (removeError) {
-      setError(removeError instanceof Error ? removeError.message : t("roster.remove.failed"));
+      setError(
+        removeError instanceof Error
+          ? removeError.message
+          : t("roster.remove.failed"),
+      );
     } finally {
       setIsSaving(false);
     }
@@ -139,10 +159,16 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
       width: "22%",
       render: (member) => (
         <Stack direction="row" spacing={1.5} align="center">
-          <Avatar src={member.avatarUrl} name={member.displayName} size="small" />
+          <Avatar
+            src={member.avatarUrl}
+            name={member.displayName}
+            size="small"
+          />
           <Text>
             {member.displayName}
-            {member.memberId === team.viewerMemberId ? ` (${t("roster.you")})` : ""}
+            {member.memberId === team.viewerMemberId
+              ? ` (${t("roster.you")})`
+              : ""}
           </Text>
         </Stack>
       ),
@@ -170,7 +196,12 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
         ) : (
           <Stack direction="row" spacing={0.5} wrap>
             {member.roles.map((role) => (
-              <Chip key={role} label={t(`roles.${role}`)} variant="outline" size="small" />
+              <Chip
+                key={role}
+                label={t(`roles.${role}`)}
+                variant="outline"
+                size="small"
+              />
             ))}
           </Stack>
         ),
@@ -226,7 +257,11 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
           >
             {t("roster.edit.action")}
           </Button>
-          <Button size="small" variant="ghost" onClick={() => setRemoved(member)}>
+          <Button
+            size="small"
+            variant="ghost"
+            onClick={() => setRemoved(member)}
+          >
             {t("roster.remove.action")}
           </Button>
         </Stack>
@@ -241,7 +276,13 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
       <Card
         title={t("roster.title")}
         description={t("roster.description")}
-        actions={canEdit ? <Button onClick={() => setIsAdding(true)}>{t("roster.add.action")}</Button> : undefined}
+        actions={
+          canEdit ? (
+            <Button onClick={() => setIsAdding(true)}>
+              {t("roster.add.action")}
+            </Button>
+          ) : undefined
+        }
       >
         <DataTable
           columns={columns}
@@ -269,15 +310,26 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
       >
         {chosen ? (
           <Stack spacing={2}>
-            <Alert severity="success" title={t("roster.add.chosen", { riotId: chosen.riotId })}>
-              <Button variant="ghost" size="small" onClick={() => setChosen(null)}>
+            <Alert
+              severity="success"
+              title={t("roster.add.chosen", { riotId: chosen.riotId })}
+            >
+              <Button
+                variant="ghost"
+                size="small"
+                onClick={() => setChosen(null)}
+              >
                 {t("roster.add.changeAccount")}
               </Button>
             </Alert>
             <MultiSelect
               label={t("roster.fields.status")}
               values={newStatuts}
-              onChange={(values) => setNewStatuts(choisitStatuts(newStatuts, values as MemberStatus[]))}
+              onChange={(values) =>
+                setNewStatuts(
+                  choisitStatuts(newStatuts, values as MemberStatus[]),
+                )
+              }
               options={statusOptions}
               helperText={t("roster.fields.statusHelper")}
             />
@@ -288,12 +340,18 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
               options={roleOptions}
               disabled={coachSeul(newStatuts)}
               helperText={
-                coachSeul(newStatuts) ? t("roster.fields.coachHasNoRole") : t("roster.fields.rolesHelper")
+                coachSeul(newStatuts)
+                  ? t("roster.fields.coachHasNoRole")
+                  : t("roster.fields.rolesHelper")
               }
             />
           </Stack>
         ) : (
-          <RiotAccountPicker resetKey={isAdding} busy={isSaving} onPick={setChosen} />
+          <RiotAccountPicker
+            resetKey={isAdding}
+            busy={isSaving}
+            onPick={setChosen}
+          />
         )}
       </Dialog>
 
@@ -312,7 +370,11 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
           <MultiSelect
             label={t("roster.fields.status")}
             values={editedStatuts}
-            onChange={(values) => setEditedStatuts(choisitStatuts(editedStatuts, values as MemberStatus[]))}
+            onChange={(values) =>
+              setEditedStatuts(
+                choisitStatuts(editedStatuts, values as MemberStatus[]),
+              )
+            }
             options={statusOptions}
             helperText={t("roster.fields.statusHelper")}
           />
@@ -323,7 +385,9 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
             options={roleOptions}
             disabled={coachSeul(editedStatuts)}
             helperText={
-              coachSeul(editedStatuts) ? t("roster.fields.coachHasNoRole") : t("roster.fields.rolesHelper")
+              coachSeul(editedStatuts)
+                ? t("roster.fields.coachHasNoRole")
+                : t("roster.fields.rolesHelper")
             }
           />
         </Stack>

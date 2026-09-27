@@ -1,4 +1,8 @@
-export const RIOT_ACCOUNT_STATES = ["ABSENT", "EN_ATTENTE_DE_RESOLUTION", "RESOLU"] as const;
+export const RIOT_ACCOUNT_STATES = [
+  "ABSENT",
+  "EN_ATTENTE_DE_RESOLUTION",
+  "RESOLU",
+] as const;
 
 export type RiotAccountState = (typeof RIOT_ACCOUNT_STATES)[number];
 
@@ -47,7 +51,14 @@ export interface RiotAccountRequest {
 }
 
 // Vocabulaire des parties Riot, distinct de GameRole (effectif d'équipe).
-export const RIOT_POSITIONS = ["TOP", "JUNGLE", "MIDDLE", "BOTTOM", "UTILITY", "UNKNOWN"] as const;
+export const RIOT_POSITIONS = [
+  "TOP",
+  "JUNGLE",
+  "MIDDLE",
+  "BOTTOM",
+  "UTILITY",
+  "UNKNOWN",
+] as const;
 
 export type RiotPosition = (typeof RIOT_POSITIONS)[number];
 

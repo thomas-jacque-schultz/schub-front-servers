@@ -14,7 +14,10 @@ const meta = {
     onClose: () => {},
   },
   argTypes: {
-    severity: { control: "inline-radio", options: ["info", "success", "warning", "error"] },
+    severity: {
+      control: "inline-radio",
+      options: ["info", "success", "warning", "error"],
+    },
   },
 } satisfies Meta<typeof Toast>;
 
@@ -24,7 +27,11 @@ type Story = StoryObj<typeof meta>;
 export const Confirmation: Story = {};
 
 export const Erreur: Story = {
-  args: { severity: "error", message: "Le cœur a refusé : ce rôle est plus puissant que le vôtre.", autoHideMs: 8000 },
+  args: {
+    severity: "error",
+    message: "Le cœur a refusé : ce rôle est plus puissant que le vôtre.",
+    autoHideMs: 8000,
+  },
 };
 
 export const Declenchable: Story = {

@@ -5,9 +5,15 @@ import { Stack } from "./Stack";
 const meta = {
   title: "Primitives/Alert",
   component: Alert,
-  args: { severity: "info", children: "Le catalogue des déploiements est indisponible." },
+  args: {
+    severity: "info",
+    children: "Le catalogue des déploiements est indisponible.",
+  },
   argTypes: {
-    severity: { control: "inline-radio", options: ["info", "success", "warning", "error"] },
+    severity: {
+      control: "inline-radio",
+      options: ["info", "success", "warning", "error"],
+    },
   },
 } satisfies Meta<typeof Alert>;
 
@@ -20,7 +26,8 @@ export const AvecTitre: Story = {
   args: {
     severity: "warning",
     title: "Vue partielle",
-    children: "Ports et administrateurs demandent la permission d'infrastructure.",
+    children:
+      "Ports et administrateurs demandent la permission d'infrastructure.",
   },
 };
 
@@ -29,12 +36,18 @@ export const LesQuatreNiveaux: Story = {
     <Stack spacing={1.5}>
       <Alert severity="info">La fiche est en consultation seule.</Alert>
       <Alert severity="success">Rôle enregistré.</Alert>
-      <Alert severity="warning">Le routeur n'a pas répondu : les redirections datent.</Alert>
+      <Alert severity="warning">
+        Le routeur n'a pas répondu : les redirections datent.
+      </Alert>
       <Alert severity="error">L'enregistrement a échoué.</Alert>
     </Stack>
   ),
 };
 
 export const Fermable: Story = {
-  args: { severity: "success", children: "Sélection enregistrée.", onClose: () => {} },
+  args: {
+    severity: "success",
+    children: "Sélection enregistrée.",
+    onClose: () => {},
+  },
 };

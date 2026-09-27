@@ -1,9 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  getTeamGameDetailApi,
-  getTeamGamesStatsApi,
-} from "../../api/statsApi";
+import { getTeamGameDetailApi, getTeamGamesStatsApi } from "../../api/statsApi";
 import { messageOf, useRequest } from "../../../api/useRequest";
 import {
   Alert,

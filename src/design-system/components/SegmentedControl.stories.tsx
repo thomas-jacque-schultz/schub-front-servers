@@ -17,7 +17,12 @@ const OPTIONS = [
 ];
 
 export const Referentiels: Story = {
-  args: { label: "Référentiel", options: OPTIONS, value: "team", onChange: () => undefined },
+  args: {
+    label: "Référentiel",
+    options: OPTIONS,
+    value: "team",
+    onChange: () => undefined,
+  },
   render: (args) => {
     const [valeur, setValeur] = useState(args.value);
     return <SegmentedControl {...args} value={valeur} onChange={setValeur} />;

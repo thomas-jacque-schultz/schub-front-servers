@@ -37,13 +37,26 @@ export function RankedStandings({ standings }: RankedStandingsProps) {
           </Text>
           <RankBadge standing={standing} />
           <Text variant="caption" tone="disabled">
-            {t("ranked.record", { wins: standing.wins, losses: standing.losses })}
+            {t("ranked.record", {
+              wins: standing.wins,
+              losses: standing.losses,
+            })}
           </Text>
           {standing.hotStreak && (
-            <Chip label={t("ranked.hotStreak")} tone="success" size="small" variant="outline" />
+            <Chip
+              label={t("ranked.hotStreak")}
+              tone="success"
+              size="small"
+              variant="outline"
+            />
           )}
           {standing.inactive && (
-            <Chip label={t("ranked.inactive")} tone="warning" size="small" variant="outline" />
+            <Chip
+              label={t("ranked.inactive")}
+              tone="warning"
+              size="small"
+              variant="outline"
+            />
           )}
         </Stack>
       ))}

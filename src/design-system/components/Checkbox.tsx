@@ -9,7 +9,13 @@ export interface CheckboxProps {
   "aria-label"?: string;
 }
 
-export function Checkbox({ checked, onChange, label, disabled = false, ...rest }: CheckboxProps) {
+export function Checkbox({
+  checked,
+  onChange,
+  label,
+  disabled = false,
+  ...rest
+}: CheckboxProps) {
   const control = (
     <MuiCheckbox
       checked={checked}
@@ -24,5 +30,7 @@ export function Checkbox({ checked, onChange, label, disabled = false, ...rest }
     return control;
   }
 
-  return <FormControlLabel control={control} label={label} disabled={disabled} />;
+  return (
+    <FormControlLabel control={control} label={label} disabled={disabled} />
+  );
 }

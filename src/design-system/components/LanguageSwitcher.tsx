@@ -4,7 +4,11 @@ import { useTranslation } from "react-i18next";
 import { type AppLanguage, SUPPORTED_LANGUAGES } from "../../i18n/config";
 import { useLanguageSwitcher } from "../../i18n/navigation";
 
-export function LanguageSwitcher({ size = "small" }: { size?: "small" | "medium" }) {
+export function LanguageSwitcher({
+  size = "small",
+}: {
+  size?: "small" | "medium";
+}) {
   const { t } = useTranslation();
   const { current, switchTo } = useLanguageSwitcher();
 
@@ -20,7 +24,9 @@ export function LanguageSwitcher({ size = "small" }: { size?: "small" | "medium"
         <ToggleButton
           key={language}
           value={language}
-          aria-label={t("language.switchTo", { language: t(`language.${language}`) })}
+          aria-label={t("language.switchTo", {
+            language: t(`language.${language}`),
+          })}
           sx={{ px: 1.25, textTransform: "uppercase", fontWeight: 600 }}
         >
           {language}

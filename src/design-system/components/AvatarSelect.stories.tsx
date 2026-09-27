@@ -2,12 +2,14 @@ import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { AvatarSelect } from "./AvatarSelect";
 
-const options = ["Joueur A", "Joueur B", "Joueur C", "Joueur D"].map((name, index) => ({
-  value: name,
-  name,
-  taken: index === 3,
-  hint: index === 3 ? `${name} — déjà au mid` : undefined,
-}));
+const options = ["Joueur A", "Joueur B", "Joueur C", "Joueur D"].map(
+  (name, index) => ({
+    value: name,
+    name,
+    taken: index === 3,
+    hint: index === 3 ? `${name} — déjà au mid` : undefined,
+  }),
+);
 
 const meta = {
   title: "Formulaires/AvatarSelect",
