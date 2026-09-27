@@ -43,3 +43,12 @@ export const getPlayerGameFindingsApi = async (
     `/players/${encodeURIComponent(slug)}/games/${encodeURIComponent(matchId)}/findings`,
     { method: "GET" },
   );
+
+export const getTeamFindingsApi = async (
+  teamId: string,
+  periode?: StatsWindow | null,
+): Promise<FindingDto[]> =>
+  requestJson<FindingDto[]>(
+    `/teams/${teamId}/stats/findings${params(periode)}`,
+    { method: "GET" },
+  );

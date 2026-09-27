@@ -11,7 +11,9 @@ import {
   useRequest,
   type ChipTone,
 } from "../../../common";
+import { getTeamFindingsApi } from "../../api/findingsApi";
 import { getTeamSynergyApi } from "../../api/statsApi";
+import { FindingList } from "../../components/Findings";
 import type { DuoDto, ResourceDto } from "../../types/stats";
 import { useStatsFormat } from "./statsFormat";
 
@@ -43,6 +45,10 @@ export interface SynergyPanelProps {
 export function SynergyPanel({ teamId, periode }: SynergyPanelProps) {
   const { t } = useTranslation("stats");
   const format = useStatsFormat();
+  const { data: constats } = useRequest(
+    `team-findings/${teamId}/${periode}`,
+    () => getTeamFindingsApi(teamId, periode),
+  );
   const { data, error, isLoading } = useRequest(
     `synergy/${teamId}/${periode}`,
     () => getTeamSynergyApi(teamId, periode),
@@ -112,6 +118,11 @@ export function SynergyPanel({ teamId, periode }: SynergyPanelProps) {
 
   return (
     <Stack spacing={3}>
+      {constats && constats.length > 0 && (
+        <Card title={t("synergy.findings")}>
+          <FindingList findings={constats} />
+        </Card>
+      )}
       <Card
         title={t("synergy.duos")}
         description={t("synergy.duosHint", { count: data.minimumDuoGames })}

@@ -542,6 +542,7 @@
     "damageShare": "Dégâts (V / D)",
     "conversion": "Dégâts − or",
     "resourceSentence": "Quand votre {{position}} a plus de {{threshold}} de l’or, vous gagnez {{above}} des parties ({{gamesAbove}}) ; en dessous, {{below}} ({{gamesBelow}}).",
-    "notConverting": "Votre {{position}} reçoit plus d’or qu’il ne rend en dégâts."
+    "notConverting": "Votre {{position}} reçoit plus d’or qu’il ne rend en dégâts.",
+    "findings": "Ce qui ressort pour l’équipe"
   }
 }
