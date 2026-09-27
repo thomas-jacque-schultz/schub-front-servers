@@ -522,5 +522,26 @@
       "down": "Slipping: {{now}} this month, versus {{before}} the month before.",
       "stable": "Steady: {{now}} this month, {{before}} the month before."
     }
+  },
+  "synergy": {
+    "title": "Duos and resources",
+    "duos": "Roster duos",
+    "duosHint": "Each cell: the gap between the pair’s win rate and what you would expect from them (each one’s average without the other), over team games. Pairs with at least {{count}} games together.",
+    "games_one": "{{count}} game",
+    "games_other": "{{count}} games",
+    "noDuo": "No pair has {{count}} team games together in this period yet.",
+    "duoUp_one": "{{a}} and {{b}} win {{points}} points more than expected together ({{count}} game).",
+    "duoUp_other": "{{a}} and {{b}} win {{points}} points more than expected together ({{count}} games).",
+    "duoDown_one": "{{a}} and {{b}} win {{points}} points less than expected together ({{count}} game).",
+    "duoDown_other": "{{a}} and {{b}} win {{points}} points less than expected together ({{count}} games).",
+    "resources": "Who gets the gold, and does it pay",
+    "resourcesHint": "Share of the team’s gold and damage held by each role, in wins then losses. All queues together.",
+    "noResources": "No team game in this period yet.",
+    "position": "Role",
+    "goldShare": "Gold (W / L)",
+    "damageShare": "Damage (W / L)",
+    "conversion": "Damage − gold",
+    "resourceSentence": "When your {{position}} has more than {{threshold}} of the gold, you win {{above}} of games ({{gamesAbove}}); below, {{below}} ({{gamesBelow}}).",
+    "notConverting": "Your {{position}} gets more gold than they return in damage."
   }
 }
