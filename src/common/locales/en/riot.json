@@ -103,5 +103,56 @@
       "players": "Unknown players per window",
       "window": "Window (minutes)"
     }
+  },
+  "augur": {
+    "title": "Findings engine rules",
+    "description": "Each rule reads signals (value or tier percentile) and produces a finding with its evidence. An active version never changes: write a draft, measure what it would change, then activate it. Every action carries a comment.",
+    "failed": "The operation failed",
+    "empty": "No rule",
+    "label": "Rule",
+    "key": "Key",
+    "scope": "Scope",
+    "scopes": {
+      "GAME": "One game",
+      "HABIT": "Habit"
+    },
+    "version": "Version",
+    "status": {
+      "DRAFT": "draft",
+      "ACTIVE": "active",
+      "RETIRED": "retired"
+    },
+    "open": "Open",
+    "new": "New rule",
+    "history": "History",
+    "content": "Version content",
+    "contentHelp": "Conditions as ramps: from \"from\" (degree 0) to \"to\" (degree 1). unit: VALUE or PERCENTILE. A \"pattern:key\" signal reads another rule’s degree. Sentence: {signal.value}, {signal.percentile}, {position}, {tier}.",
+    "comment": "Comment",
+    "commentHelp": "Why this version: required to save, activate or roll back.",
+    "invalidJson": "The content is not valid JSON.",
+    "saveDraft": "Save draft",
+    "drafted": "Draft saved.",
+    "impact": "Measure impact",
+    "measured": "Impact measured on a sample of already evaluated subjects.",
+    "activate": "Activate this draft",
+    "activated": "Version active: its findings are recomputed in the background.",
+    "rollback": "Roll back to the previous version",
+    "rolledBack": "Previous version reactivated.",
+    "sampled": "Sampled subjects",
+    "appearing": "Findings appearing",
+    "disappearing": "Findings disappearing",
+    "unchanged": "Unchanged"
+  },
+  "trace": {
+    "title": "Engine trace",
+    "description": "Every active rule evaluated on a player (their habits) or one of their games, emitted or not: what you need to tune thresholds.",
+    "riotId": "Riot ID",
+    "matchId": "Game (optional)",
+    "run": "Trace",
+    "failed": "Trace unavailable",
+    "empty": "No rule evaluated",
+    "pattern": "Rule",
+    "degree": "Degree",
+    "conditions": "Conditions (observed [ramp] = degree)"
   }
 }
