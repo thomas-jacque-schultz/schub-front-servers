@@ -18,6 +18,7 @@ export const PERMISSIONS = [
   "TEAM_VIEW",
   "TEAM_EDIT",
   "COMPOSITION_EDIT",
+  "AUGUR_PATTERN_EDIT",
   "ROLE_MANAGE",
 ] as const;
 

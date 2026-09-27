@@ -19,6 +19,8 @@ import type {
   TeamGameDetailDto,
   TeamGamePlayerDto,
 } from "../../types/stats";
+import { FindingList } from "../../components/Findings";
+import type { FindingDto } from "../../types/findings";
 import { EarlyGameView } from "./EarlyGameView";
 import { PlayerGameDialog } from "./PlayerGameDialog";
 import { useRankGap, useRankLabel } from "./rank";
@@ -31,6 +33,8 @@ export interface GameDetailProps {
   avatars: Record<string, string | null>;
   /** Sous le détail : les notes de revue d'une partie d'équipe. */
   footer?: ReactNode;
+  /** Les constats du moteur sur cette partie, en tête du détail. */
+  loadFindings?: () => Promise<FindingDto[]>;
 }
 
 const QUINZE = 15;
@@ -42,10 +46,16 @@ export function GameDetail({
   load,
   avatars,
   footer,
+  loadFindings,
 }: GameDetailProps) {
   const { t } = useTranslation("stats");
   const { data: detail, error, isLoading } = useRequest(requestKey, load);
   const [choisi, setChoisi] = useState<TeamGamePlayerDto | null>(null);
+  const { data: constats } = useRequest(
+    loadFindings ? `${requestKey}/findings` : null,
+    () => (loadFindings ? loadFindings() : Promise.resolve([])),
+  );
+  const { t: tl } = useTranslation("lol");
 
   const indicateurs = (
     joueur: TeamGamePlayerDto | null,
@@ -60,6 +70,12 @@ export function GameDetail({
 
   return (
     <Stack spacing={2}>
+      {constats && constats.length > 0 && (
+        <Stack spacing={1}>
+          <Text variant="subtitle">{tl("findings.title")}</Text>
+          <FindingList findings={constats} />
+        </Stack>
+      )}
       {error !== null && (
         <Alert severity="error">
           {messageOf(error, t("detail.loadFailed"))}

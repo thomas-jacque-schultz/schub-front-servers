@@ -45,6 +45,7 @@
     "TEAM_VIEW": "View a team",
     "TEAM_EDIT": "Edit a team and its roster",
     "COMPOSITION_EDIT": "Edit a team's compositions",
-    "ROLE_MANAGE": "Manage roles"
+    "ROLE_MANAGE": "Manage roles",
+    "AUGUR_PATTERN_EDIT": "Edit the findings engine rules (PremadeLab)"
   }
 }

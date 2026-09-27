@@ -126,6 +126,49 @@
       "description": "Riot knows no account with this name and tag.",
       "hint": "Check the spelling of the name and the tag, including the #."
     },
-    "busy": "Riot is very busy: trying again in a few seconds…"
+    "busy": "Riot is very busy: trying again in a few seconds…",
+    "style": "Play style"
+  },
+  "findings": {
+    "title": "Findings",
+    "none": "Nothing stands out here.",
+    "absent": "not measured",
+    "percentile": "{{value}}th percentile",
+    "confidence": "Confidence: {{value}}%",
+    "ramp": "0 at {{from}}, fully true at {{to}}",
+    "role": {
+      "REQUIRED": "Condition",
+      "OPTIONAL": "Support",
+      "EXCEPTION": "Exception"
+    }
+  },
+  "behaviour": {
+    "tab": "Behaviour",
+    "strengths": "Your strengths",
+    "weaknesses": "Your weaknesses",
+    "toWork": "To work on",
+    "toWorkHint": "The three clearest findings among your weaknesses, ranked by confidence. Each one unfolds on what backs it.",
+    "style": "Your play style",
+    "actions": "What you do",
+    "actionsHint": "Your choices: vision, farming, positioning, presence.",
+    "consequences": "What follows",
+    "consequencesHint": "Their effects: laning lead, damage share, results.",
+    "habits": "Habits",
+    "habitsHint": "Your win rate by time of day, and right after two losses in a row.",
+    "slot": {
+      "morning": "Morning (6am – noon)",
+      "afternoon": "Afternoon (noon – 6pm)",
+      "evening": "Evening (6pm – midnight)",
+      "night": "Night (midnight – 6am)"
+    },
+    "games_one": "{{count}} game",
+    "games_other": "{{count}} games",
+    "afterTwoLosses": "After two losses",
+    "versusAll": "versus {{value}} overall",
+    "nextTier": "To reach {{tier}}",
+    "nextTierHint": "Indicators that grow with rank where you are below the average of the tier above, in your role.",
+    "nextTierNone": "In your role, you already match the tier above on every indicator that follows rank.",
+    "gap": "{{metric}}: {{value}}, versus {{target}} on average in the tier above.",
+    "unobservable": "Wave freezing and fight spacing cannot be read from Riot data: they are not assessed here."
   }
 }

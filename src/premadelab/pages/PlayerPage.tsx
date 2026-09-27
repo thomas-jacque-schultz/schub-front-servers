@@ -26,6 +26,11 @@ import {
   getPlayerGameDetailApi,
   getPlayerGamesApi,
 } from "../api/playersApi";
+import {
+  getPlayerFindingsApi,
+  getPlayerGameFindingsApi,
+} from "../api/findingsApi";
+import { FindingList } from "../components/Findings";
 import { JoinCta } from "../components/JoinCta";
 import type { CollectLane } from "../types/player";
 import { GamesPanel } from "./stats/GamesPanel";
@@ -72,6 +77,11 @@ function PlayerPage() {
   const { data: profil, reload: reloadProfil } = useRequest(
     slug ? `player-profile/${slug}` : null,
     () => getPlayerApi(slug, null),
+  );
+
+  const { data: style } = useRequest(
+    slug ? `player-style/${slug}/${periode}/${page?.knownGames ?? 0}` : null,
+    () => getPlayerFindingsApi(slug, periode),
   );
 
   const riotId = page
@@ -206,6 +216,12 @@ function PlayerPage() {
         )}
       </Stack>
 
+      {style && style.length > 0 && (
+        <Card title={t("player.style")}>
+          <FindingList findings={style} />
+        </Card>
+      )}
+
       {collecte && (
         <Card
           title={t("player.collecting.title")}
@@ -246,6 +262,7 @@ function PlayerPage() {
             loadDetail={(matchId) =>
               getPlayerGameDetailApi(slug, matchId, periode)
             }
+            loadFindings={(matchId) => getPlayerGameFindingsApi(slug, matchId)}
             avatar={null}
           />
         )}
