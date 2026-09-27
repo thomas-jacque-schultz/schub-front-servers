@@ -11,3 +11,5 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const EnCours: Story = {};
+
+export const Mesuree: Story = { args: { value: 0.4 } };

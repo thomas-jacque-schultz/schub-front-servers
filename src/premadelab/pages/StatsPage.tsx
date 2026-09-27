@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { getMyStatsApi } from "../api/statsApi";
+import {
+  getMyGameDetailApi,
+  getMyGamesApi,
+  getMyStatsApi,
+} from "../api/statsApi";
 import {
   Alert,
   Button,
@@ -19,7 +23,7 @@ import {
   useProfileStore,
   useRequest,
 } from "../../common";
-import { MyGamesPanel } from "./stats/MyGamesPanel";
+import { GamesPanel } from "./stats/GamesPanel";
 import { PlayerStatsView } from "./stats/PlayerStatsView";
 import { StatsStateNote } from "./stats/StatsStateNote";
 import { useWindowOptions } from "./stats/windows";
@@ -142,8 +146,10 @@ function StatsPage() {
         ariaLabel={t("tabs.ariaLabel")}
       >
         {onglet === "history" && (
-          <MyGamesPanel
-            periode={periode}
+          <GamesPanel
+            requestKey={`me/${periode}`}
+            load={() => getMyGamesApi(periode)}
+            loadDetail={(matchId) => getMyGameDetailApi(matchId, periode)}
             avatar={profile?.discord.avatarUrl ?? null}
           />
         )}

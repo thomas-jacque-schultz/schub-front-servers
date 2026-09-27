@@ -78,7 +78,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ["src/**/stores/**/*.tsx", ".storybook/**/*.{ts,tsx}"],
+    files: ["src/**/stores/**/*.tsx", "src/common/product.tsx", ".storybook/**/*.{ts,tsx}"],
     rules: {
       "react-refresh/only-export-components": "off",
     },

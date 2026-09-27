@@ -89,6 +89,12 @@ export function AppLayout({ children }: { children: ReactNode }) {
       to: "/config/ingest",
       permissions: ["INGEST_VIEW"],
     },
+    {
+      key: "premadelab",
+      label: t("shell.configPremadelab"),
+      to: "/config/premadelab",
+      permissions: ["INGEST_VIEW"],
+    },
   ];
   const configuration: AppShellNavItem[] = connected
     ? configurationEntries
