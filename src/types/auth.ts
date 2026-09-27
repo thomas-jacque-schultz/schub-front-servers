@@ -4,19 +4,25 @@ export interface AuthorityDto {
   authority: string;
 }
 
-// Lu dans le jeton, pas dans le cœur. actorId = identifiant Discord (sujet du jeton), userId = id interne.
+/** Les comptes liés : ce qu'ils ouvrent (Discord : les serveurs ; Riot : les statistiques). */
+export interface AccountLinks {
+  discord: boolean;
+  riot: boolean;
+}
+
+// userId = identifiant interne, sujet du jeton.
 export interface AuthMeResponse {
-  actorId: string;
-  userId?: string | null;
+  userId: string;
   username: string;
   roles: Array<string | AuthorityDto>;
   permissions?: string[];
+  links?: AccountLinks;
 }
 
 export interface AuthenticatedUser {
-  actorId: string;
-  userId: string | null;
+  userId: string;
   username: string;
   roles: string[];
   permissions: Permission[];
+  links: AccountLinks;
 }

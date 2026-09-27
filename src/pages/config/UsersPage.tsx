@@ -20,7 +20,12 @@ import {
 import { useLocaleFormat } from "../../i18n/format";
 import { useAuthStore } from "../../stores/authStore";
 import { OWNER_ROLE_NAME, RESERVED_PERMISSION } from "../../types/permission";
-import { riotAccountOf, userLabelOf, type RoleDto, type UserDto } from "../../types/user";
+import {
+  riotAccountOf,
+  userLabelOf,
+  type RoleDto,
+  type UserDto,
+} from "../../types/user";
 
 function UsersPage() {
   const { t } = useTranslation("users");
@@ -42,11 +47,16 @@ function UsersPage() {
     setIsLoading(true);
     setError("");
     try {
-      const [loadedUsers, loadedRoles] = await Promise.all([getUsersApi(), getRolesApi()]);
+      const [loadedUsers, loadedRoles] = await Promise.all([
+        getUsersApi(),
+        getRolesApi(),
+      ]);
       setUsers(loadedUsers);
       setRoles(loadedRoles);
     } catch (loadError) {
-      setError(loadError instanceof Error ? loadError.message : t("errors.loadFailed"));
+      setError(
+        loadError instanceof Error ? loadError.message : t("errors.loadFailed"),
+      );
     } finally {
       setIsLoading(false);
     }
@@ -62,7 +72,10 @@ function UsersPage() {
   );
 
   const ownerCount = useMemo(
-    () => (ownerRole ? users.filter((user) => user.roleId === ownerRole.id).length : 0),
+    () =>
+      ownerRole
+        ? users.filter((user) => user.roleId === ownerRole.id).length
+        : 0,
     [ownerRole, users],
   );
 
@@ -72,14 +85,16 @@ function UsersPage() {
         (role) =>
           role.name !== OWNER_ROLE_NAME &&
           !role.permissions.includes(RESERVED_PERMISSION) &&
-          role.permissions.every((permission) => permissions.includes(permission)),
+          role.permissions.every((permission) =>
+            permissions.includes(permission),
+          ),
       ),
     [roles, permissions],
   );
 
   const blockedReason = useCallback(
     (user: UserDto): string | null => {
-      if (profile && user.discordId === profile.actorId) {
+      if (profile && user.id === profile.userId) {
         return t("guards.self");
       }
       if (ownerRole && user.roleId === ownerRole.id && ownerCount <= 1) {
@@ -101,7 +116,9 @@ function UsersPage() {
     setError("");
     try {
       const updated = await assignUserRoleApi(target.id, chosenRoleId);
-      setUsers((current) => current.map((user) => (user.id === updated.id ? updated : user)));
+      setUsers((current) =>
+        current.map((user) => (user.id === updated.id ? updated : user)),
+      );
       setToast(
         t("feedback.roleAssigned", {
           user: userLabelOf(target),
@@ -110,7 +127,11 @@ function UsersPage() {
       );
       setTarget(null);
     } catch (assignError) {
-      setError(assignError instanceof Error ? assignError.message : t("feedback.roleFailed"));
+      setError(
+        assignError instanceof Error
+          ? assignError.message
+          : t("feedback.roleFailed"),
+      );
     } finally {
       setIsSaving(false);
     }
@@ -125,7 +146,7 @@ function UsersPage() {
           <Avatar src={user.avatarUrl} name={userLabelOf(user)} size="small" />
           <Text>
             {userLabelOf(user)}
-            {profile && user.discordId === profile.actorId ? ` (${t("you")})` : ""}
+            {profile && user.id === profile.userId ? ` (${t("you")})` : ""}
           </Text>
         </Stack>
       ),
@@ -133,14 +154,20 @@ function UsersPage() {
     {
       key: "role",
       header: t("table.role"),
-      render: (user) => <Text tone="secondary">{user.roleName ?? t("noRole")}</Text>,
+      render: (user) => (
+        <Text tone="secondary">{user.roleName ?? t("noRole")}</Text>
+      ),
     },
     {
       key: "riot",
       header: t("table.riot"),
       render: (user) => {
         const riot = riotAccountOf(user);
-        return riot ? <Text>{riot}</Text> : <Text tone="disabled">{t("riotNone")}</Text>;
+        return riot ? (
+          <Text>{riot}</Text>
+        ) : (
+          <Text tone="disabled">{t("riotNone")}</Text>
+        );
       },
     },
     {
@@ -192,7 +219,11 @@ function UsersPage() {
 
   return (
     <Stack spacing={3}>
-      <PageHeader eyebrow={t("eyebrow")} title={t("title")} subtitle={t("subtitle")} />
+      <PageHeader
+        eyebrow={t("eyebrow")}
+        title={t("title")}
+        subtitle={t("subtitle")}
+      />
 
       {error && <Alert severity="error">{error}</Alert>}
       {isLoading && <ProgressBar label={t("title")} />}
@@ -225,12 +256,19 @@ function UsersPage() {
           label={t("dialog.field")}
           value={chosenRoleId}
           onChange={setChosenRoleId}
-          options={assignableRoles.map((role) => ({ value: role.id, label: role.name }))}
+          options={assignableRoles.map((role) => ({
+            value: role.id,
+            label: role.name,
+          }))}
           helperText={t("dialog.helper")}
         />
       </Dialog>
 
-      <Toast open={Boolean(toast)} message={toast} onClose={() => setToast("")} />
+      <Toast
+        open={Boolean(toast)}
+        message={toast}
+        onClose={() => setToast("")}
+      />
     </Stack>
   );
 }

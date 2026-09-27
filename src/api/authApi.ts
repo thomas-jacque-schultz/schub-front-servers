@@ -23,14 +23,17 @@ const normalizePermissions = (permissions?: string[]): Permission[] =>
   (permissions ?? []).filter(isPermission);
 
 export const getMeApi = async (): Promise<AuthenticatedUser> => {
-  const response = await requestJson<AuthMeResponse>("/auth/me", { method: "GET" });
+  const response = await requestJson<AuthMeResponse>("/auth/me", {
+    method: "GET",
+  });
 
   return {
-    actorId: response.actorId,
-    userId: response.userId ?? null,
+    userId: response.userId,
     username: response.username,
     roles: normalizeRoles(response.roles || []),
     permissions: normalizePermissions(response.permissions),
+    // Sans réponse du cœur : la session vient de Discord, le lien Riot se relira sur le profil.
+    links: response.links ?? { discord: true, riot: false },
   };
 };
 

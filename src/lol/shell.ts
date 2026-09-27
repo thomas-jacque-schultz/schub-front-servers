@@ -10,8 +10,10 @@ const ECRANS_LARGES = ["/lol/teams", "/lol/stats"];
 /** Le bandeau de l'application : ses entrées, et la largeur de ses écrans. */
 export const useLolShell = (route: string) => {
   const { t } = useTranslation("lol");
-  const { connected, canAny } = useAuthStore();
-  const { riotLinked } = useProfileStore();
+  const { connected, canAny, links } = useAuthStore();
+  const { profile: moi, riotLinked: riotResolu } = useProfileStore();
+  // Le profil fait foi dès qu'il est chargé : le lien Riot change en cours de session.
+  const riotLinked = moi ? riotResolu : links.riot;
   const localize = useLocalizedPath();
 
   const navItems: AppShellNavItem[] = [

@@ -11,10 +11,12 @@ import {
 import i18n from "../i18n";
 import { discordLoginUrl, getMeApi, logoutApi } from "../api/authApi";
 import { configureSessionListeners } from "../api/httpClient";
-import type { AuthenticatedUser } from "../types/auth";
+import type { AccountLinks, AuthenticatedUser } from "../types/auth";
 import type { Permission } from "../types/permission";
 
 const DISCORD_LOGIN_PENDING_KEY = "schub_discord_login_pending";
+
+const NO_LINKS: AccountLinks = { discord: false, riot: false };
 
 // sessionStorage lève dans un onglet privé ou avec les données de site bloquées.
 const readDiscordLoginPending = (): boolean => {
@@ -41,6 +43,7 @@ interface AuthStoreValue {
   profile: AuthenticatedUser | null;
   connected: boolean;
   permissions: Permission[];
+  links: AccountLinks;
   can: (permission: Permission) => boolean;
   canAny: (...permissions: Permission[]) => boolean;
   isCheckingSession: boolean;
@@ -135,7 +138,10 @@ export const AuthStoreProvider = ({ children }: { children: ReactNode }) => {
     };
   }, []);
 
-  const permissions = useMemo<Permission[]>(() => profile?.permissions ?? [], [profile]);
+  const permissions = useMemo<Permission[]>(
+    () => profile?.permissions ?? [],
+    [profile],
+  );
 
   const can = useCallback(
     (permission: Permission) => permissions.includes(permission),
@@ -143,7 +149,8 @@ export const AuthStoreProvider = ({ children }: { children: ReactNode }) => {
   );
 
   const canAny = useCallback(
-    (...candidates: Permission[]) => candidates.some((candidate) => permissions.includes(candidate)),
+    (...candidates: Permission[]) =>
+      candidates.some((candidate) => permissions.includes(candidate)),
     [permissions],
   );
 
@@ -152,6 +159,7 @@ export const AuthStoreProvider = ({ children }: { children: ReactNode }) => {
       profile,
       connected: profile !== null,
       permissions,
+      links: profile?.links ?? NO_LINKS,
       can,
       canAny,
       isCheckingSession,
@@ -176,7 +184,9 @@ export const AuthStoreProvider = ({ children }: { children: ReactNode }) => {
   );
 
   return (
-    <AuthStoreContext.Provider value={value}>{children}</AuthStoreContext.Provider>
+    <AuthStoreContext.Provider value={value}>
+      {children}
+    </AuthStoreContext.Provider>
   );
 };
 
