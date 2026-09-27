@@ -61,7 +61,11 @@ const premadelabParHote = () => ({
     server.middlewares.use((req, _res, next) => {
       const hote = String(req.headers["x-forwarded-host"] ?? req.headers.host ?? "").split(":")[0];
       const chemin = (req.url ?? "/").split("?")[0];
-      const page = String(req.headers.accept ?? "").includes("text/html") && !path.extname(chemin);
+      // /api/auth/discord est une navigation (Accept: text/html) : elle doit rester au proxy.
+      const page =
+        String(req.headers.accept ?? "").includes("text/html") &&
+        !path.extname(chemin) &&
+        !chemin.startsWith("/api/");
       if (page && premadelabHosts.includes(hote)) {
         req.url = "/premadelab.html";
       }
