@@ -26,6 +26,8 @@ import { PlayerRadar } from "./PlayerRadar";
 import { RankedStandings } from "./RankedStandings";
 import { StatsStateNote } from "./StatsStateNote";
 import { useStatsFormat } from "./statsFormat";
+import { useKpiSentence } from "./kpiSentence";
+import type { MetricKey } from "./metrics";
 import { useGradeAdornment } from "./useGrades";
 
 const CHAMPIONS_PLEINE_LARGEUR = 6;
@@ -62,6 +64,11 @@ export function PlayerStatsView({
   const { tuiles } = useMetrics();
   const [choisis, setChoisis] = useState<string[]>([]);
   const adornment = useGradeAdornment(data.references, data.positions);
+  const conclusion = useKpiSentence(
+    data.references,
+    data.positions,
+    data.months,
+  );
   const overall = data.overall;
 
   if (data.state !== "STATISTIQUES_CONNUES" || !overall) {
@@ -74,7 +81,12 @@ export function PlayerStatsView({
         <Stack spacing={2}>
           <VersusTeammates versus={versusTeammates} />
           <StatGrid
-            items={tuiles(overall, { versus: versusTeammates, adornment })}
+            items={tuiles(overall, { versus: versusTeammates, adornment }).map(
+              (tuile) => ({
+                ...tuile,
+                hint: conclusion(tuile.key as MetricKey) ?? tuile.hint,
+              }),
+            )}
             minWidth={130}
             divided
             align="center"
@@ -96,6 +108,7 @@ export function PlayerStatsView({
         overall={overall}
         references={data.references}
         positions={data.positions}
+        months={data.months}
       />
 
       <Columns minWidth={320}>

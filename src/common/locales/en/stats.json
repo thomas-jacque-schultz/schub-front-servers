@@ -513,5 +513,14 @@
     "tierEstimated": "Rank estimated from the game's lobby: {{tier}}.",
     "noMetrics": "This game's numbers are not computed yet.",
     "rankHelper": "Rank: the tier whose per-game average, in the same role, is closest to the value — only for stats that rise with rank. The others (KDA, deaths, 15-minute differences…) are given as “top x%” of your tier. A dash: not enough games yet to tell."
+  },
+  "conclusion": {
+    "better": "Better than {{part}}% of {{tier}} {{position}} players.",
+    "worse": "Below {{part}}% of {{tier}} {{position}} players.",
+    "trend": {
+      "up": "Improving: {{now}} this month, versus {{before}} the month before.",
+      "down": "Slipping: {{now}} this month, versus {{before}} the month before.",
+      "stable": "Steady: {{now}} this month, {{before}} the month before."
+    }
   }
 }
