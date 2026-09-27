@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Page d'un joueur : nginx y insère le titre, la description et l'aperçu Open Graph (SSI). -->
+    <!--# include virtual="/api/seo/players/${player_slug}/head?lang=${player_lang}" -->
+    <link rel="icon" href="/premadelab/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#080D12" />
+  </head>
+  <body style="background: #080d12">
+    <div id="root"><!--# include virtual="/api/seo/players/${player_slug}/body?lang=${player_lang}" --></div>
+    <script type="module" src="/src/premadelab/main.tsx"></script>
+  </body>
+</html>
