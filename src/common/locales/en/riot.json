@@ -114,7 +114,8 @@
     "scope": "Scope",
     "scopes": {
       "GAME": "One game",
-      "HABIT": "Habit"
+      "HABIT": "Habit",
+      "TEAM": "Team"
     },
     "version": "Version",
     "status": {

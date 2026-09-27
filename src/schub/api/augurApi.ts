@@ -14,7 +14,7 @@ export interface PatternDto {
   key: string;
   version: number;
   status: PatternStatus;
-  scope: "GAME" | "HABIT";
+  scope: "GAME" | "HABIT" | "TEAM";
   polarity: "STRENGTH" | "WEAKNESS" | "NEUTRAL";
   category: "BEHAVIOUR" | "PERFORMANCE" | "KNOWLEDGE" | "BUILD";
   nature: "ACTION" | "CONSEQUENCE";

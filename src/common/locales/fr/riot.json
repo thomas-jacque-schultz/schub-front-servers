@@ -114,7 +114,8 @@
     "scope": "Portée",
     "scopes": {
       "GAME": "Une partie",
-      "HABIT": "Habitude"
+      "HABIT": "Habitude",
+      "TEAM": "Équipe"
     },
     "version": "Version",
     "status": {
