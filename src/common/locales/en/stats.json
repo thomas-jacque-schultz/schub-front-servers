@@ -542,6 +542,7 @@
     "damageShare": "Damage (W / L)",
     "conversion": "Damage − gold",
     "resourceSentence": "When your {{position}} has more than {{threshold}} of the gold, you win {{above}} of games ({{gamesAbove}}); below, {{below}} ({{gamesBelow}}).",
-    "notConverting": "Your {{position}} gets more gold than they return in damage."
+    "notConverting": "Your {{position}} gets more gold than they return in damage.",
+    "findings": "What stands out for the team"
   }
 }
