@@ -117,7 +117,7 @@
       "title": "What is not collected",
       "i1": "no password: sign-in goes through Discord;",
       "i2": "no advertising tracker, no ad network, no commercial profiling;",
-      "i3": "no audience measurement, no third-party analytics;",
+      "i3": "no third-party analytics. The only audience measure is a daily count of the distinct people who use player search: no cookie, based on a hash of the IP address and browser salted every day, which identifies no one and is erased after 31 days;",
       "i4": "no payment data: the service is free and bills nothing."
     },
     "cookies": {

@@ -32,3 +32,18 @@ export const riotAccountOf = (user: UserDto): string | null =>
 export const userLabelOf = (
   user: Pick<UserDto, "id" | "discordUsername">,
 ): string => user.discordUsername?.trim() || user.id;
+
+export interface ActiveUsersDto {
+  last24h: number;
+  last7d: number;
+  last30d: number;
+}
+
+export interface UserStatsDto {
+  total: number;
+  riotLinked: number;
+  active: ActiveUsersDto;
+  activeByApp: Record<"schub" | "premadelab", ActiveUsersDto>;
+  /** searchers : personnes distinctes qui ont utilisé la recherche ce jour-là, sans compte ni cookie. */
+  daily: { day: string; activeUsers: number; searchers: number }[];
+}

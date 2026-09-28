@@ -117,7 +117,7 @@
       "title": "Ce qui n'est pas collecté",
       "i1": "aucun mot de passe : l'identification passe par Discord ;",
       "i2": "aucun traceur publicitaire, aucune régie, aucun profilage commercial ;",
-      "i3": "aucune mesure d'audience, aucun outil d'analyse tiers ;",
+      "i3": "aucun outil d'analyse tiers. La seule mesure d'audience est un compte, jour par jour, des personnes distinctes qui utilisent la recherche de joueur : sans cookie, à partir d'un hachage de l'adresse IP et du navigateur salé chaque jour, qui ne permet de reconnaître personne et s'efface au bout de 31 jours ;",
       "i4": "aucune donnée de paiement : le service est gratuit et ne facture rien."
     },
     "cookies": {

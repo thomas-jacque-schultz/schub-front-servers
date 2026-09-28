@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { getRolesApi } from "../../api/rolesApi";
+import { UserStatsCard } from "../../components/UserStatsCard";
 import { assignUserRoleApi, getUsersApi } from "../../api/usersApi";
 import {
   Alert,
@@ -225,6 +226,8 @@ function UsersPage() {
         title={t("title")}
         subtitle={t("subtitle")}
       />
+
+      <UserStatsCard />
 
       {error && <Alert severity="error">{error}</Alert>}
       {isLoading && <ProgressBar label={t("title")} />}
