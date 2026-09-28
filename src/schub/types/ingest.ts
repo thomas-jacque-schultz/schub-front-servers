@@ -37,3 +37,27 @@ export interface IngestSummaryDto {
   matches: IngestCountsDto;
   profiles: IngestCountsDto;
 }
+
+export interface IngestPauseDto {
+  available: boolean;
+  paused: boolean;
+  updatedAt: string | null;
+  /** Tâches prises avant la pause et pas encore terminées. */
+  running: number;
+}
+
+export interface RiotDataInventoryDto {
+  available: boolean;
+  riotDocuments: number;
+  findings: number;
+  linkedAccounts: number;
+  teamSlots: number;
+  teams: number;
+  reviews: number;
+}
+
+export interface RiotDataInvalidationDto {
+  riotDocuments: number;
+  findings: number;
+  accountsToResolve: number;
+}

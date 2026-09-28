@@ -71,6 +71,17 @@
       "storageValue": "{{used}} of {{threshold}}",
       "storageHint": "Past the threshold, background collection suspends itself."
     },
+    "pause": {
+      "title": "Ingest pause",
+      "description": "Stops the whole collection queue, player requests included, in production as well as here. Running tasks finish; the others wait for the resume. Use it for the duration of a database maintenance.",
+      "toggle": "Ingest paused",
+      "toggleHelper": "The pause survives a connector restart: remember to resume the ingest afterwards.",
+      "active": "The ingest is running.",
+      "draining_one": "Paused: {{count}} task is finishing its work.",
+      "draining_other": "Paused: {{count}} tasks are finishing their work.",
+      "stopped": "Paused since {{since}}: no task running anymore.",
+      "failed": "The pause could not be changed."
+    },
     "summary": {
       "title": "What the collection produced",
       "description": "Games and profiles, not tasks: one game produces up to four tasks.",
@@ -99,6 +110,28 @@
       "save": "Save",
       "saved": "Window saved: the collection queue now follows it.",
       "saveFailed": "The window could not be saved."
+    },
+    "invalidate": {
+      "title": "Invalidate Riot data",
+      "description": "After a Riot key change, every player identifier changes and the collected data becomes unusable. Invalidation erases it and keeps everything else; linked accounts and team slots are found again by their Riot ID.",
+      "open": "Invalidate data…",
+      "needsPause": "Pause the ingest first, and wait for running tasks to finish.",
+      "dialogTitle": "Invalidate Riot data?",
+      "dialogDescription": "The erasure is final. Games within the history window will be collected again when the ingest resumes.",
+      "goes": "What goes",
+      "goesRiot": "{{value}} documents collected from Riot (games, timelines, ranks, masteries, known accounts, references, collection queue)",
+      "goesFindings": "{{value}} findings computed on these games",
+      "stays": "What stays",
+      "staysAccounts": "{{value}} linked accounts, resolved again by their Riot ID",
+      "staysSlots": "{{value}} team slots, resolved again by their Riot ID",
+      "staysTeams": "{{value}} teams, with their compositions and pools",
+      "staysReviews": "{{value}} game reviews, which will come back with their game",
+      "staysSettings": "Users, roles and collection settings",
+      "confirmLabel": "To confirm, type {{word}}",
+      "confirm": "Invalidate",
+      "cancel": "Cancel",
+      "done": "{{riot}} Riot documents and {{findings}} findings erased. {{accounts}} accounts are being resolved; resume the ingest to restart collection.",
+      "failed": "Invalidation failed."
     }
   },
   "premadelab": {
