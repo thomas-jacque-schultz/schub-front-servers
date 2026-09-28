@@ -30,7 +30,8 @@
     "days": "Last {{count}} days",
     "patches": "Last {{count}} patches",
     "helper": "Every figure on this screen covers that period.",
-    "bounded": "Riot keeps about a thousand games per player: beyond that the history no longer exists, for anyone."
+    "bounded": "Collected games: each player's last {{maxGames}}, from the last {{maxAgeDays}} days at most. Older history is not collected.",
+    "boundedUnknown": "Only each player's recent games are collected."
   },
   "coverage": {
     "games": "over {{count}} game(s)",

@@ -11,6 +11,7 @@ import {
   Text,
   useAuthStore,
   useDocumentMeta,
+  useHistoryWindow,
   useLocalizedNavigate,
   useLocalizedPath,
   useProfileStore,
@@ -22,6 +23,7 @@ function LolLandingPage() {
   const localize = useLocalizedPath();
   const { connected, canAny } = useAuthStore();
   const { riotLinked } = useProfileStore();
+  const historyWindow = useHistoryWindow();
 
   useDocumentMeta({
     title: t("meta.title"),
@@ -102,7 +104,9 @@ function LolLandingPage() {
       <Card title={t("limits.title")} description={t("limits.intro")}>
         <BulletList
           items={[
-            t("limits.history"),
+            historyWindow
+              ? t("limits.history", { ...historyWindow })
+              : t("limits.historyUnknown"),
             t("limits.noWorldStats"),
             t("limits.noProbe"),
             t("limits.noLive"),

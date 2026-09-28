@@ -62,11 +62,12 @@
   "limits": {
     "title": "What the tool does not do",
     "intro": "Said here rather than discovered in use.",
-    "history": "The history Riot serves stops at about a thousand games per player. Beyond that, PremadeLab has nothing to read — only what it already collected.",
+    "history": "PremadeLab collects each player's last {{maxGames}} games, from the last {{maxAgeDays}} days at most, or their last {{minGames}} if they rarely play. Older history is not collected.",
     "noWorldStats": "No worldwide average: comparisons are made with players of the same tier, from the games PremadeLab collected itself, and every figure says how many games it covers.",
     "noProbe": "The page of a looked-up player only shows what Riot makes public: rank, champions and games. Team notes, compositions and reviews stay reserved to team members.",
     "noLive": "Nothing live: no in-game tracking, no overlay, no interaction with the game client.",
-    "collectTime": "The first collection takes time — the Riot API quota limits it. The profile screen says how far along it is."
+    "collectTime": "The first collection takes time — the Riot API quota limits it. The profile screen says how far along it is.",
+    "historyUnknown": "PremadeLab only collects each player's recent games: older history is not collected."
   },
   "access": {
     "title": "Enter the tool",

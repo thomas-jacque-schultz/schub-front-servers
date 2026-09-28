@@ -62,11 +62,12 @@
   "limits": {
     "title": "Ce que l'outil ne fait pas",
     "intro": "Dit ici plutôt que découvert à l'usage.",
-    "history": "L’historique servi par Riot est borné à environ mille parties par joueur. Au-delà, PremadeLab n’a rien à lire — seulement ce qu’il a déjà collecté.",
+    "history": "PremadeLab relève les {{maxGames}} dernières parties de chaque joueur, sur {{maxAgeDays}} jours au plus, ou ses {{minGames}} dernières s'il joue peu. L'historique plus ancien n'est pas collecté.",
     "noWorldStats": "Aucune moyenne mondiale : les comparaisons se font aux joueurs du même palier, à partir des parties que PremadeLab a lui-même collectées, et chaque chiffre dit sur combien de parties il porte.",
     "noProbe": "La page d’un joueur recherché ne montre que ce que Riot rend public : son rang, ses champions et ses parties. Les notes d’équipe, les compositions et les revues restent réservées aux membres de l’équipe.",
     "noLive": "Rien en direct : pas de suivi de partie en cours, pas d'overlay, aucune interaction avec le client de jeu.",
-    "collectTime": "La première collecte prend du temps — le quota de l’API de Riot la limite. L’écran de profil dit où elle en est."
+    "collectTime": "La première collecte prend du temps — le quota de l’API de Riot la limite. L’écran de profil dit où elle en est.",
+    "historyUnknown": "PremadeLab ne relève que les parties récentes de chaque joueur : l'historique ancien n'est pas collecté."
   },
   "access": {
     "title": "Entrer dans l'outil",

@@ -56,7 +56,7 @@
     },
     "crawler": {
       "title": "Collecte de fond",
-      "description": "Elle relève l'historique des comptes croisés dans nos parties, les plus récents d'abord, pour qu'un nouveau joueur trouve ses parties déjà là. Elle passe toujours après les demandes des joueurs.",
+      "description": "Elle relève l'historique récent des comptes croisés dans nos parties, quelques joueurs de chaque palier à chaque tour, pour qu'un nouveau joueur trouve ses parties déjà là. Elle passe toujours après les demandes des joueurs.",
       "toggle": "Collecte de fond active",
       "toggleHelper": "Réglage de cet environnement uniquement. En production, elle tourne en permanence.",
       "alwaysOn": "Toujours active dans cet environnement.",
@@ -88,6 +88,17 @@
       "title": "Débogage des calculs",
       "queue": "File de collecte",
       "empty": "Les traces des calculs arriveront ici au fil des analyses."
+    },
+    "window": {
+      "title": "Fenêtre de relevé",
+      "description": "Ce que le premier relevé d'un joueur va chercher chez Riot. Les relevés suivants ne demandent que ce qui a suivi. Changer la fenêtre abandonne les parties de fond déjà en file et relève de nouveau leurs joueurs.",
+      "maxGames": "Parties au plus",
+      "maxAgeDays": "Âge maximal (jours)",
+      "minGames": "Plancher de parties",
+      "minGamesHelper": "Pour un joueur qui joue peu : ses dernières parties, même au-delà de l'âge maximal.",
+      "save": "Enregistrer",
+      "saved": "Fenêtre enregistrée : la file de collecte a été ramenée à cette fenêtre.",
+      "saveFailed": "La fenêtre n'a pas pu être enregistrée."
     }
   },
   "premadelab": {

@@ -22,6 +22,8 @@ export { lazyPage } from "./routing/lazyPage";
 
 export { ApiError, requestJson } from "./api/httpClient";
 export { messageOf, useRequest } from "./api/useRequest";
+export { getHistoryWindowApi, useHistoryWindow } from "./api/historyWindowApi";
+export type { HistoryWindowDto } from "./api/historyWindowApi";
 
 export { AuthStoreProvider, useAuthStore } from "./stores/authStore";
 export { ProfileStoreProvider, useProfileStore } from "./stores/profileStore";

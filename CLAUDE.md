@@ -207,8 +207,8 @@ n'y lisait qu'un écran de connexion, donc rien de ce que le produit fait. Riot 
 « si votre site n'est pas complet, il est peu probable que nous approuvions votre produit ». La
 liste des équipes a donc pris `/teams`, et `/presentation` décrit l'outil.
 
-**Cette page ne décrit que ce qui existe.** La section des limites — historique Riot borné à mille
-parties, aucune moyenne mondiale, aucun sondage de l'historique d'un inconnu, rien en direct — est
+**Cette page ne décrit que ce qui existe.** La section des limites — la fenêtre de relevé réelle (servie par
+`/players/history-window`), aucune moyenne mondiale, aucun sondage de l'historique d'un inconnu, rien en direct — est
 aussi importante que celle des fonctionnalités : un examinateur vérifie, et une promesse
 invérifiable coûte plus cher qu'une fonctionnalité manquante.
 
@@ -296,8 +296,8 @@ qu'à l'enregistrement.
   **coéquipiers** : « 55 % sur Jayce » ne dit rien, « 55 % sur Jayce contre 41 % sur le reste »
   dit beaucoup.
 - **Un chiffre dit toujours sur quoi il porte** : nombre de parties et période. Sans ça, trois
-  parties et trois cents se lisent pareil. L'historique Riot est borné à environ mille parties
-  par joueur, et l'écran le dit.
+  parties et trois cents se lisent pareil. Seules les parties récentes sont relevées (fenêtre réglée dans
+  Configuration › Collecte), et l'écran dit laquelle.
 - **Un vide n'est pas un zéro.** Chaque colonne porte un `state` qui dit *pourquoi* elle est
   vide — compte non lié, collecte en cours, aucune partie, effectif incomplet, connecteur muet —
   et tout ratio sans dénominateur s'affiche en tiret.
