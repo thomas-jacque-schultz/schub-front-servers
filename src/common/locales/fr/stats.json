@@ -218,7 +218,8 @@
     "rank": "{{tier}} {{division}} · {{lp}} LP",
     "record": "{{wins}}V – {{losses}}D",
     "hotStreak": "Série en cours",
-    "inactive": "Inactif"
+    "inactive": "Inactif",
+    "observedAt": "relevé le {{date}}"
   },
   "metricShort": {
     "winRate": "Victoires",

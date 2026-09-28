@@ -218,7 +218,8 @@
     "rank": "{{tier}} {{division}} · {{lp}} LP",
     "record": "{{wins}}W – {{losses}}L",
     "hotStreak": "Hot streak",
-    "inactive": "Inactive"
+    "inactive": "Inactive",
+    "observedAt": "as of {{date}}"
   },
   "metricShort": {
     "winRate": "Win rate",
