@@ -71,6 +71,17 @@
       "storageValue": "{{used}} sur {{threshold}}",
       "storageHint": "Au-delà du seuil, la collecte de fond se suspend d'elle-même."
     },
+    "pause": {
+      "title": "Pause de l’ingest",
+      "description": "Arrête toute la file de collecte, demandes des joueurs comprises, en production comme ici. Les tâches en cours finissent ; les autres attendent la reprise. À utiliser le temps d’une maintenance de la base.",
+      "toggle": "Ingest en pause",
+      "toggleHelper": "La pause survit à un redémarrage du connecteur : pense à reprendre l’ingest ensuite.",
+      "active": "L’ingest tourne.",
+      "draining_one": "En pause : {{count}} tâche finit son travail.",
+      "draining_other": "En pause : {{count}} tâches finissent leur travail.",
+      "stopped": "En pause depuis {{since}} : plus aucune tâche en cours.",
+      "failed": "La pause n’a pas pu être modifiée."
+    },
     "summary": {
       "title": "Ce que la collecte a produit",
       "description": "Des parties et des profils, pas des tâches : une partie produit jusqu’à quatre tâches.",
@@ -99,6 +110,28 @@
       "save": "Enregistrer",
       "saved": "Fenêtre enregistrée : la file de collecte a été ramenée à cette fenêtre.",
       "saveFailed": "La fenêtre n'a pas pu être enregistrée."
+    },
+    "invalidate": {
+      "title": "Invalider les données Riot",
+      "description": "Après un changement de clé Riot, tous les identifiants de joueurs changent et les données collectées deviennent inutilisables. L’invalidation les efface et garde tout le reste ; les comptes liés et les places d’équipe sont retrouvés par leur Riot ID.",
+      "open": "Invalider les données…",
+      "needsPause": "Mets d’abord l’ingest en pause, et attends que les tâches en cours aient fini.",
+      "dialogTitle": "Invalider les données Riot ?",
+      "dialogDescription": "L’effacement est définitif. Les parties de la fenêtre de relevé seront recollectées à la reprise de l’ingest.",
+      "goes": "Ce qui part",
+      "goesRiot": "{{value}} documents collectés chez Riot (parties, timelines, rangs, maîtrises, comptes connus, référentiels, file de collecte)",
+      "goesFindings": "{{value}} constats calculés sur ces parties",
+      "stays": "Ce qui reste",
+      "staysAccounts": "{{value}} comptes liés, résolus de nouveau par leur Riot ID",
+      "staysSlots": "{{value}} places d’équipe, résolues de nouveau par leur Riot ID",
+      "staysTeams": "{{value}} équipes, avec leurs compositions et leurs pools",
+      "staysReviews": "{{value}} revues de partie, qui réapparaîtront avec leur partie",
+      "staysSettings": "Les utilisateurs, les rôles et les réglages de la collecte",
+      "confirmLabel": "Pour confirmer, saisis {{word}}",
+      "confirm": "Invalider",
+      "cancel": "Annuler",
+      "done": "{{riot}} documents Riot et {{findings}} constats effacés. {{accounts}} comptes sont en cours de résolution ; reprends l’ingest pour relancer la collecte.",
+      "failed": "L’invalidation a échoué."
     }
   },
   "premadelab": {

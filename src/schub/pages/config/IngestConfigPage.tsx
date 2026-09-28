@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import {
   getCrawlerApi,
   getIngestLoadApi,
+  getIngestPauseApi,
   getIngestSummaryApi,
   toggleCrawlerApi,
 } from "../../api/ingestApi";
@@ -23,10 +24,13 @@ import {
 } from "../../../common";
 import { AugurTrace } from "../../components/AugurTrace";
 import { HistoryWindowCard } from "../../components/HistoryWindowCard";
+import { IngestPauseCard } from "../../components/IngestPauseCard";
+import { RiotDataInvalidationCard } from "../../components/RiotDataInvalidationCard";
 import type {
   CrawlerDto,
   IngestCountsDto,
   IngestLoadDto,
+  IngestPauseDto,
   IngestSummaryDto,
 } from "../../types/ingest";
 
@@ -46,6 +50,7 @@ function IngestConfigPage() {
   const [load, setLoad] = useState<IngestLoadDto | null>(null);
   const [summary, setSummary] = useState<IngestSummaryDto | null>(null);
   const [crawler, setCrawler] = useState<CrawlerDto | null>(null);
+  const [pause, setPause] = useState<IngestPauseDto | null>(null);
   const [error, setError] = useState<string>("");
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const [debugOpen, setDebugOpen] = useState<boolean>(false);
@@ -53,14 +58,16 @@ function IngestConfigPage() {
   const refresh = useCallback(async () => {
     setError("");
     try {
-      const [charge, fond, bilan] = await Promise.all([
+      const [charge, fond, bilan, arret] = await Promise.all([
         getIngestLoadApi(),
         getCrawlerApi(),
         canManage ? getIngestSummaryApi() : Promise.resolve(null),
+        getIngestPauseApi(),
       ]);
       setLoad(charge);
       setCrawler(fond);
       setSummary(bilan);
+      setPause(arret);
     } catch (loadError) {
       setError(
         loadError instanceof Error ? loadError.message : t("ingest.loadFailed"),
@@ -237,7 +244,15 @@ function IngestConfigPage() {
             </Stack>
           </Card>
 
+          {pause?.available && (
+            <IngestPauseCard pause={pause} onChange={setPause} />
+          )}
+
           <HistoryWindowCard />
+
+          {pause?.available && can("ROLE_MANAGE") && (
+            <RiotDataInvalidationCard pause={pause} />
+          )}
 
           <Disclosure
             title={t("ingest.debug.title")}
