@@ -35,5 +35,21 @@
   },
   "errors": {
     "loadFailed": "Could not load accounts"
+  },
+  "stats": {
+    "title": "Traffic",
+    "description": "An account is active if it used the site within the period. Player search counts distinct people per day, with no cookie and no identifier kept.",
+    "total": "Accounts",
+    "riotLinked": "With a Riot account",
+    "active24h": "Active over 24 h",
+    "active7d": "Active over 7 days",
+    "active30d": "Active over 30 days",
+    "byApp": "Schub {{schub}} · PremadeLab {{premadelab}}",
+    "dailyActive": "Active accounts per day",
+    "dailySearchers": "People who searched for a player, per day",
+    "users": "Accounts",
+    "people": "People",
+    "empty": "Nothing over 30 days.",
+    "loadFailed": "Traffic could not be loaded."
   }
 }

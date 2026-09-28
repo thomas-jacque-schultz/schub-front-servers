@@ -35,5 +35,21 @@
   },
   "errors": {
     "loadFailed": "Impossible de charger les comptes"
+  },
+  "stats": {
+    "title": "Fréquentation",
+    "description": "Un compte est actif s'il a utilisé le site dans la période. La recherche de joueur compte des personnes distinctes par jour, sans cookie ni identifiant conservé.",
+    "total": "Comptes",
+    "riotLinked": "Avec un compte Riot",
+    "active24h": "Actifs sur 24 h",
+    "active7d": "Actifs sur 7 jours",
+    "active30d": "Actifs sur 30 jours",
+    "byApp": "Schub {{schub}} · PremadeLab {{premadelab}}",
+    "dailyActive": "Comptes actifs par jour",
+    "dailySearchers": "Personnes qui ont cherché un joueur, par jour",
+    "users": "Comptes",
+    "people": "Personnes",
+    "empty": "Rien sur 30 jours.",
+    "loadFailed": "La fréquentation n'a pas pu être chargée."
   }
 }
