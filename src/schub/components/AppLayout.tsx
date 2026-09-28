@@ -6,6 +6,7 @@ import {
   APP_URLS,
   AppShell,
   pathWithoutLanguage,
+  PageErrorBoundary,
   Stack,
   useAuthStore,
   useCurrentLanguage,
@@ -173,6 +174,8 @@ export function AppLayout({ children }: { children: ReactNode }) {
     { key: "github", label: t("shell.github"), href: GITHUB_URL },
   ];
 
+  const page = <PageErrorBoundary>{children}</PageErrorBoundary>;
+
   return (
     <AppShell
       brand={t("app.name")}
@@ -198,10 +201,10 @@ export function AppLayout({ children }: { children: ReactNode }) {
           <Alert severity="warning" onClose={dismissDiscordLoginFailure}>
             {t("errors.discordAborted", { ns: "auth" })}
           </Alert>
-          {children}
+          {page}
         </Stack>
       ) : (
-        children
+        page
       )}
     </AppShell>
   );

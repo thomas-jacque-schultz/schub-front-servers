@@ -36,6 +36,11 @@
     "switchTo": "Afficher le site en {{language}}"
   },
   "loading": "Chargement…",
+  "pageError": {
+    "title": "Cette page a rencontré un problème",
+    "description": "Le reste du site fonctionne. Recharger la page suffit le plus souvent.",
+    "reload": "Recharger la page"
+  },
   "shell": {
     "home": "Accueil",
     "servers": "Serveurs",
