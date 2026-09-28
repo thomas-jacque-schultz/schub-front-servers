@@ -3,19 +3,23 @@ import { getReferenceGridApi } from "../../api/statsApi";
 import type { ReferenceGridDto, ReferenceScope } from "../../types/stats";
 
 // Recalculés une fois par jour : une grille lue reste bonne pour la session.
+// undefined pendant le chargement, null quand le référentiel manque : l'écran ne dit « manquant » qu'une fois fixé.
 const cache = new Map<string, Promise<ReferenceGridDto | null>>();
 
 export const useReferenceGrid = (
   position: string | null | undefined,
   scope: ReferenceScope,
   tier: string | null | undefined,
-): ReferenceGridDto | null => {
-  const [grille, setGrille] = useState<ReferenceGridDto | null>(null);
+): ReferenceGridDto | null | undefined => {
+  const [grille, setGrille] = useState<ReferenceGridDto | null | undefined>(
+    undefined,
+  );
   useEffect(() => {
     if (!position) {
       setGrille(null);
       return;
     }
+    setGrille(undefined);
     const cle = `${position}/${scope}/${tier ?? ""}`;
     if (!cache.has(cle)) {
       cache.set(

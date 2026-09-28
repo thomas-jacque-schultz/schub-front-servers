@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { Stack, Text, Tooltip } from "../../../common";
+import { Chip, Stack, Text, Tooltip } from "../../../common";
 import { EMBLEMES } from "./emblems";
 import type { Grade } from "./grading";
 import { useGradeTitle } from "./gradeTitle";
@@ -77,6 +77,16 @@ export function PercentileMark({
       <Text variant="caption" tone="secondary">
         {t("grade.short", { top: Math.max(1, Math.round((1 - value) * 100)) })}
       </Text>
+    </Tooltip>
+  );
+}
+
+/** Les moyennes du palier manquent encore : l'écran le dit, au lieu de laisser la place vide. */
+export function MissingDataMark() {
+  const { t } = useTranslation("stats");
+  return (
+    <Tooltip title={t("grade.missing")}>
+      <Chip label={t("grade.missingShort")} variant="outline" />
     </Tooltip>
   );
 }

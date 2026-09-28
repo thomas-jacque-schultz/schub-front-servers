@@ -468,7 +468,9 @@
     "champion": "Mieux que {{rank}} % des joueurs de {{champion}} en {{group}}, sur leurs moyennes ({{count}} joueurs à 5 parties ou plus).",
     "championFallback": "Pas encore assez de joueurs de {{champion}} en {{group}} : comparé à tous les joueurs {{tier}} au poste {{position}}.",
     "team": "En moyenne sur {{games}} partie(s) : mieux que {{rank}} % des parties de même palier.",
-    "teamLevel": "Moyenne au niveau des {{tier}} : c’est de leur moyenne par partie qu’elle est la plus proche."
+    "teamLevel": "Moyenne au niveau des {{tier}} : c’est de leur moyenne par partie qu’elle est la plus proche.",
+    "missing": "Moyennes du palier pas encore disponibles : l’échantillon de joueurs classés qui sert à les calculer est encore en cours de collecte.",
+    "missingShort": "n. d."
   },
   "group": {
     "IRON_BRONZE": "Fer–Bronze",
