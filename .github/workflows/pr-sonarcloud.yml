@@ -30,6 +30,7 @@ jobs:
       - name: Build
         run: npm run build
 
+      # premadelab-player.html reçoit son <title> par SSI (nginx, depuis le BFF) : Sonar ne peut pas le voir.
       - name: SonarCloud Scan
         uses: SonarSource/sonarqube-scan-action@v5
         with:
@@ -37,5 +38,8 @@ jobs:
             -Dsonar.projectKey=thomas-jacque-schultz_Front
             -Dsonar.organization=thomas-jacque-schultz
             -Dsonar.coverage.exclusions=**/*
+            -Dsonar.issue.ignore.multicriteria=ssi
+            -Dsonar.issue.ignore.multicriteria.ssi.ruleKey=Web:PageWithoutTitleCheck
+            -Dsonar.issue.ignore.multicriteria.ssi.resourceKey=premadelab-player.html
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
