@@ -1,4 +1,5 @@
 import { type ReactNode } from "react";
+import Box from "@mui/material/Box";
 import MuiChip from "@mui/material/Chip";
 
 export type ChipTone =
@@ -37,7 +38,14 @@ export function Chip({
       color={TONE[tone]}
       variant={variant === "outline" ? "outlined" : "filled"}
       size={size}
-      icon={icon ? <>{icon}</> : undefined}
+      // MUI pose sa classe d'icône sur cet élément : un fragment la refusait, et l'icône perdait marge et couleur.
+      icon={
+        icon ? (
+          <Box component="span" sx={{ display: "inline-flex" }}>
+            {icon}
+          </Box>
+        ) : undefined
+      }
     />
   );
 }
