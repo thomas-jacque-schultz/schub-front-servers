@@ -30,7 +30,8 @@
     "days": "{{count}} derniers jours",
     "patches": "{{count}} derniers patchs",
     "helper": "Toutes les valeurs de l'écran portent sur cette période.",
-    "bounded": "Riot conserve environ mille parties par joueur : au-delà, l'historique n'existe plus, chez personne."
+    "bounded": "Parties relevées : les {{maxGames}} dernières de chaque joueur, sur {{maxAgeDays}} jours au plus. L'historique plus ancien n'est pas collecté.",
+    "boundedUnknown": "Seules les parties récentes de chaque joueur sont relevées."
   },
   "coverage": {
     "games": "sur {{count}} partie(s)",

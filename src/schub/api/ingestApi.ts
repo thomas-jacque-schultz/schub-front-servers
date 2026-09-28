@@ -1,4 +1,4 @@
-import { requestJson } from "../../common";
+import { requestJson, type HistoryWindowDto } from "../../common";
 import type {
   CrawlerDto,
   IngestLoadDto,
@@ -18,4 +18,12 @@ export const toggleCrawlerApi = async (enabled: boolean): Promise<CrawlerDto> =>
   requestJson<CrawlerDto>("/ingest/crawler", {
     method: "PUT",
     body: JSON.stringify({ enabled }),
+  });
+
+export const updateHistoryWindowApi = async (
+  window: HistoryWindowDto,
+): Promise<HistoryWindowDto> =>
+  requestJson<HistoryWindowDto>("/ingest/history-window", {
+    method: "PUT",
+    body: JSON.stringify(window),
   });

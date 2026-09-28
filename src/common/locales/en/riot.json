@@ -56,7 +56,7 @@
     },
     "crawler": {
       "title": "Background collection",
-      "description": "It reads the history of accounts met in our games, most recent first, so a new player finds their games already there. It always comes after players' requests.",
+      "description": "It collects the recent history of accounts met in our games, a few players from each tier every round, so a new player finds their games already there. Player requests always come first.",
       "toggle": "Background collection on",
       "toggleHelper": "Setting for this environment only. In production it runs permanently.",
       "alwaysOn": "Always on in this environment.",
@@ -88,6 +88,17 @@
       "title": "Computation debugging",
       "queue": "Collection queue",
       "empty": "Computation traces will show up here as analyses arrive."
+    },
+    "window": {
+      "title": "Collection window",
+      "description": "What a player's first collection fetches from Riot. Later collections only ask for what came after. Changing the window drops the background games already queued and collects their players again.",
+      "maxGames": "Games at most",
+      "maxAgeDays": "Maximum age (days)",
+      "minGames": "Game floor",
+      "minGamesHelper": "For a player who rarely plays: their latest games, even beyond the maximum age.",
+      "save": "Save",
+      "saved": "Window saved: the collection queue now follows it.",
+      "saveFailed": "The window could not be saved."
     }
   },
   "premadelab": {

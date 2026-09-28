@@ -20,6 +20,7 @@ import {
   messageOf,
   useLocaleFormat,
   useLocalizedNavigate,
+  useHistoryWindow,
   useProfileStore,
   useRequest,
 } from "../../common";
@@ -39,6 +40,7 @@ function StatsPage() {
   const { formatDateTime } = useLocaleFormat();
   const navigate = useLocalizedNavigate();
   const fenetres = useWindowOptions();
+  const historyWindow = useHistoryWindow();
   const {
     profile,
     isLoading,
@@ -143,7 +145,9 @@ function StatsPage() {
           helperText={t("window.helper")}
         />
         <Text variant="caption" tone="secondary">
-          {t("window.bounded")}
+          {historyWindow
+            ? t("window.bounded", { ...historyWindow })
+            : t("window.boundedUnknown")}
         </Text>
       </Stack>
 

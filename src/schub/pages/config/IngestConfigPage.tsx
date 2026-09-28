@@ -22,6 +22,7 @@ import {
   useLocaleFormat,
 } from "../../../common";
 import { AugurTrace } from "../../components/AugurTrace";
+import { HistoryWindowCard } from "../../components/HistoryWindowCard";
 import type {
   CrawlerDto,
   IngestCountsDto,
@@ -235,6 +236,8 @@ function IngestConfigPage() {
               />
             </Stack>
           </Card>
+
+          <HistoryWindowCard />
 
           <Disclosure
             title={t("ingest.debug.title")}

@@ -11,6 +11,7 @@ import {
   Stack,
   Text,
   messageOf,
+  useHistoryWindow,
   useRequest,
 } from "../../../common";
 import { playerColumn } from "./playerColumn";
@@ -29,6 +30,7 @@ const RADAR_JUSQU_A = 3;
 export function PlayersPanel({ teamId }: PlayersPanelProps) {
   const { t } = useTranslation("stats");
   const fenetres = useWindowOptions();
+  const historyWindow = useHistoryWindow();
   const [periode, setPeriode] = useState<string>("");
   const {
     data: stats,
@@ -93,7 +95,9 @@ export function PlayersPanel({ teamId }: PlayersPanelProps) {
           helperText={t("window.helper")}
         />
         <Text variant="caption" tone="secondary">
-          {t("window.bounded")}
+          {historyWindow
+            ? t("window.bounded", { ...historyWindow })
+            : t("window.boundedUnknown")}
         </Text>
       </Stack>
 
