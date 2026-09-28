@@ -1,16 +1,11 @@
 {
-  "draft": {
-    "title": "Draft — to be reviewed before publication",
-    "body": "This text was written from what the code actually does, but it has not been reviewed by a lawyer and it binds the site's publisher. The passages in brackets are still his to complete.",
-    "marker": "The passages in brackets are the ones that are missing."
-  },
   "riot": {
     "title": "Notice required by Riot Games",
     "intro": "Riot Games requires every third-party product to display the following notice in a place that is readily visible to players. It is reproduced word for word, in its official English wording.",
     "text": "{{product}} isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.",
     "sourceLabel": "Riot Games — General Policies"
   },
-  "updated": "Last updated: 22 September 2026.",
+  "updated": "Last updated: 28 September 2026.",
   "terms": {
     "meta": {
       "title": "Terms of use — {{product}}",
@@ -30,7 +25,7 @@
     },
     "publisher": {
       "title": "Publisher",
-      "p1": "The site is published and hosted privately by [publisher's legal name, to be completed], [status and address, to be completed].",
+      "p1": "The site is published and hosted privately and non-professionally by Thomas Schultz, a private individual living in Colmar (France). His full postal address is provided on request, through the contact form.",
       "p2": "No email address is published on this site: the contact form is the open channel, and it is also the one used for any request concerning data."
     },
     "account": {
@@ -58,7 +53,7 @@
       "title": "Availability and warranties",
       "p1": "The service is provided as is, free of charge, with no warranty whatsoever as to availability, accuracy or preservation. It runs on a personal machine: a power cut, a hardware failure or a move stops it.",
       "p2": "The publisher may change, restrict or shut down the service, in whole or in part, without notice and without compensation. The statistics shown are computed from game data: they may be incomplete or wrong, and they ground no decision binding anyone.",
-      "p3": "The publisher cannot be held liable for the unavailability of the service or the loss of the data it holds. [Limitation of liability clause to be reviewed, to be completed.]"
+      "p3": "To the fullest extent permitted by law, the publisher cannot be held liable for any damage, direct or indirect, arising from the use of the service, its unavailability or the loss of the data it holds. Nothing in these terms excludes a liability that the law does not allow to be excluded."
     },
     "ip": {
       "title": "Intellectual property",
@@ -76,7 +71,7 @@
     },
     "law": {
       "title": "Governing law",
-      "p1": "[Governing law and competent courts to be completed — French law and the courts of the publisher's place of residence by default, to be confirmed by him.]"
+      "p1": "These terms are governed by French law. Failing an amicable settlement, any dispute falls under the competent French courts. A user acting as a consumer keeps the protection of the mandatory rules of their country of residence."
     }
   },
   "privacy": {
@@ -91,7 +86,7 @@
     },
     "controller": {
       "title": "Who processes this data",
-      "p1": "Data is processed by [publisher's legal name, to be completed], publisher of the site, privately and non-commercially. [Address to be completed.]",
+      "p1": "Data is processed by Thomas Schultz, publisher of the site, a private individual living in Colmar (France), privately and non-commercially. His full postal address is provided on request.",
       "p2": "No email address is published: every request goes through the site's contact form."
     },
     "collected": {
@@ -111,7 +106,7 @@
       "reviewsTitle": "Post-game reviews",
       "reviews": "The free-form text written by one member about another, attached to a specific game, with its author, its subject and its creation and edit dates.",
       "contactTitle": "Contact form",
-      "contact": "The name, email address and message entered. The message is delivered to the publisher through Discord, as a direct message or in a fallback channel. [Server-side retention of the message to be confirmed by the publisher.]"
+      "contact": "The name, email address and message entered. The site does not store them: the message is delivered as is to the publisher through Discord, as a direct message or in a fallback channel, and stays in that messaging service until the publisher deletes it."
     },
     "notCollected": {
       "title": "What is not collected",
@@ -133,12 +128,12 @@
       "i3": "to compute and display personal and team statistics;",
       "i4": "to operate teams: roster, champion pool, compositions, reviews;",
       "i5": "to receive contact form messages and keep spam out.",
-      "basis": "[Legal basis to be qualified by the publisher — performance of the requested service for accounts, legitimate interest for third parties' game data. To be reviewed.]"
+      "basis": "Legal basis: performance of the service you request by creating an account (GDPR, Article 6(1)(b)) for your account, your teams and your content; legitimate interest (Article 6(1)(f)) for other players’ game data, which the Riot Games API makes public and without which no statistic exists, as well as for the contact form and its protection against spam."
     },
     "storage": {
       "title": "Where this data lives",
       "p1": "In a self-hosted MongoDB database, on the machine that hosts the site. No data is handed to a third-party database host, an analytics service or an online backup service.",
-      "p2": "[Physical location of the machine, and backup policy, to be specified by the publisher.]"
+      "p2": "This machine is located in France, at the publisher’s home. There is no backup outside this machine: a failure can lose data, as the terms of use say."
     },
     "retention": {
       "title": "For how long",
@@ -170,12 +165,12 @@
       "gapTitle": "What does not exist yet",
       "gap": "There is no account deletion button, and it would be dishonest to suggest otherwise. Deleting an account and the game data attached to it is done by hand, on request.",
       "howTitle": "How to ask",
-      "how": "Through the site's contact form, stating the Discord username or the Riot ID concerned. The publisher undertakes to handle the request and to confirm what was erased. [Response time commitment to be set by the publisher.]",
+      "how": "Through the site’s contact form, stating the Discord username or the Riot ID concerned. The publisher undertakes to reply within one month and to confirm what was erased. You can also lodge a complaint with the CNIL, the French data protection authority (cnil.fr).",
       "thirdParty": "This channel is open to people with no {{product}} account too: if your Riot ID appears here because you crossed paths with a user in a game, the same request applies, through the same form."
     },
     "minors": {
       "title": "Minors",
-      "p1": "The site is not aimed at children and asks for no age, because it would not verify it. Access requires a Discord account, whose terms already set a minimum age. [The publisher's position on users' age to be settled.]"
+      "p1": "The site is not aimed at children and asks for no age, because it could not verify it. Access requires a Discord account, and therefore the minimum age Discord sets in the user’s country."
     },
     "changes": {
       "title": "Changes",

@@ -223,11 +223,12 @@ une formulation imposée ; le seul ajustement permis est le nom du produit à la
 demande qu'elle soit « à un endroit visible des joueurs » : elle est donc sur la vitrine **et** sur
 les deux pages de texte.
 
-**`/terms` et `/privacy` sont des brouillons, et le disent en tête.** Elles engagent le
-propriétaire du domaine, elles n'ont pas été relues par un juriste, et l'avertissement ne se
-retire pas avant que ce soit fait. Ce que le code ne porte pas — nom légal, adresse, juridiction,
-base légale, délai de réponse — reste **entre crochets** plutôt qu'inventé. Un crochet se voit et
-finit rempli ; une phrase plausible et fausse survit à celui qui l'a écrite.
+**`/terms` et `/privacy` sont publiées depuis le 28-09, pour la demande de clé de production.**
+Les crochets ont été remplis sur décision de l'éditeur, sans relecture par un juriste. Ce que le
+code ne porte pas vient de ce que le site publie déjà (nom et ville, sur `/contact`) ou d'un choix
+de l'éditeur (droit français, base légale, délai d'un mois). L'adresse postale n'est pas publiée :
+elle se donne sur demande. Une information nouvelle se vérifie avant d'entrer dans ces pages ; une
+phrase plausible et fausse survit à celui qui l'a écrite.
 
 **Elles sont écrites depuis les collections, pas depuis un modèle.** Trois faits en découlent et ne
 doivent pas disparaître à la prochaine retouche :

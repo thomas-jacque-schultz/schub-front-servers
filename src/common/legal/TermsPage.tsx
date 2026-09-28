@@ -7,7 +7,6 @@ import {
   Stack,
   Text,
 } from "../design-system";
-import { DraftNotice } from "./DraftNotice";
 import { RiotDisclaimer } from "../riot/RiotDisclaimer";
 import { useLocalizedPath } from "../i18n/navigation";
 import { useDocumentMeta } from "../seo/useDocumentMeta";
@@ -30,8 +29,6 @@ function TermsPage() {
         title={t("terms.hero.title")}
         subtitle={t("terms.hero.subtitle")}
       />
-
-      <DraftNotice />
 
       <Text variant="caption" tone="secondary">
         {t("updated")}
