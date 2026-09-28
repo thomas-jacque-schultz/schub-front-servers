@@ -19,6 +19,7 @@ export {
 export { useDocumentMeta } from "./seo/useDocumentMeta";
 export { RequireAuth, RequirePermission } from "./routing/guards";
 export { lazyPage } from "./routing/lazyPage";
+export { PageErrorBoundary } from "./routing/PageErrorBoundary";
 
 export { ApiError, requestJson } from "./api/httpClient";
 export { messageOf, useRequest } from "./api/useRequest";

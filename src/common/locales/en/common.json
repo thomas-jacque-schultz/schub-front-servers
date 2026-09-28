@@ -36,6 +36,11 @@
     "switchTo": "View this site in {{language}}"
   },
   "loading": "Loading…",
+  "pageError": {
+    "title": "This page ran into a problem",
+    "description": "The rest of the site still works. Reloading the page usually fixes it.",
+    "reload": "Reload the page"
+  },
   "shell": {
     "home": "Home",
     "servers": "Servers",
