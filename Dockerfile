@@ -18,8 +18,12 @@ RUN npm run build-storybook
 FROM nginx:1.27-alpine
 COPY --from=build-app /app/dist /usr/share/nginx/html
 COPY --from=build-storybook /app/storybook-static /usr/share/nginx/html/storybook
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY nginx-shared.conf /etc/nginx/shared.conf
+# Le BFF visé est réglable : le dev qui rejoue une release doit viser dev-schub-bff, jamais le schub-bff de prod
+# que publie l'overlay partagé. Le filtre borne la substitution à BFF_ : les $host et $uri de nginx restent intacts.
+ENV BFF_UPSTREAM=schub-bff:8080
+ENV NGINX_ENVSUBST_FILTER=^BFF_
+COPY nginx.conf /etc/nginx/templates/default.conf.template
+COPY nginx-shared.conf /etc/nginx/templates/shared.inc.template
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
