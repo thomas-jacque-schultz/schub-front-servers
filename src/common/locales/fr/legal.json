@@ -1,16 +1,11 @@
 {
-  "draft": {
-    "title": "Brouillon — à relire avant publication",
-    "body": "Ce texte a été rédigé d'après ce que le code fait réellement, mais il n'a pas été relu par un juriste et il engage l'éditeur du site. Les passages entre crochets restent à compléter par lui.",
-    "marker": "Les passages entre crochets sont ceux qui manquent."
-  },
   "riot": {
     "title": "Mention exigée par Riot Games",
     "intro": "Riot Games impose à tout produit tiers d'afficher la mention suivante à un endroit visible des joueurs. Elle est reproduite telle quelle, en anglais, parce que c'est sa formulation officielle. Elle dit que {{product}} n'est pas endossé par Riot Games et ne reflète ni les vues ni les opinions de Riot Games, ni de quiconque participe officiellement à la production ou à la gestion de ses propriétés.",
     "text": "{{product}} isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.",
     "sourceLabel": "Riot Games — General Policies"
   },
-  "updated": "Dernière mise à jour : 22 septembre 2026.",
+  "updated": "Dernière mise à jour : 28 septembre 2026.",
   "terms": {
     "meta": {
       "title": "Conditions d'utilisation — {{product}}",
@@ -30,7 +25,7 @@
     },
     "publisher": {
       "title": "Éditeur",
-      "p1": "Le site est édité et hébergé à titre privé par [nom légal de l'éditeur, à compléter], [statut et adresse, à compléter].",
+      "p1": "Le site est édité et hébergé à titre privé et non professionnel par Thomas Schultz, particulier domicilié à Colmar (France). Son adresse postale complète est communiquée sur demande, par le formulaire de contact.",
       "p2": "Aucune adresse électronique n'est publiée sur ce site : le formulaire de contact est la voie ouverte, et c'est lui qui sert aussi pour toute demande relative aux données."
     },
     "account": {
@@ -58,7 +53,7 @@
       "title": "Disponibilité et garanties",
       "p1": "Le service est rendu tel quel, gratuitement, sans aucune garantie de disponibilité, d'exactitude ni de conservation. Il est hébergé sur une machine personnelle : une coupure de courant, une panne ou un déménagement l'arrêtent.",
       "p2": "L'éditeur peut modifier, restreindre ou arrêter le service, en totalité ou en partie, sans préavis et sans contrepartie. Les statistiques affichées sont issues de calculs sur des données de jeu : elles peuvent être incomplètes ou fausses, et ne fondent aucune décision engageant qui que ce soit.",
-      "p3": "La responsabilité de l'éditeur ne peut être engagée à raison de l'indisponibilité du service ou de la perte des données qu'il contient. [Clause de limitation de responsabilité à faire relire, à compléter.]"
+      "p3": "Dans toute la mesure permise par la loi, l’éditeur ne peut être tenu responsable des dommages, directs ou indirects, liés à l’utilisation du service, à son indisponibilité ou à la perte des données qu’il contient. Rien dans ces conditions n’écarte une responsabilité que la loi interdit d’écarter."
     },
     "ip": {
       "title": "Propriété intellectuelle",
@@ -76,7 +71,7 @@
     },
     "law": {
       "title": "Droit applicable",
-      "p1": "[Droit applicable et juridiction compétente à compléter — par défaut le droit français et les tribunaux du ressort du domicile de l'éditeur, à confirmer par lui.]"
+      "p1": "Ces conditions sont régies par le droit français. À défaut d’accord amiable, un litige relève des tribunaux français compétents. Un utilisateur qui agit en tant que consommateur conserve la protection des règles impératives de son pays de résidence."
     }
   },
   "privacy": {
@@ -91,7 +86,7 @@
     },
     "controller": {
       "title": "Qui traite ces données",
-      "p1": "Les données sont traitées par [nom légal de l'éditeur, à compléter], éditeur du site, à titre privé et non commercial. [Adresse à compléter.]",
+      "p1": "Les données sont traitées par Thomas Schultz, éditeur du site, particulier domicilié à Colmar (France), à titre privé et non commercial. Son adresse postale complète est communiquée sur demande.",
       "p2": "Aucune adresse électronique n'est publiée : toute demande passe par le formulaire de contact du site."
     },
     "collected": {
@@ -111,7 +106,7 @@
       "reviewsTitle": "Revues d'après-partie",
       "reviews": "Le texte libre écrit par un membre à propos d'un autre, rattaché à une partie précise, avec son auteur, son sujet et ses dates d'écriture et de modification.",
       "contactTitle": "Formulaire de contact",
-      "contact": "Le nom, l'adresse électronique et le message saisis. Le message est remis à l'éditeur par Discord, en message privé ou dans un salon de repli. [Durée de conservation du message côté serveur à confirmer par l'éditeur.]"
+      "contact": "Le nom, l’adresse électronique et le message saisis. Le site ne les enregistre pas : le message est remis tel quel à l’éditeur par Discord, en message privé ou dans un salon de repli, et reste dans cette messagerie tant que l’éditeur ne le supprime pas."
     },
     "notCollected": {
       "title": "Ce qui n'est pas collecté",
@@ -133,12 +128,12 @@
       "i3": "calculer et afficher les statistiques personnelles et d'équipe ;",
       "i4": "faire fonctionner les équipes : effectif, pool de champions, compositions, revues ;",
       "i5": "recevoir les messages du formulaire de contact et en écarter le spam.",
-      "basis": "[Base légale à qualifier par l'éditeur — exécution du service demandé pour les comptes, intérêt légitime pour les données de parties de tiers. À faire relire.]"
+      "basis": "Base légale : l’exécution du service que tu demandes en créant un compte (RGPD, article 6.1.b) pour ton compte, tes équipes et tes contenus ; l’intérêt légitime (article 6.1.f) pour les données de parties des autres joueurs, que l’API de Riot Games rend publiques et sans lesquelles aucune statistique n’existe, ainsi que pour le formulaire de contact et sa protection contre le spam."
     },
     "storage": {
       "title": "Où ces données vivent",
       "p1": "Dans une base MongoDB auto-hébergée, sur la machine qui héberge le site. Aucune donnée n'est confiée à un hébergeur de base de données tiers, à un service d'analyse ou à un service de sauvegarde en ligne.",
-      "p2": "[Localisation physique de la machine, et politique de sauvegarde, à préciser par l'éditeur.]"
+      "p2": "Cette machine se trouve en France, au domicile de l’éditeur. Il n’existe aucune sauvegarde hors de cette machine : une panne peut faire perdre des données, comme le disent les conditions d’utilisation."
     },
     "retention": {
       "title": "Combien de temps",
@@ -170,12 +165,12 @@
       "gapTitle": "Ce qui n'existe pas encore",
       "gap": "Il n'y a aucun bouton de suppression de compte, et il serait malhonnête de laisser croire le contraire. La suppression d'un compte et des données de jeu qui s'y rattachent se fait à la main, sur demande.",
       "howTitle": "Comment demander",
-      "how": "Par le formulaire de contact du site, en indiquant le pseudo Discord ou le Riot ID concerné. L'éditeur s'engage à traiter la demande et à confirmer ce qui a été effacé. [Délai d'engagement à fixer par l'éditeur.]",
+      "how": "Par le formulaire de contact du site, en indiquant le pseudo Discord ou le Riot ID concerné. L’éditeur s’engage à répondre dans un délai d’un mois et à confirmer ce qui a été effacé. Tu peux aussi introduire une réclamation auprès de la CNIL (cnil.fr).",
       "thirdParty": "Cette voie est ouverte aussi à qui n'a pas de compte {{product}} : si ton Riot ID figure ici parce que tu as croisé un utilisateur en partie, la même demande s'applique, par le même formulaire."
     },
     "minors": {
       "title": "Mineurs",
-      "p1": "Le site n'est pas destiné aux enfants et ne demande aucun âge, parce qu'il ne le vérifierait pas. L'accès suppose un compte Discord, dont les conditions posent déjà un âge minimum. [Position de l'éditeur sur l'âge des utilisateurs à arrêter.]"
+      "p1": "Le site n’est pas destiné aux enfants et ne demande aucun âge, parce qu’il ne pourrait pas le vérifier. L’accès suppose un compte Discord, donc l’âge minimum que Discord impose dans le pays de l’utilisateur."
     },
     "changes": {
       "title": "Modifications",

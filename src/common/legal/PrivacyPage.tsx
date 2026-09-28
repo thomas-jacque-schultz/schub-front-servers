@@ -7,7 +7,6 @@ import {
   Stack,
   Text,
 } from "../design-system";
-import { DraftNotice } from "./DraftNotice";
 import { RiotDisclaimer } from "../riot/RiotDisclaimer";
 import { useLocalizedPath } from "../i18n/navigation";
 import { useDocumentMeta } from "../seo/useDocumentMeta";
@@ -71,8 +70,6 @@ function PrivacyPage() {
         title={t("privacy.hero.title")}
         subtitle={t("privacy.hero.subtitle")}
       />
-
-      <DraftNotice />
 
       <Text variant="caption" tone="secondary">
         {t("updated")}
