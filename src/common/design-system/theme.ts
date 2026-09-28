@@ -183,4 +183,20 @@ export const gridOverlaySxOf = ({ textures }: Identity) =>
 
 export const gridOverlaySx = gridOverlaySxOf(identities.schub);
 
-export const THEME_MODE_STORAGE_KEY = "schub-color-mode";
+export const THEME_MODE_STORAGE_KEY = "color-mode";
+const ANCIENNE_CLE = "schub-color-mode";
+
+// Reprend le choix enregistré sous l'ancienne clé, citée par /privacy et visible sur PremadeLab.
+export function migrateThemeModeKey(
+  storage: Storage | undefined = globalThis.localStorage,
+): void {
+  try {
+    const ancien = storage?.getItem(ANCIENNE_CLE);
+    if (ancien && !storage?.getItem(THEME_MODE_STORAGE_KEY)) {
+      storage?.setItem(THEME_MODE_STORAGE_KEY, ancien);
+    }
+    storage?.removeItem(ANCIENNE_CLE);
+  } catch {
+    // Stockage refusé (navigation privée) : le thème par défaut s'applique.
+  }
+}

@@ -2,8 +2,14 @@ import { type ReactNode, useMemo } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
 import { IdentityContext } from "./identity";
-import { THEME_MODE_STORAGE_KEY, createAppTheme } from "./theme";
+import {
+  THEME_MODE_STORAGE_KEY,
+  createAppTheme,
+  migrateThemeModeKey,
+} from "./theme";
 import { identities, type AppBrand } from "./tokens";
+
+migrateThemeModeKey();
 
 export function AppThemeProvider({
   children,

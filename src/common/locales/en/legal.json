@@ -13,18 +13,20 @@
   "updated": "Last updated: 22 September 2026.",
   "terms": {
     "meta": {
-      "title": "Terms of use — Schub",
-      "description": "Schub's terms of use: purpose of the service, sign-in through Discord, League of Legends account, published content, availability and intellectual property."
+      "title": "Terms of use — {{product}}",
+      "description": "{{product}}'s terms of use: purpose of the service, sign-in through Discord, League of Legends account, published content, availability and intellectual property."
     },
     "hero": {
       "eyebrow": "Notices",
       "title": "Terms of use",
-      "subtitle": "What each side commits to when using Schub."
+      "subtitle": "What each side commits to when using {{product}}."
     },
     "purpose": {
       "title": "Purpose",
       "p1": "Schub is a personal, free and non-commercial project hosted on schultz-thomas.fr. It gathers the tools of the Miam Discord community: today, control over game servers hosted at home and support for a League of Legends team — roster, statistics, champion pool, composition planning and post-game review.",
-      "p2": "Using the site means accepting these terms. Anyone who does not accept them simply does not create an account; server status and the text pages remain readable without one."
+      "p2": "Using the site means accepting these terms. Anyone who does not accept them simply does not create an account; server status and the text pages remain readable without one.",
+      "p1_PremadeLab": "PremadeLab is a personal, free and non-commercial project hosted on premadelab.eu. It is a League of Legends game analysis tool, for a player and for their team: player search, statistics and findings on their games, roster, champion pool, composition planning and post-game review.",
+      "p2_PremadeLab": "Using the site means accepting these terms. Anyone who does not accept them simply does not create an account; the presentation, player pages and text pages remain readable without one."
     },
     "publisher": {
       "title": "Publisher",
@@ -33,7 +35,7 @@
     },
     "account": {
       "title": "Account and access",
-      "p1": "Sign-in goes through Discord. A Discord account is therefore required, along with compliance with Discord's own terms, over which the publisher has no control. No password is created or kept for Schub.",
+      "p1": "Sign-in goes through Discord. A Discord account is therefore required, along with compliance with Discord's own terms, over which the publisher has no control. No password is created or kept for {{product}}.",
       "p2": "An account's rights follow a role granted by the publisher. A newly created account only reaches its own profile and its own statistics; access to teams and to administration is granted case by case.",
       "p3": "The publisher may suspend or close an access, without notice, in case of abuse — in particular declaring a game account that does not belong to the person, or writing the content listed below."
     },
@@ -41,7 +43,7 @@
       "title": "League of Legends account",
       "p1": "Declaring a Riot ID triggers the reading of that account's public history through the Riot Games API. Declare only your own account: declaring someone else's amounts to having their games collected without their consent.",
       "p2": "A declared account is not unlinked, it is replaced. Replacing it resets personal statistics and restarts a collection; the consequences are shown and require confirmation before being applied.",
-      "p3": "Schub does not interact with the game client, changes nothing in the game and provides no in-game advantage. It only reads data that the Riot Games API exposes publicly."
+      "p3": "{{product}} does not interact with the game client, changes nothing in the game and provides no in-game advantage. It only reads data that the Riot Games API exposes publicly."
     },
     "content": {
       "title": "What you publish",
@@ -60,8 +62,8 @@
     },
     "ip": {
       "title": "Intellectual property",
-      "p1": "League of Legends, champion names and artwork, the icons served by Data Dragon and all game assets belong to Riot Games, Inc. Schub uses them as a third-party product, under the rules of the Riot Games developer portal.",
-      "p2": "Schub's code is published under the licence of its public repository. Content written by users — team names, compositions, reviews — remains theirs; the publisher only uses it to operate the service."
+      "p1": "League of Legends, champion names and artwork, the icons served by Data Dragon and all game assets belong to Riot Games, Inc. {{product}} uses them as a third-party product, under the rules of the Riot Games developer portal.",
+      "p2": "{{product}}'s code is published under the licence of its public repository. Content written by users — team names, compositions, reviews — remains theirs; the publisher only uses it to operate the service."
     },
     "privacy": {
       "title": "Personal data",
@@ -79,8 +81,8 @@
   },
   "privacy": {
     "meta": {
-      "title": "Privacy policy — Schub",
-      "description": "What Schub collects — Discord identity, Riot ID, public match history, review notes —, where that data lives, for how long, and how to ask for its deletion."
+      "title": "Privacy policy — {{product}}",
+      "description": "What {{product}} collects — Discord identity, Riot ID, public match history, review notes —, where that data lives, for how long, and how to ask for its deletion."
     },
     "hero": {
       "eyebrow": "Notices",
@@ -96,14 +98,14 @@
       "title": "What is collected",
       "discordTitle": "Discord identity",
       "discord": "On sign-in, Discord provides the account identifier, its username and its avatar address. Nothing else: no Discord email address, no server list, no messages.",
-      "accountTitle": "Schub account",
+      "accountTitle": "{{product}} account",
       "account": "The display name chosen on the site, the role granted and the permissions that follow from it, the creation date and the last sign-in date.",
       "riotTitle": "Game account",
       "riot": "The declared Riot ID (name and tag) and the puuid Riot associates with it. The puuid is never returned to the browser: it stays server-side, because a Riot identifier handed to the client is the key to probing someone's history.",
       "matchesTitle": "Match history",
       "matches": "For every game read through the Riot Games API, Riot's response is kept as is, and a per-player projection is derived from it: champion, position, queue, result, side, duration, patch, kills, deaths, assists, minions, gold, damage to champions, vision score, whether the player went absent, and date. Current rankings and champion masteries are added to that.",
       "othersTitle": "The other players in those games",
-      "others": "A game holds ten participants. The Riot ID and game figures of the other nine are therefore recorded too, including when they have no Schub account and never will. That data is made public by the Riot Games API, but it is indeed kept here — and a deletion request covers it as well.",
+      "others": "A game holds ten participants. The Riot ID and game figures of the other nine are therefore recorded too, including when they have no {{product}} account and never will. That data is made public by the Riot Games API, but it is indeed kept here — and a deletion request covers it as well.",
       "teamsTitle": "Teams",
       "teams": "A team's name, its roster — a Riot ID, positions and a status per seat —, the champion pool it keeps per position and the compositions prepared, with their patch and notes.",
       "reviewsTitle": "Post-game reviews",
@@ -121,7 +123,7 @@
     "cookies": {
       "title": "Cookies and browser storage",
       "session": "A session cookie, set by the server and unreachable from the site's JavaScript, carries the authentication token. It is required to operate: without it there is no sign-in. Signing out erases it.",
-      "local": "The browser keeps one setting locally, under the key schub-color-mode: the choice between light and dark theme. It never leaves the device.",
+      "local": "The browser keeps one setting locally, under the key color-mode: the choice between light and dark theme. It never leaves the device.",
       "turnstile": "The contact form may be protected by Cloudflare Turnstile, an anti-bot service. When it is enabled, the browser contacts Cloudflare, which then sees the visitor's IP address and applies its own policy. With no key configured, the widget is not loaded at all."
     },
     "purposes": {
@@ -141,10 +143,10 @@
     "retention": {
       "title": "For how long",
       "cachesTitle": "What expires on its own",
-      "caches": "Rankings are refreshed roughly every hour, champion masteries and the game version every six hours. These are caches: they are replaced, not accumulated.",
+      "caches": "Rankings, champion masteries and the game version are fetched again after a few hours. These are caches: they are replaced, not accumulated.",
       "permanentTitle": "What does not erase itself",
       "permanent": "Collected games, their per-player projections and the index of game accounts encountered have no expiry date.",
-      "riotPurge": "This has to be said plainly: the history Riot serves is capped at roughly a thousand games per player, and an older game drops out of it. The games Schub already collected, however, stay. In other words, Schub keeps games that Riot no longer serves. That is deliberate — it is what makes comparing one season to the previous one possible — and it is also what makes a deletion request meaningful.",
+      "riotPurge": "This has to be said plainly: {{product}} only collects each player's recent games, and Riot itself only serves a capped history. The games already collected, however, stay. In other words, {{product}} keeps games that Riot no longer serves, and that is what makes a deletion request meaningful.",
       "accountTitle": "The rest",
       "account": "The account, its teams, its compositions and its reviews are kept as long as the account exists. Deleting a team deletes its compositions and its reviews."
     },
@@ -155,7 +157,7 @@
       "i1": "Riot Games — the site queries its API to read games. What leaves here is the identifier of the game account concerned, nothing more;",
       "i2": "Discord — for authentication, and for delivering contact form messages;",
       "i3": "Cloudflare — only if the contact form's anti-bot protection is enabled.",
-      "p3": "Data also stays visible to those who need it on the site: a team's members see that team's roster, statistics and reviews. Nothing is public: no page of the site exposes statistics or Riot IDs to a signed-out visitor."
+      "p3": "Data also stays visible to those who need it on the site: a team's members see that team's roster, statistics and reviews. A player's public page shows any visitor what the Riot Games API makes public: their Riot ID, rank, champions and game statistics. Team notes, compositions and reviews are never public."
     },
     "rights": {
       "title": "What you can ask for",
@@ -169,7 +171,7 @@
       "gap": "There is no account deletion button, and it would be dishonest to suggest otherwise. Deleting an account and the game data attached to it is done by hand, on request.",
       "howTitle": "How to ask",
       "how": "Through the site's contact form, stating the Discord username or the Riot ID concerned. The publisher undertakes to handle the request and to confirm what was erased. [Response time commitment to be set by the publisher.]",
-      "thirdParty": "This channel is open to people with no Schub account too: if your Riot ID appears here because you crossed paths with a user in a game, the same request applies, through the same form."
+      "thirdParty": "This channel is open to people with no {{product}} account too: if your Riot ID appears here because you crossed paths with a user in a game, the same request applies, through the same form."
     },
     "minors": {
       "title": "Minors",

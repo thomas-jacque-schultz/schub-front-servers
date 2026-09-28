@@ -2,16 +2,16 @@ import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Alert,
-  ApiError,
   Button,
   Card,
   HoneypotField,
   Stack,
   Text,
   TextField,
-} from "../../../common";
-import { sendContactMessageApi } from "../../api/contactApi";
-import { TurnstileWidget } from "../../components/TurnstileWidget";
+} from "../design-system";
+import { ApiError } from "../api/httpClient";
+import { sendContactMessageApi } from "./contactApi";
+import { TurnstileWidget } from "./TurnstileWidget";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MIN_MESSAGE_LENGTH = 20;

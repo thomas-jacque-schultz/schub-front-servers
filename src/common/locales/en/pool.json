@@ -56,7 +56,7 @@
   "member": {
     "viewer": "You",
     "substitute": "Substitute",
-    "free": "No Schub account",
+    "free": "No {{product}} account",
     "observedAt": "Masteries read on {{date}}",
     "substituteShort": "sub"
   },

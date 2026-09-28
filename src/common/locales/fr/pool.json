@@ -56,7 +56,7 @@
   "member": {
     "viewer": "Vous",
     "substitute": "Remplaçant",
-    "free": "Sans compte Schub",
+    "free": "Sans compte {{product}}",
     "observedAt": "Maîtrises relevées le {{date}}",
     "substituteShort": "rempl."
   },

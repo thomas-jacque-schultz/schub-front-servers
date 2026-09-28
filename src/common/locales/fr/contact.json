@@ -32,6 +32,10 @@
   "privacy": "Aucune adresse e-mail n'est publiée sur ce site : ce formulaire existe pour la remplacer.",
   "feedback": {
     "title": "Feedback",
-    "intro": "Une question, une proposition, un bug rencontré sur Schub : le message m'arrive directement sur Discord."
+    "intro": "Une question, une proposition, un bug rencontré sur {{product}} : le message m'arrive directement sur Discord."
+  },
+  "feedbackMeta": {
+    "title": "Contact — {{product}}",
+    "description": "Une question, une proposition, un bug : écrire à l'éditeur de {{product}}."
   }
 }
