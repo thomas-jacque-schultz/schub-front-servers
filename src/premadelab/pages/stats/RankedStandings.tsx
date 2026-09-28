@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { Chip, Stack, Text } from "../../../common";
+import { Chip, Stack, Text, useLocaleFormat } from "../../../common";
 import type { RankedStandingDto } from "../../types/stats";
 import { RankBadge } from "./RankBadge";
 import { useStatsFormat } from "./statsFormat";
@@ -11,6 +11,7 @@ export interface RankedStandingsProps {
 export function RankedStandings({ standings }: RankedStandingsProps) {
   const { t } = useTranslation("stats");
   const format = useStatsFormat();
+  const { formatDateTime } = useLocaleFormat();
 
   const classees = standings.filter((standing) => standing.tier);
 
@@ -42,6 +43,13 @@ export function RankedStandings({ standings }: RankedStandingsProps) {
               losses: standing.losses,
             })}
           </Text>
+          {standing.observedAt && (
+            <Text variant="caption" tone="disabled">
+              {t("ranked.observedAt", {
+                date: formatDateTime(new Date(standing.observedAt)),
+              })}
+            </Text>
+          )}
           {standing.hotStreak && (
             <Chip
               label={t("ranked.hotStreak")}
