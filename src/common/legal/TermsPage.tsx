@@ -11,10 +11,12 @@ import { DraftNotice } from "./DraftNotice";
 import { RiotDisclaimer } from "../riot/RiotDisclaimer";
 import { useLocalizedPath } from "../i18n/navigation";
 import { useDocumentMeta } from "../seo/useDocumentMeta";
+import { useProductName } from "../product";
 
 function TermsPage() {
   const { t } = useTranslation("legal");
   const localize = useLocalizedPath();
+  const product = useProductName();
 
   useDocumentMeta({
     title: t("terms.meta.title"),
@@ -37,8 +39,8 @@ function TermsPage() {
 
       <Card title={t("terms.purpose.title")}>
         <Stack spacing={2}>
-          <Text>{t("terms.purpose.p1")}</Text>
-          <Text>{t("terms.purpose.p2")}</Text>
+          <Text>{t("terms.purpose.p1", { context: product })}</Text>
+          <Text>{t("terms.purpose.p2", { context: product })}</Text>
         </Stack>
       </Card>
 

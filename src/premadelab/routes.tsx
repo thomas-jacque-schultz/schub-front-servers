@@ -19,6 +19,7 @@ const PlayerPage = lazyPage(() => import("./pages/PlayerPage"));
 const StatsPage = lazyPage(() => import("./pages/StatsPage"));
 const TeamPage = lazyPage(() => import("./pages/TeamPage"));
 const TeamsPage = lazyPage(() => import("./pages/TeamsPage"));
+const ContactPage = lazyPage(() => import("./pages/ContactPage"));
 
 // Le bouton « Crée ton premade » ramène sur les équipes une fois la connexion faite.
 function AfterLogin() {
@@ -83,6 +84,7 @@ export function PremadeLabRoutes() {
           }
         />
         <Route path="login" element={<LoginRoute />} />
+        <Route path="contact" element={<ContactPage />} />
         <Route path="terms" element={<TermsPage />} />
         <Route path="privacy" element={<PrivacyPage />} />
         <Route path="*" element={<LocalizedNavigate to="/" replace />} />

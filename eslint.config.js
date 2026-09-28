@@ -72,7 +72,7 @@ export default tseslint.config(
   pacte(["src/premadelab/**/*.{ts,tsx}"], [PORTE_DE_COMMON, vers("schub")]),
   pacte(["src/common/**/*.{ts,tsx}"], [vers("schub"), vers("premadelab")]),
   {
-    files: ["*.config.js", "*.config.ts"],
+    files: ["*.config.js", "*.config.ts", "scripts/**/*.mjs"],
     languageOptions: {
       globals: globals.node,
     },

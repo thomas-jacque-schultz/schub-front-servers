@@ -24,6 +24,7 @@ void i18n.use(initReactI18next).init({
   returnNull: false,
   interpolation: {
     escapeValue: false,
+    defaultVariables: { product: "Schub" },
   },
 });
 

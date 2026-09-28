@@ -81,7 +81,8 @@ export interface AppShellProps {
   navItems?: AppShellNavEntry[];
   connected: boolean;
   username?: string | null;
-  account: AppShellAccount;
+  /** Absent : pas de menu de compte (un visiteur, dans une application sans autre entrée). */
+  account?: AppShellAccount;
   signInLabel: string;
   signOutLabel: string;
   onSignIn: () => void;
@@ -273,84 +274,88 @@ export function AppShell({
                   {signInLabel}
                 </Button>
               )}
-              <IconButton
-                aria-label={account.label}
-                aria-haspopup="menu"
-                aria-expanded={openMenuKey === COMPTE}
-                onClick={(event) => {
-                  setAnchor(event.currentTarget);
-                  setOpenMenuKey(COMPTE);
-                }}
-                sx={{ p: 0.5 }}
-              >
-                {connected && username ? (
-                  <Avatar name={username} src={account.avatarUrl} />
-                ) : (
-                  <AccountCircleIcon fontSize="large" />
-                )}
-              </IconButton>
-              <Menu
-                anchorEl={anchor}
-                open={openMenuKey === COMPTE}
-                onClose={closeMenu}
-                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-                transformOrigin={{ vertical: "top", horizontal: "right" }}
-                slotProps={{ list: { "aria-label": account.label } }}
-              >
-                {account.caption && (
-                  <Typography
-                    variant="caption"
-                    color="text.secondary"
-                    component="div"
-                    sx={{ px: 2, py: 1 }}
-                  >
-                    {account.caption}
-                  </Typography>
-                )}
-                {account.groups
-                  .filter((groupe) => groupe.length > 0)
-                  .flatMap((groupe, index) => [
-                    ...(index > 0 || account.caption
-                      ? [<Divider key={`trait-${index}`} />]
-                      : []),
-                    ...groupe.map((item) =>
-                      item.href ? (
-                        <MenuItem
-                          key={item.key}
-                          component="a"
-                          href={item.href}
-                          onClick={closeMenu}
-                          selected={item.current}
-                        >
-                          {item.label}
-                        </MenuItem>
-                      ) : (
-                        <MenuItem
-                          key={item.key}
-                          component={RouterLink}
-                          to={item.to}
-                          onClick={closeMenu}
-                          selected={item.current}
-                          aria-current={item.current ? "page" : undefined}
-                        >
-                          {item.label}
-                        </MenuItem>
-                      ),
-                    ),
-                  ])}
-                {connected && [
-                  <Divider key="trait-session" />,
-                  <MenuItem
-                    key="session"
-                    onClick={() => {
-                      closeMenu();
-                      onSignOut();
+              {account && (
+                <>
+                  <IconButton
+                    aria-label={account.label}
+                    aria-haspopup="menu"
+                    aria-expanded={openMenuKey === COMPTE}
+                    onClick={(event) => {
+                      setAnchor(event.currentTarget);
+                      setOpenMenuKey(COMPTE);
                     }}
+                    sx={{ p: 0.5 }}
                   >
-                    {signOutLabel}
-                  </MenuItem>,
-                ]}
-              </Menu>
+                    {connected && username ? (
+                      <Avatar name={username} src={account.avatarUrl} />
+                    ) : (
+                      <AccountCircleIcon fontSize="large" />
+                    )}
+                  </IconButton>
+                  <Menu
+                    anchorEl={anchor}
+                    open={openMenuKey === COMPTE}
+                    onClose={closeMenu}
+                    anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                    transformOrigin={{ vertical: "top", horizontal: "right" }}
+                    slotProps={{ list: { "aria-label": account.label } }}
+                  >
+                    {account.caption && (
+                      <Typography
+                        variant="caption"
+                        color="text.secondary"
+                        component="div"
+                        sx={{ px: 2, py: 1 }}
+                      >
+                        {account.caption}
+                      </Typography>
+                    )}
+                    {account.groups
+                      .filter((groupe) => groupe.length > 0)
+                      .flatMap((groupe, index) => [
+                        ...(index > 0 || account.caption
+                          ? [<Divider key={`trait-${index}`} />]
+                          : []),
+                        ...groupe.map((item) =>
+                          item.href ? (
+                            <MenuItem
+                              key={item.key}
+                              component="a"
+                              href={item.href}
+                              onClick={closeMenu}
+                              selected={item.current}
+                            >
+                              {item.label}
+                            </MenuItem>
+                          ) : (
+                            <MenuItem
+                              key={item.key}
+                              component={RouterLink}
+                              to={item.to}
+                              onClick={closeMenu}
+                              selected={item.current}
+                              aria-current={item.current ? "page" : undefined}
+                            >
+                              {item.label}
+                            </MenuItem>
+                          ),
+                        ),
+                      ])}
+                    {connected && [
+                      <Divider key="trait-session" />,
+                      <MenuItem
+                        key="session"
+                        onClick={() => {
+                          closeMenu();
+                          onSignOut();
+                        }}
+                      >
+                        {signOutLabel}
+                      </MenuItem>,
+                    ]}
+                  </Menu>
+                </>
+              )}
             </MuiStack>
           </Toolbar>
         </Container>

@@ -32,6 +32,10 @@
   "privacy": "No email address is published on this site: this form exists in its place.",
   "feedback": {
     "title": "Feedback",
-    "intro": "A question, an offer, a bug you hit on Schub: your message reaches me directly on Discord."
+    "intro": "A question, an offer, a bug you hit on {{product}}: your message reaches me directly on Discord."
+  },
+  "feedbackMeta": {
+    "title": "Contact — {{product}}",
+    "description": "A question, a suggestion, a bug: write to the maker of {{product}}."
   }
 }

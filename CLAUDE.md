@@ -110,6 +110,11 @@ dans ce dépôt, sur une base commune. **ESLint tient les pactes** (`pacte(...)`
   `useIdentity()` ou `useChartScheme()`, jamais par un import direct de `chartColors`.
 - Les anciennes URL `/lol/…` de Schub redirigent vers la même page de PremadeLab.
 - Les traductions restent dans `src/common/locales/` (typées depuis `i18n/resources.ts`).
+- **Schub peut renvoyer vers PremadeLab, PremadeLab ne cite jamais Schub.** Un texte commun écrit
+  `{{product}}` (variable posée par `ProductProvider`) ; un paragraphe propre à un produit a sa
+  variante `<clé>_PremadeLab`, appelée avec `{ context: product }`. `scripts/premadelab-sans-schub.mjs`
+  le vérifie à chaque `build` et `lint` : une section affichée par PremadeLab s'ajoute à sa liste.
+  PremadeLab a son propre `/contact` (`FeedbackForm`, commun).
 
 ## La coquille
 

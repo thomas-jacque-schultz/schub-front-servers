@@ -3,17 +3,14 @@ import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import {
   Alert,
-  APP_URLS,
   AppShell,
   pathWithoutLanguage,
   Stack,
   useAuthStore,
-  useCurrentLanguage,
   useLocalizedNavigate,
   useLocalizedPath,
   useProfileStore,
   type AppShellAccount,
-  type AppShellAccountItem,
   type AppShellFooterLink,
 } from "../../common";
 import { usePremadeLabShell } from "../shell";
@@ -32,25 +29,12 @@ export function PremadeLabLayout({ children }: { children: ReactNode }) {
   const { profile: moi } = useProfileStore();
   const localize = useLocalizedPath();
   const navigate = useLocalizedNavigate();
-  const language = useCurrentLanguage();
   const { pathname } = useLocation();
 
   const route = pathWithoutLanguage(pathname);
   const shell = usePremadeLabShell(route);
   const surProfil = route === "/profile";
-  const schub = (path: string) =>
-    `${APP_URLS.schub}${language === "en" ? "/en" : ""}${path === "/" ? "" : path}`;
-
-  const applications: AppShellAccountItem[] = [
-    {
-      key: "premadelab",
-      label: t("shell.appPremadelab"),
-      to: localize("/"),
-      current: true,
-    },
-    { key: "schub", label: t("shell.appSchub"), to: "/", href: schub("/") },
-  ];
-  const account: AppShellAccount = connected
+  const account: AppShellAccount | undefined = connected
     ? {
         label: t("shell.account"),
         caption: profile
@@ -66,16 +50,15 @@ export function PremadeLabLayout({ children }: { children: ReactNode }) {
               current: surProfil,
             },
           ],
-          applications,
         ],
       }
-    : { label: t("shell.apps"), groups: [applications] };
+    : undefined;
 
   const footerLinks: AppShellFooterLink[] = [
     {
       key: "feedback",
       label: t("shell.feedback"),
-      href: schub("/contact#feedback"),
+      to: localize("/contact"),
       accent: true,
     },
     { key: "terms", label: t("shell.terms"), to: localize("/terms") },

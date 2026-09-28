@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
-import { Divider, Stack, useDocumentMeta } from "../../common";
-import { FeedbackForm } from "./contact/FeedbackForm";
+import { Divider, FeedbackForm, Stack, useDocumentMeta } from "../../common";
 import { PortfolioSections } from "./contact/PortfolioSections";
 
 function ContactPage() {

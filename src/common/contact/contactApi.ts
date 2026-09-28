@@ -1,4 +1,4 @@
-import { requestJson } from "../../common";
+import { requestJson } from "../api/httpClient";
 
 export interface ContactMessage {
   name: string;
