@@ -350,6 +350,7 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
           <RiotAccountPicker
             resetKey={isAdding}
             busy={isSaving}
+            actionLabel={t("roster.add.pick")}
             onPick={setChosen}
           />
         )}

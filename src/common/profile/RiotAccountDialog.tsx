@@ -106,6 +106,7 @@ export function RiotAccountDialog({
           <RiotAccountPicker
             resetKey={open}
             busy={isSaving}
+            actionLabel={t("riot.linkAction")}
             onPick={(account) => void lier(account.riotId, false)}
           />
         )}

@@ -3,6 +3,7 @@ import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import MuiStack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import { Icon } from "./Icon";
 
 export interface ChoiceListOption {
   id: string;
@@ -33,14 +34,26 @@ export function ChoiceList({
   }
 
   return (
-    <List aria-label={label} dense disablePadding sx={{ width: "100%" }}>
+    <List
+      aria-label={label}
+      dense
+      disablePadding
+      sx={{ width: "100%", display: "grid", gap: 1 }}
+    >
       {options.map((option) => (
         <ListItemButton
           key={option.id}
           selected={option.id === selectedId}
           disabled={disabled}
           onClick={() => onSelect(option.id)}
-          sx={{ borderRadius: 1, alignItems: "flex-start", gap: 1 }}
+          sx={{
+            borderRadius: 1,
+            border: "1px solid",
+            borderColor: "divider",
+            alignItems: "center",
+            gap: 1,
+            "&:hover": { borderColor: "primary.main" },
+          }}
         >
           <MuiStack spacing={0.25} sx={{ flexGrow: 1, minWidth: 0 }}>
             <Typography variant="body2" sx={{ fontWeight: 600 }}>
@@ -67,6 +80,7 @@ export function ChoiceList({
               {option.meta}
             </MuiStack>
           )}
+          <Icon name="chevron" size="small" />
         </ListItemButton>
       ))}
     </List>

@@ -60,6 +60,7 @@
       "readyAt": "Prêt vers {{date}}",
       "readyUnknown": "Échéance inconnue pour le moment",
       "unavailable": "L'avancement de la collecte est indisponible : le connecteur Riot ne répond pas. Ce n'est pas une perte de données, seulement une information manquante."
-    }
+    },
+    "linkAction": "Lier ce compte"
   }
 }

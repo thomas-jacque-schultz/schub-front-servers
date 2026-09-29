@@ -5,6 +5,7 @@ export interface TextFieldProps {
   label: string;
   value: string;
   onChange?: (value: string) => void;
+  onEnter?: () => void;
   name?: string;
   type?: "text" | "password" | "number" | "url";
   placeholder?: string;
@@ -25,6 +26,7 @@ export function TextField({
   label,
   value,
   onChange,
+  onEnter,
   name,
   type = "text",
   placeholder,
@@ -46,6 +48,12 @@ export function TextField({
       name={name}
       value={value}
       onChange={(event) => onChange?.(event.target.value)}
+      onKeyDown={(event) => {
+        if (onEnter && event.key === "Enter" && !multiline) {
+          event.preventDefault();
+          onEnter();
+        }
+      }}
       type={type}
       placeholder={placeholder}
       helperText={helperText}

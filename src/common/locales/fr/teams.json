@@ -85,7 +85,8 @@
       "confirm": "Ajouter",
       "failed": "L'ajout a échoué",
       "chosen": "Compte choisi : {{riotId}}",
-      "changeAccount": "Choisir un autre compte"
+      "changeAccount": "Choisir un autre compte",
+      "pick": "Choisir ce joueur"
     },
     "edit": {
       "action": "Modifier",

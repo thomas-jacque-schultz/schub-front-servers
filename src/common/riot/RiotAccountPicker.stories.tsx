@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect, fn, userEvent, within } from "@storybook/test";
+import { expect, fn, userEvent, waitFor, within } from "@storybook/test";
 import { enAttente, fauxServeur, json } from "../../../.storybook/fauxServeur";
 import type { KnownRiotAccountDto } from "../types/profile";
 import { RiotAccountPicker } from "./RiotAccountPicker";
@@ -54,16 +54,14 @@ const RECHERCHE_FINIE_MS = 800;
 const demanderARiot = async (canvasElement: HTMLElement) => {
   const canvas = await saisir(canvasElement, "Nova#EUW");
   await new Promise((fin) => setTimeout(fin, RECHERCHE_FINIE_MS));
-  await userEvent.click(
-    canvas.getByRole("button", { name: /Demander à Riot|Ask Riot/ }),
-  );
+  await userEvent.click(canvas.getByRole("button", { name: "Lier ce compte" }));
   return canvas;
 };
 
 const meta = {
   title: "PremadeLab/Sélecteur de compte Riot",
   component: RiotAccountPicker,
-  args: { onPick: fn() },
+  args: { onPick: fn(), actionLabel: "Lier ce compte" },
   decorators: [suggestions(() => json([]))],
 } satisfies Meta<typeof RiotAccountPicker>;
 
@@ -95,9 +93,17 @@ export const Verification: Story = {
 
 export const Verifie: Story = {
   decorators: [suggestions((q) => json(q.includes("#") ? VERIFIE : []))],
-  play: async ({ canvasElement }) => {
-    const canvas = await demanderARiot(canvasElement);
-    await expect(await canvas.findByText("Nova#EUW")).toBeInTheDocument();
+  play: async ({ args, canvasElement }) => {
+    await demanderARiot(canvasElement);
+    await waitFor(() => expect(args.onPick).toHaveBeenCalledWith(VERIFIE[0]));
+  },
+};
+
+export const ValideParEntree: Story = {
+  decorators: [suggestions((q) => json(q.includes("#") ? VERIFIE : []))],
+  play: async ({ args, canvasElement }) => {
+    await saisir(canvasElement, "nova#euw{enter}");
+    await waitFor(() => expect(args.onPick).toHaveBeenCalledWith(VERIFIE[0]));
   },
 };
 

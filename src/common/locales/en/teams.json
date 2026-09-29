@@ -85,7 +85,8 @@
       "confirm": "Add",
       "failed": "Adding failed",
       "chosen": "Account chosen: {{riotId}}",
-      "changeAccount": "Pick another account"
+      "changeAccount": "Pick another account",
+      "pick": "Pick this player"
     },
     "edit": {
       "action": "Edit",
