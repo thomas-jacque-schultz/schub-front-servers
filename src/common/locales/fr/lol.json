@@ -175,7 +175,7 @@
       "thin_other": "{{range}} : {{count}} parties, trop peu pour conclure",
       "center": "Tu gagnes {{best}} de {{bestRange}}, {{worst}} de {{worstRange}}",
       "empty": "Aucune partie sur la période.",
-      "timezone": "Heures de ton fuseau ({{zone}}). L'épaisseur d'un secteur dit combien de parties y ont été jouées ; sa couleur, s'il gagne plus (vert) ou moins (rouge) que ta moyenne. Gris : moins de 3 parties."
+      "timezone": "Heures de ton fuseau ({{zone}}). L'épaisseur d'un secteur dit combien de parties y ont été jouées ; sa couleur, s'il gagne plus (vert) ou moins (rouge) que ta moyenne. Gris clair : dans ta moyenne ; gris foncé : moins de 3 parties."
     }
   }
 }

@@ -28,6 +28,8 @@ const CENTRE = COTE / 2;
 const INTERIEUR = 46;
 const EPAISSEUR_MAX = 52;
 const EPAISSEUR_MIN = 6;
+// Place des heures écrites autour du cadran.
+const MARGE = 22;
 
 const angleDe = (heure: number) => (heure / 24) * 2 * Math.PI;
 
@@ -76,10 +78,10 @@ export function ClockChart({
       </Typography>
       <Box
         component="svg"
-        viewBox={`0 0 ${COTE} ${COTE}`}
+        viewBox={`${-MARGE} ${-MARGE} ${COTE + 2 * MARGE} ${COTE + 2 * MARGE}`}
         sx={{
           width: "100%",
-          maxWidth: COTE,
+          maxWidth: COTE + 2 * MARGE,
           display: "block",
           mx: "auto",
           mt: 0.5,
@@ -113,7 +115,7 @@ export function ClockChart({
           );
         })}
         {[0, 6, 12, 18].map((heure) => {
-          const [x, y] = point(angleDe(heure), INTERIEUR + EPAISSEUR_MAX + 10);
+          const [x, y] = point(angleDe(heure), INTERIEUR + EPAISSEUR_MAX + 14);
           return (
             <text
               key={heure}

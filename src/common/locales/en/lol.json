@@ -175,7 +175,7 @@
       "thin_other": "{{range}}: {{count}} games, too few to conclude",
       "center": "You win {{best}} from {{bestRange}}, {{worst}} from {{worstRange}}",
       "empty": "No game in the period.",
-      "timezone": "Times in your time zone ({{zone}}). A sector's thickness shows how many games were played then; its colour, whether you win more (green) or less (red) than your average. Grey: fewer than 3 games."
+      "timezone": "Times in your time zone ({{zone}}). A sector's thickness shows how many games were played then; its colour, whether you win more (green) or less (red) than your average. Light grey: around your average; dark grey: fewer than 3 games."
     }
   }
 }
