@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react";
-import { identities, type Identity } from "./tokens";
+import { identity, type Identity } from "./tokens";
 
-export const IdentityContext = createContext<Identity>(identities.schub);
+export const IdentityContext = createContext<Identity>(identity);
 
-/** Les couleurs de l'application en cours : Schub par défaut, PremadeLab sous son propre thème. */
+/** Les couleurs de l'application. */
 export const useIdentity = (): Identity => useContext(IdentityContext);

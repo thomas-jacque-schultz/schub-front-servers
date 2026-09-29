@@ -105,9 +105,10 @@ dans ce dépôt, sur une base commune. **ESLint tient les pactes** (`pacte(...)`
 - **Mon profil, la connexion et les pages légales sont communs** (`ProfilePage`, `LoginPage`,
   `TermsPage`, `PrivacyPage` exportés paresseusement par `common`) : chaque application les monte
   dans ses routes. Le composant de choix d'un compte Riot est commun pour la même raison.
-- **Une identité par application** : `AppThemeProvider brand="premadelab"` change les couleurs
-  (`identities` dans `tokens.ts`), rien d'autre. Un composant qui lit une couleur de marque passe par
-  `useIdentity()` ou `useChartScheme()`, jamais par un import direct de `chartColors`.
+- **Une seule identité pour les deux applications** (prune, or et noir, `identity` dans `tokens.ts`,
+  Schub#60) : seuls le nom, le logo et le titre de l'onglet les distinguent. Un composant qui lit une
+  couleur de marque passe par `useIdentity()` ou `useChartScheme()`, jamais par un import direct de
+  `chartColors`.
 - Les anciennes URL `/lol/…` de Schub redirigent vers la même page de PremadeLab.
 - Les traductions restent dans `src/common/locales/` (typées depuis `i18n/resources.ts`).
 - **Schub peut renvoyer vers PremadeLab, PremadeLab ne cite jamais Schub.** Un texte commun écrit

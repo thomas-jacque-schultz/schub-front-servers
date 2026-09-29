@@ -4,7 +4,7 @@ import "@fontsource-variable/jetbrains-mono";
 
 import { createTheme } from "@mui/material/styles";
 import {
-  identities,
+  identity,
   radii,
   spacingUnit,
   typographyTokens,
@@ -142,7 +142,7 @@ export const createAppTheme = (identity: Identity) => {
   });
 };
 
-export const appTheme = createAppTheme(identities.schub);
+export const appTheme = createAppTheme(identity);
 
 export const backdropSxOf = ({ backdrops }: Identity) =>
   ({
@@ -160,7 +160,7 @@ export const backdropSxOf = ({ backdrops }: Identity) =>
     },
   }) as const;
 
-export const backdropSx = backdropSxOf(identities.schub);
+export const backdropSx = backdropSxOf(identity);
 
 const trame = (couleur: string, pas: number) =>
   `repeating-linear-gradient(0deg, ${couleur} 0 1px, transparent 1px ${pas}px), ` +
@@ -181,7 +181,7 @@ export const gridOverlaySxOf = ({ textures }: Identity) =>
     },
   }) as const;
 
-export const gridOverlaySx = gridOverlaySxOf(identities.schub);
+export const gridOverlaySx = gridOverlaySxOf(identity);
 
 export const THEME_MODE_STORAGE_KEY = "color-mode";
 const ANCIENNE_CLE = "schub-color-mode";

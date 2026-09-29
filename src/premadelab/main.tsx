@@ -11,7 +11,7 @@ import App from "./App";
 
 createRoot(document.getElementById("root") as HTMLElement).render(
   <StrictMode>
-    <AppThemeProvider brand="premadelab">
+    <AppThemeProvider>
       <ProductProvider name="PremadeLab">
         <BrowserRouter>
           <AuthStoreProvider>
