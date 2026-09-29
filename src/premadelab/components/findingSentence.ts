@@ -32,18 +32,28 @@ export const useFindingSentence = () => {
         const preuve = finding.evidence.find(
           (condition) => condition.signal === signal,
         );
-        if (!preuve || preuve.observed === null) {
+        if (!preuve) {
+          return format.absent;
+        }
+        const enCentile = preuve.unit === "PERCENTILE";
+        if (champ === "percentile") {
+          return enCentile && preuve.observed !== null
+            ? format.entier(preuve.observed)
+            : format.absent;
+        }
+        const mesure =
+          champ === "points" || !enCentile
+            ? (preuve.value ?? preuve.observed)
+            : preuve.value;
+        if (mesure === null || mesure === undefined) {
           return format.absent;
         }
         if (champ === "points") {
-          return format.entier(Math.abs(preuve.observed) * 100);
+          return format.entier(Math.abs(mesure) * 100);
         }
-        if (champ === "percentile" || preuve.unit === "PERCENTILE") {
-          return format.entier(preuve.observed);
-        }
-        return Math.abs(preuve.observed) >= 100
-          ? format.entier(preuve.observed)
-          : format.ratio(preuve.observed);
+        return Math.abs(mesure) >= 100
+          ? format.entier(mesure)
+          : format.ratio(mesure);
       },
     );
   };

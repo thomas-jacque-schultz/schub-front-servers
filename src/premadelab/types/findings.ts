@@ -10,6 +10,8 @@ export interface ConditionTraceDto {
   from: number;
   to: number;
   observed: number | null;
+  // La mesure brute du signal ; `observed` est le centile quand la condition est en centile.
+  value?: number | null;
   degree: number | null;
 }
 
