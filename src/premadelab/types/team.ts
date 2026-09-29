@@ -8,7 +8,8 @@ export type MemberStatus = (typeof MEMBER_STATUSES)[number];
 
 interface ViewerFacts {
   viewerMemberId: string | null;
-  viewerCanEdit: boolean;
+  viewerCanManage: boolean;
+  viewerCanEditRoster: boolean;
   viewerCanEditCompositions: boolean;
 }
 

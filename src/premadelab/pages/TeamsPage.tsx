@@ -109,14 +109,14 @@ function TeamsPage() {
         <Stack spacing={0.5}>
           <Text>{team.name}</Text>
           <Stack direction="row" spacing={1} wrap>
-            {team.viewerCanEdit && (
+            {team.viewerCanManage && (
               <Chip
                 label={t("list.canEdit")}
                 tone="primary"
                 variant="outline"
               />
             )}
-            {!team.viewerCanEdit && team.viewerMemberId && (
+            {!team.viewerCanManage && team.viewerMemberId && (
               <Chip label={t("list.isMember")} variant="outline" />
             )}
           </Stack>

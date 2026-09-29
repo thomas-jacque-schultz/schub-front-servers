@@ -43,7 +43,8 @@
     "INGEST_MANAGE": "Piloter la collecte Riot",
     "TEAM_CREATE": "Créer une équipe",
     "TEAM_VIEW": "Voir une équipe",
-    "TEAM_EDIT": "Modifier une équipe et son effectif",
+    "TEAM_MANAGE": "Renommer et supprimer une équipe",
+    "ROSTER_EDIT": "Gérer l'effectif d'une équipe",
     "COMPOSITION_EDIT": "Modifier les compositions d'une équipe",
     "ROLE_MANAGE": "Administrer les rôles",
     "AUGUR_PATTERN_EDIT": "Éditer les règles du moteur de constats (PremadeLab)"

@@ -46,8 +46,7 @@
       "failed": "La suppression a échoué"
     },
     "back": "Retour à mes équipes",
-    "loadFailed": "Impossible de charger cette équipe",
-    "readOnly": "Vous êtes membre de cette équipe : vous voyez tout, et le capitaine seul écrit."
+    "loadFailed": "Impossible de charger cette équipe"
   },
   "tabs": {
     "roster": "Effectif",
