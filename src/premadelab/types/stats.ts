@@ -413,6 +413,7 @@ export interface MyStatsDto {
   positions: StatLineDto[];
   queues: StatLineDto[];
   months: StatLineDto[];
+  patches: StatLineDto[];
   rankings: RankedStandingDto[];
   references: RadarReferencesDto | null;
   generatedAt: string;

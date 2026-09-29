@@ -1,9 +1,9 @@
 import { useTranslation } from "react-i18next";
-import { Avatar, Chip, Divider, MeterBar, Stack, Text } from "../../../common";
+import { Avatar, Chip, Divider, Stack, Text } from "../../../common";
 import type { PlayerStatsDto } from "../../types/stats";
 import { ChampionChoice } from "./ChampionChoice";
 import { CHAMPIONS_EN_COLONNE } from "./champions";
-import { useStatsFormat } from "./statsFormat";
+import { QueuePie } from "./QueuePie";
 
 export function PlayerHeader({
   player,
@@ -68,23 +68,8 @@ export function ChampionsHeader({
 
 export function Files({ player }: { player: PlayerStatsDto }) {
   const { t } = useTranslation("stats");
-  const format = useStatsFormat();
   if (player.queues.length === 0) {
     return null;
   }
-  return (
-    <Stack spacing={0.5}>
-      <Text variant="caption" tone="secondary">
-        {t("section.queues")}
-      </Text>
-      {player.queues.map((queue) => (
-        <MeterBar
-          key={queue.key}
-          label={format.file(queue.key)}
-          value={queue.winRate}
-          valueLabel={`${format.taux(queue.winRate)} · ${t("coverage.gamesShort", { count: queue.games })}`}
-        />
-      ))}
-    </Stack>
-  );
+  return <QueuePie queues={player.queues} label={t("section.queues")} />;
 }

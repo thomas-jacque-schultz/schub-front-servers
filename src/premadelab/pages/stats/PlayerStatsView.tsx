@@ -18,6 +18,7 @@ import { ChampionStatCard } from "./ChampionStatCard";
 import { GameAnalysis } from "./GameAnalysis";
 import { useMetrics } from "./metrics";
 import { PlayerRadar } from "./PlayerRadar";
+import { QueuePie } from "./QueuePie";
 import { RankedStandings } from "./RankedStandings";
 import { StatsStateNote } from "./StatsStateNote";
 import { useStatsFormat } from "./statsFormat";
@@ -26,6 +27,8 @@ import type { MetricKey } from "./metrics";
 import { useGradeAdornment } from "./useGrades";
 
 const CHAMPIONS_PLEINE_LARGEUR = 8;
+// En deçà, un patch se lit comme du bruit, pas comme une tendance.
+const PARTIES_PAR_PATCH = 3;
 
 /** Ce que Mes stats et un joueur d'équipe ont en commun. */
 export type PlayerStatsData = Pick<
@@ -37,6 +40,7 @@ export type PlayerStatsData = Pick<
   | "positions"
   | "queues"
   | "months"
+  | "patches"
   | "rankings"
   | "references"
 >;
@@ -48,7 +52,7 @@ export interface PlayerStatsViewProps {
 export function PlayerStatsView({ data }: PlayerStatsViewProps) {
   const { t } = useTranslation("stats");
   const format = useStatsFormat();
-  const { formatMonth } = useLocaleFormat();
+  const { formatDate } = useLocaleFormat();
   const { tuiles } = useMetrics();
   const [choisis, setChoisis] = useState<string[]>([]);
   const adornment = useGradeAdornment(data.references, data.positions);
@@ -164,52 +168,46 @@ export function PlayerStatsView({ data }: PlayerStatsViewProps) {
         )}
       </Card>
 
-      <Card title={t("section.trend")} description={t("section.trendHelper")}>
-        <TrendChart
-          label={t("metric.winRate")}
-          valueHeader={t("metric.winRate")}
-          emptyLabel={t("section.noMonth")}
-          scaleMax={1}
-          reference={overall.winRate}
-          referenceLabel={t("section.trendReference", {
-            value: format.taux(overall.winRate),
-          })}
-          points={data.months.map((month) => ({
-            key: month.key,
-            label: etiquetteDuMois(month.key, formatMonth),
-            value: month.winRate,
-            title: t("section.trendPoint", {
-              month: month.key,
-              rate: format.taux(month.winRate),
-              count: month.games,
-            }),
-          }))}
-        />
-      </Card>
-
-      <Card title={t("section.queues")} description={t("section.queuesHelper")}>
-        <Stack spacing={0.75}>
-          {data.queues.map((queue) => (
-            <MeterBar
-              key={queue.key}
-              label={format.file(queue.key)}
-              value={queue.winRate}
-              valueLabel={detail(queue, format)}
-            />
-          ))}
-        </Stack>
-      </Card>
+      <Columns minWidth={440} count={2}>
+        <Card title={t("section.trend")} description={t("section.trendHelper")}>
+          <TrendChart
+            label={t("metric.winRate")}
+            valueHeader={t("metric.winRate")}
+            emptyLabel={t("section.noPatch")}
+            scaleMax={1}
+            reference={overall.winRate}
+            referenceLabel={t("section.trendReference", {
+              value: format.taux(overall.winRate),
+            })}
+            points={data.patches.map((patch) => ({
+              key: patch.key,
+              label: patch.key,
+              value: patch.winRate,
+              muted: patch.games < PARTIES_PAR_PATCH,
+              title: t("section.trendPoint", {
+                patch: patch.key,
+                from: patch.firstPlayedAt
+                  ? formatDate(new Date(patch.firstPlayedAt))
+                  : format.absent,
+                to: patch.lastPlayedAt
+                  ? formatDate(new Date(patch.lastPlayedAt))
+                  : format.absent,
+                rate: format.taux(patch.winRate),
+                count: patch.games,
+              }),
+            }))}
+          />
+        </Card>
+        <Card
+          title={t("section.queues")}
+          description={t("section.queuesHelper")}
+        >
+          <QueuePie queues={data.queues} label={t("queuePie.label")} />
+        </Card>
+      </Columns>
     </Stack>
   );
 }
 
 const detail = (line: StatLineDto, format: ReturnType<typeof useStatsFormat>) =>
   `${format.taux(line.winRate)} · ${line.games}`;
-
-const etiquetteDuMois = (key: string, formatMonth: (value: Date) => string) => {
-  const [annee, mois] = key.split("-").map(Number);
-  if (!annee || !mois) {
-    return key;
-  }
-  return formatMonth(new Date(Date.UTC(annee, mois - 1, 1)));
-};

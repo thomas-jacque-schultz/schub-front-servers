@@ -206,6 +206,8 @@ export const chartColors: Record<
     grid: string;
     positive: string;
     negative: string;
+    // Parts d'un tout, dans cet ordre (validées : bande de luminosité, daltonisme, contraste).
+    categories: string[];
   }
 > = {
   dark: {
@@ -217,6 +219,7 @@ export const chartColors: Record<
     grid: darkPalette.outline,
     positive: darkPalette.success.main,
     negative: darkPalette.error.main,
+    categories: ["#B38C1C", "#C07AA6", "#3987E5", "#199E70", "#D95926"],
   },
   light: {
     mark: brand.goldDeep,
@@ -227,6 +230,7 @@ export const chartColors: Record<
     grid: lightPalette.outline,
     positive: lightPalette.success.main,
     negative: lightPalette.error.main,
+    categories: ["#9A7512", "#A4477E", "#2A78D6", "#199E70", "#EB6834"],
   },
 };
 

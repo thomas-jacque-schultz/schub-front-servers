@@ -150,6 +150,8 @@ export type {
 } from "./components/ComparisonTile";
 export { FaceOffTable } from "./components/FaceOffTable";
 export type { FaceOffRow, FaceOffTableProps } from "./components/FaceOffTable";
+export { PieChart } from "./components/PieChart";
+export type { PieChartProps, PieSlice } from "./components/PieChart";
 export { QuadStatTile } from "./components/QuadStatTile";
 export type { QuadCorner, QuadStatTileProps } from "./components/QuadStatTile";
 export { StatTile } from "./components/StatTile";

@@ -98,10 +98,10 @@
     "rankings": "Rankings",
     "rankingDetail": "{{wins}} wins, {{losses}} losses",
     "trend": "Trend",
-    "trendHelper": "Your win rate month by month, against your own average.",
+    "trendHelper": "Your win rate patch by patch, against your own average. A patch with fewer than 3 games is greyed out: too few games to read a trend.",
     "trendReference": "Line: your average over the period ({{value}})",
-    "trendPoint": "{{month}} · {{rate}} over {{count}} game(s)",
-    "noMonth": "Not enough history yet to draw a trend."
+    "trendPoint": "Patch {{patch}}, {{from}} to {{to}} · {{rate}} over {{count}} game(s)",
+    "noPatch": "Not enough history yet to draw a trend."
   },
   "team": {
     "definition": "A team game: at least {{count}} of the {{roster}} players on the roster, across all queues.",
@@ -572,5 +572,14 @@
       "note": "Centre: the lowest member, edge: the highest, in premade. Dotted: the members' average.",
       "fewMembers": "At least two members with team games are needed."
     }
+  },
+  "queuePie": {
+    "label": "Games split",
+    "detail_one": "{{rate}} win rate · {{count}} game",
+    "detail_other": "{{rate}} win rate · {{count}} games",
+    "other": "Other modes",
+    "otherDetail_one": "{{count}} game",
+    "otherDetail_other": "{{count}} games",
+    "empty": "No game in the period."
   }
 }
