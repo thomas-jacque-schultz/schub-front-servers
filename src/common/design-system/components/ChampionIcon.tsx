@@ -5,6 +5,8 @@ import { radii } from "../tokens";
 export interface ChampionIconProps {
   src?: string | null;
   name: string;
+  /** Infobulle ; le nom du champion par défaut. */
+  tooltip?: string;
   size?: "small" | "medium" | "large";
   dimmed?: boolean;
   selected?: boolean;
@@ -19,6 +21,7 @@ const TAILLES: Record<NonNullable<ChampionIconProps["size"]>, number> = {
 export function ChampionIcon({
   src,
   name,
+  tooltip,
   size = "medium",
   dimmed = false,
   selected = false,
@@ -45,7 +48,7 @@ export function ChampionIcon({
   };
 
   return (
-    <Tooltip title={name}>
+    <Tooltip title={tooltip ?? name}>
       {src ? (
         <Box component="img" src={src} alt={name} loading="lazy" sx={cadre} />
       ) : (

@@ -135,6 +135,7 @@ const joueur = (
 ): TeamGamePlayerDto => ({
   memberId: null,
   displayName: null,
+  riotId: `Joueur${championName}#EUW`,
   championId: championName.length * 7,
   championName,
   iconUrl: null,

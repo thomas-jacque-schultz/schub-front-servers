@@ -157,6 +157,7 @@ function TousLesJoueurs({ detail, avatars, onPick }: JoueursProps) {
               key={`${joueur.side}-${joueur.championId}`}
               championName={joueur.championName ?? String(joueur.championId)}
               championIcon={joueur.iconUrl}
+              riotId={joueur.riotId}
               playerName={joueur.displayName}
               playerAvatar={joueur.memberId ? avatars[joueur.memberId] : null}
               caption={`${joueur.kills}/${joueur.deaths}/${joueur.assists}`}
@@ -195,6 +196,7 @@ function FaceAFace({ detail, avatars, onPick }: JoueursProps) {
         <ChampionSlot
           championName={joueur.championName ?? String(joueur.championId)}
           championIcon={joueur.iconUrl}
+          riotId={joueur.riotId}
           playerName={
             allie ? (joueur.displayName ?? t("games.outsider")) : null
           }
