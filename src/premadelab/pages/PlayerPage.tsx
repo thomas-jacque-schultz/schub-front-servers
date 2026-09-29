@@ -264,6 +264,7 @@ function PlayerPage() {
             }
             loadFindings={(matchId) => getPlayerGameFindingsApi(slug, matchId)}
             avatar={null}
+            detailTitle={ts("detail.playerStats", { player: page.gameName })}
           />
         )}
         {onglet === "overview" &&

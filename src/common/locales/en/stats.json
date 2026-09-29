@@ -317,7 +317,9 @@
       "lost": "Lane lost"
     },
     "playerHint": "Click a player: their numbers in this game, their average and the rank they match.",
-    "openPlayer": "Open {{player}}'s numbers for this game"
+    "openPlayer": "Open {{player}}'s numbers for this game",
+    "myStats": "My detailed stats",
+    "playerStats": "{{player}}'s detailed stats"
   },
   "opposition": {
     "tab": "Strategy",

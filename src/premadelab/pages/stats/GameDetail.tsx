@@ -5,6 +5,7 @@ import {
   ChampionSlot,
   Chip,
   DataTable,
+  Disclosure,
   Divider,
   ProgressBar,
   Stack,
@@ -22,7 +23,7 @@ import type {
 import { FindingList } from "../../components/Findings";
 import type { FindingDto } from "../../types/findings";
 import { EarlyGameView } from "./EarlyGameView";
-import { PlayerGameDialog } from "./PlayerGameDialog";
+import { PlayerGameDialog, PlayerGameStats } from "./PlayerGameDialog";
 import { useRankGap, useRankLabel } from "./rank";
 import { useStatsFormat } from "./statsFormat";
 
@@ -35,6 +36,8 @@ export interface GameDetailProps {
   footer?: ReactNode;
   /** Les constats du moteur sur cette partie, en tête du détail. */
   loadFindings?: () => Promise<FindingDto[]>;
+  /** Historique d'un joueur : ses stats détaillées dans un accordéon, et plus de clic sur les icônes. */
+  subjectTitle?: string;
 }
 
 const QUINZE = 15;
@@ -47,10 +50,14 @@ export function GameDetail({
   avatars,
   footer,
   loadFindings,
+  subjectTitle,
 }: GameDetailProps) {
   const { t } = useTranslation("stats");
   const { data: detail, error, isLoading } = useRequest(requestKey, load);
   const [choisi, setChoisi] = useState<TeamGamePlayerDto | null>(null);
+  const [detailOuvert, setDetailOuvert] = useState(false);
+  const choisir = subjectTitle ? undefined : setChoisi;
+  const sujet = subjectTitle ? (detail?.game.players[0] ?? null) : null;
   const { data: constats } = useRequest(
     loadFindings ? `${requestKey}/findings` : null,
     () => (loadFindings ? loadFindings() : Promise.resolve([])),
@@ -84,17 +91,32 @@ export function GameDetail({
       {isLoading && !detail && <ProgressBar label={t("loading")} />}
       {detail && (
         <>
-          <Text variant="caption" tone="secondary">
-            {t("detail.playerHint")}
-          </Text>
+          {!subjectTitle && (
+            <Text variant="caption" tone="secondary">
+              {t("detail.playerHint")}
+            </Text>
+          )}
           {detail.matchups.length > 0 ? (
-            <FaceAFace detail={detail} avatars={avatars} onPick={setChoisi} />
+            <FaceAFace detail={detail} avatars={avatars} onPick={choisir} />
           ) : (
             <TousLesJoueurs
               detail={detail}
               avatars={avatars}
-              onPick={setChoisi}
+              onPick={choisir}
             />
+          )}
+          {subjectTitle && sujet && (
+            <Disclosure
+              title={subjectTitle}
+              open={detailOuvert}
+              onToggle={setDetailOuvert}
+            >
+              <PlayerGameStats
+                player={sujet}
+                metrics={indicateurs(sujet)}
+                avatar={sujet.memberId ? avatars[sujet.memberId] : null}
+              />
+            </Disclosure>
           )}
         </>
       )}
@@ -135,7 +157,7 @@ export function GameDetail({
 interface JoueursProps {
   detail: TeamGameDetailDto;
   avatars: Record<string, string | null>;
-  onPick: (joueur: TeamGamePlayerDto) => void;
+  onPick?: (joueur: TeamGamePlayerDto) => void;
 }
 
 // ARAM, Arène, ou membres dans les deux camps : pas de face-à-face, mais chaque joueur reste consultable.
@@ -161,7 +183,7 @@ function TousLesJoueurs({ detail, avatars, onPick }: JoueursProps) {
               playerName={joueur.displayName}
               playerAvatar={joueur.memberId ? avatars[joueur.memberId] : null}
               caption={`${joueur.kills}/${joueur.deaths}/${joueur.assists}`}
-              onClick={() => onPick(joueur)}
+              onClick={onPick ? () => onPick(joueur) : undefined}
               ariaLabel={t("detail.openPlayer", {
                 player: joueur.displayName ?? joueur.championName ?? "",
               })}
@@ -204,7 +226,7 @@ function FaceAFace({ detail, avatars, onPick }: JoueursProps) {
             allie && joueur.memberId ? avatars[joueur.memberId] : null
           }
           size="small"
-          onClick={() => onPick(joueur)}
+          onClick={onPick ? () => onPick(joueur) : undefined}
           ariaLabel={t("detail.openPlayer", {
             player: joueur.displayName ?? joueur.championName ?? "",
           })}
