@@ -10,6 +10,9 @@ export interface LaneMapZone {
   label: string;
   value: number;
   valueLabel: string;
+  /** Échelle divergente : au-dessus ou en dessous d'une référence, plus dense à mesure que l'écart grandit (strength, de 0 à 1). Absente : part du total, une seule teinte. */
+  tone?: "positive" | "negative" | "neutral" | "empty";
+  strength?: number;
 }
 
 export interface LaneMapProps {
@@ -81,12 +84,23 @@ export function LaneMap({ label, zones, highlight }: LaneMapProps) {
         />
         {zones.map((zone) => {
           const part = total > 0 ? Math.max(0, zone.value) / total : 0;
+          const force = Math.min(1, Math.max(0, zone.strength ?? 0));
+          const teinte =
+            zone.tone === undefined
+              ? { fill: couleurs.mark, opacity: 0.08 + 0.52 * part }
+              : zone.tone === "positive"
+                ? { fill: couleurs.positive, opacity: 0.18 + 0.5 * force }
+                : zone.tone === "negative"
+                  ? { fill: couleurs.negative, opacity: 0.18 + 0.5 * force }
+                  : zone.tone === "neutral"
+                    ? { fill: couleurs.markMuted, opacity: 0.35 }
+                    : { fill: couleurs.track, opacity: 0 };
           return (
             <polygon
               key={zone.key}
               points={ZONES[zone.key].points}
-              fill={couleurs.mark}
-              fillOpacity={0.08 + 0.52 * part}
+              fill={teinte.fill}
+              fillOpacity={teinte.opacity}
               stroke={
                 zone.key === highlight
                   ? couleurs.mark

@@ -438,7 +438,14 @@
       "side": "Côté fort",
       "games": "Parties",
       "winRate": "Victoires",
-      "onWeakSide": "Ganks adverses côté faible"
+      "onWeakSide": "Ganks adverses côté faible",
+      "sidesTable": "Les chiffres exacts",
+      "sidesMap": "Taux de victoire selon le côté fort de notre jungler (moyenne : {{average}}). Vert : au-dessus de notre moyenne, rouge : en dessous, gris : moins de 3 parties.",
+      "sideZone": {
+        "TOP": "Haut",
+        "BALANCED": "Équilibré",
+        "BOT": "Bas"
+      }
     }
   },
   "family": {
