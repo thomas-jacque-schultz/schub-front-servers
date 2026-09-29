@@ -12,10 +12,11 @@ import type {
   StatLineDto,
 } from "../../types/stats";
 import { type MetricKey, useMetrics } from "./metrics";
-import { type RadarReference, referenceParDefaut } from "./radar";
 import { useStatsFormat } from "./statsFormat";
 import { groupeDePalier, noter } from "./grading";
 import { useReferenceGrid } from "./useReferenceGrid";
+
+type RadarReference = "met" | "league";
 
 const AXES: MetricKey[] = [
   "damagePerMinute",
@@ -29,37 +30,25 @@ const AXES: MetricKey[] = [
 ];
 
 export interface PlayerRadarProps {
-  overall: StatLineDto | null;
   positions: StatLineDto[];
   references: RadarReferencesDto | null;
-  /** Les lignes des joueurs de l'équipe, lui compris : sans elles, pas de référentiel d'équipe. */
-  teamLines?: StatLineDto[];
-  /** Imposé : plusieurs radars côte à côte partagent le référentiel choisi au-dessus d'eux. */
-  reference?: RadarReference;
   label?: string;
 }
 
 export function PlayerRadar({
-  overall,
   positions,
   references,
-  teamLines,
-  reference,
   label,
 }: PlayerRadarProps) {
   const { t } = useTranslation("stats");
   const { definitions } = useMetrics();
   const format = useStatsFormat();
-  const [locale, setLocale] = useState<RadarReference>(
-    referenceParDefaut(teamLines),
-  );
-  const choisie = reference ?? locale;
+  const [choisie, setChoisie] = useState<RadarReference>("met");
   const grille = useReferenceGrid(
     references?.position,
     "MEAN",
     references?.tier,
   );
-  const equipePossible = Boolean(teamLines && teamLines.length >= 2);
 
   const auPoste = references
     ? (positions.find((line) => line.key === references.position) ?? null)
@@ -72,26 +61,6 @@ export function PlayerRadar({
     note?: string;
     vide: string;
   } => {
-    if (choisie === "team") {
-      const bornes: Partial<Record<string, MetricBoundDto>> = {};
-      AXES.forEach((axe) => {
-        const valeurs = (teamLines ?? [])
-          .map((line) => line[axe])
-          .filter((v): v is number => v !== null && v !== undefined);
-        if (valeurs.length >= 2) {
-          bornes[axe] = {
-            low: Math.min(...valeurs),
-            high: Math.max(...valeurs),
-          };
-        }
-      });
-      return {
-        line: overall,
-        bornes,
-        note: t("radar.note.team"),
-        vide: equipePossible ? t("radar.empty.noGames") : t("radar.empty.team"),
-      };
-    }
     if (!references) {
       return { line: null, bornes: {}, vide: t("radar.empty.noGames") };
     }
@@ -147,7 +116,7 @@ export function PlayerRadar({
     };
   })();
 
-  // Palier : le percentile dans sa grille. Adversaires et équipe : une règle entre leurs bornes.
+  // Palier : le percentile dans sa grille. Adversaires : une règle entre leurs bornes.
   const normalise = (key: MetricKey, value: number | null | undefined) => {
     if (choisie === "league") {
       return grille && references
@@ -170,10 +139,7 @@ export function PlayerRadar({
     ? [
         {
           key: choisie,
-          label:
-            choisie === "team"
-              ? t("radar.series.period")
-              : t("radar.series.position", { position: poste }),
+          label: t("radar.series.position", { position: poste }),
           emphasis: "primary",
           values: AXES.map((axe) => normalise(axe, vue.line?.[axe])),
           display: AXES.map((axe) => definitions[axe].format(vue.line?.[axe])),
@@ -183,13 +149,15 @@ export function PlayerRadar({
 
   return (
     <Stack spacing={1}>
-      {!reference && (
-        <RadarReferenceSelector
-          value={choisie}
-          onChange={(valeur) => setLocale(valeur as RadarReference)}
-          teamAvailable={equipePossible}
-        />
-      )}
+      <SegmentedControl
+        label={t("radar.reference.label")}
+        value={choisie}
+        onChange={(valeur) => setChoisie(valeur as RadarReference)}
+        options={[
+          { value: "met", label: t("radar.reference.met") },
+          { value: "league", label: t("radar.reference.league") },
+        ]}
+      />
       <RadarChart
         label={label ?? t("radar.title")}
         axes={AXES.map((axe) => ({ key: axe, label: definitions[axe].short }))}
@@ -198,31 +166,5 @@ export function PlayerRadar({
         scaleNote={series.length > 0 ? vue.note : undefined}
       />
     </Stack>
-  );
-}
-
-export function RadarReferenceSelector({
-  value,
-  onChange,
-  teamAvailable,
-}: {
-  value: RadarReference;
-  onChange: (value: string) => void;
-  teamAvailable: boolean;
-}) {
-  const { t } = useTranslation("stats");
-  return (
-    <SegmentedControl
-      label={t("radar.reference.label")}
-      value={value}
-      onChange={onChange}
-      options={[
-        ...(teamAvailable
-          ? [{ value: "team", label: t("radar.reference.team") }]
-          : []),
-        { value: "met", label: t("radar.reference.met") },
-        { value: "league", label: t("radar.reference.league") },
-      ]}
-    />
   );
 }

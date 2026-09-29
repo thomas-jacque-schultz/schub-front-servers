@@ -4,12 +4,14 @@ import { AlignedColumns } from "../../../common";
 import type { PlayerStatsDto } from "../../types/stats";
 import { championsEnColonne } from "./champions";
 import { playerColumn } from "./playerColumn";
+import { lignesPremade } from "./premade";
 import { ligne, references } from "./storyFixtures";
 
 const joueur = (
   memberId: string,
   nom: string,
   champions: PlayerStatsDto["champions"],
+  premade: PlayerStatsDto["premade"],
 ): PlayerStatsDto => ({
   memberId,
   displayName: nom,
@@ -28,25 +30,48 @@ const joueur = (
   months: [],
   rankings: [],
   references,
-  versusTeammates: null,
+  premade,
 });
 
 // Des noms de longueurs différentes et un joueur à deux champions : c'est ce qui décalait les cartes.
 const JOUEURS = [
-  joueur("a", "Alpha", [
-    ligne("61", "Orianna", 23),
-    ligne("103", "Ahri", 12),
-    ligne("7", "LeBlanc", 5),
-  ]),
-  joueur("b", "Bravo", [
-    ligne("711", "Vex", 18),
-    ligne("163", "Taliyah", 9, { goldDiffAt15: null, laningGames: 0 }),
-  ]),
-  joueur("c", "Charlie", [
-    ligne("136", "Aurelion Sol", 30),
-    ligne("518", "Neeko", 4),
-    ligne("268", "Azir", 3),
-  ]),
+  joueur(
+    "a",
+    "Alpha",
+    [
+      ligne("61", "Orianna", 23),
+      ligne("103", "Ahri", 12),
+      ligne("7", "LeBlanc", 5),
+    ],
+    ligne("premade", null, 22, {
+      winRate: 0.45,
+      kda: 3.1,
+      damagePerMinute: 720,
+    }),
+  ),
+  joueur(
+    "b",
+    "Bravo",
+    [
+      ligne("711", "Vex", 18),
+      ligne("163", "Taliyah", 9, { goldDiffAt15: null, laningGames: 0 }),
+    ],
+    ligne("premade", null, 22, {
+      winRate: 0.55,
+      kda: 2.4,
+      damagePerMinute: 610,
+    }),
+  ),
+  joueur(
+    "c",
+    "Charlie",
+    [
+      ligne("136", "Aurelion Sol", 30),
+      ligne("518", "Neeko", 4),
+      ligne("268", "Azir", 3),
+    ],
+    null,
+  ),
 ];
 
 function Colonnes() {
@@ -63,9 +88,8 @@ function Colonnes() {
       columns={JOUEURS.map((player) =>
         playerColumn(player, {
           isViewer: false,
-          showRadar: false,
-          teamLines: [],
-          reference: "team",
+          showRadar: true,
+          premadeLines: lignesPremade(JOUEURS),
           champions: choix[player.memberId] ?? [],
           onChampionsChange: (keys) =>
             setChoix((avant) => ({ ...avant, [player.memberId]: keys })),

@@ -1,20 +1,9 @@
 import { useTranslation } from "react-i18next";
-import {
-  Avatar,
-  Chip,
-  Divider,
-  MeterBar,
-  Stack,
-  StatGrid,
-  Text,
-} from "../../../common";
+import { Avatar, Chip, Divider, MeterBar, Stack, Text } from "../../../common";
 import type { PlayerStatsDto } from "../../types/stats";
 import { ChampionChoice } from "./ChampionChoice";
 import { CHAMPIONS_EN_COLONNE } from "./champions";
-import { useMetrics } from "./metrics";
-import { VersusTeammates } from "./PlayerStatsView";
 import { useStatsFormat } from "./statsFormat";
-import { useGradeAdornment } from "./useGrades";
 
 export function PlayerHeader({
   player,
@@ -40,35 +29,6 @@ export function PlayerHeader({
         </Text>
       </Stack>
       {isViewer && <Chip label={t("player.you")} tone="primary" size="small" />}
-    </Stack>
-  );
-}
-
-export function Tableau({ player }: { player: PlayerStatsDto }) {
-  const format = useStatsFormat();
-  const { tuiles } = useMetrics();
-  const adornment = useGradeAdornment(player.references, player.positions);
-  if (!player.overall) {
-    return null;
-  }
-  return (
-    <Stack spacing={1.5}>
-      <VersusTeammates versus={player.versusTeammates} compact />
-      <StatGrid
-        items={tuiles(player.overall, {
-          compact: true,
-          versus: player.versusTeammates,
-          adornment,
-        })}
-        size="small"
-        minWidth={92}
-        divided
-      />
-      {format.assise(player.coverage) && (
-        <Text variant="caption" tone="secondary">
-          {format.assise(player.coverage)}
-        </Text>
-      )}
     </Stack>
   );
 }

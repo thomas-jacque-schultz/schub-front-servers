@@ -7,16 +7,11 @@ import {
   MeterBar,
   Stack,
   StatGrid,
-  StatTile,
   Text,
   TrendChart,
   useLocaleFormat,
 } from "../../../common";
-import type {
-  MyStatsDto,
-  StatLineDto,
-  TeamComparisonDto,
-} from "../../types/stats";
+import type { MyStatsDto, StatLineDto } from "../../types/stats";
 import { ChampionChoice } from "./ChampionChoice";
 import { championsAffiches } from "./champions";
 import { ChampionStatCard } from "./ChampionStatCard";
@@ -48,16 +43,9 @@ export type PlayerStatsData = Pick<
 
 export interface PlayerStatsViewProps {
   data: PlayerStatsData;
-  versusTeammates?: TeamComparisonDto | null;
-  /** Les lignes des joueurs de l'équipe : ouvrent le référentiel d'équipe du radar. */
-  teamLines?: StatLineDto[];
 }
 
-export function PlayerStatsView({
-  data,
-  versusTeammates,
-  teamLines,
-}: PlayerStatsViewProps) {
+export function PlayerStatsView({ data }: PlayerStatsViewProps) {
   const { t } = useTranslation("stats");
   const format = useStatsFormat();
   const { formatMonth } = useLocaleFormat();
@@ -79,14 +67,11 @@ export function PlayerStatsView({
     <Stack spacing={3}>
       <Card>
         <Stack spacing={2}>
-          <VersusTeammates versus={versusTeammates} />
           <StatGrid
-            items={tuiles(overall, { versus: versusTeammates, adornment }).map(
-              (tuile) => ({
-                ...tuile,
-                hint: conclusion(tuile.key as MetricKey) ?? tuile.hint,
-              }),
-            )}
+            items={tuiles(overall, { adornment }).map((tuile) => ({
+              ...tuile,
+              hint: conclusion(tuile.key as MetricKey) ?? tuile.hint,
+            }))}
             minWidth={130}
             divided
             align="center"
@@ -114,10 +99,8 @@ export function PlayerStatsView({
       <Columns minWidth={320}>
         <Card title={t("radar.title")} description={t("radar.helper")}>
           <PlayerRadar
-            overall={overall}
             positions={data.positions}
             references={data.references}
-            teamLines={teamLines}
           />
         </Card>
         <Stack spacing={2}>
@@ -217,28 +200,6 @@ export function PlayerStatsView({
         </Stack>
       </Card>
     </Stack>
-  );
-}
-
-export function VersusTeammates({
-  versus,
-  compact = false,
-}: {
-  versus?: TeamComparisonDto | null;
-  compact?: boolean;
-}) {
-  const { t } = useTranslation("stats");
-  const format = useStatsFormat();
-  if (!versus) {
-    return null;
-  }
-  return (
-    <StatTile
-      size={compact ? "small" : "medium"}
-      label={t("delta.winRateVersusTeammates")}
-      value={format.ecartEnPoints(versus.winRateDelta) ?? format.absent}
-      hint={t("delta.versusTeammates", { count: versus.comparedWith })}
-    />
   );
 }
 

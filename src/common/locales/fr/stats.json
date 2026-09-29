@@ -68,9 +68,7 @@
   },
   "delta": {
     "points": "{{value}} pts",
-    "versusRest": "{{delta}} contre le reste de son pool ({{count}} partie(s))",
-    "versusTeammates": "contre la moyenne de {{count}} coéquipier(s)",
-    "winRateVersusTeammates": "Écart de taux de victoire"
+    "versusRest": "{{delta}} contre le reste de son pool ({{count}} partie(s))"
   },
   "championChoice": {
     "button": "Choisir",
@@ -252,22 +250,18 @@
     "helper": "Huit axes, lus contre le référentiel choisi : le centre est le bas du référentiel, le bord son haut.",
     "reference": {
       "label": "Référentiel",
-      "team": "Équipe",
       "met": "Adversaires",
       "league": "Palier"
     },
     "series": {
-      "period": "Sur la période",
       "position": "Au poste {{position}}"
     },
     "note": {
-      "team": "Centre : le plus bas de l'équipe, bord : le plus haut, sur la même période que le tableau de bord.",
       "met": "Au poste {{position}}, {{games}} partie(s). Centre : 5e percentile de {{count}} adversaires directs (au moins {{min}} parties chacun), bord : 95e.",
       "league": "Au poste {{position}}, {{games}} partie(s). Chaque axe est votre percentile parmi {{count}} joueurs {{tier}} à ce poste, patchs {{patches}} : centre 0, bord 100."
     },
     "empty": {
       "noGames": "Aucune partie sur la Faille sur la période.",
-      "team": "Il faut au moins deux joueurs avec des statistiques.",
       "met": "Pas encore assez d'adversaires directs connus au poste {{position}} : il en faut dix, avec au moins cinq parties chacun. Le référentiel grossit avec la collecte.",
       "leagueThin": "Pas encore de référentiel {{tier}} au poste {{position}} : il se calcule chaque jour sur les joueurs classés collectés.",
       "unranked": "Joueur non classé : pas de palier auquel se comparer."
@@ -291,7 +285,7 @@
   },
   "players": {
     "filter": "Joueurs affichés",
-    "filterHint": "Cliquez sur un avatar pour ne garder que certains joueurs. Un seul joueur retenu s'affiche en détail, comme Mes stats.",
+    "filterHint": "Cliquez sur un avatar pour ne garder que certains joueurs.",
     "radarHint": "Choisissez {{count}} joueurs au plus pour voir leurs profils radar côte à côte."
   },
   "rankGap": {
@@ -548,5 +542,29 @@
     "resourceSentence": "Quand votre {{position}} a plus de {{threshold}} de l’or, vous gagnez {{above}} des parties ({{gamesAbove}}) ; en dessous, {{below}} ({{gamesBelow}}).",
     "notConverting": "Votre {{position}} reçoit plus d’or qu’il ne rend en dégâts.",
     "findings": "Ce qui ressort pour l’équipe"
+  },
+  "premade": {
+    "summary_one": "{{count}} partie d'équipe sur la période (au moins {{minimum}} membres ensemble). Chaque tuile se lit ainsi : en haut à gauche la valeur en premade, en haut à droite l'écart avec ses stats habituelles, en bas à gauche l'écart avec la moyenne des coéquipiers, en bas à droite son rang.",
+    "summary_other": "{{count}} parties d'équipe sur la période (au moins {{minimum}} membres ensemble). Chaque tuile se lit ainsi : en haut à gauche la valeur en premade, en haut à droite l'écart avec ses stats habituelles, en bas à gauche l'écart avec la moyenne des coéquipiers, en bas à droite son rang.",
+    "unknown": "Le nombre de parties d'équipe est indisponible pour l'instant.",
+    "games_one": "{{count}} partie en premade",
+    "games_other": "{{count}} parties en premade",
+    "none": "Aucune partie d'équipe sur la période : rien à comparer.",
+    "rank_ordinal_one": "{{count}}er",
+    "rank_ordinal_other": "{{count}}e",
+    "hint": {
+      "main_one": "Sur la partie jouée en premade",
+      "main_other": "Sur les {{count}} parties jouées en premade",
+      "self": "Écart avec ses propres stats, toutes parties de la période",
+      "teammates": "Écart avec la moyenne des autres membres, en premade",
+      "rank_one": "Rang parmi les membres qui ont des parties d'équipe",
+      "rank_other": "Rang parmi les {{count}} membres qui ont des parties d'équipe"
+    },
+    "radar": {
+      "player": "En premade",
+      "mean": "Moyenne du premade",
+      "note": "Centre : le plus bas des membres, bord : le plus haut, en premade. Pointillés : la moyenne des membres.",
+      "fewMembers": "Il faut au moins deux membres avec des parties d'équipe."
+    }
   }
 }

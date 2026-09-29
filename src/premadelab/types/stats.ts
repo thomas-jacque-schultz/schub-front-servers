@@ -103,17 +103,6 @@ export interface RadarReferencesDto {
   met: MetricReferenceDto | null;
 }
 
-export interface TeamComparisonDto {
-  comparedWith: number;
-  winRateDelta: number | null;
-  kdaDelta: number | null;
-  csPerMinuteDelta: number | null;
-  goldPerMinuteDelta: number | null;
-  damagePerMinuteDelta: number | null;
-  damageTakenPerMinuteDelta: number | null;
-  visionPerMinuteDelta: number | null;
-}
-
 export interface PlayerStatsDto {
   memberId: string;
   displayName: string | null;
@@ -132,7 +121,8 @@ export interface PlayerStatsDto {
   months: StatLineDto[];
   rankings: RankedStandingDto[];
   references: RadarReferencesDto | null;
-  versusTeammates: TeamComparisonDto | null;
+  /** Sur les parties d'équipe de la période ; null sans partie d'équipe. */
+  premade: StatLineDto | null;
 }
 
 export interface TeamPlayersStatsDto {
@@ -143,6 +133,9 @@ export interface TeamPlayersStatsDto {
   players: PlayerStatsDto[];
   viewerMemberId: string | null;
   generatedAt: string;
+  /** null : le connecteur n'a pas répondu. */
+  premadeGames: number | null;
+  premadeMinimum: number;
 }
 
 export interface TeamRecordDto {
