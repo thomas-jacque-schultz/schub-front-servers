@@ -52,6 +52,7 @@ export function PlayerGameDialog({
             <ChampionSlot
               championName={player.championName ?? String(player.championId)}
               championIcon={player.iconUrl}
+              riotId={player.riotId}
               playerName={player.displayName}
               playerAvatar={avatar}
               caption={`${player.kills}/${player.deaths}/${player.assists}`}

@@ -11,6 +11,8 @@ export interface ChampionSlotProps {
   /** Le joueur qui l'a pris ; absent pour un adversaire, dont le nom n'apporte rien. */
   playerName?: string | null;
   playerAvatar?: string | null;
+  /** Pseudo#TAG du joueur, ajouté à l'infobulle du champion. */
+  riotId?: string | null;
   /** Une donnée courte sous l'icône : K/D/A, écart. */
   caption?: string;
   size?: "small" | "medium";
@@ -26,6 +28,7 @@ export function ChampionSlot({
   championIcon,
   playerName,
   playerAvatar,
+  riotId,
   caption,
   size = "medium",
   framed = true,
@@ -35,7 +38,12 @@ export function ChampionSlot({
   const contenu = (
     <>
       <Box sx={{ position: "relative" }}>
-        <ChampionIcon src={championIcon} name={championName} size={size} />
+        <ChampionIcon
+          src={championIcon}
+          name={championName}
+          tooltip={riotId ? `${championName} · ${riotId}` : undefined}
+          size={size}
+        />
         {playerName && (
           <Box sx={{ position: "absolute", right: -6, bottom: -6 }}>
             <Avatar src={playerAvatar} name={playerName} size="small" />

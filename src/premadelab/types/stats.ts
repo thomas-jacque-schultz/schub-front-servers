@@ -151,6 +151,7 @@ export interface TeamRecordDto {
 export interface TeamGamePlayerDto {
   memberId: string | null;
   displayName: string | null;
+  riotId: string | null;
   championId: number;
   championName: string | null;
   iconUrl: string | null;

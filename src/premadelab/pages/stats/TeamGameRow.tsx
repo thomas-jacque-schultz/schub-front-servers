@@ -93,6 +93,7 @@ export function TeamGameRow({
               key={`${game.matchId}-${joueur.championId}-${joueur.side}`}
               championName={joueur.championName ?? String(joueur.championId)}
               championIcon={joueur.iconUrl}
+              riotId={joueur.riotId}
               playerName={joueur.displayName ?? t("games.outsider")}
               playerAvatar={joueur.memberId ? avatars[joueur.memberId] : null}
               caption={kda(joueur)}
@@ -110,6 +111,7 @@ export function TeamGameRow({
                 key={`${game.matchId}-${joueur.championId}-${joueur.side}`}
                 championName={joueur.championName ?? String(joueur.championId)}
                 championIcon={joueur.iconUrl}
+                riotId={joueur.riotId}
                 caption={kda(joueur)}
                 size="small"
                 framed={false}
