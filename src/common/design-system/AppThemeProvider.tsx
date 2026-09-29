@@ -7,21 +7,18 @@ import {
   createAppTheme,
   migrateThemeModeKey,
 } from "./theme";
-import { identities, type AppBrand } from "./tokens";
+import { identity } from "./tokens";
 
 migrateThemeModeKey();
 
 export function AppThemeProvider({
   children,
-  brand = "schub",
   defaultMode = "dark",
 }: {
   children: ReactNode;
-  brand?: AppBrand;
   defaultMode?: "light" | "dark" | "system";
 }) {
-  const identity = identities[brand];
-  const theme = useMemo(() => createAppTheme(identity), [identity]);
+  const theme = useMemo(() => createAppTheme(identity), []);
 
   return (
     <IdentityContext.Provider value={identity}>

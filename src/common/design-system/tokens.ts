@@ -231,11 +231,9 @@ export const chartColors: Record<
 };
 
 // ---------------------------------------------------------------------------------------------
-// Les identités : Schub (prune, or, noir) et PremadeLab. Le reste du design system (polices,
-// rayons, espacements) est commun : seules les couleurs changent d'une application à l'autre.
+// L'identité commune à Schub et à PremadeLab (Schub#60) : prune, or et noir. Seuls le nom, le logo
+// et le titre de l'onglet distinguent les deux applications.
 // ---------------------------------------------------------------------------------------------
-
-export type AppBrand = "schub" | "premadelab";
 
 export interface Identity {
   palettes: Record<ColorSchemeName, PaletteTokens>;
@@ -247,156 +245,12 @@ export interface Identity {
   selection: string;
 }
 
-// PremadeLab : encre de nuit, menthe et corail. Rien de l'or de Schub, ni du doré et du bleu de
-// Riot. Contrastes mesurés (WCAG) : menthe sur fond 10,7:1, texte de bouton sur menthe 10,4:1,
-// sarcelle sur blanc 6,4:1, corail foncé sur blanc 5,6:1.
-export const premadelabBrand = {
-  mint: "#3DD6B5",
-  mintBright: "#7BE8D0",
-  mintDeep: "#1F9E84",
-  teal: "#0E6B5B",
-  coral: "#FF7A59",
-  coralDeep: "#B4432A",
-  night: "#080D12",
-  ink: "#0B1B21",
-} as const;
-
-const premadelabDark: PaletteTokens = {
-  primary: {
-    main: premadelabBrand.mint,
-    light: premadelabBrand.mintBright,
-    dark: premadelabBrand.mintDeep,
-    contrastText: "#03130F",
-  },
-  secondary: {
-    main: premadelabBrand.coral,
-    light: "#FF9E85",
-    dark: "#D2553A",
-    contrastText: "#1A0703",
-  },
-  success: { main: "#4FB783", contrastText: "#04120B" },
-  // Ambre et non orange : l'orange se confondrait avec le corail.
-  warning: { main: "#E3A93B", contrastText: "#1A1204" },
-  error: { main: "#E0576B", contrastText: "#1A050A" },
-  info: { main: "#5B9BE8", contrastText: "#04101D" },
-  background: {
-    default: premadelabBrand.night,
-    paper: "#0F171F",
-    raised: "#16212B",
-  },
-  text: { primary: "#E6EEF1", secondary: "#9AAEB7", disabled: "#62747C" },
-  divider: "rgba(154, 174, 183, 0.20)",
-  outline: "rgba(61, 214, 181, 0.14)",
-};
-
-const premadelabLight: PaletteTokens = {
-  primary: {
-    main: premadelabBrand.teal,
-    light: "#2A8C7A",
-    dark: "#094B40",
-    contrastText: "#FFFFFF",
-  },
-  secondary: {
-    main: premadelabBrand.coralDeep,
-    light: "#CF6A50",
-    dark: "#7F2C1A",
-    contrastText: "#FFFFFF",
-  },
-  success: { main: "#1F7A50", contrastText: "#FFFFFF" },
-  warning: { main: "#9A5312", contrastText: "#FFFFFF" },
-  error: { main: "#B02A3C", contrastText: "#FFFFFF" },
-  info: { main: "#1F5FA9", contrastText: "#FFFFFF" },
-  background: { default: "#EFF4F5", paper: "#FFFFFF", raised: "#F6FAFA" },
-  text: {
-    primary: premadelabBrand.ink,
-    secondary: "#4A5D65",
-    disabled: "#85969C",
-  },
-  divider: "#D3DFE2",
-  outline: "#DDEAEC",
-};
-
-export const identities: Record<AppBrand, Identity> = {
-  schub: {
-    palettes,
-    backdrops,
-    textures,
-    chart: chartColors,
-    status: statusColors,
-    elevations,
-    selection: "rgba(164, 71, 126, 0.45)",
-  },
-  premadelab: {
-    palettes: { dark: premadelabDark, light: premadelabLight },
-    backdrops: {
-      dark: {
-        page:
-          "radial-gradient(1100px 620px at 8% -14%, rgba(61, 214, 181, 0.16) 0%, transparent 62%), " +
-          "radial-gradient(900px 540px at 108% 112%, rgba(255, 122, 89, 0.12) 0%, transparent 58%), " +
-          premadelabBrand.night,
-        panel: `linear-gradient(180deg, ${premadelabBrand.night} 0%, #0C141B 100%)`,
-      },
-      light: {
-        page:
-          "radial-gradient(1100px 620px at 8% -14%, rgba(14, 107, 91, 0.10) 0%, transparent 62%), " +
-          "radial-gradient(900px 540px at 108% 112%, rgba(180, 67, 42, 0.08) 0%, transparent 58%), " +
-          "#EFF4F5",
-        panel: "linear-gradient(180deg, #F6FAFA 0%, #E8F0F1 100%)",
-      },
-    },
-    textures: {
-      dark: { grid: "rgba(61, 214, 181, 0.05)", gridSize: 32 },
-      light: { grid: "rgba(14, 107, 91, 0.05)", gridSize: 32 },
-    },
-    chart: {
-      dark: {
-        mark: premadelabBrand.mint,
-        markSoft: "rgba(61, 214, 181, 0.24)",
-        // Violet et non corail : menthe et corail se confondent en deutéranopie.
-        markSecondary: "#B79CFF",
-        markMuted: "rgba(154, 174, 183, 0.55)",
-        track: "rgba(154, 174, 183, 0.14)",
-        grid: premadelabDark.outline,
-        positive: premadelabDark.success.main,
-        negative: premadelabDark.error.main,
-      },
-      light: {
-        mark: premadelabBrand.teal,
-        markSoft: "rgba(14, 107, 91, 0.18)",
-        markSecondary: "#6D4FC4",
-        markMuted: "rgba(11, 27, 33, 0.40)",
-        track: "rgba(11, 27, 33, 0.10)",
-        grid: premadelabLight.outline,
-        positive: premadelabLight.success.main,
-        negative: premadelabLight.error.main,
-      },
-    },
-    status: {
-      dark: {
-        online: premadelabDark.success.main,
-        offline: "#5E6E76",
-        unknown: premadelabDark.warning.main,
-        unreachable: premadelabDark.error.main,
-      },
-      light: {
-        online: premadelabLight.success.main,
-        offline: "#6E7E84",
-        unknown: premadelabLight.warning.main,
-        unreachable: premadelabLight.error.main,
-      },
-    },
-    elevations: {
-      dark: {
-        sm: "0 1px 2px rgba(0, 0, 0, 0.6)",
-        md: "0 10px 30px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(123, 232, 208, 0.06)",
-        lg: "0 24px 60px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(123, 232, 208, 0.09)",
-      },
-      light: {
-        sm: "0 1px 2px rgba(11, 27, 33, 0.06)",
-        md: "0 6px 16px rgba(11, 27, 33, 0.08)",
-        lg: "0 18px 40px rgba(11, 27, 33, 0.12)",
-      },
-    },
-    selection: "rgba(61, 214, 181, 0.35)",
-  },
+export const identity: Identity = {
+  palettes,
+  backdrops,
+  textures,
+  chart: chartColors,
+  status: statusColors,
+  elevations,
+  selection: "rgba(164, 71, 126, 0.45)",
 };
