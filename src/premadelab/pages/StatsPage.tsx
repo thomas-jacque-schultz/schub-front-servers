@@ -175,6 +175,7 @@ function StatsPage() {
             loadDetail={(matchId) => getMyGameDetailApi(matchId, periode)}
             loadFindings={getMyGameFindingsApi}
             avatar={profile?.discord.avatarUrl ?? null}
+            detailTitle={t("detail.myStats")}
           />
         )}
         {onglet === "overview" && (

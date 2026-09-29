@@ -317,7 +317,9 @@
       "lost": "Couloir perdu"
     },
     "playerHint": "Cliquez sur un joueur : ses chiffres de la partie, sa moyenne et le rang auquel ils correspondent.",
-    "openPlayer": "Ouvrir les chiffres de {{player}} sur cette partie"
+    "openPlayer": "Ouvrir les chiffres de {{player}} sur cette partie",
+    "myStats": "Mes stats détaillées",
+    "playerStats": "Stats détaillées de {{player}}"
   },
   "opposition": {
     "tab": "Stratégie",

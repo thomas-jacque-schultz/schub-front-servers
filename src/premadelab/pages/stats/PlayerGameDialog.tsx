@@ -25,7 +25,6 @@ export interface PlayerGameDialogProps {
   onClose: () => void;
 }
 
-/** Une partie d'un joueur, famille par famille : la valeur, sa moyenne au même poste, le rang auquel elle correspond. */
 export function PlayerGameDialog({
   player,
   metrics,
@@ -33,8 +32,6 @@ export function PlayerGameDialog({
   onClose,
 }: PlayerGameDialogProps) {
   const { t } = useTranslation("stats");
-  const format = useStatsFormat();
-
   const nom = player
     ? (player.displayName ?? player.championName ?? String(player.championId))
     : "";
@@ -47,57 +44,74 @@ export function PlayerGameDialog({
       maxWidth="lg"
     >
       {player && (
-        <Stack spacing={2.5}>
-          <Stack direction="row" spacing={1.5} align="center" wrap>
-            <ChampionSlot
-              championName={player.championName ?? String(player.championId)}
-              championIcon={player.iconUrl}
-              riotId={player.riotId}
-              playerName={player.displayName}
-              playerAvatar={avatar}
-              caption={`${player.kills}/${player.deaths}/${player.assists}`}
-            />
-            <Stack spacing={0.25}>
-              <Text variant="subtitle">
-                {[player.championName, format.poste(player.position ?? "")]
-                  .filter(Boolean)
-                  .join(" · ")}
-              </Text>
-              <Text variant="caption" tone="secondary">
-                {metrics?.average
-                  ? t("playerGame.averageBasis", {
-                      count: metrics.average.games,
-                      position: format.poste(metrics.average.key),
-                    })
-                  : t("playerGame.noAverage")}
-              </Text>
-              {metrics?.tier && (
-                <Text variant="caption" tone="secondary">
-                  {t(
-                    metrics.tierEstimated
-                      ? "playerGame.tierEstimated"
-                      : "playerGame.tier",
-                    {
-                      tier: t(`tier.${metrics.tier}`, {
-                        defaultValue: metrics.tier,
-                      }),
-                    },
-                  )}
-                </Text>
-              )}
-            </Stack>
-          </Stack>
-          {metrics ? (
-            <Familles metrics={metrics} />
-          ) : (
-            <Alert severity="info">{t("playerGame.noMetrics")}</Alert>
-          )}
-          <Text variant="caption" tone="secondary">
-            {t("playerGame.rankHelper")}
-          </Text>
-        </Stack>
+        <PlayerGameStats player={player} metrics={metrics} avatar={avatar} />
       )}
     </Dialog>
+  );
+}
+
+/** Une partie d'un joueur, famille par famille : la valeur, sa moyenne au même poste, le rang auquel elle correspond. */
+export function PlayerGameStats({
+  player,
+  metrics,
+  avatar,
+}: {
+  player: TeamGamePlayerDto;
+  metrics: GamePlayerMetricsDto | null;
+  avatar?: string | null;
+}) {
+  const { t } = useTranslation("stats");
+  const format = useStatsFormat();
+  return (
+    <Stack spacing={2.5}>
+      <Stack direction="row" spacing={1.5} align="center" wrap>
+        <ChampionSlot
+          championName={player.championName ?? String(player.championId)}
+          championIcon={player.iconUrl}
+          riotId={player.riotId}
+          playerName={player.displayName}
+          playerAvatar={avatar}
+          caption={`${player.kills}/${player.deaths}/${player.assists}`}
+        />
+        <Stack spacing={0.25}>
+          <Text variant="subtitle">
+            {[player.championName, format.poste(player.position ?? "")]
+              .filter(Boolean)
+              .join(" · ")}
+          </Text>
+          <Text variant="caption" tone="secondary">
+            {metrics?.average
+              ? t("playerGame.averageBasis", {
+                  count: metrics.average.games,
+                  position: format.poste(metrics.average.key),
+                })
+              : t("playerGame.noAverage")}
+          </Text>
+          {metrics?.tier && (
+            <Text variant="caption" tone="secondary">
+              {t(
+                metrics.tierEstimated
+                  ? "playerGame.tierEstimated"
+                  : "playerGame.tier",
+                {
+                  tier: t(`tier.${metrics.tier}`, {
+                    defaultValue: metrics.tier,
+                  }),
+                },
+              )}
+            </Text>
+          )}
+        </Stack>
+      </Stack>
+      {metrics ? (
+        <Familles metrics={metrics} />
+      ) : (
+        <Alert severity="info">{t("playerGame.noMetrics")}</Alert>
+      )}
+      <Text variant="caption" tone="secondary">
+        {t("playerGame.rankHelper")}
+      </Text>
+    </Stack>
   );
 }
 

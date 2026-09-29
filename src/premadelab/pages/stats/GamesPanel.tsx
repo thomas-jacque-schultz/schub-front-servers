@@ -20,6 +20,8 @@ export interface GamesPanelProps {
   loadDetail: (matchId: string) => Promise<TeamGameDetailDto>;
   loadFindings?: (matchId: string) => Promise<FindingDto[]>;
   avatar: string | null;
+  /** Titre de l'accordéon des stats détaillées du joueur, dans chaque partie. */
+  detailTitle: string;
 }
 
 /** Toutes les parties d'un joueur, toutes files confondues, comme l'historique d'une équipe dont il serait le seul membre. */
@@ -29,6 +31,7 @@ export function GamesPanel({
   loadDetail,
   loadFindings,
   avatar,
+  detailTitle,
 }: GamesPanelProps) {
   const { t } = useTranslation("stats");
   const { data: historique, error, isLoading } = useRequest(requestKey, load);
@@ -76,6 +79,7 @@ export function GamesPanel({
                 loadFindings ? () => loadFindings(game.matchId) : undefined
               }
               avatars={avatars}
+              subjectTitle={detailTitle}
             />
           )}
         />
