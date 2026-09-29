@@ -17,6 +17,8 @@ export interface StatGridProps {
   labelLines?: StatTileProps["labelLines"];
 }
 
+const LISERE = 2;
+
 // Même ordre, même largeur de colonne partout : deux rangées de chiffres se comparent verticalement.
 export function StatGrid({
   items,
@@ -26,12 +28,15 @@ export function StatGrid({
   align,
   labelLines,
 }: StatGridProps) {
-  return (
+  // auto-fit : les colonnes vides se replient, la rangée occupe toute la largeur.
+  // Le liseré de la première tuile de chaque rangée tombe dans la marge négative et se masque.
+  const grille = (
     <Box
       sx={{
         display: "grid",
-        gridTemplateColumns: `repeat(auto-fill, minmax(${minWidth}px, 1fr))`,
+        gridTemplateColumns: `repeat(auto-fit, minmax(${minWidth}px, 1fr))`,
         gap: `${1.5 * spacingUnit}px`,
+        ml: divided ? `-${LISERE + 1.5 * spacingUnit}px` : undefined,
       }}
     >
       {items.map(({ key, ...tile }) => (
@@ -39,7 +44,11 @@ export function StatGrid({
           key={key}
           sx={
             divided
-              ? { borderLeft: "2px solid", borderColor: "divider", pl: 1.25 }
+              ? {
+                  borderLeft: `${LISERE}px solid`,
+                  borderColor: "divider",
+                  pl: `${1.5 * spacingUnit}px`,
+                }
               : undefined
           }
         >
@@ -53,4 +62,6 @@ export function StatGrid({
       ))}
     </Box>
   );
+
+  return divided ? <Box sx={{ overflow: "hidden" }}>{grille}</Box> : grille;
 }
