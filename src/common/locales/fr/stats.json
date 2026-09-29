@@ -98,10 +98,10 @@
     "rankings": "Classements",
     "rankingDetail": "{{wins}} victoires, {{losses}} défaites",
     "trend": "Évolution",
-    "trendHelper": "Votre taux de victoire mois par mois, comparé à votre propre moyenne.",
+    "trendHelper": "Votre taux de victoire patch par patch, comparé à votre propre moyenne. Un patch de moins de 3 parties est grisé : trop peu de parties pour y lire une tendance.",
     "trendReference": "Trait : votre moyenne sur la période ({{value}})",
-    "trendPoint": "{{month}} · {{rate}} sur {{count}} partie(s)",
-    "noMonth": "Pas encore assez d'historique pour dessiner une évolution."
+    "trendPoint": "Patch {{patch}}, du {{from}} au {{to}} · {{rate}} sur {{count}} partie(s)",
+    "noPatch": "Pas encore assez d'historique pour dessiner une évolution."
   },
   "team": {
     "definition": "Une partie d'équipe : au moins {{count}} des {{roster}} joueurs de l'effectif, toutes files confondues.",
@@ -570,5 +570,14 @@
       "note": "Centre : le plus bas des membres, bord : le plus haut, en premade. Pointillés : la moyenne des membres.",
       "fewMembers": "Il faut au moins deux membres avec des parties d'équipe."
     }
+  },
+  "queuePie": {
+    "label": "Répartition des parties",
+    "detail_one": "{{rate}} de victoires · {{count}} partie",
+    "detail_other": "{{rate}} de victoires · {{count}} parties",
+    "other": "Autres modes",
+    "otherDetail_one": "{{count}} partie",
+    "otherDetail_other": "{{count}} parties",
+    "empty": "Aucune partie sur la période."
   }
 }

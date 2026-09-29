@@ -14,6 +14,7 @@ import {
 import type { TeamGamesStatsDto, TeamRecordDto } from "../../types/stats";
 import { StatsStateNote } from "./StatsStateNote";
 import { useStatsFormat } from "./statsFormat";
+import { QueuePie } from "./QueuePie";
 
 export interface TeamSummaryProps {
   teamId: string;
@@ -97,16 +98,7 @@ export function TeamSummary({ teamId, periode }: TeamSummaryProps) {
               title={t("section.byQueue")}
               description={t("section.byQueueHelper")}
             >
-              <Stack spacing={0.75}>
-                {stats.byQueue.map((record) => (
-                  <MeterBar
-                    key={record.key}
-                    label={format.file(record.key)}
-                    value={record.winRate}
-                    valueLabel={libelle(record, format)}
-                  />
-                ))}
-              </Stack>
+              <QueuePie queues={stats.byQueue} label={t("queuePie.label")} />
             </Card>
             <Card title={t("section.bySide")}>
               <Stack spacing={0.75}>

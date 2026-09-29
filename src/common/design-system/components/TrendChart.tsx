@@ -9,6 +9,8 @@ export interface TrendPoint {
   label: string;
   value: number | null;
   title: string;
+  /** Échantillon trop mince pour être lu comme une tendance : grisé. */
+  muted?: boolean;
 }
 
 export interface TrendChartProps {
@@ -114,7 +116,9 @@ export function TrendChart({
                     backgroundColor:
                       point.value === null
                         ? identity.chart[scheme].track
-                        : identity.chart[scheme].mark,
+                        : point.muted
+                          ? identity.chart[scheme].markMuted
+                          : identity.chart[scheme].mark,
                   };
                 }}
               />
