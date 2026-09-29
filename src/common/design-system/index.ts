@@ -148,6 +148,8 @@ export type {
   ComparisonEntry,
   ComparisonTileProps,
 } from "./components/ComparisonTile";
+export { FaceOffTable } from "./components/FaceOffTable";
+export type { FaceOffRow, FaceOffTableProps } from "./components/FaceOffTable";
 export { QuadStatTile } from "./components/QuadStatTile";
 export type { QuadCorner, QuadStatTileProps } from "./components/QuadStatTile";
 export { StatTile } from "./components/StatTile";

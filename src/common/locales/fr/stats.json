@@ -408,10 +408,12 @@
     "weakSummary": "Notre jungler a joué {{side}} ; {{onWeak}} gank(s) adverse(s) sur {{total}} sont tombés sur l'autre côté.",
     "balancedSummary": "Notre jungler a partagé son temps entre les deux côtés.",
     "objectives": {
-      "title": "Objectifs avant 15 min (nous – eux)",
+      "title": "Objectifs avant 15 min : nous à gauche, eux à droite",
       "dragons": "Dragons",
       "grubs": "Larves",
-      "heralds": "Héraut"
+      "heralds": "Héraut",
+      "ours": "Nous",
+      "theirs": "Eux"
     },
     "noAnalysis": "Pas d'analyse du début de partie : timeline absente, ou postes de la partie inconnus.",
     "team": {
