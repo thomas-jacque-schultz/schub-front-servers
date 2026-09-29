@@ -1,8 +1,10 @@
-import type { ReactNode } from "react";
+import { type ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Card,
   DataTable,
+  Disclosure,
+  LaneMap,
   SplitBar,
   Stack,
   Text,
@@ -18,6 +20,7 @@ import { useStatsFormat } from "./statsFormat";
 export function TeamEarlyGame({ early }: { early: TeamEarlyGameDto | null }) {
   const { t } = useTranslation("stats");
   const format = useStatsFormat();
+  const [tableauOuvert, setTableauOuvert] = useState(false);
 
   if (!early || early.games === 0) {
     return (
@@ -197,19 +200,79 @@ export function TeamEarlyGame({ early }: { early: TeamEarlyGameDto | null }) {
           titre={t("early.team.sides")}
           aide={t("early.team.sidesHelper")}
         >
-          <DataTable
-            columns={cotes}
-            rows={early.strongSides}
-            rowKey={(c) => c.side}
-            caption={t("early.team.sides")}
-            emptyTitle={t("early.team.none")}
-            dense
-            layout="fixed"
-            minWidth={580}
-          />
+          <SidesMap sides={early.strongSides} />
+          <Disclosure
+            title={t("early.team.sidesTable")}
+            open={tableauOuvert}
+            onToggle={setTableauOuvert}
+          >
+            <DataTable
+              columns={cotes}
+              rows={early.strongSides}
+              rowKey={(c) => c.side}
+              caption={t("early.team.sides")}
+              emptyTitle={t("early.team.none")}
+              dense
+              layout="fixed"
+              minWidth={580}
+            />
+          </Disclosure>
         </Section>
       </Stack>
     </Card>
+  );
+}
+
+// En deçà, un couloir reste gris : trop peu de parties pour le comparer.
+const PARTIES_PAR_COTE = 3;
+// L'écart qui sature la teinte : 20 points au-dessus ou en dessous de la moyenne.
+const ECART_SATURE = 0.2;
+const ECART_NEUTRE = 0.03;
+const ZONE_DU_COTE = { TOP: "TOP", BALANCED: "MID", BOT: "BOT" } as const;
+
+function SidesMap({ sides }: { sides: StrongSideRecordDto[] }) {
+  const { t } = useTranslation("stats");
+  const format = useStatsFormat();
+  const parties = sides.reduce((somme, c) => somme + c.games, 0);
+  const victoires = sides.reduce((somme, c) => somme + c.wins, 0);
+  const moyenne = parties > 0 ? victoires / parties : null;
+  const lisibles = sides.filter((c) => c.games >= PARTIES_PAR_COTE);
+  const meilleur = [...lisibles].sort(
+    (a, b) => b.wins / b.games - a.wins / a.games,
+  )[0];
+  return (
+    <LaneMap
+      label={t("early.team.sidesMap", {
+        average: format.taux(moyenne),
+      })}
+      highlight={
+        meilleur && lisibles.length > 1 ? ZONE_DU_COTE[meilleur.side] : null
+      }
+      zones={(["TOP", "BALANCED", "BOT"] as const).map((cote) => {
+        const ligne = sides.find((c) => c.side === cote);
+        const games = ligne?.games ?? 0;
+        const taux = ligne && games > 0 ? ligne.wins / games : null;
+        const ecart = taux !== null && moyenne !== null ? taux - moyenne : 0;
+        return {
+          key: ZONE_DU_COTE[cote],
+          label: t(`early.team.sideZone.${cote}`),
+          value: games,
+          valueLabel:
+            games < PARTIES_PAR_COTE
+              ? `${format.absent} · ${games}`
+              : `${format.taux(taux)} · ${games}`,
+          tone:
+            games < PARTIES_PAR_COTE
+              ? "empty"
+              : ecart > ECART_NEUTRE
+                ? "positive"
+                : ecart < -ECART_NEUTRE
+                  ? "negative"
+                  : "neutral",
+          strength: Math.abs(ecart) / ECART_SATURE,
+        };
+      })}
+    />
   );
 }
 

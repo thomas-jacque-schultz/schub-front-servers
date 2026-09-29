@@ -31,3 +31,34 @@ export const Equilibre: Story = {
     ],
   },
 };
+
+export const AuDessusEtEnDessousDeLaMoyenne: Story = {
+  args: {
+    label: "Taux de victoire selon le côté fort de notre jungler",
+    highlight: "TOP",
+    zones: [
+      {
+        key: "TOP",
+        label: "Haut",
+        value: 14,
+        valueLabel: "64 % · 14",
+        tone: "positive",
+        strength: 0.8,
+      },
+      {
+        key: "MID",
+        label: "Équilibré",
+        value: 9,
+        valueLabel: "50 % · 9",
+        tone: "neutral",
+      },
+      {
+        key: "BOT",
+        label: "Bas",
+        value: 2,
+        valueLabel: "— · 2",
+        tone: "empty",
+      },
+    ],
+  },
+};

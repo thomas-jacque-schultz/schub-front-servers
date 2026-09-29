@@ -438,7 +438,14 @@
       "side": "Strong side",
       "games": "Games",
       "winRate": "Wins",
-      "onWeakSide": "Enemy ganks on weak side"
+      "onWeakSide": "Enemy ganks on weak side",
+      "sidesTable": "Exact figures",
+      "sidesMap": "Win rate by our jungler's strong side (average: {{average}}). Green: above our average, red: below, grey: fewer than 3 games.",
+      "sideZone": {
+        "TOP": "Top",
+        "BALANCED": "Balanced",
+        "BOT": "Bottom"
+      }
     }
   },
   "family": {
