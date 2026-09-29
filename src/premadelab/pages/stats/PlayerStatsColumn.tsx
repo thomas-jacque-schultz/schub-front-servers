@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Avatar,
@@ -11,14 +10,11 @@ import {
 } from "../../../common";
 import type { PlayerStatsDto } from "../../types/stats";
 import { ChampionChoice } from "./ChampionChoice";
-import { championsAffiches } from "./champions";
-import { ChampionStatCard } from "./ChampionStatCard";
+import { CHAMPIONS_EN_COLONNE } from "./champions";
 import { useMetrics } from "./metrics";
 import { VersusTeammates } from "./PlayerStatsView";
 import { useStatsFormat } from "./statsFormat";
 import { useGradeAdornment } from "./useGrades";
-
-const CHAMPIONS_EN_COLONNE = 3;
 
 export function PlayerHeader({
   player,
@@ -77,9 +73,16 @@ export function Tableau({ player }: { player: PlayerStatsDto }) {
   );
 }
 
-export function Champions({ player }: { player: PlayerStatsDto }) {
+export function ChampionsHeader({
+  player,
+  selected,
+  onChange,
+}: {
+  player: PlayerStatsDto;
+  selected: string[];
+  onChange: (keys: string[]) => void;
+}) {
   const { t } = useTranslation("stats");
-  const [choisis, setChoisis] = useState<string[]>([]);
   return (
     <Stack spacing={1}>
       <Divider />
@@ -89,26 +92,15 @@ export function Champions({ player }: { player: PlayerStatsDto }) {
         </Text>
         <ChampionChoice
           champions={player.champions}
-          selected={choisis}
-          onChange={setChoisis}
+          selected={selected}
+          onChange={onChange}
           defaultCount={CHAMPIONS_EN_COLONNE}
         />
       </Stack>
-      {player.champions.length === 0 ? (
+      {player.champions.length === 0 && (
         <Text variant="caption" tone="disabled">
           {t("section.noChampion")}
         </Text>
-      ) : (
-        championsAffiches(player.champions, choisis, CHAMPIONS_EN_COLONNE).map(
-          (line) => (
-            <ChampionStatCard
-              key={line.key}
-              line={line}
-              compact
-              references={player.references}
-            />
-          ),
-        )
       )}
     </Stack>
   );
