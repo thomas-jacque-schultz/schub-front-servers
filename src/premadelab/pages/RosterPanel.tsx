@@ -57,7 +57,7 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
 
   const [removed, setRemoved] = useState<TeamMemberDto | null>(null);
 
-  const canEdit = team.viewerCanEdit;
+  const canEdit = team.viewerCanEditRoster;
 
   const roleOptions = GAME_ROLES.map((role) => ({
     value: role,

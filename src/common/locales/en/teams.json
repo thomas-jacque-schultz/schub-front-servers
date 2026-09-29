@@ -46,8 +46,7 @@
       "failed": "Deletion failed"
     },
     "back": "Back to my teams",
-    "loadFailed": "Could not load this team",
-    "readOnly": "You are a member of this team: you see everything, and the captain alone writes."
+    "loadFailed": "Could not load this team"
   },
   "tabs": {
     "roster": "Roster",

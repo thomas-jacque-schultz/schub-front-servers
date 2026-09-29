@@ -10,7 +10,6 @@ import {
   ProgressBar,
   Stack,
   Tabs,
-  Text,
   TextField,
   useLocalizedNavigate,
   type TabItem,
@@ -140,7 +139,7 @@ function TeamPage() {
               {t("team.back")}
             </Button>
             <StatsRefreshButton teamId={team.id} />
-            {team.viewerCanEdit && (
+            {team.viewerCanManage && (
               <>
                 <Button
                   variant="secondary"
@@ -161,12 +160,6 @@ function TeamPage() {
       />
 
       {error && <Alert severity="error">{error}</Alert>}
-
-      {!team.viewerCanEdit && (
-        <Text variant="caption" tone="secondary">
-          {t("team.readOnly")}
-        </Text>
-      )}
 
       <Tabs
         items={tabs}
