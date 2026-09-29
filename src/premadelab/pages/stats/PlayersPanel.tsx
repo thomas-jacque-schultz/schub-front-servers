@@ -15,6 +15,7 @@ import {
   useRequest,
 } from "../../../common";
 import { playerColumn } from "./playerColumn";
+import { championsEnColonne } from "./champions";
 import { PlayerHeader } from "./PlayerStatsColumn";
 import { PlayerStatsView } from "./PlayerStatsView";
 import { RadarReferenceSelector } from "./PlayerRadar";
@@ -42,6 +43,9 @@ export function PlayersPanel({ teamId }: PlayersPanelProps) {
   const error = echec === null ? "" : messageOf(echec, t("loadFailed"));
   const [choisis, setChoisis] = useState<string[]>([]);
   const [referentiel, setReferentiel] = useState<RadarReference | null>(null);
+  const [choixChampions, setChoixChampions] = useState<
+    Record<string, string[]>
+  >({});
 
   if (isLoading && !stats) {
     return <ProgressBar label={t("loading")} />;
@@ -56,6 +60,16 @@ export function PlayersPanel({ teamId }: PlayersPanelProps) {
     choisis.length === 0
       ? joueurs
       : joueurs.filter((player) => choisis.includes(player.memberId));
+  const championRows = Math.max(
+    0,
+    ...visibles
+      .filter((player) => player.state === "STATISTIQUES_CONNUES")
+      .map(
+        (player) =>
+          championsEnColonne(player, choixChampions[player.memberId] ?? [])
+            .length,
+      ),
+  );
   const lignesEquipe = joueurs.flatMap((player) =>
     player.state === "STATISTIQUES_CONNUES" && player.overall
       ? [player.overall]
@@ -142,6 +156,13 @@ export function PlayersPanel({ teamId }: PlayersPanelProps) {
                 showRadar: radars,
                 teamLines: lignesEquipe,
                 reference,
+                champions: choixChampions[player.memberId] ?? [],
+                onChampionsChange: (keys) =>
+                  setChoixChampions((avant) => ({
+                    ...avant,
+                    [player.memberId]: keys,
+                  })),
+                championRows,
               }),
             )}
           />
