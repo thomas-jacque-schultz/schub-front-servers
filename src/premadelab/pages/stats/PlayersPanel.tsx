@@ -16,10 +16,7 @@ import {
 } from "../../../common";
 import { playerColumn } from "./playerColumn";
 import { championsEnColonne } from "./champions";
-import { PlayerHeader } from "./PlayerStatsColumn";
-import { PlayerStatsView } from "./PlayerStatsView";
-import { RadarReferenceSelector } from "./PlayerRadar";
-import { type RadarReference, referenceParDefaut } from "./radar";
+import { lignesPremade } from "./premade";
 import { useWindowOptions } from "./windows";
 
 export interface PlayersPanelProps {
@@ -42,7 +39,6 @@ export function PlayersPanel({ teamId }: PlayersPanelProps) {
   );
   const error = echec === null ? "" : messageOf(echec, t("loadFailed"));
   const [choisis, setChoisis] = useState<string[]>([]);
-  const [referentiel, setReferentiel] = useState<RadarReference | null>(null);
   const [choixChampions, setChoixChampions] = useState<
     Record<string, string[]>
   >({});
@@ -70,13 +66,8 @@ export function PlayersPanel({ teamId }: PlayersPanelProps) {
             .length,
       ),
   );
-  const lignesEquipe = joueurs.flatMap((player) =>
-    player.state === "STATISTIQUES_CONNUES" && player.overall
-      ? [player.overall]
-      : [],
-  );
-  const reference = referentiel ?? referenceParDefaut(lignesEquipe);
-  const radars = visibles.length > 1 && visibles.length <= RADAR_JUSQU_A;
+  const premadeLines = lignesPremade(joueurs);
+  const radars = visibles.length <= RADAR_JUSQU_A;
 
   return (
     <Stack spacing={2}>
@@ -123,30 +114,16 @@ export function PlayersPanel({ teamId }: PlayersPanelProps) {
             {t("emptyRoster")}
           </Text>
         </Card>
-      ) : visibles.length === 1 ? (
-        // Un seul joueur retenu : la même vue que Mes stats.
-        <Stack spacing={2}>
-          <Card>
-            <PlayerHeader
-              player={visibles[0]}
-              isViewer={visibles[0].memberId === stats?.viewerMemberId}
-            />
-          </Card>
-          <PlayerStatsView
-            data={visibles[0]}
-            versusTeammates={visibles[0].versusTeammates}
-            teamLines={lignesEquipe}
-          />
-        </Stack>
       ) : (
         <Stack spacing={1.5}>
-          {radars && (
-            <RadarReferenceSelector
-              value={reference}
-              onChange={(valeur) => setReferentiel(valeur as RadarReference)}
-              teamAvailable={lignesEquipe.length >= 2}
-            />
-          )}
+          <Text variant="caption" tone="secondary">
+            {stats?.premadeGames === null || stats?.premadeGames === undefined
+              ? t("premade.unknown")
+              : t("premade.summary", {
+                  count: stats.premadeGames,
+                  minimum: stats.premadeMinimum,
+                })}
+          </Text>
           <AlignedColumns
             minWidth={220}
             count={Math.max(1, Math.min(6, visibles.length))}
@@ -154,8 +131,7 @@ export function PlayersPanel({ teamId }: PlayersPanelProps) {
               playerColumn(player, {
                 isViewer: player.memberId === stats?.viewerMemberId,
                 showRadar: radars,
-                teamLines: lignesEquipe,
-                reference,
+                premadeLines,
                 champions: choixChampions[player.memberId] ?? [],
                 onChampionsChange: (keys) =>
                   setChoixChampions((avant) => ({

@@ -1,23 +1,15 @@
 import { type AlignedColumn } from "../../../common";
 import type { PlayerStatsDto, StatLineDto } from "../../types/stats";
-import { PlayerRadar } from "./PlayerRadar";
 import { ChampionStatCard } from "./ChampionStatCard";
 import { championsEnColonne } from "./champions";
-import {
-  ChampionsHeader,
-  Files,
-  PlayerHeader,
-  Tableau,
-} from "./PlayerStatsColumn";
-import type { RadarReference } from "./radar";
-import { RankedStandings } from "./RankedStandings";
+import { ChampionsHeader, Files, PlayerHeader } from "./PlayerStatsColumn";
+import { PremadeRadar, PremadeTiles } from "./PremadeColumn";
 import { StatsStateNote } from "./StatsStateNote";
 
 export interface PlayerColumnOptions {
   isViewer: boolean;
   showRadar: boolean;
-  teamLines: StatLineDto[];
-  reference: RadarReference;
+  premadeLines: { memberId: string; line: StatLineDto }[];
   champions: string[];
   onChampionsChange: (keys: string[]) => void;
   // Le même nombre de rangées de champions dans chaque colonne : une carte par rangée, alignée sur ses voisines.
@@ -30,8 +22,7 @@ export const playerColumn = (
   {
     isViewer,
     showRadar,
-    teamLines,
-    reference,
+    premadeLines,
     champions,
     onChampionsChange,
     championRows,
@@ -44,23 +35,15 @@ export const playerColumn = (
     key: player.memberId,
     sections: [
       <PlayerHeader key="header" player={player} isViewer={isViewer} />,
-      <RankedStandings key="ranks" standings={player.rankings} />,
       connu ? (
-        <Tableau key="kpi" player={player} />
+        <PremadeTiles key="kpi" player={player} lines={premadeLines} />
       ) : (
         <StatsStateNote key="kpi" state={player.state} />
       ),
       ...(showRadar
         ? [
             connu ? (
-              <PlayerRadar
-                key="radar"
-                overall={player.overall}
-                positions={player.positions}
-                references={player.references}
-                teamLines={teamLines}
-                reference={reference}
-              />
+              <PremadeRadar key="radar" player={player} lines={premadeLines} />
             ) : null,
           ]
         : []),
@@ -78,7 +61,6 @@ export const playerColumn = (
             key={lignes[index].key}
             line={lignes[index]}
             compact
-            references={player.references}
           />
         ) : null,
       ),

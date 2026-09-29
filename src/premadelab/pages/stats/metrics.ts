@@ -1,7 +1,7 @@
 import { type ReactNode, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { type StatGridItem } from "../../../common";
-import type { StatLineDto, TeamComparisonDto } from "../../types/stats";
+import type { StatLineDto } from "../../types/stats";
 import { useStatsFormat } from "./statsFormat";
 
 /**
@@ -36,24 +36,12 @@ type MetriqueDePartie =
   | "xpDiffAt15"
   | "killsDiffAt15";
 
-type Deltas = Pick<
-  TeamComparisonDto,
-  | "winRateDelta"
-  | "kdaDelta"
-  | "csPerMinuteDelta"
-  | "goldPerMinuteDelta"
-  | "damagePerMinuteDelta"
-  | "damageTakenPerMinuteDelta"
-  | "visionPerMinuteDelta"
->;
-
 interface MetricDefinition {
   key: MetricKey;
   label: string;
   short: string;
   format: (value: number | null | undefined) => string;
   delta: (value: number | null | undefined) => string | null;
-  deltaOf: (comparison: Deltas) => number | null;
   /** Les dégâts subis n'ont pas de bon sens : un tank en encaisse, c'est son rôle. */
   polarity: "higher" | "lower" | "neutral";
 }
@@ -130,18 +118,17 @@ export const useMetrics = () => {
         ? null
         : `${value > 0 ? "+" : ""}${format.entier(value)}`;
 
-    // Sans écart aux coéquipiers : le cœur ne le calcule que pour les indicateurs historiques.
     const simple = (
       key: MetriqueDePartie,
       format: (value: number | null | undefined) => string,
+      delta: MetricDefinition["delta"],
       polarity: MetricDefinition["polarity"],
     ): MetricDefinition => ({
       key,
       label: t(`metric.${key}`),
       short: t(`metricShort.${key}`),
       format,
-      delta: () => null,
-      deltaOf: () => null,
+      delta,
       polarity,
     });
     const signe = (value: number | null | undefined) =>
@@ -149,32 +136,47 @@ export const useMetrics = () => {
     const signeDecimal = (value: number | null | undefined) =>
       format.ecartRatio(value) ?? format.absent;
 
+    const points = format.ecartEnPoints;
+    const decimal = format.ecartRatio;
     const nouvelles = {
       wardsKilledPerMinute: simple(
         "wardsKilledPerMinute",
         format.ratio,
+        decimal,
         "higher",
       ),
-      controlWardsPlaced: simple("controlWardsPlaced", format.ratio, "higher"),
-      damageShare: simple("damageShare", format.taux, "higher"),
-      deathsPer10: simple("deathsPer10", format.ratio, "lower"),
-      timeDeadShare: simple("timeDeadShare", format.taux, "lower"),
+      controlWardsPlaced: simple(
+        "controlWardsPlaced",
+        format.ratio,
+        decimal,
+        "higher",
+      ),
+      damageShare: simple("damageShare", format.taux, points, "higher"),
+      deathsPer10: simple("deathsPer10", format.ratio, decimal, "lower"),
+      timeDeadShare: simple("timeDeadShare", format.taux, points, "lower"),
       turretDamagePerMinute: simple(
         "turretDamagePerMinute",
         format.entier,
+        ecartEntier,
         "higher",
       ),
-      turretTakedowns: simple("turretTakedowns", format.ratio, "higher"),
+      turretTakedowns: simple(
+        "turretTakedowns",
+        format.ratio,
+        decimal,
+        "higher",
+      ),
       epicMonsterDamagePerMinute: simple(
         "epicMonsterDamagePerMinute",
         format.entier,
+        ecartEntier,
         "higher",
       ),
-      platesDiff: simple("platesDiff", signeDecimal, "higher"),
-      goldDiffAt15: simple("goldDiffAt15", signe, "higher"),
-      csDiffAt15: simple("csDiffAt15", signeDecimal, "higher"),
-      xpDiffAt15: simple("xpDiffAt15", signe, "higher"),
-      killsDiffAt15: simple("killsDiffAt15", signeDecimal, "higher"),
+      platesDiff: simple("platesDiff", signeDecimal, decimal, "higher"),
+      goldDiffAt15: simple("goldDiffAt15", signe, ecartEntier, "higher"),
+      csDiffAt15: simple("csDiffAt15", signeDecimal, decimal, "higher"),
+      xpDiffAt15: simple("xpDiffAt15", signe, ecartEntier, "higher"),
+      killsDiffAt15: simple("killsDiffAt15", signeDecimal, decimal, "higher"),
     };
 
     const definitions: Record<MetricKey, MetricDefinition> = {
@@ -184,7 +186,6 @@ export const useMetrics = () => {
         short: t("metricShort.winRate"),
         format: format.taux,
         delta: format.ecartEnPoints,
-        deltaOf: (c) => c.winRateDelta,
         polarity: "higher",
       },
       kda: {
@@ -193,7 +194,6 @@ export const useMetrics = () => {
         short: t("metricShort.kda"),
         format: format.ratio,
         delta: format.ecartRatio,
-        deltaOf: (c) => c.kdaDelta,
         polarity: "higher",
       },
       csPerMinute: {
@@ -202,7 +202,6 @@ export const useMetrics = () => {
         short: t("metricShort.cs"),
         format: format.ratio,
         delta: format.ecartRatio,
-        deltaOf: (c) => c.csPerMinuteDelta,
         polarity: "higher",
       },
       goldPerMinute: {
@@ -211,7 +210,6 @@ export const useMetrics = () => {
         short: t("metricShort.gold"),
         format: format.entier,
         delta: ecartEntier,
-        deltaOf: (c) => c.goldPerMinuteDelta,
         polarity: "higher",
       },
       damagePerMinute: {
@@ -220,7 +218,6 @@ export const useMetrics = () => {
         short: t("metricShort.dpm"),
         format: format.entier,
         delta: ecartEntier,
-        deltaOf: (c) => c.damagePerMinuteDelta,
         polarity: "higher",
       },
       damageTakenPerMinute: {
@@ -229,7 +226,6 @@ export const useMetrics = () => {
         short: t("metricShort.damageTaken"),
         format: format.entier,
         delta: ecartEntier,
-        deltaOf: (c) => c.damageTakenPerMinuteDelta,
         polarity: "neutral",
       },
       visionPerMinute: {
@@ -238,7 +234,6 @@ export const useMetrics = () => {
         short: t("metricShort.vision"),
         format: format.ratio,
         delta: format.ecartRatio,
-        deltaOf: (c) => c.visionPerMinuteDelta,
         polarity: "higher",
       },
       killParticipation: {
@@ -247,7 +242,6 @@ export const useMetrics = () => {
         short: t("metricShort.kp"),
         format: format.taux,
         delta: format.ecartEnPoints,
-        deltaOf: () => null,
         polarity: "higher",
       },
       deathShare: {
@@ -256,25 +250,22 @@ export const useMetrics = () => {
         short: t("metricShort.dp"),
         format: format.taux,
         delta: format.ecartEnPoints,
-        deltaOf: () => null,
         polarity: "lower",
       },
       ...nouvelles,
     };
 
-    /** Une rangée de tuiles dans l'ordre du catalogue, avec l'écart aux coéquipiers s'il existe. */
+    /** Une rangée de tuiles dans l'ordre du catalogue. */
     const tuiles = (
       line: StatLineDto,
       options: {
         compact?: boolean;
-        versus?: TeamComparisonDto | null;
         keys?: MetricKey[];
         adornment?: (key: MetricKey) => ReactNode | undefined;
       } = {},
     ): StatGridItem[] =>
       (options.keys ?? KPI_ORDER).map((key) => {
         const metric = definitions[key];
-        const ecart = options.versus ? metric.deltaOf(options.versus) : null;
         return {
           key,
           label: options.compact ? metric.short : metric.label,
@@ -288,15 +279,6 @@ export const useMetrics = () => {
                 })
               : undefined,
           adornment: options.adornment?.(key),
-          delta: metric.delta(ecart) ?? undefined,
-          deltaTone:
-            metric.polarity === "neutral"
-              ? "neutral"
-              : format.tonDeLEcart(
-                  metric.polarity === "lower" && ecart !== null
-                    ? -ecart
-                    : ecart,
-                ),
         };
       });
 

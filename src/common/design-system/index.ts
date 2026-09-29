@@ -148,6 +148,8 @@ export type {
   ComparisonEntry,
   ComparisonTileProps,
 } from "./components/ComparisonTile";
+export { QuadStatTile } from "./components/QuadStatTile";
+export type { QuadCorner, QuadStatTileProps } from "./components/QuadStatTile";
 export { StatTile } from "./components/StatTile";
 export type { StatTileProps } from "./components/StatTile";
 export { StatusChip } from "./components/StatusChip";
