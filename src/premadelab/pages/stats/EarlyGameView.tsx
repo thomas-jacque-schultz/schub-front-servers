@@ -5,7 +5,7 @@ import {
   Columns,
   LaneMap,
   Stack,
-  StatGrid,
+  FaceOffTable,
   Text,
   Tooltip,
   type ChipTone,
@@ -103,29 +103,26 @@ export function EarlyGameView({ early, names }: EarlyGameViewProps) {
             })
           : t("early.balancedSummary")}
       </Text>
-      <Columns minWidth={240} count={3}>
+      <Columns minWidth={220} count={3}>
         <Presence
           title={t("early.presence.ours")}
           presence={early.ourJungler}
+        />
+        <FaceOffTable
+          title={t("early.objectives.title")}
+          oursLabel={t("early.objectives.ours")}
+          theirsLabel={t("early.objectives.theirs")}
+          rows={(["dragons", "grubs", "heralds"] as const).map((cle) => ({
+            key: cle,
+            label: t(`early.objectives.${cle}`),
+            ours: early.ourObjectives[cle],
+            theirs: early.theirObjectives[cle],
+          }))}
         />
         <Presence
           title={t("early.presence.theirs")}
           presence={early.theirJungler}
         />
-        <Stack spacing={0.5}>
-          <Text variant="caption" tone="secondary">
-            {t("early.objectives.title")}
-          </Text>
-          <StatGrid
-            size="small"
-            minWidth={70}
-            items={(["dragons", "grubs", "heralds"] as const).map((cle) => ({
-              key: cle,
-              label: t(`early.objectives.${cle}`),
-              value: `${early.ourObjectives[cle]} – ${early.theirObjectives[cle]}`,
-            }))}
-          />
-        </Stack>
       </Columns>
     </Stack>
   );

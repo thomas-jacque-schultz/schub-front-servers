@@ -408,10 +408,12 @@
     "weakSummary": "Our jungler played {{side}}; {{onWeak}} of {{total}} enemy gank(s) landed on the other side.",
     "balancedSummary": "Our jungler split their time between both sides.",
     "objectives": {
-      "title": "Objectives before 15 min (us – them)",
+      "title": "Objectives before 15 min: us on the left, them on the right",
       "dragons": "Dragons",
       "grubs": "Grubs",
-      "heralds": "Herald"
+      "heralds": "Herald",
+      "ours": "Us",
+      "theirs": "Them"
     },
     "noAnalysis": "No early-game analysis: missing timeline, or unknown roles in this game.",
     "team": {
