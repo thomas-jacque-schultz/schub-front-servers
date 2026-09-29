@@ -4,14 +4,13 @@
     "placeholder": "Pseudo, ou Pseudo#TAG",
     "helper": "Trois caractères suffisent. Les propositions viennent des comptes déjà connus du site : l’API Riot ne sait pas chercher par pseudo partiel.",
     "searching": "Recherche…",
-    "suggestions": "Comptes connus qui correspondent",
+    "suggestions": "Comptes connus : cliquez sur le bon pour le choisir",
     "noSuggestionTitle": "Aucun compte connu ne correspond",
-    "noSuggestionDescription": "C’est normal tant que peu de parties ont été collectées. Écrivez le Riot ID en entier, puis demandez-le à Riot : il rejoindra la liste."
+    "noSuggestionDescription": "C’est normal tant que peu de parties ont été collectées. Écrivez le Riot ID en entier puis validez : Riot le confirme et il est choisi."
   },
   "verify": {
-    "action": "Demander à Riot",
-    "helper": "Le compte n’est pas dans la liste ? Écrivez le Riot ID en entier et demandez-le à Riot. Cela ne lie rien : le compte rejoint la liste, et c’est le clic qui choisit.",
-    "needsFullId": "Pour demander à Riot, écrivez le Riot ID en entier : un seul #, avec du texte de chaque côté.",
+    "helper": "Le compte n’est pas dans la liste ? Écrivez le Riot ID en entier puis validez (bouton ou Entrée) : Riot le confirme et il est choisi.",
+    "needsFullId": "Pour valider, écrivez le Riot ID en entier : un seul #, avec du texte de chaque côté.",
     "done": "{{riotId}} confirmé par Riot. Choisissez-le dans la liste.",
     "unavailable": "La vérification auprès de Riot est indisponible. Réessayez dans un instant."
   },

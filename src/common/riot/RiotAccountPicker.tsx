@@ -36,12 +36,14 @@ const pseudoDe = (saisie: string): string => saisie.split("#")[0].trim();
 
 export interface RiotAccountPickerProps {
   onPick: (account: KnownRiotAccountDto) => void;
+  actionLabel: string;
   busy?: boolean;
   resetKey?: unknown;
 }
 
 export function RiotAccountPicker({
   onPick,
+  actionLabel,
   busy = false,
   resetKey,
 }: RiotAccountPickerProps) {
@@ -120,12 +122,23 @@ export function RiotAccountPicker({
 
   const verifier = async () => {
     const riotId = query.trim();
+    if (!isRiotIdComplete(riotId) || isVerifying || busy) {
+      return;
+    }
     setIsVerifying(true);
     setError("");
     setVerified(null);
 
     try {
-      setSuggestions(await verifyRiotAccountApi(riotId));
+      const trouves = await verifyRiotAccountApi(riotId);
+      const exact = trouves.find(
+        (account) => account.riotId.toLowerCase() === riotId.toLowerCase(),
+      );
+      if (exact) {
+        onPick(exact);
+        return;
+      }
+      setSuggestions(trouves);
       setHasSearched(true);
       setVerified(riotId);
     } catch (verifyError) {
@@ -213,6 +226,7 @@ export function RiotAccountPicker({
             setQuery(value);
             setVerified(null);
           }}
+          onEnter={() => void verifier()}
           placeholder={t("search.placeholder")}
           helperText={t("search.helper")}
           autoFocus
@@ -230,12 +244,11 @@ export function RiotAccountPicker({
       <Stack spacing={1}>
         <Stack direction="row" justify="end">
           <Button
-            variant="secondary"
-            disabled={!isRiotIdComplete(query)}
+            disabled={!isRiotIdComplete(query) || busy}
             loading={isVerifying}
             onClick={() => void verifier()}
           >
-            {t("verify.action")}
+            {actionLabel}
           </Button>
         </Stack>
         <Text variant="caption" tone="secondary">
@@ -250,6 +263,11 @@ export function RiotAccountPicker({
         )}
       </Stack>
 
+      {hasSearched && !isSearching && suggestions.length > 0 && (
+        <Text variant="caption" tone="secondary">
+          {t("search.suggestions")}
+        </Text>
+      )}
       {hasSearched && !isSearching && (
         <ChoiceList
           label={t("search.suggestions")}

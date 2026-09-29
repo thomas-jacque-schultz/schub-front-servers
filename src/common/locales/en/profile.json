@@ -60,6 +60,7 @@
       "readyAt": "Ready around {{date}}",
       "readyUnknown": "No estimate available yet",
       "unavailable": "Collection progress is unavailable: the Riot connector is not answering. No data is lost, only this information is missing."
-    }
+    },
+    "linkAction": "Link this account"
   }
 }
