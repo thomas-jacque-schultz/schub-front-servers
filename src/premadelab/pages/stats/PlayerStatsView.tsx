@@ -25,7 +25,7 @@ import { useKpiSentence } from "./kpiSentence";
 import type { MetricKey } from "./metrics";
 import { useGradeAdornment } from "./useGrades";
 
-const CHAMPIONS_PLEINE_LARGEUR = 6;
+const CHAMPIONS_PLEINE_LARGEUR = 8;
 
 /** Ce que Mes stats et un joueur d'équipe ont en commun. */
 export type PlayerStatsData = Pick<
@@ -148,7 +148,7 @@ export function PlayerStatsView({ data }: PlayerStatsViewProps) {
             {t("section.noChampion")}
           </Text>
         ) : (
-          <Columns minWidth={280}>
+          <Columns minWidth={240} count={4}>
             {championsAffiches(
               data.champions,
               choisis,
