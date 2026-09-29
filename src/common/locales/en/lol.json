@@ -155,13 +155,7 @@
     "consequences": "What follows",
     "consequencesHint": "Their effects: laning lead, damage share, results.",
     "habits": "Habits",
-    "habitsHint": "Your win rate by time of day, and right after two losses in a row.",
-    "slot": {
-      "morning": "Morning (6am – noon)",
-      "afternoon": "Afternoon (noon – 6pm)",
-      "evening": "Evening (6pm – midnight)",
-      "night": "Night (midnight – 6am)"
-    },
+    "habitsHint": "Your win rate by time of day, in two-hour slots, and right after two losses in a row.",
     "games_one": "{{count}} game",
     "games_other": "{{count}} games",
     "afterTwoLosses": "After two losses",
@@ -170,6 +164,18 @@
     "nextTierHint": "Indicators that grow with rank where you are below the average of the tier above, in your role.",
     "nextTierNone": "In your role, you already match the tier above on every indicator that follows rank.",
     "gap": "{{metric}}: {{value}}, versus {{target}} on average in the tier above.",
-    "unobservable": "Wave freezing and fight spacing cannot be read from Riot data: they are not assessed here."
+    "unobservable": "Wave freezing and fight spacing cannot be read from Riot data: they are not assessed here.",
+    "overall": "Overall",
+    "clock": {
+      "label": "Win rate by time of day",
+      "range": "{{from}}:00 – {{to}}:00",
+      "sector_one": "{{range}}: {{rate}} over {{count}} game",
+      "sector_other": "{{range}}: {{rate}} over {{count}} games",
+      "thin_one": "{{range}}: {{count}} game, too few to conclude",
+      "thin_other": "{{range}}: {{count}} games, too few to conclude",
+      "center": "You win {{best}} from {{bestRange}}, {{worst}} from {{worstRange}}",
+      "empty": "No game in the period.",
+      "timezone": "Times in your time zone ({{zone}}). A sector's thickness shows how many games were played then; its colour, whether you win more (green) or less (red) than your average. Grey: fewer than 3 games."
+    }
   }
 }

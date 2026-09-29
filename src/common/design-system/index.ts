@@ -148,6 +148,8 @@ export type {
   ComparisonEntry,
   ComparisonTileProps,
 } from "./components/ComparisonTile";
+export { ClockChart } from "./components/ClockChart";
+export type { ClockChartProps, ClockSector } from "./components/ClockChart";
 export { FaceOffTable } from "./components/FaceOffTable";
 export type { FaceOffRow, FaceOffTableProps } from "./components/FaceOffTable";
 export { PieChart } from "./components/PieChart";

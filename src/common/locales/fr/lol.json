@@ -155,13 +155,7 @@
     "consequences": "Ce qui en découle",
     "consequencesHint": "Leurs effets : avance en phase de lane, part des dégâts, résultats.",
     "habits": "Habitudes",
-    "habitsHint": "Ton taux de victoire selon l’heure de la partie, et juste après deux défaites d’affilée.",
-    "slot": {
-      "morning": "Matin (6 h – 12 h)",
-      "afternoon": "Après-midi (12 h – 18 h)",
-      "evening": "Soirée (18 h – minuit)",
-      "night": "Nuit (minuit – 6 h)"
-    },
+    "habitsHint": "Ton taux de victoire selon l'heure de la partie, par tranche de deux heures, et juste après deux défaites d'affilée.",
     "games_one": "{{count}} partie",
     "games_other": "{{count}} parties",
     "afterTwoLosses": "Après deux défaites",
@@ -170,6 +164,18 @@
     "nextTierHint": "Les indicateurs qui montent avec le rang et où tu es sous la moyenne du palier au-dessus, à ton poste.",
     "nextTierNone": "À ton poste, tu es déjà au niveau de la moyenne du palier au-dessus sur tous les indicateurs qui suivent le rang.",
     "gap": "{{metric}} : {{value}}, contre {{target}} en moyenne au palier au-dessus.",
-    "unobservable": "Le gel de vague et le placement en combat ne se lisent pas dans les données de Riot : ils ne sont pas évalués ici."
+    "unobservable": "Le gel de vague et le placement en combat ne se lisent pas dans les données de Riot : ils ne sont pas évalués ici.",
+    "overall": "Sur l'ensemble",
+    "clock": {
+      "label": "Taux de victoire selon l'heure",
+      "range": "{{from}} h – {{to}} h",
+      "sector_one": "{{range}} : {{rate}} sur {{count}} partie",
+      "sector_other": "{{range}} : {{rate}} sur {{count}} parties",
+      "thin_one": "{{range}} : {{count}} partie, trop peu pour conclure",
+      "thin_other": "{{range}} : {{count}} parties, trop peu pour conclure",
+      "center": "Tu gagnes {{best}} de {{bestRange}}, {{worst}} de {{worstRange}}",
+      "empty": "Aucune partie sur la période.",
+      "timezone": "Heures de ton fuseau ({{zone}}). L'épaisseur d'un secteur dit combien de parties y ont été jouées ; sa couleur, s'il gagne plus (vert) ou moins (rouge) que ta moyenne. Gris : moins de 3 parties."
+    }
   }
 }

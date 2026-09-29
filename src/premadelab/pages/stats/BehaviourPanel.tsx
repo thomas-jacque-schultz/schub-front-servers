@@ -6,6 +6,8 @@ import {
   Stack,
   Text,
   type StatGridItem,
+  ClockChart,
+  type ClockSector,
 } from "../../../common";
 import { FindingList } from "../../components/Findings";
 import type { FindingDto } from "../../types/findings";
@@ -52,33 +54,32 @@ export function FindingsSummary({ findings }: { findings: FindingDto[] }) {
 }
 
 interface Creneau {
-  key: "morning" | "afternoon" | "evening" | "night";
+  debut: number;
   games: number;
   wins: number;
 }
 
-const creneauDe = (date: Date): Creneau["key"] => {
-  const heure = date.getHours();
-  if (heure >= 6 && heure < 12) return "morning";
-  if (heure >= 12 && heure < 18) return "afternoon";
-  if (heure >= 18) return "evening";
-  return "night";
-};
+const HEURES_PAR_SECTEUR = 2;
+// En deçà, un secteur reste gris : on n'en tire rien.
+const PARTIES_PAR_SECTEUR = 3;
+// Un secteur à moins de 3 points de la moyenne est dit « dans la moyenne ».
+const ECART_NEUTRE = 0.03;
 
-/** Taux de victoire par créneau horaire, et après deux défaites d'affilée : des faits, pas une règle. */
+/** Taux de victoire par tranche de deux heures, et après deux défaites d'affilée : des faits, pas une règle. */
 const habitudes = (games: TeamGameDto[]) => {
-  const creneaux: Record<Creneau["key"], Creneau> = {
-    morning: { key: "morning", games: 0, wins: 0 },
-    afternoon: { key: "afternoon", games: 0, wins: 0 },
-    evening: { key: "evening", games: 0, wins: 0 },
-    night: { key: "night", games: 0, wins: 0 },
-  };
+  const creneaux: Creneau[] = Array.from(
+    { length: 24 / HEURES_PAR_SECTEUR },
+    (_, index) => ({ debut: index * HEURES_PAR_SECTEUR, games: 0, wins: 0 }),
+  );
   const chronologie = games
     .filter((g) => g.startedAt && g.win !== null)
     .sort((a, b) => (a.startedAt! < b.startedAt! ? -1 : 1));
   let apresDeux = { games: 0, wins: 0 };
   chronologie.forEach((game, index) => {
-    const c = creneaux[creneauDe(new Date(game.startedAt!))];
+    const c =
+      creneaux[
+        Math.floor(new Date(game.startedAt!).getHours() / HEURES_PAR_SECTEUR)
+      ];
     c.games++;
     if (game.win) c.wins++;
     if (
@@ -94,7 +95,7 @@ const habitudes = (games: TeamGameDto[]) => {
   });
   const total = chronologie.length;
   const victoires = chronologie.filter((g) => g.win).length;
-  return { creneaux: Object.values(creneaux), apresDeux, total, victoires };
+  return { creneaux, apresDeux, total, victoires };
 };
 
 export interface BehaviourPanelProps {
@@ -155,13 +156,62 @@ export function BehaviourPanel({
   const h = habitudes(games);
   const taux = (wins: number, total: number) =>
     total >= PARTIES_MIN ? format.taux(wins / total) : format.absent;
+  const moyenne = h.total > 0 ? h.victoires / h.total : null;
+  const plage = (c: Creneau) =>
+    t("behaviour.clock.range", {
+      from: c.debut,
+      to: (c.debut + HEURES_PAR_SECTEUR) % 24,
+    });
+  const lisibles = h.creneaux.filter((c) => c.games >= PARTIES_PAR_SECTEUR);
+  const secteurs: ClockSector[] = h.creneaux.map((c) => {
+    const tauxDuSecteur = c.games > 0 ? c.wins / c.games : null;
+    const ecart =
+      tauxDuSecteur !== null && moyenne !== null ? tauxDuSecteur - moyenne : 0;
+    return {
+      key: String(c.debut),
+      startHour: c.debut,
+      endHour: c.debut + HEURES_PAR_SECTEUR,
+      weight: c.games,
+      tone:
+        c.games < PARTIES_PAR_SECTEUR
+          ? "empty"
+          : ecart > ECART_NEUTRE
+            ? "positive"
+            : ecart < -ECART_NEUTRE
+              ? "negative"
+              : "neutral",
+      title:
+        c.games < PARTIES_PAR_SECTEUR
+          ? t("behaviour.clock.thin", { range: plage(c), count: c.games })
+          : t("behaviour.clock.sector", {
+              range: plage(c),
+              rate: format.taux(tauxDuSecteur),
+              count: c.games,
+            }),
+    };
+  });
+  const parTaux = [...lisibles].sort(
+    (a, b) => b.wins / b.games - a.wins / a.games,
+  );
+  const meilleur = parTaux[0];
+  const pire = parTaux[parTaux.length - 1];
+  const centre =
+    meilleur && pire && meilleur !== pire
+      ? t("behaviour.clock.center", {
+          best: format.taux(meilleur.wins / meilleur.games),
+          bestRange: plage(meilleur),
+          worst: format.taux(pire.wins / pire.games),
+          worstRange: plage(pire),
+        })
+      : undefined;
+  const fuseau = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const tuiles: StatGridItem[] = [
-    ...h.creneaux.map((c) => ({
-      key: c.key,
-      label: t(`behaviour.slot.${c.key}`),
-      value: taux(c.wins, c.games),
-      hint: t("behaviour.games", { count: c.games }),
-    })),
+    {
+      key: "overall",
+      label: t("behaviour.overall"),
+      value: taux(h.victoires, h.total),
+      hint: t("behaviour.games", { count: h.total }),
+    },
     {
       key: "afterTwoLosses",
       label: t("behaviour.afterTwoLosses"),
@@ -207,7 +257,20 @@ export function BehaviourPanel({
         title={t("behaviour.habits")}
         description={t("behaviour.habitsHint")}
       >
-        <StatGrid items={tuiles} />
+        <Columns count={2} minWidth={260}>
+          <Stack spacing={1}>
+            <ClockChart
+              label={t("behaviour.clock.label")}
+              sectors={secteurs}
+              center={centre}
+              emptyLabel={t("behaviour.clock.empty")}
+            />
+            <Text variant="caption" tone="secondary" align="center">
+              {t("behaviour.clock.timezone", { zone: fuseau })}
+            </Text>
+          </Stack>
+          <StatGrid items={tuiles} />
+        </Columns>
       </Card>
       {suivant && (
         <Card
