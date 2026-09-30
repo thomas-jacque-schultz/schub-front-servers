@@ -9,6 +9,7 @@ import PauseIcon from "@mui/icons-material/Pause";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import SchoolIcon from "@mui/icons-material/School";
+import ScienceIcon from "@mui/icons-material/ScienceOutlined";
 import SendIcon from "@mui/icons-material/Send";
 import StorageIcon from "@mui/icons-material/Storage";
 import TranslateIcon from "@mui/icons-material/Translate";
@@ -37,6 +38,7 @@ const ICONS = {
   play: PlayArrowIcon,
   refresh: RefreshIcon,
   school: SchoolIcon,
+  science: ScienceIcon,
   send: SendIcon,
   storage: StorageIcon,
   todo: RadioButtonUncheckedIcon,

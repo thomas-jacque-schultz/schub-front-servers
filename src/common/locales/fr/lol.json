@@ -141,7 +141,9 @@
       "REQUIRED": "Condition",
       "OPTIONAL": "Renfort",
       "EXCEPTION": "Exception"
-    }
+    },
+    "experimental": "Expérimental",
+    "experimentalHint": "Mesure encore en validation : à lire avec prudence."
   },
   "behaviour": {
     "tab": "Comportement",

@@ -3,9 +3,11 @@ import { useTranslation } from "react-i18next";
 import {
   Chip,
   Expandable,
+  Icon,
   MeterBar,
   Stack,
   Text,
+  Tooltip,
   useCurrentLanguage,
   type ChipTone,
 } from "../../common";
@@ -76,6 +78,22 @@ export function FindingList({
                 finding.label[langue] ?? finding.label.fr ?? finding.pattern
               }
             />
+            {finding.experimental && (
+              <Tooltip
+                title={
+                  finding.limits[langue] ??
+                  finding.limits.fr ??
+                  t("findings.experimentalHint")
+                }
+              >
+                <Chip
+                  size="small"
+                  variant="outline"
+                  icon={<Icon name="science" size="small" />}
+                  label={t("findings.experimental")}
+                />
+              </Tooltip>
+            )}
             <Text>{phrase(finding)}</Text>
           </Stack>
         );

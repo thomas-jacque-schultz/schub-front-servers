@@ -141,7 +141,9 @@
       "REQUIRED": "Condition",
       "OPTIONAL": "Support",
       "EXCEPTION": "Exception"
-    }
+    },
+    "experimental": "Experimental",
+    "experimentalHint": "Measure still being validated: read with care."
   },
   "behaviour": {
     "tab": "Behaviour",

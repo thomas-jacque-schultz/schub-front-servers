@@ -25,6 +25,8 @@ export interface PatternDto {
   threshold: number;
   label: Record<string, string>;
   sentence: Record<string, string>;
+  experimental: boolean;
+  limits: Record<string, string>;
   author: string | null;
   comment: string | null;
   createdAt: string | null;

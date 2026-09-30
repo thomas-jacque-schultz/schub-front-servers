@@ -6,6 +6,7 @@ import {
   Card,
   Chip,
   DataTable,
+  Icon,
   Stack,
   StatGrid,
   Text,
@@ -41,6 +42,8 @@ const MODELE: Omit<PatternRequest, "comment"> = {
   threshold: 0.5,
   label: { fr: "", en: "" },
   sentence: { fr: "", en: "" },
+  experimental: true,
+  limits: { fr: "", en: "" },
 };
 
 const contenu = (p: PatternDto): Omit<PatternRequest, "comment"> => ({
@@ -56,6 +59,8 @@ const contenu = (p: PatternDto): Omit<PatternRequest, "comment"> => ({
   threshold: p.threshold,
   label: p.label,
   sentence: p.sentence,
+  experimental: p.experimental,
+  limits: p.limits,
 });
 
 /**
@@ -146,7 +151,19 @@ export function PatternEditor() {
             {
               key: "label",
               header: t("augur.label"),
-              render: (p) => <Text>{p.label.fr ?? p.key}</Text>,
+              render: (p) => (
+                <Stack direction="row" spacing={1} align="center">
+                  <Text>{p.label.fr ?? p.key}</Text>
+                  {p.experimental && (
+                    <Chip
+                      size="small"
+                      variant="outline"
+                      icon={<Icon name="science" size="small" />}
+                      label={t("augur.experimental")}
+                    />
+                  )}
+                </Stack>
+              ),
             },
             {
               key: "key",

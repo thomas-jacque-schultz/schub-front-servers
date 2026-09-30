@@ -112,7 +112,7 @@
     },
     "invalidate": {
       "title": "Invalidate Riot data",
-      "description": "After a Riot key change, every player identifier changes and the collected data becomes unusable. Invalidation erases it and keeps everything else; linked accounts and team slots are found again by their Riot ID.",
+      "description": "After a Riot key change, every player identifier changes and the collected data becomes unusable. Invalidation erases it and keeps everything else; linked accounts and team slots are found again by their Riot ID..",
       "open": "Invalidate data…",
       "needsPause": "Pause the ingest first, and wait for running tasks to finish.",
       "dialogTitle": "Invalidate Riot data?",
@@ -170,7 +170,7 @@
     "new": "New rule",
     "history": "History",
     "content": "Version content",
-    "contentHelp": "Conditions as ramps: from \"from\" (degree 0) to \"to\" (degree 1). unit: VALUE or PERCENTILE. A \"pattern:key\" signal reads another rule’s degree. Sentence: {signal.value}, {signal.percentile}, {position}, {tier}.",
+    "contentHelp": "Conditions as ramps: from \"from\" (degree 0) to \"to\" (degree 1). unit: VALUE or PERCENTILE. A \"pattern:key\" signal reads another rule’s degree. Sentence: {signal.value}, {signal.percentile}, {position}, {tier}. experimental: \"Experimental\" badge for players, limits (per language): what the measure misses, shown as a tooltip. A new rule starts experimental.",
     "comment": "Comment",
     "commentHelp": "Why this version: required to save, activate or roll back.",
     "invalidJson": "The content is not valid JSON.",
@@ -185,7 +185,8 @@
     "sampled": "Sampled subjects",
     "appearing": "Findings appearing",
     "disappearing": "Findings disappearing",
-    "unchanged": "Unchanged"
+    "unchanged": "Unchanged",
+    "experimental": "Experimental"
   },
   "trace": {
     "title": "Engine trace",
