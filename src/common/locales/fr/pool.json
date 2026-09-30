@@ -73,5 +73,9 @@
     "AUCUNE_MAITRISE": {
       "short": "Aucune maîtrise"
     }
+  },
+  "starting": {
+    "title": "Sélection de départ",
+    "description": "Chaque poste part d’une sélection des champions courants à ce poste. Modifiez-les librement : dès le premier changement, le pool est le vôtre."
   }
 }
