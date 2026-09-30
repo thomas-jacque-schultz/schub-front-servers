@@ -141,6 +141,12 @@ export function PoolPanel({ teamId }: PoolPanelProps) {
             })}
       </Text>
 
+      {pool.startingSelection && (
+        <Alert severity="info" title={t("starting.title")}>
+          {t("starting.description")}
+        </Alert>
+      )}
+
       {error && <Alert severity="warning">{error}</Alert>}
 
       {!pool.patch && (

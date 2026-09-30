@@ -73,5 +73,9 @@
     "AUCUNE_MAITRISE": {
       "short": "No mastery"
     }
+  },
+  "starting": {
+    "title": "Starting selection",
+    "description": "Each position starts from a selection of the champions commonly played there. Change them freely: from the first change, the pool is yours."
   }
 }

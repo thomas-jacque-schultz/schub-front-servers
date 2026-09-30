@@ -58,5 +58,6 @@ export interface ChampionPoolDto {
   columns: ChampionPoolColumnDto[];
   viewerMemberId: string | null;
   viewerCanEdit: boolean;
+  startingSelection: boolean;
   generatedAt: string;
 }
