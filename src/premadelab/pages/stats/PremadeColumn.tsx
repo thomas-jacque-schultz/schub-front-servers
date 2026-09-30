@@ -34,12 +34,23 @@ export function PremadeTiles({ player, lines }: PremadeProps) {
   const { definitions } = useMetrics();
   const format = useStatsFormat();
   const parties = player.premade?.games ?? 0;
-  const ton = (ecart: number | null, key: MetricKey) => {
-    const polarity = definitions[key].polarity;
-    if (polarity === "neutral" || ecart === null) {
-      return "neutral" as const;
+  // Un écart qui s'arrondit à zéro s'affiche sans signe ni couleur.
+  const ecart = (valeur: number | null, key: MetricKey) => {
+    const metric = definitions[key];
+    const texte = metric.delta(valeur);
+    if (texte === null || valeur === null) {
+      return { value: format.absent, tone: "neutral" as const };
     }
-    return format.tonDeLEcart(polarity === "lower" ? -ecart : ecart);
+    if (/^[+\-−]?0(?:[.,]0+)?(?![.,]?\d)/.test(texte)) {
+      return { value: texte.replace(/^[+\-−]/, ""), tone: "neutral" as const };
+    }
+    return {
+      value: texte,
+      tone:
+        metric.polarity === "neutral"
+          ? ("neutral" as const)
+          : format.tonDeLEcart(metric.polarity === "lower" ? -valeur : valeur),
+    };
   };
 
   return (
@@ -63,13 +74,11 @@ export function PremadeTiles({ player, lines }: PremadeProps) {
                   hint: t("premade.hint.main", { count: parties }),
                 }}
                 topRight={{
-                  value: metric.delta(chiffre.versusTeammates) ?? format.absent,
-                  tone: ton(chiffre.versusTeammates, key),
+                  ...ecart(chiffre.versusTeammates, key),
                   hint: t("premade.hint.teammates"),
                 }}
                 bottomLeft={{
-                  value: metric.delta(chiffre.versusSelf) ?? format.absent,
-                  tone: ton(chiffre.versusSelf, key),
+                  ...ecart(chiffre.versusSelf, key),
                   hint: t("premade.hint.self"),
                 }}
                 bottomRight={{
