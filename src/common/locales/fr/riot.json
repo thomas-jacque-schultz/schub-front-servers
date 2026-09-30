@@ -112,7 +112,7 @@
     },
     "invalidate": {
       "title": "Invalider les données Riot",
-      "description": "Après un changement de clé Riot, tous les identifiants de joueurs changent et les données collectées deviennent inutilisables. L’invalidation les efface et garde tout le reste ; les comptes liés et les places d’équipe sont retrouvés par leur Riot ID..",
+      "description": "Après un changement de clé Riot, tous les identifiants de joueurs changent et les données collectées deviennent inutilisables. L’invalidation les efface et garde tout le reste ; les comptes liés et les places d’équipe sont retrouvés par leur Riot ID. Les collections sont recréées compressées en zstd : c’est aussi le seul moment où une base existante passe en zstd.",
       "open": "Invalider les données…",
       "needsPause": "Mets d’abord l’ingest en pause, et attends que les tâches en cours aient fini.",
       "dialogTitle": "Invalider les données Riot ?",

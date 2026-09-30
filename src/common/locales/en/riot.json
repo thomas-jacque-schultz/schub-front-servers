@@ -112,7 +112,7 @@
     },
     "invalidate": {
       "title": "Invalidate Riot data",
-      "description": "After a Riot key change, every player identifier changes and the collected data becomes unusable. Invalidation erases it and keeps everything else; linked accounts and team slots are found again by their Riot ID..",
+      "description": "After a Riot key change, every player identifier changes and the collected data becomes unusable. Invalidation erases it and keeps everything else; linked accounts and team slots are found again by their Riot ID. Collections are recreated with zstd compression: it is also the only time an existing database switches to zstd.",
       "open": "Invalidate data…",
       "needsPause": "Pause the ingest first, and wait for running tasks to finish.",
       "dialogTitle": "Invalidate Riot data?",
