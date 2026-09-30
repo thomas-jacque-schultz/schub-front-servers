@@ -112,7 +112,7 @@
     },
     "invalidate": {
       "title": "Invalider les données Riot",
-      "description": "Après un changement de clé Riot, tous les identifiants de joueurs changent et les données collectées deviennent inutilisables. L’invalidation les efface et garde tout le reste ; les comptes liés et les places d’équipe sont retrouvés par leur Riot ID.",
+      "description": "Après un changement de clé Riot, tous les identifiants de joueurs changent et les données collectées deviennent inutilisables. L’invalidation les efface et garde tout le reste ; les comptes liés et les places d’équipe sont retrouvés par leur Riot ID..",
       "open": "Invalider les données…",
       "needsPause": "Mets d’abord l’ingest en pause, et attends que les tâches en cours aient fini.",
       "dialogTitle": "Invalider les données Riot ?",
@@ -170,7 +170,7 @@
     "new": "Nouvelle règle",
     "history": "Historique",
     "content": "Contenu de la version",
-    "contentHelp": "Conditions en rampes : de « from » (degré 0) à « to » (degré 1). unit : VALUE ou PERCENTILE. Un signal « pattern:clé » lit le degré d’une autre règle. Phrase : {signal.value}, {signal.percentile}, {position}, {tier}.",
+    "contentHelp": "Conditions en rampes : de « from » (degré 0) à « to » (degré 1). unit : VALUE ou PERCENTILE. Un signal « pattern:clé » lit le degré d’une autre règle. Phrase : {signal.value}, {signal.percentile}, {position}, {tier}. experimental : badge « Expérimental » côté joueur, limits (par langue) : ce que la mesure ne voit pas, en infobulle. Une nouvelle règle naît expérimentale.",
     "comment": "Commentaire",
     "commentHelp": "Pourquoi cette version : obligatoire pour enregistrer, activer ou revenir en arrière.",
     "invalidJson": "Le contenu n’est pas un JSON valide.",
@@ -185,7 +185,8 @@
     "sampled": "Sujets échantillonnés",
     "appearing": "Constats qui apparaissent",
     "disappearing": "Constats qui disparaissent",
-    "unchanged": "Inchangés"
+    "unchanged": "Inchangés",
+    "experimental": "Expérimental"
   },
   "trace": {
     "title": "Trace du moteur",

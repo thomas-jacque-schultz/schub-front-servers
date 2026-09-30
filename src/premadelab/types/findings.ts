@@ -24,6 +24,8 @@ export interface FindingDto {
   category: FindingCategory;
   nature: FindingNature;
   confidence: number;
+  experimental: boolean;
+  limits: Record<string, string>;
   evidence: ConditionTraceDto[];
   context: Record<string, string>;
 }
