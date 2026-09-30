@@ -8,14 +8,14 @@ const meta = {
     label: "Victoires",
     main: { value: "45 %", hint: "Sur les parties jouées ensemble" },
     topRight: {
-      value: "+3 pts",
-      tone: "positive",
-      hint: "Écart avec ses propres stats, toutes parties",
-    },
-    bottomLeft: {
       value: "−5 pts",
       tone: "negative",
       hint: "Écart avec la moyenne des coéquipiers",
+    },
+    bottomLeft: {
+      value: "+3 pts",
+      tone: "positive",
+      hint: "Écart avec ses propres stats, toutes parties",
     },
     bottomRight: { value: "4e", hint: "Rang parmi les membres" },
   },
@@ -30,11 +30,11 @@ export const SansPartieEnsemble: Story = {
   args: {
     label: "KDA",
     main: { value: "—", hint: "Aucune partie d'équipe sur la période" },
-    topRight: {
+    topRight: { value: "—", hint: "Écart avec la moyenne des coéquipiers" },
+    bottomLeft: {
       value: "—",
       hint: "Écart avec ses propres stats, toutes parties",
     },
-    bottomLeft: { value: "—", hint: "Écart avec la moyenne des coéquipiers" },
     bottomRight: { value: "—", hint: "Rang parmi les membres" },
   },
 };
