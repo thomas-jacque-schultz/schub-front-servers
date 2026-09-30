@@ -11,7 +11,6 @@ import {
   messageOf,
   useRequest,
 } from "../../../common";
-import { GameReviews } from "../reviews/GameReviews";
 import { GameDetail } from "./GameDetail";
 import { GameHistoryList } from "./GameHistoryList";
 import { StatsStateNote } from "./StatsStateNote";
@@ -91,7 +90,6 @@ export function TeamGamesPanel({ teamId, avatars }: TeamGamesPanelProps) {
                     getTeamGameDetailApi(teamId, game.matchId, periode)
                   }
                   avatars={avatars}
-                  footer={<GameReviews teamId={teamId} game={game} />}
                 />
               )}
             />

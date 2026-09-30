@@ -5,7 +5,7 @@
     "text": "{{product}} isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.",
     "sourceLabel": "Riot Games — General Policies"
   },
-  "updated": "Dernière mise à jour : 28 septembre 2026.",
+  "updated": "Dernière mise à jour : 30 septembre 2026.",
   "terms": {
     "meta": {
       "title": "Conditions d'utilisation — {{product}}",
@@ -18,9 +18,9 @@
     },
     "purpose": {
       "title": "Objet",
-      "p1": "Schub est un projet personnel, gratuit et non commercial, hébergé sur schultz-thomas.fr. Il rassemble les outils de la communauté Discord Miam : aujourd'hui, piloter des serveurs de jeu hébergés à domicile et outiller une équipe League of Legends — effectif, statistiques, pool de champions, préparation des compositions et revue d'après-partie.",
+      "p1": "Schub est un projet personnel, gratuit et non commercial, hébergé sur schultz-thomas.fr. Il rassemble les outils de la communauté Discord Miam : aujourd'hui, piloter des serveurs de jeu hébergés à domicile et outiller une équipe League of Legends — effectif, statistiques, pool de champions et préparation des compositions.",
       "p2": "Utiliser le site vaut acceptation des présentes conditions. Qui ne les accepte pas n'a qu'à ne pas créer de compte ; l'état des serveurs et les pages de texte restent consultables sans compte.",
-      "p1_PremadeLab": "PremadeLab est un projet personnel, gratuit et non commercial, hébergé sur premadelab.eu. C'est un outil d'analyse de parties League of Legends, pour un joueur et pour son équipe : recherche d'un joueur, statistiques et constats sur ses parties, effectif, pool de champions, préparation des compositions et revue d'après-partie.",
+      "p1_PremadeLab": "PremadeLab est un projet personnel, gratuit et non commercial, hébergé sur premadelab.eu. C'est un outil d'analyse de parties League of Legends, pour un joueur et pour son équipe : recherche d'un joueur, statistiques et constats sur ses parties, effectif, pool de champions et préparation des compositions.",
       "p2_PremadeLab": "Utiliser le site vaut acceptation des présentes conditions. Qui ne les accepte pas n'a qu'à ne pas créer de compte ; la présentation, les pages de joueur et les pages de texte restent consultables sans compte."
     },
     "publisher": {
@@ -42,12 +42,11 @@
     },
     "content": {
       "title": "Ce que tu publies",
-      "p1": "Les noms d'équipe, les compositions, leurs notes et les revues d'après-partie sont écrits par les utilisateurs. Ils sont visibles des membres de l'équipe concernée, et de personne d'autre.",
+      "p1": "Les noms d'équipe, les compositions et leurs notes sont écrits par les utilisateurs. Ils sont visibles des membres de l'équipe concernée, et de personne d'autre.",
       "p2": "Tu restes responsable de ce que tu écris. Sont exclus, et supprimés sans préavis :",
-      "i1": "les injures, le harcèlement et les propos discriminatoires, y compris visant un coéquipier nommé dans une revue ;",
+      "i1": "les injures, le harcèlement et les propos discriminatoires, y compris visant un coéquipier ;",
       "i2": "les données personnelles de tiers — adresse, numéro, identité civile — qui n'ont rien à faire dans une note de partie ;",
-      "i3": "tout contenu illicite, ou portant atteinte aux droits d'un tiers.",
-      "p3": "Une revue d'après-partie porte sur une partie : elle décrit du jeu, pas une personne."
+      "i3": "tout contenu illicite, ou portant atteinte aux droits d'un tiers."
     },
     "availability": {
       "title": "Disponibilité et garanties",
@@ -58,7 +57,7 @@
     "ip": {
       "title": "Propriété intellectuelle",
       "p1": "League of Legends, les noms et les visuels de champions, les icônes servies par Data Dragon et l'ensemble des éléments de jeu appartiennent à Riot Games, Inc. {{product}} en fait un usage de produit tiers, dans le cadre des règles du portail développeur de Riot Games.",
-      "p2": "Le code de {{product}} est publié sous la licence de son dépôt public. Les contenus écrits par les utilisateurs — noms d'équipe, compositions, revues — restent les leurs ; l'éditeur ne les exploite qu'aux fins de faire fonctionner le service."
+      "p2": "Le code de {{product}} est publié sous la licence de son dépôt public. Les contenus écrits par les utilisateurs — noms d'équipe, compositions — restent les leurs ; l'éditeur ne les exploite qu'aux fins de faire fonctionner le service."
     },
     "privacy": {
       "title": "Données personnelles",
@@ -77,7 +76,7 @@
   "privacy": {
     "meta": {
       "title": "Politique de confidentialité — {{product}}",
-      "description": "Ce que {{product}} collecte — identité Discord, Riot ID, historique de parties publiques, notes de revue —, où ces données vivent, combien de temps, et comment en demander la suppression."
+      "description": "Ce que {{product}} collecte — identité Discord, Riot ID, historique de parties publiques —, où ces données vivent, combien de temps, et comment en demander la suppression."
     },
     "hero": {
       "eyebrow": "Mentions",
@@ -103,8 +102,6 @@
       "others": "Une partie compte dix participants. Le Riot ID et les chiffres de partie des neuf autres sont donc enregistrés eux aussi, y compris lorsqu'ils n'ont pas de compte {{product}} et n'en auront jamais. Ce sont des données que l'API de Riot Games rend publiques, mais elles sont bien conservées ici — et une demande de suppression les concerne aussi.",
       "teamsTitle": "Équipes",
       "teams": "Le nom d'une équipe, son effectif — un Riot ID, des postes, un statut par place —, le pool de champions retenu par poste et les compositions préparées, avec leur patch et leurs notes.",
-      "reviewsTitle": "Revues d'après-partie",
-      "reviews": "Le texte libre écrit par un membre à propos d'un autre, rattaché à une partie précise, avec son auteur, son sujet et ses dates d'écriture et de modification.",
       "contactTitle": "Formulaire de contact",
       "contact": "Le nom, l’adresse électronique et le message saisis. Le site ne les enregistre pas : le message est remis tel quel à l’éditeur par Discord, en message privé ou dans un salon de repli, et reste dans cette messagerie tant que l’éditeur ne le supprime pas."
     },
@@ -126,7 +123,7 @@
       "i1": "identifier une personne et lui donner les droits attachés à son rôle ;",
       "i2": "rattacher un compte de jeu à un compte du site, et à une place d'effectif ;",
       "i3": "calculer et afficher les statistiques personnelles et d'équipe ;",
-      "i4": "faire fonctionner les équipes : effectif, pool de champions, compositions, revues ;",
+      "i4": "faire fonctionner les équipes : effectif, pool de champions, compositions ;",
       "i5": "recevoir les messages du formulaire de contact et en écarter le spam.",
       "basis": "Base légale : l’exécution du service que tu demandes en créant un compte (RGPD, article 6.1.b) pour ton compte, tes équipes et tes contenus ; l’intérêt légitime (article 6.1.f) pour les données de parties des autres joueurs, que l’API de Riot Games rend publiques et sans lesquelles aucune statistique n’existe, ainsi que pour le formulaire de contact et sa protection contre le spam."
     },
@@ -143,7 +140,7 @@
       "permanent": "Les parties collectées, leurs projections par joueur et l'index des comptes de jeu croisés n'ont aucune date d'expiration.",
       "riotPurge": "Il faut le dire clairement : {{product}} ne relève que les parties récentes de chaque joueur, et Riot ne sert lui-même qu'un historique borné. Les parties déjà collectées, elles, restent. Autrement dit, {{product}} conserve des parties que Riot ne sert plus, et c'est ce qui rend une demande de suppression utile.",
       "accountTitle": "Le reste",
-      "account": "Le compte, ses équipes, ses compositions et ses revues sont conservés tant que le compte existe. Supprimer une équipe supprime ses compositions et ses revues."
+      "account": "Le compte, ses équipes et ses compositions sont conservés tant que le compte existe. Supprimer une équipe supprime ses compositions."
     },
     "sharing": {
       "title": "À qui ces données sont transmises",
@@ -152,7 +149,7 @@
       "i1": "Riot Games — le site interroge son API pour lire des parties. Ce qui sort d'ici est l'identifiant du compte de jeu concerné, rien de plus ;",
       "i2": "Discord — pour l'authentification, et pour la remise des messages du formulaire de contact ;",
       "i3": "Cloudflare — uniquement si la protection anti-robots du formulaire de contact est activée.",
-      "p3": "Les données restent par ailleurs visibles de qui en a l'usage sur le site : les membres d'une équipe voient l'effectif, les statistiques et les revues de cette équipe. La page publique d'un joueur montre à tout visiteur ce que l'API de Riot Games rend public : son Riot ID, son rang, ses champions et les statistiques de ses parties. Les notes d'équipe, les compositions et les revues ne sont jamais publiques."
+      "p3": "Les données restent par ailleurs visibles de qui en a l'usage sur le site : les membres d'une équipe voient l'effectif et les statistiques de cette équipe. La page publique d'un joueur montre à tout visiteur ce que l'API de Riot Games rend public : son Riot ID, son rang, ses champions et les statistiques de ses parties. Les notes d'équipe et les compositions ne sont jamais publiques."
     },
     "rights": {
       "title": "Ce que tu peux demander",
@@ -160,7 +157,6 @@
       "selfTitle": "Ce que tu peux faire toi-même, aujourd'hui",
       "self1": "changer ton nom d'affichage, depuis ton profil ;",
       "self2": "remplacer ton compte de jeu déclaré — les statistiques personnelles repartent alors de zéro ;",
-      "self3": "supprimer les revues que tu as écrites ;",
       "self4": "supprimer une équipe que tu as créée, ou en retirer un membre.",
       "gapTitle": "Ce qui n'existe pas encore",
       "gap": "Il n'y a aucun bouton de suppression de compte, et il serait malhonnête de laisser croire le contraire. La suppression d'un compte et des données de jeu qui s'y rattachent se fait à la main, sur demande.",

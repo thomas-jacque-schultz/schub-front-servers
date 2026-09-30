@@ -14,7 +14,6 @@ const AFFICHES = {
   lol: [""],
   pool: [""],
   profile: [""],
-  reviews: [""],
   riot: ["search", "verify", "errors", "suggestion", "position"],
   stats: [""],
   teams: [""],

@@ -66,11 +66,6 @@ function LolLandingPage() {
       title: t("features.draft.title"),
       body: t("features.draft.body"),
     },
-    {
-      key: "reviews",
-      title: t("features.reviews.title"),
-      body: t("features.reviews.body"),
-    },
   ];
 
   return (

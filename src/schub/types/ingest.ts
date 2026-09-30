@@ -53,7 +53,6 @@ export interface RiotDataInventoryDto {
   linkedAccounts: number;
   teamSlots: number;
   teams: number;
-  reviews: number;
 }
 
 export interface RiotDataInvalidationDto {

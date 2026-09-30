@@ -52,11 +52,6 @@ function PrivacyPage() {
       body: t("privacy.collected.teams"),
     },
     {
-      key: "reviews",
-      title: t("privacy.collected.reviewsTitle"),
-      body: t("privacy.collected.reviews"),
-    },
-    {
       key: "contact",
       title: t("privacy.collected.contactTitle"),
       body: t("privacy.collected.contact"),
@@ -178,7 +173,6 @@ function PrivacyPage() {
               items={[
                 t("privacy.rights.self1"),
                 t("privacy.rights.self2"),
-                t("privacy.rights.self3"),
                 t("privacy.rights.self4"),
               ]}
             />

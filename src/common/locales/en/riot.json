@@ -124,7 +124,6 @@
       "staysAccounts": "{{value}} linked accounts, resolved again by their Riot ID",
       "staysSlots": "{{value}} team slots, resolved again by their Riot ID",
       "staysTeams": "{{value}} teams, with their compositions and pools",
-      "staysReviews": "{{value}} game reviews, which will come back with their game",
       "staysSettings": "Users, roles and collection settings",
       "confirmLabel": "To confirm, type {{word}}",
       "confirm": "Invalidate",

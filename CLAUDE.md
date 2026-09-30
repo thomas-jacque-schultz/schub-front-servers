@@ -333,7 +333,7 @@ qu'à l'enregistrement.
   95e percentiles de joueurs collectés. Un référentiel de moins de dix joueurs est absent, et l'écran dit
   pourquoi. Plusieurs colonnes partagent le même référentiel.
 - **Un historique de parties est un accordéon, un joueur une fenêtre.** La ligne se déplie sur le
-  face-à-face, le début de partie et, en équipe, les notes ; cliquer un joueur ouvre ses indicateurs de la
+  face-à-face et le début de partie ; cliquer un joueur ouvre ses indicateurs de la
   partie famille par famille (`ComparisonTile` : la partie, sa moyenne au même poste sur la période, le
   rang). Mes stats a le même historique, toutes files confondues ; sa liste
   ne réclame aucun enrichissement, seule l'ouverture d'une partie le fait.
@@ -425,16 +425,8 @@ son rôle. Démarrer et arrêter s'affichent donc dès que le rôle porte `SERVE
 des permissions sans aucun écran pour s'en servir. `/servers` lit `GET /game-servers` quand on est
 connecté — seule réponse portant le slug — et la vue publique sinon.
 
-## La revue par joueur
+## La revue de partie a été retirée (Schub#67)
 
-Une note s'attache à **une partie d'équipe** et à **une place** de l'effectif ; elle vit dans le
-détail déplié d'une partie du panneau *Matchs*, sous le face-à-face par poste.
-
-- **Qui écrit sur qui vient de deux faits sur le lecteur** — `viewerCanReviewAnyone` et
-  `viewerMemberId` — plus `viewerCanEdit` sur chaque note. Aucune comparaison d'identifiants, et
-  aucune liste d'ayants droit : c'est la règle du §A.5 bis, appliquée ici comme ailleurs.
-- **Les sujets proposés sont les joueurs présents dans cette partie.** Le cœur en accepterait
-  davantage — n'importe quel joueur de l'effectif — mais noter quelqu'un sur une partie qu'il n'a
-  pas jouée n'est pas un débrief. L'IHM propose donc **moins** que le serveur, jamais plus.
-- **Une note par auteur, par joueur et par partie.** Une seconde tentative revient en 409 ; la
-  note existante se modifie, elle ne se double pas.
+Plus aucune route, aucun écran ni aucun texte n'en parle, pages légales comprises. La collection
+`team_game_reviews` reste en base, sans code : si la fonctionnalité revient, les pages légales
+reviennent avec elle.
