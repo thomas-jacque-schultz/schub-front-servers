@@ -12,7 +12,7 @@ export interface QuadCorner {
 
 export interface QuadStatTileProps {
   label: string;
-  /** En haut à gauche, en grand. */
+  /** À gauche, le joueur : la valeur en grand, puis `bottomLeft`. À droite, l'équipe : `topRight`, puis `bottomRight`. */
   main: QuadCorner;
   topRight: QuadCorner;
   bottomLeft: QuadCorner;
@@ -23,14 +23,17 @@ function Coin({
   corner,
   main = false,
   align,
+  area,
 }: {
   corner: QuadCorner;
   main?: boolean;
   align: "start" | "end";
+  area: string;
 }) {
   return (
     <Box
       sx={{
+        gridArea: area,
         display: "flex",
         justifyContent: align === "end" ? "flex-end" : "flex-start",
         minWidth: 0,
@@ -103,15 +106,25 @@ export function QuadStatTile({
       <Box
         sx={{
           display: "grid",
-          gridTemplateColumns: "minmax(0, 1fr) auto",
+          gridTemplateColumns: "minmax(0, 1fr) 1px auto",
+          gridTemplateAreas: `"main sep tr" "bl sep br"`,
           alignItems: "baseline",
           columnGap: 1,
         }}
       >
-        <Coin corner={main} main align="start" />
-        <Coin corner={topRight} align="end" />
-        <Coin corner={bottomLeft} align="start" />
-        <Coin corner={bottomRight} align="end" />
+        <Coin corner={main} main align="start" area="main" />
+        <Box
+          aria-hidden
+          sx={{
+            gridArea: "sep",
+            alignSelf: "stretch",
+            bgcolor: "divider",
+            opacity: 0.5,
+          }}
+        />
+        <Coin corner={topRight} align="end" area="tr" />
+        <Coin corner={bottomLeft} align="start" area="bl" />
+        <Coin corner={bottomRight} align="end" area="br" />
       </Box>
     </Box>
   );

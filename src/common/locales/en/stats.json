@@ -555,8 +555,8 @@
     "findings": "What stands out for the team"
   },
   "premade": {
-    "summary_one": "{{count}} team game in the period (at least {{minimum}} members together). Each tile reads: top left the premade value, top right the gap with their usual stats, bottom left the gap with the teammates' average, bottom right their rank.",
-    "summary_other": "{{count}} team games in the period (at least {{minimum}} members together). Each tile reads: top left the premade value, top right the gap with their usual stats, bottom left the gap with the teammates' average, bottom right their rank.",
+    "summary_one": "{{count}} team game in the period (at least {{minimum}} members together). Each tile reads: on the left the player (premade value, then the gap with their usual stats), on the right the team (the gap with the teammates' average, then their rank).",
+    "summary_other": "{{count}} team games in the period (at least {{minimum}} members together). Each tile reads: on the left the player (premade value, then the gap with their usual stats), on the right the team (the gap with the teammates' average, then their rank).",
     "unknown": "The number of team games is unavailable for now.",
     "games_one": "{{count}} premade game",
     "games_other": "{{count}} premade games",

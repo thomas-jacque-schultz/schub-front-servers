@@ -555,8 +555,8 @@
     "findings": "Ce qui ressort pour l’équipe"
   },
   "premade": {
-    "summary_one": "{{count}} partie d'équipe sur la période (au moins {{minimum}} membres ensemble). Chaque tuile se lit ainsi : en haut à gauche la valeur en premade, en haut à droite l'écart avec ses stats habituelles, en bas à gauche l'écart avec la moyenne des coéquipiers, en bas à droite son rang.",
-    "summary_other": "{{count}} parties d'équipe sur la période (au moins {{minimum}} membres ensemble). Chaque tuile se lit ainsi : en haut à gauche la valeur en premade, en haut à droite l'écart avec ses stats habituelles, en bas à gauche l'écart avec la moyenne des coéquipiers, en bas à droite son rang.",
+    "summary_one": "{{count}} partie d'équipe sur la période (au moins {{minimum}} membres ensemble). Chaque tuile se lit ainsi : à gauche le joueur (sa valeur en premade, puis l'écart avec ses stats habituelles), à droite l'équipe (l'écart avec la moyenne des coéquipiers, puis son rang).",
+    "summary_other": "{{count}} parties d'équipe sur la période (au moins {{minimum}} membres ensemble). Chaque tuile se lit ainsi : à gauche le joueur (sa valeur en premade, puis l'écart avec ses stats habituelles), à droite l'équipe (l'écart avec la moyenne des coéquipiers, puis son rang).",
     "unknown": "Le nombre de parties d'équipe est indisponible pour l'instant.",
     "games_one": "{{count}} partie en premade",
     "games_other": "{{count}} parties en premade",

@@ -63,14 +63,14 @@ export function PremadeTiles({ player, lines }: PremadeProps) {
                   hint: t("premade.hint.main", { count: parties }),
                 }}
                 topRight={{
-                  value: metric.delta(chiffre.versusSelf) ?? format.absent,
-                  tone: ton(chiffre.versusSelf, key),
-                  hint: t("premade.hint.self"),
-                }}
-                bottomLeft={{
                   value: metric.delta(chiffre.versusTeammates) ?? format.absent,
                   tone: ton(chiffre.versusTeammates, key),
                   hint: t("premade.hint.teammates"),
+                }}
+                bottomLeft={{
+                  value: metric.delta(chiffre.versusSelf) ?? format.absent,
+                  tone: ton(chiffre.versusSelf, key),
+                  hint: t("premade.hint.self"),
                 }}
                 bottomRight={{
                   value:
