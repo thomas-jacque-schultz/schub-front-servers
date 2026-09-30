@@ -5,7 +5,7 @@
     "text": "{{product}} isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.",
     "sourceLabel": "Riot Games — General Policies"
   },
-  "updated": "Last updated: 28 September 2026.",
+  "updated": "Last updated: 30 September 2026.",
   "terms": {
     "meta": {
       "title": "Terms of use — {{product}}",
@@ -18,9 +18,9 @@
     },
     "purpose": {
       "title": "Purpose",
-      "p1": "Schub is a personal, free and non-commercial project hosted on schultz-thomas.fr. It gathers the tools of the Miam Discord community: today, control over game servers hosted at home and support for a League of Legends team — roster, statistics, champion pool, composition planning and post-game review.",
+      "p1": "Schub is a personal, free and non-commercial project hosted on schultz-thomas.fr. It gathers the tools of the Miam Discord community: today, control over game servers hosted at home and support for a League of Legends team — roster, statistics, champion pool and composition planning.",
       "p2": "Using the site means accepting these terms. Anyone who does not accept them simply does not create an account; server status and the text pages remain readable without one.",
-      "p1_PremadeLab": "PremadeLab is a personal, free and non-commercial project hosted on premadelab.eu. It is a League of Legends game analysis tool, for a player and for their team: player search, statistics and findings on their games, roster, champion pool, composition planning and post-game review.",
+      "p1_PremadeLab": "PremadeLab is a personal, free and non-commercial project hosted on premadelab.eu. It is a League of Legends game analysis tool, for a player and for their team: player search, statistics and findings on their games, roster, champion pool and composition planning.",
       "p2_PremadeLab": "Using the site means accepting these terms. Anyone who does not accept them simply does not create an account; the presentation, player pages and text pages remain readable without one."
     },
     "publisher": {
@@ -42,12 +42,11 @@
     },
     "content": {
       "title": "What you publish",
-      "p1": "Team names, compositions, their notes and post-game reviews are written by users. They are visible to the members of the team concerned, and to no one else.",
+      "p1": "Team names, compositions and their notes are written by users. They are visible to the members of the team concerned, and to no one else.",
       "p2": "You remain responsible for what you write. The following are excluded, and removed without notice:",
-      "i1": "insults, harassment and discriminatory statements, including those aimed at a teammate named in a review;",
+      "i1": "insults, harassment and discriminatory statements, including those aimed at a teammate;",
       "i2": "third parties' personal data — address, phone number, civil identity — which has no place in a game note;",
-      "i3": "any unlawful content, or content infringing a third party's rights.",
-      "p3": "A post-game review is about a game: it describes play, not a person."
+      "i3": "any unlawful content, or content infringing a third party's rights."
     },
     "availability": {
       "title": "Availability and warranties",
@@ -58,7 +57,7 @@
     "ip": {
       "title": "Intellectual property",
       "p1": "League of Legends, champion names and artwork, the icons served by Data Dragon and all game assets belong to Riot Games, Inc. {{product}} uses them as a third-party product, under the rules of the Riot Games developer portal.",
-      "p2": "{{product}}'s code is published under the licence of its public repository. Content written by users — team names, compositions, reviews — remains theirs; the publisher only uses it to operate the service."
+      "p2": "{{product}}'s code is published under the licence of its public repository. Content written by users — team names, compositions — remains theirs; the publisher only uses it to operate the service."
     },
     "privacy": {
       "title": "Personal data",
@@ -77,7 +76,7 @@
   "privacy": {
     "meta": {
       "title": "Privacy policy — {{product}}",
-      "description": "What {{product}} collects — Discord identity, Riot ID, public match history, review notes —, where that data lives, for how long, and how to ask for its deletion."
+      "description": "What {{product}} collects — Discord identity, Riot ID, public match history —, where that data lives, for how long, and how to ask for its deletion."
     },
     "hero": {
       "eyebrow": "Notices",
@@ -103,8 +102,6 @@
       "others": "A game holds ten participants. The Riot ID and game figures of the other nine are therefore recorded too, including when they have no {{product}} account and never will. That data is made public by the Riot Games API, but it is indeed kept here — and a deletion request covers it as well.",
       "teamsTitle": "Teams",
       "teams": "A team's name, its roster — a Riot ID, positions and a status per seat —, the champion pool it keeps per position and the compositions prepared, with their patch and notes.",
-      "reviewsTitle": "Post-game reviews",
-      "reviews": "The free-form text written by one member about another, attached to a specific game, with its author, its subject and its creation and edit dates.",
       "contactTitle": "Contact form",
       "contact": "The name, email address and message entered. The site does not store them: the message is delivered as is to the publisher through Discord, as a direct message or in a fallback channel, and stays in that messaging service until the publisher deletes it."
     },
@@ -126,7 +123,7 @@
       "i1": "to identify a person and grant the rights attached to their role;",
       "i2": "to attach a game account to a site account, and to a roster seat;",
       "i3": "to compute and display personal and team statistics;",
-      "i4": "to operate teams: roster, champion pool, compositions, reviews;",
+      "i4": "to operate teams: roster, champion pool, compositions;",
       "i5": "to receive contact form messages and keep spam out.",
       "basis": "Legal basis: performance of the service you request by creating an account (GDPR, Article 6(1)(b)) for your account, your teams and your content; legitimate interest (Article 6(1)(f)) for other players’ game data, which the Riot Games API makes public and without which no statistic exists, as well as for the contact form and its protection against spam."
     },
@@ -143,7 +140,7 @@
       "permanent": "Collected games, their per-player projections and the index of game accounts encountered have no expiry date.",
       "riotPurge": "This has to be said plainly: {{product}} only collects each player's recent games, and Riot itself only serves a capped history. The games already collected, however, stay. In other words, {{product}} keeps games that Riot no longer serves, and that is what makes a deletion request meaningful.",
       "accountTitle": "The rest",
-      "account": "The account, its teams, its compositions and its reviews are kept as long as the account exists. Deleting a team deletes its compositions and its reviews."
+      "account": "The account, its teams and its compositions are kept as long as the account exists. Deleting a team deletes its compositions."
     },
     "sharing": {
       "title": "Who this data is shared with",
@@ -152,7 +149,7 @@
       "i1": "Riot Games — the site queries its API to read games. What leaves here is the identifier of the game account concerned, nothing more;",
       "i2": "Discord — for authentication, and for delivering contact form messages;",
       "i3": "Cloudflare — only if the contact form's anti-bot protection is enabled.",
-      "p3": "Data also stays visible to those who need it on the site: a team's members see that team's roster, statistics and reviews. A player's public page shows any visitor what the Riot Games API makes public: their Riot ID, rank, champions and game statistics. Team notes, compositions and reviews are never public."
+      "p3": "Data also stays visible to those who need it on the site: a team's members see that team's roster and statistics. A player's public page shows any visitor what the Riot Games API makes public: their Riot ID, rank, champions and game statistics. Team notes and compositions are never public."
     },
     "rights": {
       "title": "What you can ask for",
@@ -160,7 +157,6 @@
       "selfTitle": "What you can do yourself, today",
       "self1": "change your display name, from your profile;",
       "self2": "replace your declared game account — personal statistics then start over from zero;",
-      "self3": "delete the reviews you wrote;",
       "self4": "delete a team you created, or remove a member from it.",
       "gapTitle": "What does not exist yet",
       "gap": "There is no account deletion button, and it would be dishonest to suggest otherwise. Deleting an account and the game data attached to it is done by hand, on request.",

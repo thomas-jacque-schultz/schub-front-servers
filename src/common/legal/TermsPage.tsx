@@ -75,7 +75,6 @@ function TermsPage() {
               t("terms.content.i3"),
             ]}
           />
-          <Text>{t("terms.content.p3")}</Text>
         </Stack>
       </Card>
 

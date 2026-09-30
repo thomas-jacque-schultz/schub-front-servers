@@ -124,7 +124,6 @@
       "staysAccounts": "{{value}} comptes liés, résolus de nouveau par leur Riot ID",
       "staysSlots": "{{value}} places d’équipe, résolues de nouveau par leur Riot ID",
       "staysTeams": "{{value}} équipes, avec leurs compositions et leurs pools",
-      "staysReviews": "{{value}} revues de partie, qui réapparaîtront avec leur partie",
       "staysSettings": "Les utilisateurs, les rôles et les réglages de la collecte",
       "confirmLabel": "Pour confirmer, saisis {{word}}",
       "confirm": "Invalider",

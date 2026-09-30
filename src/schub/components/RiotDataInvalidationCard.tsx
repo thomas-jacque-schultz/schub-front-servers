@@ -143,9 +143,6 @@ export function RiotDataInvalidationCard({
                   t("ingest.invalidate.staysTeams", {
                     value: formatNumber(inventory.teams),
                   }),
-                  t("ingest.invalidate.staysReviews", {
-                    value: formatNumber(inventory.reviews),
-                  }),
                   t("ingest.invalidate.staysSettings"),
                 ]}
               />

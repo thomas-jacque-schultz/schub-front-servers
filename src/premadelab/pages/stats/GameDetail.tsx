@@ -1,4 +1,4 @@
-import { type ReactNode, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Alert,
@@ -32,8 +32,6 @@ export interface GameDetailProps {
   requestKey: string;
   load: () => Promise<TeamGameDetailDto>;
   avatars: Record<string, string | null>;
-  /** Sous le détail : les notes de revue d'une partie d'équipe. */
-  footer?: ReactNode;
   /** Les constats du moteur sur cette partie, en tête du détail. */
   loadFindings?: () => Promise<FindingDto[]>;
   /** Historique d'un joueur : ses stats détaillées dans un accordéon, et plus de clic sur les icônes. */
@@ -48,7 +46,6 @@ export function GameDetail({
   requestKey,
   load,
   avatars,
-  footer,
   loadFindings,
   subjectTitle,
 }: GameDetailProps) {
@@ -137,12 +134,6 @@ export function GameDetail({
       )}
       {detail && detail.timelineAvailable && !detail.early && (
         <Alert severity="info">{t("early.noAnalysis")}</Alert>
-      )}
-      {footer && (
-        <>
-          <Divider />
-          {footer}
-        </>
       )}
       <PlayerGameDialog
         player={choisi}

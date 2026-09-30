@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Présentation de PremadeLab — statistiques, pool de champions et draft d’équipe",
-    "description": "PremadeLab outille une équipe League of Legends : recherche de joueurs, effectif, historique des parties jouées ensemble, statistiques par joueur et par équipe, pool de champions par poste, préparation des compositions et revue d’après-partie."
+    "description": "PremadeLab outille une équipe League of Legends : recherche de joueurs, effectif, historique des parties jouées ensemble, statistiques par joueur et par équipe, pool de champions par poste et préparation des compositions."
   },
   "shell": {
     "tagline": "Les stats de ton premade",
@@ -50,10 +50,6 @@
       "title": "Préparation des compositions",
       "body": "Une composition retient cinq champions, un par poste, et le joueur qui prend chaque ligne. Elle porte le patch auquel elle se rapporte et des notes libres, et se retrouve à la partie suivante."
     },
-    "reviews": {
-      "title": "Revue d'après-partie",
-      "body": "Depuis le tableau des parties, chaque membre reçoit une note écrite rattachée à cette partie-là. Une note par auteur, par joueur et par partie ; elle se modifie, elle ne se double pas."
-    },
     "search": {
       "title": "Chercher un joueur",
       "body": "Un Riot ID suffit : son rang, ses champions les plus maîtrisés, puis les statistiques de ses dix dernières parties, collectées à la demande."
@@ -64,7 +60,7 @@
     "intro": "Dit ici plutôt que découvert à l'usage.",
     "history": "PremadeLab relève les {{maxGames}} dernières parties de chaque joueur, sur {{maxAgeDays}} jours au plus, ou ses {{minGames}} dernières s'il joue peu. L'historique plus ancien n'est pas collecté.",
     "noWorldStats": "Aucune moyenne mondiale : les comparaisons se font aux joueurs du même palier, à partir des parties que PremadeLab a lui-même collectées, et chaque chiffre dit sur combien de parties il porte.",
-    "noProbe": "La page d’un joueur recherché ne montre que ce que Riot rend public : son rang, ses champions et ses parties. Les notes d’équipe, les compositions et les revues restent réservées aux membres de l’équipe.",
+    "noProbe": "La page d’un joueur recherché ne montre que ce que Riot rend public : son rang, ses champions et ses parties. Les notes d’équipe et les compositions restent réservées aux membres de l’équipe.",
     "noLive": "Rien en direct : pas de suivi de partie en cours, pas d'overlay, aucune interaction avec le client de jeu.",
     "collectTime": "La première collecte prend du temps — le quota de l’API de Riot la limite. L’écran de profil dit où elle en est.",
     "historyUnknown": "PremadeLab ne relève que les parties récentes de chaque joueur : l'historique ancien n'est pas collecté."
