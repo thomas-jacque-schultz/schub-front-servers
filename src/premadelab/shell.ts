@@ -6,6 +6,8 @@ import {
   type AppShellNavItem,
 } from "../common";
 
+export const SUPPORT_URL = "https://buymeacoffee.com/pisel";
+
 const ECRANS_LARGES = ["/teams", "/stats", "/players"];
 
 /** Le bandeau de PremadeLab : ses entrées, et la largeur de ses écrans. */

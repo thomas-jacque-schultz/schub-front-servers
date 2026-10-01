@@ -10,7 +10,8 @@
     "statsLocked": "Link your Riot account to open it",
     "teams": "Teams",
     "footerNote": "PremadeLab — stats and theorycraft for your League of Legends team",
-    "search": "Search"
+    "search": "Search",
+    "support": "Support"
   },
   "hero": {
     "eyebrow": "League of Legends",
@@ -175,5 +176,10 @@
       "empty": "No game in the period.",
       "timezone": "Times in your time zone ({{zone}}). A sector's thickness shows how many games were played then; its colour, whether you win more (green) or less (red) than your average. Light grey: around your average; dark grey: fewer than 3 games."
     }
+  },
+  "support": {
+    "title": "Support PremadeLab",
+    "text": "PremadeLab is free and ad-free. The servers that collect and compute the stats are not: a coffee helps keep them running.",
+    "action": "Buy a coffee"
   }
 }
