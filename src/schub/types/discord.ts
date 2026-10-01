@@ -15,3 +15,12 @@ export interface DiscordChannelSelection {
   channelId: string;
   channelName: string;
 }
+
+export interface ChannelCleanupDto {
+  channelId: string;
+  name: string;
+  /** Faux sans la permission « Gérer les messages » : le salon est laissé tel quel. */
+  allowed: boolean;
+  toDelete: number;
+  toRepost: number;
+}

@@ -10,5 +10,19 @@
       "load": "Impossible de charger les canaux Discord",
       "save": "Impossible de sauvegarder la sélection"
     }
+  },
+  "cleanup": {
+    "title": "Nettoyer les salons",
+    "description": "Supprime des salons d'état tout ce qui n'est pas un encart du bot, puis reposte les encarts manquants.",
+    "button": "Nettoyer les salons",
+    "confirm": "Nettoyer",
+    "summary": "{{messages}} message(s) seront supprimés dans {{channels}} salon(s), {{reposts}} encart(s) seront repostés.",
+    "nothing": "Les salons sont déjà propres : rien à supprimer, rien à reposter.",
+    "forbidden": "Sans la permission « Gérer les messages », ces salons seront laissés tels quels : {{channels}}.",
+    "done": "Salons nettoyés : {{messages}} message(s) supprimé(s), {{reposts}} encart(s) reposté(s).",
+    "errors": {
+      "preview": "Impossible de compter les messages à supprimer",
+      "clean": "Le nettoyage a échoué"
+    }
   }
 }

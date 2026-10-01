@@ -10,5 +10,19 @@
       "load": "Discord channels could not be loaded",
       "save": "The selection could not be saved"
     }
+  },
+  "cleanup": {
+    "title": "Clean the channels",
+    "description": "Removes everything that is not a bot status card from the status channels, then reposts the missing cards.",
+    "button": "Clean the channels",
+    "confirm": "Clean",
+    "summary": "{{messages}} message(s) will be deleted in {{channels}} channel(s), {{reposts}} card(s) will be reposted.",
+    "nothing": "The channels are already clean: nothing to delete, nothing to repost.",
+    "forbidden": "Without the “Manage Messages” permission, these channels are left as they are: {{channels}}.",
+    "done": "Channels cleaned: {{messages}} message(s) deleted, {{reposts}} card(s) reposted.",
+    "errors": {
+      "preview": "The messages to delete could not be counted",
+      "clean": "The cleanup failed"
+    }
   }
 }
