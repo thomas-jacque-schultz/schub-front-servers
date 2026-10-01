@@ -37,7 +37,7 @@
     "UNKNOWN": "Undetermined role"
   },
   "ingest": {
-    "eyebrow": "Configuration",
+    "eyebrow": "PremadeLab",
     "title": "Riot collection",
     "subtitle": "What the Riot connector collects, how fast, and how much it weighs.",
     "loadFailed": "Could not read the collection state",
@@ -198,5 +198,9 @@
     "pattern": "Rule",
     "degree": "Degree",
     "conditions": "Conditions (observed [ramp] = degree)"
+  },
+  "research": {
+    "title": "R&D",
+    "subtitle": "Augur rules, and the trace of their computations on a player or a game."
   }
 }

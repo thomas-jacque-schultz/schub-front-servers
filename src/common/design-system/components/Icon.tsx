@@ -1,5 +1,6 @@
 import CodeIcon from "@mui/icons-material/Code";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import EditIcon from "@mui/icons-material/EditOutlined";
 import EmailIcon from "@mui/icons-material/AlternateEmail";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import HubIcon from "@mui/icons-material/Hub";
@@ -27,6 +28,7 @@ const ICONS = {
   code: CodeIcon,
   delete: DeleteOutlineIcon,
   done: CheckCircleIcon,
+  edit: EditIcon,
   email: EmailIcon,
   expand: ExpandMoreIcon,
   external: LaunchIcon,

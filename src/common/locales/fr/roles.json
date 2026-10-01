@@ -1,5 +1,5 @@
 {
-  "eyebrow": "Configuration",
+  "eyebrow": "Administration",
   "title": "Rôles",
   "subtitle": "Un rôle est un nom et un jeu de permissions. Les permissions, elles, sont figées dans le code : une permission que rien ne lit serait une promesse fausse.",
   "table": {

@@ -43,14 +43,16 @@
   },
   "shell": {
     "home": "Accueil",
-    "servers": "Serveurs",
-    "configuration": "Configuration",
-    "configServers": "Serveurs",
-    "configPorts": "Ports",
-    "configUsers": "Utilisateurs",
-    "configRoles": "Rôles",
-    "configDiscord": "Salons Discord",
-    "configIngest": "Collecte Riot",
+    "gameServers": "Serveurs de jeux",
+    "admin": "Administration",
+    "tabServers": "Serveurs",
+    "tabPorts": "Ports",
+    "tabDiscord": "Discord",
+    "tabSettings": "Configuration",
+    "tabIngest": "Collecte",
+    "tabResearch": "R&D",
+    "tabUsers": "Utilisateurs",
+    "tabRoles": "Rôles",
     "storybook": "Design system",
     "linkedin": "LinkedIn",
     "github": "GitHub",
@@ -61,10 +63,7 @@
     "profile": "Mon profil",
     "creator": "Créateur",
     "feedback": "Feedback",
-    "account": "Compte et applications",
-    "apps": "Applications",
-    "appSchub": "Schub",
-    "appPremadelab": "PremadeLab",
-    "configPremadelab": "PremadeLab"
+    "account": "Compte",
+    "appPremadelab": "PremadeLab"
   }
 }

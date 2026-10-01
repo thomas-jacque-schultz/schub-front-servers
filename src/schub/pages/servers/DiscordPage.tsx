@@ -11,7 +11,7 @@ import type {
   DiscordGuildChannelsDto,
 } from "../../types/discord";
 
-function DiscordConfigPage() {
+function DiscordPage() {
   const { t } = useTranslation("servers");
   const [guilds, setGuilds] = useState<DiscordGuildChannelsDto[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -57,4 +57,4 @@ function DiscordConfigPage() {
   );
 }
 
-export default DiscordConfigPage;
+export default DiscordPage;

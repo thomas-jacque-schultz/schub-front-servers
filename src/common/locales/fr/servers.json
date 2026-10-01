@@ -1,6 +1,6 @@
 {
   "landing": {
-    "eyebrow": "Schub bot front",
+    "eyebrow": "Serveurs de jeux",
     "title": "Pilote tes serveurs de jeu",
     "description": "Interface web pour superviser tes instances, suivre leur statut et lancer les actions bot depuis un point d'accès unique."
   },
@@ -21,7 +21,9 @@
       "view": "Voir",
       "edit": "Modifier"
     },
-    "memberView": "Vue membre : les détails d'infrastructure sont masqués pour ton rôle."
+    "memberView": "Vue membre : les détails d'infrastructure sont masqués pour ton rôle.",
+    "editMode": "Modifier les serveurs",
+    "editDone": "Terminer"
   },
   "admin": {
     "title": "Actions administrateur",
@@ -68,7 +70,7 @@
     "unnamed": "Serveur sans nom"
   },
   "config": {
-    "eyebrow": "Configuration",
+    "eyebrow": "Serveurs de jeux",
     "serversTitle": "Serveurs",
     "serversSubtitle": "Les fiches affichées aux joueurs et dans les messages Discord.",
     "portsTitle": "Redirections de ports",

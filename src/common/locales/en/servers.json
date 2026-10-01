@@ -1,6 +1,6 @@
 {
   "landing": {
-    "eyebrow": "Schub bot front",
+    "eyebrow": "Game servers",
     "title": "Run your game servers",
     "description": "A web console to supervise your instances, follow their status and trigger bot actions from a single place."
   },
@@ -21,7 +21,9 @@
       "view": "View",
       "edit": "Edit"
     },
-    "memberView": "Member view: infrastructure details are hidden for your role."
+    "memberView": "Member view: infrastructure details are hidden for your role.",
+    "editMode": "Edit servers",
+    "editDone": "Done"
   },
   "admin": {
     "title": "Administrator actions",
@@ -68,7 +70,7 @@
     "unnamed": "Unnamed server"
   },
   "config": {
-    "eyebrow": "Configuration",
+    "eyebrow": "Game servers",
     "serversTitle": "Servers",
     "serversSubtitle": "The records shown to players and in Discord messages.",
     "portsTitle": "Port forwarding",

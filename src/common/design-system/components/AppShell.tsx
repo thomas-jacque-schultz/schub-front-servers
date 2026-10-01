@@ -28,6 +28,8 @@ export interface AppShellNavItem {
   to: string;
   muted?: boolean;
   hint?: string;
+  /** Absent : courant quand le chemin vaut exactement `to`. */
+  current?: boolean;
 }
 
 export interface AppShellMenu {
@@ -56,8 +58,6 @@ export interface AppShellFooterLink {
 }
 
 export interface AppShellAccountItem extends AppShellNavItem {
-  /** L'application ou la page où l'on se trouve. */
-  current?: boolean;
   /** Une autre application, sur un autre domaine : lien absolu, qui remplace `to`. */
   href?: string;
 }
@@ -183,19 +183,20 @@ export function AppShell({
             >
               {navItems.map((entry) => {
                 if (!estUnMenu(entry)) {
+                  const courant = entry.current ?? pathname === entry.to;
                   const bouton = (
                     <MuiButton
                       component={RouterLink}
                       to={entry.to}
                       color="inherit"
-                      aria-current={pathname === entry.to ? "page" : undefined}
+                      aria-current={courant ? "page" : undefined}
                       aria-label={
                         entry.hint
                           ? `${entry.label} — ${entry.hint}`
                           : undefined
                       }
                       sx={{
-                        fontWeight: pathname === entry.to ? 700 : 500,
+                        fontWeight: courant ? 700 : 500,
                         color: entry.muted ? "text.disabled" : undefined,
                       }}
                     >

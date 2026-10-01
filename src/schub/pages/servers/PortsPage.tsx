@@ -4,7 +4,7 @@ import PortForwardingCard from "../../components/PortForwardingCard";
 import { PageHeader, Stack, useAuthStore } from "../../../common";
 import { usePortForwardingStore } from "../../stores/portForwardingStore";
 
-function PortsConfigPage() {
+function PortsPage() {
   const { t } = useTranslation("servers");
   const { can } = useAuthStore();
   const {
@@ -44,4 +44,4 @@ function PortsConfigPage() {
   );
 }
 
-export default PortsConfigPage;
+export default PortsPage;

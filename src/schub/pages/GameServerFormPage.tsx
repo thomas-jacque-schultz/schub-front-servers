@@ -313,7 +313,7 @@ function GameServerFormPage() {
     event.preventDefault();
 
     if (isReadOnly) {
-      navigate("/config/servers");
+      navigate("/servers?edit");
       return;
     }
 
@@ -333,7 +333,7 @@ function GameServerFormPage() {
         await updateGameServerApi(id, payload);
       }
 
-      navigate("/config/servers", { replace: true });
+      navigate("/servers?edit", { replace: true });
     } catch (error) {
       setGlobalError(
         error instanceof Error ? error.message : t("form.errors.saveFailed"),
@@ -353,7 +353,7 @@ function GameServerFormPage() {
         title={pageTitle}
         actions={
           <>
-            <Button variant="ghost" onClick={() => navigate("/config/servers")}>
+            <Button variant="ghost" onClick={() => navigate("/servers?edit")}>
               {t("actions.back", { ns: "common" })}
             </Button>
             {!isReadOnly && (

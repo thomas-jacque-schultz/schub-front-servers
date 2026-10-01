@@ -3,24 +3,21 @@ import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import {
   Alert,
-  APP_URLS,
   AppShell,
   pathWithoutLanguage,
   PageErrorBoundary,
   Stack,
   useAuthStore,
-  useCurrentLanguage,
   useLocalizedNavigate,
   useLocalizedPath,
   useProfileStore,
   type AppShellAccount,
-  type AppShellAccountItem,
   type AppShellFooterLink,
   type AppShellNavEntry,
-  type AppShellNavItem,
-  type Permission,
 } from "../../common";
 import { PORTFOLIO } from "../content/portfolio";
+import { SECTIONS, visibleTabs } from "../sections";
+
 const LINKEDIN_URL = "https://www.linkedin.com/in/thomas-schultz-abab10181/";
 
 const GITHUB_URL = PORTFOLIO.fr.repositoryUrl;
@@ -41,94 +38,27 @@ export function AppLayout({ children }: { children: ReactNode }) {
   const localize = useLocalizedPath();
   const navigate = useLocalizedNavigate();
   const { pathname } = useLocation();
-  const language = useCurrentLanguage();
 
   const route = pathWithoutLanguage(pathname);
   // Mon profil est commun aux deux applications : le bandeau de Schub ne lui revient pas.
   const surProfil = route === "/profile";
 
-  // Pas de useMemo sur des libellés : `t` garde la même référence quand la langue change.
-  const configurationEntries: Array<{
-    key: string;
-    label: string;
-    to: string;
-    permissions: Permission[];
-  }> = [
-    {
-      key: "servers",
-      label: t("shell.configServers"),
-      to: "/config/servers",
-      permissions: ["SERVER_CREATE", "SERVER_EDIT", "SERVER_INFRA_VIEW"],
-    },
-    {
-      key: "ports",
-      label: t("shell.configPorts"),
-      to: "/config/ports",
-      permissions: ["PORT_VIEW"],
-    },
-    {
-      key: "users",
-      label: t("shell.configUsers"),
-      to: "/config/users",
-      permissions: ["USER_VIEW"],
-    },
-    {
-      key: "roles",
-      label: t("shell.configRoles"),
-      to: "/config/roles",
-      permissions: ["ROLE_MANAGE"],
-    },
-    {
-      key: "discord",
-      label: t("shell.configDiscord"),
-      to: "/config/discord",
-      permissions: ["DISCORD_CHANNEL_MANAGE"],
-    },
-    {
-      key: "ingest",
-      label: t("shell.configIngest"),
-      to: "/config/ingest",
-      permissions: ["INGEST_VIEW"],
-    },
-    {
-      key: "premadelab",
-      label: t("shell.configPremadelab"),
-      to: "/config/premadelab",
-      permissions: ["INGEST_VIEW"],
-    },
-  ];
-  const configuration: AppShellNavItem[] = connected
-    ? configurationEntries
-        .filter((entry) => canAny(...entry.permissions))
-        .map(({ key, label, to }) => ({ key, label, to: localize(to) }))
-    : [];
+  const sectionCourante = (path: string) =>
+    route === path || route.startsWith(`${path}/`);
 
   const schubNav: AppShellNavEntry[] = [
     { key: "home", label: t("shell.home"), to: localize("/") },
-    { key: "servers", label: t("shell.servers"), to: localize("/servers") },
-    {
-      key: "configuration",
-      label: t("shell.configuration"),
-      items: configuration,
-    },
+    ...SECTIONS.filter(
+      (section) => visibleTabs(section, canAny).length > 0,
+    ).map((section) => ({
+      key: section.key,
+      label: t(section.labelKey),
+      to: localize(section.path),
+      current: sectionCourante(section.path),
+    })),
   ];
 
-  const applications: AppShellAccountItem[] = [
-    {
-      key: "schub",
-      label: t("shell.appSchub"),
-      to: localize("/"),
-      current: true,
-    },
-    {
-      key: "premadelab",
-      label: t("shell.appPremadelab"),
-      to: "/",
-      href:
-        language === "en" ? `${APP_URLS.premadelab}/en` : APP_URLS.premadelab,
-    },
-  ];
-  const account: AppShellAccount = connected
+  const account: AppShellAccount | undefined = connected
     ? {
         label: t("shell.account"),
         caption: profile
@@ -141,13 +71,12 @@ export function AppLayout({ children }: { children: ReactNode }) {
               key: "profile",
               label: t("shell.profile"),
               to: localize("/profile"),
-              current: route === "/profile",
+              current: surProfil,
             },
           ],
-          applications,
         ],
       }
-    : { label: t("shell.apps"), groups: [applications] };
+    : undefined;
 
   const footerLinks: AppShellFooterLink[] = [
     {
