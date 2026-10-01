@@ -4,20 +4,13 @@ export interface PremadeLabMarkProps {
   size?: number;
 }
 
-const FLAMME =
-  "M33 50.5 C33.6 53.6 38.2 55.6 38.2 59.6 C38.2 61.9 35.5 63.3 32 63.3 C28.5 63.3 25.8 61.9 25.8 59.6 C25.8 57 27.5 55.5 28.8 54.2 C29.2 55.8 30 56.8 31 57.1 C31.1 54.6 31.6 52.5 33 50.5 Z";
-// Les deux petites flammes : la grande réduite aux 7/10, celle de gauche retournée.
-const FLAMME_GAUCHE =
-  "translate(21.5 63.3) scale(-0.7 0.7) translate(-32 -63.3)";
-const FLAMME_DROITE = "translate(42.5 63.3) scale(0.7) translate(-32 -63.3)";
-
-// La marmite qui est aussi une fiole, trois bulles, sur le feu (Schub#78).
+// La marmite qui est aussi une fiole, trois bulles (Schub#78).
 // Les couleurs suivent les rôles : or sur sombre, prune sur clair.
 export function PremadeLabMark({ size = 28 }: PremadeLabMarkProps) {
   return (
     <Box
       component="svg"
-      viewBox="1 0 62 64"
+      viewBox="6 0 52 52"
       aria-hidden
       sx={{ width: size, height: size, flexShrink: 0, display: "block" }}
     >
@@ -50,17 +43,6 @@ export function PremadeLabMark({ size = 28 }: PremadeLabMarkProps) {
           strokeLinecap="round"
         />
       </Box>
-      <Box component="g" sx={{ color: "secondary.main" }} fill="currentColor">
-        <path d={FLAMME} />
-        <path transform={FLAMME_GAUCHE} d={FLAMME} />
-        <path transform={FLAMME_DROITE} d={FLAMME} />
-      </Box>
-      <Box
-        component="path"
-        sx={{ color: "primary.light" }}
-        fill="currentColor"
-        d="M32.6 56.2 C33 57.8 35 58.8 35 60.5 C35 61.6 33.7 62.3 32 62.3 C30.3 62.3 29 61.6 29 60.5 C29 59.3 29.8 58.6 30.6 58.1 C30.9 58.8 31.3 59.2 31.8 59.3 C31.8 58.2 32 57.1 32.6 56.2 Z"
-      />
     </Box>
   );
 }
