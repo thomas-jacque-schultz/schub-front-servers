@@ -315,6 +315,16 @@ export interface MemberEarlyDto {
   topMinutes: number;
   midMinutes: number;
   botMinutes: number;
+  /** Jungler : ses minutes du côté où jouait chaque coéquipier, sur leurs parties communes. */
+  presenceWith: PresenceWithDto[];
+}
+
+export interface PresenceWithDto {
+  memberId: string;
+  displayName: string | null;
+  games: number;
+  minutes: number;
+  totalMinutes: number;
 }
 
 export interface StrongSideRecordDto {
@@ -483,6 +493,10 @@ export interface TeamLevelMetricDto {
   inTier: number | null;
   /** Palier dont la moyenne par partie est la plus proche de celle de l’équipe, quand la métrique suit le rang. */
   level: string | null;
+  /** Fin de partie, sur les parties qui ont aussi la valeur à 15 min ; 0 et null pour les larves et les ganks. */
+  gamesAtEnd: number;
+  meanAtEnd: number | null;
+  meanChange: number | null;
 }
 
 export interface DuoDto {

@@ -1,11 +1,11 @@
-import { type ReactNode, useState } from "react";
+import { type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Card,
+  Columns,
   DataTable,
-  Disclosure,
   LaneMap,
-  SplitBar,
+  MeterBar,
   Stack,
   Text,
   type DataTableColumn,
@@ -20,7 +20,6 @@ import { useStatsFormat } from "./statsFormat";
 export function TeamEarlyGame({ early }: { early: TeamEarlyGameDto | null }) {
   const { t } = useTranslation("stats");
   const format = useStatsFormat();
-  const [tableauOuvert, setTableauOuvert] = useState(false);
 
   if (!early || early.games === 0) {
     return (
@@ -64,10 +63,10 @@ export function TeamEarlyGame({ early }: { early: TeamEarlyGameDto | null }) {
     },
     {
       key: "deaths",
-      header: t("early.team.deaths"),
-      width: 140,
+      header: t("early.team.deathsPerGame"),
+      width: 160,
       align: "right",
-      render: (m) => format.entier(m.deathsOnGank),
+      render: (m) => parPartie(m.deathsOnGank, m.laneGames),
     },
   ];
 
@@ -103,30 +102,23 @@ export function TeamEarlyGame({ early }: { early: TeamEarlyGameDto | null }) {
     },
     {
       key: "presence",
-      header: t("early.team.presence"),
-      width: 260,
-      render: (m) => (
-        <SplitBar
-          label={t("early.team.presence")}
-          highlight={coteFort(m)}
-          segments={(["TOP", "MID", "BOT"] as const).map((cote) => {
-            const minutes =
-              cote === "TOP"
-                ? m.topMinutes
-                : cote === "MID"
-                  ? m.midMinutes
-                  : m.botMinutes;
-            const total = m.topMinutes + m.midMinutes + m.botMinutes;
-            return {
-              key: cote,
-              label: t(`early.lane.${cote}`),
-              value: minutes,
-              valueLabel:
-                total === 0 ? format.absent : format.taux(minutes / total),
-            };
-          })}
-        />
-      ),
+      header: t("early.team.presenceWith"),
+      width: 300,
+      render: (m) =>
+        m.presenceWith.length === 0 ? (
+          format.absent
+        ) : (
+          <Stack spacing={0.75}>
+            {m.presenceWith.map((p) => (
+              <MeterBar
+                key={p.memberId}
+                label={p.displayName ?? t("player.unnamed")}
+                value={p.totalMinutes === 0 ? null : p.minutes / p.totalMinutes}
+                valueLabel={`${taux(p.minutes, p.totalMinutes)} · ${t("synergy.games", { count: p.games })}`}
+              />
+            ))}
+          </Stack>
+        ),
     },
   ];
 
@@ -134,27 +126,27 @@ export function TeamEarlyGame({ early }: { early: TeamEarlyGameDto | null }) {
     {
       key: "side",
       header: t("early.team.side"),
-      width: 160,
+      width: 120,
       render: (c) => t(`early.side.${c.side}`),
     },
     {
       key: "games",
       header: t("early.team.games"),
-      width: 90,
+      width: 80,
       align: "right",
       render: (c) => format.entier(c.games),
     },
     {
       key: "wins",
       header: t("early.team.winRate"),
-      width: 110,
+      width: 100,
       align: "right",
       render: (c) => taux(c.wins, c.games),
     },
     {
       key: "weak",
       header: t("early.team.onWeakSide"),
-      width: 220,
+      width: 190,
       align: "right",
       render: (c) =>
         c.side === "BALANCED"
@@ -193,19 +185,15 @@ export function TeamEarlyGame({ early }: { early: TeamEarlyGameDto | null }) {
             emptyTitle={t("early.team.none")}
             dense
             layout="fixed"
-            minWidth={880}
+            minWidth={920}
           />
         </Section>
         <Section
           titre={t("early.team.sides")}
           aide={t("early.team.sidesHelper")}
         >
-          <SidesMap sides={early.strongSides} />
-          <Disclosure
-            title={t("early.team.sidesTable")}
-            open={tableauOuvert}
-            onToggle={setTableauOuvert}
-          >
+          <Columns minWidth={300} count={2}>
+            <SidesMap sides={early.strongSides} />
             <DataTable
               columns={cotes}
               rows={early.strongSides}
@@ -214,9 +202,9 @@ export function TeamEarlyGame({ early }: { early: TeamEarlyGameDto | null }) {
               emptyTitle={t("early.team.none")}
               dense
               layout="fixed"
-              minWidth={580}
+              minWidth={490}
             />
-          </Disclosure>
+          </Columns>
         </Section>
       </Stack>
     </Card>
@@ -275,14 +263,6 @@ function SidesMap({ sides }: { sides: StrongSideRecordDto[] }) {
     />
   );
 }
-
-// Même règle que le cœur pour une partie — deux minutes d'écart — rapportée au nombre de parties.
-const coteFort = (m: MemberEarlyDto) =>
-  m.topMinutes >= m.botMinutes + 2 * m.jungleGames
-    ? "TOP"
-    : m.botMinutes >= m.topMinutes + 2 * m.jungleGames
-      ? "BOT"
-      : null;
 
 function Section({
   titre,

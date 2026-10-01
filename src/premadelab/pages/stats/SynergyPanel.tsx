@@ -1,9 +1,13 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Alert,
   Card,
   Chip,
+  Columns,
   DataTable,
+  Disclosure,
+  Frame,
   ProgressBar,
   Stack,
   Text,
@@ -31,6 +35,24 @@ const ton = (delta: number | null): ChipTone =>
         ? "warning"
         : "neutral";
 
+const ecartDOr = (r: ResourceDto) =>
+  r.winRateAbove === null || r.winRateBelow === null
+    ? null
+    : r.winRateAbove - r.winRateBelow;
+
+const PRIORITE = {
+  feed: "success",
+  neutral: "neutral",
+  starve: "warning",
+} as const satisfies Record<string, ChipTone>;
+
+const priorite = (ecart: number | null): keyof typeof PRIORITE =>
+  ecart !== null && ecart >= NOTABLE
+    ? "feed"
+    : ecart !== null && ecart <= -NOTABLE
+      ? "starve"
+      : "neutral";
+
 interface Ligne {
   id: string;
   nom: string;
@@ -45,6 +67,7 @@ export interface SynergyPanelProps {
 export function SynergyPanel({ teamId, periode }: SynergyPanelProps) {
   const { t } = useTranslation("stats");
   const format = useStatsFormat();
+  const [chiffresOuverts, setChiffresOuverts] = useState(false);
   const { data: constats } = useRequest(
     `team-findings/${teamId}/${periode}`,
     () => getTeamFindingsApi(teamId, periode),
@@ -81,15 +104,22 @@ export function SynergyPanel({ teamId, periode }: SynergyPanelProps) {
     if (a.id === b.id) return <Text tone="disabled">—</Text>;
     const duo = paire(a.id, b.id);
     if (!duo) return <Text tone="disabled">·</Text>;
+    const ecart = format.ecartEnPoints(duo.delta);
     return (
-      <Stack spacing={0} align="center">
+      <Stack spacing={0.25} align="center">
+        <Text variant="caption" tone="secondary" mono>
+          {t("synergy.apart", { rate: format.taux(duo.expected) })}
+        </Text>
         <Chip
           size="small"
           tone={ton(duo.delta)}
           label={
-            duo.delta === null
-              ? format.taux(duo.winRate)
-              : (format.ecartEnPoints(duo.delta) ?? "—")
+            ecart === null
+              ? t("synergy.together", { rate: format.taux(duo.winRate) })
+              : t("synergy.togetherDelta", {
+                  rate: format.taux(duo.winRate),
+                  delta: ecart,
+                })
           }
         />
         <Text variant="caption" tone="secondary" mono>
@@ -102,19 +132,9 @@ export function SynergyPanel({ teamId, periode }: SynergyPanelProps) {
     (d) => d.delta !== null && Math.abs(d.delta) >= NOTABLE,
   );
 
-  const phraseRessource = (r: ResourceDto) =>
-    r.goldShareThreshold === null ||
-    r.winRateAbove === null ||
-    r.winRateBelow === null
-      ? null
-      : t("synergy.resourceSentence", {
-          position: format.poste(r.position),
-          threshold: format.taux(r.goldShareThreshold),
-          above: format.taux(r.winRateAbove),
-          gamesAbove: r.gamesAbove,
-          below: format.taux(r.winRateBelow),
-          gamesBelow: r.gamesBelow,
-        });
+  const classement = [...data.resources].sort(
+    (x, y) => (ecartDOr(y) ?? -Infinity) - (ecartDOr(x) ?? -Infinity),
+  );
 
   return (
     <Stack spacing={3}>
@@ -167,68 +187,137 @@ export function SynergyPanel({ teamId, periode }: SynergyPanelProps) {
         title={t("synergy.resources")}
         description={t("synergy.resourcesHint")}
       >
-        <Stack spacing={2}>
-          <DataTable<ResourceDto>
-            dense
-            caption={t("synergy.resources")}
-            emptyTitle={t("synergy.noResources")}
-            rows={data.resources}
-            rowKey={(r) => r.position}
-            columns={[
-              {
-                key: "position",
-                header: t("synergy.position"),
-                render: (r) => format.poste(r.position),
-              },
-              {
-                key: "gold",
-                header: t("synergy.goldShare"),
-                align: "right",
-                render: (r) =>
-                  `${format.taux(r.goldShareInWins)} / ${format.taux(r.goldShareInLosses)}`,
-              },
-              {
-                key: "damage",
-                header: t("synergy.damageShare"),
-                align: "right",
-                render: (r) =>
-                  `${format.taux(r.damageShareInWins)} / ${format.taux(r.damageShareInLosses)}`,
-              },
-              {
-                key: "conversion",
-                header: t("synergy.conversion"),
-                align: "right",
-                render: (r) => (
-                  <Chip
-                    size="small"
-                    tone={
-                      r.conversion !== null && r.conversion <= CONVERSION_FAIBLE
-                        ? "warning"
-                        : "neutral"
-                    }
-                    label={format.ecartEnPoints(r.conversion) ?? "—"}
-                  />
-                ),
-              },
-            ]}
-          />
-          {data.resources.map((r) => {
-            const phrase = phraseRessource(r);
-            return phrase ? <Text key={r.position}>{phrase}</Text> : null;
-          })}
-          {data.resources
-            .filter(
-              (r) => r.conversion !== null && r.conversion <= CONVERSION_FAIBLE,
-            )
-            .map((r) => (
-              <Text key={`${r.position}-conv`} tone="secondary">
-                {t("synergy.notConverting", {
-                  position: format.poste(r.position),
-                })}
-              </Text>
-            ))}
-        </Stack>
+        {classement.length === 0 ? (
+          <Text tone="secondary">{t("synergy.noResources")}</Text>
+        ) : (
+          <Stack spacing={2}>
+            <Columns minWidth={220} count={Math.min(classement.length, 5)}>
+              {classement.map((r, rang) => (
+                <PosteOr key={r.position} rang={rang + 1} ressource={r} />
+              ))}
+            </Columns>
+            <Text variant="caption" tone="secondary">
+              {t("synergy.correlation")}
+            </Text>
+            <Disclosure
+              title={t("synergy.exact")}
+              open={chiffresOuverts}
+              onToggle={setChiffresOuverts}
+            >
+              <DataTable<ResourceDto>
+                dense
+                caption={t("synergy.resources")}
+                emptyTitle={t("synergy.noResources")}
+                rows={classement}
+                rowKey={(r) => r.position}
+                layout="fixed"
+                minWidth={760}
+                columns={[
+                  {
+                    key: "position",
+                    header: t("synergy.position"),
+                    width: 120,
+                    render: (r) => format.poste(r.position),
+                  },
+                  ...(
+                    [
+                      ["goldWin", (r: ResourceDto) => r.goldShareInWins],
+                      ["goldLoss", (r: ResourceDto) => r.goldShareInLosses],
+                      ["damageWin", (r: ResourceDto) => r.damageShareInWins],
+                      ["damageLoss", (r: ResourceDto) => r.damageShareInLosses],
+                    ] as const
+                  ).map(([cle, part]) => ({
+                    key: cle,
+                    header: t(`synergy.share.${cle}`),
+                    width: 130,
+                    align: "right" as const,
+                    render: (r: ResourceDto) => format.taux(part(r)),
+                  })),
+                  {
+                    key: "conversion",
+                    header: t("synergy.conversion"),
+                    width: 120,
+                    align: "right",
+                    render: (r) => (
+                      <Chip
+                        size="small"
+                        tone={
+                          r.conversion !== null &&
+                          r.conversion <= CONVERSION_FAIBLE
+                            ? "warning"
+                            : "neutral"
+                        }
+                        label={format.ecartEnPoints(r.conversion) ?? "—"}
+                      />
+                    ),
+                  },
+                ]}
+              />
+            </Disclosure>
+          </Stack>
+        )}
       </Card>
     </Stack>
+  );
+}
+
+function PosteOr({
+  rang,
+  ressource: r,
+}: {
+  rang: number;
+  ressource: ResourceDto;
+}) {
+  const { t } = useTranslation("stats");
+  const format = useStatsFormat();
+  const ecart = ecartDOr(r);
+  const niveau = priorite(ecart);
+  return (
+    <Frame>
+      <Stack spacing={1}>
+        <Stack direction="row" spacing={1} align="center" justify="between">
+          <Text variant="subtitle">
+            {t("synergy.rank", {
+              rank: rang,
+              position: format.poste(r.position),
+            })}
+          </Text>
+          <Text variant="caption" mono>
+            {format.ecartEnPoints(ecart) ?? format.absent}
+          </Text>
+        </Stack>
+        <Chip
+          size="small"
+          tone={PRIORITE[niveau]}
+          label={t(`synergy.priority.${niveau}`)}
+        />
+        {r.goldShareThreshold === null ? (
+          <Text variant="caption" tone="secondary">
+            {t("synergy.noSplit")}
+          </Text>
+        ) : (
+          <>
+            <Text variant="caption">
+              {t("synergy.above", {
+                threshold: format.taux(r.goldShareThreshold),
+                rate: format.taux(r.winRateAbove),
+                count: r.gamesAbove,
+              })}
+            </Text>
+            <Text variant="caption">
+              {t("synergy.below", {
+                rate: format.taux(r.winRateBelow),
+                count: r.gamesBelow,
+              })}
+            </Text>
+          </>
+        )}
+        {r.conversion !== null && r.conversion <= CONVERSION_FAIBLE && (
+          <Text variant="caption" tone="secondary">
+            {t("synergy.notConverting")}
+          </Text>
+        )}
+      </Stack>
+    </Frame>
   );
 }
