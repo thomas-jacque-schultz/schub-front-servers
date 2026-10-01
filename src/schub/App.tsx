@@ -24,6 +24,7 @@ import {
 } from "../common";
 
 const ContactPage = lazyPage(() => import("./pages/ContactPage"));
+const FeedbackPage = lazyPage(() => import("./pages/FeedbackPage"));
 const GameServerFormPage = lazyPage(() => import("./pages/GameServerFormPage"));
 const ServersPage = lazyPage(() => import("./pages/servers/ServersPage"));
 const PortsPage = lazyPage(() => import("./pages/servers/PortsPage"));
@@ -112,6 +113,7 @@ function LocalizedRoutes() {
             <Route index element={<HomePage />} />
 
             <Route path="contact" element={<ContactPage />} />
+            <Route path="feedback" element={<FeedbackPage />} />
 
             {/* Exigées par Riot pour un produit tiers. */}
             <Route path="terms" element={<TermsPage />} />

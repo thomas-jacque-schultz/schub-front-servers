@@ -185,7 +185,7 @@ function PrivacyPage() {
             <Text variant="section">{t("privacy.rights.howTitle")}</Text>
             <Text>{t("privacy.rights.how")}</Text>
             <Text>{t("privacy.rights.thirdParty")}</Text>
-            <Link href={localize("/contact")}>
+            <Link href={localize("/feedback")}>
               {t("shell.contact", { ns: "common" })}
             </Link>
           </Stack>
