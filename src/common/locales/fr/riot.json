@@ -71,10 +71,10 @@
       "storageHint": "Au-delà du seuil, la collecte de fond se suspend d'elle-même."
     },
     "pause": {
-      "title": "Pause de l’ingest",
+      "title": "Ingest",
       "description": "Arrête toute la file de collecte, demandes des joueurs comprises, en production comme ici. Les tâches en cours finissent ; les autres attendent la reprise. À utiliser le temps d’une maintenance de la base.",
-      "toggle": "Ingest en pause",
-      "toggleHelper": "La pause survit à un redémarrage du connecteur : pense à reprendre l’ingest ensuite.",
+      "toggle": "Ingest en marche",
+      "toggleHelper": "Décoché, toute la file s’arrête. La pause survit à un redémarrage du connecteur : pense à reprendre l’ingest ensuite.",
       "active": "L’ingest tourne.",
       "draining_one": "En pause : {{count}} tâche finit son travail.",
       "draining_other": "En pause : {{count}} tâches finissent leur travail.",
@@ -130,6 +130,16 @@
       "cancel": "Annuler",
       "done": "{{riot}} documents Riot et {{findings}} constats effacés. {{accounts}} comptes sont en cours de résolution ; reprends l’ingest pour relancer la collecte.",
       "failed": "L’invalidation a échoué."
+    },
+    "ranks": {
+      "title": "Comptes relevés par rang",
+      "description": "Le dernier rang solo/duo relevé de chaque compte suivi par la collecte. Les graines du ladder, tirées dans les classements, ne sont pas relevées : seules leurs dernières parties classées sont prises.",
+      "rank": "Rang",
+      "tracked": "Comptes relevés",
+      "seeds": "Graines",
+      "unranked": "Non classé",
+      "masterGrandmaster": "Maître et Grand maître",
+      "total": "Total"
     }
   },
   "premadelab": {

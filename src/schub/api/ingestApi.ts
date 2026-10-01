@@ -1,5 +1,6 @@
 import { requestJson, type HistoryWindowDto } from "../../common";
 import type {
+  AccountsByRankDto,
   CrawlerDto,
   IngestLoadDto,
   IngestPauseDto,
@@ -16,6 +17,9 @@ export const getIngestSummaryApi = async (): Promise<IngestSummaryDto> =>
 
 export const getCrawlerApi = async (): Promise<CrawlerDto> =>
   requestJson<CrawlerDto>("/ingest/crawler", { method: "GET" });
+
+export const getAccountsByRankApi = async (): Promise<AccountsByRankDto> =>
+  requestJson<AccountsByRankDto>("/ingest/accounts-by-rank", { method: "GET" });
 
 export const toggleCrawlerApi = async (enabled: boolean): Promise<CrawlerDto> =>
   requestJson<CrawlerDto>("/ingest/crawler", {

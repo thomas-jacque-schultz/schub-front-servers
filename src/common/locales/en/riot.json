@@ -71,10 +71,10 @@
       "storageHint": "Past the threshold, background collection suspends itself."
     },
     "pause": {
-      "title": "Ingest pause",
+      "title": "Ingest",
       "description": "Stops the whole collection queue, player requests included, in production as well as here. Running tasks finish; the others wait for the resume. Use it for the duration of a database maintenance.",
-      "toggle": "Ingest paused",
-      "toggleHelper": "The pause survives a connector restart: remember to resume the ingest afterwards.",
+      "toggle": "Ingest running",
+      "toggleHelper": "Unchecked, the whole queue stops. The pause survives a connector restart: remember to resume the ingest afterwards.",
       "active": "The ingest is running.",
       "draining_one": "Paused: {{count}} task is finishing its work.",
       "draining_other": "Paused: {{count}} tasks are finishing their work.",
@@ -130,6 +130,16 @@
       "cancel": "Cancel",
       "done": "{{riot}} Riot documents and {{findings}} findings erased. {{accounts}} accounts are being resolved; resume the ingest to restart collection.",
       "failed": "Invalidation failed."
+    },
+    "ranks": {
+      "title": "Tracked accounts by rank",
+      "description": "The latest solo/duo rank recorded for each account tracked by the collection. Ladder seeds, drawn from the leaderboards, are not tracked: only their latest ranked games are taken.",
+      "rank": "Rank",
+      "tracked": "Tracked accounts",
+      "seeds": "Seeds",
+      "unranked": "Unranked",
+      "masterGrandmaster": "Master and Grandmaster",
+      "total": "Total"
     }
   },
   "premadelab": {

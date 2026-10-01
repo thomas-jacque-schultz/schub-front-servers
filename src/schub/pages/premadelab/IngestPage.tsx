@@ -22,6 +22,7 @@ import {
   useAuthStore,
   useLocaleFormat,
 } from "../../../common";
+import { AccountsByRankCard } from "../../components/AccountsByRankCard";
 import { IngestPauseCard } from "../../components/IngestPauseCard";
 import { RiotDataInvalidationCard } from "../../components/RiotDataInvalidationCard";
 import type {
@@ -241,6 +242,8 @@ function IngestPage() {
               />
             </Stack>
           </Card>
+
+          <AccountsByRankCard />
 
           {pause?.available && (
             <IngestPauseCard pause={pause} onChange={setPause} />
