@@ -1,7 +1,6 @@
-import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
-import { Divider, FeedbackForm, Stack, useDocumentMeta } from "../../common";
+import { LocalizedNavigate, useDocumentMeta } from "../../common";
 import { PortfolioSections } from "./contact/PortfolioSections";
 
 function ContactPage() {
@@ -14,26 +13,12 @@ function ContactPage() {
     description: t("meta.description"),
   });
 
-  // Le routeur ne suit pas les ancres : le lien « Feedback » du pied de page atterrirait en haut.
-  useEffect(() => {
-    if (hash) {
-      document
-        .getElementById(hash.slice(1))
-        ?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }, [hash]);
+  // Les liens partagés avant que le feedback ait sa propre page.
+  if (hash === "#feedback") {
+    return <LocalizedNavigate to="/feedback" replace />;
+  }
 
-  return (
-    <Stack spacing={4}>
-      <PortfolioSections />
-
-      <Divider />
-
-      <Stack id="feedback">
-        <FeedbackForm />
-      </Stack>
-    </Stack>
-  );
+  return <PortfolioSections />;
 }
 
 export default ContactPage;

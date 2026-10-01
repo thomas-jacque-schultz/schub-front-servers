@@ -29,6 +29,14 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://schultz-thomas.fr/feedback</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://schultz-thomas.fr/feedback" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://schultz-thomas.fr/en/feedback" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://schultz-thomas.fr/feedback" />
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://schultz-thomas.fr/servers</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://schultz-thomas.fr/servers" />
     <xhtml:link rel="alternate" hreflang="en" href="https://schultz-thomas.fr/en/servers" />

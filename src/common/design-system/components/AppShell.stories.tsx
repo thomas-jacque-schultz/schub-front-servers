@@ -49,7 +49,7 @@ const COMPTE = {
 
 const LIENS = [
   { key: "creator", label: "Créateur", to: "/contact", accent: true },
-  { key: "feedback", label: "Feedback", to: "/contact#feedback", accent: true },
+  { key: "feedback", label: "Feedback", to: "/feedback", accent: true },
   { key: "terms", label: "Conditions d'utilisation", to: "/conditions" },
   { key: "privacy", label: "Confidentialité", to: "/confidentialite" },
   {

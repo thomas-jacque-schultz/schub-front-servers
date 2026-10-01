@@ -88,7 +88,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
     {
       key: "feedback",
       label: t("shell.feedback"),
-      to: localize("/contact#feedback"),
+      to: localize("/feedback"),
       accent: true,
     },
     { key: "terms", label: t("shell.terms"), to: localize("/terms") },
