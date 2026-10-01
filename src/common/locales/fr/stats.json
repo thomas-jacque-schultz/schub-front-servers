@@ -422,30 +422,29 @@
       "laners": "Encaisser les ganks",
       "lanersHelper": "Tenu : le joueur visé n'est pas mort pendant le gank.",
       "junglers": "Ganks du jungler",
-      "junglersHelper": "Décisif : un kill sans perte, ou un objectif du côté du couloir dans les 90 secondes.",
+      "junglersHelper": "Décisif : un kill sans perte, ou un objectif du côté du couloir dans les 90 secondes. Présence : la part de son temps, de 2 à 14 min, passée du côté de la carte où jouait ce coéquipier, sur leurs parties communes. Le tireur et le support partagent le bas.",
       "sides": "Côté fort de notre jungler",
       "sidesHelper": "Le côté où il a passé au moins deux minutes de plus. Côté faible : l'autre.",
       "member": "Joueur",
       "laneGames": "Parties",
       "facedPerGame": "Subis / partie",
       "held": "Tenus",
-      "deaths": "Morts sur gank",
       "jungleGames": "Parties",
       "madePerGame": "Ganks / partie",
       "decisive": "Décisifs",
       "countered": "Contrés",
-      "presence": "Présence",
       "side": "Côté fort",
       "games": "Parties",
       "winRate": "Victoires",
       "onWeakSide": "Ganks adverses côté faible",
-      "sidesTable": "Les chiffres exacts",
       "sidesMap": "Taux de victoire selon le côté fort de notre jungler (moyenne : {{average}}). Vert : au-dessus de notre moyenne, rouge : en dessous, gris : moins de 3 parties.",
       "sideZone": {
         "TOP": "Haut",
         "BALANCED": "Équilibré",
         "BOT": "Bas"
-      }
+      },
+      "deathsPerGame": "Morts sur gank / partie",
+      "presenceWith": "Présence auprès de chacun"
     }
   },
   "family": {
@@ -485,20 +484,26 @@
     "MASTER_PLUS": "Maître+"
   },
   "teamLevel": {
-    "title": "Notre début de partie, noté",
-    "helper": "Chaque partie d’équipe à timeline se situe parmi les parties classées du même palier ; la note est la moyenne de ces positions.",
+    "title": "Early contre Late",
+    "helper": "L’early mesure surtout le niveau de chacun dans son couloir, le late le jeu d’équipe. L’écart dit lequel des deux vous porte. L’emblème situe la valeur à 15 min parmi les parties classées du même palier.",
     "empty": "Pas encore de partie d’équipe à timeline sur la période.",
     "basis": "{{games}} partie(s) analysée(s) · palier moyen : {{tier}}",
     "metric": {
-      "goldDiffAt15": "Écart d’or à 15 min",
-      "xpDiffAt15": "Écart d’XP à 15 min",
-      "killsDiffAt15": "Écart de kills à 15 min",
-      "dragons": "Dragons avant 15 min",
-      "grubs": "Larves avant 15 min",
-      "heralds": "Hérauts avant 15 min",
+      "goldDiffAt15": "Écart d’or",
+      "xpDiffAt15": "Écart d’XP",
+      "killsDiffAt15": "Écart de kills",
+      "dragons": "Dragons",
+      "grubs": "Larves",
+      "heralds": "Hérauts",
       "ganksDecisive": "Ganks décisifs faits",
       "ganksConceded": "Ganks décisifs subis"
-    }
+    },
+    "metricHeader": "Mesure",
+    "at15": "À 15 min",
+    "atEnd": "À la fin",
+    "change": "Différence",
+    "endPending_one": "Fin de partie sur {{count}} partie sur {{games}} : les autres attendent leur recalcul.",
+    "endPending_other": "Fin de partie sur {{count}} parties sur {{games}} : les autres attendent leur recalcul."
   },
   "tabs": {
     "ariaLabel": "Sections de mes stats",
@@ -535,7 +540,7 @@
   "synergy": {
     "title": "Duos et ressources",
     "duos": "Les duos de l’effectif",
-    "duosHint": "Chaque case : l’écart entre le taux de victoire de la paire et ce qu’on attendrait d’elle (la moyenne de chacun sans l’autre), sur les parties d’équipe. Paires à {{count}} parties ensemble au moins.",
+    "duosHint": "Chaque case, sur les parties d’équipe : en haut, le taux de victoire de chacun dans les parties où l’autre n’est pas là (moyenne des deux) ; en dessous, celui de la paire quand elle joue ensemble, en vert à 5 points au-dessus ou plus, en orange à 5 points en dessous ou plus, en gris entre les deux ; puis le nombre de parties ensemble. Paires à {{count}} parties ensemble au moins.",
     "games_one": "{{count}} partie",
     "games_other": "{{count}} parties",
     "noDuo": "Aucune paire n’a encore {{count}} parties d’équipe ensemble sur cette période.",
@@ -543,16 +548,35 @@
     "duoUp_other": "{{a}} et {{b}} gagnent {{points}} points de plus qu’attendu ensemble ({{count}} parties).",
     "duoDown_one": "{{a}} et {{b}} gagnent {{points}} points de moins qu’attendu ensemble ({{count}} partie).",
     "duoDown_other": "{{a}} et {{b}} gagnent {{points}} points de moins qu’attendu ensemble ({{count}} parties).",
-    "resources": "Qui reçoit l’or, et est-ce que ça paie",
-    "resourcesHint": "Part de l’or et des dégâts de l’équipe tenue par chaque poste, en victoire puis en défaite. Toutes files confondues.",
+    "resources": "Qui doit recevoir l’or",
+    "resourcesHint": "Les postes classés par priorité d’accès à l’or : l’écart de taux de victoire entre les parties où le poste a plus que sa part habituelle de l’or de l’équipe, et celles où il en a moins. Toutes files confondues.",
     "noResources": "Pas encore de partie d’équipe sur cette période.",
     "position": "Poste",
-    "goldShare": "Or (V / D)",
-    "damageShare": "Dégâts (V / D)",
     "conversion": "Dégâts − or",
-    "resourceSentence": "Quand votre {{position}} a plus de {{threshold}} de l’or, vous gagnez {{above}} des parties ({{gamesAbove}}) ; en dessous, {{below}} ({{gamesBelow}}).",
-    "notConverting": "Votre {{position}} reçoit plus d’or qu’il ne rend en dégâts.",
-    "findings": "Ce qui ressort pour l’équipe"
+    "notConverting": "Reçoit plus d’or qu’il ne rend en dégâts.",
+    "findings": "Ce qui ressort pour l’équipe",
+    "apart": "Séparés : {{rate}}",
+    "together": "Ensemble : {{rate}}",
+    "togetherDelta": "Ensemble : {{rate}} ({{delta}})",
+    "rank": "{{rank}}. {{position}}",
+    "priority": {
+      "feed": "À nourrir",
+      "neutral": "Indifférent",
+      "starve": "À ne pas nourrir"
+    },
+    "above_one": "Plus de {{threshold}} de l’or : {{rate}} de victoires ({{count}} partie)",
+    "above_other": "Plus de {{threshold}} de l’or : {{rate}} de victoires ({{count}} parties)",
+    "below_one": "Moins : {{rate}} ({{count}} partie)",
+    "below_other": "Moins : {{rate}} ({{count}} parties)",
+    "noSplit": "Pas assez de parties pour couper au-dessus et en dessous.",
+    "correlation": "C’est une corrélation, pas une cause : une part d’or est relative. Un poste peut dépasser son seuil parce que les autres sont en retard.",
+    "exact": "Les chiffres exacts",
+    "share": {
+      "goldWin": "Part de l’or en victoire",
+      "goldLoss": "Part de l’or en défaite",
+      "damageWin": "Part des dégâts en victoire",
+      "damageLoss": "Part des dégâts en défaite"
+    }
   },
   "premade": {
     "summary_one": "{{count}} partie d'équipe sur la période (au moins {{minimum}} membres ensemble). Chaque tuile se lit ainsi : à gauche le joueur (sa valeur en premade, puis l'écart avec ses stats habituelles), à droite l'équipe (l'écart avec la moyenne des coéquipiers, puis son rang).",

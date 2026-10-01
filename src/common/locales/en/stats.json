@@ -422,30 +422,29 @@
       "laners": "Taking ganks",
       "lanersHelper": "Held: the targeted player did not die during the gank.",
       "junglers": "Jungler ganks",
-      "junglersHelper": "Decisive: a kill without loss, or an objective on that side within 90 seconds.",
+      "junglersHelper": "Decisive: a kill without loss, or an objective on that lane’s side within 90 seconds. Presence: the share of their time, from 2 to 14 min, spent on the side of the map where that teammate played, over their shared games. ADC and support share the bottom side.",
       "sides": "Our jungler's strong side",
       "sidesHelper": "The side where they spent at least two more minutes. Weak side: the other one.",
       "member": "Player",
       "laneGames": "Games",
       "facedPerGame": "Faced / game",
       "held": "Held",
-      "deaths": "Deaths on gank",
       "jungleGames": "Games",
       "madePerGame": "Ganks / game",
       "decisive": "Decisive",
       "countered": "Countered",
-      "presence": "Presence",
       "side": "Strong side",
       "games": "Games",
       "winRate": "Wins",
       "onWeakSide": "Enemy ganks on weak side",
-      "sidesTable": "Exact figures",
       "sidesMap": "Win rate by our jungler's strong side (average: {{average}}). Green: above our average, red: below, grey: fewer than 3 games.",
       "sideZone": {
         "TOP": "Top",
         "BALANCED": "Balanced",
         "BOT": "Bottom"
-      }
+      },
+      "deathsPerGame": "Gank deaths / game",
+      "presenceWith": "Presence with each"
     }
   },
   "family": {
@@ -485,20 +484,26 @@
     "MASTER_PLUS": "Master+"
   },
   "teamLevel": {
-    "title": "Our early game, graded",
-    "helper": "Each team game with a timeline is placed among ranked games of the same tier; the grade is the average of those positions.",
+    "title": "Early versus Late",
+    "helper": "The early game mostly measures each player’s level in lane, the late game the team play. The gap tells which of the two carries you. The emblem places the 15-min value among ranked games of the same tier.",
     "empty": "No team game with a timeline in this period yet.",
     "basis": "{{games}} game(s) analysed · average tier: {{tier}}",
     "metric": {
-      "goldDiffAt15": "Gold difference at 15",
-      "xpDiffAt15": "XP difference at 15",
-      "killsDiffAt15": "Kill difference at 15",
-      "dragons": "Dragons before 15",
-      "grubs": "Grubs before 15",
-      "heralds": "Heralds before 15",
+      "goldDiffAt15": "Gold gap",
+      "xpDiffAt15": "XP gap",
+      "killsDiffAt15": "Kill gap",
+      "dragons": "Dragons",
+      "grubs": "Voidgrubs",
+      "heralds": "Heralds",
       "ganksDecisive": "Decisive ganks made",
       "ganksConceded": "Decisive ganks conceded"
-    }
+    },
+    "metricHeader": "Measure",
+    "at15": "At 15 min",
+    "atEnd": "At the end",
+    "change": "Difference",
+    "endPending_one": "End of game over {{count}} game out of {{games}}: the others are waiting to be recomputed.",
+    "endPending_other": "End of game over {{count}} games out of {{games}}: the others are waiting to be recomputed."
   },
   "tabs": {
     "ariaLabel": "My stats sections",
@@ -535,7 +540,7 @@
   "synergy": {
     "title": "Duos and resources",
     "duos": "Roster duos",
-    "duosHint": "Each cell: the gap between the pair’s win rate and what you would expect from them (each one’s average without the other), over team games. Pairs with at least {{count}} games together.",
+    "duosHint": "Each cell, over team games: on top, each player’s win rate in games without the other (average of both); below, the pair’s win rate when playing together, green 5 points above or more, orange 5 points below or more, grey in between; then the number of games together. Pairs with at least {{count}} games together.",
     "games_one": "{{count}} game",
     "games_other": "{{count}} games",
     "noDuo": "No pair has {{count}} team games together in this period yet.",
@@ -543,16 +548,35 @@
     "duoUp_other": "{{a}} and {{b}} win {{points}} points more than expected together ({{count}} games).",
     "duoDown_one": "{{a}} and {{b}} win {{points}} points less than expected together ({{count}} game).",
     "duoDown_other": "{{a}} and {{b}} win {{points}} points less than expected together ({{count}} games).",
-    "resources": "Who gets the gold, and does it pay",
-    "resourcesHint": "Share of the team’s gold and damage held by each role, in wins then losses. All queues together.",
+    "resources": "Who should get the gold",
+    "resourcesHint": "Roles ranked by gold priority: the win-rate gap between games where the role has more than its usual share of the team’s gold and games where it has less. All queues.",
     "noResources": "No team game in this period yet.",
     "position": "Role",
-    "goldShare": "Gold (W / L)",
-    "damageShare": "Damage (W / L)",
     "conversion": "Damage − gold",
-    "resourceSentence": "When your {{position}} has more than {{threshold}} of the gold, you win {{above}} of games ({{gamesAbove}}); below, {{below}} ({{gamesBelow}}).",
-    "notConverting": "Your {{position}} gets more gold than they return in damage.",
-    "findings": "What stands out for the team"
+    "notConverting": "Gets more gold than it returns in damage.",
+    "findings": "What stands out for the team",
+    "apart": "Apart: {{rate}}",
+    "together": "Together: {{rate}}",
+    "togetherDelta": "Together: {{rate}} ({{delta}})",
+    "rank": "{{rank}}. {{position}}",
+    "priority": {
+      "feed": "Feed",
+      "neutral": "Indifferent",
+      "starve": "Don’t feed"
+    },
+    "above_one": "Over {{threshold}} of the gold: {{rate}} wins ({{count}} game)",
+    "above_other": "Over {{threshold}} of the gold: {{rate}} wins ({{count}} games)",
+    "below_one": "Under: {{rate}} ({{count}} game)",
+    "below_other": "Under: {{rate}} ({{count}} games)",
+    "noSplit": "Not enough games to split above and below.",
+    "correlation": "This is a correlation, not a cause: a gold share is relative. A role can exceed its threshold because the others are behind.",
+    "exact": "Exact figures",
+    "share": {
+      "goldWin": "Gold share in wins",
+      "goldLoss": "Gold share in losses",
+      "damageWin": "Damage share in wins",
+      "damageLoss": "Damage share in losses"
+    }
   },
   "premade": {
     "summary_one": "{{count}} team game in the period (at least {{minimum}} members together). Each tile reads: on the left the player (premade value, then the gap with their usual stats), on the right the team (the gap with the teammates' average, then their rank).",
