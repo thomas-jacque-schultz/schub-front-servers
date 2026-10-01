@@ -112,16 +112,11 @@ function ServersPage() {
         }
       />
 
-      {editing ? (
-        <>
-          {!can("SERVER_INFRA_VIEW") && (
-            <Alert severity="info">{t("list.memberView")}</Alert>
-          )}
-          {dashboard}
-        </>
-      ) : (
-        <Card>{dashboard}</Card>
+      {editing && !can("SERVER_INFRA_VIEW") && (
+        <Alert severity="info">{t("list.memberView")}</Alert>
       )}
+
+      <Card>{dashboard}</Card>
     </Stack>
   );
 }
