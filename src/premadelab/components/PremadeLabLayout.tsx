@@ -14,7 +14,7 @@ import {
   type AppShellAccount,
   type AppShellFooterLink,
 } from "../../common";
-import { usePremadeLabShell } from "../shell";
+import { SUPPORT_URL, usePremadeLabShell } from "../shell";
 
 const GITHUB_URL = "https://github.com/thomas-jacque-schultz";
 
@@ -60,6 +60,12 @@ export function PremadeLabLayout({ children }: { children: ReactNode }) {
       key: "feedback",
       label: t("shell.feedback"),
       to: localize("/contact"),
+      accent: true,
+    },
+    {
+      key: "support",
+      label: t("shell.support", { ns: "lol" }),
+      href: SUPPORT_URL,
       accent: true,
     },
     { key: "terms", label: t("shell.terms"), to: localize("/terms") },

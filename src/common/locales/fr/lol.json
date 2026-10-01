@@ -10,7 +10,8 @@
     "statsLocked": "Liez votre compte Riot pour y accéder",
     "teams": "Équipes",
     "footerNote": "PremadeLab — les stats et le théorycraft de ton équipe League of Legends",
-    "search": "Rechercher"
+    "search": "Rechercher",
+    "support": "Soutenir"
   },
   "hero": {
     "eyebrow": "League of Legends",
@@ -175,5 +176,10 @@
       "empty": "Aucune partie sur la période.",
       "timezone": "Heures de ton fuseau ({{zone}}). L'épaisseur d'un secteur dit combien de parties y ont été jouées ; sa couleur, s'il gagne plus (vert) ou moins (rouge) que ta moyenne. Gris clair : dans ta moyenne ; gris foncé : moins de 3 parties."
     }
+  },
+  "support": {
+    "title": "Soutenir PremadeLab",
+    "text": "PremadeLab est gratuit et sans publicité. Les serveurs qui collectent et calculent les stats, eux, coûtent : un café aide à les garder allumés.",
+    "action": "Offrir un café"
   }
 }
