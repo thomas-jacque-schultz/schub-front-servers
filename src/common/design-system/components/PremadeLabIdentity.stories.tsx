@@ -110,7 +110,7 @@ export const Splash: Story = {
               inset: 0,
               backgroundImage: "url(premadelab/splash.svg)",
               backgroundSize: "cover",
-              backgroundPosition: "center bottom",
+              backgroundPosition: "right center",
               opacity: 0.12,
             },
             "[data-mui-color-scheme='light'] &::before": { opacity: 0.07 },

@@ -146,7 +146,7 @@ export function AppShell({
             pointerEvents: "none",
             backgroundImage: `url(${backdropArt})`,
             backgroundSize: "cover",
-            backgroundPosition: "center bottom",
+            backgroundPosition: "right center",
             opacity: 0.12,
             "[data-mui-color-scheme='light'] &": { opacity: 0.07 },
           }}
