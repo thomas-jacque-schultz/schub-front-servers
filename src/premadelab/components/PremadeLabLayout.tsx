@@ -6,6 +6,7 @@ import {
   AppShell,
   pathWithoutLanguage,
   PageErrorBoundary,
+  PremadeLabMark,
   Stack,
   useAuthStore,
   useLocalizedNavigate,
@@ -78,9 +79,11 @@ export function PremadeLabLayout({ children }: { children: ReactNode }) {
   return (
     <AppShell
       brand={t("shell.appPremadelab")}
+      brandMark={<PremadeLabMark />}
       brandTo={shell.brandTo}
       brandTagline={shell.tagline}
       maxWidth={shell.maxWidth}
+      backdropArt="/premadelab/splash.svg"
       navItems={surProfil ? [] : shell.navItems}
       connected={connected}
       username={profile?.username}

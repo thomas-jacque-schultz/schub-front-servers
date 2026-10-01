@@ -76,6 +76,8 @@ export { Divider } from "./components/Divider";
 export type { DividerProps } from "./components/Divider";
 export { DiscordIcon } from "./components/DiscordIcon";
 export type { DiscordIconProps } from "./components/DiscordIcon";
+export { PremadeLabMark } from "./components/PremadeLabMark";
+export type { PremadeLabMarkProps } from "./components/PremadeLabMark";
 export { EmptyState } from "./components/EmptyState";
 export type { EmptyStateProps } from "./components/EmptyState";
 export { Frame } from "./components/Frame";
