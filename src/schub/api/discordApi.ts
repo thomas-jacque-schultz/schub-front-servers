@@ -1,5 +1,6 @@
 import { requestJson } from "../../common";
 import type {
+  ChannelCleanupDto,
   DiscordChannelSelection,
   DiscordGuildChannelsDto,
 } from "../types/discord";
@@ -19,3 +20,15 @@ export const subscribeDiscordChannelsApi = async (
     body: JSON.stringify({ channels }),
   });
 };
+
+export const previewChannelCleanupApi = async (): Promise<
+  ChannelCleanupDto[]
+> =>
+  requestJson<ChannelCleanupDto[]>("/discord/channels/clean", {
+    method: "GET",
+  });
+
+export const cleanChannelsApi = async (): Promise<ChannelCleanupDto[]> =>
+  requestJson<ChannelCleanupDto[]>("/discord/channels/clean", {
+    method: "POST",
+  });

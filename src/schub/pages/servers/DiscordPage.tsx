@@ -5,6 +5,7 @@ import {
   subscribeDiscordChannelsApi,
 } from "../../api/discordApi";
 import DiscordChannelsCard from "../../components/DiscordChannelsCard";
+import DiscordCleanupCard from "../../components/DiscordCleanupCard";
 import { PageHeader, Stack } from "../../../common";
 import type {
   DiscordChannelSelection,
@@ -53,6 +54,7 @@ function DiscordPage() {
           await load();
         }}
       />
+      <DiscordCleanupCard />
     </Stack>
   );
 }
