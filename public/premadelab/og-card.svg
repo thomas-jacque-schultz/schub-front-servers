@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Source de la vignette OpenGraph (1200 × 630) : premadelab.html sert le PNG, rendu comme celui de Schub (public/og-card.svg). -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <radialGradient id="halo-prune" cx="0.08" cy="-0.14" r="0.9">
+      <stop offset="0%" stop-color="#A4477E" stop-opacity="0.34" />
+      <stop offset="62%" stop-color="#A4477E" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="halo-profond" cx="1.08" cy="1.12" r="0.8">
+      <stop offset="0%" stop-color="#6B2853" stop-opacity="0.42" />
+      <stop offset="58%" stop-color="#6B2853" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="trame" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#C9A227" stroke-opacity="0.055" stroke-width="1" />
+    </pattern>
+    <linearGradient id="estompe" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.9" />
+      <stop offset="60%" stop-color="#FFFFFF" stop-opacity="0" />
+    </linearGradient>
+    <mask id="masque-trame">
+      <rect width="1200" height="630" fill="url(#estompe)" />
+    </mask>
+  </defs>
+
+  <rect width="1200" height="630" fill="#0A060C" />
+  <rect width="1200" height="630" fill="url(#halo-prune)" />
+  <rect width="1200" height="630" fill="url(#halo-profond)" />
+  <rect width="1200" height="630" fill="url(#trame)" mask="url(#masque-trame)" />
+
+  <g transform="translate(840 150) scale(5)">
+    <g fill="#E9C766">
+      <circle cx="31" cy="14.5" r="3.2" />
+      <circle cx="37.5" cy="9.5" r="2.6" />
+      <circle cx="26.5" cy="8" r="2.2" />
+      <circle cx="33" cy="3.5" r="1.7" />
+      <circle cx="41" cy="15.5" r="1.7" />
+    </g>
+    <g fill="none" stroke="#C9A227" stroke-width="3" stroke-linecap="round">
+      <path d="M18.5 40.5 Q11.5 39.5 11.5 44 Q11.5 47.5 16 47.5" />
+      <path d="M45.5 40.5 Q52.5 39.5 52.5 44 Q52.5 47.5 48 47.5" />
+    </g>
+    <g fill="#C9A227">
+      <rect x="23" y="19" width="18" height="4.5" rx="2.25" />
+      <path d="M27 23 V31 L15.5 44.5 Q12.5 48.5 15.5 51.5 Q19.5 55 32 55 Q44.5 55 48.5 51.5 Q51.5 48.5 48.5 44.5 L37 31 V23 Z" />
+    </g>
+    <path d="M19.5 45 Q25.5 42 32 45 T44.5 45" fill="none" stroke="#0A060C" stroke-width="2" stroke-linecap="round" />
+    <g fill="#A4477E">
+      <path d="M4.5 43.5 Q3.5 61 30 61 V57 Q11 57 9.5 46 Q9 42 6.5 42 Q4.5 42 4.5 43.5 Z" />
+      <path d="M59.5 43.5 Q60.5 61 34 61 V57 Q53 57 54.5 46 Q55 42 57.5 42 Q59.5 42 59.5 43.5 Z" />
+    </g>
+  </g>
+
+  <rect x="80" y="150" width="40" height="5" fill="#C9A227" />
+  <text x="136" y="160" font-family="'JetBrains Mono', Menlo, Consolas, monospace" font-size="24"
+    fill="#C9A227" letter-spacing="7">LEAGUE OF LEGENDS · PREMADE</text>
+
+  <text x="80" y="300" font-family="Helvetica, Arial, sans-serif" font-size="104" font-weight="bold"
+    fill="#F2E9EE" letter-spacing="-3">PremadeLab</text>
+  <rect x="688" y="252" width="20" height="48" fill="#C9A227" />
+
+  <text x="80" y="386" font-family="Helvetica, Arial, sans-serif" font-size="36" fill="#B6A3B4">
+    Les stats de ton premade : joueurs, duos,
+  </text>
+  <text x="80" y="438" font-family="Helvetica, Arial, sans-serif" font-size="36" fill="#B6A3B4">
+    compos et pool de champions.
+  </text>
+
+  <rect x="80" y="516" width="1040" height="1" fill="#C9A227" fill-opacity="0.22" />
+  <text x="80" y="566" font-family="'JetBrains Mono', Menlo, Consolas, monospace" font-size="28"
+    fill="#C9A227">premadelab.eu</text>
+</svg>

@@ -75,6 +75,8 @@ export interface AppShellAccount {
 
 export interface AppShellProps {
   brand: string;
+  /** Le logo, à gauche du nom. */
+  brandMark?: ReactNode;
   brandTo: string;
   brandTagline?: string;
   /** Entrées et menus déroulants, dans l'ordre d'affichage. */
@@ -90,11 +92,14 @@ export interface AppShellProps {
   footerLinks: AppShellFooterLink[];
   footerNote?: ReactNode;
   maxWidth?: "md" | "lg" | "xl";
+  /** Illustration fixe sous le contenu, entrevue entre les panneaux. */
+  backdropArt?: string;
   children: ReactNode;
 }
 
 export function AppShell({
   brand,
+  brandMark,
   brandTo,
   brandTagline,
   navItems = [],
@@ -108,6 +113,7 @@ export function AppShell({
   footerLinks,
   footerNote,
   maxWidth = "lg",
+  backdropArt,
   children,
 }: AppShellProps) {
   const identity = useIdentity();
@@ -131,6 +137,21 @@ export function AppShell({
         "&::before": gridOverlaySxOf(identity),
       }}
     >
+      {backdropArt && (
+        <Box
+          aria-hidden
+          sx={{
+            position: "fixed",
+            inset: 0,
+            pointerEvents: "none",
+            backgroundImage: `url(${backdropArt})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center bottom",
+            opacity: 0.12,
+            "[data-mui-color-scheme='light'] &": { opacity: 0.07 },
+          }}
+        />
+      )}
       <AppBar
         position="sticky"
         color="transparent"
@@ -150,6 +171,7 @@ export function AppShell({
               sx={{ textDecoration: "none", color: "inherit", mr: 2 }}
             >
               <MuiStack direction="row" spacing={0.75} alignItems="center">
+                {brandMark}
                 <Typography
                   variant="h6"
                   component="span"
