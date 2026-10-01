@@ -25,3 +25,8 @@ npm run build
 ```bash
 npm run preview
 ```
+
+
+## Licence
+
+[PolyForm Noncommercial 1.0.0](LICENSE) : le code se lit et se réutilise, sauf pour un usage commercial. Les versions publiées avant le 01-10-2026 restent sous Apache-2.0.
