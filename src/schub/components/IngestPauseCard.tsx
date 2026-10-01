@@ -69,8 +69,8 @@ export function IngestPauseCard({ pause, onChange }: IngestPauseCardProps) {
     >
       <Stack spacing={2}>
         <Switch
-          checked={pause.paused}
-          onChange={(paused) => void toggle(paused)}
+          checked={!pause.paused}
+          onChange={(running) => void toggle(!running)}
           label={t("ingest.pause.toggle")}
           helperText={t("ingest.pause.toggleHelper")}
           disabled={isSaving || !can("INGEST_MANAGE")}

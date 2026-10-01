@@ -60,3 +60,15 @@ export interface RiotDataInvalidationDto {
   findings: number;
   accountsToResolve: number;
 }
+
+export interface AccountsByRankRowDto {
+  /** UNRANKED, puis IRON … CHALLENGER. */
+  tier: string;
+  tracked: number;
+  seeds: number;
+}
+
+export interface AccountsByRankDto {
+  available: boolean;
+  rows: AccountsByRankRowDto[];
+}
