@@ -540,7 +540,7 @@
   "synergy": {
     "title": "Duos et ressources",
     "duos": "Les duos de l’effectif",
-    "duosHint": "Chaque case, sur les parties d’équipe : en haut, le taux de victoire de chacun dans les parties où l’autre n’est pas là (moyenne des deux) ; en dessous, celui de la paire quand elle joue ensemble, en vert à 5 points au-dessus ou plus, en orange à 5 points en dessous ou plus, en gris entre les deux ; puis le nombre de parties ensemble. Paires à {{count}} parties ensemble au moins.",
+    "duosHint": "Chaque case, sur les parties d’équipe : en haut, le taux de victoire de chacun dans les parties où l’autre n’est pas là (moyenne des deux) ; en dessous, celui de la paire quand elle joue ensemble, en vert à 5 points au-dessus ou plus, en orange à 5 points en dessous ou plus, en gris entre les deux ; puis le nombre de parties ensemble. « Séparés : — » : ils ne jouent jamais l’un sans l’autre. Paires à {{count}} parties ensemble au moins.",
     "games_one": "{{count}} partie",
     "games_other": "{{count}} parties",
     "noDuo": "Aucune paire n’a encore {{count}} parties d’équipe ensemble sur cette période.",
