@@ -1,5 +1,5 @@
 {
-  "eyebrow": "Configuration",
+  "eyebrow": "Administration",
   "title": "Roles",
   "subtitle": "A role is a name and a set of permissions. Permissions themselves are frozen in code: a permission nothing reads would be a false promise.",
   "table": {

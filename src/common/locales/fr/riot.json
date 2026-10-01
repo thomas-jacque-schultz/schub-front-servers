@@ -37,7 +37,7 @@
     "UNKNOWN": "Poste indéterminé"
   },
   "ingest": {
-    "eyebrow": "Configuration",
+    "eyebrow": "PremadeLab",
     "title": "Collecte Riot",
     "subtitle": "Ce que le connecteur Riot collecte, à quel rythme, et ce que ça pèse.",
     "loadFailed": "Impossible de lire l'état de la collecte",
@@ -198,5 +198,9 @@
     "pattern": "Règle",
     "degree": "Degré",
     "conditions": "Conditions (observé [rampe] = degré)"
+  },
+  "research": {
+    "title": "R&D",
+    "subtitle": "Les règles d’Augur, et la trace de leurs calculs sur un joueur ou une partie."
   }
 }

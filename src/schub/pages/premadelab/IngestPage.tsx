@@ -22,8 +22,6 @@ import {
   useAuthStore,
   useLocaleFormat,
 } from "../../../common";
-import { AugurTrace } from "../../components/AugurTrace";
-import { HistoryWindowCard } from "../../components/HistoryWindowCard";
 import { IngestPauseCard } from "../../components/IngestPauseCard";
 import { RiotDataInvalidationCard } from "../../components/RiotDataInvalidationCard";
 import type {
@@ -41,7 +39,7 @@ interface SummaryRow {
   counts: IngestCountsDto;
 }
 
-function IngestConfigPage() {
+function IngestPage() {
   const { t } = useTranslation("riot");
   const { formatNumber, formatDateTime } = useLocaleFormat();
   const { can } = useAuthStore();
@@ -248,19 +246,16 @@ function IngestConfigPage() {
             <IngestPauseCard pause={pause} onChange={setPause} />
           )}
 
-          <HistoryWindowCard />
-
           {pause?.available && can("ROLE_MANAGE") && (
             <RiotDataInvalidationCard pause={pause} />
           )}
 
           <Disclosure
-            title={t("ingest.debug.title")}
+            title={t("ingest.debug.queue")}
             open={debugOpen}
             onToggle={setDebugOpen}
           >
             <Stack spacing={2}>
-              <Text variant="subtitle">{t("ingest.debug.queue")}</Text>
               <Text tone="secondary" variant="caption">
                 {t("ingest.queue.description")}
               </Text>
@@ -296,11 +291,6 @@ function IngestConfigPage() {
                   },
                 ]}
               />
-              {can("INGEST_MANAGE") ? (
-                <AugurTrace />
-              ) : (
-                <Text tone="secondary">{t("ingest.debug.empty")}</Text>
-              )}
             </Stack>
           </Disclosure>
         </>
@@ -309,4 +299,4 @@ function IngestConfigPage() {
   );
 }
 
-export default IngestConfigPage;
+export default IngestPage;

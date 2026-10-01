@@ -1,7 +1,9 @@
 import { type ReactNode, Suspense, useEffect } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { AppLayout } from "./components/AppLayout";
+import { SectionTabs } from "./components/SectionTabs";
+import { SECTIONS } from "./sections";
 import HomePage from "./pages/HomePage";
 import {
   APP_URLS,
@@ -23,29 +25,36 @@ import {
 
 const ContactPage = lazyPage(() => import("./pages/ContactPage"));
 const GameServerFormPage = lazyPage(() => import("./pages/GameServerFormPage"));
-const LandingPage = lazyPage(() => import("./pages/LandingPage"));
-const DiscordConfigPage = lazyPage(
-  () => import("./pages/config/DiscordConfigPage"),
-);
-const IngestConfigPage = lazyPage(
-  () => import("./pages/config/IngestConfigPage"),
-);
-const PremadeLabConfigPage = lazyPage(
-  () => import("./pages/config/PremadeLabConfigPage"),
-);
-const PortsConfigPage = lazyPage(
-  () => import("./pages/config/PortsConfigPage"),
-);
-const RolesPage = lazyPage(() => import("./pages/config/RolesPage"));
-const ServersConfigPage = lazyPage(
-  () => import("./pages/config/ServersConfigPage"),
-);
-const UsersPage = lazyPage(() => import("./pages/config/UsersPage"));
+const ServersPage = lazyPage(() => import("./pages/servers/ServersPage"));
+const PortsPage = lazyPage(() => import("./pages/servers/PortsPage"));
+const DiscordPage = lazyPage(() => import("./pages/servers/DiscordPage"));
+const SettingsPage = lazyPage(() => import("./pages/premadelab/SettingsPage"));
+const IngestPage = lazyPage(() => import("./pages/premadelab/IngestPage"));
+const ResearchPage = lazyPage(() => import("./pages/premadelab/ResearchPage"));
+const UsersPage = lazyPage(() => import("./pages/admin/UsersPage"));
+const RolesPage = lazyPage(() => import("./pages/admin/RolesPage"));
+
+const [SERVERS, PREMADELAB, ADMIN] = SECTIONS;
+
+const LEGACY_CONFIG: Record<string, string> = {
+  servers: "/servers?edit",
+  ports: "/servers/ports",
+  discord: "/servers/discord",
+  premadelab: "/premadelab/settings",
+  ingest: "/premadelab/ingest",
+  users: "/admin/users",
+  roles: "/admin/roles",
+};
+
+function LegacyConfigRedirect() {
+  const { page = "" } = useParams<{ page: string }>();
+  return <LocalizedNavigate to={LEGACY_CONFIG[page] ?? "/servers"} replace />;
+}
 
 function RedirectIfAuthenticated({ children }: { children: ReactNode }) {
   const { connected } = useAuthStore();
   return connected ? (
-    <LocalizedNavigate to="/config/servers" replace />
+    <LocalizedNavigate to="/servers" replace />
   ) : (
     <>{children}</>
   );
@@ -102,7 +111,6 @@ function LocalizedRoutes() {
           <Routes>
             <Route index element={<HomePage />} />
 
-            <Route path="servers" element={<LandingPage />} />
             <Route path="contact" element={<ContactPage />} />
 
             {/* Exigées par Riot pour un produit tiers. */}
@@ -120,71 +128,84 @@ function LocalizedRoutes() {
 
             <Route
               path="dashboard"
-              element={<LocalizedNavigate to="/config/servers" replace />}
+              element={<LocalizedNavigate to="/servers" replace />}
             />
             <Route
               path="config"
-              element={<LocalizedNavigate to="/config/servers" replace />}
+              element={<LocalizedNavigate to="/servers" replace />}
             />
+            <Route path="config/:page" element={<LegacyConfigRedirect />} />
+
+            <Route path="servers" element={<SectionTabs section={SERVERS} />}>
+              <Route index element={<ServersPage />} />
+              <Route
+                path="ports"
+                element={
+                  <RequirePermission anyOf={["PORT_VIEW"]}>
+                    <PortsPage />
+                  </RequirePermission>
+                }
+              />
+              <Route
+                path="discord"
+                element={
+                  <RequirePermission anyOf={["DISCORD_CHANNEL_MANAGE"]}>
+                    <DiscordPage />
+                  </RequirePermission>
+                }
+              />
+            </Route>
 
             <Route
-              path="config/servers"
-              element={
-                <RequirePermission
-                  anyOf={["SERVER_CREATE", "SERVER_EDIT", "SERVER_INFRA_VIEW"]}
-                >
-                  <ServersConfigPage />
-                </RequirePermission>
-              }
-            />
-            <Route
-              path="config/ports"
-              element={
-                <RequirePermission anyOf={["PORT_VIEW"]}>
-                  <PortsConfigPage />
-                </RequirePermission>
-              }
-            />
-            <Route
-              path="config/users"
-              element={
-                <RequirePermission anyOf={["USER_VIEW"]}>
-                  <UsersPage />
-                </RequirePermission>
-              }
-            />
-            <Route
-              path="config/roles"
-              element={
-                <RequirePermission anyOf={["ROLE_MANAGE"]}>
-                  <RolesPage />
-                </RequirePermission>
-              }
-            />
-            <Route
-              path="config/discord"
-              element={
-                <RequirePermission anyOf={["DISCORD_CHANNEL_MANAGE"]}>
-                  <DiscordConfigPage />
-                </RequirePermission>
-              }
-            />
-            <Route
-              path="config/premadelab"
-              element={
-                <RequirePermission anyOf={["INGEST_VIEW"]}>
-                  <PremadeLabConfigPage />
-                </RequirePermission>
-              }
-            />
-            <Route
-              path="config/ingest"
-              element={
-                <RequirePermission anyOf={["INGEST_VIEW"]}>
-                  <IngestConfigPage />
-                </RequirePermission>
-              }
-            />
+              path="premadelab"
+              element={<SectionTabs section={PREMADELAB} />}
+            >
+              <Route
+                path="settings"
+                element={
+                  <RequirePermission anyOf={["INGEST_VIEW"]}>
+                    <SettingsPage />
+                  </RequirePermission>
+                }
+              />
+              <Route
+                path="ingest"
+                element={
+                  <RequirePermission anyOf={["INGEST_VIEW"]}>
+                    <IngestPage />
+                  </RequirePermission>
+                }
+              />
+              <Route
+                path="research"
+                element={
+                  <RequirePermission
+                    anyOf={["AUGUR_PATTERN_EDIT", "INGEST_MANAGE"]}
+                  >
+                    <ResearchPage />
+                  </RequirePermission>
+                }
+              />
+            </Route>
+
+            <Route path="admin" element={<SectionTabs section={ADMIN} />}>
+              <Route
+                path="users"
+                element={
+                  <RequirePermission anyOf={["USER_VIEW"]}>
+                    <UsersPage />
+                  </RequirePermission>
+                }
+              />
+              <Route
+                path="roles"
+                element={
+                  <RequirePermission anyOf={["ROLE_MANAGE"]}>
+                    <RolesPage />
+                  </RequirePermission>
+                }
+              />
+            </Route>
 
             <Route
               path="gameServeur/create"

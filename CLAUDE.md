@@ -78,7 +78,7 @@ vers le bas. Elle se peint **sous** le contenu, ce qui oblige `<main>` et `<foot
   éditable en base : son nom ne dit plus rien de ce qu'il permet. `isAdmin` n'existe plus.
 - **Une entrée de menu n'apparaît que si sa permission est présente**, et la route porte la même
   condition — une URL se tape à la main. La liste vit à un seul endroit par application :
-  `src/schub/components/AppLayout.tsx` pour Schub, `src/premadelab/shell.ts` pour PremadeLab.
+  `src/schub/sections.ts` pour Schub (menus et onglets), `src/premadelab/shell.ts` pour PremadeLab.
 - **L'IHM ne propose pas ce que le serveur refusera** : les rôles attribuables sont filtrés par la
   règle du sous-ensemble, on ne modifie pas son propre rôle et on ne rétrograde pas le dernier
   `OWNER`. C'est le cœur qui tranche ; l'écran évite d'avoir à découvrir le refus.
@@ -151,10 +151,13 @@ décide de ce qu'elle reçoit.
 | Route | Contenu | Accès |
 |---|---|---|
 | `/` | la page produit de Schub, qui renvoie vers ses outils | public, **chargé d'emblée** |
-| `/servers` | l'état des serveurs, et démarrer/arrêter | public, à la demande |
+| `/servers` | l'état des serveurs, démarrer/arrêter ; ✏️ (`?edit`) pour les fiches | public, à la demande |
+| `/servers/ports`, `/servers/discord` | onglets de Serveurs de jeux | connecté + permission, à la demande |
+| `/premadelab/settings`, `/premadelab/ingest`, `/premadelab/research` | Configuration, Collecte, R&D | connecté + permission, à la demande |
+| `/admin/users`, `/admin/roles` | Administration | connecté + permission, à la demande |
 | `/contact` | le contenu personnel, puis le formulaire en bas | public, à la demande |
 | `/storybook` | le design system | public, **hors du routeur React** (nginx) |
-| `/config/*` | l'administration | connecté + permission, à la demande |
+| `/config/*` | redirection vers l'onglet qui a pris la page | — |
 | `/lol/*` | redirection vers la même page de PremadeLab | — |
 
 **PremadeLab** (`src/premadelab/routes.tsx`)
@@ -304,7 +307,7 @@ qu'à l'enregistrement.
   dit beaucoup.
 - **Un chiffre dit toujours sur quoi il porte** : nombre de parties et période. Sans ça, trois
   parties et trois cents se lisent pareil. Seules les parties récentes sont relevées (fenêtre réglée dans
-  Configuration › Collecte), et l'écran dit laquelle.
+  PremadeLab › Configuration), et l'écran dit laquelle.
 - **Un vide n'est pas un zéro.** Chaque colonne porte un `state` qui dit *pourquoi* elle est
   vide — compte non lié, collecte en cours, aucune partie, effectif incomplet, connecteur muet —
   et tout ratio sans dénominateur s'affiche en tiret.
@@ -420,7 +423,7 @@ Il n'y a **pas d'administrateur par serveur** : un modérateur pilote tous les s
 son rôle. Démarrer et arrêter s'affichent donc dès que le rôle porte `SERVER_START` *et*
 `SERVER_STOP` — les deux, parce que les deux boutons vont ensemble dans une carte.
 
-**Ils vivent sur `/servers`, pas sous *Configuration*.** Ce menu exige `SERVER_CREATE`,
+**Ils vivent sur `/servers`, hors du mode ✏️.** Ce mode exige `SERVER_CREATE`,
 `SERVER_EDIT` ou `SERVER_INFRA_VIEW`, qu'un modérateur n'a pas : les y laisser seuls lui donnait
 des permissions sans aucun écran pour s'en servir. `/servers` lit `GET /game-servers` quand on est
 connecté — seule réponse portant le slug — et la vue publique sinon.

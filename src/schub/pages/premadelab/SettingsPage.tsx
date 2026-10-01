@@ -16,10 +16,9 @@ import {
   getPremadeLabSettingsApi,
   updatePremadeLabSettingsApi,
 } from "../../api/premadelabApi";
-import { PatternEditor } from "../../components/PatternEditor";
+import { HistoryWindowCard } from "../../components/HistoryWindowCard";
 
-/** La configuration de PremadeLab, tenue depuis Schub. */
-function PremadeLabConfigPage() {
+function SettingsPage() {
   const { t } = useTranslation("riot");
   const { can } = useAuthStore();
   const { data, error, isLoading } = useRequest(
@@ -116,9 +115,9 @@ function PremadeLabConfigPage() {
           </Stack>
         </Card>
       )}
-      {can("AUGUR_PATTERN_EDIT") && <PatternEditor />}
+      <HistoryWindowCard />
     </Stack>
   );
 }
 
-export default PremadeLabConfigPage;
+export default SettingsPage;
