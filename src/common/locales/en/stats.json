@@ -540,7 +540,7 @@
   "synergy": {
     "title": "Duos and resources",
     "duos": "Roster duos",
-    "duosHint": "Each cell, over team games: on top, each player’s win rate in games without the other (average of both); below, the pair’s win rate when playing together, green 5 points above or more, orange 5 points below or more, grey in between; then the number of games together. Pairs with at least {{count}} games together.",
+    "duosHint": "Each cell, over team games: on top, each player’s win rate in games without the other (average of both); below, the pair’s win rate when playing together, green 5 points above or more, orange 5 points below or more, grey in between; then the number of games together. “Apart: —”: they never play without each other. Pairs with at least {{count}} games together.",
     "games_one": "{{count}} game",
     "games_other": "{{count}} games",
     "noDuo": "No pair has {{count}} team games together in this period yet.",

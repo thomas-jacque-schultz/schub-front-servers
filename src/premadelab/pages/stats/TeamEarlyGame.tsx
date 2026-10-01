@@ -109,14 +109,18 @@ export function TeamEarlyGame({ early }: { early: TeamEarlyGameDto | null }) {
           format.absent
         ) : (
           <Stack spacing={0.75}>
-            {m.presenceWith.map((p) => (
-              <MeterBar
-                key={p.memberId}
-                label={p.displayName ?? t("player.unnamed")}
-                value={p.totalMinutes === 0 ? null : p.minutes / p.totalMinutes}
-                valueLabel={`${taux(p.minutes, p.totalMinutes)} · ${t("synergy.games", { count: p.games })}`}
-              />
-            ))}
+            {[...m.presenceWith]
+              .sort((a, b) => b.games - a.games)
+              .map((p) => (
+                <MeterBar
+                  key={p.memberId}
+                  label={p.displayName ?? t("player.unnamed")}
+                  value={
+                    p.totalMinutes === 0 ? null : p.minutes / p.totalMinutes
+                  }
+                  valueLabel={`${taux(p.minutes, p.totalMinutes)} · ${t("synergy.games", { count: p.games })}`}
+                />
+              ))}
           </Stack>
         ),
     },
