@@ -16,6 +16,9 @@
       Depuis les retours d'usage, `/` est la page produit de Schub et le contenu personnel vit
       sur `/contact`. Ces balises ont suivi : un lien partagé annonçait un CV, il annonce
       maintenant ce que le site fait.
+
+      Ni canonical, ni hreflang, ni og:url : servis sur toutes les routes, ils contrediraient ceux
+      que posent useDocumentMeta et LocalizedRoot.
     -->
     <title>Schub — la boîte à outils de la communauté Miam</title>
     <meta
@@ -24,13 +27,6 @@
     />
     <meta name="robots" content="index, follow" />
     <meta name="author" content="Thomas Schultz" />
-    <link rel="canonical" href="https://schultz-thomas.fr/" />
-
-    <!-- Les `hreflang` de la racine. Les autres routes les posent dynamiquement (LocalizedRoot),
-         mais celles-ci doivent exister sans JavaScript : c'est la page d'entrée du domaine. -->
-    <link rel="alternate" hreflang="fr" href="https://schultz-thomas.fr/" />
-    <link rel="alternate" hreflang="en" href="https://schultz-thomas.fr/en" />
-    <link rel="alternate" hreflang="x-default" href="https://schultz-thomas.fr/" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Schub" />
@@ -39,7 +35,6 @@
       property="og:description"
       content="La boîte à outils de la communauté Miam : serveurs de jeu à la demande et équipes League of Legends."
     />
-    <meta property="og:url" content="https://schultz-thomas.fr/" />
     <meta property="og:locale" content="fr_FR" />
     <meta property="og:locale:alternate" content="en_GB" />
     <!-- Produit depuis public/og-card.svg. Le regénérer si la source change. -->
