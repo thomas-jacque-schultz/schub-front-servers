@@ -1,6 +1,11 @@
 User-agent: *
 Allow: /
 Disallow: /stats
+Disallow: /en/stats
 Disallow: /teams
+Disallow: /en/teams
 Disallow: /profile
+Disallow: /en/profile
+Disallow: /login
+Disallow: /en/login
 Sitemap: https://premadelab.eu/sitemap.xml

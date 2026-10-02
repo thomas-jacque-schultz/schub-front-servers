@@ -28,8 +28,9 @@ export function LocalizedRoot({
 
   useEffect(() => {
     const head = document.head;
+    // Y compris ceux que nginx insère dans la page d'un joueur : deux jeux se contrediraient.
     head
-      .querySelectorAll(`link[${HREFLANG_MARKER}]`)
+      .querySelectorAll(`link[rel="alternate"][hreflang]`)
       .forEach((node) => node.remove());
 
     const origin = window.location.origin;

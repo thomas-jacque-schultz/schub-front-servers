@@ -3,20 +3,18 @@
 User-agent: *
 Allow: /
 
-# L'administration n'a rien à faire dans un index : elle exige une session, et ses URL
-# indexées ne produiraient que des redirections vers l'écran de connexion.
-Disallow: /config/
-Disallow: /en/config/
-Disallow: /login
-Disallow: /en/login
-
-# Même raison pour les écrans de l'outil LoL et le profil : ils exigent une session. La vitrine
-# publique, elle, est `/lol` — et elle doit être indexée.
-Disallow: /lol/teams
-Disallow: /en/lol/teams
-Disallow: /lol/stats
-Disallow: /en/lol/stats
+# Écrans derrière une session : indexés, ils ne rendraient que l'écran de connexion.
+Disallow: /admin/
+Disallow: /en/admin/
+Disallow: /premadelab/
+Disallow: /en/premadelab/
+Disallow: /servers/ports
+Disallow: /en/servers/ports
+Disallow: /servers/discord
+Disallow: /en/servers/discord
 Disallow: /profile
 Disallow: /en/profile
+Disallow: /login
+Disallow: /en/login
 
 Sitemap: https://schultz-thomas.fr/sitemap.xml
