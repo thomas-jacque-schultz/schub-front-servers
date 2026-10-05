@@ -40,6 +40,7 @@ export function LevelCrest({
         value={grade.inTier ?? 0}
         title={titre}
         neutral={neutral}
+        withLabel={false}
       />
     );
   }
@@ -91,18 +92,21 @@ export function PercentileMark({
   value,
   title,
   neutral = false,
+  withLabel = true,
 }: {
   value: number;
   title: string;
   neutral?: boolean;
+  /** Sans libellé dans une tuile étroite : il passe au survol, avec le pourcentage. */
+  withLabel?: boolean;
 }) {
   const { t } = useTranslation("stats");
   if (neutral) {
     return (
       <VerdictMark
         verdict={null}
-        label={t("verdict.neutral")}
-        title={`${t("verdict.neutralHint")} ${title}`}
+        label={withLabel ? t("verdict.neutral") : undefined}
+        title={`${withLabel ? "" : `${t("verdict.neutral")} : `}${t("verdict.neutralHint")} ${title}`}
       />
     );
   }
@@ -110,8 +114,8 @@ export function PercentileMark({
   return (
     <VerdictMark
       verdict={verdict}
-      label={t(`verdict.${verdict}`)}
-      title={title}
+      label={withLabel ? t(`verdict.${verdict}`) : undefined}
+      title={withLabel ? title : `${t(`verdict.${verdict}`)} : ${title}`}
     />
   );
 }

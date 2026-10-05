@@ -44,6 +44,7 @@ export const useChampionAdornment = (
       const note = sienne.polarity === "LOWER" ? 1 - p : p;
       return (
         <PercentileMark
+          withLabel={false}
           value={note}
           title={t("grade.champion", {
             rank: Math.round(note * 100),
@@ -65,6 +66,7 @@ export const useChampionAdornment = (
     }
     return (
       <PercentileMark
+        withLabel={false}
         value={grade.inTier}
         title={t("grade.championFallback", {
           champion: nom,
