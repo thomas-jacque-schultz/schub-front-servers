@@ -180,7 +180,9 @@
       "EXCEPTION": "Exception"
     },
     "experimental": "Expérimental",
-    "experimentalHint": "Mesure encore en validation : à lire avec prudence."
+    "experimentalHint": "Mesure encore en validation : à lire avec prudence.",
+    "verdict": "Verdict de la partie",
+    "all": "Voir les {{count}} constats"
   },
   "behaviour": {
     "tab": "Comportement",

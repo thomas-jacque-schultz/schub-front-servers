@@ -20,7 +20,7 @@ import type {
   TeamGameDetailDto,
   TeamGamePlayerDto,
 } from "../../types/stats";
-import { FindingList } from "../../components/Findings";
+import { GameVerdict } from "../../components/GameVerdict";
 import type { FindingDto } from "../../types/findings";
 import { EarlyGameView } from "./EarlyGameView";
 import { PlayerGameDialog, PlayerGameStats } from "./PlayerGameDialog";
@@ -59,7 +59,6 @@ export function GameDetail({
     loadFindings ? `${requestKey}/findings` : null,
     () => (loadFindings ? loadFindings() : Promise.resolve([])),
   );
-  const { t: tl } = useTranslation("lol");
 
   const indicateurs = (
     joueur: TeamGamePlayerDto | null,
@@ -74,12 +73,7 @@ export function GameDetail({
 
   return (
     <Stack spacing={2}>
-      {constats && constats.length > 0 && (
-        <Stack spacing={1}>
-          <Text variant="subtitle">{tl("findings.title")}</Text>
-          <FindingList findings={constats} />
-        </Stack>
-      )}
+      {constats && constats.length > 0 && <GameVerdict findings={constats} />}
       {error !== null && (
         <Alert severity="error">
           {messageOf(error, t("detail.loadFailed"))}
@@ -88,11 +82,6 @@ export function GameDetail({
       {isLoading && !detail && <ProgressBar label={t("loading")} />}
       {detail && (
         <>
-          {!subjectTitle && (
-            <Text variant="caption" tone="secondary">
-              {t("detail.playerHint")}
-            </Text>
-          )}
           {detail.matchups.length > 0 ? (
             <FaceAFace detail={detail} avatars={avatars} onPick={choisir} />
           ) : (
@@ -101,6 +90,11 @@ export function GameDetail({
               avatars={avatars}
               onPick={choisir}
             />
+          )}
+          {!subjectTitle && (
+            <Text variant="caption" tone="secondary">
+              {t("detail.playerHint")}
+            </Text>
           )}
           {subjectTitle && sujet && (
             <Disclosure
@@ -211,7 +205,7 @@ function FaceAFace({ detail, avatars, onPick }: JoueursProps) {
           championIcon={joueur.iconUrl}
           riotId={joueur.riotId}
           playerName={
-            allie ? (joueur.displayName ?? t("games.outsider")) : null
+            allie && joueur.memberId ? (joueur.displayName ?? null) : null
           }
           playerAvatar={
             allie && joueur.memberId ? avatars[joueur.memberId] : null

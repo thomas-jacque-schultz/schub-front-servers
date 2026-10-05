@@ -94,7 +94,9 @@ export function TeamGameRow({
               championName={joueur.championName ?? String(joueur.championId)}
               championIcon={joueur.iconUrl}
               riotId={joueur.riotId}
-              playerName={joueur.displayName ?? t("games.outsider")}
+              playerName={
+                joueur.memberId ? (joueur.displayName ?? undefined) : undefined
+              }
               playerAvatar={joueur.memberId ? avatars[joueur.memberId] : null}
               caption={kda(joueur)}
             />
@@ -142,12 +144,9 @@ function RangsDesCamps({
   const { t } = useTranslation("stats");
   const { formatDate } = useLocaleFormat();
 
+  // Les rangs se relèvent à l'ouverture de la partie : fermée, la ligne n'a rien à en dire.
   if (!observe) {
-    return (
-      <Text variant="caption" tone="disabled">
-        {t("games.ranksPending")}
-      </Text>
-    );
+    return null;
   }
 
   const ligne = (

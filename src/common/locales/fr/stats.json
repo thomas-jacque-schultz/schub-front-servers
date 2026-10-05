@@ -134,10 +134,8 @@
     "theirs": "Eux",
     "solo": "Solo",
     "flex": "Flex",
-    "ranksPending": "Rangs en cours de relevé",
     "ranksObserved": "Rangs relevés le {{date}} — Riot ne sert que le rang courant.",
     "enemies": "Adversaires",
-    "outsider": "Hors effectif",
     "rankHint": "Moyenne des joueurs classés ({{count}}) ; un non-classé n'est pas compté.",
     "accordionHelper": "Cliquez sur une partie pour la déplier, puis sur un joueur pour ses chiffres de la partie."
   },

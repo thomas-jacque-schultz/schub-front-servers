@@ -41,7 +41,10 @@ export function ChampionSlot({
         <ChampionIcon
           src={championIcon}
           name={championName}
-          tooltip={riotId ? `${championName} · ${riotId}` : undefined}
+          tooltip={
+            [championName, playerName, riotId].filter(Boolean).join(" · ") ||
+            undefined
+          }
           size={size}
         />
         {playerName && (
