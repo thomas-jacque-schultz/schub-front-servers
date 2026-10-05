@@ -17,6 +17,7 @@ import {
   updatePremadeLabSettingsApi,
 } from "../../api/premadelabApi";
 import { HistoryWindowCard } from "../../components/HistoryWindowCard";
+import { SeoCreatorsCard } from "../../components/SeoCreatorsCard";
 
 function SettingsPage() {
   const { t } = useTranslation("riot");
@@ -116,6 +117,7 @@ function SettingsPage() {
         </Card>
       )}
       <HistoryWindowCard />
+      <SeoCreatorsCard />
     </Stack>
   );
 }

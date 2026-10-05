@@ -57,3 +57,19 @@ export const invalidateRiotDataApi = async (
     method: "POST",
     body: JSON.stringify({ confirmation }),
   });
+
+export interface SeoCreatorsDto {
+  creators: string[];
+  unknown: string[];
+}
+
+export const getSeoCreatorsApi = async (): Promise<SeoCreatorsDto> =>
+  requestJson<SeoCreatorsDto>("/ingest/seo-creators", { method: "GET" });
+
+export const updateSeoCreatorsApi = async (
+  riotIds: string[],
+): Promise<SeoCreatorsDto> =>
+  requestJson<SeoCreatorsDto>("/ingest/seo-creators", {
+    method: "PUT",
+    body: JSON.stringify(riotIds),
+  });
