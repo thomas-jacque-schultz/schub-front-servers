@@ -84,6 +84,8 @@ export function PlayerHighlights({ data }: { data: PlayerStatsData }) {
         key={constat.key}
         variant="ghost"
         size="small"
+        align="start"
+        fullWidth
         onClick={() =>
           document
             .getElementById(familyAnchor(constat.family))
