@@ -108,6 +108,14 @@ function ServersDashboard({
               <StatusChip status={server.status} />
             </Stack>
 
+            {server.lastCommandFailure && (
+              <Alert severity="error">
+                {t(`list.commandFailure.${server.lastCommandFailure.action}`, {
+                  message: server.lastCommandFailure.message,
+                })}
+              </Alert>
+            )}
+
             {(server.id || server.slug) && (
               <Stack direction="row" spacing={1} justify="end">
                 {server.slug && canControl && (

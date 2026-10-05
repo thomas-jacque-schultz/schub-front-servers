@@ -47,6 +47,7 @@ const toDisplayedServer = (server: GameServerDto): DisplayedServer => ({
     server.name || server.slug || i18n.t("errors.unnamed", { ns: "servers" }),
   status: normalizeStatus(server.status),
   lastStatusCheckAt: server.lastStatusCheckAt,
+  lastCommandFailure: server.lastCommandFailure,
 });
 
 const toPublicDisplayedServer = (
