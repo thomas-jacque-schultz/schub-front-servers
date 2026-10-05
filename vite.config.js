@@ -97,6 +97,10 @@ export default defineConfig({
       },
     },
   },
+  // Le prérendu (scripts/prerender.mjs) tourne sous Node, qui ne sait pas importer le CSS des polices.
+  ssr: {
+    noExternal: [/^@fontsource/],
+  },
   server: {
     allowedHosts,
     proxy: {

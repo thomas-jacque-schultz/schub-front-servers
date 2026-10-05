@@ -82,6 +82,41 @@
     "terms": "Terms of use",
     "privacy": "Privacy policy"
   },
+  "home": {
+    "features": {
+      "players": {
+        "title": "Every player's profile",
+        "body": "Look up a Riot ID: rank, most played champions, laning phase and play style, compared with players of the same tier in the same role. Profiles are public, no account needed."
+      },
+      "team": {
+        "title": "What works as a five",
+        "body": "Build your premade: PremadeLab finds the games you play together and shows your winning duos, your early game, Early versus Late and the level of your opponents."
+      },
+      "draft": {
+        "title": "Pool and draft",
+        "body": "The team's champion pool role by role, and a draft planner to save your compositions, with substitutes and planned bans."
+      }
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "duo": {
+        "question": "How can I see my duo's stats in League of Legends?",
+        "answer": "Create a team with your duo on PremadeLab. The games you play together are found automatically, and the Strategy tab compares your win rate together with what each of you does without the other."
+      },
+      "premade": {
+        "question": "How can I find my premade's win rate?",
+        "answer": "Add your group's Riot IDs to a team. A game counts as a team game as soon as four members play it together, whatever the mode, and the record is on the team page."
+      },
+      "games": {
+        "question": "Which games are analysed?",
+        "answer": "The recent games Riot makes public for each account, in every queue. Per-minute indicators only cover Summoner's Rift: ranked, normal and Clash."
+      },
+      "free": {
+        "question": "Is PremadeLab free?",
+        "answer": "Yes. Player profiles can be viewed without an account, and a Discord login is enough to build a team."
+      }
+    }
+  },
   "search": {
     "metaTitle": "PremadeLab — look up a League of Legends player",
     "metaDescription": "Look up a Riot ID: rank, champions and stats of their latest games, then build your premade.",
@@ -125,7 +160,13 @@
       "hint": "Check the spelling of the name and the tag, including the #."
     },
     "busy": "Riot is very busy: trying again in a few seconds…",
-    "style": "Play style"
+    "style": "Play style",
+    "metaHead": "{{riotId}}: {{rank}}.",
+    "unranked": "unranked",
+    "metaGames_one": "{{count}} game analysed",
+    "metaGames_other": "{{count}} games analysed",
+    "metaWinRate": "{{rate}}% win rate",
+    "metaChampions": "Champions: {{names}}"
   },
   "findings": {
     "title": "Findings",

@@ -131,3 +131,4 @@ dist
 
 # Storybook statique : construit à la demande, jamais versionné ni embarqué dans l'image du front
 storybook-static
+dist-ssr

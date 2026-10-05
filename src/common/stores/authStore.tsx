@@ -56,9 +56,17 @@ interface AuthStoreValue {
 
 const AuthStoreContext = createContext<AuthStoreValue | undefined>(undefined);
 
-export const AuthStoreProvider = ({ children }: { children: ReactNode }) => {
+// anonymous : le prérendu montre la page d'un visiteur, sans attendre une session qu'il ne vérifiera pas.
+export const AuthStoreProvider = ({
+  children,
+  anonymous = false,
+}: {
+  children: ReactNode;
+  anonymous?: boolean;
+}) => {
   const [profile, setProfile] = useState<AuthenticatedUser | null>(null);
-  const [isCheckingSession, setIsCheckingSession] = useState<boolean>(true);
+  const [isCheckingSession, setIsCheckingSession] =
+    useState<boolean>(!anonymous);
   const [error, setError] = useState<string>("");
   const [discordLoginFailed, setDiscordLoginFailed] = useState<boolean>(false);
 

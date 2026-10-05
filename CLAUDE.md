@@ -170,6 +170,14 @@ décide de ce qu'elle reçoit.
 
 **Communes** : `/profile` (connecté), `/login`, `/terms`, `/privacy` (publiques).
 
+**Les pages publiques de PremadeLab sont prérendues au build** (Schub#90) : `/`, `/presentation`,
+`/contact`, `/terms`, `/privacy`, en fr et en en. `npm run prerender` construit
+`src/premadelab/prerender.tsx` pour Node et écrit `dist/prerendu/<langue>/<page>.html` ; nginx les sert, puis
+React remplace le contenu au montage. Le rendu se fait **en visiteur anonyme** (`AuthStoreProvider anonymous`) et
+sans aucun effet : une page y déclare ses méta par `useDocumentMeta`, et tout ce qu'elle charge par l'API reste
+à l'état de chargement. **nginx liste les routes de `routes.tsx`** pour répondre une vraie 404 au reste : une
+route ajoutée à PremadeLab s'ajoute aussi à `nginx.conf`.
+
 **Seule la racine est dans le fichier JavaScript initial.** Tout le reste passe par
 `React.lazy` dans `App.tsx`. Un écran neuf s'ajoute de la même façon : une visite sur `/` ne doit
 embarquer ni formulaire d'administration, ni sa validation.

@@ -16,7 +16,7 @@ export {
   useLocalizedPath,
 } from "./i18n/navigation";
 
-export { useDocumentMeta } from "./seo/useDocumentMeta";
+export { takePrerenderedMeta, useDocumentMeta } from "./seo/useDocumentMeta";
 export { RequireAuth, RequirePermission } from "./routing/guards";
 export { lazyPage } from "./routing/lazyPage";
 export { PageErrorBoundary } from "./routing/PageErrorBoundary";
