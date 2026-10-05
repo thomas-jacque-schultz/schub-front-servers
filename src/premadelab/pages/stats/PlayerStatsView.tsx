@@ -2,11 +2,11 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Alert,
+  Button,
   Card,
   Columns,
   MeterBar,
   Stack,
-  StatGrid,
   Text,
   TrendChart,
   useLocaleFormat,
@@ -16,17 +16,17 @@ import { ChampionChoice } from "./ChampionChoice";
 import { championsAffiches } from "./champions";
 import { ChampionStatCard } from "./ChampionStatCard";
 import { GameAnalysis } from "./GameAnalysis";
-import { useMetrics } from "./metrics";
+import { PlayerHighlights } from "./PlayerHighlights";
 import { PlayerRadar } from "./PlayerRadar";
 import { QueuePie } from "./QueuePie";
 import { RankedStandings } from "./RankedStandings";
 import { StatsStateNote } from "./StatsStateNote";
 import { useStatsFormat } from "./statsFormat";
-import { useKpiSentence } from "./kpiSentence";
-import type { MetricKey } from "./metrics";
-import { useGradeAdornment } from "./useGrades";
 
 const CHAMPIONS_PLEINE_LARGEUR = 8;
+const CHAMPIONS_VISIBLES = 4;
+// Un poste ne se dit « meilleur » qu'avec assez de parties pour que son taux ne soit pas du bruit.
+const PARTIES_POSTE = 5;
 // En deçà, un patch se lit comme du bruit, pas comme une tendance.
 const PARTIES_PAR_PATCH = 3;
 
@@ -47,47 +47,51 @@ export type PlayerStatsData = Pick<
 
 export interface PlayerStatsViewProps {
   data: PlayerStatsData;
+  /** La fiche publique montre déjà le classement en tête : une seule fois par page (Schub#93). */
+  showRankings?: boolean;
 }
 
-export function PlayerStatsView({ data }: PlayerStatsViewProps) {
+export function PlayerStatsView({
+  data,
+  showRankings = true,
+}: PlayerStatsViewProps) {
   const { t } = useTranslation("stats");
   const format = useStatsFormat();
   const { formatDate } = useLocaleFormat();
-  const { tuiles } = useMetrics();
   const [choisis, setChoisis] = useState<string[]>([]);
-  const adornment = useGradeAdornment(data.references, data.positions);
-  const conclusion = useKpiSentence(
-    data.references,
-    data.positions,
-    data.months,
-  );
+  const [tousChampions, setTousChampions] = useState<boolean>(false);
   const overall = data.overall;
 
   if (data.state !== "STATISTIQUES_CONNUES" || !overall) {
     return <StatsStateNote state={data.state} variant="block" />;
   }
 
+  const meilleurPoste = [...data.positions]
+    .filter((position) => position.games >= PARTIES_POSTE)
+    .sort((a, b) => (b.winRate ?? 0) - (a.winRate ?? 0))[0];
+  const patchsLisibles = data.patches.filter(
+    (patch) => patch.games >= PARTIES_PAR_PATCH && patch.winRate !== null,
+  );
+  const dernier = patchsLisibles[patchsLisibles.length - 1];
+  const ecartDernier =
+    dernier && overall.winRate !== null
+      ? (dernier.winRate ?? 0) - overall.winRate
+      : null;
+  const tendance =
+    ecartDernier === null || patchsLisibles.length < 2
+      ? null
+      : t(
+          ecartDernier >= 0.05
+            ? "section.trendUp"
+            : ecartDernier <= -0.05
+              ? "section.trendDown"
+              : "section.trendStable",
+          { patch: dernier.key, rate: format.taux(dernier.winRate) },
+        );
+
   return (
     <Stack spacing={3}>
-      <Card>
-        <Stack spacing={2}>
-          <StatGrid
-            items={tuiles(overall, { adornment }).map((tuile) => ({
-              ...tuile,
-              hint: conclusion(tuile.key as MetricKey) ?? tuile.hint,
-            }))}
-            minWidth={130}
-            divided
-            align="center"
-            labelLines={2}
-          />
-          <Text variant="caption" tone="secondary" align="center">
-            {[format.assise(data.coverage), t("scope.rift")]
-              .filter(Boolean)
-              .join(" · ")}
-          </Text>
-        </Stack>
-      </Card>
+      <PlayerHighlights data={data} />
 
       {data.coverage && !data.coverage.tracked && (
         <Alert severity="info">{t("coverage.untracked")}</Alert>
@@ -108,11 +112,22 @@ export function PlayerStatsView({ data }: PlayerStatsViewProps) {
           />
         </Card>
         <Stack spacing={2}>
-          <Card title={t("section.rankings")}>
-            <RankedStandings standings={data.rankings} />
-          </Card>
+          {showRankings && (
+            <Card title={t("section.rankings")}>
+              <RankedStandings standings={data.rankings} />
+            </Card>
+          )}
           <Card title={t("section.positions")}>
             <Stack spacing={0.75}>
+              {meilleurPoste && (
+                <Text>
+                  {t("section.bestPosition", {
+                    position: format.poste(meilleurPoste.key),
+                    rate: format.taux(meilleurPoste.winRate),
+                    count: meilleurPoste.games,
+                  })}
+                </Text>
+              )}
               {data.positions.map((position) => (
                 <MeterBar
                   key={position.key}
@@ -157,19 +172,35 @@ export function PlayerStatsView({ data }: PlayerStatsViewProps) {
               data.champions,
               choisis,
               CHAMPIONS_PLEINE_LARGEUR,
-            ).map((line) => (
-              <ChampionStatCard
-                key={line.key}
-                line={line}
-                references={data.references}
-              />
-            ))}
+            )
+              .slice(
+                0,
+                tousChampions || choisis.length > 0
+                  ? undefined
+                  : CHAMPIONS_VISIBLES,
+              )
+              .map((line) => (
+                <ChampionStatCard
+                  key={line.key}
+                  line={line}
+                  references={data.references}
+                  overall={overall}
+                />
+              ))}
           </Columns>
         )}
+        {choisis.length === 0 &&
+          data.champions.length > CHAMPIONS_VISIBLES &&
+          !tousChampions && (
+            <Button variant="ghost" onClick={() => setTousChampions(true)}>
+              {t("section.allChampions")}
+            </Button>
+          )}
       </Card>
 
       <Columns minWidth={440} count={2}>
-        <Card title={t("section.trend")} description={t("section.trendHelper")}>
+        <Card title={t("section.trend")}>
+          {tendance && <Text>{tendance}</Text>}
           <TrendChart
             label={t("metric.winRate")}
             valueHeader={t("metric.winRate")}
@@ -183,6 +214,7 @@ export function PlayerStatsView({ data }: PlayerStatsViewProps) {
               key: patch.key,
               label: patch.key,
               value: patch.winRate,
+              valueLabel: format.taux(patch.winRate),
               muted: patch.games < PARTIES_PAR_PATCH,
               title: t("section.trendPoint", {
                 patch: patch.key,

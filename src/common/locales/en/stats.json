@@ -101,7 +101,12 @@
     "trendHelper": "Your win rate patch by patch, against your own average. A patch with fewer than 3 games is greyed out: too few games to read a trend.",
     "trendReference": "Line: your average over the period ({{value}})",
     "trendPoint": "Patch {{patch}}, {{from}} to {{to}} · {{rate}} over {{count}} game(s)",
-    "noPatch": "Not enough history yet to draw a trend."
+    "noPatch": "Not enough history yet to draw a trend.",
+    "bestPosition": "Best role: {{position}} ({{rate}} over {{count}} games).",
+    "allChampions": "Show all champions",
+    "trendUp": "Up on patch {{patch}}: {{rate}} win rate.",
+    "trendDown": "Down on patch {{patch}}: {{rate}} win rate.",
+    "trendStable": "Steady on patch {{patch}}: {{rate}} win rate."
   },
   "team": {
     "definition": "A team game: at least {{count}} of the {{roster}} players on the roster, across all queues.",
@@ -458,7 +463,19 @@
     "survival": "Survival",
     "vision": "Vision",
     "objectives": "Objectives",
-    "laningBasis": "Differences against the direct opponent, over {{count}} game(s) with a timeline."
+    "laningBasis": "Differences against the direct opponent, over {{count}} game(s) with a timeline.",
+    "laningNone": "No game with a timeline in this period yet.",
+    "laningAhead": "You leave lane {{gold}} gold ahead.",
+    "laningBehind": "You leave lane {{gold}} gold behind.",
+    "laningEven": "You leave lane even.",
+    "laningCenter": "even with the direct opponent",
+    "sentence": {
+      "veryAbove": "Well above {{tier}} {{position}}s.",
+      "above": "Above {{tier}} {{position}}s.",
+      "average": "On par with {{tier}} {{position}}s.",
+      "below": "Below {{tier}} {{position}}s.",
+      "veryBelow": "Well below {{tier}} {{position}}s."
+    }
   },
   "grade": {
     "level": "{{tier}} level in the {{position}} role: the value is closest to their per-game average ({{mean}}).",
@@ -622,5 +639,31 @@
     "lowConfidence": "Insufficient confidence",
     "details": "Show details",
     "hideDetails": "Hide details"
+  },
+  "highlights": {
+    "title": "What stands out",
+    "strengths": "Strengths",
+    "weaknesses": "To work on",
+    "noStrength": "Nothing clearly above the tier.",
+    "noWeakness": "Nothing clearly below the tier.",
+    "allNumbers": "Show all numbers",
+    "noTier": "Without a rank or main role, no tier comparison.",
+    "line": {
+      "veryAbove": "{{metric}}: well above {{tier}} {{position}}s",
+      "above": "{{metric}}: above {{tier}} {{position}}s",
+      "average": "{{metric}}: average",
+      "below": "{{metric}}: below {{tier}} {{position}}s",
+      "veryBelow": "{{metric}}: well below {{tier}} {{position}}s"
+    },
+    "overall": {
+      "veryAbove": "Overall, well above {{tier}} {{position}}s.",
+      "above": "Overall, above {{tier}} {{position}}s.",
+      "average": "Overall, on par with {{tier}} {{position}}s.",
+      "below": "Overall, below {{tier}} {{position}}s.",
+      "veryBelow": "Overall, well below {{tier}} {{position}}s."
+    }
+  },
+  "champion": {
+    "versusRest": "{{delta}} win rate compared with their other champions ({{count}} games)."
   }
 }

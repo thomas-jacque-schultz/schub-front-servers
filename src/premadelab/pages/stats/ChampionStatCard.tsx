@@ -20,17 +20,41 @@ export interface ChampionStatCardProps {
   compact?: boolean;
   /** Palier et poste du joueur : sans eux, pas de note. */
   references?: RadarReferencesDto | null;
+  /** Toutes ses parties : la carte ne garde que les deux stats qui s'en écartent le plus (Schub#93). */
+  overall?: StatLineDto | null;
 }
+
+// Écart relatif à sa moyenne, orienté « plus haut = mieux » ; une mesure neutre ne se distingue pas.
+const ecartRelatif = (
+  champion: StatLineDto,
+  overall: StatLineDto,
+  key: MetricKey,
+  polarity: "higher" | "lower" | "neutral",
+) => {
+  const a = champion[key];
+  const b = overall[key];
+  if (
+    typeof a !== "number" ||
+    typeof b !== "number" ||
+    b === 0 ||
+    polarity === "neutral"
+  ) {
+    return 0;
+  }
+  const ecart = (a - b) / Math.abs(b);
+  return polarity === "lower" ? -ecart : ecart;
+};
 
 // Les mêmes indicateurs, dans le même ordre, que la rangée de Mes stats : un champion se lit contre la moyenne du joueur.
 export function ChampionStatCard({
   line,
   compact = false,
   references,
+  overall,
 }: ChampionStatCardProps) {
   const { t } = useTranslation("stats");
   const format = useStatsFormat();
-  const { tuiles } = useMetrics();
+  const { tuiles, definitions } = useMetrics();
   const adornment = useChampionAdornment(line, references);
   const nom = line.label ?? line.key;
   const ecart = format.ecartEnPoints(line.versusRest?.winRateDelta);
@@ -47,7 +71,7 @@ export function ChampionStatCard({
           <Stack spacing={0} fullWidth>
             <Text variant="subtitle">{nom}</Text>
             <Text variant="caption" tone="secondary">
-              {ecart
+              {ecart && !(overall && line.versusRest)
                 ? `${t("coverage.gamesShort", { count: line.games })} · ${ecart}`
                 : t("coverage.gamesShort", { count: line.games })}
             </Text>
@@ -56,10 +80,42 @@ export function ChampionStatCard({
             {format.taux(line.winRate)}
           </Text>
         </Stack>
+        {!compact && overall && line.versusRest && (
+          <Text variant="caption">
+            {t("champion.versusRest", {
+              delta: ecart,
+              count: line.versusRest.referenceGames,
+            })}
+          </Text>
+        )}
         <StatGrid
           items={tuiles(line, {
             compact: true,
-            keys: compact ? COMPACT : COMPLET,
+            keys: compact
+              ? COMPACT
+              : overall
+                ? [...COMPLET]
+                    .sort(
+                      (a, b) =>
+                        Math.abs(
+                          ecartRelatif(
+                            line,
+                            overall,
+                            b,
+                            definitions[b].polarity,
+                          ),
+                        ) -
+                        Math.abs(
+                          ecartRelatif(
+                            line,
+                            overall,
+                            a,
+                            definitions[a].polarity,
+                          ),
+                        ),
+                    )
+                    .slice(0, 2)
+                : COMPLET,
             adornment,
           })}
           size="small"

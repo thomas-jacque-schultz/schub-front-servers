@@ -11,6 +11,8 @@ export interface TrendPoint {
   title: string;
   /** Échantillon trop mince pour être lu comme une tendance : grisé. */
   muted?: boolean;
+  /** Écrit au-dessus de la barre (douze barres au plus) : la valeur se lit sans survol. */
+  valueLabel?: string;
 }
 
 export interface TrendChartProps {
@@ -40,6 +42,9 @@ export function TrendChart({
     .filter((value): value is number => value !== null);
   const haut = Math.max(scaleMax ?? 0, ...mesures, Number.EPSILON);
   const pasEtiquette = points.length > 8 ? 2 : 1;
+  const valeursEcrites =
+    points.length <= 12 && points.some((point) => point.valueLabel);
+  const hauteurBarre = valeursEcrites ? HAUTEUR - 16 : HAUTEUR;
 
   if (points.length === 0) {
     return (
@@ -77,7 +82,7 @@ export function TrendChart({
                 position: "absolute",
                 left: 0,
                 right: 0,
-                bottom: `${Math.min(1, reference / haut) * HAUTEUR}px`,
+                bottom: `${Math.min(1, reference / haut) * hauteurBarre}px`,
                 borderTop: `1px dashed ${identity.chart[scheme].grid}`,
               };
             }}
@@ -94,15 +99,26 @@ export function TrendChart({
                   minWidth: 6,
                   height: "100%",
                   display: "flex",
-                  alignItems: "flex-end",
+                  flexDirection: "column",
+                  justifyContent: "flex-end",
                   cursor: "default",
-                  "&:hover > *": {
+                  "&:hover > .barre": {
                     backgroundColor: identity.chart[scheme].markSoft,
                   },
                 };
               }}
             >
+              {valeursEcrites && (
+                <Typography
+                  variant="caption"
+                  color={point.muted ? "text.disabled" : "text.secondary"}
+                  sx={{ fontSize: 10, textAlign: "center", lineHeight: "14px" }}
+                >
+                  {point.valueLabel ?? ""}
+                </Typography>
+              )}
               <Box
+                className="barre"
                 sx={(theme) => {
                   const scheme =
                     theme.palette.mode === "light" ? "light" : "dark";
@@ -111,7 +127,7 @@ export function TrendChart({
                     height:
                       point.value === null
                         ? 2
-                        : `${Math.max(2, (point.value / haut) * HAUTEUR)}px`,
+                        : `${Math.max(2, (point.value / haut) * hauteurBarre)}px`,
                     borderRadius: `${radii.sm}px ${radii.sm}px 0 0`,
                     backgroundColor:
                       point.value === null

@@ -229,38 +229,9 @@ function PlayerPage() {
         subtitle={t("player.subtitle")}
       />
 
-      <JoinCta />
-
-      <Stack direction="responsive" spacing={2} align="start">
-        <Card title={t("player.ranked")}>
-          <RankedStandings standings={profil?.rankings ?? []} />
-        </Card>
-        {profil && profil.masteries.length > 0 && (
-          <Card title={t("player.masteries")}>
-            <Stack direction="row" spacing={2} wrap>
-              {profil.masteries.map((m) => (
-                <Stack key={m.championId} spacing={0.5} align="center">
-                  <ChampionIcon
-                    src={m.iconUrl}
-                    name={m.championName ?? String(m.championId)}
-                  />
-                  <Text variant="caption" mono>
-                    {t("player.masteryPoints", {
-                      points: formatNumber(m.points),
-                    })}
-                  </Text>
-                </Stack>
-              ))}
-            </Stack>
-          </Card>
-        )}
-      </Stack>
-
-      {style && style.length > 0 && (
-        <Card title={t("player.style")}>
-          <FindingList findings={style} />
-        </Card>
-      )}
+      <Card title={t("player.ranked")}>
+        <RankedStandings standings={profil?.rankings ?? []} />
+      </Card>
 
       {collecte && (
         <Card
@@ -309,7 +280,7 @@ function PlayerPage() {
         )}
         {onglet === "overview" &&
           (stats.state === "STATISTIQUES_CONNUES" && stats.overall ? (
-            <PlayerStatsView data={stats} />
+            <PlayerStatsView data={stats} showRankings={false} />
           ) : (
             !collecte && <StatsStateNote state={stats.state} variant="block" />
           ))}
@@ -318,6 +289,37 @@ function PlayerPage() {
         <Text variant="caption" tone="secondary">
           {t("player.refreshing")}
         </Text>
+      )}
+
+      {style && style.length > 0 && (
+        <Card title={t("player.style")}>
+          <FindingList findings={style} />
+        </Card>
+      )}
+
+      <JoinCta />
+
+      {profil && profil.masteries.length > 0 && (
+        <Card title={t("player.masteries")}>
+          <Stack direction="row" spacing={2} wrap>
+            {profil.masteries.map((m) => (
+              <Stack key={m.championId} spacing={0.5} align="center">
+                <ChampionIcon
+                  src={m.iconUrl}
+                  name={m.championName ?? String(m.championId)}
+                />
+                <Text variant="caption">
+                  {m.championName ?? String(m.championId)}
+                </Text>
+                <Text variant="caption" mono tone="secondary">
+                  {t("player.masteryPoints", {
+                    points: formatNumber(m.points),
+                  })}
+                </Text>
+              </Stack>
+            ))}
+          </Stack>
+        </Card>
       )}
     </Stack>
   );
