@@ -21,6 +21,10 @@
       "view": "Voir",
       "edit": "Modifier"
     },
+    "commandFailure": {
+      "start": "Le dernier démarrage a échoué : {{message}}",
+      "stop": "Le dernier arrêt a échoué : {{message}}"
+    },
     "memberView": "Vue membre : les détails d'infrastructure sont masqués pour ton rôle.",
     "editMode": "Modifier les serveurs",
     "editDone": "Terminer"

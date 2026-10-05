@@ -2,12 +2,19 @@ export type ServerStatus = "online" | "offline" | "unknown" | "unreachable";
 
 export type GameServerFormMode = "creation" | "edition" | "visualisation";
 
+export interface GameServerCommandFailureDto {
+  action: "start" | "stop";
+  message?: string;
+  at?: string;
+}
+
 export interface DisplayedServer {
   id?: string;
   slug?: string;
   name: string;
   status: ServerStatus;
   lastStatusCheckAt?: string;
+  lastCommandFailure?: GameServerCommandFailureDto;
 }
 
 export interface GameServerPortDto {
@@ -35,6 +42,7 @@ export interface GameServerDto {
   lastStatusCheckAt?: string;
   lastStatusChangeAt?: string;
   statusHistory?: GameServerStatusHistoryEntryDto[];
+  lastCommandFailure?: GameServerCommandFailureDto;
 }
 
 export interface GameServerStatusHistoryEntryDto {

@@ -21,6 +21,10 @@
       "view": "View",
       "edit": "Edit"
     },
+    "commandFailure": {
+      "start": "The last start failed: {{message}}",
+      "stop": "The last stop failed: {{message}}"
+    },
     "memberView": "Member view: infrastructure details are hidden for your role.",
     "editMode": "Edit servers",
     "editDone": "Done"
