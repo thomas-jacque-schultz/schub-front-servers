@@ -13,6 +13,8 @@ export interface ButtonProps {
   disabled?: boolean;
   loading?: boolean;
   fullWidth?: boolean;
+  /** start : un lien de liste, aligné sur le texte qui l'entoure. */
+  align?: "center" | "start";
   startIcon?: ReactNode;
   endIcon?: ReactNode;
   onClick?: () => void;
@@ -34,6 +36,7 @@ export function Button({
   disabled = false,
   loading = false,
   fullWidth = false,
+  align = "center",
   startIcon,
   endIcon,
   onClick,
@@ -54,6 +57,11 @@ export function Button({
       disabled={disabled || loading}
       fullWidth={fullWidth}
       onClick={onClick}
+      sx={
+        align === "start"
+          ? { justifyContent: "flex-start", textAlign: "left" }
+          : undefined
+      }
       startIcon={
         loading ? <CircularProgress size={16} color="inherit" /> : startIcon
       }
