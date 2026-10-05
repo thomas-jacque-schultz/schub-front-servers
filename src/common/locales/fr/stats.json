@@ -252,7 +252,7 @@
   },
   "radar": {
     "title": "Profil",
-    "helper": "Huit axes, lus contre le référentiel choisi : le centre est le bas du référentiel, le bord son haut.",
+    "helper": "Cinq axes, plus loin = mieux, lus contre le référentiel choisi : le centre est le bas du référentiel, le bord son haut.",
     "reference": {
       "label": "Référentiel",
       "met": "Adversaires",

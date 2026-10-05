@@ -252,7 +252,7 @@
   },
   "radar": {
     "title": "Profile",
-    "helper": "Eight axes read against the chosen reference: the centre is its low end, the edge its high end.",
+    "helper": "Five axes, further out = better, read against the chosen reference: the centre is its low end, the edge its high end.",
     "reference": {
       "label": "Reference",
       "met": "Opponents",

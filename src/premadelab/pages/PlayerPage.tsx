@@ -223,11 +223,7 @@ function PlayerPage() {
 
   return (
     <Stack spacing={3}>
-      <PageHeader
-        eyebrow={t("player.eyebrow")}
-        title={riotId}
-        subtitle={t("player.subtitle")}
-      />
+      <PageHeader eyebrow={t("player.eyebrow")} title={riotId} />
 
       <Card title={t("player.ranked")}>
         <RankedStandings standings={profil?.rankings ?? []} />
@@ -253,7 +249,6 @@ function PlayerPage() {
           value={periode}
           onChange={setPeriode}
           options={fenetres}
-          helperText={ts("window.helper")}
         />
       </Stack>
 

@@ -139,7 +139,6 @@
   },
   "player": {
     "eyebrow": "Joueur",
-    "subtitle": "Ce que Riot rend public sur ce compte : rang, champions et parties récentes.",
     "metaTitle": "{{riotId}} — stats, duos et parties en premade | PremadeLab",
     "metaDescription": "Rang, champions les plus joués et statistiques des dernières parties de {{riotId}} sur League of Legends.",
     "loading": "Chargement du joueur",

@@ -105,11 +105,16 @@ export function PlayerStatsView({
       />
 
       <Columns minWidth={320}>
-        <Card title={t("radar.title")} description={t("radar.helper")}>
-          <PlayerRadar
-            positions={data.positions}
-            references={data.references}
-          />
+        <Card title={t("radar.title")}>
+          <Stack spacing={1}>
+            <PlayerRadar
+              positions={data.positions}
+              references={data.references}
+            />
+            <Text variant="caption" tone="secondary">
+              {t("radar.helper")}
+            </Text>
+          </Stack>
         </Card>
         <Stack spacing={2}>
           {showRankings && (
@@ -230,11 +235,13 @@ export function PlayerStatsView({
             }))}
           />
         </Card>
-        <Card
-          title={t("section.queues")}
-          description={t("section.queuesHelper")}
-        >
-          <QueuePie queues={data.queues} label={t("queuePie.label")} />
+        <Card title={t("section.queues")}>
+          <Stack spacing={1}>
+            <QueuePie queues={data.queues} label={t("queuePie.label")} />
+            <Text variant="caption" tone="secondary">
+              {t("section.queuesHelper")}
+            </Text>
+          </Stack>
         </Card>
       </Columns>
     </Stack>

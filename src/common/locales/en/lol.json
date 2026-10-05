@@ -139,7 +139,6 @@
   },
   "player": {
     "eyebrow": "Player",
-    "subtitle": "What Riot makes public about this account: rank, champions and recent games.",
     "metaTitle": "{{riotId}} — stats, duos and premade games | PremadeLab",
     "metaDescription": "Rank, most played champions and stats of the latest League of Legends games of {{riotId}}.",
     "loading": "Loading player",
