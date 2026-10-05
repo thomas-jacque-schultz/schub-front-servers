@@ -140,6 +140,16 @@
       "unranked": "Unranked",
       "masterGrandmaster": "Master and Grandmaster",
       "total": "Total"
+    },
+    "creators": {
+      "title": "Content creators",
+      "description": "Their profiles come first in the sitemap, with Master and above players. Riot cannot list them: the list is kept here, one Riot ID per line. A newcomer has their history collected; they enter the sitemap from 20 games.",
+      "label": "Riot ID",
+      "helper": "One per line, as Name#TAG.",
+      "save": "Save",
+      "saved": "List saved.",
+      "saveFailed": "Could not save the list.",
+      "unknown": "Riot does not know these Riot IDs, they were removed: {{riotIds}}"
     }
   },
   "premadelab": {

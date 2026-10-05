@@ -140,6 +140,16 @@
       "unranked": "Non classé",
       "masterGrandmaster": "Maître et Grand maître",
       "total": "Total"
+    },
+    "creators": {
+      "title": "Créateurs de contenu",
+      "description": "Leurs profils passent en tête du plan du site, avec les joueurs Maître et au-dessus. Riot ne sait pas les lister : la liste se tient ici, un Riot ID par ligne. Un nouveau venu voit son historique relevé ; il entre dans le plan du site dès 20 parties.",
+      "label": "Riot ID",
+      "helper": "Un par ligne, sous la forme Pseudo#TAG.",
+      "save": "Enregistrer",
+      "saved": "Liste enregistrée.",
+      "saveFailed": "Impossible d'enregistrer la liste.",
+      "unknown": "Riot ne connaît pas ces Riot ID, ils ont été retirés : {{riotIds}}"
     }
   },
   "premadelab": {
