@@ -134,10 +134,8 @@
     "theirs": "Them",
     "solo": "Solo",
     "flex": "Flex",
-    "ranksPending": "Ranks being collected",
     "ranksObserved": "Ranks observed on {{date}} — Riot only serves the current rank.",
     "enemies": "Opponents",
-    "outsider": "Not in roster",
     "rankHint": "Average of ranked players ({{count}}); unranked players are not counted.",
     "accordionHelper": "Click a game to expand it, then a player for their numbers in that game."
   },

@@ -180,7 +180,9 @@
       "EXCEPTION": "Exception"
     },
     "experimental": "Experimental",
-    "experimentalHint": "Measure still being validated: read with care."
+    "experimentalHint": "Measure still being validated: read with care.",
+    "verdict": "Game verdict",
+    "all": "Show the {{count}} findings"
   },
   "behaviour": {
     "tab": "Behaviour",
