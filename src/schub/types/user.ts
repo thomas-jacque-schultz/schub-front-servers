@@ -4,6 +4,7 @@ export interface UserDto {
   id: string;
   discordId: string | null;
   discordUsername?: string | null;
+  displayName?: string | null;
   avatarUrl?: string | null;
   roleId?: string | null;
   roleName?: string | null;

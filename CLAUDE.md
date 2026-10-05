@@ -419,9 +419,11 @@ formulaire mot de passe ont disparu au lot A.6.
 
 ## Les droits liés à un serveur
 
-Il n'y a **pas d'administrateur par serveur** : un modérateur pilote tous les serveurs de jeu, par
-son rôle. Démarrer et arrêter s'affichent donc dès que le rôle porte `SERVER_START` *et*
-`SERVER_STOP` — les deux, parce que les deux boutons vont ensemble dans une carte.
+**Un modérateur ne pilote que les serveurs dont il est référent** (Schub#87) ; `SERVER_CONTROL_ALL`
+(administrateurs) les pilote tous. Le cœur tranche et sert `viewerCanControl` par serveur : les
+boutons démarrer/arrêter s'affichent quand le rôle porte `SERVER_START` *et* `SERVER_STOP` **et**
+que `viewerCanControl` est vrai. Les référents se choisissent dans la fiche, parmi les comptes
+modérateurs, et s'affichent sur la carte pour tout le monde.
 
 **Ils vivent sur `/servers`, hors du mode ✏️.** Ce mode exige `SERVER_CREATE`,
 `SERVER_EDIT` ou `SERVER_INFRA_VIEW`, qu'un modérateur n'a pas : les y laisser seuls lui donnait

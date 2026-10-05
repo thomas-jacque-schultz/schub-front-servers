@@ -21,6 +21,7 @@
       "view": "Voir",
       "edit": "Modifier"
     },
+    "referents": "Référents : {{names}}",
     "commandFailure": {
       "start": "Le dernier démarrage a échoué : {{message}}",
       "stop": "Le dernier arrêt a échoué : {{message}}"
@@ -49,12 +50,15 @@
       "installation": "Installation",
       "version": "Version",
       "ports": "Ports Freebox",
+      "referents": "Référents",
       "description": "Description"
     },
     "helpers": {
       "deploymentEmpty": "Lie la fiche à son déploiement et en dérive l'identifiant",
       "deploymentLinked": "Identifiant de la fiche : {{slug}}",
-      "ports": "Ouverts pendant que le serveur tourne, refermés à l'arrêt. Format : tcp:25565, udp:8211"
+      "ports": "Ouverts pendant que le serveur tourne, refermés à l'arrêt. Format : tcp:25565, udp:8211",
+      "referents": "Modérateurs qui peuvent démarrer et arrêter ce serveur. Les administrateurs le peuvent toujours.",
+      "noModerator": "Aucun compte n'a le rôle modérateur."
     },
     "errors": {
       "required": "Ce champ est obligatoire.",
