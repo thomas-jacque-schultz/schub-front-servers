@@ -1,5 +1,12 @@
 import { useTranslation } from "react-i18next";
-import { Chip, Stack, Text, Tooltip } from "../../../common";
+import {
+  Chip,
+  Stack,
+  Text,
+  Tooltip,
+  VerdictMark,
+  verdictOf,
+} from "../../../common";
 import { EMBLEMES } from "./emblems";
 import type { Grade } from "./grading";
 import { useGradeTitle } from "./gradeTitle";
@@ -12,6 +19,8 @@ export interface LevelCrestProps {
   scope: "GAME" | "MEAN";
   /** Met en forme une valeur de la métrique : les moyennes de l'infobulle se lisent dans son unité. */
   format: (value: number) => string;
+  /** Une mesure sans bon ni mauvais sens : pas de verdict. */
+  neutral?: boolean;
 }
 
 /** L'icône du palier dont la valeur est la plus proche ; sans lui, sa place dans son propre palier. */
@@ -21,11 +30,18 @@ export function LevelCrest({
   patches,
   scope,
   format,
+  neutral = false,
 }: LevelCrestProps) {
   const { t } = useTranslation("stats");
   const titre = useGradeTitle()(grade, position, patches, scope, format);
   if (!grade.level) {
-    return <PercentileMark value={grade.inTier ?? 0} title={titre} />;
+    return (
+      <PercentileMark
+        value={grade.inTier ?? 0}
+        title={titre}
+        neutral={neutral}
+      />
+    );
   }
   return (
     <Tooltip title={titre}>
@@ -46,11 +62,18 @@ export function GradeLabel({
   patches,
   scope,
   format,
+  neutral = false,
 }: LevelCrestProps) {
   const { t } = useTranslation("stats");
   const titre = useGradeTitle()(grade, position, patches, scope, format);
   if (!grade.level) {
-    return <PercentileMark value={grade.inTier ?? 0} title={titre} />;
+    return (
+      <PercentileMark
+        value={grade.inTier ?? 0}
+        title={titre}
+        neutral={neutral}
+      />
+    );
   }
   const palier = t(`tier.${grade.level}`, { defaultValue: grade.level });
   return (
@@ -63,21 +86,33 @@ export function GradeLabel({
   );
 }
 
-/** Une métrique qui ne suit pas le rang : la part des joueurs de son palier qui font moins bien, en « top x % ». */
+/** Une métrique qui ne suit pas le rang : son cran sur l'échelle unique (Schub#92), le pourcentage exact au survol. */
 export function PercentileMark({
   value,
   title,
+  neutral = false,
 }: {
   value: number;
   title: string;
+  neutral?: boolean;
 }) {
   const { t } = useTranslation("stats");
+  if (neutral) {
+    return (
+      <VerdictMark
+        verdict={null}
+        label={t("verdict.neutral")}
+        title={`${t("verdict.neutralHint")} ${title}`}
+      />
+    );
+  }
+  const verdict = verdictOf(value);
   return (
-    <Tooltip title={title}>
-      <Text variant="caption" tone="secondary">
-        {t("grade.short", { top: Math.max(1, Math.round((1 - value) * 100)) })}
-      </Text>
-    </Tooltip>
+    <VerdictMark
+      verdict={verdict}
+      label={t(`verdict.${verdict}`)}
+      title={title}
+    />
   );
 }
 

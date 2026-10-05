@@ -108,6 +108,14 @@ export type {
   LaneMapProps,
   LaneMapZone,
 } from "./components/LaneMap";
+export { ConfidenceBadge } from "./components/ConfidenceBadge";
+export type { ConfidenceBadgeProps } from "./components/ConfidenceBadge";
+export { InsightCard } from "./components/InsightCard";
+export type { InsightCardProps } from "./components/InsightCard";
+export { VerdictMark } from "./components/VerdictMark";
+export type { VerdictMarkProps } from "./components/VerdictMark";
+export { VERDICTS, verdictOf, verdictTone } from "./components/verdict";
+export type { Verdict } from "./components/verdict";
 export { ScoreRow } from "./components/ScoreRow";
 export type { ScoreRowProps } from "./components/ScoreRow";
 export type { SplitBarProps, SplitBarSegment } from "./components/SplitBar";

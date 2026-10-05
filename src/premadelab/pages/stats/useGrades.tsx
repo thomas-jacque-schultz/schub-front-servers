@@ -86,6 +86,7 @@ export const useGrades = (
           patches: grille.patches,
           scope: "MEAN",
           format: definitions[key].format,
+          neutral: definitions[key].polarity === "neutral",
         }
       : null;
   };
