@@ -40,7 +40,7 @@ const pacte = (fichiers, motifs) => ({
 
 export default tseslint.config(
   {
-    ignores: ["dist", "storybook-static", "node_modules", "jsconfig.json"],
+    ignores: ["dist", "dist-ssr", "storybook-static", "node_modules", "jsconfig.json"],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,

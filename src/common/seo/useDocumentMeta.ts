@@ -9,6 +9,15 @@ export interface DocumentMeta {
 
 const MARKER = "data-schub-meta";
 
+// Au prérendu (scripts/prerender.mjs), aucun effet ne tourne : la page déclare ses méta pendant le rendu.
+let prerendered: DocumentMeta | null = null;
+
+export const takePrerenderedMeta = (): DocumentMeta | null => {
+  const meta = prerendered;
+  prerendered = null;
+  return meta;
+};
+
 const setMeta = (
   attribute: "name" | "property",
   key: string,
@@ -29,6 +38,10 @@ const setMeta = (
 
 export function useDocumentMeta({ title, description, image }: DocumentMeta) {
   const { pathname } = useLocation();
+
+  if (typeof window === "undefined") {
+    prerendered = { title, description, image };
+  }
 
   useEffect(() => {
     const previousTitle = document.title;

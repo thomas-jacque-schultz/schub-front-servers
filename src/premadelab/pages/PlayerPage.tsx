@@ -32,7 +32,7 @@ import {
 } from "../api/findingsApi";
 import { FindingList } from "../components/Findings";
 import { JoinCta } from "../components/JoinCta";
-import type { CollectLane } from "../types/player";
+import type { CollectLane, SearchedPlayerDto } from "../types/player";
 import { GamesPanel } from "./stats/GamesPanel";
 import { PlayerStatsView } from "./stats/PlayerStatsView";
 import { RankedStandings } from "./stats/RankedStandings";
@@ -49,8 +49,48 @@ const DEMARRAGE_MS = 10_000;
 type Onglet = "overview" | "history";
 
 /** La page d'un joueur recherché : son profil tout de suite, ses parties au fil de leur collecte. */
+// Même phrase que le head servi aux robots (SeoController du BFF) : la remplacer par un texte générique la perdait.
+function usePlayerDescription() {
+  const { t } = useTranslation(["lol", "stats"]);
+  const { formatNumber } = useLocaleFormat();
+  return (riotId: string, player: SearchedPlayerDto | null): string => {
+    if (!player) {
+      return t("player.metaDescription", { riotId });
+    }
+    const solo = player.rankings.find(
+      (ranking) => ranking.riotQueueType === "RANKED_SOLO_5x5" && ranking.tier,
+    );
+    const rank = solo
+      ? `${t(`tier.${solo.tier}`, { ns: "stats", defaultValue: solo.tier ?? "" })}${solo.division && !["MASTER", "GRANDMASTER", "CHALLENGER"].includes(solo.tier ?? "") ? ` ${solo.division}` : ""} · ${solo.leaguePoints} LP`
+      : t("player.unranked");
+    const overall = player.stats.overall;
+    const facts: string[] = [];
+    if (overall && overall.games > 0) {
+      facts.push(t("player.metaGames", { count: overall.games }));
+      facts.push(
+        t("player.metaWinRate", {
+          rate: formatNumber(Math.round((overall.wins / overall.games) * 100)),
+        }),
+      );
+      if (overall.kda !== null) {
+        facts.push(`KDA ${formatNumber(Math.round(overall.kda * 10) / 10)}`);
+      }
+    }
+    const champions = player.stats.champions
+      .slice(0, 3)
+      .map((champion) => champion.label)
+      .filter(Boolean);
+    if (champions.length > 0) {
+      facts.push(t("player.metaChampions", { names: champions.join(", ") }));
+    }
+    const head = t("player.metaHead", { riotId, rank });
+    return facts.length > 0 ? `${head} ${facts.join(", ")}.` : head;
+  };
+}
+
 function PlayerPage() {
   const { t } = useTranslation("lol");
+  const describePlayer = usePlayerDescription();
   const { t: ts } = useTranslation("stats");
   const { formatNumber } = useLocaleFormat();
   const navigate = useLocalizedNavigate();
@@ -89,7 +129,7 @@ function PlayerPage() {
     : slug.replace(/-([^-]*)$/, "#$1");
   useDocumentMeta({
     title: t("player.metaTitle", { riotId }),
-    description: t("player.metaDescription", { riotId }),
+    description: describePlayer(riotId, page ?? profil ?? null),
   });
 
   // Son propre compte : la même page que Mes stats.

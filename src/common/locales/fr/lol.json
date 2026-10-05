@@ -82,6 +82,41 @@
     "terms": "Conditions d'utilisation",
     "privacy": "Politique de confidentialité"
   },
+  "home": {
+    "features": {
+      "players": {
+        "title": "La fiche de chaque joueur",
+        "body": "Cherche un Riot ID : rang, champions les plus joués, phase de couloir et style de jeu, comparés aux joueurs de son palier au même poste. La fiche est publique, sans compte."
+      },
+      "team": {
+        "title": "Ce qui marche à cinq",
+        "body": "Monte ton premade : PremadeLab retrouve les parties que vous jouez ensemble et en tire vos duos qui gagnent, votre début de partie, Early contre Late et le niveau de vos adversaires."
+      },
+      "draft": {
+        "title": "Pool et draft",
+        "body": "Le pool de l'équipe poste par poste, et un préparateur de draft pour enregistrer vos compositions, avec remplaçants et bans prévus."
+      }
+    },
+    "faq": {
+      "title": "Questions fréquentes",
+      "duo": {
+        "question": "Comment voir les stats de mon duo sur League of Legends ?",
+        "answer": "Crée une équipe avec ton duo sur PremadeLab. Les parties que vous jouez ensemble sont retrouvées toutes seules, et l'onglet Stratégie compare votre taux de victoire ensemble à ce que chacun fait sans l'autre."
+      },
+      "premade": {
+        "question": "Comment connaître le winrate de mon premade ?",
+        "answer": "Ajoute les Riot ID de ton groupe à une équipe. Une partie compte comme partie d'équipe dès que quatre membres y jouent ensemble, quel que soit le mode, et le bilan se lit sur la page de l'équipe."
+      },
+      "games": {
+        "question": "Quelles parties sont analysées ?",
+        "answer": "Les parties récentes que Riot rend publiques pour chaque compte, toutes files confondues. Les indicateurs par minute ne portent que sur la Faille de l'invocateur : classées, normales et Clash."
+      },
+      "free": {
+        "question": "PremadeLab est-il gratuit ?",
+        "answer": "Oui. La fiche des joueurs se consulte sans compte, et une connexion Discord suffit pour monter une équipe."
+      }
+    }
+  },
   "search": {
     "metaTitle": "PremadeLab — cherche un joueur League of Legends",
     "metaDescription": "Cherche un Riot ID : rang, champions et stats de ses dernières parties, puis monte ton premade.",
@@ -125,7 +160,13 @@
       "hint": "Vérifie l’orthographe du pseudo et le tag, sans oublier le #."
     },
     "busy": "Riot est très sollicité : nouvel essai dans quelques secondes…",
-    "style": "Style de jeu"
+    "style": "Style de jeu",
+    "metaHead": "{{riotId}} : {{rank}}.",
+    "unranked": "non classé",
+    "metaGames_one": "{{count}} partie analysée",
+    "metaGames_other": "{{count}} parties analysées",
+    "metaWinRate": "{{rate}} % de victoires",
+    "metaChampions": "Champions : {{names}}"
   },
   "findings": {
     "title": "Constats",
