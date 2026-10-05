@@ -451,7 +451,6 @@
     "title": "My game, analysed",
     "helper": "Each figure against {{tier}} players in the {{position}} role, on their averages. The gauge shows the share it beats; the emblem, the tier it is closest to when the stat rises with rank.",
     "helperNoTier": "With no known rank or main role, the figures stand alone: no gauge, no emblem.",
-    "average": "Top {{top}}% on average",
     "better": "Better than {{rank}}% of their tier",
     "income": "Income",
     "laning": "Laning phase",
@@ -468,7 +467,6 @@
     "inTier": "Better than {{rank}}% of {{tier}} players in the {{position}} role ({{count}} players).",
     "inTierGame": "Better than {{rank}}% of {{tier}} games in the {{position}} role.",
     "basis": "Based on your games in the {{position}} role, compared with ranked players on patches {{patches}}.",
-    "short": "Top {{top}}%",
     "champion": "Better than {{rank}}% of {{champion}} players in {{group}}, on their averages ({{count}} players with 5+ games).",
     "championFallback": "Not enough {{champion}} players in {{group}} yet: compared with all {{tier}} players in the {{position}} role.",
     "team": "Averaged over {{games}} game(s): better than {{rank}}% of games at the same tier.",
@@ -530,7 +528,6 @@
   },
   "conclusion": {
     "better": "Better than {{part}}% of {{tier}} {{position}} players.",
-    "worse": "Below {{part}}% of {{tier}} {{position}} players.",
     "trend": {
       "up": "Improving: {{now}} this month, versus {{before}} the month before.",
       "down": "Slipping: {{now}} this month, versus {{before}} the month before.",
@@ -612,5 +609,18 @@
     "otherDetail_one": "{{count}} game",
     "otherDetail_other": "{{count}} games",
     "empty": "No game in the period."
+  },
+  "verdict": {
+    "veryBelow": "Well below",
+    "below": "Below",
+    "average": "Average",
+    "above": "Above",
+    "veryAbove": "Well above",
+    "neutral": "Neutral",
+    "neutralHint": "Neither good nor bad: this measure depends on the role played (a tank takes damage, that is the job).",
+    "familyAverage": "On average: {{verdict}}",
+    "lowConfidence": "Insufficient confidence",
+    "details": "Show details",
+    "hideDetails": "Hide details"
   }
 }

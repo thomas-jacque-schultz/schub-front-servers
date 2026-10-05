@@ -49,8 +49,6 @@ export const useKpiSentence = (
       tier: t(`tier.${references.tier}`, { defaultValue: references.tier }),
       position: format.poste(references.position),
     };
-    return part >= 50
-      ? t("conclusion.better", { part, ...contexte })
-      : t("conclusion.worse", { part: 100 - part, ...contexte });
+    return t("conclusion.better", { part, ...contexte });
   };
 };

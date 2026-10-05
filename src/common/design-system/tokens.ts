@@ -208,6 +208,10 @@ export const chartColors: Record<
     negative: string;
     // Parts d'un tout, dans cet ordre (validées : bande de luminosité, daltonisme, contraste).
     categories: string[];
+    // Échelle de verdict en cinq crans (Schub#92), du plus bas au plus haut. Contraste sur le papier :
+    // sombre 5,1 · 8,2 · 7,9 · 10,0 · 7,5 ; clair 6,5 · 4,6 · 6,1 · 4,2 · 6,5. Le pictogramme double le cran :
+    // rouge et vert ne se lisent pas seuls en deutéranopie.
+    verdict: [string, string, string, string, string];
   }
 > = {
   dark: {
@@ -220,6 +224,7 @@ export const chartColors: Record<
     positive: darkPalette.success.main,
     negative: darkPalette.error.main,
     categories: ["#B38C1C", "#C07AA6", "#3987E5", "#199E70", "#D95926"],
+    verdict: ["#E0576B", "#E8968F", "#B6A3B4", "#8CCBA9", "#4FB783"],
   },
   light: {
     mark: brand.goldDeep,
@@ -231,6 +236,7 @@ export const chartColors: Record<
     positive: lightPalette.success.main,
     negative: lightPalette.error.main,
     categories: ["#9A7512", "#A4477E", "#2A78D6", "#199E70", "#EB6834"],
+    verdict: ["#B02A3C", "#B65A4C", "#6E5D6B", "#3B8A62", "#1F6B46"],
   },
 };
 

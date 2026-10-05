@@ -1,5 +1,14 @@
 import { useTranslation } from "react-i18next";
-import { Card, Columns, Frame, ScoreRow, Stack, Text } from "../../../common";
+import {
+  Card,
+  Columns,
+  Frame,
+  ScoreRow,
+  Stack,
+  Text,
+  VerdictMark,
+  verdictOf,
+} from "../../../common";
 import type { RadarReferencesDto, StatLineDto } from "../../types/stats";
 import { FAMILLES, useMetrics } from "./metrics";
 import { useStatsFormat } from "./statsFormat";
@@ -26,7 +35,7 @@ export function GameAnalysis({
 }: GameAnalysisProps) {
   const { t } = useTranslation("stats");
   const format = useStatsFormat();
-  const { tuiles } = useMetrics();
+  const { tuiles, definitions } = useMetrics();
   const grades = useGrades(references, positions);
   const conclusion = useKpiSentence(references, positions, months);
 
@@ -48,6 +57,7 @@ export function GameAnalysis({
         {FAMILLES.map((famille) => {
           const lignes = tuiles(overall, { keys: famille.metrics });
           const scores = famille.metrics
+            .filter((key) => definitions[key].polarity !== "neutral")
             .map((key) => grades.grade(key)?.inTier)
             .filter((score): score is number => typeof score === "number");
           const moyenne =
@@ -67,11 +77,13 @@ export function GameAnalysis({
                     {t(`family.${famille.key}`, { defaultValue: famille.key })}
                   </Text>
                   {moyenne !== null && (
-                    <Text variant="caption" tone="secondary">
-                      {t("family.average", {
-                        top: Math.max(1, Math.round((1 - moyenne) * 100)),
+                    <VerdictMark
+                      verdict={verdictOf(moyenne)}
+                      label={t(`verdict.${verdictOf(moyenne)}`)}
+                      title={t("family.better", {
+                        rank: Math.round(moyenne * 100),
                       })}
-                    </Text>
+                    />
                   )}
                 </Stack>
                 <Stack spacing={0}>
