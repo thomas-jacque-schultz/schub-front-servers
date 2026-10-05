@@ -5,6 +5,7 @@ import {
   Alert,
   Button,
   Card,
+  MultiSelect,
   PageHeader,
   ProgressBar,
   SelectField,
@@ -19,11 +20,14 @@ import {
   updateGameServerApi,
 } from "../api/serversApi";
 import { getDeploymentsApi } from "../api/deploymentsApi";
+import { getUsersApi } from "../api/usersApi";
+import type { UserDto } from "../types/user";
 import type { DeploymentDto } from "../types/deployment";
 import { slugFromDeploymentName } from "../types/deployment";
 import type {
   GameServerFormMode,
   GameServerPortDto,
+  GameServerReferentDto,
   UpsertGameServerPayload,
 } from "../types/server";
 import { hasInfrastructureView } from "../types/server";
@@ -39,6 +43,7 @@ interface GameServerFormValues {
   version: string;
   description: string;
   ports: string;
+  referentIds: string[];
 }
 
 const DEFAULT_VALUES: GameServerFormValues = {
@@ -52,12 +57,15 @@ const DEFAULT_VALUES: GameServerFormValues = {
   version: "",
   description: "",
   ports: "",
+  referentIds: [],
 };
 
 // Convention de nommage des déploiements de jeu : gaming-*. Le connecteur liste tout, le tri se fait ici.
 const GAME_DEPLOYMENT_MARKER = "gaming";
 
-const REQUIRED_FIELDS: Array<keyof GameServerFormValues> = ["slug", "name"];
+const REQUIRED_FIELDS = ["slug", "name"] as const;
+
+const MODERATOR_ROLE = "MODERATOR";
 
 const PORT_ENTRY_PATTERN = /^(tcp|udp):(\d{1,5})(?::(\d{1,5}))?$/i;
 
@@ -97,9 +105,11 @@ const formatPorts = (ports?: GameServerPortDto[]): string =>
     .join(", ");
 
 // ports omis sans SERVER_INFRA_VIEW : un tableau vide effacerait des redirections que l'acteur ne voit pas.
+// referentIds omis sans la liste des comptes : l'éditeur ne pourrait pas les reproduire.
 const toPayload = (
   values: GameServerFormValues,
   seesInfrastructure: boolean,
+  editsReferents: boolean,
 ): UpsertGameServerPayload => ({
   slug: values.slug.trim(),
   deploymentId: values.deploymentId.trim()
@@ -115,6 +125,7 @@ const toPayload = (
   version: values.version.trim() || undefined,
   description: values.description.trim() || undefined,
   ports: seesInfrastructure ? parsePorts(values.ports) || [] : undefined,
+  referentIds: editsReferents ? values.referentIds : undefined,
 });
 
 const resolveMode = (pathname: string): GameServerFormMode => {
@@ -142,6 +153,10 @@ function GameServerFormPage() {
   const [seesInfrastructure, setSeesInfrastructure] = useState<boolean>(
     can("SERVER_INFRA_VIEW"),
   );
+  const [users, setUsers] = useState<UserDto[] | null>(null);
+  const [currentReferents, setCurrentReferents] = useState<
+    GameServerReferentDto[]
+  >([]);
 
   const mode = useMemo(() => resolveMode(window.location.pathname), []);
   const isReadOnly = mode === "visualisation";
@@ -177,6 +192,19 @@ function GameServerFormPage() {
   }, [mode, can, t]);
 
   useEffect(() => {
+    if (mode === "visualisation" || !can("USER_VIEW")) {
+      return;
+    }
+    let active = true;
+    getUsersApi()
+      .then((payload) => active && setUsers(payload))
+      .catch(() => active && setUsers(null));
+    return () => {
+      active = false;
+    };
+  }, [mode, can]);
+
+  useEffect(() => {
     if (!id || mode === "creation") {
       return;
     }
@@ -199,6 +227,7 @@ function GameServerFormPage() {
         }
 
         setSeesInfrastructure(hasInfrastructureView(server));
+        setCurrentReferents(server.referents || []);
         setValues({
           slug: server.slug || "",
           deploymentId:
@@ -216,6 +245,7 @@ function GameServerFormPage() {
           version: server.version || "",
           description: server.description || "",
           ports: formatPorts(server.ports),
+          referentIds: server.referentIds || [],
         });
       } catch (error) {
         if (!active) {
@@ -238,7 +268,28 @@ function GameServerFormPage() {
     };
   }, [id, mode, t]);
 
-  const onFieldChange = (field: keyof GameServerFormValues, value: string) => {
+  const referentOptions = useMemo(() => {
+    const moderators = (users || [])
+      .filter((user) => user.roleName === MODERATOR_ROLE)
+      .map((user) => ({
+        value: user.id,
+        label: user.displayName || user.discordUsername || user.id,
+        avatarUrl: user.avatarUrl,
+      }));
+    const known = new Set(moderators.map((option) => option.value));
+    const others = currentReferents
+      .filter((referent) => !known.has(referent.id))
+      .map((referent) => ({
+        value: referent.id,
+        label: referent.displayName || referent.id,
+      }));
+    return [...moderators, ...others];
+  }, [users, currentReferents]);
+
+  const onFieldChange = (
+    field: Exclude<keyof GameServerFormValues, "referentIds">,
+    value: string,
+  ) => {
     setValues((current) => ({ ...current, [field]: value }));
     setErrors((current) => ({ ...current, [field]: "" }));
     setGlobalError("");
@@ -324,7 +375,7 @@ function GameServerFormPage() {
     setIsSubmitting(true);
     setGlobalError("");
 
-    const payload = toPayload(values, seesInfrastructure);
+    const payload = toPayload(values, seesInfrastructure, users !== null);
 
     try {
       if (mode === "creation") {
@@ -457,6 +508,18 @@ function GameServerFormPage() {
             disabled={infraDisabled}
             error={Boolean(errors.ports)}
             helperText={errors.ports || t("form.helpers.ports")}
+          />
+
+          <MultiSelect
+            label={t("form.fields.referents")}
+            values={values.referentIds}
+            onChange={(referentIds) =>
+              setValues((current) => ({ ...current, referentIds }))
+            }
+            options={referentOptions}
+            disabled={fieldDisabled || users === null}
+            helperText={t("form.helpers.referents")}
+            noOptionsText={t("form.helpers.noModerator")}
           />
 
           <TextField

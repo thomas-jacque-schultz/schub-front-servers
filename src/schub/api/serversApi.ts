@@ -48,6 +48,8 @@ const toDisplayedServer = (server: GameServerDto): DisplayedServer => ({
   status: normalizeStatus(server.status),
   lastStatusCheckAt: server.lastStatusCheckAt,
   lastCommandFailure: server.lastCommandFailure,
+  referents: server.referents,
+  viewerCanControl: server.viewerCanControl,
 });
 
 const toPublicDisplayedServer = (

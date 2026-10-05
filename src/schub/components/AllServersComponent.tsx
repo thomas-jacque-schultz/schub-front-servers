@@ -108,6 +108,16 @@ function ServersDashboard({
               <StatusChip status={server.status} />
             </Stack>
 
+            {server.referents && server.referents.length > 0 && (
+              <Text variant="caption" tone="secondary">
+                {t("list.referents", {
+                  names: server.referents
+                    .map((referent) => referent.displayName)
+                    .join(", "),
+                })}
+              </Text>
+            )}
+
             {server.lastCommandFailure && (
               <Alert severity="error">
                 {t(`list.commandFailure.${server.lastCommandFailure.action}`, {
@@ -118,7 +128,7 @@ function ServersDashboard({
 
             {(server.id || server.slug) && (
               <Stack direction="row" spacing={1} justify="end">
-                {server.slug && canControl && (
+                {server.slug && canControl && server.viewerCanControl && (
                   <>
                     <Button
                       size="small"

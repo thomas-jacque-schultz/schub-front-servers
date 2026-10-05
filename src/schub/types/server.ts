@@ -8,6 +8,12 @@ export interface GameServerCommandFailureDto {
   at?: string;
 }
 
+export interface GameServerReferentDto {
+  id: string;
+  displayName?: string;
+  discordId?: string;
+}
+
 export interface DisplayedServer {
   id?: string;
   slug?: string;
@@ -15,6 +21,8 @@ export interface DisplayedServer {
   status: ServerStatus;
   lastStatusCheckAt?: string;
   lastCommandFailure?: GameServerCommandFailureDto;
+  referents?: GameServerReferentDto[];
+  viewerCanControl?: boolean;
 }
 
 export interface GameServerPortDto {
@@ -43,6 +51,9 @@ export interface GameServerDto {
   lastStatusChangeAt?: string;
   statusHistory?: GameServerStatusHistoryEntryDto[];
   lastCommandFailure?: GameServerCommandFailureDto;
+  referentIds?: string[];
+  referents?: GameServerReferentDto[];
+  viewerCanControl?: boolean;
 }
 
 export interface GameServerStatusHistoryEntryDto {
@@ -71,4 +82,5 @@ export interface UpsertGameServerPayload {
   version?: string;
   description?: string;
   ports?: GameServerPortDto[];
+  referentIds?: string[];
 }

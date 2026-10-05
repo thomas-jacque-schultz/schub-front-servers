@@ -31,6 +31,7 @@
     "SERVER_INFRA_VIEW": "Voir les ports et le déploiement",
     "SERVER_START": "Démarrer un serveur",
     "SERVER_STOP": "Arrêter un serveur",
+    "SERVER_CONTROL_ALL": "Piloter tous les serveurs, référent ou non",
     "SERVER_CREATE": "Créer une fiche serveur",
     "SERVER_EDIT": "Modifier une fiche serveur",
     "SERVER_DELETE": "Supprimer une fiche serveur",

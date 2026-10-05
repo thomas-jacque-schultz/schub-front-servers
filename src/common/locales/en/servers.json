@@ -21,6 +21,7 @@
       "view": "View",
       "edit": "Edit"
     },
+    "referents": "Referents: {{names}}",
     "commandFailure": {
       "start": "The last start failed: {{message}}",
       "stop": "The last stop failed: {{message}}"
@@ -49,12 +50,15 @@
       "installation": "Installation",
       "version": "Version",
       "ports": "Freebox ports",
+      "referents": "Referents",
       "description": "Description"
     },
     "helpers": {
       "deploymentEmpty": "Links the entry to its deployment and derives its identifier",
       "deploymentLinked": "Entry identifier: {{slug}}",
-      "ports": "Opened while the server runs, closed when it stops. Format: tcp:25565, udp:8211"
+      "ports": "Opened while the server runs, closed when it stops. Format: tcp:25565, udp:8211",
+      "referents": "Moderators who can start and stop this server. Administrators always can.",
+      "noModerator": "No account has the moderator role."
     },
     "errors": {
       "required": "This field is required.",
