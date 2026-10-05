@@ -101,7 +101,12 @@
     "trendHelper": "Votre taux de victoire patch par patch, comparé à votre propre moyenne. Un patch de moins de 3 parties est grisé : trop peu de parties pour y lire une tendance.",
     "trendReference": "Trait : votre moyenne sur la période ({{value}})",
     "trendPoint": "Patch {{patch}}, du {{from}} au {{to}} · {{rate}} sur {{count}} partie(s)",
-    "noPatch": "Pas encore assez d'historique pour dessiner une évolution."
+    "noPatch": "Pas encore assez d'historique pour dessiner une évolution.",
+    "bestPosition": "Meilleur poste : {{position}} ({{rate}} sur {{count}} parties).",
+    "allChampions": "Voir tous les champions",
+    "trendUp": "En hausse sur le patch {{patch}} : {{rate}} de victoires.",
+    "trendDown": "En baisse sur le patch {{patch}} : {{rate}} de victoires.",
+    "trendStable": "Stable sur le patch {{patch}} : {{rate}} de victoires."
   },
   "team": {
     "definition": "Une partie d'équipe : au moins {{count}} des {{roster}} joueurs de l'effectif, toutes files confondues.",
@@ -458,7 +463,19 @@
     "survival": "Survie",
     "vision": "Vision",
     "objectives": "Objectifs",
-    "laningBasis": "Écarts face à l’adversaire direct, sur {{count}} partie(s) dont on a la timeline."
+    "laningBasis": "Écarts face à l’adversaire direct, sur {{count}} partie(s) dont on a la timeline.",
+    "laningNone": "Pas encore de partie avec timeline sur la période.",
+    "laningAhead": "Tu sors de ta lane avec {{gold}} d'or d'avance.",
+    "laningBehind": "Tu sors de ta lane avec {{gold}} d'or de retard.",
+    "laningEven": "Tu sors de ta lane à égalité.",
+    "laningCenter": "égalité avec l'adversaire direct",
+    "sentence": {
+      "veryAbove": "Bien au-dessus des {{position}} {{tier}}.",
+      "above": "Au-dessus des {{position}} {{tier}}.",
+      "average": "Au niveau des {{position}} {{tier}}.",
+      "below": "En dessous des {{position}} {{tier}}.",
+      "veryBelow": "Bien en dessous des {{position}} {{tier}}."
+    }
   },
   "grade": {
     "level": "Au niveau des {{tier}} au poste {{position}} : c’est de leur moyenne par partie ({{mean}}) que la valeur est la plus proche.",
@@ -620,5 +637,31 @@
     "lowConfidence": "Confiance insuffisante",
     "details": "Voir le détail",
     "hideDetails": "Masquer le détail"
+  },
+  "highlights": {
+    "title": "Ce qui ressort",
+    "strengths": "Points forts",
+    "weaknesses": "À travailler",
+    "noStrength": "Rien qui dépasse nettement le palier.",
+    "noWeakness": "Rien qui reste nettement en dessous du palier.",
+    "allNumbers": "Voir tous les chiffres",
+    "noTier": "Sans rang ni poste principal, pas de comparaison au palier.",
+    "line": {
+      "veryAbove": "{{metric}} : bien au-dessus des {{position}} {{tier}}",
+      "above": "{{metric}} : au-dessus des {{position}} {{tier}}",
+      "average": "{{metric}} : dans la moyenne",
+      "below": "{{metric}} : en dessous des {{position}} {{tier}}",
+      "veryBelow": "{{metric}} : bien en dessous des {{position}} {{tier}}"
+    },
+    "overall": {
+      "veryAbove": "Dans l'ensemble, bien au-dessus des {{position}} {{tier}}.",
+      "above": "Dans l'ensemble, au-dessus des {{position}} {{tier}}.",
+      "average": "Dans l'ensemble, au niveau des {{position}} {{tier}}.",
+      "below": "Dans l'ensemble, en dessous des {{position}} {{tier}}.",
+      "veryBelow": "Dans l'ensemble, bien en dessous des {{position}} {{tier}}."
+    }
+  },
+  "champion": {
+    "versusRest": "{{delta}} de victoires par rapport à ses autres champions ({{count}} parties)."
   }
 }

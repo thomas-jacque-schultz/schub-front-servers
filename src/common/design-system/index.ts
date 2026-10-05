@@ -110,6 +110,8 @@ export type {
 } from "./components/LaneMap";
 export { ConfidenceBadge } from "./components/ConfidenceBadge";
 export type { ConfidenceBadgeProps } from "./components/ConfidenceBadge";
+export { DivergingBar } from "./components/DivergingBar";
+export type { DivergingBarProps } from "./components/DivergingBar";
 export { InsightCard } from "./components/InsightCard";
 export type { InsightCardProps } from "./components/InsightCard";
 export { VerdictMark } from "./components/VerdictMark";

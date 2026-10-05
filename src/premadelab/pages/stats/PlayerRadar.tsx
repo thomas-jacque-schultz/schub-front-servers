@@ -18,15 +18,14 @@ import { useReferenceGrid } from "./useReferenceGrid";
 
 type RadarReference = "met" | "league";
 
+// Cinq axes, tous « plus loin = mieux » (Schub#93) : les dégâts subis n'ont pas de bon sens, la part des morts
+// se lisait à l'envers, et le taux de victoire n'est pas une manière de jouer.
 const AXES: MetricKey[] = [
   "damagePerMinute",
   "goldPerMinute",
-  "damageTakenPerMinute",
   "kda",
   "killParticipation",
-  "deathShare",
   "visionPerMinute",
-  "winRate",
 ];
 
 export interface PlayerRadarProps {

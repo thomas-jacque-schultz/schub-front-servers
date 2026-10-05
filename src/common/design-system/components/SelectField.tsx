@@ -37,6 +37,9 @@ export function SelectField({
   size = "medium",
 }: SelectFieldProps) {
   const labelId = useId();
+  // Une option de valeur vide (« tout l'historique ») est un vrai choix : MUI ne l'affiche qu'avec displayEmpty.
+  const videChoisi =
+    value === "" && options.some((option) => option.value === "");
 
   return (
     <FormControl
@@ -46,11 +49,15 @@ export function SelectField({
       required={required}
       size={size}
     >
-      <InputLabel id={labelId}>{label}</InputLabel>
+      <InputLabel id={labelId} shrink={videChoisi || undefined}>
+        {label}
+      </InputLabel>
       <Select
         labelId={labelId}
         label={label}
         value={value}
+        displayEmpty={videChoisi}
+        notched={videChoisi || undefined}
         onChange={(event) => onChange(String(event.target.value))}
       >
         {options.map((option) => (
