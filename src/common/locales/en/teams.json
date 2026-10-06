@@ -173,7 +173,7 @@
     "advice": {
       "pick": "{{player}} ({{champion}})",
       "record": "{{wins}}W – {{losses}}L",
-      "reference": "{{rate}} in general",
+      "reference": "{{rate}} in general over {{count}}",
       "tryLine": "{{rate}} in general · played {{count}} times together",
       "lowConfidence": "Insufficient confidence",
       "lowConfidenceHint": "{{count}} game(s): {{threshold}} are needed to conclude.",

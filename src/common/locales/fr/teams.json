@@ -173,7 +173,7 @@
     "advice": {
       "pick": "{{player}} ({{champion}})",
       "record": "{{wins}} V – {{losses}} D",
-      "reference": "en général {{rate}}",
+      "reference": "en général {{rate}} sur {{count}}",
       "tryLine": "en général {{rate}} · joué {{count}} fois ensemble",
       "lowConfidence": "Confiance insuffisante",
       "lowConfidenceHint": "{{count}} partie(s) : il en faut {{threshold}} pour conclure.",
