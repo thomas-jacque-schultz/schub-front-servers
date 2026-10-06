@@ -26,7 +26,8 @@
     "field": "Team name",
     "helper": "60 characters at most.",
     "confirm": "Create",
-    "failed": "Creation failed"
+    "failed": "Creation failed",
+    "proposed": "The team will be created with: {{players}}."
   },
   "team": {
     "caption": "Team {{name}}",

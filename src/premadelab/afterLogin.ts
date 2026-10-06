@@ -18,3 +18,31 @@ export const destinationApresConnexion = (): string | null => {
     return null;
   }
 };
+
+const EQUIPE_PROPOSEE = "premadelab-equipe-proposee";
+
+/** Les Riot ID qu'une fiche publique propose de réunir (Schub#96) : la création d'équipe les reprend. */
+export const retenirEquipeProposee = (riotIds: string[]): void => {
+  try {
+    sessionStorage.setItem(EQUIPE_PROPOSEE, JSON.stringify(riotIds));
+  } catch {
+    // Sans stockage de session, l'équipe se crée vide et s'étoffe à la main.
+  }
+};
+
+export const equipeProposee = (): string[] => {
+  try {
+    const brut = sessionStorage.getItem(EQUIPE_PROPOSEE);
+    return brut ? (JSON.parse(brut) as string[]) : [];
+  } catch {
+    return [];
+  }
+};
+
+export const oublierEquipeProposee = (): void => {
+  try {
+    sessionStorage.removeItem(EQUIPE_PROPOSEE);
+  } catch {
+    // rien à oublier
+  }
+};

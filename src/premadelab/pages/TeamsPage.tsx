@@ -1,6 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { claimTeamsApi, createTeamApi, getMyTeamsApi } from "../api/teamsApi";
+import {
+  addTeamMemberApi,
+  claimTeamsApi,
+  createTeamApi,
+  getMyTeamsApi,
+} from "../api/teamsApi";
+import { equipeProposee, oublierEquipeProposee } from "../afterLogin";
 import {
   Alert,
   Button,
@@ -34,6 +40,7 @@ function TeamsPage() {
 
   const [isCreating, setIsCreating] = useState<boolean>(false);
   const [newName, setNewName] = useState<string>("");
+  const [proposee] = useState<string[]>(equipeProposee);
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const [isClaiming, setIsClaiming] = useState<boolean>(false);
 
@@ -57,6 +64,13 @@ function TeamsPage() {
     void load();
   }, [load]);
 
+  // Arrivée depuis « Il est l'heure de créer votre première équipe » : la création s'ouvre d'elle-même.
+  useEffect(() => {
+    if (proposee.length > 0 && canCreate) {
+      setIsCreating(true);
+    }
+  }, [proposee, canCreate]);
+
   const onCreate = async () => {
     if (!newName.trim()) {
       return;
@@ -65,6 +79,17 @@ function TeamsPage() {
     setError("");
     try {
       const created = await createTeamApi(newName.trim());
+      for (const riotId of proposee) {
+        const diese = riotId.lastIndexOf("#");
+        await addTeamMemberApi(created.id, {
+          riotGameName: riotId.slice(0, diese),
+          riotTagLine: riotId.slice(diese + 1),
+          roles: [],
+          status: "TITULAIRE",
+          coach: false,
+        }).catch(() => undefined);
+      }
+      oublierEquipeProposee();
       setIsCreating(false);
       setNewName("");
       navigate(`/teams/${created.id}`);
@@ -210,9 +235,15 @@ function TeamsPage() {
         confirmLabel={t("create.confirm")}
         confirmDisabled={!newName.trim()}
         confirmLoading={isSaving}
-        onClose={() => setIsCreating(false)}
+        onClose={() => {
+          oublierEquipeProposee();
+          setIsCreating(false);
+        }}
         onConfirm={() => void onCreate()}
       >
+        {proposee.length > 0 && (
+          <Text>{t("create.proposed", { players: proposee.join(", ") })}</Text>
+        )}
         <TextField
           label={t("create.field")}
           value={newName}

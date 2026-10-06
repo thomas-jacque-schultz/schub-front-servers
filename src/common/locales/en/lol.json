@@ -223,5 +223,16 @@
     "title": "Support PremadeLab",
     "text": "PremadeLab is free and ad-free. The servers that collect and compute the stats are not: a coffee helps keep them running.",
     "action": "Buy a coffee"
+  },
+  "companions": {
+    "title": "Often plays with",
+    "conclusion": "Partner of the month: {{player}}, {{count}} games together.",
+    "line": "{{count}} games together · {{rate}}",
+    "tooEarly": "too early to compare without them",
+    "without": "{{delta}} compared with games without them",
+    "teamTime": "Time to create your first team.",
+    "teamAction": "Build the premade",
+    "method": "Teammates of at least {{count}} games this month, from the games Riot makes public. To remove a name, write to us through the contact form.",
+    "details": "How it is computed"
   }
 }

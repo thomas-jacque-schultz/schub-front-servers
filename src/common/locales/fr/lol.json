@@ -223,5 +223,16 @@
     "title": "Soutenir PremadeLab",
     "text": "PremadeLab est gratuit et sans publicité. Les serveurs qui collectent et calculent les stats, eux, coûtent : un café aide à les garder allumés.",
     "action": "Offrir un café"
+  },
+  "companions": {
+    "title": "Joue souvent avec",
+    "conclusion": "Son partenaire du mois : {{player}}, {{count}} parties ensemble.",
+    "line": "{{count}} parties ensemble · {{rate}}",
+    "tooEarly": "trop tôt pour comparer sans lui",
+    "without": "{{delta}} par rapport aux parties sans lui",
+    "teamTime": "Il est l'heure de créer votre première équipe.",
+    "teamAction": "Monter le premade",
+    "method": "Les coéquipiers d'au moins {{count}} parties sur le mois en cours, tirées des parties que Riot rend publiques. Pour retirer un nom, écris-nous par le formulaire de contact.",
+    "details": "Comment c'est calculé"
   }
 }

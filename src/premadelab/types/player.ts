@@ -33,3 +33,20 @@ export interface PlayerSuggestionDto {
   positions: string[];
   lastPlayedAt: string | null;
 }
+
+/** « Joue souvent avec » : coéquipiers d'au moins `minimumGames` parties sur le mois en cours (Schub#96). */
+export interface CompanionsDto {
+  month: string;
+  minimumGames: number;
+  companions: {
+    riotId: string;
+    slug: string;
+    games: number;
+    wins: number;
+    winRate: number;
+    withoutGames: number;
+    /** Absent quand l'échantillon sans lui est trop court pour conclure. */
+    withoutWinRate: number | null;
+  }[];
+  suggestedTeam: string[];
+}
