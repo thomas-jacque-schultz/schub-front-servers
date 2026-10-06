@@ -7,6 +7,8 @@ import Typography from "@mui/material/Typography";
 export interface CardProps {
   title?: ReactNode;
   description?: ReactNode;
+  /** La méthode, sous le contenu : un encart commence par ce qu'il montre, pas par comment le lire (Schub#88). */
+  footnote?: ReactNode;
   actions?: ReactNode;
   disablePadding?: boolean;
   /** Hauteur minimale, pour qu'une grille de cartes voisines se lise ligne à ligne. */
@@ -17,6 +19,7 @@ export interface CardProps {
 export function Card({
   title,
   description,
+  footnote,
   actions,
   disablePadding = false,
   minHeight,
@@ -57,6 +60,11 @@ export function Card({
             </Stack>
           )}
           {children}
+          {footnote && (
+            <Typography variant="caption" color="text.secondary" component="p">
+              {footnote}
+            </Typography>
+          )}
         </Stack>
       </CardContent>
     </MuiCard>

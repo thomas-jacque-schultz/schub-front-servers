@@ -663,5 +663,17 @@
   },
   "champion": {
     "versusRest": "{{delta}} win rate compared with their other champions ({{count}} games)."
+  },
+  "premadeHighlights": {
+    "title": "What stands out for the team",
+    "method": "Each player compared with their own games, over the period, from {{count}} team games. A rate counts in points (from 5), a ratio as a share of its value (from 15%).",
+    "metric": {
+      "winRate": "win rate",
+      "killParticipation": "kill participation",
+      "kda": "KDA",
+      "goldPerMinute": "gold per minute",
+      "damagePerMinute": "damage per minute"
+    },
+    "line": "{{player}}: {{delta}} {{metric}} in premade"
   }
 }

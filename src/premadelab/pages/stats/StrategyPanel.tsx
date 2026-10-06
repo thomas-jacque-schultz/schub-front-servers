@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { SelectField, Stack, Text } from "../../../common";
+import { SelectField, Stack, Text, useRequest } from "../../../common";
+import { getTeamFindingsApi } from "../../api/findingsApi";
+import { GameVerdict } from "../../components/GameVerdict";
 import { OppositionPanel } from "./OppositionPanel";
 import { SynergyPanel } from "./SynergyPanel";
 import { TeamEarlyGame } from "./TeamEarlyGame";
@@ -19,6 +21,10 @@ export function StrategyPanel({ teamId }: StrategyPanelProps) {
   const fenetres = useWindowOptions();
   const [periode, setPeriode] = useState<string>("");
   const opposition = useTeamOpposition(teamId, periode);
+  const { data: constats } = useRequest(
+    `team-findings/${teamId}/${periode}`,
+    () => getTeamFindingsApi(teamId, periode),
+  );
 
   return (
     <Stack spacing={3}>
@@ -29,6 +35,13 @@ export function StrategyPanel({ teamId }: StrategyPanelProps) {
         options={fenetres}
         helperText={t("window.helper")}
       />
+      {constats && constats.length > 0 && (
+        <GameVerdict
+          findings={constats}
+          title={t("synergy.findings")}
+          visible={2}
+        />
+      )}
       <Stack spacing={2}>
         <Text variant="section">{t("strategy.summary")}</Text>
         <TeamSummary teamId={teamId} periode={periode} />

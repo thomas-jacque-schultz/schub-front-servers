@@ -14,6 +14,7 @@ import {
   useHistoryWindow,
   useRequest,
 } from "../../../common";
+import { PremadeHighlights } from "./PremadeHighlights";
 import { playerColumn } from "./playerColumn";
 import { championsEnColonne } from "./champions";
 import { lignesPremade } from "./premade";
@@ -108,6 +109,8 @@ export function PlayersPanel({ teamId }: PlayersPanelProps) {
 
       {error && <Alert severity="warning">{error}</Alert>}
 
+      <PremadeHighlights players={joueurs} />
+
       {stats && stats.players.length === 0 ? (
         <Card>
           <Text variant="body" tone="secondary">
@@ -116,14 +119,6 @@ export function PlayersPanel({ teamId }: PlayersPanelProps) {
         </Card>
       ) : (
         <Stack spacing={1.5}>
-          <Text variant="caption" tone="secondary">
-            {stats?.premadeGames === null || stats?.premadeGames === undefined
-              ? t("premade.unknown")
-              : t("premade.summary", {
-                  count: stats.premadeGames,
-                  minimum: stats.premadeMinimum,
-                })}
-          </Text>
           <AlignedColumns
             minWidth={220}
             count={Math.max(1, Math.min(6, visibles.length))}
@@ -142,6 +137,14 @@ export function PlayersPanel({ teamId }: PlayersPanelProps) {
               }),
             )}
           />
+          <Text variant="caption" tone="secondary">
+            {stats?.premadeGames === null || stats?.premadeGames === undefined
+              ? t("premade.unknown")
+              : t("premade.summary", {
+                  count: stats.premadeGames,
+                  minimum: stats.premadeMinimum,
+                })}
+          </Text>
         </Stack>
       )}
     </Stack>

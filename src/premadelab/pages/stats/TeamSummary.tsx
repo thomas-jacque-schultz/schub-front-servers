@@ -96,7 +96,7 @@ export function TeamSummary({ teamId, periode }: TeamSummaryProps) {
           <Columns minWidth={260}>
             <Card
               title={t("section.byQueue")}
-              description={t("section.byQueueHelper")}
+              footnote={t("section.byQueueHelper")}
             >
               <QueuePie queues={stats.byQueue} label={t("queuePie.label")} />
             </Card>
@@ -128,7 +128,7 @@ export function TeamSummary({ teamId, periode }: TeamSummaryProps) {
 
           <Card
             title={t("section.presence")}
-            description={t("section.presenceHelper")}
+            footnote={t("section.presenceHelper")}
           >
             <Stack spacing={0.75}>
               {stats.presence.map((member) => (

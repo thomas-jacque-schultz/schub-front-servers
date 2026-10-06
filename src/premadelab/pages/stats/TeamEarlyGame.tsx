@@ -160,7 +160,7 @@ export function TeamEarlyGame({ early }: { early: TeamEarlyGameDto | null }) {
   ];
 
   return (
-    <Card description={t("early.team.helper", { count: early.games })}>
+    <Card footnote={t("early.team.helper", { count: early.games })}>
       <Stack spacing={2.5}>
         <Section
           titre={t("early.team.laners")}
