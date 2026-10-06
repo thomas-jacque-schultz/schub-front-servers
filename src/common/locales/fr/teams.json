@@ -267,5 +267,35 @@
       "copied": "Lien copié",
       "card": "Télécharger la carte"
     }
+  },
+  "training": {
+    "title": "Soirées d'entraînement",
+    "none": "Aucun créneau : chaque session reste libre.",
+    "recurring": "Chaque {{day}}, de {{start}} à {{end}}",
+    "once": "Le {{date}}, de {{start}} à {{end}}",
+    "remove": "Retirer ce créneau",
+    "kind": "Type de créneau",
+    "kindRecurring": "Chaque semaine",
+    "kindOnce": "Une seule fois",
+    "day": "Jour",
+    "date": "Date",
+    "start": "Début",
+    "end": "Fin",
+    "add": "Ajouter",
+    "saveFailed": "Impossible d'enregistrer les créneaux.",
+    "helper": "Heure de Paris. Chaque nuit, PremadeLab repère vos sessions : au moins trois membres, deux parties à la suite, sans pause de plus d'une heure. Une session qui recoupe un créneau est une séance d'entraînement ; un créneau sans partie compte comme séance manquée.",
+    "sessions": "Dernières sessions",
+    "sessionPlanned": "{{date}} · séance d'entraînement · {{count}} parties, {{wins}} V – {{losses}} D",
+    "sessionFree": "{{date}} · session libre · {{count}} parties, {{wins}} V – {{losses}} D",
+    "missed": "{{date}} · séance manquée",
+    "days": {
+      "MONDAY": "lundi",
+      "TUESDAY": "mardi",
+      "WEDNESDAY": "mercredi",
+      "THURSDAY": "jeudi",
+      "FRIDAY": "vendredi",
+      "SATURDAY": "samedi",
+      "SUNDAY": "dimanche"
+    }
   }
 }

@@ -7,7 +7,7 @@ export interface TextFieldProps {
   onChange?: (value: string) => void;
   onEnter?: () => void;
   name?: string;
-  type?: "text" | "password" | "number" | "url";
+  type?: "text" | "password" | "number" | "url" | "time" | "date";
   placeholder?: string;
   helperText?: ReactNode;
   error?: boolean;
@@ -65,7 +65,12 @@ export function TextField({
       multiline={multiline}
       minRows={minRows}
       select={select}
-      slotProps={{ input: { readOnly } }}
+      // Un champ d'heure ou de date affiche toujours son gabarit : l'étiquette ne peut pas s'y superposer.
+      slotProps={{
+        input: { readOnly },
+        inputLabel:
+          type === "time" || type === "date" ? { shrink: true } : undefined,
+      }}
     >
       {children}
     </MuiTextField>

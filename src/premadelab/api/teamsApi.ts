@@ -4,6 +4,8 @@ import type {
   CompositionDto,
   CompositionRequest,
   PublicTeamDto,
+  TeamSessionDto,
+  TrainingSlotDto,
   TeamDto,
   TeamNameRequest,
   TeamSummaryDto,
@@ -140,4 +142,20 @@ export const setMemberHiddenApi = async (
   requestJson<TeamDto>(`/teams/${teamId}/members/${memberId}/hidden`, {
     method: "PUT",
     body: JSON.stringify({ value }),
+  });
+
+export const setTrainingSlotsApi = async (
+  teamId: string,
+  slots: TrainingSlotDto[],
+): Promise<TeamDto> =>
+  requestJson<TeamDto>(`/teams/${teamId}/training-slots`, {
+    method: "PUT",
+    body: JSON.stringify(slots),
+  });
+
+export const getTeamSessionsApi = async (
+  teamId: string,
+): Promise<TeamSessionDto[]> =>
+  requestJson<TeamSessionDto[]>(`/teams/${teamId}/sessions`, {
+    method: "GET",
   });

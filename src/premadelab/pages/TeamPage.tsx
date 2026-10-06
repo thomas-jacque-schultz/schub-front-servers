@@ -25,6 +25,7 @@ import { StatsRefreshButton } from "./stats/StatsRefreshButton";
 import { RosterPanel } from "./RosterPanel";
 import { PublicTeamView } from "./team/PublicTeamView";
 import { TeamSharing } from "./team/TeamSharing";
+import { TrainingCard } from "./team/TrainingCard";
 
 type PanelKey = "roster" | "players" | "team" | "opposition" | "pool" | "draft";
 
@@ -176,7 +177,10 @@ function TeamPage() {
         ariaLabel={t("tabs.ariaLabel")}
       >
         {panel === "roster" && (
-          <RosterPanel team={team} onTeamChange={setTeam} />
+          <Stack spacing={2}>
+            <RosterPanel team={team} onTeamChange={setTeam} />
+            <TrainingCard team={team} onTeamChange={setTeam} />
+          </Stack>
         )}
         {panel === "players" && <PlayersPanel teamId={team.id} />}
         {panel === "team" && (
