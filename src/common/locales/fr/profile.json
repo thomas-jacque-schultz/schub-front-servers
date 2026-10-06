@@ -62,5 +62,12 @@
       "unavailable": "L'avancement de la collecte est indisponible : le connecteur Riot ne répond pas. Ce n'est pas une perte de données, seulement une information manquante."
     },
     "linkAction": "Lier ce compte"
+  },
+  "sessionSummaries": {
+    "title": "Résumés de session",
+    "description": "Le lendemain d'une session avec ton équipe, un message privé de l'application Discord PremadeLab : le bilan, ce qui a marché pour toi, ce qui reste à travailler.",
+    "planned": "Après une séance d'entraînement planifiée",
+    "free": "Après une session libre",
+    "unreachable": "Discord a refusé notre dernier message : tes messages privés sont fermés, ou l’application PremadeLab est bloquée. Autorise les messages privés dans les réglages de confidentialité de Discord, puis vérifie que PremadeLab n’est pas bloquée."
   }
 }

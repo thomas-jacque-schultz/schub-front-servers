@@ -94,3 +94,12 @@ export const verifyRiotAccountApi = async (
 export const claimRosterSlotsApi = async (): Promise<void> => {
   await requestJson<unknown>("/teams/claim", { method: "POST" });
 };
+
+export const updateSessionSummariesApi = async (preferences: {
+  planned: boolean;
+  free: boolean;
+}): Promise<ProfileDto> =>
+  requestJson<ProfileDto>("/me/session-summaries", {
+    method: "PUT",
+    body: JSON.stringify(preferences),
+  });

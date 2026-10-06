@@ -39,6 +39,10 @@ export interface ProfileDto {
   displayNameChosen: boolean;
   role: ProfileRoleDto;
   riot: ProfileRiotDto;
+  /** Résumés de session en MP (Schub#99). */
+  sessionSummaries?: { planned: boolean; free: boolean };
+  /** Discord a refusé un MP : le profil explique comment les ouvrir. */
+  dmUnreachable?: boolean;
 }
 
 export interface DisplayNameRequest {
