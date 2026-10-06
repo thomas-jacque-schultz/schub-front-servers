@@ -13,6 +13,7 @@ interface ViewerFacts {
   viewerCanEditCompositions: boolean;
   /** Page publique en lecture seule (Schub#98). */
   publicPage?: boolean;
+  trainingSlots?: TrainingSlotDto[];
 }
 
 export interface TeamSummaryDto extends ViewerFacts {
@@ -169,4 +170,34 @@ export interface PublicTeamDto {
     games: number;
     wins: number;
   }[];
+}
+
+export type WeekDay =
+  | "MONDAY"
+  | "TUESDAY"
+  | "WEDNESDAY"
+  | "THURSDAY"
+  | "FRIDAY"
+  | "SATURDAY"
+  | "SUNDAY";
+
+/** Un créneau d'entraînement (Schub#102), à l'heure de Paris : récurrent (day) ou ponctuel (date). */
+export interface TrainingSlotDto {
+  id?: string | null;
+  day: WeekDay | null;
+  date: string | null;
+  start: string;
+  end: string;
+}
+
+export interface TeamSessionDto {
+  id: string;
+  day: string;
+  startedAt: string;
+  endedAt: string;
+  memberIds: string[];
+  games: number;
+  wins: number;
+  planned: boolean;
+  missed: boolean;
 }

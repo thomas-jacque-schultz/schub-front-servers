@@ -267,5 +267,35 @@
       "copied": "Link copied",
       "card": "Download the card"
     }
+  },
+  "training": {
+    "title": "Training nights",
+    "none": "No slot: every session stays free.",
+    "recurring": "Every {{day}}, from {{start}} to {{end}}",
+    "once": "On {{date}}, from {{start}} to {{end}}",
+    "remove": "Remove this slot",
+    "kind": "Slot type",
+    "kindRecurring": "Every week",
+    "kindOnce": "Once",
+    "day": "Day",
+    "date": "Date",
+    "start": "Start",
+    "end": "End",
+    "add": "Add",
+    "saveFailed": "Could not save the slots.",
+    "helper": "Paris time. Every night, PremadeLab spots your sessions: at least three members, two games in a row, no break longer than an hour. A session overlapping a slot is a training session; a slot without a game counts as missed.",
+    "sessions": "Latest sessions",
+    "sessionPlanned": "{{date}} · training session · {{count}} games, {{wins}}W – {{losses}}L",
+    "sessionFree": "{{date}} · free session · {{count}} games, {{wins}}W – {{losses}}L",
+    "missed": "{{date}} · missed session",
+    "days": {
+      "MONDAY": "Monday",
+      "TUESDAY": "Tuesday",
+      "WEDNESDAY": "Wednesday",
+      "THURSDAY": "Thursday",
+      "FRIDAY": "Friday",
+      "SATURDAY": "Saturday",
+      "SUNDAY": "Sunday"
+    }
   }
 }
