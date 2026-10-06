@@ -62,5 +62,12 @@
       "unavailable": "Collection progress is unavailable: the Riot connector is not answering. No data is lost, only this information is missing."
     },
     "linkAction": "Link this account"
+  },
+  "sessionSummaries": {
+    "title": "Session summaries",
+    "description": "The day after a session with your team, a direct message from the PremadeLab Discord app: the record, what worked for you, what to work on.",
+    "planned": "After a planned training session",
+    "free": "After a free session",
+    "unreachable": "Discord refused our last message: your direct messages are closed, or the PremadeLab app is blocked. Allow direct messages in your Discord privacy settings, then check that PremadeLab is not blocked."
   }
 }

@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { linkRiotAccountApi, updateDisplayNameApi } from "../api/profileApi";
+import {
+  linkRiotAccountApi,
+  updateDisplayNameApi,
+  updateSessionSummariesApi,
+} from "../api/profileApi";
 import {
   Alert,
   Avatar,
@@ -10,6 +14,7 @@ import {
   PageHeader,
   ProgressBar,
   Stack,
+  Switch,
   Text,
   TextField,
   Toast,
@@ -51,6 +56,7 @@ function ProfilePage() {
         }}
       />
       <RiotAccountCard profile={profile} onChanged={setProfile} />
+      <SessionSummariesCard profile={profile} onChanged={setProfile} />
 
       <Toast
         open={Boolean(toast)}
@@ -58,6 +64,41 @@ function ProfilePage() {
         onClose={() => setToast("")}
       />
     </Stack>
+  );
+}
+
+function SessionSummariesCard({
+  profile,
+  onChanged,
+}: {
+  profile: ProfileDto;
+  onChanged: (profile: ProfileDto) => void;
+}) {
+  const { t } = useTranslation("profile");
+  const prefs = profile.sessionSummaries ?? { planned: true, free: false };
+  const change = (next: { planned: boolean; free: boolean }) =>
+    void updateSessionSummariesApi(next).then(onChanged);
+  return (
+    <Card
+      title={t("sessionSummaries.title")}
+      description={t("sessionSummaries.description")}
+    >
+      <Stack spacing={1}>
+        {profile.dmUnreachable && (
+          <Alert severity="warning">{t("sessionSummaries.unreachable")}</Alert>
+        )}
+        <Switch
+          checked={prefs.planned}
+          onChange={(planned) => change({ ...prefs, planned })}
+          label={t("sessionSummaries.planned")}
+        />
+        <Switch
+          checked={prefs.free}
+          onChange={(free) => change({ ...prefs, free })}
+          label={t("sessionSummaries.free")}
+        />
+      </Stack>
+    </Card>
   );
 }
 
