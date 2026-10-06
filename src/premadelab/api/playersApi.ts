@@ -1,6 +1,7 @@
 import { requestJson } from "../../common";
 import { fenetreParams, type StatsWindow } from "../pages/stats/windows";
 import type {
+  CompanionsDto,
   CollectLane,
   PlayerSuggestionDto,
   SearchedPlayerDto,
@@ -74,3 +75,8 @@ export const searchPlayersApi = async (
       method: "GET",
     },
   );
+
+export const getPlayerCompanionsApi = async (
+  slug: string,
+): Promise<CompanionsDto> =>
+  requestJson<CompanionsDto>(`${base(slug)}/companions`, { method: "GET" });

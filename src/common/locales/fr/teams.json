@@ -26,7 +26,8 @@
     "field": "Nom de l'équipe",
     "helper": "60 caractères au plus.",
     "confirm": "Créer",
-    "failed": "La création a échoué"
+    "failed": "La création a échoué",
+    "proposed": "L'équipe sera créée avec : {{players}}."
   },
   "team": {
     "caption": "Équipe {{name}}",

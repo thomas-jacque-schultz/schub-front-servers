@@ -31,6 +31,7 @@ import {
   getPlayerGameFindingsApi,
 } from "../api/findingsApi";
 import { FindingList } from "../components/Findings";
+import { CompanionsCard } from "../components/CompanionsCard";
 import { JoinCta } from "../components/JoinCta";
 import type { CollectLane, SearchedPlayerDto } from "../types/player";
 import { GamesPanel } from "./stats/GamesPanel";
@@ -285,6 +286,8 @@ function PlayerPage() {
           {t("player.refreshing")}
         </Text>
       )}
+
+      <CompanionsCard slug={slug} riotId={riotId} />
 
       {style && style.length > 0 && (
         <Card title={t("player.style")}>
