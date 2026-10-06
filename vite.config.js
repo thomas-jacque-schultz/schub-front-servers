@@ -94,6 +94,7 @@ export default defineConfig({
         schub: path.join(racineProjet, "index.html"),
         premadelab: path.join(racineProjet, "premadelab.html"),
         premadelabPlayer: path.join(racineProjet, "premadelab-player.html"),
+        premadelabTeam: path.join(racineProjet, "premadelab-team.html"),
       },
     },
   },

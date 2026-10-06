@@ -228,5 +228,44 @@
   },
   "errors": {
     "loadFailed": "Impossible de charger vos équipes"
+  },
+  "public": {
+    "eyebrow": "Premade League of Legends",
+    "subtitle": "{{count}} joueurs",
+    "loading": "Chargement de l'équipe",
+    "metaTitle": "{{name}} — premade League of Legends | PremadeLab",
+    "metaTitleUnknown": "Équipe — PremadeLab",
+    "metaDescription": "{{name}} : {{count}} parties ensemble, {{rate}} de victoires.",
+    "notFound": {
+      "title": "Équipe introuvable",
+      "description": "Cette équipe n'existe pas, ou ses membres ne l'ont pas rendue publique."
+    },
+    "record": {
+      "title": "Bilan",
+      "conclusion": "{{count}} parties ensemble, {{rate}} de victoires."
+    },
+    "month": {
+      "title": "Forme du mois",
+      "conclusion": "{{count}} parties ces 30 derniers jours : {{wins}} V – {{losses}} D.",
+      "none": "Pas de partie ensemble ces 30 derniers jours."
+    },
+    "duo": {
+      "title": "Meilleur duo",
+      "conclusion": "{{a}} et {{b}} gagnent plus ensemble.",
+      "detail": "{{wins}} V – {{losses}} D · {{delta}} par rapport à l'attendu"
+    },
+    "champions": "Champions du groupe",
+    "championGames": "{{count}} parties",
+    "members": "Membres",
+    "hiddenMember": "Membre masqué",
+    "share": {
+      "title": "Page publique",
+      "toggle": "Rendre l'équipe publique",
+      "toggleHelper": "Une page en lecture seule, que tout le monde peut voir et que les moteurs de recherche indexent. Chaque membre peut y masquer son nom.",
+      "hideMe": "Masquer mon nom sur la page publique",
+      "copy": "Copier le lien",
+      "copied": "Lien copié",
+      "card": "Télécharger la carte"
+    }
   }
 }

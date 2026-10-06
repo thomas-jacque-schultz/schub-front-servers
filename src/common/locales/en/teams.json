@@ -228,5 +228,44 @@
   },
   "errors": {
     "loadFailed": "Could not load your teams"
+  },
+  "public": {
+    "eyebrow": "League of Legends premade",
+    "subtitle": "{{count}} players",
+    "loading": "Loading the team",
+    "metaTitle": "{{name}} — League of Legends premade | PremadeLab",
+    "metaTitleUnknown": "Team — PremadeLab",
+    "metaDescription": "{{name}}: {{count}} games together, {{rate}} win rate.",
+    "notFound": {
+      "title": "Team not found",
+      "description": "This team does not exist, or its members have not made it public."
+    },
+    "record": {
+      "title": "Record",
+      "conclusion": "{{count}} games together, {{rate}} win rate."
+    },
+    "month": {
+      "title": "Form of the month",
+      "conclusion": "{{count}} games in the last 30 days: {{wins}}W – {{losses}}L.",
+      "none": "No game together in the last 30 days."
+    },
+    "duo": {
+      "title": "Best duo",
+      "conclusion": "{{a}} and {{b}} win more together.",
+      "detail": "{{wins}}W – {{losses}}L · {{delta}} above expected"
+    },
+    "champions": "The group's champions",
+    "championGames": "{{count}} games",
+    "members": "Members",
+    "hiddenMember": "Hidden member",
+    "share": {
+      "title": "Public page",
+      "toggle": "Make the team public",
+      "toggleHelper": "A read-only page anyone can see and search engines index. Each member can hide their name on it.",
+      "hideMe": "Hide my name on the public page",
+      "copy": "Copy the link",
+      "copied": "Link copied",
+      "card": "Download the card"
+    }
   }
 }
