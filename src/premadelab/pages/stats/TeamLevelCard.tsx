@@ -13,7 +13,7 @@ export function TeamLevelCard({ level }: { level: TeamLevelDto | null }) {
   const format = useStatsFormat();
   if (!level || level.games === 0) {
     return (
-      <Card title={t("teamLevel.title")} description={t("teamLevel.helper")}>
+      <Card title={t("teamLevel.title")} footnote={t("teamLevel.helper")}>
         <Text variant="caption" tone="secondary">
           {t("teamLevel.empty")}
         </Text>
@@ -64,7 +64,7 @@ export function TeamLevelCard({ level }: { level: TeamLevelDto | null }) {
   const aLaFin = Math.max(0, ...level.metrics.map((m) => m.gamesAtEnd));
 
   return (
-    <Card title={t("teamLevel.title")} description={t("teamLevel.helper")}>
+    <Card title={t("teamLevel.title")} footnote={t("teamLevel.helper")}>
       <Stack spacing={1.5}>
         <DataTable<TeamLevelMetricDto>
           dense

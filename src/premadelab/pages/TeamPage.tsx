@@ -168,8 +168,6 @@ function TeamPage() {
 
       {error && <Alert severity="error">{error}</Alert>}
 
-      <TeamSharing team={team} onTeamChange={setTeam} />
-
       <Tabs
         items={tabs}
         value={panel}
@@ -180,6 +178,7 @@ function TeamPage() {
           <Stack spacing={2}>
             <RosterPanel team={team} onTeamChange={setTeam} />
             <TrainingCard team={team} onTeamChange={setTeam} />
+            <TeamSharing team={team} onTeamChange={setTeam} />
           </Stack>
         )}
         {panel === "players" && <PlayersPanel teamId={team.id} />}

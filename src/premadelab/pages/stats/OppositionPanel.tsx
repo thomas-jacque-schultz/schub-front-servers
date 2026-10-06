@@ -160,7 +160,7 @@ export function OppositionPanel({
           <Columns minWidth={300}>
             <Card
               title={t("opposition.ceiling")}
-              description={t("opposition.ceilingHelper", {
+              footnote={t("opposition.ceilingHelper", {
                 count: dto.ceilingMinimumGames,
               })}
             >
@@ -182,7 +182,7 @@ export function OppositionPanel({
             </Card>
             <Card
               title={t("opposition.byGap")}
-              description={t("opposition.byGapHelper")}
+              footnote={t("opposition.byGapHelper")}
             >
               <Stack spacing={0.75}>
                 {dto.byGap.map((record) => (
@@ -197,7 +197,7 @@ export function OppositionPanel({
             </Card>
             <Card
               title={t("opposition.byTier")}
-              description={t("opposition.byTierHelper")}
+              footnote={t("opposition.byTierHelper")}
             >
               <Stack spacing={0.75}>
                 {dto.byEnemyTier.map((record) => (
@@ -214,7 +214,7 @@ export function OppositionPanel({
 
           <Card
             title={t("opposition.byPosition")}
-            description={t("opposition.byPositionHelper")}
+            footnote={t("opposition.byPositionHelper")}
           >
             <DataTable
               columns={colonnes}

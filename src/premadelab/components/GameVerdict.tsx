@@ -1,5 +1,11 @@
 import { useTranslation } from "react-i18next";
-import { InsightCard, type Verdict } from "../../common";
+import {
+  InsightCard,
+  Stack,
+  Text,
+  VerdictMark,
+  type Verdict,
+} from "../../common";
 import type { FindingDto } from "../types/findings";
 import { useFindingSentence } from "./findingSentence";
 import { FindingList } from "./Findings";
@@ -19,19 +25,51 @@ const VERDICT: Record<FindingDto["polarity"], Verdict | null> = {
   NEUTRAL: null,
 };
 
-/** La revue d'une partie commence par une phrase (Schub#94) ; tous les constats et leurs preuves dans le détail. */
-export function GameVerdict({ findings }: { findings: FindingDto[] }) {
+/**
+ * Une phrase d'abord (Schub#88) : le constat le plus sûr en conclusion, quelques autres en clair, tous avec leurs
+ * preuves dans le détail. Sert la revue d'une partie (#94) et le haut de l'onglet Stratégie (#95).
+ */
+export function GameVerdict({
+  findings,
+  title,
+  visible = 0,
+}: {
+  findings: FindingDto[];
+  title?: string;
+  /** Constats écrits en clair sous la conclusion. */
+  visible?: number;
+}) {
   const { t } = useTranslation(["lol", "stats"]);
   const phrase = useFindingSentence();
   const tete = principal(findings);
   if (!tete) {
     return null;
   }
+  const suivants = findings
+    .filter((finding) => finding !== tete && !finding.experimental)
+    .slice(0, visible);
   return (
     <InsightCard
-      title={t("findings.verdict")}
+      title={title ?? t("findings.verdict")}
       conclusion={phrase(tete)}
       verdict={VERDICT[tete.polarity]}
+      visual={
+        suivants.length > 0 ? (
+          <Stack spacing={0.75}>
+            {suivants.map((finding) => (
+              <Stack
+                key={finding.pattern}
+                direction="row"
+                spacing={1}
+                align="center"
+              >
+                <VerdictMark verdict={VERDICT[finding.polarity]} />
+                <Text>{phrase(finding)}</Text>
+              </Stack>
+            ))}
+          </Stack>
+        ) : undefined
+      }
       details={<FindingList findings={findings} />}
       detailsLabel={t("findings.all", { count: findings.length })}
       hideDetailsLabel={t("verdict.hideDetails", { ns: "stats" })}

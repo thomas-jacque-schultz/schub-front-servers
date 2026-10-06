@@ -661,5 +661,17 @@
   },
   "champion": {
     "versusRest": "{{delta}} de victoires par rapport à ses autres champions ({{count}} parties)."
+  },
+  "premadeHighlights": {
+    "title": "Ce qui ressort pour l'équipe",
+    "method": "Chaque joueur comparé à ses propres parties, sur la période, à partir de {{count}} parties d'équipe. Un taux compte en points (dès 5), un ratio en pourcentage de sa valeur (dès 15 %).",
+    "metric": {
+      "winRate": "victoires",
+      "killParticipation": "participation aux kills",
+      "kda": "KDA",
+      "goldPerMinute": "or par minute",
+      "damagePerMinute": "dégâts par minute"
+    },
+    "line": "{{player}} : {{delta}} de {{metric}} en premade"
   }
 }
