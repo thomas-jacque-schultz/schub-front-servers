@@ -4,7 +4,9 @@ import { getChampionPoolApi } from "../api/poolApi";
 import {
   createCompositionApi,
   deleteCompositionApi,
+  getCompositionRecordsApi,
   getCompositionsApi,
+  getDraftAdviceApi,
   updateCompositionApi,
 } from "../api/teamsApi";
 import {
@@ -13,6 +15,7 @@ import {
   Button,
   Card,
   ChampionIcon,
+  ConfidenceBadge,
   ChampionPickButton,
   ChampionSelector,
   DataTable,
@@ -36,6 +39,8 @@ import {
   type GameRole,
   type TeamDto,
 } from "../types/team";
+import type { CompositionRecordDto, DraftAdviceDto } from "../types/draft";
+import { DraftAdviceCards } from "./draft/DraftAdvice";
 import { selectorEntries } from "./pool/catalog";
 
 export interface DraftPanelProps {
@@ -94,6 +99,8 @@ export function DraftPanel({ team }: DraftPanelProps) {
   const [formError, setFormError] = useState<string>("");
 
   const [removed, setRemoved] = useState<CompositionDto | null>(null);
+  const [advice, setAdvice] = useState<DraftAdviceDto | null>(null);
+  const [records, setRecords] = useState<CompositionRecordDto[]>([]);
 
   const canEdit = team.viewerCanEditCompositions;
   const players = playableMembers(team.members);
@@ -102,10 +109,14 @@ export function DraftPanel({ team }: DraftPanelProps) {
   const load = useCallback(async () => {
     setIsLoading(true);
     setError("");
-    const [compos, pool] = await Promise.allSettled([
+    const [compos, pool, conseils, bilans] = await Promise.allSettled([
       getCompositionsApi(team.id),
       getChampionPoolApi(team.id),
+      getDraftAdviceApi(team.id),
+      getCompositionRecordsApi(team.id),
     ]);
+    setAdvice(conseils.status === "fulfilled" ? conseils.value : null);
+    setRecords(bilans.status === "fulfilled" ? bilans.value : []);
     if (compos.status === "fulfilled") {
       setCompositions(compos.value);
     } else {
@@ -363,13 +374,44 @@ export function DraftPanel({ team }: DraftPanelProps) {
     },
   ];
 
+  // Nos meilleurs combos avec les choix déjà faits aux autres postes remontent en tête (Schub#105).
+  const entreesPour = (cible: Selecteur) => {
+    if (cible.kind !== "pick" || !advice) {
+      return entries;
+    }
+    const choisis = slots.filter(
+      (slot) => slot.role !== cible.role && slot.championId && slot.memberId,
+    );
+    const remontes = [...advice.duos, ...advice.trios]
+      .filter((combo) =>
+        combo.picks.some((pick) =>
+          choisis.some(
+            (slot) =>
+              slot.memberId === pick.memberId &&
+              slot.championId === pick.championKey,
+          ),
+        ),
+      )
+      .sort((a, b) => b.lowerBound - a.lowerBound)
+      .flatMap((combo) =>
+        combo.picks
+          .filter((pick) => pick.role === cible.role && pick.championKey)
+          .map((pick) => pick.championKey as string),
+      );
+    const ordre = [...new Set(remontes)];
+    return [
+      ...ordre.flatMap((key) => entries.filter((entry) => entry.key === key)),
+      ...entries.filter((entry) => !ordre.includes(entry.key)),
+    ];
+  };
+
   const selecteurDe = (
     cible: Selecteur,
     selected: string[],
     onChange: (keys: string[]) => void,
   ) => (
     <ChampionSelector
-      entries={entries}
+      entries={entreesPour(cible)}
       mode={cible.kind === "pick" ? "single" : "multiple"}
       selected={selected}
       onChange={onChange}
@@ -381,9 +423,90 @@ export function DraftPanel({ team }: DraftPanelProps) {
     />
   );
 
+  const minutes = (secondes: number) => Math.round(secondes / 60);
+
+  const bilan = (compositionId: string) => {
+    const record = records.find((r) => r.compositionId === compositionId);
+    if (!record) {
+      return null;
+    }
+    if (record.games === 0) {
+      return (
+        <Text variant="caption" tone="secondary">
+          {t("draft.advice.notPlayed")}
+        </Text>
+      );
+    }
+    const victoires = record.matches.filter((m) => m.win);
+    const defaites = record.matches.filter((m) => !m.win);
+    const duree = (liste: typeof record.matches) =>
+      liste.reduce((s, m) => s + m.durationSeconds, 0) / liste.length;
+    const ecart =
+      victoires.length > 0 && defaites.length > 0
+        ? duree(victoires) - duree(defaites)
+        : 0;
+    return (
+      <Stack spacing={0.5}>
+        <Stack direction="row" spacing={1} align="center">
+          <Text>
+            {t("draft.advice.record_composition", {
+              count: record.games,
+              wins: record.wins,
+              losses: record.games - record.wins,
+            })}
+          </Text>
+          {record.lowConfidence && (
+            <ConfidenceBadge
+              label={t("draft.advice.lowConfidence")}
+              title={t("draft.advice.lowConfidenceHint", {
+                count: record.games,
+                threshold: advice?.trioThreshold ?? 4,
+              })}
+            />
+          )}
+        </Stack>
+        {Math.abs(ecart) >= 300 && (
+          <Text variant="caption">
+            {t(ecart > 0 ? "draft.advice.lateWins" : "draft.advice.earlyWins", {
+              wins: minutes(duree(victoires)),
+              losses: minutes(duree(defaites)),
+            })}
+          </Text>
+        )}
+        <Text variant="caption" tone="secondary">
+          {t("draft.advice.compositionMethod")}
+        </Text>
+      </Stack>
+    );
+  };
+
+  const synthese = () => {
+    const jouees = records.filter((r) => r.games > 0);
+    const meilleure = [...jouees].sort(
+      (a, b) => b.wins / b.games - a.wins / a.games || b.games - a.games,
+    )[0];
+    const nom = compositions.find(
+      (c) => c.id === meilleure?.compositionId,
+    )?.name;
+    return meilleure && nom
+      ? t("draft.advice.synthesisBest", {
+          played: jouees.length,
+          total: compositions.length,
+          name: nom,
+          wins: meilleure.wins,
+          losses: meilleure.games - meilleure.wins,
+        })
+      : t("draft.advice.synthesis", {
+          played: jouees.length,
+          total: compositions.length,
+        });
+  };
+
   return (
     <Stack spacing={2}>
       {error && <Alert severity="error">{error}</Alert>}
+
+      {advice && <DraftAdviceCards advice={advice} />}
 
       <Card
         title={t("draft.title")}
@@ -395,6 +518,7 @@ export function DraftPanel({ team }: DraftPanelProps) {
         }
       >
         {isLoading && <ProgressBar label={t("draft.title")} />}
+        {!isLoading && compositions.length > 0 && <Text>{synthese()}</Text>}
         {!isLoading && compositions.length === 0 && (
           <EmptyState
             title={t("draft.emptyTitle")}
@@ -457,6 +581,7 @@ export function DraftPanel({ team }: DraftPanelProps) {
             {composition.notes && (
               <Text tone="secondary">{composition.notes}</Text>
             )}
+            {bilan(composition.id)}
           </Stack>
         </Card>
       ))}
@@ -601,6 +726,35 @@ export function DraftPanel({ team }: DraftPanelProps) {
               <Text variant="caption" tone="secondary">
                 {t("draft.fields.bansHelper")}
               </Text>
+              {advice && advice.bans.length > 0 && (
+                <Stack direction="row" spacing={1} align="center" wrap>
+                  <Text variant="caption">
+                    {t("draft.advice.recommendedBans")}
+                  </Text>
+                  {advice.bans
+                    .filter(
+                      (ban) =>
+                        ban.championKey && !bans.includes(ban.championKey),
+                    )
+                    .map((ban) => (
+                      <Button
+                        key={ban.championId}
+                        size="small"
+                        variant="secondary"
+                        disabled={bans.length >= BANS_MAX}
+                        onClick={() =>
+                          setBans((courants) =>
+                            courants.length < BANS_MAX && ban.championKey
+                              ? [...courants, ban.championKey]
+                              : courants,
+                          )
+                        }
+                      >
+                        {ban.championName ?? ban.championKey}
+                      </Button>
+                    ))}
+                </Stack>
+              )}
               {estOuvert("bans") &&
                 selecteurDe({ kind: "bans" }, bans, setBans)}
             </Stack>
