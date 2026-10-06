@@ -11,6 +11,7 @@ import {
   Stack,
   Tabs,
   TextField,
+  useAuthStore,
   useLocalizedNavigate,
   type TabItem,
 } from "../../common";
@@ -22,6 +23,8 @@ import { TeamGamesPanel } from "./stats/TeamGamesPanel";
 import { DraftPanel } from "./DraftPanel";
 import { StatsRefreshButton } from "./stats/StatsRefreshButton";
 import { RosterPanel } from "./RosterPanel";
+import { PublicTeamView } from "./team/PublicTeamView";
+import { TeamSharing } from "./team/TeamSharing";
 
 type PanelKey = "roster" | "players" | "team" | "opposition" | "pool" | "draft";
 
@@ -29,6 +32,7 @@ function TeamPage() {
   const { t } = useTranslation("teams");
   const { id = "" } = useParams<{ id: string }>();
   const navigate = useLocalizedNavigate();
+  const { connected } = useAuthStore();
 
   const [team, setTeam] = useState<TeamDto | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -41,6 +45,10 @@ function TeamPage() {
   const [isSaving, setIsSaving] = useState<boolean>(false);
 
   const load = useCallback(async () => {
+    if (!connected) {
+      setIsLoading(false);
+      return;
+    }
     setIsLoading(true);
     setError("");
     try {
@@ -52,7 +60,7 @@ function TeamPage() {
     } finally {
       setIsLoading(false);
     }
-  }, [id, t]);
+  }, [id, t, connected]);
 
   useEffect(() => {
     void load();
@@ -99,6 +107,11 @@ function TeamPage() {
     }
   };
 
+  // Un visiteur, ou un connecté qui n'est pas de l'équipe : la page publique, ou la 404 si elle est fermée.
+  if (!connected || (!isLoading && !team)) {
+    return <PublicTeamView teamId={id} />;
+  }
+
   if (isLoading) {
     return (
       <Stack spacing={3}>
@@ -108,14 +121,7 @@ function TeamPage() {
   }
 
   if (!team) {
-    return (
-      <Stack spacing={3}>
-        <Alert severity="error">{error || t("team.loadFailed")}</Alert>
-        <Button variant="secondary" onClick={() => navigate("/teams")}>
-          {t("team.back")}
-        </Button>
-      </Stack>
-    );
+    return null;
   }
 
   const tabs: TabItem[] = [
@@ -160,6 +166,8 @@ function TeamPage() {
       />
 
       {error && <Alert severity="error">{error}</Alert>}
+
+      <TeamSharing team={team} onTeamChange={setTeam} />
 
       <Tabs
         items={tabs}

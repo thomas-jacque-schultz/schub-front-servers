@@ -11,6 +11,8 @@ interface ViewerFacts {
   viewerCanManage: boolean;
   viewerCanEditRoster: boolean;
   viewerCanEditCompositions: boolean;
+  /** Page publique en lecture seule (Schub#98). */
+  publicPage?: boolean;
 }
 
 export interface TeamSummaryDto extends ViewerFacts {
@@ -33,6 +35,7 @@ export interface TeamMemberDto {
   coach: boolean;
   linked: boolean;
   captain: boolean;
+  hiddenOnPublicPage?: boolean;
 }
 
 export interface TeamDto extends ViewerFacts {
@@ -142,3 +145,28 @@ export const versRequete = (
       : "COACH",
   coach: statuts.includes("COACH"),
 });
+
+export interface PublicTeamDto {
+  id: string;
+  name: string;
+  /** riotId absent : le membre a masqué son nom. */
+  members: { riotId: string | null; slug: string | null; roles: GameRole[] }[];
+  games: number;
+  wins: number;
+  monthGames: number;
+  monthWins: number;
+  bestDuo: {
+    a: string;
+    b: string;
+    games: number;
+    wins: number;
+    delta: number;
+  } | null;
+  champions: {
+    championId: number;
+    name: string;
+    iconUrl: string | null;
+    games: number;
+    wins: number;
+  }[];
+}

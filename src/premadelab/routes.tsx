@@ -67,14 +67,8 @@ export function PremadeLabRoutes() {
             </RequireAuth>
           }
         />
-        <Route
-          path="teams/:id"
-          element={
-            <RequireAuth>
-              <TeamPage />
-            </RequireAuth>
-          }
-        />
+        {/* Sans RequireAuth : un visiteur y lit la page publique, si le créateur l'a ouverte (Schub#98). */}
+        <Route path="teams/:id" element={<TeamPage />} />
         <Route
           path="profile"
           element={

@@ -3,6 +3,7 @@ import type {
   AddMemberRequest,
   CompositionDto,
   CompositionRequest,
+  PublicTeamDto,
   TeamDto,
   TeamNameRequest,
   TeamSummaryDto,
@@ -115,4 +116,28 @@ export const getCompositionRecordsApi = async (
 ): Promise<CompositionRecordDto[]> =>
   requestJson<CompositionRecordDto[]>(`/teams/${teamId}/stats/compositions`, {
     method: "GET",
+  });
+
+export const getPublicTeamApi = async (
+  teamId: string,
+): Promise<PublicTeamDto> =>
+  requestJson<PublicTeamDto>(`/public-teams/${teamId}`, { method: "GET" });
+
+export const setTeamPublicApi = async (
+  teamId: string,
+  value: boolean,
+): Promise<TeamDto> =>
+  requestJson<TeamDto>(`/teams/${teamId}/public`, {
+    method: "PUT",
+    body: JSON.stringify({ value }),
+  });
+
+export const setMemberHiddenApi = async (
+  teamId: string,
+  memberId: string,
+  value: boolean,
+): Promise<TeamDto> =>
+  requestJson<TeamDto>(`/teams/${teamId}/members/${memberId}/hidden`, {
+    method: "PUT",
+    body: JSON.stringify({ value }),
   });
