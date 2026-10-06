@@ -169,6 +169,48 @@
     "validation": {
       "nameRequired": "A composition has a name.",
       "championRequired": "Every position carries a champion: that is what makes a composition."
+    },
+    "advice": {
+      "pick": "{{player}} ({{champion}})",
+      "record": "{{wins}}W – {{losses}}L",
+      "reference": "{{rate}} in general",
+      "tryLine": "{{rate}} in general · played {{count}} times together",
+      "lowConfidence": "Insufficient confidence",
+      "lowConfidenceHint": "{{count}} game(s): {{threshold}} are needed to conclude.",
+      "combosTitle": "Combos that work",
+      "combosConclusion": "Your best combo: {{picks}}, {{wins}}W – {{losses}}L.",
+      "combosEmpty": "No game played as a pair in this period yet.",
+      "kind": {
+        "JGL_TOP": "Jungle and top",
+        "JGL_MID": "Jungle and mid",
+        "JGL_SUP": "Jungle and support",
+        "ADC_SUP": "Bot and support",
+        "JGL_MID_SUP": "Jungle, mid and support",
+        "COMPOSITION": "Compositions played"
+      },
+      "avoid": "To avoid",
+      "expected": "{{picks}}: {{rate}} together, {{expected}} each without the other.",
+      "combosMethod": "Over {{games}} games played by two members or more. Ranked by the lower bound of the win rate (Wilson): a 3/3 does not beat a 15/20. Confidence from {{duo}} games for a duo, {{trio}} for a trio. The \"in general\" reference covers every collected game, all players and tiers.",
+      "toTryTitle": "Combos to try",
+      "toTryConclusion": "Try: {{picks}}, which wins {{rate}} in general.",
+      "toTryMethod": "Duos that win in general (at least 30 collected games, more than one win in two), with champions from the team pool or played at least 5 times by the player, that you played together fewer than 3 times.",
+      "bansTitle": "Recommended bans",
+      "bansConclusion": "{{champion}}: you win {{rate}} against them ({{count}} games), they show up one game in {{every}}.",
+      "bansEmpty": "No champion is clearly a problem for you in this period.",
+      "banLine": "{{rate}} against · 1 game in {{every}}",
+      "banAdd": "Ban",
+      "laneThreat": "Against {{champion}}, {{player}} loses {{gold}} gold at 15 min on average ({{count}} games).",
+      "bansMethod": "Ranked by impact: presence × win rate loss against your average, the loss taken at its cautious bound. Over {{games}} games.",
+      "details": "Show details",
+      "hideDetails": "Hide details",
+      "record_composition": "Played {{count}} times: {{wins}}W – {{losses}}L",
+      "notPlayed": "Not played yet",
+      "synthesis": "{{played}} of {{total}} compositions played",
+      "synthesisBest": "{{played}} of {{total}} compositions played, the best: {{name}} ({{wins}}W – {{losses}}L)",
+      "lateWins": "Wins mostly in long games: its wins last {{wins}} min on average, its losses {{losses}} min.",
+      "earlyWins": "Wins mostly fast: its wins last {{wins}} min on average, its losses {{losses}} min.",
+      "compositionMethod": "A game counts when the five champions, or their substitutes, are on our side, whoever played them.",
+      "recommendedBans": "Recommended bans"
     }
   },
   "roles": {

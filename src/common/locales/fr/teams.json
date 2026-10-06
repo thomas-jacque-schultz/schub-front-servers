@@ -169,6 +169,48 @@
     "validation": {
       "nameRequired": "Une composition a un nom.",
       "championRequired": "Chaque poste porte un champion : c'est ce qui fait une composition."
+    },
+    "advice": {
+      "pick": "{{player}} ({{champion}})",
+      "record": "{{wins}} V – {{losses}} D",
+      "reference": "en général {{rate}}",
+      "tryLine": "en général {{rate}} · joué {{count}} fois ensemble",
+      "lowConfidence": "Confiance insuffisante",
+      "lowConfidenceHint": "{{count}} partie(s) : il en faut {{threshold}} pour conclure.",
+      "combosTitle": "Combos qui marchent",
+      "combosConclusion": "Votre meilleur combo : {{picks}}, {{wins}} V – {{losses}} D.",
+      "combosEmpty": "Pas encore de partie jouée à deux sur la période.",
+      "kind": {
+        "JGL_TOP": "Jungle et haut",
+        "JGL_MID": "Jungle et milieu",
+        "JGL_SUP": "Jungle et support",
+        "ADC_SUP": "Bas et support",
+        "JGL_MID_SUP": "Jungle, milieu et support",
+        "COMPOSITION": "Compositions jouées"
+      },
+      "avoid": "À éviter",
+      "expected": "{{picks}} : {{rate}} ensemble, {{expected}} chacun sans l'autre.",
+      "combosMethod": "Sur {{games}} parties jouées à deux membres ou plus. Classement par la borne basse du taux de victoire (Wilson) : un 3/3 ne passe pas devant un 15/20. Confiance à partir de {{duo}} parties pour un duo, {{trio}} pour un trio. Le repère « en général » porte sur toutes les parties collectées, tous joueurs et paliers confondus.",
+      "toTryTitle": "Combos à essayer",
+      "toTryConclusion": "À essayer : {{picks}}, qui gagne {{rate}} en général.",
+      "toTryMethod": "Des duos qui gagnent en général (au moins 30 parties collectées, plus d'une victoire sur deux), avec des champions du pool de l'équipe ou joués au moins 5 fois par le joueur, et que vous avez joués moins de 3 fois ensemble.",
+      "bansTitle": "Bans conseillés",
+      "bansConclusion": "{{champion}} : vous gagnez {{rate}} face à lui ({{count}} parties), il est là une partie sur {{every}}.",
+      "bansEmpty": "Aucun champion ne vous pose nettement problème sur la période.",
+      "banLine": "{{rate}} en face · 1 partie sur {{every}}",
+      "banAdd": "Bannir",
+      "laneThreat": "Contre {{champion}}, {{player}} perd en moyenne {{gold}} d'or à 15 min ({{count}} parties).",
+      "bansMethod": "Classement par impact : présence × perte de taux de victoire par rapport à votre moyenne, la perte prise à sa borne prudente. Sur {{games}} parties.",
+      "details": "Voir le détail",
+      "hideDetails": "Masquer le détail",
+      "record_composition": "Jouée {{count}} fois : {{wins}} V – {{losses}} D",
+      "notPlayed": "Pas encore jouée",
+      "synthesis": "{{played}} compo(s) jouée(s) sur {{total}}",
+      "synthesisBest": "{{played}} compo(s) jouée(s) sur {{total}}, la meilleure : {{name}} ({{wins}} V – {{losses}} D)",
+      "lateWins": "Gagne surtout en partie longue : ses victoires durent {{wins}} min en moyenne, ses défaites {{losses}} min.",
+      "earlyWins": "Gagne surtout vite : ses victoires durent {{wins}} min en moyenne, ses défaites {{losses}} min.",
+      "compositionMethod": "Une partie compte quand les cinq champions, ou leurs remplaçants, sont dans notre camp, quel que soit le joueur.",
+      "recommendedBans": "Bans conseillés"
     }
   },
   "roles": {

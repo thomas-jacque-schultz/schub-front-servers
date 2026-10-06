@@ -8,6 +8,7 @@ import type {
   TeamSummaryDto,
   UpdateMemberRequest,
 } from "../types/team";
+import type { CompositionRecordDto, DraftAdviceDto } from "../types/draft";
 
 export const getMyTeamsApi = async (): Promise<TeamSummaryDto[]> =>
   requestJson<TeamSummaryDto[]>("/teams", { method: "GET" });
@@ -101,3 +102,17 @@ export const deleteCompositionApi = async (
     method: "DELETE",
   });
 };
+
+export const getDraftAdviceApi = async (
+  teamId: string,
+): Promise<DraftAdviceDto> =>
+  requestJson<DraftAdviceDto>(`/teams/${teamId}/stats/draft`, {
+    method: "GET",
+  });
+
+export const getCompositionRecordsApi = async (
+  teamId: string,
+): Promise<CompositionRecordDto[]> =>
+  requestJson<CompositionRecordDto[]>(`/teams/${teamId}/stats/compositions`, {
+    method: "GET",
+  });
