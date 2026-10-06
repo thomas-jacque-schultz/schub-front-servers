@@ -68,7 +68,10 @@ function ComboLine({
             losses: combo.games - combo.wins,
           })}
           {combo.referenceWinRate !== null &&
-            ` · ${t("draft.advice.reference", { rate: taux(combo.referenceWinRate) })}`}
+            ` · ${t("draft.advice.reference", {
+              rate: taux(combo.referenceWinRate),
+              count: combo.referenceGames ?? 0,
+            })}`}
         </Text>
       )}
       {!tryOut && combo.lowConfidence && (
@@ -221,15 +224,20 @@ export function ToTryCard({ advice }: { advice: DraftAdviceDto }) {
       })}
       visual={
         <Stack spacing={0.75}>
-          {advice.toTry.map((combo, index) => (
+          {advice.toTry.slice(0, RETENUS).map((combo, index) => (
             <ComboLine key={index} combo={combo} threshold={0} tryOut />
           ))}
         </Stack>
       }
       details={
-        <Text variant="caption" tone="secondary">
-          {t("draft.advice.toTryMethod")}
-        </Text>
+        <Stack spacing={0.75}>
+          {advice.toTry.slice(RETENUS).map((combo, index) => (
+            <ComboLine key={index} combo={combo} threshold={0} tryOut />
+          ))}
+          <Text variant="caption" tone="secondary">
+            {t("draft.advice.toTryMethod")}
+          </Text>
+        </Stack>
       }
       detailsLabel={t("draft.advice.details")}
       hideDetailsLabel={t("draft.advice.hideDetails")}
