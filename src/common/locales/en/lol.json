@@ -263,8 +263,6 @@
     "games": "Games",
     "empty": "Not enough games in this tier yet.",
     "unavailable": "Today's combos are not computed yet. Try again in a few minutes.",
-    "lowConfidence": "Low confidence",
-    "lowConfidenceHint": "{{count}} games, {{threshold}} needed",
-    "method": "Over {{games}} team sides with a known tier (the average of the recorded ranks). Ranked by the lower bound of the win rate (Wilson): a 3/3 does not beat a 15/20. Confidence from {{threshold}} games. Computed on {{date}}."
+    "method": "Over {{games}} team sides with a known tier (the average of the recorded ranks), at least {{minGames}} games per combo. Ranked by the lower bound of the win rate (Wilson): 74% over 40 games beats 80% over 20. Computed on {{date}}."
   }
 }

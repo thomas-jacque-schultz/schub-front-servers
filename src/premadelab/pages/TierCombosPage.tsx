@@ -4,7 +4,6 @@ import {
   Alert,
   Card,
   ChampionIcon,
-  ConfidenceBadge,
   DataTable,
   EmptyState,
   PageHeader,
@@ -110,7 +109,7 @@ export default function TierCombosPage() {
           <Card
             footnote={t("combos.method", {
               games: data.games,
-              threshold: data.threshold,
+              minGames: data.minGames,
               date: formatDate(new Date(data.computedAt)),
             })}
           >
@@ -126,7 +125,7 @@ export default function TierCombosPage() {
                 {
                   key: "rank",
                   header: "#",
-                  width: 48,
+                  width: 64,
                   render: (ligne) => (
                     <Text mono tone="secondary">
                       {data.combos.indexOf(ligne) + 1}
@@ -162,23 +161,7 @@ export default function TierCombosPage() {
                   width: 120,
                   align: "right",
                   render: (ligne) => (
-                    <Stack
-                      direction="row"
-                      spacing={0.5}
-                      align="center"
-                      justify="end"
-                    >
-                      {ligne.lowConfidence && (
-                        <ConfidenceBadge
-                          label={t("combos.lowConfidence")}
-                          title={t("combos.lowConfidenceHint", {
-                            count: ligne.games,
-                            threshold: data.threshold,
-                          })}
-                        />
-                      )}
-                      <Text mono>{format.taux(ligne.winRate)}</Text>
-                    </Stack>
+                    <Text mono>{format.taux(ligne.winRate)}</Text>
                   ),
                 },
                 {
