@@ -9,7 +9,7 @@ import {
   SelectField,
   Stack,
   Text,
-  TextField,
+  TimeField,
   messageOf,
   useLocaleFormat,
   useRequest,
@@ -170,15 +170,15 @@ export function TrainingCard({
                 }))}
               />
             )}
-            <TextField
+            <TimeField
               label={t("training.start")}
-              type="time"
+              minuteLabel={t("training.minutes")}
               value={debut}
               onChange={setDebut}
             />
-            <TextField
+            <TimeField
               label={t("training.end")}
-              type="time"
+              minuteLabel={t("training.minutes")}
               value={fin}
               onChange={setFin}
             />

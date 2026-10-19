@@ -166,6 +166,8 @@ export type { ClockChartProps, ClockSector } from "./components/ClockChart";
 export { FaceOffTable } from "./components/FaceOffTable";
 export type { FaceOffRow, FaceOffTableProps } from "./components/FaceOffTable";
 export { PieChart } from "./components/PieChart";
+export { TimeField } from "./components/TimeField";
+export type { TimeFieldProps } from "./components/TimeField";
 export { RingGauges } from "./components/RingGauges";
 export type { RingGauge, RingGaugesProps } from "./components/RingGauges";
 export type { PieChartProps, PieSlice } from "./components/PieChart";
