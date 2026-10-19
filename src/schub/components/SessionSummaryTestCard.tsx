@@ -26,6 +26,9 @@ const SEVERITE = {
   FAILED: "error",
 } as const;
 
+// Discord met en gras ce qui est entre ** ; l’aperçu se contente du texte.
+const sansGras = (texte: string) => texte.split("**").join("");
+
 export function SessionSummaryTestCard() {
   const { t } = useTranslation("riot");
   const { formatDate } = useLocaleFormat();
@@ -59,12 +62,12 @@ export function SessionSummaryTestCard() {
   });
   const choisi = jour || options[0]?.value || "";
 
-  const send = async () => {
+  const send = async (envoyer: boolean) => {
     setIsSending(true);
     setResultat(null);
     setSendError("");
     try {
-      setResultat(await sendSessionSummaryTestApi(choisi));
+      setResultat(await sendSessionSummaryTestApi(choisi, envoyer));
     } catch (erreur) {
       setSendError(messageOf(erreur, t("premadelab.summaryTest.failed")));
     } finally {
@@ -95,7 +98,7 @@ export function SessionSummaryTestCard() {
             />
           )}
           {sendError && <Alert severity="error">{sendError}</Alert>}
-          {resultat && !resultat.status && (
+          {resultat && !resultat.embeds && (
             <Alert severity="info">{t("premadelab.summaryTest.empty")}</Alert>
           )}
           {resultat?.status && (
@@ -104,18 +107,46 @@ export function SessionSummaryTestCard() {
               {resultat.detail ? ` (${resultat.detail})` : ""}
             </Alert>
           )}
-          {resultat?.text && (
-            <Frame>
-              {resultat.text.split("\n").map((ligne, i) => (
-                <Text key={i} variant="caption">
-                  {ligne || " "}
-                </Text>
-              ))}
+          {resultat?.embeds?.map((encadre, i) => (
+            <Frame key={i} accent>
+              <Stack spacing={1.5}>
+                <Stack spacing={0.5}>
+                  <Text variant="section">{encadre.title}</Text>
+                  {encadre.description && (
+                    <Text variant="caption" tone="secondary">
+                      {encadre.description}
+                    </Text>
+                  )}
+                </Stack>
+                {encadre.fields.map((champ, j) => (
+                  <Stack key={j} spacing={0.25}>
+                    <Text variant="subtitle">{sansGras(champ.name)}</Text>
+                    {champ.value.split("\n").map((ligne, k) => (
+                      <Text key={k} variant="caption">
+                        {sansGras(ligne)}
+                      </Text>
+                    ))}
+                  </Stack>
+                ))}
+                {encadre.footer && (
+                  <Text variant="caption" tone="secondary">
+                    {encadre.footer.text}
+                  </Text>
+                )}
+              </Stack>
             </Frame>
-          )}
-          <Stack direction="row">
+          ))}
+          <Stack direction="row" spacing={1}>
             <Button
-              onClick={() => void send()}
+              variant="secondary"
+              onClick={() => void send(false)}
+              loading={isSending}
+              disabled={!choisi}
+            >
+              {t("premadelab.summaryTest.preview")}
+            </Button>
+            <Button
+              onClick={() => void send(true)}
               loading={isSending}
               disabled={!choisi}
             >
