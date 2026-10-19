@@ -38,7 +38,7 @@ type Onglet = "overview" | "history" | "behaviour";
 
 function StatsPage() {
   const { t } = useTranslation("stats");
-  const { formatDateTime } = useLocaleFormat();
+  const { formatDate, formatDateTime } = useLocaleFormat();
   const navigate = useLocalizedNavigate();
   const fenetres = useWindowOptions();
   const historyWindow = useHistoryWindow();
@@ -132,10 +132,26 @@ function StatsPage() {
   }
 
   const overall = stats?.overall;
+  const rattrapage = riot?.ingest?.backfill;
 
   return (
     <Stack spacing={3}>
       {header}
+      {rattrapage &&
+        (rattrapage.found === null ||
+          rattrapage.collected < rattrapage.found) && (
+          <Alert severity="info">
+            {rattrapage.found === null
+              ? t("backfill.listing", {
+                  date: formatDate(new Date(rattrapage.since)),
+                })
+              : t("backfill.progress", {
+                  collected: rattrapage.collected,
+                  count: rattrapage.found,
+                  date: formatDate(new Date(rattrapage.since)),
+                })}
+          </Alert>
+        )}
 
       <Stack direction="row" spacing={2} align="center" wrap>
         <SelectField

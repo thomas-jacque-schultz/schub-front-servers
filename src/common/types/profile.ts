@@ -10,6 +10,8 @@ export interface RiotIngestDto {
   pending: number;
   running: number;
   estimatedReadyAt: string | null;
+  /** Rattrapage des derniers mois à la liaison (Schub#113) ; found est nul tant que les parties ne sont pas relevées. */
+  backfill?: { since: string; found: number | null; collected: number } | null;
 }
 
 export interface ProfileRiotDto {

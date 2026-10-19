@@ -693,5 +693,10 @@
       "damagePerMinute": "damage per minute"
     },
     "line": "{{player}}: {{delta}} {{metric}} in premade"
+  },
+  "backfill": {
+    "listing": "Catching up your history since {{date}}: listing your games.",
+    "progress_one": "Catching up your history: {{collected}} game out of {{count}}, back to {{date}}.",
+    "progress_other": "Catching up your history: {{collected}} games out of {{count}}, back to {{date}}."
   }
 }
