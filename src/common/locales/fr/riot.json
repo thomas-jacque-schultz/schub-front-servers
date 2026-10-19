@@ -164,6 +164,23 @@
       "description": "Un visiteur fait collecter vite ce nombre de joueurs inconnus par fenêtre\u202f; au-delà, leurs parties arrivent au compte-gouttes, sans message de refus. Compté par compte, ou par adresse IP sans compte.",
       "players": "Joueurs inconnus par fenêtre",
       "window": "Fenêtre (minutes)"
+    },
+    "summaryTest": {
+      "title": "Tester le résumé de session",
+      "description": "Debug\u00a0: t’envoie en MP le résumé d’une de tes sessions récentes, sans tenir compte de tes préférences ni de l’envoi déjà fait ce jour-là. Le résumé du lendemain n’en est pas affecté.",
+      "session": "Session",
+      "option": "{{date}} · {{team}} · {{count}} session(s), {{wins}}\u00a0V – {{losses}}\u00a0D",
+      "send": "M’envoyer le résumé",
+      "none": "Aucune session récente où tu étais présent.",
+      "empty": "Rien à résumer pour ce jour.",
+      "loadFailed": "Impossible de lire tes sessions récentes",
+      "failed": "L’envoi a échoué",
+      "status": {
+        "SENT": "Message envoyé.",
+        "UNREACHABLE": "Discord refuse le message privé.",
+        "DISABLED": "Envoi impossible.",
+        "FAILED": "Échec de l’envoi."
+      }
     }
   },
   "augur": {
