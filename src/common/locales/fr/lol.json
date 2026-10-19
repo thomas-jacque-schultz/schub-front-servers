@@ -11,6 +11,7 @@
     "teams": "Équipes",
     "footerNote": "PremadeLab — les stats et le théorycraft de ton équipe League of Legends",
     "search": "Rechercher",
+    "combos": "Combos",
     "support": "Soutenir"
   },
   "hero": {
@@ -236,5 +237,34 @@
     "teamAction": "Monter le premade",
     "method": "Les coéquipiers d'au moins {{count}} parties sur le mois en cours, tirées des parties que Riot rend publiques. Pour retirer un nom, écris-nous par le formulaire de contact.",
     "details": "Comment c'est calculé"
+  },
+  "combos": {
+    "eyebrow": "Combos par palier",
+    "title": "Meilleurs {{kind}} en {{tier}}",
+    "subtitle": "Les combos qui gagnent le plus dans les parties collectées, palier par palier. Mis à jour chaque jour.",
+    "description": "Les duos bas, duos jungle + milieu et trios jungle, milieu et support qui gagnent le plus, palier par palier, sur League of Legends.",
+    "unknown": "Cette page de combos n'existe pas.",
+    "tierLabel": "Palier",
+    "kindLabel": "Type de combo",
+    "tier": {
+      "IRON_BRONZE": "Fer–Bronze",
+      "SILVER_GOLD": "Argent–Or",
+      "PLATINUM_EMERALD": "Platine–Émeraude",
+      "DIAMOND": "Diamant",
+      "MASTER_PLUS": "Maître+"
+    },
+    "kind": {
+      "ADC_SUP": "duos bas",
+      "JGL_MID": "duos jungle-milieu",
+      "JGL_MID_SUP": "trios jungle-milieu-support"
+    },
+    "champions": "Champions",
+    "winRate": "Victoires",
+    "games": "Parties",
+    "empty": "Pas encore assez de parties dans ce palier.",
+    "unavailable": "Les combos du jour ne sont pas encore calculés. Réessaie dans quelques minutes.",
+    "lowConfidence": "Confiance insuffisante",
+    "lowConfidenceHint": "{{count}} parties, il en faut {{threshold}}",
+    "method": "Sur {{games}} camps dont le palier est connu (la moyenne des rangs relevés). Classement par la borne basse du taux de victoire (Wilson)\u00a0: un 3/3 ne passe pas devant un 15/20. Confiance à partir de {{threshold}} parties. Calculé le {{date}}."
   }
 }

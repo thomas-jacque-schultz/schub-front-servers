@@ -95,6 +95,7 @@ export default defineConfig({
         premadelab: path.join(racineProjet, "premadelab.html"),
         premadelabPlayer: path.join(racineProjet, "premadelab-player.html"),
         premadelabTeam: path.join(racineProjet, "premadelab-team.html"),
+        premadelabCombos: path.join(racineProjet, "premadelab-combos.html"),
       },
     },
   },

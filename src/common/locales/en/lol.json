@@ -11,6 +11,7 @@
     "teams": "Teams",
     "footerNote": "PremadeLab — stats and theorycraft for your League of Legends team",
     "search": "Search",
+    "combos": "Combos",
     "support": "Support"
   },
   "hero": {
@@ -236,5 +237,34 @@
     "teamAction": "Build the premade",
     "method": "Teammates of at least {{count}} games this month, from the games Riot makes public. To remove a name, write to us through the contact form.",
     "details": "How it is computed"
+  },
+  "combos": {
+    "eyebrow": "Combos by tier",
+    "title": "Best {{kind}} in {{tier}}",
+    "subtitle": "The combos that win most in the games we collected, tier by tier. Updated every day.",
+    "description": "The bot lane duos, jungle + mid duos and jungle, mid and support trios that win most, tier by tier, in League of Legends.",
+    "unknown": "This combo page does not exist.",
+    "tierLabel": "Tier",
+    "kindLabel": "Combo type",
+    "tier": {
+      "IRON_BRONZE": "Iron–Bronze",
+      "SILVER_GOLD": "Silver–Gold",
+      "PLATINUM_EMERALD": "Platinum–Emerald",
+      "DIAMOND": "Diamond",
+      "MASTER_PLUS": "Master+"
+    },
+    "kind": {
+      "ADC_SUP": "bot lane duos",
+      "JGL_MID": "jungle-mid duos",
+      "JGL_MID_SUP": "jungle-mid-support trios"
+    },
+    "champions": "Champions",
+    "winRate": "Wins",
+    "games": "Games",
+    "empty": "Not enough games in this tier yet.",
+    "unavailable": "Today's combos are not computed yet. Try again in a few minutes.",
+    "lowConfidence": "Low confidence",
+    "lowConfidenceHint": "{{count}} games, {{threshold}} needed",
+    "method": "Over {{games}} team sides with a known tier (the average of the recorded ranks). Ranked by the lower bound of the win rate (Wilson): a 3/3 does not beat a 15/20. Confidence from {{threshold}} games. Computed on {{date}}."
   }
 }
