@@ -222,7 +222,9 @@
   "support": {
     "title": "Soutenir PremadeLab",
     "text": "PremadeLab est gratuit et sans publicité. Les serveurs qui collectent et calculent les stats, eux, coûtent\u00a0: un café aide à les garder allumés.",
-    "action": "Offrir un café"
+    "action": "Offrir un café",
+    "reminder": "PremadeLab est gratuit. Si ça t'aide, tu peux soutenir le site.",
+    "reminderAction": "Soutenir PremadeLab"
   },
   "companions": {
     "title": "Joue souvent avec",

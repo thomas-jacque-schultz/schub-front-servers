@@ -33,6 +33,7 @@ import {
 import { FindingList } from "../components/Findings";
 import { CompanionsCard } from "../components/CompanionsCard";
 import { JoinCta } from "../components/JoinCta";
+import { SupportReminder } from "../components/SupportReminder";
 import type { CollectLane, SearchedPlayerDto } from "../types/player";
 import { GamesPanel } from "./stats/GamesPanel";
 import { PlayerStatsView } from "./stats/PlayerStatsView";
@@ -319,6 +320,8 @@ function PlayerPage() {
           </Stack>
         </Card>
       )}
+
+      <SupportReminder />
     </Stack>
   );
 }

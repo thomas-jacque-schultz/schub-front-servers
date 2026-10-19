@@ -110,7 +110,7 @@
       "i1": "aucun mot de passe\u00a0: l'identification passe par Discord\u202f;",
       "i2": "aucun traceur publicitaire, aucune régie, aucun profilage commercial\u202f;",
       "i3": "aucun outil d'analyse tiers. La seule mesure d'audience est un compte, jour par jour, des personnes distinctes qui utilisent la recherche de joueur\u00a0: sans cookie, à partir d'un hachage de l'adresse IP et du navigateur salé chaque jour, qui ne permet de reconnaître personne et s'efface au bout de 31 jours\u202f;",
-      "i4": "aucune donnée de paiement\u00a0: le service est gratuit et ne facture rien."
+      "i4": "aucune donnée de paiement\u00a0: le service est gratuit. Un don se fait sur Buy Me a Coffee, qui le traite selon sa propre politique\u202f; le site ne voit aucune donnée de paiement."
     },
     "cookies": {
       "title": "Cookies et stockage du navigateur",

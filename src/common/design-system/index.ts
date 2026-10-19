@@ -10,6 +10,7 @@ export type {
   AppShellAccount,
   AppShellAccountItem,
   AppShellFooterLink,
+  AppShellHeaderLink,
   AppShellMenu,
   AppShellNavEntry,
   AppShellNavItem,

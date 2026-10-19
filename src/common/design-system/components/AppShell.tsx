@@ -19,6 +19,7 @@ import { useIdentity } from "../identity";
 import { backdropSxOf, gridOverlaySxOf } from "../theme";
 import { Avatar } from "./Avatar";
 import { Button } from "./Button";
+import { Icon, type IconName } from "./Icon";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { ThemeModeToggle } from "./ThemeModeToggle";
 
@@ -57,6 +58,13 @@ export interface AppShellFooterLink {
   accent?: boolean;
 }
 
+/** Un lien externe en haut à droite, sur toutes les pages ; l'icône seule sur mobile. */
+export interface AppShellHeaderLink {
+  label: string;
+  href: string;
+  icon: IconName;
+}
+
 export interface AppShellAccountItem extends AppShellNavItem {
   /** Une autre application, sur un autre domaine : lien absolu, qui remplace `to`. */
   href?: string;
@@ -91,6 +99,7 @@ export interface AppShellProps {
   onSignOut: () => void;
   footerLinks: AppShellFooterLink[];
   footerNote?: ReactNode;
+  headerLink?: AppShellHeaderLink;
   maxWidth?: "md" | "lg" | "xl";
   /** Illustration fixe sous le contenu, entrevue entre les panneaux. */
   backdropArt?: string;
@@ -112,6 +121,7 @@ export function AppShell({
   onSignOut,
   footerLinks,
   footerNote,
+  headerLink,
   maxWidth = "lg",
   backdropArt,
   children,
@@ -290,6 +300,32 @@ export function AppShell({
             </MuiStack>
 
             <MuiStack direction="row" spacing={1} alignItems="center">
+              {headerLink && (
+                <>
+                  <MuiButton
+                    href={headerLink.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    size="small"
+                    variant="outlined"
+                    startIcon={<Icon name={headerLink.icon} size="small" />}
+                    sx={{ display: { xs: "none", sm: "inline-flex" } }}
+                  >
+                    {headerLink.label}
+                  </MuiButton>
+                  <IconButton
+                    href={headerLink.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={headerLink.label}
+                    color="primary"
+                    size="small"
+                    sx={{ display: { xs: "inline-flex", sm: "none" } }}
+                  >
+                    <Icon name={headerLink.icon} size="small" />
+                  </IconButton>
+                </>
+              )}
               <ThemeModeToggle size="small" />
               <LanguageSwitcher />
               {!connected && (
