@@ -691,5 +691,10 @@
       "damagePerMinute": "dégâts par minute"
     },
     "line": "{{player}}\u00a0: {{delta}} de {{metric}} en premade"
+  },
+  "backfill": {
+    "listing": "Rattrapage de ton historique depuis le {{date}}\u00a0: relevé des parties en cours.",
+    "progress_one": "Rattrapage de ton historique\u00a0: {{collected}} partie sur {{count}}, jusqu'au {{date}}.",
+    "progress_other": "Rattrapage de ton historique\u00a0: {{collected}} parties sur {{count}}, jusqu'au {{date}}."
   }
 }
