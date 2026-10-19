@@ -263,8 +263,6 @@
     "games": "Parties",
     "empty": "Pas encore assez de parties dans ce palier.",
     "unavailable": "Les combos du jour ne sont pas encore calculés. Réessaie dans quelques minutes.",
-    "lowConfidence": "Confiance insuffisante",
-    "lowConfidenceHint": "{{count}} parties, il en faut {{threshold}}",
-    "method": "Sur {{games}} camps dont le palier est connu (la moyenne des rangs relevés). Classement par la borne basse du taux de victoire (Wilson)\u00a0: un 3/3 ne passe pas devant un 15/20. Confiance à partir de {{threshold}} parties. Calculé le {{date}}."
+    "method": "Sur {{games}} camps dont le palier est connu (la moyenne des rangs relevés), au moins {{minGames}} parties par combo. Classement par la borne basse du taux de victoire (Wilson)\u00a0: 74\u00a0% sur 40 parties passe devant 80\u00a0% sur 20. Calculé le {{date}}."
   }
 }

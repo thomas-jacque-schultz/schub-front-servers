@@ -20,7 +20,6 @@ export interface TierComboLineDto {
   wins: number;
   winRate: number;
   lowerBound: number;
-  lowConfidence: boolean;
 }
 
 export interface TierCombosDto {
@@ -31,6 +30,7 @@ export interface TierCombosDto {
   computedAt: string;
   /** Camps comptés dans ce groupe de paliers. */
   games: number;
-  threshold: number;
+  /** Plancher de parties d'un combo affiché. */
+  minGames: number;
   combos: TierComboLineDto[];
 }
