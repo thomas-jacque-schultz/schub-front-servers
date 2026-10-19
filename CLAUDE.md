@@ -167,6 +167,7 @@ décide de ce qu'elle reçoit.
 | `/presentation` | la vitrine du produit, lue par l'examinateur de Riot | **public**, à la demande |
 | `/stats` | Mes stats — ses parties, ses champions, ses postes | connecté, à la demande |
 | `/teams`, `/teams/:id` | les équipes | connecté, à la demande |
+| `/combos/:palier/:type` | les combos qui gagnent par palier (Schub#112), lus par les robots en SSI comme les profils | **public**, à la demande |
 
 **Communes** : `/profile` (connecté), `/login`, `/terms`, `/privacy` (publiques).
 

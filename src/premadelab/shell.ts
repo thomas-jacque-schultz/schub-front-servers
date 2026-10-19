@@ -39,6 +39,12 @@ export const usePremadeLabShell = (route: string) => {
     });
   }
   navItems.push({
+    key: "combos",
+    label: t("shell.combos"),
+    to: localize("/combos/silver-gold/adc-sup"),
+    current: route.startsWith("/combos"),
+  });
+  navItems.push({
     key: "presentation",
     label: t("shell.presentation"),
     to: localize("/presentation"),

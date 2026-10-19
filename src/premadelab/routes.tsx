@@ -20,6 +20,7 @@ const StatsPage = lazyPage(() => import("./pages/StatsPage"));
 const TeamPage = lazyPage(() => import("./pages/TeamPage"));
 const TeamsPage = lazyPage(() => import("./pages/TeamsPage"));
 const ContactPage = lazyPage(() => import("./pages/ContactPage"));
+const TierCombosPage = lazyPage(() => import("./pages/TierCombosPage"));
 
 // Le bouton « Crée ton premade » ramène sur les équipes une fois la connexion faite.
 function AfterLogin() {
@@ -50,6 +51,13 @@ export function PremadeLabRoutes() {
         <Route path="players/:riotId" element={<PlayerPage />} />
         {/* Publique : l'examinateur du portail développeur Riot doit voir le produit sans compte. */}
         <Route path="presentation" element={<PresentationPage />} />
+        <Route
+          path="combos"
+          element={
+            <LocalizedNavigate to="/combos/silver-gold/adc-sup" replace />
+          }
+        />
+        <Route path="combos/:tier/:kind" element={<TierCombosPage />} />
         <Route
           path="stats"
           element={

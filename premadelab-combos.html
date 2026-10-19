@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Pages de combos par palier (Schub#112) : nginx y insère le head et le corps produits par le BFF (SSI). -->
+    <!-- Repli si le BFF ne répond pas : sans lui, nginx insérerait sa page d'erreur. React complète au montage. -->
+    <!--# block name="head_repli" --><title>PremadeLab</title><!--# endblock -->
+    <!--# block name="vide" --><!--# endblock -->
+    <!--# include virtual="/api/seo/combos/${combo_tier}/${combo_kind}/head?lang=${combo_lang}" stub="head_repli" -->
+    <link rel="icon" href="/premadelab/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/premadelab/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="icon" href="/premadelab/favicon-48.png" type="image/png" sizes="48x48" />
+    <link rel="apple-touch-icon" href="/premadelab/apple-touch-icon.png" />
+    <meta name="theme-color" content="#0A060C" />
+  </head>
+  <body style="background: #0a060c">
+    <div id="root"><!--# include virtual="/api/seo/combos/${combo_tier}/${combo_kind}/body?lang=${combo_lang}" stub="vide" --></div>
+    <script type="module" src="/src/premadelab/main.tsx"></script>
+  </body>
+</html>
