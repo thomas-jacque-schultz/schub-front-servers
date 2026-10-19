@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Schub — la boîte à outils de la communauté Miam",
-    "description": "Schub rassemble les outils de la communauté Discord Miam : des serveurs de jeu démarrés à la demande, et de quoi faire vivre une équipe League of Legends — effectif, statistiques, pool de champions, préparation de draft."
+    "description": "Schub rassemble les outils de la communauté Discord Miam\u00a0: des serveurs de jeu démarrés à la demande, et de quoi faire vivre une équipe League of Legends — effectif, statistiques, pool de champions, préparation de draft."
   },
   "hero": {
     "eyebrow": "Schub",
@@ -10,9 +10,9 @@
   },
   "about": {
     "title": "Ce que fait Schub",
-    "community": "Schub est la boîte à outils de la communauté Discord Miam : ses serveurs de jeu, ses équipes League of Legends, et les outils qui s'y ajoutent au fil des besoins. Il s'ouvrira peut-être un jour à un cercle plus large, une fois les outils éprouvés et stabilisés — pour l'instant, il est fait pour nous.",
-    "servers": "Les serveurs de jeu sont hébergés à la maison et pilotés depuis le site ou depuis Discord : leur état est visible en direct, et démarrer ou arrêter est un bouton. Les redirections de ports s'ouvrent et se referment toutes seules avec le serveur.",
-    "lol": "Côté League of Legends, PremadeLab lit tes parties par l’API de Riot : statistiques personnelles et d’équipe, pool de champions par poste, préparateur de draft et débrief d’après-match. Il vit sur son propre site, ouvert à tous.",
+    "community": "Schub est la boîte à outils de la communauté Discord Miam\u00a0: ses serveurs de jeu, ses équipes League of Legends, et les outils qui s'y ajoutent au fil des besoins. Il s'ouvrira peut-être un jour à un cercle plus large, une fois les outils éprouvés et stabilisés — pour l'instant, il est fait pour nous.",
+    "servers": "Les serveurs de jeu sont hébergés à la maison et pilotés depuis le site ou depuis Discord\u00a0: leur état est visible en direct, et démarrer ou arrêter est un bouton. Les redirections de ports s'ouvrent et se referment toutes seules avec le serveur.",
+    "lol": "Côté League of Legends, PremadeLab lit tes parties par l’API de Riot\u00a0: statistiques personnelles et d’équipe, pool de champions par poste, préparateur de draft et débrief d’après-match. Il vit sur son propre site, ouvert à tous.",
     "identity": "L'identité passe par Discord. Il n'y a pas de mot de passe à retenir, et les droits suivent le rôle.",
     "ctaServers": "Voir l'état des serveurs",
     "ctaLol": "Ouvrir PremadeLab"
@@ -20,7 +20,7 @@
   "onboarding": {
     "title": "Pour être opérationnel",
     "intro": "Ce qu'il reste à faire sur ton profil. Chaque ligne y mène.",
-    "allDone": "Ton profil est complet : rien ne manque.",
+    "allDone": "Ton profil est complet\u00a0: rien ne manque.",
     "loading": "Lecture de ton profil…",
     "unavailable": "Ton profil n'a pas pu être lu. La liste des actions reste incomplète tant que c'est le cas.",
     "signedOutTitle": "Connecte-toi pour utiliser {{product}}",

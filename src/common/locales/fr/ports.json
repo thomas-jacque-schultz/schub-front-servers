@@ -27,7 +27,7 @@
   },
   "row": {
     "deleteStatic": "Supprimer cette règle permanente",
-    "deleteFromServer": "Dérivée du serveur « {{label}} » : elle se retire depuis sa fiche.",
+    "deleteFromServer": "Dérivée du serveur «\u00a0{{label}}\u00a0»\u00a0: elle se retire depuis sa fiche.",
     "deleteManual": "Créée à la main sur la box. L'application l'observe sans y toucher."
   },
   "dialog": {
@@ -42,23 +42,23 @@
       "lanPort": "Port LAN"
     },
     "helpers": {
-      "label": "Identifie la règle sur le routeur, par exemple « wireguard »",
+      "label": "Identifie la règle sur le routeur, par exemple «\u00a0wireguard\u00a0»",
       "optional": "facultatif",
       "lanIp": "vide = valeur par défaut du serveur",
       "lanPort": "vide = identique au port public"
     }
   },
   "feedback": {
-    "labelRequired": "Le libellé est obligatoire : c'est lui qui identifie la règle sur le routeur.",
-    "wanPortInvalid": "Port WAN invalide : attendu entre 1 et 65535.",
+    "labelRequired": "Le libellé est obligatoire\u00a0: c'est lui qui identifie la règle sur le routeur.",
+    "wanPortInvalid": "Port WAN invalide\u00a0: attendu entre 1 et 65535.",
     "created": "Règle ajoutée. Le routeur est réaligné dans la foulée.",
     "createFailed": "L'ajout a échoué",
-    "deleted": "Règle « {{label}} » supprimée.",
+    "deleted": "Règle «\u00a0{{label}}\u00a0» supprimée.",
     "deleteFailed": "La suppression a échoué"
   },
   "errors": {
     "loadFailed": "Impossible de lire les redirections",
     "routerUnavailableTitle": "État du routeur indisponible",
-    "routerUnavailable": "Les redirections actives du routeur n'ont pas pu être lues. Les règles permanentes ci-dessous restent enregistrées ; elles seront réappliquées dès que le routeur répondra."
+    "routerUnavailable": "Les redirections actives du routeur n'ont pas pu être lues. Les règles permanentes ci-dessous restent enregistrées\u202f; elles seront réappliquées dès que le routeur répondra."
   }
 }

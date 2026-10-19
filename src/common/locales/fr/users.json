@@ -19,15 +19,15 @@
   "changeRole": "Changer le rôle",
   "dialog": {
     "title": "Changer le rôle de {{user}}",
-    "description": "Le rôle décide de ce que ce compte peut faire partout. Être administrateur d'un serveur reste à part : ça ne donne que le démarrage et l'arrêt de ce serveur-là.",
+    "description": "Le rôle décide de ce que ce compte peut faire partout. Être administrateur d'un serveur reste à part\u00a0: ça ne donne que le démarrage et l'arrêt de ce serveur-là.",
     "field": "Rôle attribuable",
     "confirm": "Attribuer",
     "helper": "Seuls les rôles dont les permissions sont incluses dans les vôtres sont proposés."
   },
   "guards": {
-    "self": "On ne modifie pas son propre rôle : se rétrograder soi-même est l'erreur la plus facile à commettre et la plus pénible à réparer.",
-    "lastOwner": "Le dernier {{role}} ne peut pas être rétrogradé : plus personne ne pourrait administrer les rôles.",
-    "noAssignableRole": "Aucun rôle ne vous est attribuable : on n'attribue qu'un rôle dont les permissions sont incluses dans les siennes."
+    "self": "On ne modifie pas son propre rôle\u00a0: se rétrograder soi-même est l'erreur la plus facile à commettre et la plus pénible à réparer.",
+    "lastOwner": "Le dernier {{role}} ne peut pas être rétrogradé\u00a0: plus personne ne pourrait administrer les rôles.",
+    "noAssignableRole": "Aucun rôle ne vous est attribuable\u00a0: on n'attribue qu'un rôle dont les permissions sont incluses dans les siennes."
   },
   "feedback": {
     "roleAssigned": "Rôle de {{user}} changé en {{role}}.",
@@ -41,7 +41,7 @@
     "description": "Un compte est actif s'il a utilisé le site dans la période. La recherche de joueur compte des personnes distinctes par jour, sans cookie ni identifiant conservé.",
     "total": "Comptes",
     "riotLinked": "Avec un compte Riot",
-    "active24h": "Actifs sur 24 h",
+    "active24h": "Actifs sur 24\u00a0h",
     "active7d": "Actifs sur 7 jours",
     "active30d": "Actifs sur 30 jours",
     "byApp": "Schub {{schub}} · PremadeLab {{premadelab}}",

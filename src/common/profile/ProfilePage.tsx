@@ -122,7 +122,7 @@ function DiscordCard({ profile }: { profile: ProfileDto }) {
           </Text>
         </Stack>
         <Chip
-          label={`${t("discord.role")} : ${profile.role.name}`}
+          label={`${t("discord.role")}\u00a0: ${profile.role.name}`}
           tone="secondary"
           variant="outline"
         />

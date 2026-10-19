@@ -21,12 +21,12 @@
       "view": "Voir",
       "edit": "Modifier"
     },
-    "referents": "Référents : {{names}}",
+    "referents": "Référents\u00a0: {{names}}",
     "commandFailure": {
-      "start": "Le dernier démarrage a échoué : {{message}}",
-      "stop": "Le dernier arrêt a échoué : {{message}}"
+      "start": "Le dernier démarrage a échoué\u00a0: {{message}}",
+      "stop": "Le dernier arrêt a échoué\u00a0: {{message}}"
     },
-    "memberView": "Vue membre : les détails d'infrastructure sont masqués pour ton rôle.",
+    "memberView": "Vue membre\u00a0: les détails d'infrastructure sont masqués pour ton rôle.",
     "editMode": "Modifier les serveurs",
     "editDone": "Terminer"
   },
@@ -55,23 +55,23 @@
     },
     "helpers": {
       "deploymentEmpty": "Lie la fiche à son déploiement et en dérive l'identifiant",
-      "deploymentLinked": "Identifiant de la fiche : {{slug}}",
-      "ports": "Ouverts pendant que le serveur tourne, refermés à l'arrêt. Format : tcp:25565, udp:8211",
+      "deploymentLinked": "Identifiant de la fiche\u00a0: {{slug}}",
+      "ports": "Ouverts pendant que le serveur tourne, refermés à l'arrêt. Format\u00a0: tcp:25565, udp:8211",
       "referents": "Modérateurs qui peuvent démarrer et arrêter ce serveur. Les administrateurs le peuvent toujours.",
       "noModerator": "Aucun compte n'a le rôle modérateur."
     },
     "errors": {
       "required": "Ce champ est obligatoire.",
-      "deploymentRequired": "Choisissez le déploiement à lier : il renseigne le slug.",
+      "deploymentRequired": "Choisissez le déploiement à lier\u00a0: il renseigne le slug.",
       "playersMax": "Le nombre de joueurs doit être un entier positif.",
-      "portsFormat": "Format attendu : tcp:25565, udp:8211:8211",
+      "portsFormat": "Format attendu\u00a0: tcp:25565, udp:8211:8211",
       "notFound": "Serveur introuvable.",
       "loadFailed": "Erreur de chargement.",
       "saveFailed": "Impossible d'enregistrer la fiche serveur.",
       "deploymentsUnavailable": "Impossible de lire les déploiements",
-      "deploymentsCatalog": "Catalogue des déploiements indisponible : {{reason}}. La fiche reste modifiable, mais le déploiement ne peut pas être choisi dans la liste."
+      "deploymentsCatalog": "Catalogue des déploiements indisponible\u00a0: {{reason}}. La fiche reste modifiable, mais le déploiement ne peut pas être choisi dans la liste."
     },
-    "infraHidden": "Ports et déploiement ne sont visibles qu'avec la permission d'infrastructure. Ton rôle ne la porte pas : ces champs restent vides et ne seront pas enregistrés."
+    "infraHidden": "Ports et déploiement ne sont visibles qu'avec la permission d'infrastructure. Ton rôle ne la porte pas\u00a0: ces champs restent vides et ne seront pas enregistrés."
   },
   "errors": {
     "loadFailed": "Impossible de charger les serveurs",

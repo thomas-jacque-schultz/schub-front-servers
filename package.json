@@ -9,7 +9,7 @@
     "prerender": "vite build --ssr src/premadelab/prerender.tsx --outDir dist-ssr && node scripts/prerender.mjs",
     "preview": "vite preview --host",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint . && node scripts/premadelab-sans-schub.mjs",
+    "lint": "eslint . && node scripts/premadelab-sans-schub.mjs && node scripts/typographie-fr.mjs",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write \"src/**/*.{ts,tsx,json}\" \".storybook/**/*.{ts,tsx}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,json}\" \".storybook/**/*.{ts,tsx}\"",

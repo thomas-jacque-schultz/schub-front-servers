@@ -1,7 +1,7 @@
 {
   "eyebrow": "Administration",
   "title": "Rôles",
-  "subtitle": "Un rôle est un nom et un jeu de permissions. Les permissions, elles, sont figées dans le code : une permission que rien ne lit serait une promesse fausse.",
+  "subtitle": "Un rôle est un nom et un jeu de permissions. Les permissions, elles, sont figées dans le code\u00a0: une permission que rien ne lit serait une promesse fausse.",
   "table": {
     "caption": "Matrice des rôles et des permissions",
     "permission": "Permission"
@@ -11,7 +11,7 @@
   "systemRole": "rôle système",
   "reserved": {
     "title": "Deux choses n'apparaissent pas dans cette matrice",
-    "body": "La permission d'administration des rôles n'est attribuable à personne, et le rôle {{role}} n'est pas modifiable. C'est ce qui rend « réservé à moi seul » vrai par construction plutôt que par convention."
+    "body": "La permission d'administration des rôles n'est attribuable à personne, et le rôle {{role}} n'est pas modifiable. C'est ce qui rend «\u00a0réservé à moi seul\u00a0» vrai par construction plutôt que par convention."
   },
   "actions": {
     "save": "Enregistrer la matrice",

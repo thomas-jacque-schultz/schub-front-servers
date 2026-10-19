@@ -29,13 +29,13 @@
     "rejected": "Le message a été refusé. Si vous êtes bien humain, réessayez en rechargeant la page.",
     "failed": "L'envoi a échoué. Réessayez, ou passez par Discord depuis le pied de page."
   },
-  "privacy": "Aucune adresse e-mail n'est publiée sur ce site : ce formulaire existe pour la remplacer.",
+  "privacy": "Aucune adresse e-mail n'est publiée sur ce site\u00a0: ce formulaire existe pour la remplacer.",
   "feedback": {
     "title": "Feedback",
-    "intro": "Une question, une proposition, un bug rencontré sur {{product}} : le message m'arrive directement sur Discord."
+    "intro": "Une question, une proposition, un bug rencontré sur {{product}}\u00a0: le message m'arrive directement sur Discord."
   },
   "feedbackMeta": {
     "title": "Contact — {{product}}",
-    "description": "Une question, une proposition, un bug : écrire à l'éditeur de {{product}}."
+    "description": "Une question, une proposition, un bug\u00a0: écrire à l'éditeur de {{product}}."
   }
 }
