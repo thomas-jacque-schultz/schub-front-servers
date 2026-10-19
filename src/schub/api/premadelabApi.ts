@@ -28,8 +28,17 @@ export interface RecentSessionDto {
   planned: boolean;
 }
 
+export interface DiscordEmbedDto {
+  title: string;
+  url?: string;
+  description?: string;
+  color?: number;
+  fields: { name: string; value: string; inline: boolean }[];
+  footer?: { text: string };
+}
+
 export interface SessionSummaryTestDto {
-  text?: string;
+  embeds?: DiscordEmbedDto[];
   status?: "SENT" | "UNREACHABLE" | "DISABLED" | "FAILED";
   detail?: string | null;
 }
@@ -43,8 +52,9 @@ export const getSessionSummaryTestSessionsApi = async (): Promise<
 
 export const sendSessionSummaryTestApi = async (
   day: string,
+  send: boolean,
 ): Promise<SessionSummaryTestDto> =>
   requestJson<SessionSummaryTestDto>(
-    `/premadelab/session-summary-test?day=${encodeURIComponent(day)}`,
+    `/premadelab/session-summary-test?day=${encodeURIComponent(day)}&send=${send}`,
     { method: "POST" },
   );
