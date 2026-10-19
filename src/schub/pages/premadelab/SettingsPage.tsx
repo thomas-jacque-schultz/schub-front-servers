@@ -18,6 +18,7 @@ import {
 } from "../../api/premadelabApi";
 import { HistoryWindowCard } from "../../components/HistoryWindowCard";
 import { SeoCreatorsCard } from "../../components/SeoCreatorsCard";
+import { SessionSummaryTestCard } from "../../components/SessionSummaryTestCard";
 
 function SettingsPage() {
   const { t } = useTranslation("riot");
@@ -118,6 +119,7 @@ function SettingsPage() {
       )}
       <HistoryWindowCard />
       <SeoCreatorsCard />
+      {can("INGEST_MANAGE") && <SessionSummaryTestCard />}
     </Stack>
   );
 }

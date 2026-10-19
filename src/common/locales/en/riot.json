@@ -164,6 +164,23 @@
       "description": "A visitor gets this many unknown players collected quickly per window; beyond that, their games trickle in, with no refusal message. Counted per account, or per IP address without an account.",
       "players": "Unknown players per window",
       "window": "Window (minutes)"
+    },
+    "summaryTest": {
+      "title": "Test the session summary",
+      "description": "Debug: sends you a DM with the summary of one of your recent sessions, ignoring your preferences and any summary already sent that day. The next-day summary is not affected.",
+      "session": "Session",
+      "option": "{{date}} · {{team}} · {{count}} session(s), {{wins}} W – {{losses}} L",
+      "send": "Send me the summary",
+      "none": "No recent session you attended.",
+      "empty": "Nothing to summarise for that day.",
+      "loadFailed": "Could not load your recent sessions",
+      "failed": "Sending failed",
+      "status": {
+        "SENT": "Message sent.",
+        "UNREACHABLE": "Discord refuses the direct message.",
+        "DISABLED": "Cannot send.",
+        "FAILED": "Sending failed."
+      }
     }
   },
   "augur": {
