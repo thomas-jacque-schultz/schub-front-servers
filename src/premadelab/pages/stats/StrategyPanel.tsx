@@ -6,7 +6,6 @@ import { GameVerdict } from "../../components/GameVerdict";
 import { OppositionPanel } from "./OppositionPanel";
 import { SynergyPanel } from "./SynergyPanel";
 import { TeamEarlyGame } from "./TeamEarlyGame";
-import { TeamLevelCard } from "./TeamLevelCard";
 import { TeamSummary } from "./TeamSummary";
 import { useTeamOpposition } from "./useTeamOpposition";
 import { useWindowOptions } from "./windows";
@@ -57,8 +56,10 @@ export function StrategyPanel({ teamId }: StrategyPanelProps) {
       {opposition.dto?.state === "STATISTIQUES_CONNUES" && (
         <Stack spacing={2}>
           <Text variant="section">{t("strategy.early")}</Text>
-          <TeamEarlyGame early={opposition.dto.early} />
-          <TeamLevelCard level={opposition.dto.level} />
+          <TeamEarlyGame
+            early={opposition.dto.early}
+            level={opposition.dto.level}
+          />
         </Stack>
       )}
     </Stack>

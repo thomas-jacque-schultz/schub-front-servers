@@ -94,6 +94,9 @@
     "byPatch": "By patch",
     "presence": "Presence",
     "presenceHelper": "Share of team games each player took part in.",
+    "presenceRings": "Share of team games, and wins when present",
+    "bySideMap": "Green: above your average ({{average}}), red: below",
+    "trendReferenceTeam": "Line: your average over the period ({{value}})",
     "games": "Team games",
     "rankings": "Rankings",
     "rankingDetail": "{{wins}} wins, {{losses}} losses",
@@ -114,8 +117,7 @@
     "gamesHint": "{{total}} found, {{undecided}} of them without a shared result",
     "averageDuration": "Average duration",
     "truncated": "Only the most recent games are shown: the totals cover what is visible here.",
-    "presenceValue": "{{rate}} · {{count}} game(s)",
-    "memberWinRate": "{{rate}} wins when present"
+    "presenceDetail": "{{count}} games · {{rate}}"
   },
   "games": {
     "date": "Date",
@@ -447,7 +449,18 @@
         "BOT": "Bottom"
       },
       "deathsPerGame": "Gank deaths / game",
-      "presenceWith": "Presence with each"
+      "presenceWith": "Presence with each",
+      "presenceLine": "{{player}} {{rate}} · {{count}}",
+      "goldTitle": "Gold at 15 min, then at the end",
+      "goldFigure": "{{at15}} → {{atEnd}}",
+      "goldNoEnd": "The end of game is not recorded yet.",
+      "goldWorse": "The gap widens after 15 min: your late game costs more than your early game.",
+      "goldBetter": "You claw back after 15 min: the late game carries you.",
+      "goldSteady": "The gap barely moves after 15 min.",
+      "lanersConclusion": "You hold {{held}} of the ganks you face. Most exposed: {{player}}, {{deaths}} death per game to a gank.",
+      "junglerConclusion_one": "{{player}}: {{made}} gank per game, {{decisive}} decisive, over {{count}} game.",
+      "junglerConclusion_other": "{{player}}: {{made}} ganks per game, {{decisive}} decisive, over {{count}} games.",
+      "sideConclusion": "You win {{rate}} when your jungler plays {{side}} ({{count}} games)."
     }
   },
   "family": {
@@ -552,6 +565,11 @@
   "synergy": {
     "title": "Duos and resources",
     "duos": "Roster duos",
+    "noNotable": "No pair wins 5 points more or less than expected together.",
+    "pair": "{{a}} + {{b}}",
+    "pairUp": "Stronger together",
+    "pairDown": "Weaker together",
+    "pairRates": "Together: {{together}} · apart: {{apart}}",
     "duosHint": "Each cell, over team games: on top, each player’s win rate in games without the other (average of both); below, the pair’s win rate when playing together, green 5 points above or more, orange 5 points below or more, grey in between; then the number of games together. “Apart: —”: they never play without each other. Pairs with at least {{count}} games together.",
     "games_one": "{{count}} game",
     "games_other": "{{count}} games",

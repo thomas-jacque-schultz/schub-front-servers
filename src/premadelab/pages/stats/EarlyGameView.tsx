@@ -201,6 +201,7 @@ function Presence({
   return (
     <LaneMap
       label={title}
+      align="center"
       highlight={
         presence.strongSide === "BALANCED" ? null : presence.strongSide
       }

@@ -175,6 +175,13 @@
       "pick": "{{player}} ({{champion}})",
       "record": "{{wins}} V – {{losses}} D",
       "reference": "en général {{rate}} sur {{count}}",
+      "referenceShort": "{{rate}} sur {{count}}",
+      "columns": {
+        "champions": "Champions",
+        "players": "Joueurs",
+        "record": "Bilan",
+        "reference": "En général"
+      },
       "tryLine": "en général {{rate}} · joué {{count}} fois ensemble",
       "lowConfidence": "Confiance insuffisante",
       "lowConfidenceHint": "{{count}} partie(s)\u00a0: il en faut {{threshold}} pour conclure.",
@@ -279,6 +286,9 @@
     "kindOnce": "Une seule fois",
     "day": "Jour",
     "date": "Date",
+    "today": "Aujourd'hui, {{date}}",
+    "tomorrow": "Demain, {{date}}",
+    "dayDate": "{{day}} {{date}}",
     "start": "Début",
     "end": "Fin",
     "add": "Ajouter",

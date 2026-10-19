@@ -166,6 +166,8 @@ export type { ClockChartProps, ClockSector } from "./components/ClockChart";
 export { FaceOffTable } from "./components/FaceOffTable";
 export type { FaceOffRow, FaceOffTableProps } from "./components/FaceOffTable";
 export { PieChart } from "./components/PieChart";
+export { RingGauges } from "./components/RingGauges";
+export type { RingGauge, RingGaugesProps } from "./components/RingGauges";
 export type { PieChartProps, PieSlice } from "./components/PieChart";
 export { QuadStatTile } from "./components/QuadStatTile";
 export type { QuadCorner, QuadStatTileProps } from "./components/QuadStatTile";

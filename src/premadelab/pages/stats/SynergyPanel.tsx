@@ -66,6 +66,7 @@ export function SynergyPanel({ teamId, periode }: SynergyPanelProps) {
   const { t } = useTranslation("stats");
   const format = useStatsFormat();
   const [chiffresOuverts, setChiffresOuverts] = useState(false);
+  const [matriceOuverte, setMatriceOuverte] = useState(false);
   const { data, error, isLoading } = useRequest(
     `synergy/${teamId}/${periode}`,
     () => getTeamSynergyApi(teamId, periode),
@@ -122,9 +123,9 @@ export function SynergyPanel({ teamId, periode }: SynergyPanelProps) {
       </Stack>
     );
   };
-  const notables = data.duos.filter(
-    (d) => d.delta !== null && Math.abs(d.delta) >= NOTABLE,
-  );
+  const notables = data.duos
+    .filter((d) => d.delta !== null && Math.abs(d.delta) >= NOTABLE)
+    .sort((x, y) => y.delta! - x.delta!);
 
   const classement = [...data.resources].sort(
     (x, y) => (ecartDOr(y) ?? -Infinity) - (ecartDOr(x) ?? -Infinity),
@@ -142,32 +143,41 @@ export function SynergyPanel({ teamId, periode }: SynergyPanelProps) {
           </Text>
         ) : (
           <Stack spacing={2}>
-            <DataTable<Ligne>
-              dense
-              caption={t("synergy.duos")}
-              emptyTitle={t("synergy.noDuo", { count: data.minimumDuoGames })}
-              rows={membres}
-              rowKey={(m) => m.id}
-              columns={[
-                { key: "nom", header: "", render: (m) => <Text>{m.nom}</Text> },
-                ...membres.map((colonne) => ({
-                  key: colonne.id,
-                  header: colonne.nom,
-                  align: "center" as const,
-                  render: (ligne: Ligne) => cellule(ligne, colonne),
-                })),
-              ]}
-            />
-            {notables.map((d) => (
-              <Text key={`${d.memberA}-${d.memberB}`}>
-                {t(d.delta! > 0 ? "synergy.duoUp" : "synergy.duoDown", {
-                  a: d.nameA,
-                  b: d.nameB,
-                  points: Math.round(Math.abs(d.delta!) * 100),
-                  count: d.games,
-                })}
-              </Text>
-            ))}
+            {notables.length === 0 ? (
+              <Text tone="secondary">{t("synergy.noNotable")}</Text>
+            ) : (
+              <Columns minWidth={220} count={Math.min(notables.length, 4)}>
+                {notables.map((d) => (
+                  <DuoNotable key={`${d.memberA}-${d.memberB}`} duo={d} />
+                ))}
+              </Columns>
+            )}
+            <Disclosure
+              title={t("synergy.exact")}
+              open={matriceOuverte}
+              onToggle={setMatriceOuverte}
+            >
+              <DataTable<Ligne>
+                dense
+                caption={t("synergy.duos")}
+                emptyTitle={t("synergy.noDuo", { count: data.minimumDuoGames })}
+                rows={membres}
+                rowKey={(m) => m.id}
+                columns={[
+                  {
+                    key: "nom",
+                    header: "",
+                    render: (m) => <Text>{m.nom}</Text>,
+                  },
+                  ...membres.map((colonne) => ({
+                    key: colonne.id,
+                    header: colonne.nom,
+                    align: "center" as const,
+                    render: (ligne: Ligne) => cellule(ligne, colonne),
+                  })),
+                ]}
+              />
+            </Disclosure>
           </Stack>
         )}
       </Card>
@@ -247,6 +257,45 @@ export function SynergyPanel({ teamId, periode }: SynergyPanelProps) {
         )}
       </Card>
     </Stack>
+  );
+}
+
+function DuoNotable({ duo }: { duo: DuoDto }) {
+  const { t } = useTranslation("stats");
+  const format = useStatsFormat();
+  const hausse = duo.delta! > 0;
+  return (
+    <Frame>
+      <Stack spacing={1}>
+        <Stack direction="row" spacing={1} align="center" justify="between">
+          <Text variant="subtitle">
+            {t("synergy.pair", { a: duo.nameA, b: duo.nameB })}
+          </Text>
+          <Text variant="caption" mono>
+            {format.ecartEnPoints(duo.delta)}
+          </Text>
+        </Stack>
+        <Chip
+          size="small"
+          tone={ton(duo.delta)}
+          label={t(hausse ? "synergy.pairUp" : "synergy.pairDown")}
+        />
+        <Text variant="caption">
+          {t(hausse ? "synergy.duoUp" : "synergy.duoDown", {
+            a: duo.nameA,
+            b: duo.nameB,
+            points: Math.round(Math.abs(duo.delta!) * 100),
+            count: duo.games,
+          })}
+        </Text>
+        <Text variant="caption" tone="secondary">
+          {t("synergy.pairRates", {
+            together: format.taux(duo.winRate),
+            apart: format.taux(duo.expected),
+          })}
+        </Text>
+      </Stack>
+    </Frame>
   );
 }
 

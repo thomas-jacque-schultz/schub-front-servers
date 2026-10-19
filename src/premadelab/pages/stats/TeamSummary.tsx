@@ -5,11 +5,14 @@ import {
   Alert,
   Card,
   Columns,
+  LaneMap,
   MeterBar,
   ProgressBar,
+  RingGauges,
   Stack,
   StatTile,
   Text,
+  TrendChart,
 } from "../../../common";
 import type { TeamGamesStatsDto, TeamRecordDto } from "../../types/stats";
 import { StatsStateNote } from "./StatsStateNote";
@@ -93,7 +96,7 @@ export function TeamSummary({ teamId, periode }: TeamSummaryProps) {
             </Card>
           </Columns>
 
-          <Columns minWidth={260}>
+          <Columns minWidth={260} count={4}>
             <Card
               title={t("section.byQueue")}
               footnote={t("section.byQueueHelper")}
@@ -101,63 +104,102 @@ export function TeamSummary({ teamId, periode }: TeamSummaryProps) {
               <QueuePie queues={stats.byQueue} label={t("queuePie.label")} />
             </Card>
             <Card title={t("section.bySide")}>
-              <Stack spacing={0.75}>
-                {stats.bySide.map((record) => (
-                  <MeterBar
-                    key={record.key}
-                    label={format.cote(Number(record.key))}
-                    value={record.winRate}
-                    valueLabel={libelle(record, format)}
-                  />
-                ))}
-              </Stack>
+              <LaneMap
+                align="center"
+                label={t("section.bySideMap", {
+                  average: format.taux(stats.overall.winRate),
+                })}
+                zones={stats.bySide.map((record) => ({
+                  key: Number(record.key) === 200 ? "RED" : "BLUE",
+                  label: format.cote(Number(record.key)),
+                  value: record.games,
+                  valueLabel: libelle(record, format),
+                  ...teinte(record, stats.overall.winRate),
+                }))}
+              />
             </Card>
             <Card title={t("section.byPatch")}>
-              <Stack spacing={0.75}>
-                {stats.byPatch.map((record) => (
-                  <MeterBar
-                    key={record.key}
-                    label={record.key || format.absent}
-                    value={record.winRate}
-                    valueLabel={libelle(record, format)}
-                  />
-                ))}
-              </Stack>
+              <TrendChart
+                label={t("metric.winRate")}
+                valueHeader={t("metric.winRate")}
+                emptyLabel={t("section.noPatch")}
+                scaleMax={1}
+                reference={stats.overall.winRate}
+                referenceLabel={t("section.trendReferenceTeam", {
+                  value: format.taux(stats.overall.winRate),
+                })}
+                points={[...stats.byPatch]
+                  .sort((a, b) =>
+                    a.key.localeCompare(b.key, undefined, { numeric: true }),
+                  )
+                  .map((record) => ({
+                    key: record.key,
+                    label: record.key || format.absent,
+                    value: record.winRate,
+                    valueLabel: format.taux(record.winRate),
+                    muted: record.games < PARTIES_LISIBLES,
+                    title: `${record.key} · ${libelle(record, format)}`,
+                  }))}
+              />
+            </Card>
+            <Card
+              title={t("section.presence")}
+              footnote={t("section.presenceHelper")}
+            >
+              <RingGauges
+                label={t("section.presenceRings")}
+                items={stats.presence.map((member) => ({
+                  key: member.memberId,
+                  label: member.displayName ?? member.memberId,
+                  value: member.presenceRate,
+                  valueLabel: format.taux(member.presenceRate),
+                  detail:
+                    member.state !== "STATISTIQUES_CONNUES"
+                      ? t(`state.${member.state}.short`)
+                      : t("team.presenceDetail", {
+                          count: member.games,
+                          rate: format.taux(member.winRate),
+                        }),
+                }))}
+              />
             </Card>
           </Columns>
-
-          <Card
-            title={t("section.presence")}
-            footnote={t("section.presenceHelper")}
-          >
-            <Stack spacing={0.75}>
-              {stats.presence.map((member) => (
-                <Stack key={member.memberId} spacing={0}>
-                  <MeterBar
-                    label={member.displayName ?? member.memberId}
-                    value={member.presenceRate}
-                    valueLabel={t("team.presenceValue", {
-                      rate: format.taux(member.presenceRate),
-                      count: member.games,
-                    })}
-                    hint={
-                      member.games > 0
-                        ? t("team.memberWinRate", {
-                            rate: format.taux(member.winRate),
-                          })
-                        : undefined
-                    }
-                  />
-                  <StatsStateNote state={member.state} />
-                </Stack>
-              ))}
-            </Stack>
-          </Card>
         </>
       )}
     </Stack>
   );
 }
+
+// En deçà, un côté reste gris : trop peu de parties pour le comparer.
+const PARTIES_LISIBLES = 3;
+const ECART_NEUTRE = 0.03;
+const ECART_SATURE = 0.2;
+
+const teinte = (
+  record: TeamRecordDto,
+  moyenne: number | null,
+): {
+  tone: "positive" | "negative" | "neutral" | "empty";
+  strength: number;
+} => {
+  if (
+    record.games < PARTIES_LISIBLES ||
+    record.winRate === null ||
+    moyenne === null
+  ) {
+    return { tone: "empty", strength: 0 };
+  }
+  const ecart = record.winRate - moyenne;
+  return {
+    tone:
+      ecart > ECART_NEUTRE
+        ? "positive"
+        : ecart < -ECART_NEUTRE
+          ? "negative"
+          : "neutral",
+    strength: Math.abs(ecart) / ECART_SATURE,
+  };
+};
 
 const libelle = (
   record: TeamRecordDto,

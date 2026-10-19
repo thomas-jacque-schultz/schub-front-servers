@@ -175,6 +175,13 @@
       "pick": "{{player}} ({{champion}})",
       "record": "{{wins}}W – {{losses}}L",
       "reference": "{{rate}} in general over {{count}}",
+      "referenceShort": "{{rate}} over {{count}}",
+      "columns": {
+        "champions": "Champions",
+        "players": "Players",
+        "record": "Record",
+        "reference": "In general"
+      },
       "tryLine": "{{rate}} in general · played {{count}} times together",
       "lowConfidence": "Insufficient confidence",
       "lowConfidenceHint": "{{count}} game(s): {{threshold}} are needed to conclude.",
@@ -279,6 +286,9 @@
     "kindOnce": "Once",
     "day": "Day",
     "date": "Date",
+    "today": "Today, {{date}}",
+    "tomorrow": "Tomorrow, {{date}}",
+    "dayDate": "{{day}} {{date}}",
     "start": "Start",
     "end": "End",
     "add": "Add",

@@ -62,3 +62,28 @@ export const AuDessusEtEnDessousDeLaMoyenne: Story = {
     ],
   },
 };
+
+export const ParCote: Story = {
+  args: {
+    label: "Taux de victoire par côté de la carte",
+    highlight: "BLUE",
+    zones: [
+      {
+        key: "BLUE",
+        label: "Bleu",
+        value: 30,
+        valueLabel: "57 % · 30",
+        tone: "positive",
+        strength: 0.45,
+      },
+      {
+        key: "RED",
+        label: "Rouge",
+        value: 30,
+        valueLabel: "40 % · 30",
+        tone: "negative",
+        strength: 0.4,
+      },
+    ],
+  },
+};
