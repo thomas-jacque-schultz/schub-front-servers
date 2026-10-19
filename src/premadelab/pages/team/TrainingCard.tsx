@@ -34,6 +34,23 @@ const JOURS: WeekDay[] = [
 
 const heure = (valeur: string) => valeur.slice(0, 5);
 
+// Une séance ponctuelle se prévoit sur les trois semaines à venir : une liste se lit mieux qu'un calendrier.
+const JOURS_PROPOSES = 21;
+
+const isoLocal = (jour: Date) =>
+  [
+    jour.getFullYear(),
+    String(jour.getMonth() + 1).padStart(2, "0"),
+    String(jour.getDate()).padStart(2, "0"),
+  ].join("-");
+
+const prochainsJours = () =>
+  Array.from({ length: JOURS_PROPOSES }, (_, decalage) => {
+    const jour = new Date();
+    jour.setDate(jour.getDate() + decalage);
+    return { decalage, jour };
+  });
+
 /** Soirées d'entraînement (Schub#102) et sessions détectées par l'observateur (Schub#103). */
 export function TrainingCard({
   team,
@@ -49,7 +66,7 @@ export function TrainingCard({
   );
   const [genre, setGenre] = useState<"recurring" | "once">("recurring");
   const [jour, setJour] = useState<WeekDay>("THURSDAY");
-  const [date, setDate] = useState<string>("");
+  const [date, setDate] = useState<string>(() => isoLocal(new Date()));
   const [debut, setDebut] = useState<string>("21:00");
   const [fin, setFin] = useState<string>("23:00");
   const [erreur, setErreur] = useState<string>("");
@@ -133,11 +150,24 @@ export function TrainingCard({
                 }))}
               />
             ) : (
-              <TextField
+              <SelectField
                 label={t("training.date")}
-                type="date"
                 value={date}
                 onChange={setDate}
+                options={prochainsJours().map(({ decalage, jour }) => ({
+                  value: isoLocal(jour),
+                  label:
+                    decalage === 0
+                      ? t("training.today", { date: formatDate(jour) })
+                      : decalage === 1
+                        ? t("training.tomorrow", { date: formatDate(jour) })
+                        : t("training.dayDate", {
+                            day: t(
+                              `training.days.${JOURS[(jour.getDay() + 6) % 7]}`,
+                            ),
+                            date: formatDate(jour),
+                          }),
+                }))}
               />
             )}
             <TextField

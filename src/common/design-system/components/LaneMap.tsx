@@ -3,7 +3,8 @@ import Typography from "@mui/material/Typography";
 import { useChartScheme } from "./useChartScheme";
 import { typographyTokens } from "../tokens";
 
-export type LaneMapKey = "TOP" | "MID" | "BOT";
+/** Trois couloirs, ou les deux moitiés de la carte de part et d'autre de la rivière : bleu en bas à gauche, rouge en haut à droite. */
+export type LaneMapKey = "TOP" | "MID" | "BOT" | "BLUE" | "RED";
 
 export interface LaneMapZone {
   key: LaneMapKey;
@@ -20,6 +21,7 @@ export interface LaneMapProps {
   zones: LaneMapZone[];
   /** La zone à cerner : le côté fort, par exemple. */
   highlight?: LaneMapKey | null;
+  align?: "start" | "center";
 }
 
 // La Faille vue d'en haut : le couloir du haut longe les bords gauche et haut, celui du bas les bords bas et
@@ -37,6 +39,8 @@ const ZONES: Record<
     angle: -45,
   },
   BOT: { points: "100,22 100,100 22,100", x: 74, y: 74, angle: 0 },
+  BLUE: { points: "0,0 100,100 0,100", x: 32, y: 70, angle: 0 },
+  RED: { points: "0,0 100,0 100,100", x: 68, y: 32, angle: 0 },
 };
 
 const COULOIRS = [
@@ -45,7 +49,12 @@ const COULOIRS = [
   "M 8 92 L 92 92 L 92 8",
 ];
 
-export function LaneMap({ label, zones, highlight }: LaneMapProps) {
+export function LaneMap({
+  label,
+  zones,
+  highlight,
+  align = "start",
+}: LaneMapProps) {
   const { chart: couleurs, palette } = useChartScheme();
   const total = zones.reduce(
     (somme, zone) => somme + Math.max(0, zone.value),
@@ -57,7 +66,7 @@ export function LaneMap({ label, zones, highlight }: LaneMapProps) {
         variant="caption"
         color="text.secondary"
         component="p"
-        sx={{ mb: 0.5 }}
+        sx={{ mb: 0.5, textAlign: align === "center" ? "center" : undefined }}
       >
         {label}
       </Typography>
@@ -70,6 +79,7 @@ export function LaneMap({ label, zones, highlight }: LaneMapProps) {
           display: "block",
           width: "100%",
           maxWidth: 200,
+          mx: align === "center" ? "auto" : undefined,
           aspectRatio: "1",
           overflow: "visible",
         }}

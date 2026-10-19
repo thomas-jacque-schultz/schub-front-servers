@@ -94,6 +94,9 @@
     "byPatch": "Par patch",
     "presence": "Présence",
     "presenceHelper": "Part des parties d'équipe où chacun était là.",
+    "presenceRings": "Part des parties d'équipe, et victoires quand il est là",
+    "bySideMap": "Vert\u00a0: au-dessus de votre moyenne ({{average}}), rouge\u00a0: en dessous",
+    "trendReferenceTeam": "Trait\u00a0: votre moyenne sur la période ({{value}})",
     "games": "Les parties d'équipe",
     "rankings": "Classements",
     "rankingDetail": "{{wins}} victoires, {{losses}} défaites",
@@ -114,8 +117,7 @@
     "gamesHint": "{{total}} trouvée(s), dont {{undecided}} sans résultat commun",
     "averageDuration": "Durée moyenne",
     "truncated": "Seules les parties les plus récentes sont affichées\u00a0: les totaux portent sur ce qui est visible ici.",
-    "presenceValue": "{{rate}} · {{count}} partie(s)",
-    "memberWinRate": "{{rate}} de victoires quand il est là"
+    "presenceDetail": "{{count}} parties · {{rate}}"
   },
   "games": {
     "date": "Date",
@@ -447,7 +449,18 @@
         "BOT": "Bas"
       },
       "deathsPerGame": "Morts sur gank / partie",
-      "presenceWith": "Présence auprès de chacun"
+      "presenceWith": "Présence auprès de chacun",
+      "presenceLine": "{{player}} {{rate}} · {{count}}",
+      "goldTitle": "Or à 15\u00a0min, puis à la fin",
+      "goldFigure": "{{at15}} → {{atEnd}}",
+      "goldNoEnd": "La fin de partie n'est pas encore relevée.",
+      "goldWorse": "L'écart se creuse après 15\u00a0min\u202f: le late vous coûte plus que l'early.",
+      "goldBetter": "Vous reprenez du terrain après 15\u00a0min\u202f: le late vous porte.",
+      "goldSteady": "L'écart bouge peu après 15\u00a0min.",
+      "lanersConclusion": "Vous tenez {{held}} des ganks subis. Le plus exposé\u00a0: {{player}}, {{deaths}} mort par partie sur un gank.",
+      "junglerConclusion_one": "{{player}}\u00a0: {{made}} gank par partie, {{decisive}} décisifs, sur {{count}} partie.",
+      "junglerConclusion_other": "{{player}}\u00a0: {{made}} ganks par partie, {{decisive}} décisifs, sur {{count}} parties.",
+      "sideConclusion": "Vous gagnez {{rate}} quand votre jungler joue {{side}} ({{count}} parties)."
     }
   },
   "family": {
@@ -552,6 +565,11 @@
   "synergy": {
     "title": "Duos et ressources",
     "duos": "Les duos de l’effectif",
+    "noNotable": "Aucune paire ne gagne 5 points de plus ou de moins qu’attendu ensemble.",
+    "pair": "{{a}} + {{b}}",
+    "pairUp": "Plus fort ensemble",
+    "pairDown": "Moins bien ensemble",
+    "pairRates": "Ensemble\u00a0: {{together}} · séparés\u00a0: {{apart}}",
     "duosHint": "Chaque case, sur les parties d’équipe\u00a0: en haut, le taux de victoire de chacun dans les parties où l’autre n’est pas là (moyenne des deux)\u202f; en dessous, celui de la paire quand elle joue ensemble, en vert à 5 points au-dessus ou plus, en orange à 5 points en dessous ou plus, en gris entre les deux\u202f; puis le nombre de parties ensemble. «\u00a0Séparés\u00a0: —\u00a0»\u00a0: ils ne jouent jamais l’un sans l’autre. Paires à {{count}} parties ensemble au moins.",
     "games_one": "{{count}} partie",
     "games_other": "{{count}} parties",

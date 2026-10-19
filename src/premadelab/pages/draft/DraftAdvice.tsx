@@ -1,12 +1,14 @@
-import type { ReactNode } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Button,
   ChampionIcon,
   Columns,
   ConfidenceBadge,
+  DataTable,
   InsightCard,
   Stack,
+  Tabs,
   Text,
   useLocaleFormat,
 } from "../../../common";
@@ -87,12 +89,107 @@ function ComboLine({
   );
 }
 
-function Section({ title, children }: { title: string; children: ReactNode }) {
+const cleDe = (combo: ComboDto) =>
+  combo.picks.map((pick) => `${pick.memberId}:${pick.championId}`).join("|");
+
+/** Les combos d'un onglet, en colonnes alignées : champions, joueurs, bilan, repère général. */
+function ComboTable({
+  combos,
+  threshold,
+}: {
+  combos: ComboDto[];
+  threshold: (combo: ComboDto) => number;
+}) {
+  const { t } = useTranslation("teams");
+  const taux = useStatsFormat().taux;
+  const icones = Math.max(...combos.map((combo) => combo.picks.length));
   return (
-    <Stack spacing={0.75}>
-      <Text variant="overline">{title}</Text>
-      {children}
-    </Stack>
+    <DataTable<ComboDto>
+      dense
+      layout="fixed"
+      minWidth={560}
+      caption={t("draft.advice.combosTitle")}
+      emptyTitle={t("draft.advice.combosEmpty")}
+      rows={combos}
+      rowKey={cleDe}
+      columns={[
+        {
+          key: "champions",
+          header: t("draft.advice.columns.champions"),
+          width: 30 * icones + 8,
+          render: (combo) => (
+            <Stack direction="row" spacing={0.5}>
+              {combo.picks.map((pick, index) => (
+                <ChampionIcon
+                  key={`${pick.championId}-${index}`}
+                  size="small"
+                  name={pick.championName ?? String(pick.championId)}
+                  src={pick.iconUrl}
+                />
+              ))}
+            </Stack>
+          ),
+        },
+        {
+          key: "players",
+          header: t("draft.advice.columns.players"),
+          render: (combo) => (
+            <Stack spacing={0}>
+              {combo.picks.map((pick, index) => (
+                <Text key={index} variant="caption">
+                  {t("draft.advice.pick", {
+                    player: pick.memberName ?? "—",
+                    champion: pick.championName ?? pick.championKey ?? "",
+                  })}
+                </Text>
+              ))}
+            </Stack>
+          ),
+        },
+        {
+          key: "record",
+          header: t("draft.advice.columns.record"),
+          width: 110,
+          align: "right",
+          render: (combo) => (
+            <Stack direction="row" spacing={0.5} align="center" justify="end">
+              {combo.lowConfidence && (
+                <ConfidenceBadge
+                  label={t("draft.advice.lowConfidence")}
+                  title={t("draft.advice.lowConfidenceHint", {
+                    count: combo.games,
+                    threshold: threshold(combo),
+                  })}
+                />
+              )}
+              <Text mono>
+                {t("draft.advice.record", {
+                  wins: combo.wins,
+                  losses: combo.games - combo.wins,
+                })}
+              </Text>
+            </Stack>
+          ),
+        },
+        {
+          key: "reference",
+          header: t("draft.advice.columns.reference"),
+          width: 140,
+          align: "right",
+          render: (combo) =>
+            combo.referenceWinRate === null ? (
+              <Text tone="disabled">—</Text>
+            ) : (
+              <Text variant="caption" tone="secondary" mono>
+                {t("draft.advice.referenceShort", {
+                  rate: taux(combo.referenceWinRate),
+                  count: combo.referenceGames ?? 0,
+                })}
+              </Text>
+            ),
+        },
+      ]}
+    />
   );
 }
 
@@ -112,6 +209,28 @@ export function CombosCard({ advice }: { advice: DraftAdviceDto }) {
       .slice(0, RETENUS),
   })).filter((section) => section.combos.length > 0);
   const trios = advice.trios.slice(0, RETENUS);
+  const onglets = [
+    ...sections.map((section) => ({
+      key: section.kind,
+      label: t(`draft.advice.kind.${section.kind}`),
+      combos: section.combos,
+    })),
+    {
+      key: "JGL_MID_SUP",
+      label: t("draft.advice.kind.JGL_MID_SUP"),
+      combos: trios,
+    },
+    {
+      key: "COMPOSITION",
+      label: t("draft.advice.kind.COMPOSITION"),
+      combos: advice.compositions,
+    },
+    { key: "AVOID", label: t("draft.advice.avoid"), combos: advice.avoid },
+  ].filter((onglet) => onglet.combos.length > 0);
+  const [choisi, setChoisi] = useState<string | null>(null);
+  const courant = onglets.find((onglet) => onglet.key === choisi) ?? onglets[0];
+  const seuilDe = (combo: ComboDto) =>
+    courant?.key === "COMPOSITION" ? advice.trioThreshold : seuil(combo);
 
   return (
     <InsightCard
@@ -134,43 +253,20 @@ export function CombosCard({ advice }: { advice: DraftAdviceDto }) {
       }
       verdict={meilleur ? "above" : undefined}
       visual={
-        <Stack spacing={2}>
-          {sections.map((section) => (
-            <Section
-              key={section.kind}
-              title={t(`draft.advice.kind.${section.kind}`)}
-            >
-              {section.combos.map((combo, index) => (
-                <ComboLine key={index} combo={combo} threshold={seuil(combo)} />
-              ))}
-            </Section>
-          ))}
-          {trios.length > 0 && (
-            <Section title={t("draft.advice.kind.JGL_MID_SUP")}>
-              {trios.map((combo, index) => (
-                <ComboLine key={index} combo={combo} threshold={seuil(combo)} />
-              ))}
-            </Section>
-          )}
-          {advice.compositions.length > 0 && (
-            <Section title={t("draft.advice.kind.COMPOSITION")}>
-              {advice.compositions.map((combo, index) => (
-                <ComboLine
-                  key={index}
-                  combo={combo}
-                  threshold={advice.trioThreshold}
-                />
-              ))}
-            </Section>
-          )}
-          {advice.avoid.length > 0 && (
-            <Section title={t("draft.advice.avoid")}>
-              {advice.avoid.map((combo, index) => (
-                <ComboLine key={index} combo={combo} threshold={seuil(combo)} />
-              ))}
-            </Section>
-          )}
-        </Stack>
+        courant && (
+          <Tabs
+            items={onglets.map((onglet) => ({
+              key: onglet.key,
+              label: onglet.label,
+              badge: String(onglet.combos.length),
+            }))}
+            value={courant.key}
+            onChange={setChoisi}
+            ariaLabel={t("draft.advice.combosTitle")}
+          >
+            <ComboTable combos={courant.combos} threshold={seuilDe} />
+          </Tabs>
+        )
       }
       details={
         <Stack spacing={0.75}>
