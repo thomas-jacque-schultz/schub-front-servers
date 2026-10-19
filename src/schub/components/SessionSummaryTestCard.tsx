@@ -26,8 +26,12 @@ const SEVERITE = {
   FAILED: "error",
 } as const;
 
-// Discord met en gras ce qui est entre ** ; l’aperçu se contente du texte.
-const sansGras = (texte: string) => texte.split("**").join("");
+// Discord met en gras ce qui est entre ** et affiche ses emojis <:Gnar:123> ; l’aperçu se contente du texte.
+const enClair = (texte: string) =>
+  texte
+    .split("**")
+    .join("")
+    .replace(/<:(\w+):\d+>/g, "$1");
 
 export function SessionSummaryTestCard() {
   const { t } = useTranslation("riot");
@@ -120,10 +124,10 @@ export function SessionSummaryTestCard() {
                 </Stack>
                 {encadre.fields.map((champ, j) => (
                   <Stack key={j} spacing={0.25}>
-                    <Text variant="subtitle">{sansGras(champ.name)}</Text>
+                    <Text variant="subtitle">{enClair(champ.name)}</Text>
                     {champ.value.split("\n").map((ligne, k) => (
                       <Text key={k} variant="caption">
-                        {sansGras(ligne)}
+                        {enClair(ligne)}
                       </Text>
                     ))}
                   </Stack>
