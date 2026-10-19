@@ -115,7 +115,7 @@ function ComboTable({
       columns={[
         {
           key: "champions",
-          header: t("draft.advice.columns.champions"),
+          header: "",
           width: 30 * icones + 8,
           render: (combo) => (
             <Stack direction="row" spacing={0.5}>
@@ -149,7 +149,7 @@ function ComboTable({
         {
           key: "record",
           header: t("draft.advice.columns.record"),
-          width: 110,
+          width: 150,
           align: "right",
           render: (combo) => (
             <Stack direction="row" spacing={0.5} align="center" justify="end">
@@ -212,17 +212,17 @@ export function CombosCard({ advice }: { advice: DraftAdviceDto }) {
   const onglets = [
     ...sections.map((section) => ({
       key: section.kind,
-      label: t(`draft.advice.kind.${section.kind}`),
+      label: t(`draft.advice.kindShort.${section.kind}`),
       combos: section.combos,
     })),
     {
       key: "JGL_MID_SUP",
-      label: t("draft.advice.kind.JGL_MID_SUP"),
+      label: t("draft.advice.kindShort.JGL_MID_SUP"),
       combos: trios,
     },
     {
       key: "COMPOSITION",
-      label: t("draft.advice.kind.COMPOSITION"),
+      label: t("draft.advice.kindShort.COMPOSITION"),
       combos: advice.compositions,
     },
     { key: "AVOID", label: t("draft.advice.avoid"), combos: advice.avoid },
@@ -258,7 +258,6 @@ export function CombosCard({ advice }: { advice: DraftAdviceDto }) {
             items={onglets.map((onglet) => ({
               key: onglet.key,
               label: onglet.label,
-              badge: String(onglet.combos.length),
             }))}
             value={courant.key}
             onChange={setChoisi}
