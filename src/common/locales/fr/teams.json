@@ -298,6 +298,7 @@
     "dayDate": "{{day}} {{date}}",
     "start": "Début",
     "end": "Fin",
+    "minutes": "Minutes",
     "add": "Ajouter",
     "saveFailed": "Impossible d'enregistrer les créneaux.",
     "helper": "Heure de Paris. Chaque nuit, PremadeLab repère vos sessions\u00a0: au moins trois membres, deux parties à la suite, sans pause de plus d'une heure. Une session qui recoupe un créneau est une séance d'entraînement\u202f; un créneau sans partie compte comme séance manquée.",
