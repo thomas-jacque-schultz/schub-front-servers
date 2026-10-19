@@ -95,6 +95,11 @@ export function PremadeLabLayout({ children }: { children: ReactNode }) {
         void logout().then(() => navigate("/", { replace: true }));
       }}
       footerLinks={footerLinks}
+      headerLink={{
+        label: t("shell.support", { ns: "lol" }),
+        href: SUPPORT_URL,
+        icon: "heart",
+      }}
       footerNote={t("shell.footerNote", { ns: "lol" })}
     >
       {discordLoginFailed ? (

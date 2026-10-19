@@ -222,7 +222,9 @@
   "support": {
     "title": "Support PremadeLab",
     "text": "PremadeLab is free and ad-free. The servers that collect and compute the stats are not: a coffee helps keep them running.",
-    "action": "Buy a coffee"
+    "action": "Buy a coffee",
+    "reminder": "PremadeLab is free. If it helps you, you can support the site.",
+    "reminderAction": "Support PremadeLab"
   },
   "companions": {
     "title": "Often plays with",

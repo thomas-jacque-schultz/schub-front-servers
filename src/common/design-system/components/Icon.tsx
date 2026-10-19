@@ -3,6 +3,7 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditIcon from "@mui/icons-material/EditOutlined";
 import EmailIcon from "@mui/icons-material/AlternateEmail";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import FavoriteIcon from "@mui/icons-material/FavoriteBorder";
 import HubIcon from "@mui/icons-material/Hub";
 import LaunchIcon from "@mui/icons-material/Launch";
 import MemoryIcon from "@mui/icons-material/Memory";
@@ -32,6 +33,7 @@ const ICONS = {
   email: EmailIcon,
   expand: ExpandMoreIcon,
   external: LaunchIcon,
+  heart: FavoriteIcon,
   infrastructure: HubIcon,
   languages: TranslateIcon,
   memory: MemoryIcon,
