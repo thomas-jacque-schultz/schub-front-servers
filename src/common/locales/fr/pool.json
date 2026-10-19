@@ -1,13 +1,13 @@
 {
   "title": "Pool de champions",
-  "subtitle": "Cinq colonnes, une par poste : les champions qu'on s'autorise à ce poste, et qui de l'équipe peut les prendre.",
+  "subtitle": "Cinq colonnes, une par poste\u00a0: les champions qu'on s'autorise à ce poste, et qui de l'équipe peut les prendre.",
   "loading": "Lecture du pool",
   "loadFailed": "Impossible de charger le pool de champions",
   "saveFailed": "L'enregistrement a échoué",
   "patch": {
     "label": "Patch {{version}}",
     "missingTitle": "Catalogue des champions indisponible",
-    "missingDescription": "Sans la version du patch, un nom et une icône de champion ne veulent plus rien dire dans trois mois : le serveur préfère n'en rendre aucun. Le choix de l'équipe n'est pas perdu, il est seulement inaffichable tant que le connecteur ne répond pas."
+    "missingDescription": "Sans la version du patch, un nom et une icône de champion ne veulent plus rien dire dans trois mois\u00a0: le serveur préfère n'en rendre aucun. Le choix de l'équipe n'est pas perdu, il est seulement inaffichable tant que le connecteur ne répond pas."
   },
   "generatedAt": "Panneau assemblé le {{date}}",
   "floor": {
@@ -15,11 +15,11 @@
     "helper": "En points de maîtrise. En dessous, un joueur n'est pas proposé sur un champion.",
     "apply": "Voir",
     "save": "Enregistrer pour l'équipe",
-    "saved": "Plancher de l'équipe : {{count}} points",
-    "preview": "Vous regardez avec {{count}} points ; l'équipe en a enregistré {{team}}.",
-    "explain": "Il appartient à l'équipe : s'il vivait dans l'écran de chacun, deux membres liraient deux listes en croyant parler de la même chose.",
-    "hidden": "{{count}} champion retenu est masqué : personne au-dessus du plancher",
-    "hidden_other": "{{count}} champions retenus sont masqués : personne au-dessus du plancher"
+    "saved": "Plancher de l'équipe\u00a0: {{count}} points",
+    "preview": "Vous regardez avec {{count}} points\u202f; l'équipe en a enregistré {{team}}.",
+    "explain": "Il appartient à l'équipe\u00a0: s'il vivait dans l'écran de chacun, deux membres liraient deux listes en croyant parler de la même chose.",
+    "hidden": "{{count}} champion retenu est masqué\u00a0: personne au-dessus du plancher",
+    "hidden_other": "{{count}} champions retenus sont masqués\u00a0: personne au-dessus du plancher"
   },
   "column": {
     "choose": "Choisir des champions",
@@ -37,7 +37,7 @@
   },
   "unavailable": {
     "title": "Sans maîtrises lisibles",
-    "description": "Ces joueurs tiennent ce poste, mais on ne sait pas ce qu'ils maîtrisent. Ils ne sont écartés de rien : on ne peut simplement pas les classer."
+    "description": "Ces joueurs tiennent ce poste, mais on ne sait pas ce qu'ils maîtrisent. Ils ne sont écartés de rien\u00a0: on ne peut simplement pas les classer."
   },
   "picker": {
     "title": "Champions du poste {{role}}",
@@ -47,11 +47,11 @@
     "selected": "{{count}} retenu(s)",
     "confirm": "Enregistrer",
     "none": "Aucun champion ne correspond",
-    "catalogEmpty": "Le catalogue est indisponible : il n'y a rien à choisir tant que le connecteur ne répond pas."
+    "catalogEmpty": "Le catalogue est indisponible\u00a0: il n'y a rien à choisir tant que le connecteur ne répond pas."
   },
   "roster": {
     "emptyTitle": "Aucun joueur à l'effectif",
-    "emptyDescription": "Ajoutez des joueurs dans l'onglet Effectif : les coachs ne figurent pas dans ce panneau."
+    "emptyDescription": "Ajoutez des joueurs dans l'onglet Effectif\u00a0: les coachs ne figurent pas dans ce panneau."
   },
   "member": {
     "viewer": "Vous",
@@ -76,6 +76,6 @@
   },
   "starting": {
     "title": "Sélection de départ",
-    "description": "Chaque poste part d’une sélection des champions courants à ce poste. Modifiez-les librement : dès le premier changement, le pool est le vôtre."
+    "description": "Chaque poste part d’une sélection des champions courants à ce poste. Modifiez-les librement\u00a0: dès le premier changement, le pool est le vôtre."
   }
 }

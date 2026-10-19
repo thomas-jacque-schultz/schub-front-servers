@@ -5,10 +5,10 @@
   "loading": "Chargement de vos statistiques",
   "loadFailed": "Les statistiques n'ont pas pu être chargées.",
   "emptyRoster": "Cette équipe n'a encore aucun joueur.",
-  "footnote": "Aucune moyenne mondiale n'est affichée ici : elle n'est pas accessible, et l'inventer serait pire que de s'en passer. Chaque chiffre se compare à vos autres parties ou à vos coéquipiers.",
+  "footnote": "Aucune moyenne mondiale n'est affichée ici\u00a0: elle n'est pas accessible, et l'inventer serait pire que de s'en passer. Chaque chiffre se compare à vos autres parties ou à vos coéquipiers.",
   "locked": {
     "title": "Liez un compte Riot pour ouvrir cet écran",
-    "description": "Sans compte lié, il n'y a rien à calculer : les statistiques se construisent à partir de vos parties, et rien ne permet de savoir lesquelles sont les vôtres.",
+    "description": "Sans compte lié, il n'y a rien à calculer\u00a0: les statistiques se construisent à partir de vos parties, et rien ne permet de savoir lesquelles sont les vôtres.",
     "action": "Aller à mon profil"
   },
   "pending": {
@@ -30,7 +30,7 @@
     "days": "{{count}} derniers jours",
     "patches": "{{count}} derniers patchs",
     "helper": "Toutes les valeurs de l'écran portent sur cette période.",
-    "bounded": "Parties relevées : les {{maxGames}} dernières de chaque joueur, sur {{maxAgeDays}} jours au plus. L'historique plus ancien n'est pas collecté.",
+    "bounded": "Parties relevées\u00a0: les {{maxGames}} dernières de chaque joueur, sur {{maxAgeDays}} jours au plus. L'historique plus ancien n'est pas collecté.",
     "boundedUnknown": "Seules les parties récentes de chaque joueur sont relevées."
   },
   "coverage": {
@@ -38,7 +38,7 @@
     "gamesShort": "{{count}} partie(s)",
     "gamesAndPeriod": "sur {{count}} partie(s), du {{from}} au {{to}}",
     "period": "du {{from}} au {{to}}",
-    "untracked": "Ce compte n'est pas encore collecté pour lui-même : les parties connues sont celles où il a croisé un joueur que nous suivons. Les chiffres sont exacts, mais partiels."
+    "untracked": "Ce compte n'est pas encore collecté pour lui-même\u00a0: les parties connues sont celles où il a croisé un joueur que nous suivons. Les chiffres sont exacts, mais partiels."
   },
   "metric": {
     "winRate": "Taux de victoire",
@@ -61,10 +61,10 @@
     "turretTakedowns": "Tours détruites par partie",
     "epicMonsterDamagePerMinute": "Dégâts aux objectifs par minute",
     "platesDiff": "Écart de plaques",
-    "goldDiffAt15": "Écart d’or à 15 min",
-    "csDiffAt15": "Écart de CS à 15 min",
-    "xpDiffAt15": "Écart d’XP à 15 min",
-    "killsDiffAt15": "Écart de kills à 15 min"
+    "goldDiffAt15": "Écart d’or à 15\u00a0min",
+    "csDiffAt15": "Écart de CS à 15\u00a0min",
+    "xpDiffAt15": "Écart d’XP à 15\u00a0min",
+    "killsDiffAt15": "Écart de kills à 15\u00a0min"
   },
   "delta": {
     "points": "{{value}} pts",
@@ -75,7 +75,7 @@
     "buttonCount": "{{count}} choisi(s)",
     "title": "Champions à afficher",
     "selected": "{{count}} champion(s) retenu(s)",
-    "default": "Aucun choix : les {{count}} plus joués.",
+    "default": "Aucun choix\u00a0: les {{count}} plus joués.",
     "reset": "Revenir aux plus joués",
     "search": "Rechercher un champion",
     "noResult": "Aucun champion joué ne correspond.",
@@ -89,7 +89,7 @@
     "queues": "Par mode de jeu",
     "queuesHelper": "Le nombre de parties par mode. Une victoire en normale draft ne vaut pas une victoire en flex.",
     "byQueue": "Par mode de jeu",
-    "byQueueHelper": "Le mode n'exclut rien : il sépare ce qui ne se compare pas.",
+    "byQueueHelper": "Le mode n'exclut rien\u00a0: il sépare ce qui ne se compare pas.",
     "bySide": "Par côté",
     "byPatch": "Par patch",
     "presence": "Présence",
@@ -98,22 +98,22 @@
     "rankings": "Classements",
     "rankingDetail": "{{wins}} victoires, {{losses}} défaites",
     "trend": "Évolution",
-    "trendHelper": "Votre taux de victoire patch par patch, comparé à votre propre moyenne. Un patch de moins de 3 parties est grisé : trop peu de parties pour y lire une tendance.",
-    "trendReference": "Trait : votre moyenne sur la période ({{value}})",
+    "trendHelper": "Votre taux de victoire patch par patch, comparé à votre propre moyenne. Un patch de moins de 3 parties est grisé\u00a0: trop peu de parties pour y lire une tendance.",
+    "trendReference": "Trait\u00a0: votre moyenne sur la période ({{value}})",
     "trendPoint": "Patch {{patch}}, du {{from}} au {{to}} · {{rate}} sur {{count}} partie(s)",
     "noPatch": "Pas encore assez d'historique pour dessiner une évolution.",
-    "bestPosition": "Meilleur poste : {{position}} ({{rate}} sur {{count}} parties).",
+    "bestPosition": "Meilleur poste\u00a0: {{position}} ({{rate}} sur {{count}} parties).",
     "allChampions": "Voir tous les champions",
-    "trendUp": "En hausse sur le patch {{patch}} : {{rate}} de victoires.",
-    "trendDown": "En baisse sur le patch {{patch}} : {{rate}} de victoires.",
-    "trendStable": "Stable sur le patch {{patch}} : {{rate}} de victoires."
+    "trendUp": "En hausse sur le patch {{patch}}\u00a0: {{rate}} de victoires.",
+    "trendDown": "En baisse sur le patch {{patch}}\u00a0: {{rate}} de victoires.",
+    "trendStable": "Stable sur le patch {{patch}}\u00a0: {{rate}} de victoires."
   },
   "team": {
-    "definition": "Une partie d'équipe : au moins {{count}} des {{roster}} joueurs de l'effectif, toutes files confondues.",
+    "definition": "Une partie d'équipe\u00a0: au moins {{count}} des {{roster}} joueurs de l'effectif, toutes files confondues.",
     "games": "Parties d'équipe",
     "gamesHint": "{{total}} trouvée(s), dont {{undecided}} sans résultat commun",
     "averageDuration": "Durée moyenne",
-    "truncated": "Seules les parties les plus récentes sont affichées : les totaux portent sur ce qui est visible ici.",
+    "truncated": "Seules les parties les plus récentes sont affichées\u00a0: les totaux portent sur ce qui est visible ici.",
     "presenceValue": "{{rate}} · {{count}} partie(s)",
     "memberWinRate": "{{rate}} de victoires quand il est là"
   },
@@ -136,7 +136,7 @@
     "flex": "Flex",
     "ranksObserved": "Rangs relevés le {{date}} — Riot ne sert que le rang courant.",
     "enemies": "Adversaires",
-    "rankHint": "Moyenne des joueurs classés ({{count}}) ; un non-classé n'est pas compté.",
+    "rankHint": "Moyenne des joueurs classés ({{count}})\u202f; un non-classé n'est pas compté.",
     "accordionHelper": "Cliquez sur une partie pour la déplier, puis sur un joueur pour ses chiffres de la partie."
   },
   "player": {
@@ -180,7 +180,7 @@
     "red": "Rouge"
   },
   "duration": {
-    "minutes": "{{count}} min"
+    "minutes": "{{count}}\u00a0min"
   },
   "state": {
     "STATISTIQUES_CONNUES": {
@@ -189,19 +189,19 @@
       "description": ""
     },
     "COMPTE_RIOT_ABSENT": {
-      "short": "Aucun compte Riot lié : rien à calculer.",
+      "short": "Aucun compte Riot lié\u00a0: rien à calculer.",
       "title": "Aucun compte Riot lié",
       "description": "Les statistiques se construisent à partir des parties d'un compte. Tant qu'aucun Riot ID n'est renseigné, il n'y a pas de parties à rattacher."
     },
     "INGESTION_EN_COURS": {
       "short": "Collecte en cours.",
       "title": "La collecte n'est pas terminée",
-      "description": "L'historique est en train d'être constitué. C'est long une fois, et une seule : les chiffres apparaîtront au fur et à mesure."
+      "description": "L'historique est en train d'être constitué. C'est long une fois, et une seule\u00a0: les chiffres apparaîtront au fur et à mesure."
     },
     "AUCUNE_PARTIE": {
       "short": "Aucune partie sur la période.",
       "title": "Aucune partie",
-      "description": "Tout est collecté et il n'y a rien à compter sur cette période. Ce n'est pas une panne : élargissez la période pour voir plus loin."
+      "description": "Tout est collecté et il n'y a rien à compter sur cette période. Ce n'est pas une panne\u00a0: élargissez la période pour voir plus loin."
     },
     "EFFECTIF_INCOMPLET": {
       "short": "Effectif incomplet.",
@@ -237,7 +237,7 @@
     "wardsKilledPerMinute": "Balises dét./min",
     "controlWardsPlaced": "Contrôle/partie",
     "damageShare": "Part dégâts",
-    "deathsPer10": "Morts/10 min",
+    "deathsPer10": "Morts/10\u00a0min",
     "timeDeadShare": "Temps mort",
     "turretDamagePerMinute": "Tours/min",
     "turretTakedowns": "Tours/partie",
@@ -250,7 +250,7 @@
   },
   "radar": {
     "title": "Profil",
-    "helper": "Cinq axes, plus loin = mieux, lus contre le référentiel choisi : le centre est le bas du référentiel, le bord son haut.",
+    "helper": "Cinq axes, plus loin = mieux, lus contre le référentiel choisi\u00a0: le centre est le bas du référentiel, le bord son haut.",
     "reference": {
       "label": "Référentiel",
       "met": "Adversaires",
@@ -260,14 +260,14 @@
       "position": "Au poste {{position}}"
     },
     "note": {
-      "met": "Au poste {{position}}, {{games}} partie(s). Centre : 5e percentile de {{count}} adversaires directs (au moins {{min}} parties chacun), bord : 95e.",
-      "league": "Au poste {{position}}, {{games}} partie(s). Chaque axe est votre percentile parmi {{count}} joueurs {{tier}} à ce poste, patchs {{patches}} : centre 0, bord 100."
+      "met": "Au poste {{position}}, {{games}} partie(s). Centre\u00a0: 5e percentile de {{count}} adversaires directs (au moins {{min}} parties chacun), bord\u00a0: 95e.",
+      "league": "Au poste {{position}}, {{games}} partie(s). Chaque axe est votre percentile parmi {{count}} joueurs {{tier}} à ce poste, patchs {{patches}}\u00a0: centre 0, bord 100."
     },
     "empty": {
       "noGames": "Aucune partie sur la Faille sur la période.",
-      "met": "Pas encore assez d'adversaires directs connus au poste {{position}} : il en faut dix, avec au moins cinq parties chacun. Le référentiel grossit avec la collecte.",
-      "leagueThin": "Pas encore de référentiel {{tier}} au poste {{position}} : il se calcule chaque jour sur les joueurs classés collectés.",
-      "unranked": "Joueur non classé : pas de palier auquel se comparer."
+      "met": "Pas encore assez d'adversaires directs connus au poste {{position}}\u00a0: il en faut dix, avec au moins cinq parties chacun. Le référentiel grossit avec la collecte.",
+      "leagueThin": "Pas encore de référentiel {{tier}} au poste {{position}}\u00a0: il se calcule chaque jour sur les joueurs classés collectés.",
+      "unranked": "Joueur non classé\u00a0: pas de palier auquel se comparer."
     }
   },
   "tier": {
@@ -284,7 +284,7 @@
     "MASTER_PLUS": "Maître+"
   },
   "scope": {
-    "rift": "Indicateurs calculés sur la Faille (classées, normales, Clash) : l'ARAM et l'Arène fausseraient les chiffres par minute."
+    "rift": "Indicateurs calculés sur la Faille (classées, normales, Clash)\u00a0: l'ARAM et l'Arène fausseraient les chiffres par minute."
   },
   "players": {
     "filter": "Joueurs affichés",
@@ -303,23 +303,23 @@
     "ally": "Nous",
     "enemy": "Eux",
     "gap": "Écart de rang",
-    "at15": "À 15 min (nous − eux)",
+    "at15": "À 15\u00a0min (nous − eux)",
     "goldDiff": "Or",
     "csDiff": "CS",
     "kdaAt15": "K/D/A",
     "dpmAt15": "DPM",
     "fullGame": "Partie entière",
-    "noTimeline": "Timeline en cours de collecte : les chiffres à 15 minutes arriveront avec elle.",
-    "noMatchups": "Membres dans les deux camps : pas de face-à-face.",
+    "noTimeline": "Timeline en cours de collecte\u00a0: les chiffres à 15 minutes arriveront avec elle.",
+    "noMatchups": "Membres dans les deux camps\u00a0: pas de face-à-face.",
     "loadFailed": "Le détail de la partie n'a pas pu être chargé.",
     "close": "Fermer",
-    "shortGame": "Partie finie avant 15 minutes : il n'y a pas d'état des couloirs à 15 minutes.",
+    "shortGame": "Partie finie avant 15 minutes\u00a0: il n'y a pas d'état des couloirs à 15 minutes.",
     "lane": {
       "won": "Couloir gagné",
       "even": "Couloir égal",
       "lost": "Couloir perdu"
     },
-    "playerHint": "Cliquez sur un joueur : ses chiffres de la partie, sa moyenne et le rang auquel ils correspondent.",
+    "playerHint": "Cliquez sur un joueur\u00a0: ses chiffres de la partie, sa moyenne et le rang auquel ils correspondent.",
     "openPlayer": "Ouvrir les chiffres de {{player}} sur cette partie",
     "myStats": "Mes stats détaillées",
     "playerStats": "Stats détaillées de {{player}}"
@@ -327,8 +327,8 @@
   "opposition": {
     "tab": "Stratégie",
     "title": "Jusqu'où l'équipe gagne",
-    "intro": "Le taux de victoire selon le niveau des adversaires. Les rangs sont ceux relevés à la collecte : pour une partie ancienne, c'est le rang d'aujourd'hui.",
-    "coverage": "{{withRanks}} partie(s) sur {{games}} ont leurs rangs relevés ; relevé médian {{lag}} jour(s) après la partie.",
+    "intro": "Le taux de victoire selon le niveau des adversaires. Les rangs sont ceux relevés à la collecte\u00a0: pour une partie ancienne, c'est le rang d'aujourd'hui.",
+    "coverage": "{{withRanks}} partie(s) sur {{games}} ont leurs rangs relevés\u202f; relevé médian {{lag}} jour(s) après la partie.",
     "coverageNoLag": "{{withRanks}} partie(s) sur {{games}} ont leurs rangs relevés.",
     "byTier": "Par niveau moyen adverse",
     "byTierHelper": "Solo à défaut flex, moyenne des adversaires classés.",
@@ -342,25 +342,25 @@
       "MUCH_WEAKER": "Bien plus faibles (4 div. et plus)"
     },
     "ceiling": "Plafond",
-    "ceilingValue": "Le plus haut niveau adverse tenu à 50 % ou plus : {{tier}}",
+    "ceilingValue": "Le plus haut niveau adverse tenu à 50 % ou plus\u00a0: {{tier}}",
     "ceilingNone": "Aucun niveau adverse tenu à 50 % sur {{count}} parties ou plus.",
     "ceilingHelper": "Au moins {{count}} parties dans le palier.",
     "byPosition": "Par poste",
-    "byPositionHelper": "Le vis-à-vis direct de chaque membre. Un couloir gagné : plus d'or que lui à 15 minutes.",
+    "byPositionHelper": "Le vis-à-vis direct de chaque membre. Un couloir gagné\u00a0: plus d'or que lui à 15 minutes.",
     "averageGap": "Écart moyen",
     "versusStronger": "Face à plus fort",
     "versusWeaker": "Face à plus faible",
-    "laneWon": "Couloirs gagnés à 15 min",
-    "goldDiff15": "Or à 15 min",
-    "csDiff15": "CS à 15 min",
-    "pending": "Les rangs des adversaires sont en cours de relevé : la section se remplira au fil de la collecte."
+    "laneWon": "Couloirs gagnés à 15\u00a0min",
+    "goldDiff15": "Or à 15\u00a0min",
+    "csDiff15": "CS à 15\u00a0min",
+    "pending": "Les rangs des adversaires sont en cours de relevé\u00a0: la section se remplira au fil de la collecte."
   },
   "refresh": {
     "action": "Mettre à jour les stats",
     "wait": "Mise à jour possible dans {{time}}",
-    "done_one": "Nouvelles parties demandées pour {{count}} joueur : elles apparaîtront au fil de la collecte.",
-    "done_other": "Nouvelles parties demandées pour {{count}} joueurs : elles apparaîtront au fil de la collecte.",
-    "tooSoon": "Une mise à jour vient d'être demandée : réessayez dans quelques minutes.",
+    "done_one": "Nouvelles parties demandées pour {{count}} joueur\u00a0: elles apparaîtront au fil de la collecte.",
+    "done_other": "Nouvelles parties demandées pour {{count}} joueurs\u00a0: elles apparaîtront au fil de la collecte.",
+    "tooSoon": "Une mise à jour vient d'être demandée\u00a0: réessayez dans quelques minutes.",
     "failed": "La mise à jour a échoué"
   },
   "strategy": {
@@ -369,8 +369,8 @@
     "early": "Début de partie"
   },
   "early": {
-    "title": "Début de partie, 0 à 15 min",
-    "helper": "Un gank, c'est le jungler qui vient sur un couloir adverse. Il est vu par un kill sur le couloir, ou à l'image de chaque minute de la timeline : une venue sans kill entre deux images n'est pas vue.",
+    "title": "Début de partie, 0 à 15\u00a0min",
+    "helper": "Un gank, c'est le jungler qui vient sur un couloir adverse. Il est vu par un kill sur le couloir, ou à l'image de chaque minute de la timeline\u00a0: une venue sans kill entre deux images n'est pas vue.",
     "lane": {
       "TOP": "Haut",
       "MID": "Milieu",
@@ -383,7 +383,7 @@
     "weak": "Côté faible",
     "decisive": "décisif",
     "objective": "objectif",
-    "fallen": "Morts : {{names}}",
+    "fallen": "Morts\u00a0: {{names}}",
     "verdict": {
       "theirs": {
         "KILL": "Mort",
@@ -399,35 +399,35 @@
       }
     },
     "presence": {
-      "ours": "Notre jungler, de 2 à 14 min",
-      "theirs": "Leur jungler, de 2 à 14 min",
-      "minutes": "{{count}} min"
+      "ours": "Notre jungler, de 2 à 14\u00a0min",
+      "theirs": "Leur jungler, de 2 à 14\u00a0min",
+      "minutes": "{{count}}\u00a0min"
     },
     "side": {
       "TOP": "côté haut",
       "BOT": "côté bas",
       "BALANCED": "des deux côtés"
     },
-    "weakSummary": "Notre jungler a joué {{side}} ; {{onWeak}} gank(s) adverse(s) sur {{total}} sont tombés sur l'autre côté.",
+    "weakSummary": "Notre jungler a joué {{side}}\u202f; {{onWeak}} gank(s) adverse(s) sur {{total}} sont tombés sur l'autre côté.",
     "balancedSummary": "Notre jungler a partagé son temps entre les deux côtés.",
     "objectives": {
-      "title": "Objectifs avant 15 min : nous à gauche, eux à droite",
+      "title": "Objectifs avant 15\u00a0min\u00a0: nous à gauche, eux à droite",
       "dragons": "Dragons",
       "grubs": "Larves",
       "heralds": "Héraut",
       "ours": "Nous",
       "theirs": "Eux"
     },
-    "noAnalysis": "Pas d'analyse du début de partie : timeline absente, ou postes de la partie inconnus.",
+    "noAnalysis": "Pas d'analyse du début de partie\u00a0: timeline absente, ou postes de la partie inconnus.",
     "team": {
-      "helper": "Sur {{count}} partie(s) d'équipe dont la timeline est analysée. Les ganks sans kill ne sont vus qu'à l'image de chaque minute : ils sont sous-comptés.",
+      "helper": "Sur {{count}} partie(s) d'équipe dont la timeline est analysée. Les ganks sans kill ne sont vus qu'à l'image de chaque minute\u00a0: ils sont sous-comptés.",
       "none": "Aucune partie d'équipe analysée sur la période.",
       "laners": "Encaisser les ganks",
-      "lanersHelper": "Tenu : le joueur visé n'est pas mort pendant le gank.",
+      "lanersHelper": "Tenu\u00a0: le joueur visé n'est pas mort pendant le gank.",
       "junglers": "Ganks du jungler",
-      "junglersHelper": "Décisif : un kill sans perte, ou un objectif du côté du couloir dans les 90 secondes. Présence : la part de son temps, de 2 à 14 min, passée du côté de la carte où jouait ce coéquipier, sur leurs parties communes. Le tireur et le support partagent le bas.",
+      "junglersHelper": "Décisif\u00a0: un kill sans perte, ou un objectif du côté du couloir dans les 90 secondes. Présence\u00a0: la part de son temps, de 2 à 14\u00a0min, passée du côté de la carte où jouait ce coéquipier, sur leurs parties communes. Le tireur et le support partagent le bas.",
       "sides": "Côté fort de notre jungler",
-      "sidesHelper": "Le côté où il a passé au moins deux minutes de plus. Côté faible : l'autre.",
+      "sidesHelper": "Le côté où il a passé au moins deux minutes de plus. Côté faible\u00a0: l'autre.",
       "member": "Joueur",
       "laneGames": "Parties",
       "facedPerGame": "Subis / partie",
@@ -440,7 +440,7 @@
       "games": "Parties",
       "winRate": "Victoires",
       "onWeakSide": "Ganks adverses côté faible",
-      "sidesMap": "Taux de victoire selon le côté fort de notre jungler (moyenne : {{average}}). Vert : au-dessus de notre moyenne, rouge : en dessous, gris : moins de 3 parties.",
+      "sidesMap": "Taux de victoire selon le côté fort de notre jungler (moyenne\u00a0: {{average}}). Vert\u00a0: au-dessus de notre moyenne, rouge\u00a0: en dessous, gris\u00a0: moins de 3 parties.",
       "sideZone": {
         "TOP": "Haut",
         "BALANCED": "Équilibré",
@@ -452,8 +452,8 @@
   },
   "family": {
     "title": "Analyse de mon jeu",
-    "helper": "Chaque chiffre face aux {{tier}} au poste {{position}}, sur leurs moyennes. La jauge dit la part qu’il dépasse ; l’emblème, le palier dont il se rapproche quand la stat monte avec le rang.",
-    "helperNoTier": "Sans rang connu ni poste principal, les chiffres se lisent seuls : pas de jauge ni d’emblème.",
+    "helper": "Chaque chiffre face aux {{tier}} au poste {{position}}, sur leurs moyennes. La jauge dit la part qu’il dépasse\u202f; l’emblème, le palier dont il se rapproche quand la stat monte avec le rang.",
+    "helperNoTier": "Sans rang connu ni poste principal, les chiffres se lisent seuls\u00a0: pas de jauge ni d’emblème.",
     "better": "Mieux que {{rank}} % de son palier",
     "income": "Revenus",
     "laning": "Phase de couloir",
@@ -476,17 +476,17 @@
     }
   },
   "grade": {
-    "level": "Au niveau des {{tier}} au poste {{position}} : c’est de leur moyenne par partie ({{mean}}) que la valeur est la plus proche.",
-    "neighbours": "Paliers voisins : {{list}}.",
-    "noRank": "Pas de palier pour cette stat : elle varie trop peu d’un rang à l’autre, chacun jouant contre son niveau — ou l’échantillon est encore trop mince.",
+    "level": "Au niveau des {{tier}} au poste {{position}}\u00a0: c’est de leur moyenne par partie ({{mean}}) que la valeur est la plus proche.",
+    "neighbours": "Paliers voisins\u00a0: {{list}}.",
+    "noRank": "Pas de palier pour cette stat\u00a0: elle varie trop peu d’un rang à l’autre, chacun jouant contre son niveau — ou l’échantillon est encore trop mince.",
     "inTier": "Mieux que {{rank}} % des {{tier}} au poste {{position}} ({{count}} joueurs).",
     "inTierGame": "Mieux que {{rank}} % des parties des {{tier}} au poste {{position}}.",
     "basis": "Calculé sur vos parties au poste {{position}}, comparées aux joueurs classés des patchs {{patches}}.",
     "champion": "Mieux que {{rank}} % des joueurs de {{champion}} en {{group}}, sur leurs moyennes ({{count}} joueurs à 5 parties ou plus).",
-    "championFallback": "Pas encore assez de joueurs de {{champion}} en {{group}} : comparé à tous les joueurs {{tier}} au poste {{position}}.",
-    "team": "En moyenne sur {{games}} partie(s) : mieux que {{rank}} % des parties de même palier.",
-    "teamLevel": "Moyenne au niveau des {{tier}} : c’est de leur moyenne par partie qu’elle est la plus proche.",
-    "missing": "Moyennes du palier pas encore disponibles : l’échantillon de joueurs classés qui sert à les calculer est encore en cours de collecte.",
+    "championFallback": "Pas encore assez de joueurs de {{champion}} en {{group}}\u00a0: comparé à tous les joueurs {{tier}} au poste {{position}}.",
+    "team": "En moyenne sur {{games}} partie(s)\u00a0: mieux que {{rank}} % des parties de même palier.",
+    "teamLevel": "Moyenne au niveau des {{tier}}\u00a0: c’est de leur moyenne par partie qu’elle est la plus proche.",
+    "missing": "Moyennes du palier pas encore disponibles\u00a0: l’échantillon de joueurs classés qui sert à les calculer est encore en cours de collecte.",
     "missingShort": "n. d."
   },
   "group": {
@@ -498,9 +498,9 @@
   },
   "teamLevel": {
     "title": "Early contre Late",
-    "helper": "L’early mesure surtout le niveau de chacun dans son couloir, le late le jeu d’équipe. L’écart dit lequel des deux vous porte. L’emblème situe la valeur à 15 min parmi les parties classées du même palier.",
+    "helper": "L’early mesure surtout le niveau de chacun dans son couloir, le late le jeu d’équipe. L’écart dit lequel des deux vous porte. L’emblème situe la valeur à 15\u00a0min parmi les parties classées du même palier.",
     "empty": "Pas encore de partie d’équipe à timeline sur la période.",
-    "basis": "{{games}} partie(s) analysée(s) · palier moyen : {{tier}}",
+    "basis": "{{games}} partie(s) analysée(s) · palier moyen\u00a0: {{tier}}",
     "metric": {
       "goldDiffAt15": "Écart d’or",
       "xpDiffAt15": "Écart d’XP",
@@ -512,11 +512,11 @@
       "ganksConceded": "Ganks décisifs subis"
     },
     "metricHeader": "Mesure",
-    "at15": "À 15 min",
+    "at15": "À 15\u00a0min",
     "atEnd": "À la fin",
     "change": "Différence",
-    "endPending_one": "Fin de partie sur {{count}} partie sur {{games}} : les autres attendent leur recalcul.",
-    "endPending_other": "Fin de partie sur {{count}} parties sur {{games}} : les autres attendent leur recalcul."
+    "endPending_one": "Fin de partie sur {{count}} partie sur {{games}}\u00a0: les autres attendent leur recalcul.",
+    "endPending_other": "Fin de partie sur {{count}} parties sur {{games}}\u00a0: les autres attendent leur recalcul."
   },
   "tabs": {
     "ariaLabel": "Sections de mes stats",
@@ -535,24 +535,24 @@
     "rank": "Rang",
     "averageBasis_one": "Moyenne sur {{count}} partie au poste {{position}}, sur la période choisie.",
     "averageBasis_other": "Moyenne sur {{count}} parties au poste {{position}}, sur la période choisie.",
-    "noAverage": "Pas de moyenne : aucune partie de la Faille à ce poste sur la période.",
-    "tier": "Rang tenu à la date de la partie : {{tier}}.",
-    "tierEstimated": "Rang estimé d'après le lobby de la partie : {{tier}}.",
+    "noAverage": "Pas de moyenne\u00a0: aucune partie de la Faille à ce poste sur la période.",
+    "tier": "Rang tenu à la date de la partie\u00a0: {{tier}}.",
+    "tierEstimated": "Rang estimé d'après le lobby de la partie\u00a0: {{tier}}.",
     "noMetrics": "Les chiffres de cette partie ne sont pas encore calculés.",
-    "rankHelper": "Rang : le palier dont la moyenne par partie, au même poste, est la plus proche de la valeur — seulement pour les stats qui montent avec le rang. Les autres (KDA, morts, écarts à 15 min…) se disent en « top x % » de votre palier. Un tiret : pas encore assez de parties pour le dire."
+    "rankHelper": "Rang\u00a0: le palier dont la moyenne par partie, au même poste, est la plus proche de la valeur — seulement pour les stats qui montent avec le rang. Les autres (KDA, morts, écarts à 15\u00a0min…) se disent en «\u00a0top x %\u00a0» de votre palier. Un tiret\u00a0: pas encore assez de parties pour le dire."
   },
   "conclusion": {
     "better": "Mieux que {{part}} % des {{position}} {{tier}}.",
     "trend": {
-      "up": "En progrès : {{now}} ce mois-ci, contre {{before}} le mois d’avant.",
-      "down": "En recul : {{now}} ce mois-ci, contre {{before}} le mois d’avant.",
-      "stable": "Stable : {{now}} ce mois-ci, {{before}} le mois d’avant."
+      "up": "En progrès\u00a0: {{now}} ce mois-ci, contre {{before}} le mois d’avant.",
+      "down": "En recul\u00a0: {{now}} ce mois-ci, contre {{before}} le mois d’avant.",
+      "stable": "Stable\u00a0: {{now}} ce mois-ci, {{before}} le mois d’avant."
     }
   },
   "synergy": {
     "title": "Duos et ressources",
     "duos": "Les duos de l’effectif",
-    "duosHint": "Chaque case, sur les parties d’équipe : en haut, le taux de victoire de chacun dans les parties où l’autre n’est pas là (moyenne des deux) ; en dessous, celui de la paire quand elle joue ensemble, en vert à 5 points au-dessus ou plus, en orange à 5 points en dessous ou plus, en gris entre les deux ; puis le nombre de parties ensemble. « Séparés : — » : ils ne jouent jamais l’un sans l’autre. Paires à {{count}} parties ensemble au moins.",
+    "duosHint": "Chaque case, sur les parties d’équipe\u00a0: en haut, le taux de victoire de chacun dans les parties où l’autre n’est pas là (moyenne des deux)\u202f; en dessous, celui de la paire quand elle joue ensemble, en vert à 5 points au-dessus ou plus, en orange à 5 points en dessous ou plus, en gris entre les deux\u202f; puis le nombre de parties ensemble. «\u00a0Séparés\u00a0: —\u00a0»\u00a0: ils ne jouent jamais l’un sans l’autre. Paires à {{count}} parties ensemble au moins.",
     "games_one": "{{count}} partie",
     "games_other": "{{count}} parties",
     "noDuo": "Aucune paire n’a encore {{count}} parties d’équipe ensemble sur cette période.",
@@ -561,27 +561,27 @@
     "duoDown_one": "{{a}} et {{b}} gagnent {{points}} points de moins qu’attendu ensemble ({{count}} partie).",
     "duoDown_other": "{{a}} et {{b}} gagnent {{points}} points de moins qu’attendu ensemble ({{count}} parties).",
     "resources": "Qui doit recevoir l’or",
-    "resourcesHint": "Les postes classés par priorité d’accès à l’or : l’écart de taux de victoire entre les parties où le poste a plus que sa part habituelle de l’or de l’équipe, et celles où il en a moins. Toutes files confondues.",
+    "resourcesHint": "Les postes classés par priorité d’accès à l’or\u00a0: l’écart de taux de victoire entre les parties où le poste a plus que sa part habituelle de l’or de l’équipe, et celles où il en a moins. Toutes files confondues.",
     "noResources": "Pas encore de partie d’équipe sur cette période.",
     "position": "Poste",
     "conversion": "Dégâts − or",
     "notConverting": "Reçoit plus d’or qu’il ne rend en dégâts.",
     "findings": "Ce qui ressort pour l’équipe",
-    "apart": "Séparés : {{rate}}",
-    "together": "Ensemble : {{rate}}",
-    "togetherDelta": "Ensemble : {{rate}} ({{delta}})",
+    "apart": "Séparés\u00a0: {{rate}}",
+    "together": "Ensemble\u00a0: {{rate}}",
+    "togetherDelta": "Ensemble\u00a0: {{rate}} ({{delta}})",
     "rank": "{{rank}}. {{position}}",
     "priority": {
       "feed": "À nourrir",
       "neutral": "Indifférent",
       "starve": "À ne pas nourrir"
     },
-    "above_one": "Plus de {{threshold}} de l’or : {{rate}} de victoires ({{count}} partie)",
-    "above_other": "Plus de {{threshold}} de l’or : {{rate}} de victoires ({{count}} parties)",
-    "below_one": "Moins : {{rate}} ({{count}} partie)",
-    "below_other": "Moins : {{rate}} ({{count}} parties)",
+    "above_one": "Plus de {{threshold}} de l’or\u00a0: {{rate}} de victoires ({{count}} partie)",
+    "above_other": "Plus de {{threshold}} de l’or\u00a0: {{rate}} de victoires ({{count}} parties)",
+    "below_one": "Moins\u00a0: {{rate}} ({{count}} partie)",
+    "below_other": "Moins\u00a0: {{rate}} ({{count}} parties)",
     "noSplit": "Pas assez de parties pour couper au-dessus et en dessous.",
-    "correlation": "C’est une corrélation, pas une cause : une part d’or est relative. Un poste peut dépasser son seuil parce que les autres sont en retard.",
+    "correlation": "C’est une corrélation, pas une cause\u00a0: une part d’or est relative. Un poste peut dépasser son seuil parce que les autres sont en retard.",
     "exact": "Les chiffres exacts",
     "share": {
       "goldWin": "Part de l’or en victoire",
@@ -591,12 +591,12 @@
     }
   },
   "premade": {
-    "summary_one": "{{count}} partie d'équipe sur la période (au moins {{minimum}} membres ensemble). Chaque tuile se lit ainsi : à gauche le joueur (sa valeur en premade, puis l'écart avec ses stats habituelles), à droite l'équipe (l'écart avec la moyenne des coéquipiers, puis son rang).",
-    "summary_other": "{{count}} parties d'équipe sur la période (au moins {{minimum}} membres ensemble). Chaque tuile se lit ainsi : à gauche le joueur (sa valeur en premade, puis l'écart avec ses stats habituelles), à droite l'équipe (l'écart avec la moyenne des coéquipiers, puis son rang).",
+    "summary_one": "{{count}} partie d'équipe sur la période (au moins {{minimum}} membres ensemble). Chaque tuile se lit ainsi\u00a0: à gauche le joueur (sa valeur en premade, puis l'écart avec ses stats habituelles), à droite l'équipe (l'écart avec la moyenne des coéquipiers, puis son rang).",
+    "summary_other": "{{count}} parties d'équipe sur la période (au moins {{minimum}} membres ensemble). Chaque tuile se lit ainsi\u00a0: à gauche le joueur (sa valeur en premade, puis l'écart avec ses stats habituelles), à droite l'équipe (l'écart avec la moyenne des coéquipiers, puis son rang).",
     "unknown": "Le nombre de parties d'équipe est indisponible pour l'instant.",
     "games_one": "{{count}} partie en premade",
     "games_other": "{{count}} parties en premade",
-    "none": "Aucune partie d'équipe sur la période : rien à comparer.",
+    "none": "Aucune partie d'équipe sur la période\u00a0: rien à comparer.",
     "rank_ordinal_one": "{{count}}er",
     "rank_ordinal_other": "{{count}}e",
     "hint": {
@@ -610,7 +610,7 @@
     "radar": {
       "player": "En premade",
       "mean": "Moyenne du premade",
-      "note": "Centre : le plus bas des membres, bord : le plus haut, en premade. Pointillés : la moyenne des membres.",
+      "note": "Centre\u00a0: le plus bas des membres, bord\u00a0: le plus haut, en premade. Pointillés\u00a0: la moyenne des membres.",
       "fewMembers": "Il faut au moins deux membres avec des parties d'équipe."
     }
   },
@@ -630,8 +630,8 @@
     "above": "Au-dessus",
     "veryAbove": "Très au-dessus",
     "neutral": "Neutre",
-    "neutralHint": "Ni bon ni mauvais : cette mesure dépend du rôle joué (un tank encaisse, c’est son travail).",
-    "familyAverage": "En moyenne : {{verdict}}",
+    "neutralHint": "Ni bon ni mauvais\u00a0: cette mesure dépend du rôle joué (un tank encaisse, c’est son travail).",
+    "familyAverage": "En moyenne\u00a0: {{verdict}}",
     "lowConfidence": "Confiance insuffisante",
     "details": "Voir le détail",
     "hideDetails": "Masquer le détail"
@@ -645,11 +645,11 @@
     "allNumbers": "Voir tous les chiffres",
     "noTier": "Sans rang ni poste principal, pas de comparaison au palier.",
     "line": {
-      "veryAbove": "{{metric}} : bien au-dessus des {{position}} {{tier}}",
-      "above": "{{metric}} : au-dessus des {{position}} {{tier}}",
-      "average": "{{metric}} : dans la moyenne",
-      "below": "{{metric}} : en dessous des {{position}} {{tier}}",
-      "veryBelow": "{{metric}} : bien en dessous des {{position}} {{tier}}"
+      "veryAbove": "{{metric}}\u00a0: bien au-dessus des {{position}} {{tier}}",
+      "above": "{{metric}}\u00a0: au-dessus des {{position}} {{tier}}",
+      "average": "{{metric}}\u00a0: dans la moyenne",
+      "below": "{{metric}}\u00a0: en dessous des {{position}} {{tier}}",
+      "veryBelow": "{{metric}}\u00a0: bien en dessous des {{position}} {{tier}}"
     },
     "overall": {
       "veryAbove": "Dans l'ensemble, bien au-dessus des {{position}} {{tier}}.",
@@ -672,6 +672,6 @@
       "goldPerMinute": "or par minute",
       "damagePerMinute": "dégâts par minute"
     },
-    "line": "{{player}} : {{delta}} de {{metric}} en premade"
+    "line": "{{player}}\u00a0: {{delta}} de {{metric}} en premade"
   }
 }

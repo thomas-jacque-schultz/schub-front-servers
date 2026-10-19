@@ -28,7 +28,7 @@
       "EN_ATTENTE_DE_RESOLUTION": "En attente de résolution",
       "RESOLU": "Compte lié"
     },
-    "pendingExplanation": "Votre Riot ID est enregistré, mais nous n'avons pas encore pu le confirmer auprès de Riot. Rien n'est perdu : réessayez plus tard, ou vérifiez la saisie.",
+    "pendingExplanation": "Votre Riot ID est enregistré, mais nous n'avons pas encore pu le confirmer auprès de Riot. Rien n'est perdu\u00a0: réessayez plus tard, ou vérifiez la saisie.",
     "retry": "Relancer la résolution",
     "linkedAt": "Déclaré le {{date}}",
     "link": {
@@ -43,15 +43,15 @@
       "description": "Le compte actuel sera remplacé. Lisez les conséquences avant de valider.",
       "confirm": "Changer de compte",
       "consequencesTitle": "Ce que ce changement entraîne",
-      "statsReset": "Vos statistiques personnelles repartent de zéro : les parties déjà collectées restent attachées à l’ancien compte.",
+      "statsReset": "Vos statistiques personnelles repartent de zéro\u00a0: les parties déjà collectées restent attachées à l’ancien compte.",
       "unknownConsequences": "Le cœur n’a détaillé aucune conséquence pour ce changement. Il reste possible, mais sans ces précisions.",
       "from": "De",
       "to": "Vers",
-      "noUnlink": "Il n'existe pas de bouton pour délier un compte : cela laisserait les équipes qui vous référencent sans personne. Le changement le remplace.",
+      "noUnlink": "Il n'existe pas de bouton pour délier un compte\u00a0: cela laisserait les équipes qui vous référencent sans personne. Le changement le remplace.",
       "ingestRestarted": "Une nouvelle collecte de vos parties démarre.",
       "estimatedMatches": "Environ {{count}} partie(s) à récupérer.",
       "estimatedDuration": "Elle devrait prendre environ {{count}} minute(s).",
-      "rosterSlotsToClaim": "Des places d’effectif attendent ce compte : elles y seront rattachées."
+      "rosterSlotsToClaim": "Des places d’effectif attendent ce compte\u00a0: elles y seront rattachées."
     },
     "ingest": {
       "title": "Collecte en cours",
@@ -59,15 +59,15 @@
       "pending": "{{count}} partie(s) en attente",
       "readyAt": "Prêt vers {{date}}",
       "readyUnknown": "Échéance inconnue pour le moment",
-      "unavailable": "L'avancement de la collecte est indisponible : le connecteur Riot ne répond pas. Ce n'est pas une perte de données, seulement une information manquante."
+      "unavailable": "L'avancement de la collecte est indisponible\u00a0: le connecteur Riot ne répond pas. Ce n'est pas une perte de données, seulement une information manquante."
     },
     "linkAction": "Lier ce compte"
   },
   "sessionSummaries": {
     "title": "Résumés de session",
-    "description": "Le lendemain d'une session avec ton équipe, un message privé de l'application Discord PremadeLab : le bilan, ce qui a marché pour toi, ce qui reste à travailler.",
+    "description": "Le lendemain d'une session avec ton équipe, un message privé de l'application Discord PremadeLab\u00a0: le bilan, ce qui a marché pour toi, ce qui reste à travailler.",
     "planned": "Après une séance d'entraînement planifiée",
     "free": "Après une session libre",
-    "unreachable": "Discord a refusé notre dernier message : tes messages privés sont fermés, ou l’application PremadeLab est bloquée. Autorise les messages privés dans les réglages de confidentialité de Discord, puis vérifie que PremadeLab n’est pas bloquée."
+    "unreachable": "Discord a refusé notre dernier message\u00a0: tes messages privés sont fermés, ou l’application PremadeLab est bloquée. Autorise les messages privés dans les réglages de confidentialité de Discord, puis vérifie que PremadeLab n’est pas bloquée."
   }
 }

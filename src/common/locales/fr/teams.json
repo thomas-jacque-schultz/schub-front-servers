@@ -8,7 +8,7 @@
     "membersHeader": "Effectif",
     "updatedHeader": "Dernière modification",
     "emptyTitle": "Aucune équipe pour le moment",
-    "emptyDescription": "Créez-en une : les joueurs s'ajoutent par leur Riot ID, sans attendre que les cinq se soient connectés.",
+    "emptyDescription": "Créez-en une\u00a0: les joueurs s'ajoutent par leur Riot ID, sans attendre que les cinq se soient connectés.",
     "memberCount": "{{count}} membre(s)",
     "updated": "Modifiée le {{date}}",
     "open": "Ouvrir",
@@ -27,7 +27,7 @@
     "helper": "60 caractères au plus.",
     "confirm": "Créer",
     "failed": "La création a échoué",
-    "proposed": "L'équipe sera créée avec : {{players}}."
+    "proposed": "L'équipe sera créée avec\u00a0: {{players}}."
   },
   "team": {
     "caption": "Équipe {{name}}",
@@ -35,13 +35,13 @@
     "rename": {
       "action": "Renommer",
       "title": "Renommer l'équipe",
-      "description": "Le nom est ce que voient les autres membres ; changer d'avis ne coûte rien.",
+      "description": "Le nom est ce que voient les autres membres\u202f; changer d'avis ne coûte rien.",
       "confirm": "Renommer",
       "failed": "Le changement de nom a échoué"
     },
     "delete": {
       "action": "Supprimer l'équipe",
-      "title": "Supprimer « {{name}} » ?",
+      "title": "Supprimer «\u00a0{{name}}\u00a0»\u202f?",
       "description": "L'effectif et les compositions enregistrées partent avec elle. C'est définitif.",
       "confirm": "Supprimer",
       "failed": "La suppression a échoué"
@@ -59,7 +59,7 @@
   },
   "roster": {
     "title": "L'effectif",
-    "description": "Un membre est identifié par son Riot ID. S'il a déjà un compte {{product}}, la place lui est rattachée aussitôt ; sinon elle l'attend, et il la récupérera en liant son compte Riot.",
+    "description": "Un membre est identifié par son Riot ID. S'il a déjà un compte {{product}}, la place lui est rattachée aussitôt\u202f; sinon elle l'attend, et il la récupérera en liant son compte Riot.",
     "caption": "Les membres de l'équipe",
     "emptyTitle": "Effectif vide",
     "emptyDescription": "Ajoutez vos joueurs par leur Riot ID — le vôtre compris, si vous jouez.",
@@ -84,20 +84,20 @@
       "description": "Cherchez le compte Riot du joueur, puis choisissez-le dans la liste. S'il a déjà un compte {{product}}, la place lui est rattachée aussitôt.",
       "confirm": "Ajouter",
       "failed": "L'ajout a échoué",
-      "chosen": "Compte choisi : {{riotId}}",
+      "chosen": "Compte choisi\u00a0: {{riotId}}",
       "changeAccount": "Choisir un autre compte",
       "pick": "Choisir ce joueur"
     },
     "edit": {
       "action": "Modifier",
       "title": "Modifier {{name}}",
-      "description": "Le Riot ID et le compte lié ne se modifient pas ici : le premier appartient à Riot, le second se gagne par revendication.",
+      "description": "Le Riot ID et le compte lié ne se modifient pas ici\u00a0: le premier appartient à Riot, le second se gagne par revendication.",
       "confirm": "Enregistrer",
       "failed": "La modification a échoué"
     },
     "remove": {
       "action": "Retirer",
-      "title": "Retirer {{name}} de l'effectif ?",
+      "title": "Retirer {{name}} de l'effectif\u202f?",
       "description": "La place disparaît. Les compositions qui la désignaient perdront ce joueur.",
       "confirm": "Retirer",
       "failed": "Le retrait a échoué"
@@ -106,15 +106,15 @@
       "roles": "Postes",
       "rolesHelper": "Plusieurs postes sont possibles. Le premier est le poste habituel — c'est lui qui range l'effectif. Laissez vide si le poste n'est pas encore décidé.",
       "status": "Statut",
-      "coachHasNoRole": "Un coach qui ne joue pas ne tient pas de poste : les postes sont retirés.",
-      "statusHelper": "Coach se cumule avec Titulaire ou Remplaçant. Coach seul : il ne joue pas."
+      "coachHasNoRole": "Un coach qui ne joue pas ne tient pas de poste\u00a0: les postes sont retirés.",
+      "statusHelper": "Coach se cumule avec Titulaire ou Remplaçant. Coach seul\u00a0: il ne joue pas."
     }
   },
   "draft": {
     "title": "Les compositions préparées",
-    "description": "Des brouillons, à montrer à l'équipe : un champion et un joueur par poste, des remplaçants, et les bans prévus. Ni ordre de pick ni minuteur — ce n'est pas un simulateur de draft.",
+    "description": "Des brouillons, à montrer à l'équipe\u00a0: un champion et un joueur par poste, des remplaçants, et les bans prévus. Ni ordre de pick ni minuteur — ce n'est pas un simulateur de draft.",
     "emptyTitle": "Aucune composition",
-    "emptyDescription": "Préparez-en une : les cinq postes y sont, même si l'effectif ne l'est pas encore.",
+    "emptyDescription": "Préparez-en une\u00a0: les cinq postes y sont, même si l'effectif ne l'est pas encore.",
     "loadFailed": "Impossible de charger les compositions",
     "patch": "Patch {{patch}}",
     "noPatch": "Patch non précisé",
@@ -136,12 +136,12 @@
     },
     "edit": {
       "action": "Modifier",
-      "title": "Modifier « {{name}} »",
+      "title": "Modifier «\u00a0{{name}}\u00a0»",
       "confirm": "Enregistrer"
     },
     "delete": {
       "action": "Supprimer",
-      "title": "Supprimer « {{name}} » ?",
+      "title": "Supprimer «\u00a0{{name}}\u00a0»\u202f?",
       "description": "Le brouillon disparaît. Rien d'autre n'en dépend.",
       "confirm": "Supprimer",
       "failed": "La suppression a échoué"
@@ -155,9 +155,9 @@
       "notesHelper": "Ce que la composition cherche à faire. Facultatif.",
       "championChoose": "Choisir le champion ({{role}})",
       "players": "Joueur ({{role}})",
-      "playerOffRole": "{{name}} — hors poste : {{roles}}",
+      "playerOffRole": "{{name}} — hors poste\u00a0: {{roles}}",
       "playerNoRole": "{{name}} — sans poste déclaré",
-      "playerTaken": "{{name}} — déjà au poste {{role}} ; un clic l'amène ici",
+      "playerTaken": "{{name}} — déjà au poste {{role}}\u202f; un clic l'amène ici",
       "alternativesAdd": "Remplaçants ({{role}})",
       "bans": "Bans {{count}}/{{max}}",
       "bansAdd": "Choisir les bans",
@@ -165,11 +165,11 @@
       "search": "Rechercher un champion",
       "searchPlaceholder": "Ahri, Lee Sin…",
       "noResult": "Aucun champion ne correspond.",
-      "catalogMissing": "Le catalogue des champions n'a pas pu être chargé : impossible de choisir un champion pour l'instant."
+      "catalogMissing": "Le catalogue des champions n'a pas pu être chargé\u00a0: impossible de choisir un champion pour l'instant."
     },
     "validation": {
       "nameRequired": "Une composition a un nom.",
-      "championRequired": "Chaque poste porte un champion : c'est ce qui fait une composition."
+      "championRequired": "Chaque poste porte un champion\u00a0: c'est ce qui fait une composition."
     },
     "advice": {
       "pick": "{{player}} ({{champion}})",
@@ -177,9 +177,9 @@
       "reference": "en général {{rate}} sur {{count}}",
       "tryLine": "en général {{rate}} · joué {{count}} fois ensemble",
       "lowConfidence": "Confiance insuffisante",
-      "lowConfidenceHint": "{{count}} partie(s) : il en faut {{threshold}} pour conclure.",
+      "lowConfidenceHint": "{{count}} partie(s)\u00a0: il en faut {{threshold}} pour conclure.",
       "combosTitle": "Combos qui marchent",
-      "combosConclusion": "Votre meilleur combo : {{picks}}, {{wins}} V – {{losses}} D.",
+      "combosConclusion": "Votre meilleur combo\u00a0: {{picks}}, {{wins}} V – {{losses}} D.",
       "combosEmpty": "Pas encore de partie jouée à deux sur la période.",
       "kind": {
         "JGL_TOP": "Jungle et haut",
@@ -190,26 +190,26 @@
         "COMPOSITION": "Compositions jouées"
       },
       "avoid": "À éviter",
-      "expected": "{{picks}} : {{rate}} ensemble, {{expected}} chacun sans l'autre.",
-      "combosMethod": "Sur {{games}} parties jouées à deux membres ou plus. Classement par la borne basse du taux de victoire (Wilson) : un 3/3 ne passe pas devant un 15/20. Confiance à partir de {{duo}} parties pour un duo, {{trio}} pour un trio. Le repère « en général » porte sur toutes les parties collectées, tous joueurs et paliers confondus.",
+      "expected": "{{picks}}\u00a0: {{rate}} ensemble, {{expected}} chacun sans l'autre.",
+      "combosMethod": "Sur {{games}} parties jouées à deux membres ou plus. Classement par la borne basse du taux de victoire (Wilson)\u00a0: un 3/3 ne passe pas devant un 15/20. Confiance à partir de {{duo}} parties pour un duo, {{trio}} pour un trio. Le repère «\u00a0en général\u00a0» porte sur toutes les parties collectées, tous joueurs et paliers confondus.",
       "toTryTitle": "Combos à essayer",
-      "toTryConclusion": "À essayer : {{picks}}, qui gagne {{rate}} en général.",
+      "toTryConclusion": "À essayer\u00a0: {{picks}}, qui gagne {{rate}} en général.",
       "toTryMethod": "Des duos qui gagnent en général (au moins 30 parties collectées, plus d'une victoire sur deux), avec des champions du pool de l'équipe ou joués au moins 5 fois par le joueur, et que vous avez joués moins de 3 fois ensemble.",
       "bansTitle": "Bans conseillés",
-      "bansConclusion": "{{champion}} : vous gagnez {{rate}} face à lui ({{count}} parties), il est là une partie sur {{every}}.",
+      "bansConclusion": "{{champion}}\u00a0: vous gagnez {{rate}} face à lui ({{count}} parties), il est là une partie sur {{every}}.",
       "bansEmpty": "Aucun champion ne vous pose nettement problème sur la période.",
       "banLine": "{{rate}} en face · 1 partie sur {{every}}",
       "banAdd": "Bannir",
-      "laneThreat": "Contre {{champion}}, {{player}} perd en moyenne {{gold}} d'or à 15 min ({{count}} parties).",
-      "bansMethod": "Classement par impact : présence × perte de taux de victoire par rapport à votre moyenne, la perte prise à sa borne prudente. Sur {{games}} parties.",
+      "laneThreat": "Contre {{champion}}, {{player}} perd en moyenne {{gold}} d'or à 15\u00a0min ({{count}} parties).",
+      "bansMethod": "Classement par impact\u00a0: présence × perte de taux de victoire par rapport à votre moyenne, la perte prise à sa borne prudente. Sur {{games}} parties.",
       "details": "Voir le détail",
       "hideDetails": "Masquer le détail",
-      "record_composition": "Jouée {{count}} fois : {{wins}} V – {{losses}} D",
+      "record_composition": "Jouée {{count}} fois\u00a0: {{wins}} V – {{losses}} D",
       "notPlayed": "Pas encore jouée",
       "synthesis": "{{played}} compo(s) jouée(s) sur {{total}}",
-      "synthesisBest": "{{played}} compo(s) jouée(s) sur {{total}}, la meilleure : {{name}} ({{wins}} V – {{losses}} D)",
-      "lateWins": "Gagne surtout en partie longue : ses victoires durent {{wins}} min en moyenne, ses défaites {{losses}} min.",
-      "earlyWins": "Gagne surtout vite : ses victoires durent {{wins}} min en moyenne, ses défaites {{losses}} min.",
+      "synthesisBest": "{{played}} compo(s) jouée(s) sur {{total}}, la meilleure\u00a0: {{name}} ({{wins}} V – {{losses}} D)",
+      "lateWins": "Gagne surtout en partie longue\u00a0: ses victoires durent {{wins}}\u00a0min en moyenne, ses défaites {{losses}}\u00a0min.",
+      "earlyWins": "Gagne surtout vite\u00a0: ses victoires durent {{wins}}\u00a0min en moyenne, ses défaites {{losses}}\u00a0min.",
       "compositionMethod": "Une partie compte quand les cinq champions, ou leurs remplaçants, sont dans notre camp, quel que soit le joueur.",
       "recommendedBans": "Bans conseillés"
     }
@@ -235,7 +235,7 @@
     "loading": "Chargement de l'équipe",
     "metaTitle": "{{name}} — premade League of Legends | PremadeLab",
     "metaTitleUnknown": "Équipe — PremadeLab",
-    "metaDescription": "{{name}} : {{count}} parties ensemble, {{rate}} de victoires.",
+    "metaDescription": "{{name}}\u00a0: {{count}} parties ensemble, {{rate}} de victoires.",
     "notFound": {
       "title": "Équipe introuvable",
       "description": "Cette équipe n'existe pas, ou ses membres ne l'ont pas rendue publique."
@@ -246,7 +246,7 @@
     },
     "month": {
       "title": "Forme du mois",
-      "conclusion": "{{count}} parties ces 30 derniers jours : {{wins}} V – {{losses}} D.",
+      "conclusion": "{{count}} parties ces 30 derniers jours\u00a0: {{wins}} V – {{losses}} D.",
       "none": "Pas de partie ensemble ces 30 derniers jours."
     },
     "duo": {
@@ -270,7 +270,7 @@
   },
   "training": {
     "title": "Soirées d'entraînement",
-    "none": "Aucun créneau : chaque session reste libre.",
+    "none": "Aucun créneau\u00a0: chaque session reste libre.",
     "recurring": "Chaque {{day}}, de {{start}} à {{end}}",
     "once": "Le {{date}}, de {{start}} à {{end}}",
     "remove": "Retirer ce créneau",
@@ -283,7 +283,7 @@
     "end": "Fin",
     "add": "Ajouter",
     "saveFailed": "Impossible d'enregistrer les créneaux.",
-    "helper": "Heure de Paris. Chaque nuit, PremadeLab repère vos sessions : au moins trois membres, deux parties à la suite, sans pause de plus d'une heure. Une session qui recoupe un créneau est une séance d'entraînement ; un créneau sans partie compte comme séance manquée.",
+    "helper": "Heure de Paris. Chaque nuit, PremadeLab repère vos sessions\u00a0: au moins trois membres, deux parties à la suite, sans pause de plus d'une heure. Une session qui recoupe un créneau est une séance d'entraînement\u202f; un créneau sans partie compte comme séance manquée.",
     "sessions": "Dernières sessions",
     "sessionPlanned": "{{date}} · séance d'entraînement · {{count}} parties, {{wins}} V – {{losses}} D",
     "sessionFree": "{{date}} · session libre · {{count}} parties, {{wins}} V – {{losses}} D",

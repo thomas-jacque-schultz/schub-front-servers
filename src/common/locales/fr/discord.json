@@ -1,7 +1,7 @@
 {
   "channels": {
     "title": "Canaux Discord de statut",
-    "selectionCount": "{{count}} sélection(s)",
+    "selectionCount": "{{count}}\u00a0sélection(s)",
     "description": "Sélectionne les canaux par serveur Discord. En validant, le bot applique la même logique que la commande /subscribe et met à jour les messages d'état.",
     "accordion": "Liste des canaux Discord ({{count}} serveur(s))",
     "submit": "Valider la sélection",
@@ -17,9 +17,9 @@
     "button": "Nettoyer les salons",
     "confirm": "Nettoyer",
     "summary": "{{messages}} message(s) seront supprimés dans {{channels}} salon(s), {{reposts}} encart(s) seront repostés.",
-    "nothing": "Les salons sont déjà propres : rien à supprimer, rien à reposter.",
-    "forbidden": "Sans la permission « Gérer les messages », ces salons seront laissés tels quels : {{channels}}.",
-    "done": "Salons nettoyés : {{messages}} message(s) supprimé(s), {{reposts}} encart(s) reposté(s).",
+    "nothing": "Les salons sont déjà propres\u00a0: rien à supprimer, rien à reposter.",
+    "forbidden": "Sans la permission «\u00a0Gérer les messages\u00a0», ces salons seront laissés tels quels\u00a0: {{channels}}.",
+    "done": "Salons nettoyés\u00a0: {{messages}} message(s) supprimé(s), {{reposts}} encart(s) reposté(s).",
     "errors": {
       "preview": "Impossible de compter les messages à supprimer",
       "clean": "Le nettoyage a échoué"
