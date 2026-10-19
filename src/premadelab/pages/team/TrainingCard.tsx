@@ -142,6 +142,7 @@ export function TrainingCard({
             {genre === "recurring" ? (
               <SelectField
                 label={t("training.day")}
+                fullWidth={false}
                 value={jour}
                 onChange={(value) => setJour(value as WeekDay)}
                 options={JOURS.map((j) => ({
@@ -152,6 +153,7 @@ export function TrainingCard({
             ) : (
               <SelectField
                 label={t("training.date")}
+                fullWidth={false}
                 value={date}
                 onChange={setDate}
                 options={prochainsJours().map(({ decalage, jour }) => ({

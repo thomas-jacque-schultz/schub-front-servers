@@ -298,7 +298,7 @@
     "dayDate": "{{day}} {{date}}",
     "start": "Start",
     "end": "End",
-    "minutes": "Minutes",
+    "minutes": "min",
     "add": "Add",
     "saveFailed": "Could not save the slots.",
     "helper": "Paris time. Every night, PremadeLab spots your sessions: at least three members, two games in a row, no break longer than an hour. A session overlapping a slot is a training session; a slot without a game counts as missed.",
