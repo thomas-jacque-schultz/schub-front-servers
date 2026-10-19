@@ -22,6 +22,8 @@ export interface LaneMapProps {
   /** La zone à cerner : le côté fort, par exemple. */
   highlight?: LaneMapKey | null;
   align?: "start" | "center";
+  /** Largeur fixe, légende comprise : la carte se pose alors à côté d'un texte. */
+  width?: number;
 }
 
 // La Faille vue d'en haut : le couloir du haut longe les bords gauche et haut, celui du bas les bords bas et
@@ -39,8 +41,8 @@ const ZONES: Record<
     angle: -45,
   },
   BOT: { points: "100,22 100,100 22,100", x: 74, y: 74, angle: 0 },
-  BLUE: { points: "0,0 100,100 0,100", x: 32, y: 70, angle: 0 },
-  RED: { points: "0,0 100,0 100,100", x: 68, y: 32, angle: 0 },
+  BLUE: { points: "0,0 100,100 0,100", x: 30, y: 80, angle: 0 },
+  RED: { points: "0,0 100,0 100,100", x: 70, y: 22, angle: 0 },
 };
 
 const COULOIRS = [
@@ -54,6 +56,7 @@ export function LaneMap({
   zones,
   highlight,
   align = "start",
+  width,
 }: LaneMapProps) {
   const { chart: couleurs, palette } = useChartScheme();
   const total = zones.reduce(
@@ -61,7 +64,7 @@ export function LaneMap({
     0,
   );
   return (
-    <Box>
+    <Box sx={width ? { width, flexShrink: 0 } : undefined}>
       <Typography
         variant="caption"
         color="text.secondary"

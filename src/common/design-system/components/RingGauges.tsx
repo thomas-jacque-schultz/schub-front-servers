@@ -83,7 +83,7 @@ export function RingGauges({ label, items }: RingGaugesProps) {
                   x={COTE / 2}
                   y={COTE / 2 + 3.5}
                   textAnchor="middle"
-                  fontSize="11"
+                  fontSize="9.5"
                   fontWeight="700"
                   fontFamily={typographyTokens.monospaceFontFamily}
                   fill="currentColor"

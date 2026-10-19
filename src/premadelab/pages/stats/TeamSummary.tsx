@@ -113,7 +113,7 @@ export function TeamSummary({ teamId, periode }: TeamSummaryProps) {
                   key: Number(record.key) === 200 ? "RED" : "BLUE",
                   label: format.cote(Number(record.key)),
                   value: record.games,
-                  valueLabel: libelle(record, format),
+                  valueLabel: `${format.taux(record.winRate)} · ${record.games}`,
                   ...teinte(record, stats.overall.winRate),
                 }))}
               />

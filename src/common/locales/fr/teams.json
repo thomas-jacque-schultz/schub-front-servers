@@ -176,8 +176,15 @@
       "record": "{{wins}} V – {{losses}} D",
       "reference": "en général {{rate}} sur {{count}}",
       "referenceShort": "{{rate}} sur {{count}}",
+      "kindShort": {
+        "JGL_TOP": "Jungle-haut",
+        "JGL_MID": "Jungle-milieu",
+        "JGL_SUP": "Jungle-support",
+        "ADC_SUP": "Bas-support",
+        "JGL_MID_SUP": "Trios",
+        "COMPOSITION": "Compos"
+      },
       "columns": {
-        "champions": "Champions",
         "players": "Joueurs",
         "record": "Bilan",
         "reference": "En général"

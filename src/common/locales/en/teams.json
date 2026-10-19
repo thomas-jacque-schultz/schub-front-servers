@@ -176,8 +176,15 @@
       "record": "{{wins}}W – {{losses}}L",
       "reference": "{{rate}} in general over {{count}}",
       "referenceShort": "{{rate}} over {{count}}",
+      "kindShort": {
+        "JGL_TOP": "Jungle-top",
+        "JGL_MID": "Jungle-mid",
+        "JGL_SUP": "Jungle-support",
+        "ADC_SUP": "Bot-support",
+        "JGL_MID_SUP": "Trios",
+        "COMPOSITION": "Comps"
+      },
       "columns": {
-        "champions": "Champions",
         "players": "Players",
         "record": "Record",
         "reference": "In general"

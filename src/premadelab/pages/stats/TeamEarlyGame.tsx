@@ -194,7 +194,7 @@ export function TeamEarlyGame({
   return (
     <Card footnote={t("early.team.helper", { count: early.games })}>
       <Stack spacing={2.5}>
-        <Columns minWidth={240} count={4}>
+        <Columns minWidth={240} count={3}>
           {or && or.mean !== null && (
             <Conclusion
               titre={t("early.team.goldTitle")}
@@ -240,12 +240,14 @@ export function TeamEarlyGame({
               })}
             />
           )}
-          <Frame>
+        </Columns>
+        <Frame>
+          <Stack direction="row" spacing={3} align="center" wrap>
+            <SidesMap sides={early.strongSides} width={220} />
             <Stack spacing={1}>
               <Text variant="subtitle">{t("early.team.sides")}</Text>
-              <SidesMap sides={early.strongSides} />
               {cote && (
-                <Text variant="caption">
+                <Text>
                   {t("early.team.sideConclusion", {
                     side: t(`early.side.${cote.side}`),
                     rate: taux(cote.wins, cote.games),
@@ -253,9 +255,12 @@ export function TeamEarlyGame({
                   })}
                 </Text>
               )}
+              <Text variant="caption" tone="secondary">
+                {t("early.team.sidesHelper")}
+              </Text>
             </Stack>
-          </Frame>
-        </Columns>
+          </Stack>
+        </Frame>
         <Disclosure
           title={t("synergy.exact")}
           open={detailOuvert}
@@ -348,7 +353,13 @@ const ECART_SATURE = 0.2;
 const ECART_NEUTRE = 0.03;
 const ZONE_DU_COTE = { TOP: "TOP", BALANCED: "MID", BOT: "BOT" } as const;
 
-function SidesMap({ sides }: { sides: StrongSideRecordDto[] }) {
+function SidesMap({
+  sides,
+  width,
+}: {
+  sides: StrongSideRecordDto[];
+  width?: number;
+}) {
   const { t } = useTranslation("stats");
   const format = useStatsFormat();
   const parties = sides.reduce((somme, c) => somme + c.games, 0);
@@ -364,6 +375,7 @@ function SidesMap({ sides }: { sides: StrongSideRecordDto[] }) {
         average: format.taux(moyenne),
       })}
       align="center"
+      width={width}
       highlight={
         meilleur && lisibles.length > 1 ? ZONE_DU_COTE[meilleur.side] : null
       }
