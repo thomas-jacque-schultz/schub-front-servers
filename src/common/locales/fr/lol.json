@@ -5,59 +5,21 @@
   },
   "shell": {
     "tagline": "Les stats de ton premade",
-    "presentation": "Présentation",
     "stats": "Mes stats",
     "statsLocked": "Liez votre compte Riot pour y accéder",
     "teams": "Équipes",
     "footerNote": "PremadeLab — les stats et le théorycraft de ton équipe League of Legends",
-    "search": "Rechercher",
     "combos": "Combos",
     "support": "Soutenir",
     "queueKiller": "Queue Killer",
-    "experimental": "Expérimental : de nouveaux jeux arrivent, et ceux-ci bougeront encore"
+    "experimental": "Expérimental : de nouveaux jeux arrivent, et ceux-ci bougeront encore",
+    "home": "Accueil",
+    "howItWorks": "Comment ça marche"
   },
   "hero": {
     "eyebrow": "League of Legends",
     "title": "PremadeLab, l’outil de ton premade",
     "subtitle": "Chercher un joueur, constituer un effectif, réunir l’historique des parties jouées ensemble, et s’en servir pour préparer la suivante."
-  },
-  "intro": {
-    "title": "À quoi ça sert",
-    "p1": "Une équipe amateur joue ensemble sans jamais pouvoir relire ce qu’elle a joué\u00a0: l’historique du client de jeu est individuel, court, et ne dit rien de ce que le groupe fait quand il est au complet. PremadeLab rassemble ces parties au même endroit et les rend lisibles à l’échelle de l’équipe.",
-    "p2": "PremadeLab est gratuit, sans publicité ni compte payant. Chercher un joueur ne demande pas de compte\u202f; monter une équipe, si.",
-    "p3": "Les données de jeu viennent de l’API de Riot Games. PremadeLab ne lit que des parties publiques\u00a0: celles des comptes que leurs propriétaires ont déclarés, et les dernières parties d’un joueur que quelqu’un recherche."
-  },
-  "features": {
-    "title": "Ce que fait l'outil aujourd'hui",
-    "intro": "Rien de plus que cette liste. Ce qui est en chantier n'y figure pas.",
-    "roster": {
-      "title": "Constituer un effectif",
-      "body": "Une équipe se compose en ajoutant des Riot ID. Chaque place porte ses postes — top, jungle, milieu, bot, support — et son statut\u00a0: titulaire, remplaçant ou coach. Un joueur ajouté avant d'avoir un compte garde sa place\u00a0: elle le rejoint quand il se connecte et lie le même compte."
-    },
-    "collect": {
-      "title": "Collecter l'historique des parties jouées ensemble",
-      "body": "Une fois un compte déclaré, PremadeLab lit son historique par l’API de Riot et repère les parties où l’équipe était présente. Une partie compte pour l’équipe dès que quatre de ses membres y figurent, toutes files confondues."
-    },
-    "playerStats": {
-      "title": "Statistiques par joueur",
-      "body": "Par champion, par poste, par file et par mois\u00a0: parties, victoires, KDA, sbires, or, dégâts et vision à la minute, avec les classements en cours. Chaque chiffre dit sur combien de parties et sur quelle période il porte."
-    },
-    "teamStats": {
-      "title": "Statistiques par équipe",
-      "body": "Le bilan du groupe, découpé par file, par côté de la carte et par patch, avec le taux de présence de chaque membre et le tableau des parties jouées ensemble."
-    },
-    "pool": {
-      "title": "Pool de champions par poste",
-      "body": "L’équipe déclare, poste par poste, les champions qu’elle est prête à aligner. Sous chaque champion, PremadeLab montre qui du poste l’a déjà joué et à quel niveau de maîtrise, à partir d’un plancher fixé par l’équipe."
-    },
-    "draft": {
-      "title": "Préparation des compositions",
-      "body": "Une composition retient cinq champions, un par poste, et le joueur qui prend chaque ligne. Elle porte le patch auquel elle se rapporte et des notes libres, et se retrouve à la partie suivante."
-    },
-    "search": {
-      "title": "Chercher un joueur",
-      "body": "Un Riot ID suffit\u00a0: son rang, ses champions les plus maîtrisés, puis les statistiques de ses dix dernières parties, collectées à la demande."
-    }
   },
   "limits": {
     "title": "Ce que l'outil ne fait pas",
@@ -69,16 +31,6 @@
     "collectTime": "La première collecte prend du temps — le quota de l’API de Riot la limite. L’écran de profil dit où elle en est.",
     "historyUnknown": "PremadeLab ne relève que les parties récentes de chaque joueur\u00a0: l'historique ancien n'est pas collecté."
   },
-  "access": {
-    "title": "Entrer dans l'outil",
-    "signedInBody": "Ton compte est connecté\u00a0: l'outil est ouvert.",
-    "signedOutBody": "L'outil demande un compte. L'identification passe par Discord, puis par la déclaration de ton Riot ID depuis ton profil.",
-    "ctaTeams": "Mes équipes",
-    "ctaStats": "Mes stats",
-    "ctaProfile": "Lier mon compte League of Legends",
-    "ctaSignIn": "Se connecter avec Discord",
-    "noTeamPermission": "Ton rôle ne donne pas encore accès aux équipes. Les statistiques personnelles, elles, restent ouvertes."
-  },
   "legal": {
     "title": "Mentions",
     "data": "Ce que PremadeLab conserve, combien de temps, et comment en demander la suppression est décrit dans la politique de confidentialité.",
@@ -86,18 +38,21 @@
     "privacy": "Politique de confidentialité"
   },
   "home": {
-    "features": {
-      "players": {
-        "title": "La fiche de chaque joueur",
-        "body": "Cherche un Riot ID\u00a0: rang, champions les plus joués, phase de couloir et style de jeu, comparés aux joueurs de son palier au même poste. La fiche est publique, sans compte."
+    "tiles": {
+      "player": {
+        "title": "Ta fiche\u00a0: rang, champions, style de jeu",
+        "alt": "Les revenus, la phase de couloir et les combats d’un joueur",
+        "image": "/premadelab/tuiles/fr/fiche.jpg"
       },
       "team": {
-        "title": "Ce qui marche à cinq",
-        "body": "Monte ton premade\u00a0: PremadeLab retrouve les parties que vous jouez ensemble et en tire vos duos qui gagnent, votre début de partie, Early contre Late et le niveau de vos adversaires."
+        "title": "Les stats de ta premade, partie après partie",
+        "alt": "Le bilan d’une équipe et ses champions les plus joués",
+        "image": "/premadelab/tuiles/fr/premade.jpg"
       },
       "draft": {
-        "title": "Pool et draft",
-        "body": "Le pool de l'équipe poste par poste, et un préparateur de draft pour enregistrer vos compositions, avec remplaçants et bans prévus."
+        "title": "Prépare ta draft avec les combos qui gagnent",
+        "alt": "Les duos de champions qui gagnent le plus à un palier",
+        "image": "/premadelab/tuiles/fr/draft.jpg"
       }
     },
     "faq": {

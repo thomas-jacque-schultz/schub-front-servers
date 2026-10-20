@@ -12,7 +12,7 @@ import {
   useProfileStore,
 } from "../../common";
 import { getMyTeamsApi } from "../api/teamsApi";
-import { HomeShowcase } from "../components/HomeShowcase";
+import { HomeTiles } from "../components/HomeTiles";
 import { JoinCta } from "../components/JoinCta";
 import { PlayerSearch } from "../components/PlayerSearch";
 
@@ -101,6 +101,7 @@ function SearchPage() {
       <Card>
         <PlayerSearch />
       </Card>
+      {!connected && <HomeTiles />}
       <JoinCta />
       {resteAFaire && (
         <Card
@@ -114,7 +115,6 @@ function SearchPage() {
           />
         </Card>
       )}
-      {!connected && <HomeShowcase />}
     </Stack>
   );
 }
