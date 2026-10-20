@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import {
   Alert,
   Card,
-  ChampionIcon,
+  ChampionRow,
   DataTable,
   EmptyState,
   PageHeader,
@@ -136,23 +136,13 @@ export default function TierCombosPage() {
                   key: "champions",
                   header: t("combos.champions"),
                   render: (ligne) => (
-                    <Stack direction="row" spacing={1} align="center" wrap>
-                      {ligne.champions.map((champion, index) => (
-                        <Stack
-                          key={`${champion.id}-${index}`}
-                          direction="row"
-                          spacing={0.5}
-                          align="center"
-                        >
-                          <ChampionIcon
-                            size="small"
-                            name={champion.name ?? String(champion.id)}
-                            src={champion.iconUrl}
-                          />
-                          <Text>{champion.name ?? format.absent}</Text>
-                        </Stack>
-                      ))}
-                    </Stack>
+                    <ChampionRow
+                      columns={type === "JGL_MID_SUP" ? 3 : 2}
+                      champions={ligne.champions.map((champion) => ({
+                        name: champion.name ?? format.absent,
+                        iconUrl: champion.iconUrl,
+                      }))}
+                    />
                   ),
                 },
                 {

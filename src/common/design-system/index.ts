@@ -49,6 +49,11 @@ export { Checkbox } from "./components/Checkbox";
 export type { CheckboxProps } from "./components/Checkbox";
 export { ChampionIcon } from "./components/ChampionIcon";
 export type { ChampionIconProps } from "./components/ChampionIcon";
+export { ChampionRow } from "./components/ChampionRow";
+export type {
+  ChampionRowItem,
+  ChampionRowProps,
+} from "./components/ChampionRow";
 export { ChampionPickButton } from "./components/ChampionPickButton";
 export type { ChampionPickButtonProps } from "./components/ChampionPickButton";
 export { ChampionSelector } from "./components/ChampionSelector";
