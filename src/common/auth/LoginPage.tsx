@@ -8,6 +8,7 @@ import {
   Text,
 } from "../design-system";
 import { useLocalizedNavigate } from "../i18n/navigation";
+import { useProductName } from "../product";
 import { useAuthStore } from "../stores/authStore";
 
 /** La seule entrée : il n'existe plus de compte local ni de mot de passe. */
@@ -15,11 +16,12 @@ function LoginPage() {
   const { error, loginWithDiscord } = useAuthStore();
   const navigate = useLocalizedNavigate();
   const { t } = useTranslation("auth");
+  const product = useProductName();
 
   return (
     <Card
       title={t("login.discordTitle")}
-      description={t("login.discordSubtitle")}
+      description={t("login.discordSubtitle", { context: product })}
     >
       <Stack spacing={2} align="start">
         {error && <Alert severity="error">{error}</Alert>}
