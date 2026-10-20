@@ -97,7 +97,7 @@ function ScribbleRoom({ room }: { room: string | null }) {
   }, [navigate, room]);
 
   const lien = room
-    ? `${APP_URLS.premadelab}${localize(`/queue-killer/scribble/${room}`)}`
+    ? APP_URLS.premadelab + localize(`/queue-killer/scribble/${room}`)
     : null;
 
   return (
