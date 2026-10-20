@@ -120,7 +120,8 @@ export function Histogram({
             key={index}
             variant="caption"
             sx={{
-              textAlign: "center",
+              display: "flex",
+              justifyContent: index === n - 1 ? "flex-end" : "center",
               color: "text.secondary",
               fontFamily: typographyTokens.monospaceFontFamily,
               overflow: "visible",

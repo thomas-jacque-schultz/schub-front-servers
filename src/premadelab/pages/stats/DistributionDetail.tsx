@@ -54,10 +54,12 @@ export function DistributionDetail({
       const niveau = dessous > 0.6 ? "high" : dessous < 0.4 ? "low" : "average";
       const chiffre = format.ratio(valeur);
       const derniere = repartition.counts.length - 1;
-      const borne = (index: number) =>
-        discrete
-          ? format.entier(index)
-          : format.ratio(index * repartition.step);
+      const borne = (index: number) => {
+        const valeurDeCase = index * repartition.step;
+        return Number.isInteger(valeurDeCase)
+          ? format.entier(valeurDeCase)
+          : format.ratio(valeurDeCase);
+      };
       return (
         <Stack key={key} spacing={1}>
           <Text variant="subtitle">{t(`distribution.${key}.title`)}</Text>
