@@ -227,13 +227,17 @@
     },
     "title": "Queue Killer",
     "subtitle": "De quoi tuer l’attente en file avec ta premade\u00a0: des mini-jeux à plusieurs, jouables sans compte.",
+    "create": "Créer un salon",
+    "share": "Lien du salon",
+    "copy": "Copier",
+    "copied": "Lien copié",
     "scribble": {
       "title": "Scribble",
-      "body": "Un tableau partagé\u00a0: chacun dessine, tous voient le trait en direct. Crée un salon et envoie le lien à ta premade.",
-      "create": "Créer un salon",
-      "share": "Lien du salon",
-      "copy": "Copier",
-      "copied": "Lien copié"
+      "body": "Un joueur dessine un champion, les autres devinent. Crée un salon et envoie le lien à ta premade."
+    },
+    "zoom": {
+      "title": "Zoom",
+      "body": "Un champion caché sous un zoom qui recule peu à peu\u00a0: le premier qui le reconnaît marque le plus."
     }
   }
 }

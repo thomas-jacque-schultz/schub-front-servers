@@ -227,13 +227,17 @@
     },
     "title": "Queue Killer",
     "subtitle": "Something to kill queue time with your premade: multiplayer mini-games, playable without an account.",
+    "create": "Create a room",
+    "share": "Room link",
+    "copy": "Copy",
+    "copied": "Link copied",
     "scribble": {
       "title": "Scribble",
-      "body": "A shared board: everyone draws, everyone sees the strokes live. Create a room and send the link to your premade.",
-      "create": "Create a room",
-      "share": "Room link",
-      "copy": "Copy",
-      "copied": "Link copied"
+      "body": "One player draws a champion, the others guess. Create a room and send the link to your premade."
+    },
+    "zoom": {
+      "title": "Zoom",
+      "body": "A champion hidden under a zoom that slowly pulls back: the first to recognise it scores the most."
     }
   }
 }
