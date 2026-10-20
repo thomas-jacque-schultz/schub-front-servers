@@ -89,13 +89,18 @@ const parsePorts = (raw: string): GameServerPortDto[] | null => {
     if (!isValidPort(wanPort) || !isValidPort(lanPort)) {
       return null;
     }
-    parsed.push({ proto: match[1].toLowerCase(), wanPort, lanPort });
+    parsed.push({
+      proto: match[1].toLowerCase(),
+      wanPort,
+      lanPort,
+      lanIp: null,
+    });
   }
 
   return parsed;
 };
 
-const formatPorts = (ports?: GameServerPortDto[]): string =>
+const formatPorts = (ports?: GameServerPortDto[] | null): string =>
   (ports || [])
     .map((port) =>
       port.lanPort && port.lanPort !== port.wanPort

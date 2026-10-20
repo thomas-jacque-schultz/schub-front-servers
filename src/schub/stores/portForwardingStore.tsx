@@ -13,7 +13,11 @@ import {
   getStaticPortRulesApi,
 } from "../api/portForwardingApi";
 import { i18n } from "../../common";
-import type { PortRuleDto, StaticPortRuleDto } from "../types/portForwarding";
+import type {
+  PortRuleDto,
+  StaticPortRuleDto,
+  StaticPortRuleRequest,
+} from "../types/portForwarding";
 
 interface PortForwardingStoreValue {
   routerRules: PortRuleDto[];
@@ -23,7 +27,7 @@ interface PortForwardingStoreValue {
   routerError: string | null;
   lastRefreshedAt: Date | null;
   loadPortForwarding: () => Promise<void>;
-  createStaticRule: (rule: StaticPortRuleDto) => Promise<void>;
+  createStaticRule: (rule: StaticPortRuleRequest) => Promise<void>;
   deleteStaticRule: (id: string) => Promise<void>;
   resetPortForwarding: () => void;
 }
@@ -78,7 +82,7 @@ export const PortForwardingStoreProvider = ({
   }, []);
 
   const createStaticRule = useCallback(
-    async (rule: StaticPortRuleDto) => {
+    async (rule: StaticPortRuleRequest) => {
       await createStaticPortRuleApi(rule);
       await loadPortForwarding();
     },

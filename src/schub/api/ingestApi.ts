@@ -1,3 +1,4 @@
+import type { Schemas } from "../../common";
 import { requestJson, type HistoryWindowDto } from "../../common";
 import type {
   AccountsByRankDto,
@@ -58,10 +59,7 @@ export const invalidateRiotDataApi = async (
     body: JSON.stringify({ confirmation }),
   });
 
-export interface SeoCreatorsDto {
-  creators: string[];
-  unknown: string[];
-}
+export type SeoCreatorsDto = Schemas["SeoCreatorsDto"];
 
 export const getSeoCreatorsApi = async (): Promise<SeoCreatorsDto> =>
   requestJson<SeoCreatorsDto>("/ingest/seo-creators", { method: "GET" });

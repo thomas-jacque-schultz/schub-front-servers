@@ -1,11 +1,8 @@
+import type { Schemas } from "..";
 import { requestJson } from "./httpClient";
 import { useRequest } from "./useRequest";
 
-export interface HistoryWindowDto {
-  maxGames: number;
-  maxAgeDays: number;
-  minGames: number;
-}
+export type HistoryWindowDto = Schemas["HistoryWindowDto"];
 
 export const getHistoryWindowApi = async (): Promise<HistoryWindowDto> =>
   requestJson<HistoryWindowDto>("/players/history-window", { method: "GET" });

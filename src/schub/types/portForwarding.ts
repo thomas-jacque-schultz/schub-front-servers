@@ -1,25 +1,10 @@
-export interface PortRuleDto {
-  providerId?: string | null;
-  // static/<nom> : règle permanente, supprimable ; <slug> : dérivée d'un serveur ; null : manuelle, jamais touchée.
-  owner?: string | null;
-  protocol: "TCP" | "UDP";
-  wanPortStart: number;
-  wanPortEnd: number;
-  lanIp: string;
-  lanPort: number;
-  open: boolean;
-}
+import type { Schemas } from "../../common";
 
-export interface StaticPortRuleDto {
-  id?: string;
-  name: string;
-  proto: string;
-  wanPortStart: number;
-  wanPortEnd?: number | null;
-  lanPort?: number | null;
-  lanIp?: string | null;
-  enabled: boolean;
-}
+export type PortRuleDto = Schemas["PortRuleDto"];
+
+export type StaticPortRuleDto = Schemas["StaticPortRuleDto"];
+
+export type StaticPortRuleRequest = Schemas["StaticPortRuleRequest"];
 
 export const STATIC_OWNER_PREFIX = "static/";
 

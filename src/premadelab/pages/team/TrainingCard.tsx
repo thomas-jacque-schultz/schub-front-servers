@@ -192,6 +192,7 @@ export function TrainingCard({
                 void enregistre([
                   ...creneaux,
                   {
+                    id: null,
                     day: genre === "recurring" ? jour : null,
                     date: genre === "once" ? date : null,
                     start: debut,

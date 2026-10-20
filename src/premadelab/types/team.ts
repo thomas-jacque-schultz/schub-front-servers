@@ -1,3 +1,5 @@
+import type { Schemas } from "../../common";
+
 export const GAME_ROLES = ["TOP", "JGL", "MID", "ADC", "SUP"] as const;
 
 export type GameRole = (typeof GAME_ROLES)[number];
@@ -6,103 +8,25 @@ export const MEMBER_STATUSES = ["TITULAIRE", "REMPLACANT", "COACH"] as const;
 
 export type MemberStatus = (typeof MEMBER_STATUSES)[number];
 
-interface ViewerFacts {
-  viewerMemberId: string | null;
-  viewerCanManage: boolean;
-  viewerCanEditRoster: boolean;
-  viewerCanEditCompositions: boolean;
-  /** Page publique en lecture seule (Schub#98). */
-  publicPage?: boolean;
-  trainingSlots?: TrainingSlotDto[];
-}
+export type TeamSummaryDto = Schemas["TeamSummaryDto"];
 
-export interface TeamSummaryDto extends ViewerFacts {
-  id: string;
-  name: string;
-  memberCount: number;
-  createdAt: string;
-  updatedAt: string;
-}
+export type TeamMemberDto = Schemas["TeamMemberDto"];
 
-export interface TeamMemberDto {
-  memberId: string;
-  displayName: string;
-  avatarUrl: string | null;
-  riotGameName: string | null;
-  riotTagLine: string | null;
-  roles: GameRole[];
-  status: MemberStatus;
-  /** Cumulable avec titulaire ou remplaçant ; vrai aussi pour le statut COACH. */
-  coach: boolean;
-  linked: boolean;
-  captain: boolean;
-  hiddenOnPublicPage?: boolean;
-}
+export type TeamDto = Schemas["TeamDto"];
 
-export interface TeamDto extends ViewerFacts {
-  id: string;
-  name: string;
-  memberCount: number;
-  members: TeamMemberDto[];
-  createdAt: string;
-  updatedAt: string;
-}
+export type CompositionSlotDto = Schemas["CompositionSlotDto"];
 
-export interface CompositionSlotDto {
-  role: GameRole;
-  // Clé Data Dragon (Ahri, MonkeyKing…), pas un nom affiché.
-  championId: string | null;
-  memberId: string | null;
-  playerDisplayName: string | null;
-  alternatives: string[];
-}
+export type CompositionDto = Schemas["CompositionDto"];
 
-export interface CompositionDto {
-  id: string;
-  teamId: string;
-  name: string;
-  slots: CompositionSlotDto[];
-  bans: string[];
-  patch: string | null;
-  notes: string | null;
-  createdAt: string;
-  updatedAt: string;
-  viewerCanEdit: boolean;
-}
+export type TeamNameRequest = Schemas["TeamNameRequest"];
 
-export interface TeamNameRequest {
-  name: string;
-}
+export type AddMemberRequest = Schemas["AddMemberRequest"];
 
-export interface AddMemberRequest {
-  riotGameName: string;
-  riotTagLine: string;
-  riotPuuid?: string | null;
-  roles: GameRole[];
-  status: MemberStatus;
-  coach: boolean;
-}
+export type UpdateMemberRequest = Schemas["UpdateMemberRequest"];
 
-export interface UpdateMemberRequest {
-  roles: GameRole[];
-  status: MemberStatus;
-  coach: boolean;
-}
+export type CompositionSlotRequest = Schemas["CompositionSlotRequest"];
 
-export interface CompositionSlotRequest {
-  role: GameRole;
-  championId: string;
-  memberId: string | null;
-  alternatives: string[];
-}
-
-export interface CompositionRequest {
-  name: string;
-  slots: CompositionSlotRequest[];
-  bans: string[];
-  patch: string | null;
-  notes: string | null;
-}
+export type CompositionRequest = Schemas["CompositionRequest"];
 
 export const riotIdOf = (member: TeamMemberDto): string | null =>
   member.riotGameName && member.riotTagLine
@@ -147,30 +71,7 @@ export const versRequete = (
   coach: statuts.includes("COACH"),
 });
 
-export interface PublicTeamDto {
-  id: string;
-  name: string;
-  /** riotId absent : le membre a masqué son nom. */
-  members: { riotId: string | null; slug: string | null; roles: GameRole[] }[];
-  games: number;
-  wins: number;
-  monthGames: number;
-  monthWins: number;
-  bestDuo: {
-    a: string;
-    b: string;
-    games: number;
-    wins: number;
-    delta: number;
-  } | null;
-  champions: {
-    championId: number;
-    name: string;
-    iconUrl: string | null;
-    games: number;
-    wins: number;
-  }[];
-}
+export type PublicTeamDto = Schemas["PublicTeamDto"];
 
 export type WeekDay =
   | "MONDAY"
@@ -182,22 +83,6 @@ export type WeekDay =
   | "SUNDAY";
 
 /** Un créneau d'entraînement (Schub#102), à l'heure de Paris : récurrent (day) ou ponctuel (date). */
-export interface TrainingSlotDto {
-  id?: string | null;
-  day: WeekDay | null;
-  date: string | null;
-  start: string;
-  end: string;
-}
+export type TrainingSlotDto = Schemas["TrainingSlotDto"];
 
-export interface TeamSessionDto {
-  id: string;
-  day: string;
-  startedAt: string;
-  endedAt: string;
-  memberIds: string[];
-  games: number;
-  wins: number;
-  planned: boolean;
-  missed: boolean;
-}
+export type TeamSessionDto = Schemas["TeamSessionDto"];

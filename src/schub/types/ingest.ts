@@ -1,74 +1,19 @@
-export interface IngestLoadDto {
-  available: boolean;
-  pending: number;
-  running: number;
-  failed: number;
-  callsPerMinute: number;
-  /** Durée ISO-8601 (PT1H25M). */
-  estimatedDrain: string | null;
-  estimatedReadyAt: string | null;
-  throttledFor: string | null;
-}
+import type { Schemas } from "../../common";
 
-export interface CrawlerDto {
-  available: boolean;
-  /** Faux en prod : la collecte de fond y tourne toujours. */
-  switchable: boolean;
-  enabled: boolean;
-  running: boolean;
-  knownAccounts: number;
-  trackedAccounts: number;
-  backgroundPending: number;
-  databaseBytes: number;
-  storageAlertBytes: number;
-  storageAlert: boolean;
-  lastRoundAt: string | null;
-  lastRoundAccounts: number;
-}
+export type IngestLoadDto = Schemas["IngestLoadDto"];
 
-export interface IngestCountsDto {
-  retrieved: number;
-  analysed: number;
-  pending: number;
-}
+export type CrawlerDto = Schemas["CrawlerDto"];
 
-export interface IngestSummaryDto {
-  available: boolean;
-  matches: IngestCountsDto;
-  profiles: IngestCountsDto;
-}
+export type IngestCountsDto = Schemas["Counts"];
 
-export interface IngestPauseDto {
-  available: boolean;
-  paused: boolean;
-  updatedAt: string | null;
-  /** Tâches prises avant la pause et pas encore terminées. */
-  running: number;
-}
+export type IngestSummaryDto = Schemas["IngestSummaryDto"];
 
-export interface RiotDataInventoryDto {
-  available: boolean;
-  riotDocuments: number;
-  findings: number;
-  linkedAccounts: number;
-  teamSlots: number;
-  teams: number;
-}
+export type IngestPauseDto = Schemas["IngestPauseDto"];
 
-export interface RiotDataInvalidationDto {
-  riotDocuments: number;
-  findings: number;
-  accountsToResolve: number;
-}
+export type RiotDataInventoryDto = Schemas["RiotDataInventoryDto"];
 
-export interface AccountsByRankRowDto {
-  /** UNRANKED, puis IRON … CHALLENGER. */
-  tier: string;
-  tracked: number;
-  seeds: number;
-}
+export type RiotDataInvalidationDto = Schemas["RiotDataInvalidationDto"];
 
-export interface AccountsByRankDto {
-  available: boolean;
-  rows: AccountsByRankRowDto[];
-}
+export type AccountsByRankRowDto = Schemas["Row"];
+
+export type AccountsByRankDto = Schemas["AccountsByRankDto"];

@@ -1,75 +1,41 @@
+import type { Schemas } from "../../common";
+
 export type ServerStatus = "online" | "offline" | "unknown" | "unreachable";
 
 export type GameServerFormMode = "creation" | "edition" | "visualisation";
 
-export interface GameServerCommandFailureDto {
-  action: "start" | "stop";
-  message?: string;
-  at?: string;
-}
+export type GameServerCommandFailureDto =
+  Schemas["GameServerCommandFailureDto"];
 
-export interface GameServerReferentDto {
-  id: string;
-  displayName?: string;
-  discordId?: string;
-}
+export type GameServerReferentDto = Schemas["GameServerReferentDto"];
 
 export interface DisplayedServer {
-  id?: string;
-  slug?: string;
+  id?: string | null;
+  slug?: string | null;
   name: string;
   status: ServerStatus;
-  lastStatusCheckAt?: string;
-  lastCommandFailure?: GameServerCommandFailureDto;
-  referents?: GameServerReferentDto[];
+  lastStatusCheckAt?: string | null;
+  lastCommandFailure?: GameServerCommandFailureDto | null;
+  referents?: GameServerReferentDto[] | null;
   viewerCanControl?: boolean;
 }
 
-export interface GameServerPortDto {
-  proto: string;
-  wanPort: number;
-  lanPort?: number;
-  lanIp?: string;
-}
+export type GameServerPortDto = Schemas["GameServerPortDto"];
 
-export interface GameServerDto {
-  id?: string;
-  slug?: string;
-  deploymentId?: number;
-  name?: string;
-  urlConnection?: string;
-  game?: string;
-  gameLabel?: string;
-  gameIconUrl?: string;
-  playersMax?: number;
-  installation?: string;
-  version?: string;
-  description?: string;
-  ports?: GameServerPortDto[];
-  status?: string;
-  lastStatusCheckAt?: string;
-  lastStatusChangeAt?: string;
-  statusHistory?: GameServerStatusHistoryEntryDto[];
-  lastCommandFailure?: GameServerCommandFailureDto;
-  referentIds?: string[];
-  referents?: GameServerReferentDto[];
-  viewerCanControl?: boolean;
-}
+// La projection membre, et les champs d'infrastructure quand le lecteur a SERVER_INFRA_VIEW.
+export type GameServerDto = Schemas["GameServerMemberDto"] &
+  Partial<
+    Pick<Schemas["GameServerDto"], "deploymentId" | "ports" | "referentIds">
+  >;
 
-export interface GameServerStatusHistoryEntryDto {
-  status?: string;
-  observedAt?: string;
-}
+export type GameServerStatusHistoryEntryDto =
+  Schemas["GameServerStatusHistoryEntryDto"];
 
 // La projection infra rend toujours un tableau de ports : son absence signale la projection membre.
 export const hasInfrastructureView = (server: GameServerDto): boolean =>
   Array.isArray(server.ports);
 
-export interface PublicServerStatusDto {
-  name?: string;
-  game?: string;
-  status?: string;
-}
+export type PublicServerStatusDto = Schemas["PublicServerStatusDto"];
 
 export interface UpsertGameServerPayload {
   slug: string;

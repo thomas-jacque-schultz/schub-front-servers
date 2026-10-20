@@ -1,9 +1,6 @@
-export interface DeploymentDto {
-  id: number;
-  name: string;
-  endpointId?: number | null;
-  running: boolean;
-}
+import type { Schemas } from "../../common";
+
+export type DeploymentDto = Schemas["PortainerStackDto"];
 
 export const slugFromDeploymentName = (name: string): string =>
   name

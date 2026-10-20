@@ -1,52 +1,13 @@
-import type { MyStatsDto, RankedStandingDto } from "./stats";
+import type { Schemas } from "../../common";
 
-export interface MasteryDto {
-  championId: number;
-  championName: string | null;
-  iconUrl: string | null;
-  level: number;
-  points: number;
-}
+export type MasteryDto = Schemas["MasteryDto"];
 
 /** La page publique d'un joueur recherché : profil tout de suite, statistiques dès que ses parties arrivent. */
-export interface SearchedPlayerDto {
-  gameName: string;
-  tagLine: string;
-  slug: string;
-  /** Son historique a déjà été relevé : rien à collecter. */
-  known: boolean;
-  knownGames: number;
-  /** Son aperçu est en cours de collecte : ses dernières parties arrivent. */
-  collecting: boolean;
-  rankings: RankedStandingDto[];
-  masteries: MasteryDto[];
-  stats: MyStatsDto;
-}
+export type SearchedPlayerDto = Schemas["SearchedPlayerDto"];
 
 export type CollectLane = "KNOWN" | "FAST" | "SLOW";
 
-export interface PlayerSuggestionDto {
-  riotId: string;
-  gameName: string;
-  tagLine: string;
-  matchCount: number;
-  positions: string[];
-  lastPlayedAt: string | null;
-}
+export type PlayerSuggestionDto = Schemas["PlayerSuggestionDto"];
 
 /** « Joue souvent avec » : coéquipiers d'au moins `minimumGames` parties sur le mois en cours (Schub#96). */
-export interface CompanionsDto {
-  month: string;
-  minimumGames: number;
-  companions: {
-    riotId: string;
-    slug: string;
-    games: number;
-    wins: number;
-    winRate: number;
-    withoutGames: number;
-    /** Absent quand l'échantillon sans lui est trop court pour conclure. */
-    withoutWinRate: number | null;
-  }[];
-  suggestedTeam: string[];
-}
+export type CompanionsDto = Schemas["CompanionsDto"];

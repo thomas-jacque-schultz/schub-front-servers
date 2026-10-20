@@ -1,29 +1,10 @@
-import { type Permission } from "../../common";
+import type { Schemas } from "../../common";
 
-export interface UserDto {
-  id: string;
-  discordId: string | null;
-  discordUsername?: string | null;
-  displayName?: string | null;
-  avatarUrl?: string | null;
-  roleId?: string | null;
-  roleName?: string | null;
-  riotGameName?: string | null;
-  riotTagLine?: string | null;
-  createdAt?: string | null;
-  lastLoginAt?: string | null;
-}
+export type UserDto = Schemas["UserDto"];
 
-export interface RoleDto {
-  id: string;
-  name: string;
-  permissions: Permission[];
-  system: boolean;
-}
+export type RoleDto = Schemas["RoleDto"];
 
-export interface AssignRoleRequest {
-  roleId: string;
-}
+export type AssignRoleRequest = Schemas["AssignRoleRequest"];
 
 export const riotAccountOf = (user: UserDto): string | null =>
   user.riotGameName
@@ -34,17 +15,6 @@ export const userLabelOf = (
   user: Pick<UserDto, "id" | "discordUsername">,
 ): string => user.discordUsername?.trim() || user.id;
 
-export interface ActiveUsersDto {
-  last24h: number;
-  last7d: number;
-  last30d: number;
-}
+export type ActiveUsersDto = Schemas["Active"];
 
-export interface UserStatsDto {
-  total: number;
-  riotLinked: number;
-  active: ActiveUsersDto;
-  activeByApp: Record<"schub" | "premadelab", ActiveUsersDto>;
-  /** searchers : personnes distinctes qui ont utilisé la recherche ce jour-là, sans compte ni cookie. */
-  daily: { day: string; activeUsers: number; searchers: number }[];
-}
+export type UserStatsDto = Schemas["UserStatsDto"];
