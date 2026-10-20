@@ -110,6 +110,7 @@ export const grilleOr = (position: string): ReferenceGridDto => {
         },
       ]),
     ),
+    distributions: null,
   };
 };
 

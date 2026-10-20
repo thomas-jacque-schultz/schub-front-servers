@@ -16,6 +16,8 @@ import { familyAnchor } from "./anchors";
 import { useStatsFormat } from "./statsFormat";
 import { useKpiSentence } from "./kpiSentence";
 import { useGrades } from "./useGrades";
+import { DistributionDetail } from "./DistributionDetail";
+import type { RepartieKey } from "./distribution";
 
 export interface GameAnalysisProps {
   overall: StatLineDto;
@@ -26,6 +28,12 @@ export interface GameAnalysisProps {
 }
 
 // Un écart à 15 min remplit sa demi-barre à cette valeur : au-delà, l'avance est décisive.
+// Schub#129 : les familles où se lisent les morts, le KDA et les kills.
+const REPARTITIONS: Record<string, RepartieKey[]> = {
+  survival: ["deaths", "kda"],
+  fights: ["kills"],
+};
+
 const ECARTS_15: { key: MetricKey; max: number }[] = [
   { key: "goldDiffAt15", max: 2000 },
   { key: "csDiffAt15", max: 20 },
@@ -188,7 +196,20 @@ export function GameAnalysis({
                     />
                   )
                 }
-                details={moyenne === null ? undefined : lignes(famille.metrics)}
+                details={
+                  REPARTITIONS[famille.key] && references?.position ? (
+                    <Stack spacing={2}>
+                      {moyenne !== null && lignes(famille.metrics)}
+                      <DistributionDetail
+                        keys={REPARTITIONS[famille.key]}
+                        references={references}
+                        positions={positions}
+                      />
+                    </Stack>
+                  ) : moyenne === null ? undefined : (
+                    lignes(famille.metrics)
+                  )
+                }
                 detailsLabel={t("verdict.details")}
                 hideDetailsLabel={t("verdict.hideDetails")}
               />

@@ -2463,9 +2463,19 @@ export interface components {
       /** Format: int64 */
       wins: number;
     };
+    ReferenceGridDistribution: {
+      /** Format: int64 */
+      count: number;
+      counts: number[];
+      /** Format: double */
+      step: number;
+    };
     ReferenceGridDto: {
       /** Format: date-time */
       computedAt: string;
+      distributions: {
+        [key: string]: components["schemas"]["ReferenceGridDistribution"];
+      } | null;
       metrics: {
         [key: string]: components["schemas"]["ReferenceGridMetric"];
       };
