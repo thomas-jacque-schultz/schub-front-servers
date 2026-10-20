@@ -28,7 +28,6 @@ import { getMyFindingsApi, getMyGameFindingsApi } from "../api/findingsApi";
 import { BehaviourPanel, FindingsSummary } from "./stats/BehaviourPanel";
 import { GamesPanel } from "./stats/GamesPanel";
 import { PlayerStatsView } from "./stats/PlayerStatsView";
-import { SupportReminder } from "../components/SupportReminder";
 import { StatsStateNote } from "./stats/StatsStateNote";
 import { useWindowOptions } from "./stats/windows";
 
@@ -242,7 +241,6 @@ function StatsPage() {
                 <Text variant="caption" tone="secondary">
                   {t("footnote")}
                 </Text>
-                <SupportReminder />
               </>
             )}
           </Stack>
