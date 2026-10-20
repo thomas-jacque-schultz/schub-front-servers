@@ -13,7 +13,7 @@
     "search": "Search",
     "combos": "Combos",
     "support": "Support",
-    "community": "Community"
+    "community": "Queue Killer"
   },
   "hero": {
     "eyebrow": "League of Legends",
@@ -268,11 +268,11 @@
   },
   "community": {
     "meta": {
-      "title": "Community · PremadeLab",
-      "description": "Multiplayer mini-games for your premade's downtime, playable without an account."
+      "title": "Queue Killer · PremadeLab",
+      "description": "Multiplayer mini-games to kill queue time with your premade, playable without an account."
     },
-    "title": "Community",
-    "subtitle": "Mini-games for your premade's downtime, playable without an account.",
+    "title": "Queue Killer",
+    "subtitle": "Something to kill queue time with your premade: multiplayer mini-games, playable without an account.",
     "scribble": {
       "title": "Scribble",
       "body": "A shared board: everyone draws, everyone sees the strokes live. Create a room and send the link to your premade.",
