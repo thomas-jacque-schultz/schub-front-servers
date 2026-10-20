@@ -8,8 +8,10 @@ export const texte = traduction({
     choisisMot: "Choisis le champion à dessiner",
     choisitMot: "{nom} choisit un champion…",
     dessine: "Dessine : {mot}",
-    lettres: "{n} lettres",
     dessinateur: "dessine",
+    tours: "Nombre de tours",
+    tour: "Tour {n}/{total}",
+    gomme: "Gomme",
     recap: "Fin du tour",
   },
   en: {
@@ -19,8 +21,10 @@ export const texte = traduction({
     choisisMot: "Pick the champion to draw",
     choisitMot: "{nom} is picking a champion…",
     dessine: "Draw: {mot}",
-    lettres: "{n} letters",
     dessinateur: "drawing",
+    tours: "Number of rounds",
+    tour: "Round {n}/{total}",
+    gomme: "Eraser",
     recap: "End of the round",
   },
 });

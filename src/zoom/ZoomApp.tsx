@@ -1,5 +1,5 @@
 import { useCallback, useRef } from "react";
-import { champions } from "../commun/champions";
+import { catalogue } from "../commun/champions";
 import { Devinette, Joueurs, Scores } from "../commun/jeu";
 import type { Evenement } from "../commun/relay";
 import {
@@ -92,7 +92,7 @@ function Salon({ contexte, nom }: { contexte: Contexte; nom: string }) {
                 erreur={jeu.erreur}
                 onLance={(duree, manches) =>
                   jeu.lance(() =>
-                    champions(lang).then((liste) =>
+                    catalogue(lang).then(({ champions: liste }) =>
                       nouvellePartie(
                         jeu.presents.current,
                         duree,

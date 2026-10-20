@@ -355,3 +355,16 @@ select {
   transition: transform 250ms linear;
   user-select: none;
 }
+
+.champion {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.icone {
+  width: 28px;
+  height: 28px;
+  border-radius: 2px;
+  border: 1px solid var(--liseré);
+}

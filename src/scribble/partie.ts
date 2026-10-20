@@ -1,3 +1,4 @@
+import type { Champion } from "../commun/champions";
 import {
   ajouteAuFil,
   compare,
@@ -15,12 +16,17 @@ export type Phase = "choix" | "dessin" | "bilan" | "fin";
 export interface Partie {
   phase: Phase;
   lang: string;
+  // La version de Data Dragon des icônes.
+  version: string;
   duree: number;
+  // Un tour : chacun dessine une fois. tour est le rang du dessinateur dans ordre, cycle le tour en cours.
+  tours: number;
+  cycle: number;
   ordre: string[];
   tour: number;
   dessinateur: string;
-  choix: string[];
-  mot: string | null;
+  choix: Champion[];
+  mot: Champion | null;
   revele: number[];
   devineurs: string[];
   trouve: string[];
@@ -28,11 +34,13 @@ export interface Partie {
   noms: Record<string, string>;
   fil: Ligne[];
   restantMs: number;
-  reserve: string[];
+  reserve: Champion[];
 }
 
 export const DUREES = [40, 60, 80, 100, 120];
 export const DUREE_DEFAUT = 80;
+export const TOURS = [1, 2, 3];
+export const TOURS_DEFAUT = 1;
 export const CHOIX_MS = 15_000;
 export const BILAN_MS = 5_000;
 const POINTS_DEVINEUR = 50;
@@ -59,9 +67,18 @@ const manche = (
   hasard: Hasard,
 ): Partie => {
   const ids = presents.map((j) => j.id);
+  const present = (rang: number) => ids.includes(p.ordre[rang]);
+  let cycle = p.cycle;
   let suivant = tour;
-  while (suivant < p.ordre.length && !ids.includes(p.ordre[suivant])) {
+  while (suivant < p.ordre.length && !present(suivant)) {
     suivant++;
+  }
+  if (suivant >= p.ordre.length && cycle < p.tours) {
+    cycle++;
+    suivant = 0;
+    while (suivant < p.ordre.length && !present(suivant)) {
+      suivant++;
+    }
   }
   const { tires, restants } = tire(p.reserve, 3, hasard);
   if (suivant >= p.ordre.length || ids.length < 2 || tires.length === 0) {
@@ -70,6 +87,7 @@ const manche = (
   return {
     ...p,
     phase: "choix",
+    cycle,
     tour: suivant,
     dessinateur: p.ordre[suivant],
     choix: tires,
@@ -85,15 +103,20 @@ const manche = (
 export const nouvellePartie = (
   presents: Present[],
   duree: number,
+  tours: number,
   lang: string,
-  mots: string[],
+  version: string,
+  mots: Champion[],
   hasard: Hasard,
 ): Partie =>
   manche(
     {
       phase: "choix",
       lang,
+      version,
       duree,
+      tours,
+      cycle: 1,
       ordre: presents.map((j) => j.id),
       tour: 0,
       dessinateur: presents[0]?.id ?? "",
@@ -150,7 +173,7 @@ export const deviner = (
   ) {
     return { partie: p, proche: false };
   }
-  const verdict = compare(propre, p.mot);
+  const verdict = compare(propre, p.mot.nom);
   if (verdict === "juste") {
     const rapidite = p.restantMs / (p.duree * 1000);
     const gain =
@@ -188,8 +211,8 @@ const indices = (p: Partie, hasard: Hasard): number[] => {
   }
   const ecoule = 1 - p.restantMs / (p.duree * 1000);
   const voulu = (ecoule >= 0.5 ? 1 : 0) + (ecoule >= 0.75 ? 1 : 0);
-  const plafond = Math.floor(lettres(p.mot) / 3);
-  const cachees = [...p.mot]
+  const plafond = Math.floor(lettres(p.mot.nom) / 3);
+  const cachees = [...p.mot.nom]
     .map((caractere, index) => (estLettre(caractere) ? index : -1))
     .filter((index) => index >= 0 && !p.revele.includes(index));
   const revele = [...p.revele];

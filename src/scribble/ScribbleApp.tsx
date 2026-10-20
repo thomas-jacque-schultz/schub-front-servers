@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react";
-import { champions } from "../commun/champions";
+import { catalogue } from "../commun/champions";
 import { Devinette, Joueurs, Scores } from "../commun/jeu";
 import type { Evenement } from "../commun/relay";
 import {
@@ -18,15 +18,25 @@ import { Consigne } from "./Jeu";
 import { nouvellePartie, type Partie } from "./partie";
 import { nouvelleManche, REGLES } from "./regles";
 import { texte } from "./textes";
-import { estMorceau, type Morceau, Tableau } from "./traits";
+import { estMorceau, GOMME, type Morceau, Tableau } from "./traits";
 
 const COULEURS = [
   "#F2E9EE",
-  "#C9A227",
-  "#A4477E",
-  "#5B9BE8",
-  "#4FB783",
+  "#8A8A8A",
   "#E0576B",
+  "#FF8C42",
+  "#FFD23F",
+  "#C9A227",
+  "#8B5A2B",
+  "#9BE564",
+  "#4FB783",
+  "#2E7D32",
+  "#3DDBD9",
+  "#5B9BE8",
+  "#1E3A8A",
+  "#8E5CF7",
+  "#A4477E",
+  "#FF77B7",
 ];
 const EPAISSEURS = [0.004, 0.009, 0.02];
 
@@ -72,9 +82,7 @@ function Salon({ contexte, nom }: { contexte: Contexte; nom: string }) {
             recoitJeu.current(evenement.from, evenement.data);
           } else if (
             estMorceau(evenement.data) &&
-            (!p ||
-              p.phase === "fin" ||
-              (p.phase === "dessin" && evenement.from === p.dessinateur))
+            (!p || (p.phase === "dessin" && evenement.from === p.dessinateur))
           ) {
             recus.emet(evenement.data);
           }
@@ -116,10 +124,9 @@ function Salon({ contexte, nom }: { contexte: Contexte; nom: string }) {
     partie?.phase === "choix" || partie?.phase === "dessin",
   );
 
+  // Tout le monde dessine en attendant la première partie ; ensuite, le dessinateur seul, et personne à la fin.
   const dessinable =
-    !partie ||
-    partie.phase === "fin" ||
-    (partie.phase === "dessin" && partie.dessinateur === moi);
+    !partie || (partie.phase === "dessin" && partie.dessinateur === moi);
   const devine =
     partie?.phase === "dessin" &&
     partie.devineurs.includes(moi) &&
@@ -160,14 +167,16 @@ function Salon({ contexte, nom }: { contexte: Contexte; nom: string }) {
                 }
                 nbJoueurs={joueurs.length}
                 erreur={jeu.erreur}
-                onLance={(duree) =>
+                onLance={(duree, tours) =>
                   jeu.lance(() =>
-                    champions(lang).then((liste) =>
+                    catalogue(lang).then(({ version, champions }) =>
                       nouvellePartie(
                         jeu.presents.current,
                         duree,
+                        tours,
                         lang,
-                        liste.map((c) => c.nom),
+                        version,
+                        champions,
                         Math.random,
                       ),
                     ),
@@ -220,6 +229,12 @@ function Salon({ contexte, nom }: { contexte: Contexte; nom: string }) {
                   />
                 </button>
               ))}
+              <button
+                className={couleur === GOMME ? "discret choisie" : "discret"}
+                onClick={() => setCouleur(GOMME)}
+              >
+                {texte(lang, "gomme")}
+              </button>
               <span className="separateur" />
               <button className="discret" onClick={effaceTout}>
                 {texte(lang, "effacer")}

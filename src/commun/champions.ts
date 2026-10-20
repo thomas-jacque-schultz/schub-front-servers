@@ -3,29 +3,37 @@ import type { Lang } from "./textes";
 // Data Dragon sert les noms traduits et les illustrations ; les jeux ne lisent que les champions (Schub#130).
 const DDRAGON = "https://ddragon.leagueoflegends.com";
 const LOCALES: Record<Lang, string> = { fr: "fr_FR", en: "en_US" };
-const lus = new Map<Lang, Promise<Champion[]>>();
+const lus = new Map<Lang, Promise<Catalogue>>();
 
 export interface Champion {
   id: string;
   nom: string;
 }
 
-const lis = async (lang: Lang): Promise<Champion[]> => {
+export interface Catalogue {
+  version: string;
+  champions: Champion[];
+}
+
+const lis = async (lang: Lang): Promise<Catalogue> => {
   const versions = (await (
     await fetch(`${DDRAGON}/api/versions.json`)
   ).json()) as string[];
-  const catalogue = (await (
+  const lu = (await (
     await fetch(
       `${DDRAGON}/cdn/${versions[0]}/data/${LOCALES[lang]}/champion.json`,
     )
   ).json()) as { data: Record<string, { id: string; name: string }> };
-  return Object.values(catalogue.data).map((champion) => ({
-    id: champion.id,
-    nom: champion.name,
-  }));
+  return {
+    version: versions[0],
+    champions: Object.values(lu.data).map((champion) => ({
+      id: champion.id,
+      nom: champion.name,
+    })),
+  };
 };
 
-export const champions = (lang: Lang): Promise<Champion[]> => {
+export const catalogue = (lang: Lang): Promise<Catalogue> => {
   if (!lus.has(lang)) {
     lus.set(
       lang,
@@ -41,3 +49,7 @@ export const champions = (lang: Lang): Promise<Champion[]> => {
 /** L'illustration de base d'un champion, la même dans toutes les langues. */
 export const splash = (id: string): string =>
   `${DDRAGON}/cdn/img/champion/splash/${id}_0.jpg`;
+
+/** L'icône carrée d'un champion, à la version du catalogue lu. */
+export const icone = (version: string, id: string): string =>
+  `${DDRAGON}/cdn/${version}/img/champion/${id}.png`;

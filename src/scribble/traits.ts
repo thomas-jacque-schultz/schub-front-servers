@@ -16,6 +16,9 @@ interface Trait {
 
 export const RATIO = 4 / 3;
 
+// La gomme est un trait comme un autre : rejouée dans l'ordre, elle efface ce qui la précède.
+export const GOMME = "gomme";
+
 export const arrondi = (valeur: number): number =>
   Math.round(Math.min(1, Math.max(0, valeur)) * 10_000) / 10_000;
 
@@ -87,8 +90,10 @@ const trace = (
   if (points.length === 0) {
     return;
   }
-  ctx.strokeStyle = couleur;
-  ctx.fillStyle = couleur;
+  const gomme = couleur === GOMME;
+  ctx.globalCompositeOperation = gomme ? "destination-out" : "source-over";
+  ctx.strokeStyle = gomme ? "#000" : couleur;
+  ctx.fillStyle = gomme ? "#000" : couleur;
   ctx.lineWidth = Math.max(1, epaisseur * largeur);
   ctx.lineCap = "round";
   ctx.lineJoin = "round";
@@ -102,6 +107,7 @@ const trace = (
       Math.PI * 2,
     );
     ctx.fill();
+    ctx.globalCompositeOperation = "source-over";
     return;
   }
   ctx.beginPath();
@@ -110,4 +116,5 @@ const trace = (
     ctx.lineTo(points[i] * largeur, points[i + 1] * hauteur);
   }
   ctx.stroke();
+  ctx.globalCompositeOperation = "source-over";
 };

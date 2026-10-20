@@ -1,8 +1,27 @@
 import { useState } from "react";
+import { type Champion, icone } from "../commun/champions";
 import { Choix, Chrono } from "../commun/jeu";
 import type { Lang } from "../commun/textes";
-import { DUREE_DEFAUT, DUREES, lettres, masque, type Partie } from "./partie";
+import {
+  DUREE_DEFAUT,
+  DUREES,
+  masque,
+  type Partie,
+  TOURS,
+  TOURS_DEFAUT,
+} from "./partie";
 import { texte } from "./textes";
+
+function Icone({ version, champion }: { version: string; champion: Champion }) {
+  return (
+    <img
+      className="icone"
+      src={icone(version, champion.id)}
+      alt=""
+      draggable={false}
+    />
+  );
+}
 
 export function Consigne({
   lang,
@@ -22,10 +41,11 @@ export function Consigne({
   restantMs: number;
   nbJoueurs: number;
   erreur: boolean;
-  onLance: (duree: number) => void;
+  onLance: (duree: number, tours: number) => void;
   onChoisis: (index: number) => void;
 }) {
   const [duree, setDuree] = useState(DUREE_DEFAUT);
+  const [tours, setTours] = useState(TOURS_DEFAUT);
 
   if (!partie) {
     return (
@@ -39,10 +59,17 @@ export function Consigne({
               format={(n) => texte(lang, "secondes", { n })}
               onChange={setDuree}
             />
+            <Choix
+              libelle={texte(lang, "tours")}
+              valeurs={TOURS}
+              valeur={tours}
+              format={String}
+              onChange={setTours}
+            />
             <button
               type="submit"
               disabled={nbJoueurs < 2}
-              onClick={() => onLance(duree)}
+              onClick={() => onLance(duree, tours)}
             >
               {texte(lang, "lancer")}
             </button>
@@ -59,6 +86,11 @@ export function Consigne({
   }
 
   const nom = partie.noms[partie.dessinateur] ?? "";
+  const tour = (
+    <span className="aide">
+      {texte(lang, "tour", { n: partie.cycle, total: partie.tours })}
+    </span>
+  );
   const chrono =
     partie.phase === "dessin" || partie.phase === "choix" ? (
       <Chrono lang={lang} restantMs={restantMs} />
@@ -67,12 +99,18 @@ export function Consigne({
   if (partie.phase === "choix") {
     return (
       <div className="consigne">
+        {tour}
         {partie.dessinateur === moi ? (
           <>
             <span>{texte(lang, "choisisMot")}</span>
-            {partie.choix.map((mot, index) => (
-              <button key={mot} onClick={() => onChoisis(index)}>
-                {mot}
+            {partie.choix.map((champion, index) => (
+              <button
+                key={champion.id}
+                className="champion"
+                onClick={() => onChoisis(index)}
+              >
+                <Icone version={partie.version} champion={champion} />
+                {champion.nom}
               </button>
             ))}
           </>
@@ -88,17 +126,18 @@ export function Consigne({
     const vu = partie.dessinateur === moi || partie.trouve.includes(moi);
     return (
       <div className="consigne">
-        {partie.dessinateur === moi ? (
-          <strong>{texte(lang, "dessine", { mot: partie.mot })}</strong>
-        ) : vu ? (
-          <strong>{texte(lang, "trouveMoi", { mot: partie.mot })}</strong>
+        {tour}
+        {vu ? (
+          <strong className="champion">
+            <Icone version={partie.version} champion={partie.mot} />
+            {texte(lang, partie.dessinateur === moi ? "dessine" : "trouveMoi", {
+              mot: partie.mot.nom,
+            })}
+          </strong>
         ) : (
-          <>
-            <span className="masque">{masque(partie.mot, partie.revele)}</span>
-            <span className="aide">
-              {texte(lang, "lettres", { n: lettres(partie.mot) })}
-            </span>
-          </>
+          <span className="masque">
+            {masque(partie.mot.nom, partie.revele)}
+          </span>
         )}
         {chrono}
       </div>
@@ -108,7 +147,13 @@ export function Consigne({
   if (partie.phase === "bilan") {
     return (
       <div className="consigne">
-        <strong>{texte(lang, "cetait", { mot: partie.mot ?? "" })}</strong>
+        {tour}
+        {partie.mot && (
+          <strong className="champion">
+            <Icone version={partie.version} champion={partie.mot} />
+            {texte(lang, "cetait", { mot: partie.mot.nom })}
+          </strong>
+        )}
       </div>
     );
   }
@@ -117,7 +162,10 @@ export function Consigne({
     <div className="consigne">
       <strong>{texte(lang, "recap")}</strong>
       {estMeneur ? (
-        <button type="submit" onClick={() => onLance(partie.duree)}>
+        <button
+          type="submit"
+          onClick={() => onLance(partie.duree, partie.tours)}
+        >
           {texte(lang, "rejouer")}
         </button>
       ) : (

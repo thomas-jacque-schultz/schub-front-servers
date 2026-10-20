@@ -13,11 +13,14 @@ import {
 const A = { id: "a", name: "Ana" };
 const B = { id: "b", name: "Bob" };
 const C = { id: "c", name: "Cy" };
-const MOTS = ["Kai'Sa", "Dr. Mundo", "Jinx", "Lee Sin", "Nunu & Willump"];
+const champion = (nom: string) => ({ id: nom.replace(/\W/g, ""), nom });
+const MOTS = ["Kai'Sa", "Dr. Mundo", "Jinx", "Lee Sin", "Nunu & Willump"].map(
+  champion,
+);
 const premier = () => 0;
 
 const enDessin = () =>
-  choisir(nouvellePartie([A, B, C], 80, "fr", MOTS, premier), 0);
+  choisir(nouvellePartie([A, B, C], 80, 1, "fr", "16.20.1", MOTS, premier), 0);
 
 describe("partie", () => {
   it("Kai'Sa, kaisa et KAISA se valent", () => {
@@ -39,7 +42,7 @@ describe("partie", () => {
   });
 
   it("le premier joueur dessine et choisit parmi trois mots", () => {
-    const p = nouvellePartie([A, B, C], 80, "fr", MOTS, premier);
+    const p = nouvellePartie([A, B, C], 80, 1, "fr", "16.20.1", MOTS, premier);
     expect(p.phase).toBe("choix");
     expect(p.dessinateur).toBe("a");
     expect(p.choix).toHaveLength(3);
@@ -75,7 +78,15 @@ describe("partie", () => {
 
   it("le chrono révèle des lettres, puis passe la main au joueur suivant", () => {
     const p = choisir(
-      nouvellePartie([A, B, C], 80, "fr", ["Nunu & Willump", ...MOTS], premier),
+      nouvellePartie(
+        [A, B, C],
+        80,
+        1,
+        "fr",
+        "16.20.1",
+        [champion("Nunu & Willump"), ...MOTS],
+        premier,
+      ),
       0,
     );
     const mi = avancer(p, 41_000, [A, B, C], premier);
@@ -88,7 +99,7 @@ describe("partie", () => {
   });
 
   it("un tour complet mène au récapitulatif ; un absent est sauté", () => {
-    let p = nouvellePartie([A, B, C], 80, "fr", MOTS, premier);
+    let p = nouvellePartie([A, B, C], 80, 1, "fr", "16.20.1", MOTS, premier);
     p = { ...p, tour: 1, dessinateur: "b", phase: "bilan", restantMs: 0 };
     const sansC = avancer(p, 0, [A, B], premier);
     expect(sansC.phase).toBe("fin");
@@ -106,5 +117,22 @@ describe("partie", () => {
     const p = deviner(enDessin(), "b", "kaisa").partie;
     expect(presence(p, [A, B]).phase).toBe("bilan");
     expect(presence(p, [A, B, C]).phase).toBe("dessin");
+  });
+
+  it("avec deux tours, chacun dessine deux fois avant la fin", () => {
+    let p = nouvellePartie([A, B], 80, 2, "fr", "16.20.1", MOTS, premier);
+    expect(p.cycle).toBe(1);
+    p = { ...p, tour: 1, dessinateur: "b", phase: "bilan", restantMs: 0 };
+    const deuxieme = avancer(p, 0, [A, B], premier);
+    expect(deuxieme.phase).toBe("choix");
+    expect(deuxieme.cycle).toBe(2);
+    expect(deuxieme.dessinateur).toBe("a");
+    const fin = avancer(
+      { ...deuxieme, tour: 1, phase: "bilan", restantMs: 0 },
+      0,
+      [A, B],
+      premier,
+    );
+    expect(fin.phase).toBe("fin");
   });
 });
