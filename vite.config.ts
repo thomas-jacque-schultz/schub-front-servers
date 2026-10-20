@@ -2,7 +2,7 @@ import { resolve } from "node:path";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
-// Une page par jeu (scribble/…) et des assets communs ; le relais sert chacune sur son sous-domaine.
+// Une page par jeu (scribble/, zoom/) et des assets communs ; le relais sert chacune sur son sous-domaine.
 // En local, /ws part vers un relais lancé à côté (RELAY_URL, par défaut localhost:8080).
 export default defineConfig({
   plugins: [react()],
@@ -10,6 +10,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         scribble: resolve(__dirname, "scribble/index.html"),
+        zoom: resolve(__dirname, "zoom/index.html"),
       },
     },
   },

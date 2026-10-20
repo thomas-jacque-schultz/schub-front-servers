@@ -332,3 +332,26 @@ select {
 .tableau.inactif {
   cursor: default;
 }
+
+/* Zoom : le splash art garde son format (1215 × 717) et ne déborde jamais du cadre. */
+.zone-zoom {
+  width: min(100%, calc((100vh - 184px) * 1215 / 717));
+  width: min(100%, calc((100dvh - 184px) * 1215 / 717));
+}
+
+.cadre {
+  aspect-ratio: 1215 / 717;
+  overflow: hidden;
+  background: var(--carte);
+  border: 1px solid var(--liseré);
+  border-radius: 2px;
+}
+
+.cadre img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 250ms linear;
+  user-select: none;
+}
