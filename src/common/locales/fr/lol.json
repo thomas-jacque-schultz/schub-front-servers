@@ -13,7 +13,8 @@
     "search": "Rechercher",
     "combos": "Combos",
     "support": "Soutenir",
-    "community": "Queue Killer"
+    "queueKiller": "Queue Killer",
+    "experimental": "Expérimental : de nouveaux jeux arrivent, et ceux-ci bougeront encore"
   },
   "hero": {
     "eyebrow": "League of Legends",
@@ -266,7 +267,7 @@
     "unavailable": "Les combos du jour ne sont pas encore calculés. Réessaie dans quelques minutes.",
     "method": "Sur {{games}} camps dont le palier est connu (la moyenne des rangs relevés), au moins {{minGames}} parties par combo. Classement par la borne basse du taux de victoire (Wilson)\u00a0: 74\u00a0% sur 40 parties passe devant 80\u00a0% sur 20. Calculé le {{date}}."
   },
-  "community": {
+  "queueKiller": {
     "meta": {
       "title": "Queue Killer · PremadeLab",
       "description": "Des mini-jeux à plusieurs pour tuer l’attente en file avec ta premade, jouables sans compte."

@@ -13,7 +13,8 @@
     "search": "Search",
     "combos": "Combos",
     "support": "Support",
-    "community": "Queue Killer"
+    "queueKiller": "Queue Killer",
+    "experimental": "Experimental: more games are coming, and these will still change"
   },
   "hero": {
     "eyebrow": "League of Legends",
@@ -266,7 +267,7 @@
     "unavailable": "Today's combos are not computed yet. Try again in a few minutes.",
     "method": "Over {{games}} team sides with a known tier (the average of the recorded ranks), at least {{minGames}} games per combo. Ranked by the lower bound of the win rate (Wilson): 74% over 40 games beats 80% over 20. Computed on {{date}}."
   },
-  "community": {
+  "queueKiller": {
     "meta": {
       "title": "Queue Killer · PremadeLab",
       "description": "Multiplayer mini-games to kill queue time with your premade, playable without an account."

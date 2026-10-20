@@ -26,6 +26,13 @@ const LOL = [
   { key: "lolPublic", label: "Présentation", to: "/lol" },
   { key: "stats", label: "Mes stats", to: "/lol/stats" },
   { key: "teams", label: "Équipes", to: "/lol/teams" },
+  {
+    key: "queueKiller",
+    label: "Queue Killer",
+    to: "/lol/queue-killer",
+    icon: "science" as const,
+    hint: "Expérimental",
+  },
 ];
 
 const applications = (courante: "schub" | "lol") => [

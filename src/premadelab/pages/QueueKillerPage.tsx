@@ -19,19 +19,19 @@ import { SCRIBBLE_ORIGIN, SCRIBBLE_URL } from "../games";
 
 // Les mini-jeux entre premades (Schub#118). Le jeu vit sur son sous-domaine, dans une iframe ; avec lui, deux
 // messages seulement : l'init (salon et langue), puis le salon qu'il vient de créer.
-export default function CommunityPage() {
+export default function QueueKillerPage() {
   const { t } = useTranslation("lol");
   const { game, room } = useParams();
   useDocumentMeta({
-    title: t("community.meta.title"),
-    description: t("community.meta.description"),
+    title: t("queueKiller.meta.title"),
+    description: t("queueKiller.meta.description"),
   });
 
   return (
     <Stack spacing={2}>
       <PageHeader
-        title={t("community.title")}
-        subtitle={t("community.subtitle")}
+        title={t("queueKiller.title")}
+        subtitle={t("queueKiller.subtitle")}
       />
       {game === "scribble" ? (
         <ScribbleRoom room={room ?? null} />
@@ -46,12 +46,12 @@ function Catalogue() {
   const { t } = useTranslation("lol");
   const navigate = useLocalizedNavigate();
   return (
-    <Card title={t("community.scribble.title")}>
+    <Card title={t("queueKiller.scribble.title")}>
       <Stack spacing={1.5}>
-        <Text>{t("community.scribble.body")}</Text>
+        <Text>{t("queueKiller.scribble.body")}</Text>
         <div>
-          <Button onClick={() => navigate("/community/scribble")}>
-            {t("community.scribble.create")}
+          <Button onClick={() => navigate("/queue-killer/scribble")}>
+            {t("queueKiller.scribble.create")}
           </Button>
         </div>
       </Stack>
@@ -89,7 +89,7 @@ function ScribbleRoom({ room }: { room: string | null }) {
       }
       if (/^[A-Z]{4}$/.test(data.room) && data.room !== room) {
         annonce.current = data.room;
-        navigate(`/community/scribble/${data.room}`, { replace: true });
+        navigate(`/queue-killer/scribble/${data.room}`, { replace: true });
       }
     };
     window.addEventListener("message", ecoute);
@@ -97,7 +97,7 @@ function ScribbleRoom({ room }: { room: string | null }) {
   }, [navigate, room]);
 
   const lien = room
-    ? `${APP_URLS.premadelab}${localize(`/community/scribble/${room}`)}`
+    ? `${APP_URLS.premadelab}${localize(`/queue-killer/scribble/${room}`)}`
     : null;
 
   return (
@@ -106,7 +106,7 @@ function ScribbleRoom({ room }: { room: string | null }) {
         key={transmis ?? "neuf"}
         ref={cadre}
         src={SCRIBBLE_URL}
-        title={t("community.scribble.title")}
+        title={t("queueKiller.scribble.title")}
         onLoad={() =>
           cadre.current?.contentWindow?.postMessage(
             { type: "premadelab:init", room: transmis, lang },
@@ -116,7 +116,7 @@ function ScribbleRoom({ room }: { room: string | null }) {
       />
       {lien && (
         <Stack direction="row" spacing={1} align="center" wrap>
-          <Text variant="caption">{t("community.scribble.share")}</Text>
+          <Text variant="caption">{t("queueKiller.scribble.share")}</Text>
           <Text variant="caption" mono>
             {lien}
           </Text>
@@ -125,12 +125,12 @@ function ScribbleRoom({ room }: { room: string | null }) {
             variant="secondary"
             onClick={() =>
               void navigator.clipboard.writeText(lien).then(
-                () => setToast(t("community.scribble.copied")),
+                () => setToast(t("queueKiller.scribble.copied")),
                 () => setToast(lien),
               )
             }
           >
-            {t("community.scribble.copy")}
+            {t("queueKiller.scribble.copy")}
           </Button>
         </Stack>
       )}
