@@ -1,3 +1,5 @@
+import type { Schemas } from "..";
+
 export const RIOT_ACCOUNT_STATES = [
   "ABSENT",
   "EN_ATTENTE_DE_RESOLUTION",
@@ -6,55 +8,19 @@ export const RIOT_ACCOUNT_STATES = [
 
 export type RiotAccountState = (typeof RIOT_ACCOUNT_STATES)[number];
 
-export interface RiotIngestDto {
-  pending: number;
-  running: number;
-  estimatedReadyAt: string | null;
-  /** Rattrapage des derniers mois à la liaison (Schub#113) ; found est nul tant que les parties ne sont pas relevées. */
-  backfill?: { since: string; found: number | null; collected: number } | null;
-}
+export type RiotIngestDto = Schemas["RiotIngestDto"];
 
-export interface ProfileRiotDto {
-  state: RiotAccountState;
-  riotId: string | null;
-  gameName: string | null;
-  tagLine: string | null;
-  linkedAt: string | null;
-  ingest: RiotIngestDto | null;
-}
+export type ProfileRiotDto = Schemas["RiotAccountDto"];
 
-export interface ProfileDiscordDto {
-  id: string;
-  username: string;
-  avatarUrl: string | null;
-}
+export type ProfileDiscordDto = Schemas["DiscordIdentityDto"];
 
-export interface ProfileRoleDto {
-  name: string;
-  permissions: string[];
-}
+export type ProfileRoleDto = Schemas["RoleSummaryDto"];
 
-export interface ProfileDto {
-  userId: string;
-  discord: ProfileDiscordDto;
-  displayName: string;
-  displayNameChosen: boolean;
-  role: ProfileRoleDto;
-  riot: ProfileRiotDto;
-  /** Résumés de session en MP (Schub#99). */
-  sessionSummaries?: { planned: boolean; free: boolean };
-  /** Discord a refusé un MP : le profil explique comment les ouvrir. */
-  dmUnreachable?: boolean;
-}
+export type ProfileDto = Schemas["MeDto"];
 
-export interface DisplayNameRequest {
-  displayName: string;
-}
+export type DisplayNameRequest = Schemas["DisplayNameRequest"];
 
-export interface RiotAccountRequest {
-  riotId: string;
-  confirmChange: boolean;
-}
+export type RiotAccountRequest = Schemas["RiotAccountRequest"];
 
 // Vocabulaire des parties Riot, distinct de GameRole (effectif d'équipe).
 export const RIOT_POSITIONS = [
@@ -68,30 +34,8 @@ export const RIOT_POSITIONS = [
 
 export type RiotPosition = (typeof RIOT_POSITIONS)[number];
 
-export interface PositionPlayedDto {
-  position: string;
-  matches: number;
-}
+export type PositionPlayedDto = Schemas["PositionPlayedDto"];
 
-export interface KnownRiotAccountDto {
-  riotId: string;
-  gameName: string;
-  tagLine: string;
-  matchCount: number;
-  positions: PositionPlayedDto[];
-  lastPlayedAt: string | null;
-  observedAt: string;
-  source: string;
-  alreadyLinked: boolean;
-  mine: boolean;
-}
+export type KnownRiotAccountDto = Schemas["RiotAccountSuggestionDto"];
 
-export interface RiotAccountChangeDto {
-  previousRiotId: string | null;
-  riotId: string;
-  statsReset: boolean;
-  ingestRestarted: boolean;
-  estimatedMatches: number;
-  estimatedDuration: string | number | null;
-  rosterSlotsToClaim: boolean;
-}
+export type RiotAccountChangeDto = Schemas["RiotAccountChangeDto"];

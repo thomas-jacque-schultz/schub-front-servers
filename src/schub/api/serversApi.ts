@@ -13,7 +13,7 @@ const fallbackServers: DisplayedServer[] = [
   { name: "Satisfactory", status: "online" },
 ];
 
-const normalizeStatus = (rawStatus?: string): ServerStatus => {
+const normalizeStatus = (rawStatus?: string | null): ServerStatus => {
   if (!rawStatus) {
     return "unknown";
   }

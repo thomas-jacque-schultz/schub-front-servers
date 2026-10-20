@@ -1,3 +1,4 @@
+import type { Schemas } from "..";
 import type { Permission } from "./permission";
 
 export interface AuthorityDto {
@@ -5,10 +6,7 @@ export interface AuthorityDto {
 }
 
 /** Les comptes liés : ce qu'ils ouvrent (Discord : les serveurs ; Riot : les statistiques). */
-export interface AccountLinks {
-  discord: boolean;
-  riot: boolean;
-}
+export type AccountLinks = Schemas["AccountLinksDto"];
 
 // userId = identifiant interne, sujet du jeton.
 export interface AuthMeResponse {

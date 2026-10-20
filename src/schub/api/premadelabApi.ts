@@ -1,9 +1,7 @@
+import type { Schemas } from "../../common";
 import { requestJson } from "../../common";
 
-export interface PremadeLabSettingsDto {
-  unknownPlayerBudget: number;
-  budgetWindowMinutes: number;
-}
+export type PremadeLabSettingsDto = Schemas["PremadeLabSettingsDto"];
 
 export const getPremadeLabSettingsApi =
   async (): Promise<PremadeLabSettingsDto> =>
@@ -19,29 +17,11 @@ export const updatePremadeLabSettingsApi = async (
     body: JSON.stringify(settings),
   });
 
-export interface RecentSessionDto {
-  day: string;
-  startedAt: string;
-  teamName: string;
-  games: number;
-  wins: number;
-  planned: boolean;
-}
+export type RecentSessionDto = Schemas["RecentSessionDto"];
 
-export interface DiscordEmbedDto {
-  title: string;
-  url?: string;
-  description?: string;
-  color?: number;
-  fields: { name: string; value: string; inline: boolean }[];
-  footer?: { text: string };
-}
+export type DiscordEmbedDto = Schemas["SessionSummaryEmbedDto"];
 
-export interface SessionSummaryTestDto {
-  embeds?: DiscordEmbedDto[];
-  status?: "SENT" | "UNREACHABLE" | "DISABLED" | "FAILED";
-  detail?: string | null;
-}
+export type SessionSummaryTestDto = Schemas["SessionSummaryTestDto"];
 
 export const getSessionSummaryTestSessionsApi = async (): Promise<
   RecentSessionDto[]

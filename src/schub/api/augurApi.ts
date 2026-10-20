@@ -1,75 +1,22 @@
+import type { Schemas } from "../../common";
 import { requestJson } from "../../common";
 
-export interface ConditionDto {
-  signal: string;
-  unit: "VALUE" | "PERCENTILE";
-  from: number;
-  to: number;
-  weight: number;
-}
+export type ConditionDto = Schemas["ConditionDto"];
 
 export type PatternStatus = "DRAFT" | "ACTIVE" | "RETIRED";
 
-export interface PatternDto {
-  key: string;
-  version: number;
-  status: PatternStatus;
-  scope: "GAME" | "HABIT" | "TEAM";
-  polarity: "STRENGTH" | "WEAKNESS" | "NEUTRAL";
-  category: "BEHAVIOUR" | "PERFORMANCE" | "KNOWLEDGE" | "BUILD";
-  nature: "ACTION" | "CONSEQUENCE";
-  required: ConditionDto[];
-  optional: ConditionDto[];
-  exceptions: ConditionDto[];
-  optionalInfluence: number;
-  threshold: number;
-  label: Record<string, string>;
-  sentence: Record<string, string>;
-  experimental: boolean;
-  limits: Record<string, string>;
-  author: string | null;
-  comment: string | null;
-  createdAt: string | null;
-  activatedAt: string | null;
-}
+export type PatternDto = Schemas["PatternDto"];
 
 export type PatternRequest = Omit<
   PatternDto,
   "version" | "status" | "author" | "createdAt" | "activatedAt"
 > & { comment: string };
 
-export interface ImpactDto {
-  sampled: number;
-  appearing: number;
-  disappearing: number;
-  unchanged: number;
-  byTier: Record<string, [number, number]>;
-  examples: {
-    subject: string;
-    tier: string;
-    currentDegree: number;
-    draftDegree: number;
-  }[];
-}
+export type ImpactDto = Schemas["ImpactDto"];
 
-export interface TraceConditionDto {
-  role: "REQUIRED" | "OPTIONAL" | "EXCEPTION";
-  signal: string;
-  unit: "VALUE" | "PERCENTILE";
-  from: number;
-  to: number;
-  observed: number | null;
-  degree: number | null;
-}
+export type TraceConditionDto = Schemas["ConditionTraceDto"];
 
-export interface EvaluationDto {
-  patternKey: string;
-  version: number;
-  degree: number;
-  emitted: boolean;
-  excepted: boolean;
-  conditions: TraceConditionDto[];
-}
+export type EvaluationDto = Schemas["EvaluationDto"];
 
 const base = "/augur/patterns";
 

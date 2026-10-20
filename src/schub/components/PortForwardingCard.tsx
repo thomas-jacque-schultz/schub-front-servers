@@ -16,7 +16,11 @@ import {
   TextField,
   type DataTableColumn,
 } from "../../common";
-import type { PortRuleDto, StaticPortRuleDto } from "../types/portForwarding";
+import type {
+  PortRuleDto,
+  StaticPortRuleDto,
+  StaticPortRuleRequest,
+} from "../types/portForwarding";
 import { originOf, staticNameOf } from "../types/portForwarding";
 
 interface PortForwardingCardProps {
@@ -26,7 +30,7 @@ interface PortForwardingCardProps {
   error: string;
   routerError?: string | null;
   onRefresh: () => Promise<void>;
-  onCreate: (rule: StaticPortRuleDto) => Promise<void>;
+  onCreate: (rule: StaticPortRuleRequest) => Promise<void>;
   onDelete: (id: string) => Promise<void>;
   canEdit?: boolean;
 }
@@ -40,10 +44,10 @@ interface DisplayRow {
   target: string;
   open: boolean;
   onRouter: boolean;
-  staticId?: string;
+  staticId?: string | null;
 }
 
-const emptyDraft = (): StaticPortRuleDto => ({
+const emptyDraft = (): StaticPortRuleRequest => ({
   name: "",
   proto: "tcp",
   wanPortStart: 0,
@@ -73,7 +77,7 @@ function PortForwardingCard({
   const [actionError, setActionError] = useState<string>("");
 
   const [isDialogOpen, setDialogOpen] = useState<boolean>(false);
-  const [draft, setDraft] = useState<StaticPortRuleDto>(emptyDraft());
+  const [draft, setDraft] = useState<StaticPortRuleRequest>(emptyDraft());
   const [isSaving, setSaving] = useState<boolean>(false);
   const [formError, setFormError] = useState<string>("");
   const [deletingId, setDeletingId] = useState<string>("");
@@ -85,7 +89,7 @@ function PortForwardingCard({
     const fromRouter: DisplayRow[] = routerRules.map((rule, index) => {
       const origin = originOf(rule.owner);
       let label = t("origin.manualLabel");
-      let staticId: string | undefined;
+      let staticId: string | null | undefined;
 
       if (origin === "static") {
         const name = staticNameOf(rule.owner as string);

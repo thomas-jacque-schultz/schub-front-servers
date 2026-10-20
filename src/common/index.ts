@@ -25,6 +25,7 @@ export { ApiError, requestJson } from "./api/httpClient";
 export { messageOf, useRequest } from "./api/useRequest";
 export { getHistoryWindowApi, useHistoryWindow } from "./api/historyWindowApi";
 export type { HistoryWindowDto } from "./api/historyWindowApi";
+export type { Schemas } from "./api/schemas";
 
 export { AuthStoreProvider, useAuthStore } from "./stores/authStore";
 export { ProfileStoreProvider, useProfileStore } from "./stores/profileStore";

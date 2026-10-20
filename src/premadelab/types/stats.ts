@@ -1,4 +1,4 @@
-import type { GameRole, MemberStatus } from "./team";
+import type { Schemas } from "../../common";
 
 export type StatsState =
   | "STATISTIQUES_CONNUES"
@@ -8,256 +8,47 @@ export type StatsState =
   | "EFFECTIF_INCOMPLET"
   | "CONNECTEUR_INDISPONIBLE";
 
-export interface StatsCoverageDto {
-  games: number;
-  knownMatches: number;
-  pendingMatches: number;
-  tracked: boolean;
-  firstPlayedAt: string | null;
-  lastPlayedAt: string | null;
-  lastSyncAt: string | null;
-}
+export type StatsCoverageDto = Schemas["StatsCoverageDto"];
 
-export interface StatComparisonDto {
-  referenceGames: number;
-  winRateDelta: number | null;
-  kdaDelta: number | null;
-}
+export type StatComparisonDto = Schemas["StatComparisonDto"];
 
-export interface StatLineDto {
-  key: string;
-  label: string | null;
-  iconUrl: string | null;
-  games: number;
-  wins: number;
-  winRate: number | null;
-  kda: number | null;
-  killsPerGame: number | null;
-  deathsPerGame: number | null;
-  assistsPerGame: number | null;
-  csPerMinute: number | null;
-  goldPerMinute: number | null;
-  damagePerMinute: number | null;
-  damageTakenPerMinute: number | null;
-  visionPerMinute: number | null;
-  /** (kills + assists) / kills de l'équipe. */
-  killParticipation: number | null;
-  /** Morts / morts de l'équipe. */
-  deathShare: number | null;
-  wardsKilledPerMinute: number | null;
-  controlWardsPlaced: number | null;
-  /** Dégâts aux champions / ceux de toute l'équipe. */
-  damageShare: number | null;
-  deathsPer10: number | null;
-  /** Part de la partie passée mort. */
-  timeDeadShare: number | null;
-  turretDamagePerMinute: number | null;
-  turretTakedowns: number | null;
-  epicMonsterDamagePerMinute: number | null;
-  /** Plaques prises moins celles de l'adversaire direct. */
-  platesDiff: number | null;
-  /** Parties dont on a la timeline : les écarts à 15 min ne portent que sur elles. */
-  laningGames: number;
-  goldDiffAt15: number | null;
-  csDiffAt15: number | null;
-  xpDiffAt15: number | null;
-  killsDiffAt15: number | null;
-  afkGames: number;
-  secondsPlayed: number;
-  firstPlayedAt: string | null;
-  lastPlayedAt: string | null;
-  versusRest: StatComparisonDto | null;
-}
+export type StatLineDto = Schemas["StatLineDto"];
 
-export interface RankedStandingDto {
-  queue: string | null;
-  riotQueueType: string | null;
-  tier: string | null;
-  division: string | null;
-  leaguePoints: number;
-  wins: number;
-  losses: number;
-  hotStreak: boolean;
-  inactive: boolean;
-  observedAt: string | null;
-}
+export type RankedStandingDto = Schemas["RankedStandingDto"];
 
-export interface MetricBoundDto {
-  low: number;
-  high: number;
-}
+export type MetricBoundDto = Schemas["Bound"];
 
 /** 5e et 95e percentiles des moyennes par joueur d'une population, au même poste. */
-export interface MetricReferenceDto {
-  tier: string | null;
-  position: string;
-  population: number;
-  minimumGames: number;
-  bounds: Partial<Record<string, MetricBoundDto>>;
-}
+export type MetricReferenceDto = Schemas["MetricReferenceDto"];
 
 /** Poste le plus joué et palier du joueur (pour lire sa grille) ; `met` : ses adversaires directs. */
-export interface RadarReferencesDto {
-  position: string;
-  tier: string | null;
-  met: MetricReferenceDto | null;
-}
+export type RadarReferencesDto = Schemas["RadarReferencesDto"];
 
-export interface PlayerStatsDto {
-  memberId: string;
-  displayName: string | null;
-  avatarUrl: string | null;
-  riotGameName: string | null;
-  riotTagLine: string | null;
-  status: MemberStatus;
-  roles: GameRole[];
-  linked: boolean;
-  state: StatsState;
-  coverage: StatsCoverageDto | null;
-  overall: StatLineDto | null;
-  champions: StatLineDto[];
-  positions: StatLineDto[];
-  queues: StatLineDto[];
-  months: StatLineDto[];
-  rankings: RankedStandingDto[];
-  references: RadarReferencesDto | null;
-  /** Sur les parties d'équipe de la période ; null sans partie d'équipe. */
-  premade: StatLineDto | null;
-}
+export type PlayerStatsDto = Schemas["PlayerStatsDto"];
 
-export interface TeamPlayersStatsDto {
-  teamId: string;
-  teamName: string;
-  days: number | null;
-  championsPerPlayer: number;
-  players: PlayerStatsDto[];
-  viewerMemberId: string | null;
-  generatedAt: string;
-  /** null : le connecteur n'a pas répondu. */
-  premadeGames: number | null;
-  premadeMinimum: number;
-}
+export type TeamPlayersStatsDto = Schemas["TeamPlayersStatsDto"];
 
-export interface TeamRecordDto {
-  key: string;
-  label: string | null;
-  games: number;
-  wins: number;
-  losses: number;
-  winRate: number | null;
-  averageDurationSeconds: number | null;
-}
+export type TeamRecordDto = Schemas["TeamRecordDto"];
 
-export interface TeamGamePlayerDto {
-  memberId: string | null;
-  displayName: string | null;
-  riotId: string | null;
-  championId: number;
-  championName: string | null;
-  iconUrl: string | null;
-  position: string | null;
-  side: number;
-  win: boolean;
-  kills: number;
-  deaths: number;
-  assists: number;
-  goldEarned: number;
-  damageToChampions: number;
-  damageTaken: number;
-  minionsKilled: number;
-  visionScore: number;
-  afk: boolean;
-  soloRank: RankedStandingDto | null;
-  flexRank: RankedStandingDto | null;
-  at15: At15Dto | null;
-}
+export type TeamGamePlayerDto = Schemas["TeamGamePlayerDto"];
 
-export interface At15Dto {
-  gold: number;
-  xp: number;
-  cs: number;
-  damageToChampions: number;
-  kills: number;
-  deaths: number;
-  assists: number;
-}
+export type At15Dto = Schemas["At15Dto"];
 
 /** Moyenne des joueurs classés seulement ; `value` sur l'échelle Fer IV = 0 … Challenger = 30. */
-export interface AverageRankDto {
-  value: number;
-  tier: string;
-  division: string | null;
-  counted: number;
-}
+export type AverageRankDto = Schemas["AverageRankDto"];
 
-export interface SideRanksDto {
-  solo: AverageRankDto | null;
-  flex: AverageRankDto | null;
-}
+export type SideRanksDto = Schemas["SideRanksDto"];
 
-export interface TeamGameDto {
-  matchId: string;
-  startedAt: string | null;
-  durationSeconds: number;
-  queueId: number;
-  queue: string | null;
-  patch: string | null;
-  presentPlayers: number;
-  splitSides: boolean;
-  win: boolean | null;
-  players: TeamGamePlayerDto[];
-  allies: TeamGamePlayerDto[];
-  enemies: TeamGamePlayerDto[];
-  allyRanks: SideRanksDto | null;
-  enemyRanks: SideRanksDto | null;
-  /** Relevé des rangs, souvent après la partie : Riot ne sert que le rang courant. */
-  ranksObservedAt: string | null;
-}
+export type TeamGameDto = Schemas["TeamGameDto"];
 
-export interface MatchupDto {
-  position: string;
-  ally: TeamGamePlayerDto | null;
-  enemy: TeamGamePlayerDto | null;
-  /** En divisions, notre joueur moins son vis-à-vis. */
-  rankGap: number | null;
-}
+export type MatchupDto = Schemas["MatchupDto"];
 
-export interface TeamGameDetailDto {
-  /** Null dans l'historique personnel. */
-  teamId: string | null;
-  game: TeamGameDto;
-  matchups: MatchupDto[];
-  timelineAvailable: boolean;
-  ranksObservedAt: string | null;
-  early: EarlyGameDto | null;
-  viewerMemberId: string | null;
-  days: number | null;
-  metrics: GamePlayerMetricsDto[];
-}
+export type TeamGameDetailDto = Schemas["TeamGameDetailDto"];
 
 /** Un joueur d'une partie, désigné par son camp et son champion. */
-export interface GamePlayerMetricsDto {
-  side: number;
-  championId: number;
-  position: string | null;
-  /** Palier tenu à la date de la partie. */
-  tier: string | null;
-  tierEstimated: boolean;
-  /** Clé de métrique → valeur sur la partie, calculée comme la grille GAME du poste. */
-  game: Record<string, number | null>;
-  /** Sa moyenne au même poste sur la période ; absente hors Faille. */
-  average: StatLineDto | null;
-}
+export type GamePlayerMetricsDto = Schemas["GamePlayerMetricsDto"];
 
-export interface MyGamesDto {
-  days: number | null;
-  state: StatsState;
-  games: TeamGameDto[];
-  totalGames: number;
-  truncated: boolean;
-  viewerMemberId: string | null;
-  generatedAt: string;
-}
+export type MyGamesDto = Schemas["MyGamesDto"];
 
 export type Lane = "TOP" | "MID" | "BOT";
 export type StrongSide = "TOP" | "BOT" | "BALANCED";
@@ -265,273 +56,53 @@ export type StrongSide = "TOP" | "BOT" | "BALANCED";
 /** Issue vue de l'attaquant : KILL, le couloir visé a perdu quelqu'un sans perte en face. */
 export type GankOutcome = "KILL" | "TRADE" | "SURVIVED" | "COUNTER";
 
-export interface GankDto {
-  second: number;
-  lane: Lane;
-  /** Gank de notre jungler. */
-  ours: boolean;
-  outcome: GankOutcome;
-  decisive: boolean;
-  objectiveFollowUp: boolean;
-  targetMemberIds: string[];
-  fallenMemberIds: string[];
-  alliesLost: number;
-  enemiesLost: number;
-}
+export type GankDto = Schemas["GankDto"];
 
-export interface JunglePresenceDto {
-  memberId: string | null;
-  topMinutes: number;
-  midMinutes: number;
-  botMinutes: number;
-  strongSide: StrongSide;
-}
+export type JunglePresenceDto = Schemas["JunglePresenceDto"];
 
-export interface ObjectivesDto {
-  dragons: number;
-  grubs: number;
-  heralds: number;
-}
+export type ObjectivesDto = Schemas["ObjectivesDto"];
 
-export interface EarlyGameDto {
-  ganks: GankDto[];
-  ourJungler: JunglePresenceDto | null;
-  theirJungler: JunglePresenceDto | null;
-  ourObjectives: ObjectivesDto;
-  theirObjectives: ObjectivesDto;
-}
+export type EarlyGameDto = Schemas["EarlyGameDto"];
 
-export interface MemberEarlyDto {
-  memberId: string;
-  displayName: string | null;
-  laneGames: number;
-  ganksFaced: number;
-  ganksHeld: number;
-  deathsOnGank: number;
-  jungleGames: number;
-  ganksMade: number;
-  ganksDecisive: number;
-  ganksCountered: number;
-  topMinutes: number;
-  midMinutes: number;
-  botMinutes: number;
-  /** Jungler : ses minutes du côté où jouait chaque coéquipier, sur leurs parties communes. */
-  presenceWith: PresenceWithDto[];
-}
+export type MemberEarlyDto = Schemas["MemberEarlyDto"];
 
-export interface PresenceWithDto {
-  memberId: string;
-  displayName: string | null;
-  games: number;
-  minutes: number;
-  totalMinutes: number;
-}
+export type PresenceWithDto = Schemas["PresenceWithDto"];
 
-export interface StrongSideRecordDto {
-  side: StrongSide;
-  games: number;
-  wins: number;
-  enemyGanks: number;
-  enemyGanksOnWeakSide: number;
-}
+export type StrongSideRecordDto = Schemas["StrongSideDto"];
 
-export interface TeamEarlyGameDto {
-  games: number;
-  members: MemberEarlyDto[];
-  strongSides: StrongSideRecordDto[];
-}
+export type TeamEarlyGameDto = Schemas["TeamEarlyGameDto"];
 
-export interface PositionOppositionDto {
-  position: string;
-  games: number;
-  averageGap: number | null;
-  versusStronger: TeamRecordDto;
-  versusWeaker: TeamRecordDto;
-  laneGames: number;
-  laneWinRate: number | null;
-  averageGoldDiff15: number | null;
-  averageCsDiff15: number | null;
-}
+export type PositionOppositionDto = Schemas["PositionOppositionDto"];
 
-export interface TeamOppositionDto {
-  teamId: string;
-  days: number | null;
-  state: StatsState;
-  games: number;
-  gamesWithRanks: number;
-  medianLagDays: number | null;
-  byEnemyTier: TeamRecordDto[];
-  byGap: TeamRecordDto[];
-  byPosition: PositionOppositionDto[];
-  ceilingTier: string | null;
-  ceilingMinimumGames: number;
-  early: TeamEarlyGameDto | null;
-  /** Début de partie de l'équipe noté contre les parties de son palier. */
-  level: TeamLevelDto | null;
-  generatedAt: string;
-}
+export type TeamOppositionDto = Schemas["TeamOppositionDto"];
 
-export interface TeamMemberPresenceDto {
-  memberId: string;
-  displayName: string | null;
-  status: MemberStatus;
-  games: number;
-  wins: number;
-  winRate: number | null;
-  presenceRate: number | null;
-  state: StatsState;
-}
+export type TeamMemberPresenceDto = Schemas["TeamMemberPresenceDto"];
 
-export interface TeamGamesStatsDto {
-  teamId: string;
-  teamName: string;
-  days: number | null;
-  minimumPlayers: number;
-  rosterSize: number;
-  state: StatsState;
-  overall: TeamRecordDto;
-  byQueue: TeamRecordDto[];
-  bySide: TeamRecordDto[];
-  byPatch: TeamRecordDto[];
-  presence: TeamMemberPresenceDto[];
-  games: TeamGameDto[];
-  totalGames: number;
-  undecidedGames: number;
-  truncated: boolean;
-  firstPlayedAt: string | null;
-  lastPlayedAt: string | null;
-  viewerMemberId: string | null;
-  generatedAt: string;
-}
+export type TeamGamesStatsDto = Schemas["TeamGamesStatsDto"];
 
-export interface RiotIngestProgressDto {
-  pending: number;
-  running: number;
-  estimatedReadyAt: string | null;
-}
+export type RiotIngestProgressDto = Schemas["RiotIngestProgressDto"];
 
-export interface MyStatsDto {
-  displayName: string | null;
-  riotGameName: string | null;
-  riotTagLine: string | null;
-  days: number | null;
-  state: StatsState;
-  coverage: StatsCoverageDto | null;
-  ingest: RiotIngestProgressDto | null;
-  overall: StatLineDto | null;
-  champions: StatLineDto[];
-  positions: StatLineDto[];
-  queues: StatLineDto[];
-  months: StatLineDto[];
-  patches: StatLineDto[];
-  rankings: RankedStandingDto[];
-  references: RadarReferencesDto | null;
-  generatedAt: string;
-}
+export type MyStatsDto = Schemas["MyStatsDto"];
 
 /** nextAllowedAt : null quand une mise à jour peut être demandée tout de suite. */
-export interface StatsRefreshDto {
-  triggered: boolean;
-  playersQueued: number;
-  nextAllowedAt: string | null;
-}
+export type StatsRefreshDto = Schemas["StatsRefreshDto"];
 
 export type ReferenceScope = "GAME" | "MEAN";
 
 /** Répartition d'une métrique : une grille de quantiles par palier. */
-export interface ReferenceGridDto {
-  patches: string[];
-  scope: ReferenceScope;
-  position: string;
-  computedAt: string;
-  /** Rangs des quantiles de chaque grille, de 0 à 1. */
-  percentiles: number[];
-  metrics: Record<string, ReferenceMetricDto>;
-}
+export type ReferenceGridDto = Schemas["ReferenceGridDto"];
 
-export interface ReferenceMetricDto {
-  polarity: "HIGHER" | "LOWER" | "NEUTRAL";
-  tiers: Record<string, { count: number; values: number[] }>;
-  /**
-   * Moyenne par partie de chaque palier, du plus bas au plus haut. Absente quand la métrique ne suit pas le
-   * rang (le KDA : chacun joue contre son propre niveau) ou que trop peu de paliers sont assez fournis.
-   */
-  rankMeans: Record<string, number> | null;
-  missingTiers: string[];
-}
+export type ReferenceMetricDto = Schemas["ReferenceGridMetric"];
 
 /** Moyennes des joueurs d'un champion dans un groupe de paliers. Métrique absente : pas assez de joueurs. */
-export interface ChampionGridDto {
-  championId: number;
-  group: string | null;
-  patches: string[];
-  computedAt: string;
-  percentiles: number[];
-  metrics: Record<
-    string,
-    {
-      polarity: "HIGHER" | "LOWER" | "NEUTRAL";
-      count: number;
-      values: number[];
-    }
-  >;
-}
+export type ChampionGridDto = Schemas["ChampionGridDto"];
 
-export interface TeamLevelDto {
-  games: number;
-  tier: string | null;
-  patches: string[];
-  metrics: TeamLevelMetricDto[];
-}
+export type TeamLevelDto = Schemas["TeamLevelDto"];
 
-export interface TeamLevelMetricDto {
-  key: string;
-  polarity: "HIGHER" | "LOWER" | "NEUTRAL" | null;
-  games: number;
-  mean: number | null;
-  /** Moyenne des percentiles de chaque partie dans son palier, « plus haut = mieux ». */
-  inTier: number | null;
-  /** Palier dont la moyenne par partie est la plus proche de celle de l’équipe, quand la métrique suit le rang. */
-  level: string | null;
-  /** Fin de partie, sur les parties qui ont aussi la valeur à 15 min ; 0 et null pour les larves et les ganks. */
-  gamesAtEnd: number;
-  meanAtEnd: number | null;
-  meanChange: number | null;
-}
+export type TeamLevelMetricDto = Schemas["TeamLevelMetric"];
 
-export interface DuoDto {
-  memberA: string;
-  nameA: string | null;
-  memberB: string;
-  nameB: string | null;
-  games: number;
-  wins: number;
-  winRate: number | null;
-  /** Moyenne des taux de victoire de chacun sans l'autre, sur les mêmes parties d'équipe. */
-  expected: number | null;
-  delta: number | null;
-}
+export type DuoDto = Schemas["Duo"];
 
-export interface ResourceDto {
-  position: string;
-  games: number;
-  goldShareInWins: number | null;
-  goldShareInLosses: number | null;
-  damageShareInWins: number | null;
-  damageShareInLosses: number | null;
-  /** Médiane de l'équipe : le seuil vient des données, pas d'une valeur fixe. */
-  goldShareThreshold: number | null;
-  gamesAbove: number;
-  winRateAbove: number | null;
-  gamesBelow: number;
-  winRateBelow: number | null;
-  /** Part des dégâts moins part de l'or : négatif, le poste reçoit plus qu'il ne rend. */
-  conversion: number | null;
-}
+export type ResourceDto = Schemas["Resource"];
 
-export interface TeamSynergyDto {
-  games: number;
-  minimumDuoGames: number;
-  duos: DuoDto[];
-  resources: ResourceDto[];
-}
+export type TeamSynergyDto = Schemas["TeamSynergyDto"];

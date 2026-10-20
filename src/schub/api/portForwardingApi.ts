@@ -1,5 +1,9 @@
 import { requestJson } from "../../common";
-import type { PortRuleDto, StaticPortRuleDto } from "../types/portForwarding";
+import type {
+  PortRuleDto,
+  StaticPortRuleDto,
+  StaticPortRuleRequest,
+} from "../types/portForwarding";
 
 export const getPortRulesApi = async (): Promise<PortRuleDto[]> =>
   requestJson<PortRuleDto[]>("/port-forwarding/rules", { method: "GET" });
@@ -10,7 +14,7 @@ export const getStaticPortRulesApi = async (): Promise<StaticPortRuleDto[]> =>
   });
 
 export const createStaticPortRuleApi = async (
-  rule: StaticPortRuleDto,
+  rule: StaticPortRuleRequest,
 ): Promise<StaticPortRuleDto> =>
   requestJson<StaticPortRuleDto>("/port-forwarding/static-rules", {
     method: "POST",
