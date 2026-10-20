@@ -1,11 +1,19 @@
 import { useTranslation } from "react-i18next";
-import { Button, Card, Stack, Text, useAuthStore } from "../../common";
+import {
+  Button,
+  Card,
+  Stack,
+  Text,
+  useAuthStore,
+  useLocalizedNavigate,
+} from "../../common";
 import { retenirApresConnexion } from "../afterLogin";
 
-/** L'appel à se connecter de la vitrine : la connexion Discord, puis la création d'équipe. */
+/** L'appel à se connecter de la vitrine : la page de connexion (qui explique les droits demandés), puis la création d'équipe. */
 export function JoinCta() {
   const { t } = useTranslation("lol");
-  const { connected, loginWithDiscord } = useAuthStore();
+  const { connected } = useAuthStore();
+  const navigate = useLocalizedNavigate();
 
   if (connected) {
     return null;
@@ -13,7 +21,7 @@ export function JoinCta() {
 
   const rejoindre = () => {
     retenirApresConnexion("/teams");
-    loginWithDiscord();
+    navigate("/login");
   };
 
   return (
