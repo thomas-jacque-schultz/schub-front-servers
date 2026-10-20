@@ -79,7 +79,7 @@ export function PlayerSearch() {
             error={invalid}
             fullWidth
           />
-          <Button type="submit" size="large">
+          <Button type="submit" size="large" besideField>
             {t("search.submit")}
           </Button>
         </Stack>
