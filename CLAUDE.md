@@ -168,7 +168,7 @@ décide de ce qu'elle reçoit.
 | `/stats` | Mes stats — ses parties, ses champions, ses postes | connecté, à la demande |
 | `/teams`, `/teams/:id` | les équipes | connecté, à la demande |
 | `/combos/:palier/:type` | les combos qui gagnent par palier (Schub#112), lus par les robots en SSI comme les profils | **public**, à la demande |
-| `/community`, `/community/scribble/:salon` | les mini-jeux (Schub#118), chacun en iframe depuis son sous-domaine ; deux messages avec le jeu, origine vérifiée | **public**, à la demande |
+| `/queue-killer`, `/queue-killer/scribble/:salon` | les mini-jeux (Schub#118), chacun en iframe depuis son sous-domaine ; deux messages avec le jeu, origine vérifiée | **public**, à la demande |
 
 **Communes** : `/profile` (connecté), `/login`, `/terms`, `/privacy` (publiques).
 

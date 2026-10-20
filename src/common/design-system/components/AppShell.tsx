@@ -29,6 +29,8 @@ export interface AppShellNavItem {
   to: string;
   muted?: boolean;
   hint?: string;
+  /** Après le libellé, par exemple la fiole d’une entrée expérimentale. */
+  icon?: IconName;
   /** Absent : courant quand le chemin vaut exactement `to`. */
   current?: boolean;
 }
@@ -221,6 +223,9 @@ export function AppShell({
                       component={RouterLink}
                       to={entry.to}
                       color="inherit"
+                      endIcon={
+                        entry.icon && <Icon name={entry.icon} size="small" />
+                      }
                       aria-current={courant ? "page" : undefined}
                       aria-label={
                         entry.hint

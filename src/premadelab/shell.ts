@@ -8,7 +8,7 @@ import {
 
 export const SUPPORT_URL = "https://buymeacoffee.com/pisel";
 
-const ECRANS_LARGES = ["/teams", "/stats", "/players", "/community"];
+const ECRANS_LARGES = ["/teams", "/stats", "/players", "/queue-killer"];
 
 /** Le bandeau de PremadeLab : ses entrées, et la largeur de ses écrans. */
 export const usePremadeLabShell = (route: string) => {
@@ -45,10 +45,12 @@ export const usePremadeLabShell = (route: string) => {
     current: route.startsWith("/combos"),
   });
   navItems.push({
-    key: "community",
-    label: t("shell.community"),
-    to: localize("/community"),
-    current: route.startsWith("/community"),
+    key: "queueKiller",
+    label: t("shell.queueKiller"),
+    icon: "science",
+    hint: t("shell.experimental"),
+    to: localize("/queue-killer"),
+    current: route.startsWith("/queue-killer"),
   });
   navItems.push({
     key: "presentation",
