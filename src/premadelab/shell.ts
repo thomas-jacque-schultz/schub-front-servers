@@ -20,7 +20,7 @@ export const usePremadeLabShell = (route: string) => {
   const localize = useLocalizedPath();
 
   const navItems: AppShellNavItem[] = [
-    { key: "search", label: t("shell.search"), to: localize("/") },
+    { key: "home", label: t("shell.home"), to: localize("/") },
   ];
   if (connected) {
     navItems.push({
@@ -51,11 +51,6 @@ export const usePremadeLabShell = (route: string) => {
     hint: t("shell.experimental"),
     to: localize("/queue-killer"),
     current: route.startsWith("/queue-killer"),
-  });
-  navItems.push({
-    key: "presentation",
-    label: t("shell.presentation"),
-    to: localize("/presentation"),
   });
 
   return {
