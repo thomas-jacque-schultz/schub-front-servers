@@ -1,6 +1,7 @@
 {
   "search": {
     "label": "Search for a Riot account",
+    "labelShort": "Riot ID, e.g. Name#EUW",
     "placeholder": "Name, or Name#TAG",
     "helper": "Three characters are enough. Suggestions come from accounts the site already knows: the Riot API cannot search by partial name.",
     "searching": "Searching…",

@@ -70,6 +70,10 @@ type Story = StoryObj<typeof meta>;
 
 export const Saisie: Story = {};
 
+export const Compacte: Story = {
+  args: { compact: true, actionLabel: "Chercher l’ID complet" },
+};
+
 export const Propositions: Story = {
   decorators: [suggestions(() => json(CONNUS))],
   play: async ({ canvasElement }) => {

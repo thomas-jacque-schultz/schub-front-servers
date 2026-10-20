@@ -81,12 +81,13 @@
     "add": {
       "action": "Add a member",
       "title": "Add a member",
-      "description": "Search for the player's Riot account, then pick it from the list. If they already have a {{product}} account, the slot is attached to it right away.",
       "confirm": "Add",
       "failed": "Adding failed",
       "chosen": "Account chosen: {{riotId}}",
       "changeAccount": "Pick another account",
-      "pick": "Pick this player"
+      "pick": "Look up the full ID",
+      "partners": "Your gaming partners",
+      "partner": "{{riotId}} · {{count}} games together"
     },
     "edit": {
       "action": "Edit",
