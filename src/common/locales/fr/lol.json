@@ -12,7 +12,8 @@
     "footerNote": "PremadeLab — les stats et le théorycraft de ton équipe League of Legends",
     "search": "Rechercher",
     "combos": "Combos",
-    "support": "Soutenir"
+    "support": "Soutenir",
+    "community": "Communauté"
   },
   "hero": {
     "eyebrow": "League of Legends",
@@ -264,5 +265,21 @@
     "empty": "Pas encore assez de parties dans ce palier.",
     "unavailable": "Les combos du jour ne sont pas encore calculés. Réessaie dans quelques minutes.",
     "method": "Sur {{games}} camps dont le palier est connu (la moyenne des rangs relevés), au moins {{minGames}} parties par combo. Classement par la borne basse du taux de victoire (Wilson)\u00a0: 74\u00a0% sur 40 parties passe devant 80\u00a0% sur 20. Calculé le {{date}}."
+  },
+  "community": {
+    "meta": {
+      "title": "Communauté · PremadeLab",
+      "description": "Des mini-jeux à plusieurs pour les temps morts de ta premade, jouables sans compte."
+    },
+    "title": "Communauté",
+    "subtitle": "Des mini-jeux pour les temps morts de ta premade, jouables sans compte.",
+    "scribble": {
+      "title": "Scribble",
+      "body": "Un tableau partagé\u00a0: chacun dessine, tous voient le trait en direct. Crée un salon et envoie le lien à ta premade.",
+      "create": "Créer un salon",
+      "share": "Lien du salon",
+      "copy": "Copier",
+      "copied": "Lien copié"
+    }
   }
 }

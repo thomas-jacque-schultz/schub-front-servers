@@ -21,6 +21,7 @@ const TeamPage = lazyPage(() => import("./pages/TeamPage"));
 const TeamsPage = lazyPage(() => import("./pages/TeamsPage"));
 const ContactPage = lazyPage(() => import("./pages/ContactPage"));
 const TierCombosPage = lazyPage(() => import("./pages/TierCombosPage"));
+const CommunityPage = lazyPage(() => import("./pages/CommunityPage"));
 
 // Le bouton « Crée ton premade » ramène sur les équipes une fois la connexion faite.
 function AfterLogin() {
@@ -58,6 +59,10 @@ export function PremadeLabRoutes() {
           }
         />
         <Route path="combos/:tier/:kind" element={<TierCombosPage />} />
+        {/* Publique : les mini-jeux se jouent sans compte (Schub#118). */}
+        <Route path="community" element={<CommunityPage />} />
+        <Route path="community/:game" element={<CommunityPage />} />
+        <Route path="community/:game/:room" element={<CommunityPage />} />
         <Route
           path="stats"
           element={

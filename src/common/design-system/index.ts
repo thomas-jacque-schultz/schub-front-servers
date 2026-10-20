@@ -81,6 +81,8 @@ export { PremadeLabMark } from "./components/PremadeLabMark";
 export type { PremadeLabMarkProps } from "./components/PremadeLabMark";
 export { EmptyState } from "./components/EmptyState";
 export type { EmptyStateProps } from "./components/EmptyState";
+export { EmbeddedApp } from "./components/EmbeddedApp";
+export type { EmbeddedAppProps } from "./components/EmbeddedApp";
 export { Frame } from "./components/Frame";
 export type { FrameProps } from "./components/Frame";
 export { HoneypotField } from "./components/HoneypotField";
