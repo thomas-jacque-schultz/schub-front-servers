@@ -1,13 +1,16 @@
+import {
+  ajouteAuFil,
+  compare,
+  type Hasard,
+  type Ligne,
+  type Present,
+  tire,
+} from "../commun/devinette";
+
 // Les règles du scribble (Schub#130). Elles tournent chez le meneur, qui diffuse l'état entier à chaque
 // changement : un joueur qui arrive le reçoit au suivant, et le joueur suivant reprend si le meneur part.
 
 export type Phase = "choix" | "dessin" | "bilan" | "fin";
-
-export interface Ligne {
-  joueur: string;
-  texte?: string;
-  trouve?: boolean;
-}
 
 export interface Partie {
   phase: Phase;
@@ -28,52 +31,13 @@ export interface Partie {
   reserve: string[];
 }
 
-export interface Present {
-  id: string;
-  name: string;
-}
-
 export const DUREES = [40, 60, 80, 100, 120];
 export const DUREE_DEFAUT = 80;
 export const CHOIX_MS = 15_000;
 export const BILAN_MS = 5_000;
-const FIL_MAX = 30;
 const POINTS_DEVINEUR = 50;
 const POINTS_DEVINEUR_RAPIDITE = 50;
 const POINTS_DESSINATEUR = 25;
-
-export type Hasard = () => number;
-
-/** Kai'Sa, kaisa et KAISA se valent : casse, accents, apostrophes, points et espaces ignorés. */
-export const normalise = (texte: string): string =>
-  texte
-    .normalize("NFD")
-    .replace(/\p{M}/gu, "")
-    .toLowerCase()
-    .replace(/[^\p{L}\p{N}]/gu, "");
-
-/** Distance d'édition, arrêtée dès qu'elle dépasse max. */
-export const distance = (a: string, b: string, max = 1): number => {
-  if (Math.abs(a.length - b.length) > max) {
-    return max + 1;
-  }
-  let precedente = Array.from({ length: b.length + 1 }, (_, j) => j);
-  for (let i = 1; i <= a.length; i++) {
-    const ligne = [i];
-    for (let j = 1; j <= b.length; j++) {
-      ligne[j] = Math.min(
-        precedente[j] + 1,
-        ligne[j - 1] + 1,
-        precedente[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1),
-      );
-    }
-    if (Math.min(...ligne) > max) {
-      return max + 1;
-    }
-    precedente = ligne;
-  }
-  return precedente[b.length];
-};
 
 const estLettre = (caractere: string) => /[\p{L}\p{N}]/u.test(caractere);
 
@@ -87,18 +51,6 @@ export const masque = (mot: string, revele: number[]): string =>
       !estLettre(caractere) || revele.includes(index) ? caractere : "_",
     )
     .join("");
-
-const tire = (reserve: string[], n: number, hasard: Hasard) => {
-  const restants = [...reserve];
-  const tires: string[] = [];
-  while (tires.length < n && restants.length > 0) {
-    tires.push(...restants.splice(Math.floor(hasard() * restants.length), 1));
-  }
-  return { tires, restants };
-};
-
-const ajouteAuFil = (fil: Ligne[], ligne: Ligne): Ligne[] =>
-  [...fil, ligne].slice(-FIL_MAX);
 
 const manche = (
   p: Partie,
@@ -198,9 +150,8 @@ export const deviner = (
   ) {
     return { partie: p, proche: false };
   }
-  const essai = normalise(propre);
-  const attendu = normalise(p.mot);
-  if (essai === attendu) {
+  const verdict = compare(propre, p.mot);
+  if (verdict === "juste") {
     const rapidite = p.restantMs / (p.duree * 1000);
     const gain =
       POINTS_DEVINEUR + Math.round(POINTS_DEVINEUR_RAPIDITE * rapidite);
@@ -221,7 +172,7 @@ export const deviner = (
       proche: false,
     };
   }
-  if (distance(essai, attendu) <= 1) {
+  if (verdict === "proche") {
     return { partie: p, proche: true };
   }
   return {

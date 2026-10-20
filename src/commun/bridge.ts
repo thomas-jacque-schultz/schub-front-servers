@@ -1,4 +1,4 @@
-import type { Lang } from "../i18n";
+import type { Lang } from "./textes";
 
 // Le contrat avec la page hôte (PremadeLab), réduit à deux messages (Schub#119) :
 //   hôte → jeu : { type: "premadelab:init", room: string | null, lang: "fr" | "en" }

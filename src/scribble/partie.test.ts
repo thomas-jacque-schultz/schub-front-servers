@@ -1,12 +1,11 @@
 import { describe, expect, it } from "vitest";
+import { distance, normalise } from "../commun/devinette";
 import {
   avancer,
   BILAN_MS,
   choisir,
   deviner,
-  distance,
   masque,
-  normalise,
   nouvellePartie,
   presence,
 } from "./partie";

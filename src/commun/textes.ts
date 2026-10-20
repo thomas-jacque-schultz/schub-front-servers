@@ -1,17 +1,16 @@
 export type Lang = "fr" | "en";
 
-const textes = {
+export type Valeurs = Record<string, string | number>;
+
+// Les textes de tous les jeux : le salon, les réglages, les devinettes et les scores.
+const COMMUNS = {
   fr: {
-    titre: "Scribble",
     pseudoInvite: "Ton pseudo pour ce salon",
     rejoindre: "Entrer",
-    creer: "Créer un salon",
     connexion: "Connexion au salon…",
     reconnexion: "Connexion perdue, on réessaie…",
     joueurs: "Joueurs",
     meneur: "mène",
-    effacer: "Effacer le tableau",
-    epaisseur: "Épaisseur",
     copier: "Copier le lien",
     copie: "Lien copié",
     erreur_ROOM_NOT_FOUND: "Ce salon n'existe plus.",
@@ -29,10 +28,6 @@ const textes = {
     lancer: "Lancer la partie",
     attenteMeneur: "Le meneur lance la partie quand tout le monde est là.",
     attenteJoueurs: "Il faut au moins deux joueurs pour lancer une partie.",
-    choisisMot: "Choisis le champion à dessiner",
-    choisitMot: "{nom} choisit un champion…",
-    dessine: "Dessine : {mot}",
-    lettres: "{n} lettres",
     trouveMoi: "Trouvé ! C'était {mot}",
     cetait: "C'était : {mot}",
     reponse: "Ta réponse",
@@ -41,26 +36,21 @@ const textes = {
     aTrouve: "{nom} a trouvé !",
     scores: "Scores",
     reponses: "Réponses",
-    dessinateur: "dessine",
     points: "{n} pts",
-    recap: "Fin du tour",
+    recap: "Fin de la partie",
     rejouer: "Rejouer",
     recapAttente: "Le meneur peut relancer une partie.",
     erreurMots: "Impossible de charger les champions, réessaie.",
     chrono: "Temps restant",
-    ligne: "{nom}\u00a0: {texte}",
+    ligne: "{nom} : {texte}",
   },
   en: {
-    titre: "Scribble",
     pseudoInvite: "Your nickname for this room",
     rejoindre: "Join",
-    creer: "Create a room",
     connexion: "Joining the room…",
     reconnexion: "Connection lost, retrying…",
     joueurs: "Players",
     meneur: "leads",
-    effacer: "Clear the board",
-    epaisseur: "Width",
     copier: "Copy link",
     copie: "Link copied",
     erreur_ROOM_NOT_FOUND: "This room no longer exists.",
@@ -79,10 +69,6 @@ const textes = {
     lancer: "Start the game",
     attenteMeneur: "The leader starts the game once everyone is here.",
     attenteJoueurs: "You need at least two players to start a game.",
-    choisisMot: "Pick the champion to draw",
-    choisitMot: "{nom} is picking a champion…",
-    dessine: "Draw: {mot}",
-    lettres: "{n} letters",
     trouveMoi: "Got it! It was {mot}",
     cetait: "It was: {mot}",
     reponse: "Your guess",
@@ -91,27 +77,41 @@ const textes = {
     aTrouve: "{nom} got it!",
     scores: "Scores",
     reponses: "Guesses",
-    dessinateur: "drawing",
     points: "{n} pts",
-    recap: "End of the round",
+    recap: "End of the game",
     rejouer: "Play again",
     recapAttente: "The leader can start a new game.",
     erreurMots: "Could not load the champions, try again.",
     chrono: "Time left",
     ligne: "{nom}: {texte}",
   },
-} as const;
+};
 
-export type Cle = keyof (typeof textes)["fr"];
+export type CleCommune = keyof (typeof COMMUNS)["fr"];
 
-export const texte = (
-  lang: Lang,
-  cle: Cle,
-  valeurs: Record<string, string | number> = {},
-): string =>
-  textes[lang][cle].replace(/\{(\w+)\}/g, (tout, nom: string) =>
+const remplace = (gabarit: string, valeurs: Valeurs) =>
+  gabarit.replace(/\{(\w+)\}/g, (tout, nom: string) =>
     nom in valeurs ? String(valeurs[nom]) : tout,
   );
+
+export const texteCommun = (
+  lang: Lang,
+  cle: CleCommune,
+  valeurs: Valeurs = {},
+): string => remplace(COMMUNS[lang][cle], valeurs);
+
+/** Les textes d'un jeu, par-dessus les textes communs. */
+export const traduction =
+  <T extends Record<string, string>>(propres: {
+    fr: T;
+    en: Record<keyof T, string>;
+  }) =>
+  (lang: Lang, cle: keyof T | CleCommune, valeurs: Valeurs = {}): string =>
+    remplace(
+      (propres[lang] as Record<string, string>)[cle as string] ??
+        COMMUNS[lang][cle as CleCommune],
+      valeurs,
+    );
 
 export const langueDuNavigateur = (): Lang =>
   navigator.language?.startsWith("fr") ? "fr" : "en";

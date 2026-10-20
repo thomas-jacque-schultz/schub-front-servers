@@ -1,78 +1,89 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { Lang } from "../i18n";
-import type { Joueur } from "../relay/relay";
-import { champions } from "./champions";
-import {
-  avancer,
-  choisir,
-  deviner,
-  estPartie,
-  nouvellePartie,
-  type Partie,
-  presence,
-} from "./partie";
+import type { Hasard, Present } from "./devinette";
+import type { Joueur } from "./relay";
+
+// Les règles tournent chez le meneur, qui diffuse l'état entier à chaque changement (Schub#118) : un joueur
+// qui arrive le reçoit au suivant, et le joueur suivant reprend du dernier état reçu si le meneur part.
+
+export interface EtatDePartie {
+  phase: string;
+  restantMs: number;
+}
+
+export interface Regles<P extends EtatDePartie> {
+  estEtat: (data: unknown) => data is P;
+  enCours: (p: P) => boolean;
+  avancer: (p: P, ecouleMs: number, presents: Present[], hasard: Hasard) => P;
+  deviner: (
+    p: P,
+    joueur: string,
+    texte: string,
+  ) => { partie: P; proche: boolean };
+  presence: (p: P, presents: Present[]) => P;
+  /** Un changement qui part tout de suite ; le reste part avec la resynchro. */
+  aDiffuser: (avant: P, apres: P) => boolean;
+  /** Un geste propre au jeu (le choix du mot au scribble), jugé par le meneur. */
+  action?: (p: P, de: string, valeur: unknown) => P;
+}
 
 export type MessageJeu =
-  | { jeu: "etat"; partie: Partie | null }
+  | { jeu: "etat"; partie: unknown }
   | { jeu: "devine"; texte: string }
-  | { jeu: "choisi"; index: number }
+  | { jeu: "action"; valeur: unknown }
   | { jeu: "proche"; pour: string };
 
 export const estMessageJeu = (data: unknown): data is MessageJeu =>
   typeof (data as { jeu?: unknown } | null)?.jeu === "string";
 
 const TICK_MS = 500;
-// L'état part aussi sans changement : un nouveau meneur reprend à quelques secondes près.
 const RESYNCHRO_MS = 5_000;
 const PROCHE_MS = 2_500;
 
-interface Options {
+interface Options<P extends EtatDePartie> {
   moi: string;
   meneur: string | null;
   joueurs: Joueur[];
-  lang: Lang;
+  regles: Regles<P>;
   envoie: (message: MessageJeu) => void;
-  efface: () => void;
+  /** Après chaque état publié par le meneur : le scribble y efface le tableau d'une nouvelle manche. */
+  surPublication?: (avant: P | null, apres: P | null) => void;
 }
 
-export function usePartie({
+export function useMeneur<P extends EtatDePartie>({
   moi,
   meneur,
   joueurs,
-  lang,
+  regles,
   envoie,
-  efface,
-}: Options) {
-  const [partie, setPartie] = useState<Partie | null>(null);
+  surPublication,
+}: Options<P>) {
+  const [partie, setPartie] = useState<P | null>(null);
   const [recuA, setRecuA] = useState(0);
   const [proche, setProche] = useState(false);
   const [erreur, setErreur] = useState(false);
-  const courante = useRef<Partie | null>(null);
+  const courante = useRef<P | null>(null);
   const presents = useRef(joueurs);
   presents.current = joueurs;
   const meneurCourant = useRef(meneur);
   meneurCourant.current = meneur;
   const estMeneur = meneur === moi;
+  const apresPublication = useRef(surPublication);
+  apresPublication.current = surPublication;
 
-  const garde = useCallback((suivante: Partie | null) => {
+  const garde = useCallback((suivante: P | null) => {
     courante.current = suivante;
     setPartie(suivante);
     setRecuA(Date.now());
   }, []);
 
   const publie = useCallback(
-    (suivante: Partie | null) => {
-      const precedente = courante.current;
+    (suivante: P | null) => {
+      const avant = courante.current;
       garde(suivante);
       envoie({ jeu: "etat", partie: suivante });
-      const nouvelleManche =
-        suivante?.phase === "choix" &&
-        (precedente?.phase !== "choix" || precedente.tour !== suivante.tour);
-      if (nouvelleManche) {
-        efface();
-      }
+      apresPublication.current?.(avant, suivante);
     },
-    [efface, envoie, garde],
+    [envoie, garde],
   );
 
   const juge = useCallback(
@@ -81,7 +92,11 @@ export function usePartie({
       if (!p) {
         return;
       }
-      const { partie: suivante, proche: presque } = deviner(p, auteur, texte);
+      const { partie: suivante, proche: presque } = regles.deviner(
+        p,
+        auteur,
+        texte,
+      );
       if (presque) {
         if (auteur === moi) {
           setProche(true);
@@ -93,7 +108,7 @@ export function usePartie({
         publie(suivante);
       }
     },
-    [envoie, moi, publie],
+    [envoie, moi, publie, regles],
   );
 
   const recoit = useCallback(
@@ -104,9 +119,9 @@ export function usePartie({
         case "etat":
           if (
             de === meneurCourant.current &&
-            (message.partie === null || estPartie(message.partie))
+            (message.partie === null || regles.estEtat(message.partie))
           ) {
-            garde(message.partie);
+            garde(message.partie as P | null);
           }
           break;
         case "devine":
@@ -114,9 +129,9 @@ export function usePartie({
             juge(de, message.texte);
           }
           break;
-        case "choisi":
-          if (jeMene && p && de === p.dessinateur) {
-            publie(choisir(p, message.index));
+        case "action":
+          if (jeMene && p && de && regles.action) {
+            publie(regles.action(p, de, message.valeur));
           }
           break;
         case "proche":
@@ -126,7 +141,7 @@ export function usePartie({
           break;
       }
     },
-    [garde, juge, moi, publie],
+    [garde, juge, moi, publie, regles],
   );
 
   useEffect(() => {
@@ -137,9 +152,11 @@ export function usePartie({
     return () => window.clearTimeout(minuterie);
   }, [proche]);
 
-  // Le meneur fait avancer le temps ; s'il vient de prendre la main, il repart du dernier état reçu.
+  const actif = partie !== null && regles.enCours(partie);
+
+  // S'il vient de prendre la main, le meneur repart du dernier état reçu.
   useEffect(() => {
-    if (!estMeneur || !partie || partie.phase === "fin") {
+    if (!estMeneur || !actif) {
       return;
     }
     let dernier = recuA;
@@ -150,18 +167,17 @@ export function usePartie({
         return;
       }
       const maintenant = Date.now();
-      const suivante = avancer(
+      const suivante = regles.avancer(
         p,
         maintenant - dernier,
         presents.current,
         Math.random,
       );
       dernier = maintenant;
-      const change =
-        suivante.phase !== p.phase ||
-        suivante.tour !== p.tour ||
-        suivante.revele.length !== p.revele.length;
-      if (change || maintenant - diffuse >= RESYNCHRO_MS) {
+      if (
+        regles.aDiffuser(p, suivante) ||
+        maintenant - diffuse >= RESYNCHRO_MS
+      ) {
         diffuse = maintenant;
         publie(suivante);
       } else {
@@ -169,30 +185,26 @@ export function usePartie({
       }
     }, TICK_MS);
     return () => window.clearInterval(minuterie);
-    // La boucle ne se relance qu'à un changement de meneur ou de phase, pas à chaque état publié.
+    // La boucle ne se relance qu'à un changement de meneur ou quand la partie démarre ou s'arrête.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [estMeneur, partie?.phase, partie?.tour]);
+  }, [estMeneur, actif]);
 
   // Qui arrive reçoit l'état ; qui part est retiré des manches à venir.
   useEffect(() => {
     const p = courante.current;
-    if (estMeneur && p && p.phase !== "fin") {
-      publie(presence(p, joueurs));
+    if (estMeneur && p && regles.enCours(p)) {
+      publie(regles.presence(p, joueurs));
     }
-  }, [estMeneur, joueurs, publie]);
+  }, [estMeneur, joueurs, publie, regles]);
 
   const lance = useCallback(
-    (duree: number) => {
+    (creer: () => Promise<P>) => {
       setErreur(false);
-      void champions(lang)
-        .then((mots) =>
-          publie(
-            nouvellePartie(presents.current, duree, lang, mots, Math.random),
-          ),
-        )
+      void creer()
+        .then(publie)
         .catch(() => setErreur(true));
     },
-    [lang, publie],
+    [publie],
   );
 
   const devine = useCallback(
@@ -206,16 +218,16 @@ export function usePartie({
     [envoie, estMeneur, juge, moi],
   );
 
-  const choisis = useCallback(
-    (index: number) => {
+  const agit = useCallback(
+    (valeur: unknown) => {
       const p = courante.current;
-      if (estMeneur && p) {
-        publie(choisir(p, index));
+      if (estMeneur && p && regles.action) {
+        publie(regles.action(p, moi, valeur));
       } else {
-        envoie({ jeu: "choisi", index });
+        envoie({ jeu: "action", valeur });
       }
     },
-    [envoie, estMeneur, publie],
+    [envoie, estMeneur, moi, publie, regles],
   );
 
   return {
@@ -225,9 +237,10 @@ export function usePartie({
     proche,
     erreur,
     estMeneur,
+    presents,
     recoit,
     lance,
     devine,
-    choisis,
+    agit,
   };
 }

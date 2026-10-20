@@ -1,13 +1,24 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { annonceSalon, attendInit, dansUnHote } from "../host/bridge";
-import { type Cle, langueDuNavigateur, type Lang, texte } from "../i18n";
-import { playerId, playerName, rememberName } from "../identity";
-import { type Evenement, type Joueur, Relais } from "../relay/relay";
+import { useCallback, useRef, useState } from "react";
+import { champions } from "../commun/champions";
+import { Devinette, Joueurs, Scores } from "../commun/jeu";
+import type { Evenement } from "../commun/relay";
+import {
+  Bandeau,
+  type Contexte,
+  ErreurSalon,
+  JeuApp,
+  useMaintenant,
+  useSalon,
+} from "../commun/salon";
+import { langueDuNavigateur } from "../commun/textes";
+import { estMessageJeu, type MessageJeu, useMeneur } from "../commun/useMeneur";
 import { Board } from "./Board";
 import { Flux } from "./flux";
-import { Consigne, Devinette, Scores } from "./Jeu";
+import { Consigne } from "./Jeu";
+import { nouvellePartie, type Partie } from "./partie";
+import { nouvelleManche, REGLES } from "./regles";
+import { texte } from "./textes";
 import { estMorceau, type Morceau, Tableau } from "./traits";
-import { estMessageJeu, type MessageJeu, usePartie } from "./usePartie";
 
 const COULEURS = [
   "#F2E9EE",
@@ -18,129 +29,34 @@ const COULEURS = [
   "#E0576B",
 ];
 const EPAISSEURS = [0.004, 0.009, 0.02];
-const NOM_MAX = 24;
-
-// Le salon demandé par l'adresse : scribble.premadelab.eu/ABCD.
-const salonDeLAdresse = (): string | null => {
-  const code = location.pathname.slice(1);
-  return /^[A-Z]{4}$/.test(code) ? code : null;
-};
-
-interface Contexte {
-  lang: Lang;
-  room: string | null;
-  hote: string | null;
-}
 
 export function ScribbleApp() {
-  const [contexte, setContexte] = useState<Contexte | null>(null);
-  const [nom, setNom] = useState<string | null>(playerName());
-
-  useEffect(() => {
-    if (!dansUnHote()) {
-      setContexte({
-        lang: langueDuNavigateur(),
-        room: salonDeLAdresse(),
-        hote: null,
-      });
-      return;
-    }
-    void attendInit().then((init) =>
-      setContexte({ lang: init.lang, room: init.room, hote: init.origin }),
-    );
-  }, []);
-
-  if (!contexte) {
-    return null;
-  }
-  if (!nom) {
-    return (
-      <Pseudo lang={contexte.lang} onChoisi={(choisi) => setNom(choisi)} />
-    );
-  }
-  return <Salon contexte={contexte} nom={nom} />;
-}
-
-function Pseudo({
-  lang,
-  onChoisi,
-}: {
-  lang: Lang;
-  onChoisi: (nom: string) => void;
-}) {
-  const [saisie, setSaisie] = useState("");
-  const propre = saisie.trim().slice(0, NOM_MAX);
   return (
-    <main className="accueil">
-      <h1>{texte(lang, "titre")}</h1>
-      <form
-        onSubmit={(event) => {
-          event.preventDefault();
-          if (propre) {
-            rememberName(propre);
-            onChoisi(propre);
-          }
-        }}
-      >
-        <label htmlFor="pseudo">{texte(lang, "pseudoInvite")}</label>
-        <input
-          id="pseudo"
-          autoFocus
-          maxLength={NOM_MAX}
-          value={saisie}
-          onChange={(e) => setSaisie(e.target.value)}
-        />
-        <button type="submit" disabled={!propre}>
-          {texte(lang, "rejoindre")}
-        </button>
-      </form>
-    </main>
+    <JeuApp
+      titre={texte(langueDuNavigateur(), "titre")}
+      rendu={(contexte, nom) => <Salon contexte={contexte} nom={nom} />}
+    />
   );
 }
 
 function Salon({ contexte, nom }: { contexte: Contexte; nom: string }) {
   const { lang } = contexte;
-  const moi = useRef(playerId()).current;
   const tableau = useRef(new Tableau()).current;
   const recus = useRef(new Flux<Morceau>()).current;
-  const relais = useRef<Relais | null>(null);
-  const [demande, setDemande] = useState<string | null>(contexte.room);
-  const [room, setRoom] = useState<string | null>(null);
-  const [joueurs, setJoueurs] = useState<Joueur[]>([]);
-  const [meneur, setMeneur] = useState<string | null>(null);
   const [version, setVersion] = useState(0);
-  const [etat, setEtat] = useState<
-    "connexion" | "salon" | "reconnexion" | "erreur"
-  >("connexion");
-  const [erreur, setErreur] = useState<Cle | null>(null);
   const [couleur, setCouleur] = useState(COULEURS[0]);
   const [epaisseur, setEpaisseur] = useState(EPAISSEURS[1]);
-  const [copie, setCopie] = useState(false);
-  const [maintenant, setMaintenant] = useState(() => Date.now());
-
-  const envoieJeu = useCallback(
-    (message: MessageJeu) => relais.current?.envoie(message, false),
-    [],
+  const enPartie = useRef<{ current: Partie | null }>({ current: null });
+  const recoitJeu = useRef<(de: string | null, m: MessageJeu) => void>(
+    () => undefined,
   );
-  const effaceTout = useCallback(() => {
-    relais.current?.efface();
+
+  const vide = useCallback(() => {
     tableau.vide();
     setVersion((v) => v + 1);
   }, [tableau]);
-  const jeu = usePartie({
-    moi,
-    meneur,
-    joueurs,
-    lang,
-    envoie: envoieJeu,
-    efface: effaceTout,
-  });
-  // L'écoute du relais reste stable : la changer rouvrirait la connexion.
-  const recoitJeu = useRef(jeu.recoit);
-  recoitJeu.current = jeu.recoit;
-  const enPartie = useRef(jeu.courante);
 
-  const ecoute = useCallback(
+  const surEvenement = useCallback(
     (evenement: Evenement) => {
       switch (evenement.type) {
         case "joined":
@@ -149,19 +65,6 @@ function Salon({ contexte, nom }: { contexte: Contexte; nom: string }) {
             .filter(estMorceau)
             .forEach((morceau) => tableau.ajoute(morceau));
           setVersion((v) => v + 1);
-          setRoom(evenement.room);
-          setJoueurs(evenement.players);
-          setMeneur(evenement.leader);
-          setEtat("salon");
-          if (contexte.hote) {
-            annonceSalon(evenement.room, contexte.hote);
-          } else if (location.pathname !== `/${evenement.room}`) {
-            history.replaceState(null, "", `/${evenement.room}`);
-          }
-          break;
-        case "presence":
-          setJoueurs(evenement.players);
-          setMeneur(evenement.leader);
           break;
         case "message": {
           const p = enPartie.current.current;
@@ -178,43 +81,40 @@ function Salon({ contexte, nom }: { contexte: Contexte; nom: string }) {
           break;
         }
         case "cleared":
-          tableau.vide();
-          setVersion((v) => v + 1);
-          break;
-        case "error":
-          setErreur(`erreur_${evenement.code}` as Cle);
-          setEtat("erreur");
-          break;
-        case "deconnecte":
-          setEtat("reconnexion");
+          vide();
           break;
       }
     },
-    [contexte.hote, recus, tableau],
+    [recus, tableau, vide],
   );
 
-  useEffect(() => {
-    const ouvert = new Relais(
-      demande,
-      "scribble",
-      { id: moi, name: nom },
-      ecoute,
-    );
-    relais.current = ouvert;
-    return () => ouvert.ferme();
-  }, [demande, ecoute, moi, nom]);
+  const salon = useSalon({ jeu: "scribble", contexte, nom, surEvenement });
+  const { moi, joueurs, meneur, etat, erreur, efface } = salon;
 
-  const lien = room ? `${location.origin}/${room}` : null;
+  const effaceTout = useCallback(() => {
+    efface();
+    vide();
+  }, [efface, vide]);
+
+  const jeu = useMeneur({
+    moi,
+    meneur,
+    joueurs,
+    regles: REGLES,
+    envoie: salon.envoie,
+    surPublication: (avant, apres) => {
+      if (nouvelleManche(avant, apres)) {
+        effaceTout();
+      }
+    },
+  });
+  recoitJeu.current = jeu.recoit;
+  enPartie.current = jeu.courante;
+
   const { partie } = jeu;
-  const enCours = partie?.phase === "choix" || partie?.phase === "dessin";
-
-  useEffect(() => {
-    if (!enCours) {
-      return;
-    }
-    const minuterie = window.setInterval(() => setMaintenant(Date.now()), 250);
-    return () => window.clearInterval(minuterie);
-  }, [enCours]);
+  const maintenant = useMaintenant(
+    partie?.phase === "choix" || partie?.phase === "dessin",
+  );
 
   const dessinable =
     !partie ||
@@ -227,37 +127,15 @@ function Salon({ contexte, nom }: { contexte: Contexte; nom: string }) {
 
   return (
     <main className="salon">
-      <header className="bandeau">
-        <h1>{texte(lang, "titre")}</h1>
-        {room && <span className="code">{room}</span>}
-        {!contexte.hote && lien && (
-          <button
-            className="discret"
-            onClick={() =>
-              void navigator.clipboard?.writeText(lien).then(() => {
-                setCopie(true);
-                window.setTimeout(() => setCopie(false), 1500);
-              })
-            }
-          >
-            {texte(lang, copie ? "copie" : "copier")}
-          </button>
-        )}
-      </header>
+      <Bandeau
+        titre={texte(lang, "titre")}
+        lang={lang}
+        room={salon.room}
+        hote={contexte.hote}
+      />
 
       {etat === "erreur" && erreur ? (
-        <section className="alerte">
-          <p>{texte(lang, erreur)}</p>
-          <button
-            onClick={() => {
-              setErreur(null);
-              setEtat("connexion");
-              setDemande(null);
-            }}
-          >
-            {texte(lang, "nouveau")}
-          </button>
-        </section>
+        <ErreurSalon lang={lang} erreur={erreur} onNouveau={salon.nouveau} />
       ) : (
         <div className="jeu">
           <div className="zone">
@@ -282,8 +160,20 @@ function Salon({ contexte, nom }: { contexte: Contexte; nom: string }) {
                 }
                 nbJoueurs={joueurs.length}
                 erreur={jeu.erreur}
-                onLance={jeu.lance}
-                onChoisis={jeu.choisis}
+                onLance={(duree) =>
+                  jeu.lance(() =>
+                    champions(lang).then((liste) =>
+                      nouvellePartie(
+                        jeu.presents.current,
+                        duree,
+                        lang,
+                        liste.map((c) => c.nom),
+                        Math.random,
+                      ),
+                    ),
+                  )
+                }
+                onChoisis={jeu.agit}
               />
             )}
             <Board
@@ -293,7 +183,7 @@ function Salon({ contexte, nom }: { contexte: Contexte; nom: string }) {
               epaisseur={epaisseur}
               version={version}
               auteur={moi}
-              onMorceau={(morceau) => relais.current?.envoie(morceau, true)}
+              onMorceau={(morceau) => salon.envoie(morceau, true)}
               recus={recus}
             />
             {devine && (
@@ -329,14 +219,7 @@ function Salon({ contexte, nom }: { contexte: Contexte; nom: string }) {
                 </button>
               ))}
               <span className="separateur" />
-              <button
-                className="discret"
-                onClick={() => {
-                  relais.current?.efface();
-                  tableau.vide();
-                  setVersion((v) => v + 1);
-                }}
-              >
+              <button className="discret" onClick={effaceTout}>
                 {texte(lang, "effacer")}
               </button>
             </div>
@@ -345,28 +228,26 @@ function Salon({ contexte, nom }: { contexte: Contexte; nom: string }) {
             {partie ? (
               <Scores
                 lang={lang}
-                partie={partie}
+                scores={partie.scores}
+                noms={partie.noms}
+                fil={partie.fil}
+                trouve={partie.phase === "fin" ? [] : partie.trouve}
+                joueurs={joueurs}
+                moi={moi}
+                meneur={meneur}
+                etiquette={(id) =>
+                  partie.phase !== "fin" && id === partie.dessinateur
+                    ? texte(lang, "dessinateur")
+                    : null
+                }
+              />
+            ) : (
+              <Joueurs
+                lang={lang}
                 joueurs={joueurs}
                 moi={moi}
                 meneur={meneur}
               />
-            ) : (
-              <>
-                <h2>{texte(lang, "joueurs")}</h2>
-                <ul>
-                  {joueurs.map((j) => (
-                    <li key={j.id} className={j.id === moi ? "moi" : undefined}>
-                      {j.name}
-                      {j.id === meneur && (
-                        <span className="meneur">
-                          {" "}
-                          · {texte(lang, "meneur")}
-                        </span>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </>
             )}
           </aside>
         </div>
