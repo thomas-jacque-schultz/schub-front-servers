@@ -3,7 +3,7 @@ import { traduction } from "../commun/textes";
 export const texte = traduction({
   fr: {
     titre: "Scribble",
-    effacer: "Effacer le tableau",
+    effacer: "Tout effacer",
     epaisseur: "Épaisseur",
     choisisMot: "Choisis le champion à dessiner",
     choisitMot: "{nom} choisit un champion…",
@@ -16,7 +16,7 @@ export const texte = traduction({
   },
   en: {
     titre: "Scribble",
-    effacer: "Clear the board",
+    effacer: "Clear all",
     epaisseur: "Width",
     choisisMot: "Pick the champion to draw",
     choisitMot: "{nom} is picking a champion…",

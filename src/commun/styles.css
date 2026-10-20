@@ -122,8 +122,8 @@ input {
 /* Le tableau prend la hauteur qui reste : dans l'iframe de PremadeLab, le champ de réponse reste sous les yeux. */
 .zone {
   position: relative;
-  width: min(100%, calc((100vh - 184px) * 4 / 3));
-  width: min(100%, calc((100dvh - 184px) * 4 / 3));
+  width: min(100%, calc((100vh - 212px) * 4 / 3));
+  width: min(100%, calc((100dvh - 212px) * 4 / 3));
   justify-self: center;
 }
 
@@ -155,9 +155,16 @@ input {
   flex-wrap: wrap;
 }
 
+/* Seize couleurs sur deux rangs : la barre d'outils tient sur une ligne sous le tableau. */
+.palette {
+  display: grid;
+  grid-template-columns: repeat(8, 20px);
+  gap: 3px;
+}
+
 .couleur {
-  width: 28px;
-  height: 28px;
+  width: 20px;
+  height: 20px;
   padding: 0;
 }
 
@@ -167,8 +174,8 @@ input {
 }
 
 .epaisseur {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   padding: 0;
   display: grid;
   place-items: center;
@@ -335,8 +342,8 @@ select {
 
 /* Zoom : le splash art garde son format (1215 × 717) et ne déborde jamais du cadre. */
 .zone-zoom {
-  width: min(100%, calc((100vh - 184px) * 1215 / 717));
-  width: min(100%, calc((100dvh - 184px) * 1215 / 717));
+  width: min(100%, calc((100vh - 212px) * 1215 / 717));
+  width: min(100%, calc((100dvh - 212px) * 1215 / 717));
 }
 
 .cadre {

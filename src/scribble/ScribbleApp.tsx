@@ -205,15 +205,17 @@ function Salon({ contexte, nom }: { contexte: Contexte; nom: string }) {
               />
             )}
             <div className={dessinable ? "outils" : "outils cache"}>
-              {COULEURS.map((c) => (
-                <button
-                  key={c}
-                  className={c === couleur ? "couleur choisie" : "couleur"}
-                  style={{ background: c }}
-                  aria-label={c}
-                  onClick={() => setCouleur(c)}
-                />
-              ))}
+              <div className="palette">
+                {COULEURS.map((c) => (
+                  <button
+                    key={c}
+                    className={c === couleur ? "couleur choisie" : "couleur"}
+                    style={{ background: c }}
+                    aria-label={c}
+                    onClick={() => setCouleur(c)}
+                  />
+                ))}
+              </div>
               <span className="separateur" />
               {EPAISSEURS.map((e) => (
                 <button
