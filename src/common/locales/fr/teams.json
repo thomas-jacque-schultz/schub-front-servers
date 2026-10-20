@@ -81,12 +81,13 @@
     "add": {
       "action": "Ajouter un membre",
       "title": "Ajouter un membre",
-      "description": "Cherchez le compte Riot du joueur, puis choisissez-le dans la liste. S'il a déjà un compte {{product}}, la place lui est rattachée aussitôt.",
       "confirm": "Ajouter",
       "failed": "L'ajout a échoué",
       "chosen": "Compte choisi\u00a0: {{riotId}}",
       "changeAccount": "Choisir un autre compte",
-      "pick": "Choisir ce joueur"
+      "pick": "Chercher l’ID complet",
+      "partners": "Tes partenaires de jeu",
+      "partner": "{{riotId}} · {{count}} parties ensemble"
     },
     "edit": {
       "action": "Modifier",

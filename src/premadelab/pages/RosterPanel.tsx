@@ -18,7 +18,6 @@ import {
   Stack,
   Text,
   type DataTableColumn,
-  type KnownRiotAccountDto,
 } from "../../common";
 import {
   choisitStatuts,
@@ -32,6 +31,7 @@ import {
   type TeamDto,
   type TeamMemberDto,
 } from "../types/team";
+import { PartnerSelect, type Partner } from "./team/PartnerSelect";
 
 export interface RosterPanelProps {
   team: TeamDto;
@@ -45,7 +45,7 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
   const [isSaving, setIsSaving] = useState<boolean>(false);
 
   const [isAdding, setIsAdding] = useState<boolean>(false);
-  const [chosen, setChosen] = useState<KnownRiotAccountDto | null>(null);
+  const [chosen, setChosen] = useState<Partner | null>(null);
   const [newRoles, setNewRoles] = useState<string[]>([]);
   const [newStatuts, setNewStatuts] = useState<MemberStatus[]>(["TITULAIRE"]);
 
@@ -300,7 +300,6 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
       <Dialog
         open={isAdding}
         title={t("roster.add.title")}
-        description={t("roster.add.description")}
         cancelLabel={t("actions.cancel", { ns: "common" })}
         confirmLabel={chosen ? t("roster.add.confirm") : undefined}
         confirmDisabled={newStatuts.length === 0}
@@ -347,12 +346,22 @@ export function RosterPanel({ team, onTeamChange }: RosterPanelProps) {
             />
           </Stack>
         ) : (
-          <RiotAccountPicker
-            resetKey={isAdding}
-            busy={isSaving}
-            actionLabel={t("roster.add.pick")}
-            onPick={setChosen}
-          />
+          <Stack spacing={2.5}>
+            <RiotAccountPicker
+              compact
+              resetKey={isAdding}
+              busy={isSaving}
+              actionLabel={t("roster.add.pick")}
+              onPick={setChosen}
+            />
+            <PartnerSelect
+              exclude={team.members
+                .map(riotIdOf)
+                .filter((riotId): riotId is string => riotId !== null)}
+              disabled={isSaving}
+              onPick={setChosen}
+            />
+          </Stack>
         )}
       </Dialog>
 

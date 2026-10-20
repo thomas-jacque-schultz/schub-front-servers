@@ -1,6 +1,7 @@
 {
   "search": {
     "label": "Chercher un compte Riot",
+    "labelShort": "Riot ID, ex. Pseudo#EUW",
     "placeholder": "Pseudo, ou Pseudo#TAG",
     "helper": "Trois caractères suffisent. Les propositions viennent des comptes déjà connus du site\u00a0: l’API Riot ne sait pas chercher par pseudo partiel.",
     "searching": "Recherche…",
