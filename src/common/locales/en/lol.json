@@ -12,7 +12,8 @@
     "footerNote": "PremadeLab — stats and theorycraft for your League of Legends team",
     "search": "Search",
     "combos": "Combos",
-    "support": "Support"
+    "support": "Support",
+    "community": "Community"
   },
   "hero": {
     "eyebrow": "League of Legends",
@@ -264,5 +265,21 @@
     "empty": "Not enough games in this tier yet.",
     "unavailable": "Today's combos are not computed yet. Try again in a few minutes.",
     "method": "Over {{games}} team sides with a known tier (the average of the recorded ranks), at least {{minGames}} games per combo. Ranked by the lower bound of the win rate (Wilson): 74% over 40 games beats 80% over 20. Computed on {{date}}."
+  },
+  "community": {
+    "meta": {
+      "title": "Community · PremadeLab",
+      "description": "Multiplayer mini-games for your premade's downtime, playable without an account."
+    },
+    "title": "Community",
+    "subtitle": "Mini-games for your premade's downtime, playable without an account.",
+    "scribble": {
+      "title": "Scribble",
+      "body": "A shared board: everyone draws, everyone sees the strokes live. Create a room and send the link to your premade.",
+      "create": "Create a room",
+      "share": "Room link",
+      "copy": "Copy",
+      "copied": "Link copied"
+    }
   }
 }
