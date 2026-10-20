@@ -12,7 +12,7 @@
     "combos": "Combos",
     "support": "Soutenir",
     "queueKiller": "Queue Killer",
-    "experimental": "Expérimental : de nouveaux jeux arrivent, et ceux-ci bougeront encore",
+    "experimental": "Expérimental\u00a0: de nouveaux jeux arrivent, et ceux-ci bougeront encore",
     "home": "Accueil",
     "howItWorks": "Comment ça marche"
   },
@@ -226,7 +226,7 @@
       "description": "Des mini-jeux à plusieurs pour tuer l’attente en file avec ta premade, jouables sans compte."
     },
     "title": "Queue Killer",
-    "subtitle": "De quoi tuer l’attente en file avec ta premade : des mini-jeux à plusieurs, jouables sans compte.",
+    "subtitle": "De quoi tuer l’attente en file avec ta premade\u00a0: des mini-jeux à plusieurs, jouables sans compte.",
     "scribble": {
       "title": "Scribble",
       "body": "Un tableau partagé\u00a0: chacun dessine, tous voient le trait en direct. Crée un salon et envoie le lien à ta premade.",

@@ -49,6 +49,8 @@ export { Checkbox } from "./components/Checkbox";
 export type { CheckboxProps } from "./components/Checkbox";
 export { ChampionIcon } from "./components/ChampionIcon";
 export type { ChampionIconProps } from "./components/ChampionIcon";
+export { Histogram } from "./components/Histogram";
+export type { HistogramBar, HistogramProps } from "./components/Histogram";
 export { FeatureTile } from "./components/FeatureTile";
 export type { FeatureTileProps } from "./components/FeatureTile";
 export { ChampionRow } from "./components/ChampionRow";

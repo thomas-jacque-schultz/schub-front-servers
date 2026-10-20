@@ -696,5 +696,29 @@
     "listing": "Rattrapage de ton historique depuis le {{date}}\u00a0: relevé des parties en cours.",
     "progress_one": "Rattrapage de ton historique\u00a0: {{collected}} partie sur {{count}}, jusqu'au {{date}}.",
     "progress_other": "Rattrapage de ton historique\u00a0: {{collected}} parties sur {{count}}, jusqu'au {{date}}."
+  },
+  "distribution": {
+    "deaths": {
+      "title": "Morts par partie",
+      "high": "Tu meurs beaucoup\u00a0: {{value}} fois par partie, plus que dans {{share}} des parties au poste {{position}}.",
+      "average": "Tu meurs dans la moyenne\u00a0: {{value}} fois par partie au poste {{position}}.",
+      "low": "Tu joues sage\u00a0: {{value}} morts par partie, moins que dans {{share}} des parties au poste {{position}}."
+    },
+    "kills": {
+      "title": "Kills par partie",
+      "high": "Tu tues beaucoup\u00a0: {{value}} kills par partie, plus que dans {{share}} des parties au poste {{position}}.",
+      "average": "Tu tues dans la moyenne\u00a0: {{value}} kills par partie au poste {{position}}.",
+      "low": "Tu tues peu\u00a0: {{value}} kills par partie, moins que dans {{share}} des parties au poste {{position}}."
+    },
+    "kda": {
+      "title": "KDA",
+      "high": "Ton KDA de {{value}} dépasse celui de {{share}} des parties au poste {{position}}.",
+      "average": "Ton KDA de {{value}} est dans la moyenne du poste {{position}}.",
+      "low": "Ton KDA de {{value}} est sous celui de {{share}} des parties au poste {{position}}."
+    },
+    "you": "toi\u00a0: {{value}}",
+    "bar": "{{value}}\u00a0: {{share}} des parties",
+    "aria": "{{metric}}\u00a0: répartition des parties au poste {{position}}, ta moyenne à {{value}}.",
+    "basis": "Sur {{games}} parties classées au poste {{position}} des deux derniers patchs, tous paliers confondus, face à ta moyenne au même poste."
   }
 }

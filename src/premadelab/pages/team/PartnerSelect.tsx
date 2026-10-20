@@ -20,7 +20,9 @@ export function PartnerSelect({
 }) {
   const { t } = useTranslation("teams");
   const { profile } = useProfileStore();
-  const slug = profile?.riot.riotId ? slugFromRiotId(profile.riot.riotId) : null;
+  const slug = profile?.riot.riotId
+    ? slugFromRiotId(profile.riot.riotId)
+    : null;
   const { data } = useRequest(slug ? `companions/${slug}` : null, () =>
     getPlayerCompanionsApi(slug ?? ""),
   );

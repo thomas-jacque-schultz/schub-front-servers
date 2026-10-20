@@ -34,7 +34,11 @@ export function ChampionRow({ champions, columns }: ChampionRowProps) {
             minWidth: 0,
           }}
         >
-          <ChampionIcon size="small" name={champion.name} src={champion.iconUrl} />
+          <ChampionIcon
+            size="small"
+            name={champion.name}
+            src={champion.iconUrl}
+          />
           <Box sx={{ display: { xs: "none", sm: "block" }, minWidth: 0 }}>
             <Text truncate>{champion.name}</Text>
           </Box>

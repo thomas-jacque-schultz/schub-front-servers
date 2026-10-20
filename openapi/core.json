@@ -6929,13 +6929,41 @@
           }
         }
       },
+      "ReferenceGridDistribution" : {
+        "required" : [ "count", "counts", "step" ],
+        "type" : "object",
+        "properties" : {
+          "count" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "counts" : {
+            "type" : "array",
+            "items" : {
+              "type" : "integer",
+              "format" : "int64"
+            }
+          },
+          "step" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }
+      },
       "ReferenceGridDto" : {
-        "required" : [ "computedAt", "metrics", "patches", "percentiles", "position", "scope" ],
+        "required" : [ "computedAt", "distributions", "metrics", "patches", "percentiles", "position", "scope" ],
         "type" : "object",
         "properties" : {
           "computedAt" : {
             "type" : "string",
             "format" : "date-time"
+          },
+          "distributions" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/ReferenceGridDistribution"
+            },
+            "nullable" : true
           },
           "metrics" : {
             "type" : "object",
