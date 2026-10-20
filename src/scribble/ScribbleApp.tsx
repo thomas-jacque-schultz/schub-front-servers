@@ -186,10 +186,12 @@ function Salon({ contexte, nom }: { contexte: Contexte; nom: string }) {
               onMorceau={(morceau) => salon.envoie(morceau, true)}
               recus={recus}
             />
-            {devine && (
+            {partie && partie.phase !== "fin" && (
               <Devinette
                 lang={lang}
                 proche={jeu.proche}
+                actif={devine}
+                cache={partie.dessinateur === moi && partie.phase !== "bilan"}
                 onDevine={jeu.devine}
               />
             )}

@@ -107,10 +107,11 @@ function Salon({ contexte, nom }: { contexte: Contexte; nom: string }) {
               />
             )}
             <Image lang={lang} partie={partie} restantMs={restantMs} />
-            {devine && (
+            {partie && partie.phase !== "fin" && (
               <Devinette
                 lang={lang}
                 proche={jeu.proche}
+                actif={devine}
                 onDevine={jeu.devine}
               />
             )}

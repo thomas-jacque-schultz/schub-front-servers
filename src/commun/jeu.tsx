@@ -1,32 +1,50 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Ligne } from "./devinette";
 import type { Joueur } from "./relay";
 import { type Lang, texteCommun } from "./textes";
 
 const REPONSE_MAX = 60;
 
+/**
+ * Le champ reste en place d'une manche à l'autre : en lecture seule entre deux manches, il garde le focus, et il
+ * le reprend dès qu'on peut deviner (un dessinateur redevient devineur, un joueur arrive en cours de partie).
+ */
 export function Devinette({
   lang,
   proche,
+  actif,
+  cache = false,
   onDevine,
 }: {
   lang: Lang;
   proche: boolean;
+  actif: boolean;
+  cache?: boolean;
   onDevine: (texte: string) => void;
 }) {
   const [saisie, setSaisie] = useState("");
+  const champ = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (actif) {
+      champ.current?.focus({ preventScroll: true });
+    }
+  }, [actif]);
+
   return (
     <form
-      className="devinette"
+      className={cache ? "devinette cache" : "devinette"}
       onSubmit={(event) => {
         event.preventDefault();
-        if (saisie.trim()) {
+        if (actif && saisie.trim()) {
           onDevine(saisie);
           setSaisie("");
         }
       }}
     >
       <input
+        ref={champ}
+        readOnly={!actif}
         aria-label={texteCommun(lang, "reponse")}
         placeholder={texteCommun(lang, "reponse")}
         maxLength={REPONSE_MAX}
@@ -34,7 +52,7 @@ export function Devinette({
         autoComplete="off"
         onChange={(e) => setSaisie(e.target.value)}
       />
-      <button type="submit" disabled={!saisie.trim()}>
+      <button type="submit" disabled={!actif || !saisie.trim()}>
         {texteCommun(lang, "proposer")}
       </button>
       {proche && <span className="proche">{texteCommun(lang, "proche")}</span>}
@@ -65,6 +83,14 @@ export function Scores({
   /** Ce qu'un joueur fait dans la manche (« dessine »). */
   etiquette?: (id: string) => string | null;
 }) {
+  const liste = useRef<HTMLUListElement>(null);
+  useEffect(() => {
+    const el = liste.current;
+    if (el) {
+      el.scrollTop = el.scrollHeight;
+    }
+  }, [fil]);
+
   const classes = [...joueurs].sort(
     (a, b) => (scores[b.id] ?? 0) - (scores[a.id] ?? 0),
   );
@@ -97,7 +123,7 @@ export function Scores({
       {fil.length > 0 && (
         <>
           <h2>{texteCommun(lang, "reponses")}</h2>
-          <ul className="fil">
+          <ul className="fil" ref={liste} aria-live="polite">
             {fil.map((ligne, index) => (
               <li key={index} className={ligne.trouve ? "trouve" : undefined}>
                 {ligne.trouve
