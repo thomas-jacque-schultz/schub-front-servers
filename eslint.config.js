@@ -1,3 +1,4 @@
+import fs from "node:fs";
 import js from "@eslint/js";
 import globals from "globals";
 import tseslint from "typescript-eslint";
@@ -18,16 +19,21 @@ const MUI_HORS_DESIGN_SYSTEM = {
     "ou ajoutez-en une (avec sa story) si elle manque.",
 };
 
-// Trois zones, un pacte (src/common/index.ts). Schub et PremadeLab n'entrent dans common que par
-// sa porte d'entrée, ne s'importent jamais l'un l'autre, et common n'importe ni l'un ni l'autre.
+// Quatre zones, un pacte (src/common/index.ts). Schub, PremadeLab et les mini-jeux n'entrent dans common que par
+// sa porte d'entrée et ne s'importent jamais l'un l'autre ; common n'importe aucun d'eux. Un jeu n'importe
+// pas non plus un autre jeu : il n'a en commun avec eux que games/commun.
 const PORTE_DE_COMMON = {
   regex: "(^|/)common/.",
   message: "src/common ne s'importe que par sa porte d'entrée (src/common/index.ts) : c'est le pacte.",
 };
 const vers = (zone) => ({
   regex: `(^|/)${zone}(/|$)`,
-  message: `Schub et PremadeLab sont deux applications : ${zone} ne s'importe pas d'ici.`,
+  message: `Chaque application reste chez elle : ${zone} ne s'importe pas d'ici.`,
 });
+const JEUX = fs
+  .readdirSync(new URL("./src/games", import.meta.url), { withFileTypes: true })
+  .filter((entree) => entree.isDirectory() && entree.name !== "commun")
+  .map((entree) => entree.name);
 const pacte = (fichiers, motifs) => ({
   files: fichiers,
   rules: {
@@ -68,9 +74,16 @@ export default tseslint.config(
       ],
     },
   },
-  pacte(["src/schub/**/*.{ts,tsx}"], [PORTE_DE_COMMON, vers("premadelab")]),
-  pacte(["src/premadelab/**/*.{ts,tsx}"], [PORTE_DE_COMMON, vers("schub")]),
-  pacte(["src/common/**/*.{ts,tsx}"], [vers("schub"), vers("premadelab")]),
+  pacte(["src/schub/**/*.{ts,tsx}"], [PORTE_DE_COMMON, vers("premadelab"), vers("games")]),
+  pacte(["src/premadelab/**/*.{ts,tsx}"], [PORTE_DE_COMMON, vers("schub"), vers("games")]),
+  pacte(["src/common/**/*.{ts,tsx}"], [vers("schub"), vers("premadelab"), vers("games")]),
+  pacte(["src/games/commun/**/*.{ts,tsx}"], [PORTE_DE_COMMON, vers("schub"), vers("premadelab"), ...JEUX.map(vers)]),
+  ...JEUX.map((jeu) =>
+    pacte(
+      [`src/games/${jeu}/**/*.{ts,tsx}`],
+      [PORTE_DE_COMMON, vers("schub"), vers("premadelab"), ...JEUX.filter((autre) => autre !== jeu).map(vers)],
+    ),
+  ),
   {
     files: ["*.config.js", "*.config.ts", "scripts/**/*.mjs"],
     languageOptions: {
