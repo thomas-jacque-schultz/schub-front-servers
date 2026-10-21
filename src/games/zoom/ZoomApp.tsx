@@ -2,14 +2,8 @@ import { useCallback, useRef } from "react";
 import { catalogue } from "../commun/champions";
 import { Devinette, Joueurs, Scores } from "../commun/jeu";
 import type { Evenement } from "../commun/relay";
-import {
-  Bandeau,
-  type Contexte,
-  ErreurSalon,
-  JeuApp,
-  useMaintenant,
-  useSalon,
-} from "../commun/salon";
+import { Bandeau, ErreurSalon, JeuApp } from "../commun/salon";
+import { type Contexte, useMaintenant, useSalon } from "../commun/useSalon";
 import { langueDuNavigateur } from "../commun/textes";
 import { estMessageJeu, type MessageJeu, useMeneur } from "../commun/useMeneur";
 import { Consigne, Image } from "./Jeu";

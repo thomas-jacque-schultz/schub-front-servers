@@ -16,7 +16,7 @@ import {
   useLocalizedNavigate,
   useLocalizedPath,
 } from "../../common";
-import { estJeu, type Jeu, JEUX, origineDuJeu, urlDuJeu } from "../games";
+import { estJeu, type Jeu, JEUX, origineDuJeu, urlDuJeu } from "../queueKiller";
 
 // Les mini-jeux entre premades (Schub#118). Le jeu vit sur son sous-domaine, dans une iframe ; avec lui, deux
 // messages seulement : l'init (salon et langue), puis le salon qu'il vient de créer.

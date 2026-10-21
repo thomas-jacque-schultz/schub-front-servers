@@ -49,14 +49,27 @@ const storybookEnDev = () => ({
 });
 import react from "@vitejs/plugin-react";
 
-// Deux applications, un serveur : PremadeLab se reconnaît à son hôte, comme derrière nginx en prod.
+// Trois applications, un serveur : PremadeLab et chaque mini-jeu se reconnaissent à leur hôte, comme derrière nginx
+// en prod. Un jeu = un dossier de games/ et son sous-domaine (scribble.localhost, dev-scribble.premadelab.eu).
+const jeux = fs
+  .readdirSync(path.join(racineProjet, "games"), { withFileTypes: true })
+  .filter((entree) => entree.isDirectory())
+  .map((entree) => entree.name);
+
+const jeuDeLHote = (hote) => {
+  const [premier, ...reste] = hote.split(".");
+  const nom = premier.replace(/^dev-/, "");
+  const domaine = reste.join(".");
+  return jeux.includes(nom) && (domaine === "premadelab.eu" || domaine === "localhost") ? nom : null;
+};
+
 const premadelabHosts = (process.env.PREMADELAB_HOSTS ?? "dev.premadelab.eu,premadelab.localhost")
   .split(",")
   .map((host) => host.trim())
   .filter(Boolean);
 
-const premadelabParHote = () => ({
-  name: "premadelab-par-hote",
+const applicationParHote = () => ({
+  name: "application-par-hote",
   configureServer(server) {
     server.middlewares.use((req, _res, next) => {
       const hote = String(req.headers["x-forwarded-host"] ?? req.headers.host ?? "").split(":")[0];
@@ -66,7 +79,10 @@ const premadelabParHote = () => ({
         String(req.headers.accept ?? "").includes("text/html") &&
         !path.extname(chemin) &&
         !chemin.startsWith("/api/");
-      if (page && premadelabHosts.includes(hote)) {
+      const jeu = jeuDeLHote(hote);
+      if (page && jeu) {
+        req.url = `/games/${jeu}/index.html`;
+      } else if (page && premadelabHosts.includes(hote)) {
         req.url = "/premadelab.html";
       }
       next();
@@ -84,10 +100,11 @@ const allowedHosts = (
 )
   .split(",")
   .map((host) => host.trim())
-  .filter(Boolean);
+  .filter(Boolean)
+  .concat(jeux.map((jeu) => `dev-${jeu}.premadelab.eu`), ".localhost");
 
 export default defineConfig({
-  plugins: [react(), storybookEnDev(), premadelabParHote()],
+  plugins: [react(), storybookEnDev(), applicationParHote()],
   build: {
     rollupOptions: {
       input: {
@@ -96,6 +113,7 @@ export default defineConfig({
         premadelabPlayer: path.join(racineProjet, "premadelab-player.html"),
         premadelabTeam: path.join(racineProjet, "premadelab-team.html"),
         premadelabCombos: path.join(racineProjet, "premadelab-combos.html"),
+        ...Object.fromEntries(jeux.map((jeu) => [jeu, path.join(racineProjet, "games", jeu, "index.html")])),
       },
     },
   },
@@ -106,6 +124,8 @@ export default defineConfig({
   server: {
     allowedHosts,
     proxy: {
+      // Derrière le tunnel, /ws va droit au relais ; en local, il part vers un relais lancé à côté.
+      "/ws": { target: process.env.RELAY_URL ?? "ws://localhost:8080", ws: true },
       "/api": {
         target: apiProxyTarget,
         changeOrigin: true,
