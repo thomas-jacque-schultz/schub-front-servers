@@ -238,6 +238,18 @@
     "zoom": {
       "title": "Zoom",
       "body": "Un champion caché sous un zoom qui recule peu à peu\u00a0: le premier qui le reconnaît marque le plus."
+    },
+    "indices": {
+      "title": "Indices",
+      "body": "Un champion ou un objet, et des indices qui tombent un à un\u00a0: moins il en faut, plus on marque."
+    },
+    "quiz": {
+      "title": "Questions pour un invocateur",
+      "body": "Un quiz à quatre choix sur les objets, l’histoire, les skins, le monde et les joueurs pro\u00a0: le plus rapide choisit le thème suivant."
+    },
+    "imposteur": {
+      "title": "In-vo-posteur",
+      "body": "Tous ont le même champion, sauf un. Un mot chacun, trois tours, puis on vote pour démasquer l’imposteur."
     }
   }
 }
