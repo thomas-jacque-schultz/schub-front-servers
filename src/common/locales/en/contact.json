@@ -4,10 +4,18 @@
     "description": "Career, projects and contact details for Thomas Schultz, full stack engineer in Colmar, France."
   },
   "fields": {
+    "subject": "Subject",
     "name": "Your name",
     "email": "Your email address",
     "message": "Your message",
     "honeypot": "Do not fill in this field"
+  },
+  "subjects": {
+    "ACCOUNT": "Account issue",
+    "WRONG_STATS": "Wrong stats",
+    "FEATURE": "New feature",
+    "MINI_GAMES": "Mini-games",
+    "OTHER": "Other"
   },
   "helpers": {
     "email": "Only so I can reply. It is neither stored nor passed on.",
@@ -20,6 +28,7 @@
     "body": "It arrived. I usually reply within a few days."
   },
   "errors": {
+    "subjectRequired": "Choose what your message is about.",
     "nameRequired": "A name, even a first name, so I know who I am replying to.",
     "emailRequired": "Without an address I cannot reply to you.",
     "emailInvalid": "That address does not look valid.",
