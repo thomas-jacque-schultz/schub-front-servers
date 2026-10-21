@@ -1,4 +1,4 @@
-// Un sous-domaine par mini-jeu (Schub#118), tous servis par schub-together-games. Le dev se reconnaît à son
+// Un sous-domaine par mini-jeu (Schub#118), servi par ce front (games/<jeu>/index.html). Le dev se reconnaît à son
 // sous-domaine, comme dans common/apps.ts ; le certificat gratuit ne couvre qu'un niveau, d'où dev-scribble.
 export const JEUX = ["scribble", "zoom"] as const;
 
