@@ -357,14 +357,15 @@ const questionMonde = (
   };
 };
 
-const questionPro = (
+const questionBanque = (
+  theme: Theme,
   s: Sources,
   lang: Lang,
   posees: string[],
   hasard: Hasard,
 ): Question | null => {
   const [q] = tire(
-    s.banque.filter((b) => b.theme === "pros" && !posees.includes(b.id)),
+    s.banque.filter((b) => b.theme === theme && !posees.includes(b.id)),
     1,
     hasard,
   ).tires;
@@ -374,7 +375,7 @@ const questionPro = (
   const l = q[lang];
   return {
     cle: q.id,
-    theme: "pros",
+    theme,
     enonce: l.enonce,
     ...melange(l.choix[0], l.choix.slice(1), hasard),
     explication: l.explication,
@@ -392,8 +393,12 @@ export const genere = (
   posees: string[],
   hasard: Hasard,
 ): Question | null => {
-  if (theme === "pros") {
-    return questionPro(s, lang, posees, hasard);
+  // Les anecdotes du monde écrites à la main se mêlent aux questions tirées d'Univers.
+  if (theme === "pros" || (theme === "monde" && hasard() < 0.3)) {
+    const q = questionBanque(theme, s, lang, posees, hasard);
+    if (q || theme === "pros") {
+      return q;
+    }
   }
   const fabrique = {
     objets: questionObjet,

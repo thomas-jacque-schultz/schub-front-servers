@@ -99,9 +99,14 @@ function Partie({
   const { moi, joueurs, meneur } = salon;
   const presents = useRef(joueurs);
   presents.current = joueurs;
+  const courantes = useRef(sources);
   const regles = useMemo(
-    () => creerRegles(sources, () => presents.current),
-    [sources],
+    () =>
+      creerRegles(
+        () => courantes.current,
+        () => presents.current,
+      ),
+    [],
   );
   const jeu = useMeneur({ moi, meneur, joueurs, regles, envoie: salon.envoie });
   recoitJeu.current = jeu.recoit;
@@ -117,17 +122,18 @@ function Partie({
   const [manches, setManches] = useState(MANCHES_DEFAUT);
   const lance = (t: Theme[], d: number, m: number) =>
     jeu.lance(() =>
-      Promise.resolve(
-        nouvellePartie(
+      lisBanque().then((banque) => {
+        courantes.current = { ...courantes.current, banque };
+        return nouvellePartie(
           jeu.presents.current,
           t,
           d,
           m,
           lang,
-          sources,
+          courantes.current,
           Math.random,
-        ),
-      ),
+        );
+      }),
     );
 
   return (

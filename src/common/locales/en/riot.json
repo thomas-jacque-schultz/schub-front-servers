@@ -241,5 +241,47 @@
   "research": {
     "title": "R&D",
     "subtitle": "Augur rules, and the trace of their computations on a player or a game."
+  },
+  "quizBank": {
+    "title": "Quiz questions",
+    "subtitle": "The hand-written bank of the Summoner Quiz. A question changed here is asked from the next game on.",
+    "listTitle": "{{n}} questions",
+    "add": "Add a question",
+    "filter": "Theme",
+    "all": "All",
+    "empty": "No question",
+    "question": "Question",
+    "themeHeader": "Theme",
+    "state": "State",
+    "active": "Active",
+    "inactive": "Disabled",
+    "edit": "Edit",
+    "saved": "Question saved",
+    "newTitle": "New question",
+    "editTitle": "Edit \"{{id}}\"",
+    "editHint": "The right answer comes first; the quiz shuffles the four in every game. Date the question so it stays true after transfers.",
+    "loadError": "Could not read the question bank.",
+    "saveError": "The question was not saved.",
+    "id": "Identifier",
+    "idHint": "Lowercase, digits and hyphens: worlds-2025",
+    "date": "Date",
+    "dateHint": "The year or month the question is about",
+    "source": "Source (https link)",
+    "statement": "Statement",
+    "rightAnswer": "Right answer",
+    "wrongAnswer": "Wrong answer {{n}}",
+    "explanation": "One-line explanation",
+    "activeLabel": "Asked in the quiz",
+    "activeHint": "A disabled question stays here but is no longer asked.",
+    "save": "Save",
+    "cancel": "Cancel",
+    "theme": {
+      "PROS": "Pro players",
+      "MONDE": "World"
+    },
+    "lang": {
+      "fr": "French",
+      "en": "English"
+    }
   }
 }

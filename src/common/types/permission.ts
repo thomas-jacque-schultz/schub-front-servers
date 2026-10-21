@@ -21,6 +21,7 @@ export const PERMISSIONS = [
   "ROSTER_EDIT",
   "COMPOSITION_EDIT",
   "AUGUR_PATTERN_EDIT",
+  "QUIZ_QUESTION_EDIT",
   "ROLE_MANAGE",
 ] as const;
 

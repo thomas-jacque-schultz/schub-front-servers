@@ -32,6 +32,7 @@ const DiscordPage = lazyPage(() => import("./pages/servers/DiscordPage"));
 const SettingsPage = lazyPage(() => import("./pages/premadelab/SettingsPage"));
 const IngestPage = lazyPage(() => import("./pages/premadelab/IngestPage"));
 const ResearchPage = lazyPage(() => import("./pages/premadelab/ResearchPage"));
+const QuizBankPage = lazyPage(() => import("./pages/premadelab/QuizBankPage"));
 const UsersPage = lazyPage(() => import("./pages/admin/UsersPage"));
 const RolesPage = lazyPage(() => import("./pages/admin/RolesPage"));
 
@@ -185,6 +186,14 @@ function LocalizedRoutes() {
                     anyOf={["AUGUR_PATTERN_EDIT", "INGEST_MANAGE"]}
                   >
                     <ResearchPage />
+                  </RequirePermission>
+                }
+              />
+              <Route
+                path="quiz"
+                element={
+                  <RequirePermission anyOf={["QUIZ_QUESTION_EDIT"]}>
+                    <QuizBankPage />
                   </RequirePermission>
                 }
               />
