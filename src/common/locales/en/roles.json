@@ -48,6 +48,7 @@
     "ROSTER_EDIT": "Manage a team's roster",
     "COMPOSITION_EDIT": "Edit a team's compositions",
     "ROLE_MANAGE": "Manage roles",
-    "AUGUR_PATTERN_EDIT": "Edit the findings engine rules (PremadeLab)"
+    "AUGUR_PATTERN_EDIT": "Edit the findings engine rules (PremadeLab)",
+    "QUIZ_QUESTION_EDIT": "Edit the quiz questions (PremadeLab)"
   }
 }
