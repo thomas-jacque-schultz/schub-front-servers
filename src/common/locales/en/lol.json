@@ -238,6 +238,18 @@
     "zoom": {
       "title": "Zoom",
       "body": "A champion hidden under a zoom that slowly pulls back: the first to recognise it scores the most."
+    },
+    "indices": {
+      "title": "Clues",
+      "body": "A champion or an item, and clues that drop one by one: the fewer you need, the more you score."
+    },
+    "quiz": {
+      "title": "Summoner Quiz",
+      "body": "A four-choice quiz on items, lore, skins, the world and pro players: the fastest picks the next theme."
+    },
+    "imposteur": {
+      "title": "In-vo-posteur",
+      "body": "Everyone has the same champion except one. One word each, three turns, then vote to unmask the impostor."
     }
   }
 }
