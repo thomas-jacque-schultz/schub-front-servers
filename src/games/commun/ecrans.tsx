@@ -4,6 +4,7 @@ import {
   AppThemeProvider,
   Button,
   Card,
+  Columns,
   PageContainer,
   SelectField,
   SideLayout,
@@ -356,7 +357,6 @@ export function Reglage({
       value={String(valeur)}
       onChange={(choisie) => onChange(Number(choisie))}
       options={valeurs.map((v) => ({ value: String(v), label: format(v) }))}
-      fullWidth={false}
       size="small"
     />
   );
@@ -385,9 +385,7 @@ export function Preparation({
   }
   return (
     <Stack spacing={1.5}>
-      <Stack direction="row" spacing={1.5} wrap align="center">
-        {children}
-      </Stack>
+      {children && <Columns minWidth={200}>{children}</Columns>}
       <Stack direction="row" spacing={1.5} wrap align="center">
         <Button disabled={nbJoueurs < minimum} onClick={onLance}>
           {texteCommun(lang, "lancer")}
