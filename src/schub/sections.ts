@@ -63,6 +63,12 @@ export const SECTIONS: Section[] = [
         labelKey: "shell.tabResearch",
         permissions: ["AUGUR_PATTERN_EDIT", "INGEST_MANAGE"],
       },
+      {
+        key: "quiz",
+        path: "/premadelab/quiz",
+        labelKey: "shell.tabQuiz",
+        permissions: ["QUIZ_QUESTION_EDIT"],
+      },
     ],
   },
   {

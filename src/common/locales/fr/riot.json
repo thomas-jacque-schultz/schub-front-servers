@@ -241,5 +241,47 @@
   "research": {
     "title": "R&D",
     "subtitle": "Les règles d’Augur, et la trace de leurs calculs sur un joueur ou une partie."
+  },
+  "quizBank": {
+    "title": "Questions du quiz",
+    "subtitle": "La banque écrite à la main de «\u00a0Questions pour un invocateur\u00a0». Une question modifiée ici est posée dès la partie suivante.",
+    "listTitle": "{{n}} questions",
+    "add": "Ajouter une question",
+    "filter": "Thème",
+    "all": "Tous",
+    "empty": "Aucune question",
+    "question": "Question",
+    "themeHeader": "Thème",
+    "state": "État",
+    "active": "Active",
+    "inactive": "Désactivée",
+    "edit": "Modifier",
+    "saved": "Question enregistrée",
+    "newTitle": "Nouvelle question",
+    "editTitle": "Modifier «\u00a0{{id}}\u00a0»",
+    "editHint": "La bonne réponse est la première\u202f; le quiz mélange les quatre à chaque partie. Datez la question pour qu'elle reste vraie après les transferts.",
+    "loadError": "Impossible de lire la banque de questions.",
+    "saveError": "La question n'a pas été enregistrée.",
+    "id": "Identifiant",
+    "idHint": "Minuscules, chiffres et tirets\u00a0: worlds-2025",
+    "date": "Date",
+    "dateHint": "L'année ou le mois dont parle la question",
+    "source": "Source (lien https)",
+    "statement": "Énoncé",
+    "rightAnswer": "Bonne réponse",
+    "wrongAnswer": "Mauvaise réponse {{n}}",
+    "explanation": "Explication, d'une ligne",
+    "activeLabel": "Posée dans le quiz",
+    "activeHint": "Une question désactivée reste ici, mais n'est plus posée.",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "theme": {
+      "PROS": "Joueurs pro",
+      "MONDE": "Monde"
+    },
+    "lang": {
+      "fr": "Français",
+      "en": "Anglais"
+    }
   }
 }
