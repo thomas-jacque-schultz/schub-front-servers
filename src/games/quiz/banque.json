@@ -1,0 +1,620 @@
+[
+  {
+    "id": "worlds-2011",
+    "theme": "pros",
+    "date": "2011",
+    "source": "https://en.wikipedia.org/wiki/League_of_Legends_World_Championship",
+    "fr": {
+      "enonce": "Quelle équipe remporte le premier championnat du monde, en 2011 ?",
+      "choix": [
+        "Fnatic",
+        "Against All Authority",
+        "Taipei Assassins",
+        "Counter Logic Gaming"
+      ],
+      "explication": "Fnatic bat Against All Authority 2-1 en finale, à Jönköping, en Suède."
+    },
+    "en": {
+      "enonce": "Which team won the first World Championship, in 2011?",
+      "choix": [
+        "Fnatic",
+        "Against All Authority",
+        "Taipei Assassins",
+        "Counter Logic Gaming"
+      ],
+      "explication": "Fnatic beat Against All Authority 2-1 in the final, in Jönköping, Sweden."
+    }
+  },
+  {
+    "id": "worlds-2012",
+    "theme": "pros",
+    "date": "2012",
+    "source": "https://en.wikipedia.org/wiki/League_of_Legends_World_Championship",
+    "fr": {
+      "enonce": "Quelle équipe remporte les Worlds 2012 ?",
+      "choix": [
+        "Taipei Assassins",
+        "Azubu Frost",
+        "Moscow Five",
+        "Counter Logic Gaming"
+      ],
+      "explication": "Taipei Assassins bat Azubu Frost 3-1 en finale, à Los Angeles."
+    },
+    "en": {
+      "enonce": "Which team won Worlds 2012?",
+      "choix": [
+        "Taipei Assassins",
+        "Azubu Frost",
+        "Moscow Five",
+        "Counter Logic Gaming"
+      ],
+      "explication": "Taipei Assassins beat Azubu Frost 3-1 in the final, in Los Angeles."
+    }
+  },
+  {
+    "id": "worlds-2013",
+    "theme": "pros",
+    "date": "2013",
+    "source": "https://en.wikipedia.org/wiki/League_of_Legends_World_Championship",
+    "fr": {
+      "enonce": "Contre quelle équipe SK Telecom T1 gagne-t-il sa première finale des Worlds, en 2013 ?",
+      "choix": ["Royal Club", "Samsung Galaxy Ozone", "Fnatic", "KT Bullets"],
+      "explication": "SK Telecom T1 bat Royal Club 3-0 au Staples Center de Los Angeles."
+    },
+    "en": {
+      "enonce": "Which team did SK Telecom T1 beat in its first Worlds final, in 2013?",
+      "choix": ["Royal Club", "Samsung Galaxy Ozone", "Fnatic", "KT Bullets"],
+      "explication": "SK Telecom T1 beat Royal Club 3-0 at the Staples Center in Los Angeles."
+    }
+  },
+  {
+    "id": "worlds-2014",
+    "theme": "pros",
+    "date": "2014",
+    "source": "https://en.wikipedia.org/wiki/League_of_Legends_World_Championship",
+    "fr": {
+      "enonce": "Quelle équipe remporte les Worlds 2014, à Séoul ?",
+      "choix": ["Samsung White", "Samsung Blue", "Royal Club", "SK Telecom T1"],
+      "explication": "Samsung White bat Royal Club 3-1 au stade de la Coupe du monde de Séoul."
+    },
+    "en": {
+      "enonce": "Which team won Worlds 2014, in Seoul?",
+      "choix": ["Samsung White", "Samsung Blue", "Royal Club", "SK Telecom T1"],
+      "explication": "Samsung White beat Royal Club 3-1 at the Seoul World Cup Stadium."
+    }
+  },
+  {
+    "id": "worlds-2015-ville",
+    "theme": "pros",
+    "date": "2015",
+    "source": "https://en.wikipedia.org/wiki/League_of_Legends_World_Championship",
+    "fr": {
+      "enonce": "Dans quelle ville se joue la finale des Worlds 2015 ?",
+      "choix": ["Berlin", "Londres", "Paris", "Séoul"],
+      "explication": "SK Telecom T1 y bat KOO Tigers 3-1."
+    },
+    "en": {
+      "enonce": "In which city was the Worlds 2015 final played?",
+      "choix": ["Berlin", "London", "Paris", "Seoul"],
+      "explication": "SK Telecom T1 beat KOO Tigers 3-1 there."
+    }
+  },
+  {
+    "id": "worlds-2016",
+    "theme": "pros",
+    "date": "2016",
+    "source": "https://en.wikipedia.org/wiki/League_of_Legends_World_Championship",
+    "fr": {
+      "enonce": "Contre quelle équipe SK Telecom T1 gagne-t-il la finale des Worlds 2016 ?",
+      "choix": ["Samsung Galaxy", "ROX Tigers", "H2K", "Royal Never Give Up"],
+      "explication": "SK Telecom T1 bat Samsung Galaxy 3-2 à Los Angeles ; Faker est élu MVP de la finale."
+    },
+    "en": {
+      "enonce": "Which team did SK Telecom T1 beat in the Worlds 2016 final?",
+      "choix": ["Samsung Galaxy", "ROX Tigers", "H2K", "Royal Never Give Up"],
+      "explication": "SK Telecom T1 beat Samsung Galaxy 3-2 in Los Angeles; Faker was the finals MVP."
+    }
+  },
+  {
+    "id": "worlds-2017-stade",
+    "theme": "pros",
+    "date": "2017",
+    "source": "https://en.wikipedia.org/wiki/League_of_Legends_World_Championship",
+    "fr": {
+      "enonce": "Dans quel stade se joue la finale des Worlds 2017 ?",
+      "choix": [
+        "Le stade national de Pékin",
+        "Le stade de la Coupe du monde de Séoul",
+        "Le Gocheok Sky Dome",
+        "Le Staples Center"
+      ],
+      "explication": "Le « Nid d'oiseau » accueille Samsung Galaxy contre SK Telecom T1 (3-0)."
+    },
+    "en": {
+      "enonce": "In which stadium was the Worlds 2017 final played?",
+      "choix": [
+        "Beijing National Stadium",
+        "Seoul World Cup Stadium",
+        "Gocheok Sky Dome",
+        "Staples Center"
+      ],
+      "explication": "The \"Bird's Nest\" hosted Samsung Galaxy against SK Telecom T1 (3-0)."
+    }
+  },
+  {
+    "id": "worlds-2017-mvp",
+    "theme": "pros",
+    "date": "2017",
+    "source": "https://en.wikipedia.org/wiki/League_of_Legends_World_Championship",
+    "fr": {
+      "enonce": "Qui est élu MVP de la finale des Worlds 2017 ?",
+      "choix": ["Ruler", "Faker", "CuVee", "Crown"],
+      "explication": "Ruler, tireur de Samsung Galaxy, vainqueur 3-0 de SK Telecom T1."
+    },
+    "en": {
+      "enonce": "Who was the finals MVP of Worlds 2017?",
+      "choix": ["Ruler", "Faker", "CuVee", "Crown"],
+      "explication": "Ruler, Samsung Galaxy's bot laner, in a 3-0 win over SK Telecom T1."
+    }
+  },
+  {
+    "id": "worlds-2018-finaliste",
+    "theme": "pros",
+    "date": "2018",
+    "source": "https://en.wikipedia.org/wiki/League_of_Legends_World_Championship",
+    "fr": {
+      "enonce": "Quelle équipe européenne atteint la finale des Worlds 2018 ?",
+      "choix": ["Fnatic", "G2 Esports", "Team Vitality", "Splyce"],
+      "explication": "Fnatic perd 3-0 contre Invictus Gaming à Incheon."
+    },
+    "en": {
+      "enonce": "Which European team reached the Worlds 2018 final?",
+      "choix": ["Fnatic", "G2 Esports", "Team Vitality", "Splyce"],
+      "explication": "Fnatic lost 3-0 to Invictus Gaming in Incheon."
+    }
+  },
+  {
+    "id": "worlds-2018-mvp",
+    "theme": "pros",
+    "date": "2018",
+    "source": "https://en.wikipedia.org/wiki/League_of_Legends_World_Championship",
+    "fr": {
+      "enonce": "Qui est élu MVP de la finale des Worlds 2018 ?",
+      "choix": ["Ning", "TheShy", "Rookie", "JackeyLove"],
+      "explication": "Ning, jungler d'Invictus Gaming, vainqueur 3-0 de Fnatic."
+    },
+    "en": {
+      "enonce": "Who was the finals MVP of Worlds 2018?",
+      "choix": ["Ning", "TheShy", "Rookie", "JackeyLove"],
+      "explication": "Ning, Invictus Gaming's jungler, in a 3-0 win over Fnatic."
+    }
+  },
+  {
+    "id": "worlds-2019-ville",
+    "theme": "pros",
+    "date": "2019",
+    "source": "https://en.wikipedia.org/wiki/League_of_Legends_World_Championship",
+    "fr": {
+      "enonce": "Dans quelle ville se joue la finale des Worlds 2019 ?",
+      "choix": ["Paris", "Berlin", "Madrid", "Londres"],
+      "explication": "À l'AccorHotels Arena, FunPlus Phoenix bat G2 Esports 3-0."
+    },
+    "en": {
+      "enonce": "In which city was the Worlds 2019 final played?",
+      "choix": ["Paris", "Berlin", "Madrid", "London"],
+      "explication": "At the AccorHotels Arena, FunPlus Phoenix beat G2 Esports 3-0."
+    }
+  },
+  {
+    "id": "worlds-2019",
+    "theme": "pros",
+    "date": "2019",
+    "source": "https://en.wikipedia.org/wiki/League_of_Legends_World_Championship",
+    "fr": {
+      "enonce": "Quelle équipe remporte les Worlds 2019 ?",
+      "choix": [
+        "FunPlus Phoenix",
+        "G2 Esports",
+        "SK Telecom T1",
+        "Invictus Gaming"
+      ],
+      "explication": "FunPlus Phoenix bat G2 Esports 3-0 en finale ; Tian est élu MVP."
+    },
+    "en": {
+      "enonce": "Which team won Worlds 2019?",
+      "choix": [
+        "FunPlus Phoenix",
+        "G2 Esports",
+        "SK Telecom T1",
+        "Invictus Gaming"
+      ],
+      "explication": "FunPlus Phoenix beat G2 Esports 3-0 in the final; Tian was the finals MVP."
+    }
+  },
+  {
+    "id": "worlds-2020",
+    "theme": "pros",
+    "date": "2020",
+    "source": "https://en.wikipedia.org/wiki/League_of_Legends_World_Championship",
+    "fr": {
+      "enonce": "Quelle équipe remporte les Worlds 2020, à Shanghai ?",
+      "choix": ["Damwon Gaming", "Suning", "Top Esports", "G2 Esports"],
+      "explication": "Damwon Gaming bat Suning 3-1 ; Canyon est élu MVP de la finale."
+    },
+    "en": {
+      "enonce": "Which team won Worlds 2020, in Shanghai?",
+      "choix": ["Damwon Gaming", "Suning", "Top Esports", "G2 Esports"],
+      "explication": "Damwon Gaming beat Suning 3-1; Canyon was the finals MVP."
+    }
+  },
+  {
+    "id": "worlds-2021-ville",
+    "theme": "pros",
+    "date": "2021",
+    "source": "https://en.wikipedia.org/wiki/League_of_Legends_World_Championship",
+    "fr": {
+      "enonce": "Dans quelle ville se joue la finale des Worlds 2021 ?",
+      "choix": ["Reykjavik", "Shanghai", "Berlin", "Séoul"],
+      "explication": "Edward Gaming y bat DWG KIA 3-2, au Laugardalshöll."
+    },
+    "en": {
+      "enonce": "In which city was the Worlds 2021 final played?",
+      "choix": ["Reykjavík", "Shanghai", "Berlin", "Seoul"],
+      "explication": "Edward Gaming beat DWG KIA 3-2 there, at the Laugardalshöll."
+    }
+  },
+  {
+    "id": "worlds-2021-mvp",
+    "theme": "pros",
+    "date": "2021",
+    "source": "https://en.wikipedia.org/wiki/League_of_Legends_World_Championship",
+    "fr": {
+      "enonce": "Qui est élu MVP de la finale des Worlds 2021 ?",
+      "choix": ["Scout", "Viper", "Meiko", "ShowMaker"],
+      "explication": "Scout, milieu d'Edward Gaming, vainqueur 3-2 de DWG KIA."
+    },
+    "en": {
+      "enonce": "Who was the finals MVP of Worlds 2021?",
+      "choix": ["Scout", "Viper", "Meiko", "ShowMaker"],
+      "explication": "Scout, Edward Gaming's mid laner, in a 3-2 win over DWG KIA."
+    }
+  },
+  {
+    "id": "worlds-2022",
+    "theme": "pros",
+    "date": "2022",
+    "source": "https://en.wikipedia.org/wiki/League_of_Legends_World_Championship",
+    "fr": {
+      "enonce": "Quelle équipe remporte les Worlds 2022, à San Francisco ?",
+      "choix": ["DRX", "T1", "Gen.G", "JD Gaming"],
+      "explication": "DRX bat T1 3-2 au Chase Center ; Kingen est élu MVP de la finale."
+    },
+    "en": {
+      "enonce": "Which team won Worlds 2022, in San Francisco?",
+      "choix": ["DRX", "T1", "Gen.G", "JD Gaming"],
+      "explication": "DRX beat T1 3-2 at the Chase Center; Kingen was the finals MVP."
+    }
+  },
+  {
+    "id": "worlds-2023",
+    "theme": "pros",
+    "date": "2023",
+    "source": "https://en.wikipedia.org/wiki/League_of_Legends_World_Championship",
+    "fr": {
+      "enonce": "Quelle équipe T1 bat-il 3-0 en finale des Worlds 2023 ?",
+      "choix": ["Weibo Gaming", "JD Gaming", "Bilibili Gaming", "LNG Esports"],
+      "explication": "Au Gocheok Sky Dome de Séoul ; Zeus est élu MVP de la finale."
+    },
+    "en": {
+      "enonce": "Which team did T1 beat 3-0 in the Worlds 2023 final?",
+      "choix": ["Weibo Gaming", "JD Gaming", "Bilibili Gaming", "LNG Esports"],
+      "explication": "At the Gocheok Sky Dome in Seoul; Zeus was the finals MVP."
+    }
+  },
+  {
+    "id": "worlds-2023-mvp",
+    "theme": "pros",
+    "date": "2023",
+    "source": "https://en.wikipedia.org/wiki/League_of_Legends_World_Championship",
+    "fr": {
+      "enonce": "Qui est élu MVP de la finale des Worlds 2023 ?",
+      "choix": ["Zeus", "Faker", "Keria", "Oner"],
+      "explication": "Zeus, toplaner de T1, vainqueur 3-0 de Weibo Gaming."
+    },
+    "en": {
+      "enonce": "Who was the finals MVP of Worlds 2023?",
+      "choix": ["Zeus", "Faker", "Keria", "Oner"],
+      "explication": "Zeus, T1's top laner, in a 3-0 win over Weibo Gaming."
+    }
+  },
+  {
+    "id": "worlds-2024-ville",
+    "theme": "pros",
+    "date": "2024",
+    "source": "https://en.wikipedia.org/wiki/League_of_Legends_World_Championship",
+    "fr": {
+      "enonce": "Dans quelle ville se joue la finale des Worlds 2024 ?",
+      "choix": ["Londres", "Paris", "Berlin", "Séoul"],
+      "explication": "À l'O2 Arena, T1 bat Bilibili Gaming 3-2."
+    },
+    "en": {
+      "enonce": "In which city was the Worlds 2024 final played?",
+      "choix": ["London", "Paris", "Berlin", "Seoul"],
+      "explication": "At The O2 Arena, T1 beat Bilibili Gaming 3-2."
+    }
+  },
+  {
+    "id": "worlds-2024",
+    "theme": "pros",
+    "date": "2024",
+    "source": "https://en.wikipedia.org/wiki/League_of_Legends_World_Championship",
+    "fr": {
+      "enonce": "Contre quelle équipe T1 gagne-t-il la finale des Worlds 2024 ?",
+      "choix": [
+        "Bilibili Gaming",
+        "Weibo Gaming",
+        "Gen.G",
+        "Hanwha Life Esports"
+      ],
+      "explication": "T1 bat Bilibili Gaming 3-2 à Londres."
+    },
+    "en": {
+      "enonce": "Which team did T1 beat in the Worlds 2024 final?",
+      "choix": [
+        "Bilibili Gaming",
+        "Weibo Gaming",
+        "Gen.G",
+        "Hanwha Life Esports"
+      ],
+      "explication": "T1 beat Bilibili Gaming 3-2 in London."
+    }
+  },
+  {
+    "id": "worlds-2025",
+    "theme": "pros",
+    "date": "2025",
+    "source": "https://en.wikipedia.org/wiki/League_of_Legends_World_Championship",
+    "fr": {
+      "enonce": "Contre quelle équipe T1 gagne-t-il la finale des Worlds 2025 ?",
+      "choix": [
+        "KT Rolster",
+        "Gen.G",
+        "Hanwha Life Esports",
+        "Bilibili Gaming"
+      ],
+      "explication": "T1 bat KT Rolster 3-2 à Chengdu ; Gumayusi est élu MVP de la finale."
+    },
+    "en": {
+      "enonce": "Which team did T1 beat in the Worlds 2025 final?",
+      "choix": [
+        "KT Rolster",
+        "Gen.G",
+        "Hanwha Life Esports",
+        "Bilibili Gaming"
+      ],
+      "explication": "T1 beat KT Rolster 3-2 in Chengdu; Gumayusi was the finals MVP."
+    }
+  },
+  {
+    "id": "faker-titres",
+    "theme": "pros",
+    "date": "2025",
+    "source": "https://en.wikipedia.org/wiki/League_of_Legends_World_Championship",
+    "fr": {
+      "enonce": "À la fin de 2025, combien de Worlds Faker a-t-il gagnés avec T1 ?",
+      "choix": ["6", "4", "5", "7"],
+      "explication": "2013, 2015, 2016, 2023, 2024 et 2025."
+    },
+    "en": {
+      "enonce": "By the end of 2025, how many Worlds had Faker won with T1?",
+      "choix": ["6", "4", "5", "7"],
+      "explication": "2013, 2015, 2016, 2023, 2024 and 2025."
+    }
+  },
+  {
+    "id": "faker-nom",
+    "theme": "pros",
+    "date": "2013",
+    "source": "https://en.wikipedia.org/wiki/Faker_(gamer)",
+    "fr": {
+      "enonce": "Quel est le vrai nom de Faker ?",
+      "choix": [
+        "Lee Sang-hyeok",
+        "Kim Hyuk-kyu",
+        "Park Jae-hyuk",
+        "Lee Ye-chan"
+      ],
+      "explication": "Lee Sang-hyeok joue chez T1 (SK Telecom T1 à ses débuts) depuis 2013."
+    },
+    "en": {
+      "enonce": "What is Faker's real name?",
+      "choix": [
+        "Lee Sang-hyeok",
+        "Kim Hyuk-kyu",
+        "Park Jae-hyuk",
+        "Lee Ye-chan"
+      ],
+      "explication": "Lee Sang-hyeok has played for T1 (SK Telecom T1 at first) since 2013."
+    }
+  },
+  {
+    "id": "rekkles-bague",
+    "theme": "pros",
+    "date": "2024",
+    "source": "https://www.sheepesports.com/articles/rekkles-has-received-his-2024-worlds-ring-with-t1/en",
+    "fr": {
+      "enonce": "Quel joueur européen, remplaçant officiel de T1, a reçu une bague des Worlds 2024 ?",
+      "choix": ["Rekkles", "Caps", "Upset", "Hylissang"],
+      "explication": "Inscrit comme remplaçant, Rekkles n'a pas joué mais a reçu la bague, comme les titulaires."
+    },
+    "en": {
+      "enonce": "Which European player, T1's official substitute, received a Worlds 2024 ring?",
+      "choix": ["Rekkles", "Caps", "Upset", "Hylissang"],
+      "explication": "Registered as a substitute, Rekkles did not play but received the ring, like the starters."
+    }
+  },
+  {
+    "id": "msi-2015",
+    "theme": "pros",
+    "date": "2015",
+    "source": "https://en.wikipedia.org/wiki/Mid-Season_Invitational",
+    "fr": {
+      "enonce": "Quelle équipe remporte le premier MSI, en 2015 ?",
+      "choix": ["Edward Gaming", "SK Telecom T1", "Fnatic", "Team SoloMid"],
+      "explication": "Edward Gaming bat SK Telecom T1 3-2 à Tallahassee."
+    },
+    "en": {
+      "enonce": "Which team won the first MSI, in 2015?",
+      "choix": ["Edward Gaming", "SK Telecom T1", "Fnatic", "Team SoloMid"],
+      "explication": "Edward Gaming beat SK Telecom T1 3-2 in Tallahassee."
+    }
+  },
+  {
+    "id": "msi-2016",
+    "theme": "pros",
+    "date": "2016",
+    "source": "https://en.wikipedia.org/wiki/Mid-Season_Invitational",
+    "fr": {
+      "enonce": "Quelle équipe nord-américaine atteint la finale du MSI 2016 ?",
+      "choix": [
+        "Counter Logic Gaming",
+        "Team SoloMid",
+        "Cloud9",
+        "Team Liquid"
+      ],
+      "explication": "Counter Logic Gaming perd 3-0 contre SK Telecom T1 à Shanghai."
+    },
+    "en": {
+      "enonce": "Which North American team reached the MSI 2016 final?",
+      "choix": [
+        "Counter Logic Gaming",
+        "Team SoloMid",
+        "Cloud9",
+        "Team Liquid"
+      ],
+      "explication": "Counter Logic Gaming lost 3-0 to SK Telecom T1 in Shanghai."
+    }
+  },
+  {
+    "id": "msi-2017-ville",
+    "theme": "pros",
+    "date": "2017",
+    "source": "https://en.wikipedia.org/wiki/Mid-Season_Invitational",
+    "fr": {
+      "enonce": "Dans quelle ville se joue la finale du MSI 2017 ?",
+      "choix": ["Rio de Janeiro", "São Paulo", "Buenos Aires", "Mexico"],
+      "explication": "SK Telecom T1 y bat G2 Esports 3-1."
+    },
+    "en": {
+      "enonce": "In which city was the MSI 2017 final played?",
+      "choix": ["Rio de Janeiro", "São Paulo", "Buenos Aires", "Mexico City"],
+      "explication": "SK Telecom T1 beat G2 Esports 3-1 there."
+    }
+  },
+  {
+    "id": "msi-2018",
+    "theme": "pros",
+    "date": "2018",
+    "source": "https://en.wikipedia.org/wiki/Mid-Season_Invitational",
+    "fr": {
+      "enonce": "Quelle équipe remporte le MSI 2018, à Paris ?",
+      "choix": [
+        "Royal Never Give Up",
+        "Kingzone DragonX",
+        "Fnatic",
+        "Team Liquid"
+      ],
+      "explication": "Royal Never Give Up bat Kingzone DragonX 3-1."
+    },
+    "en": {
+      "enonce": "Which team won MSI 2018, in Paris?",
+      "choix": [
+        "Royal Never Give Up",
+        "Kingzone DragonX",
+        "Fnatic",
+        "Team Liquid"
+      ],
+      "explication": "Royal Never Give Up beat Kingzone DragonX 3-1."
+    }
+  },
+  {
+    "id": "msi-2019",
+    "theme": "pros",
+    "date": "2019",
+    "source": "https://en.wikipedia.org/wiki/Mid-Season_Invitational",
+    "fr": {
+      "enonce": "Quelle équipe européenne remporte le MSI 2019 ?",
+      "choix": ["G2 Esports", "Fnatic", "Splyce", "Origen"],
+      "explication": "G2 Esports bat Team Liquid 3-0 à Taipei."
+    },
+    "en": {
+      "enonce": "Which European team won MSI 2019?",
+      "choix": ["G2 Esports", "Fnatic", "Splyce", "Origen"],
+      "explication": "G2 Esports beat Team Liquid 3-0 in Taipei."
+    }
+  },
+  {
+    "id": "msi-2022",
+    "theme": "pros",
+    "date": "2022",
+    "source": "https://en.wikipedia.org/wiki/Mid-Season_Invitational",
+    "fr": {
+      "enonce": "Contre quelle équipe Royal Never Give Up gagne-t-il la finale du MSI 2022 ?",
+      "choix": ["T1", "Gen.G", "G2 Esports", "Evil Geniuses"],
+      "explication": "Royal Never Give Up bat T1 3-2 à Busan."
+    },
+    "en": {
+      "enonce": "Which team did Royal Never Give Up beat in the MSI 2022 final?",
+      "choix": ["T1", "Gen.G", "G2 Esports", "Evil Geniuses"],
+      "explication": "Royal Never Give Up beat T1 3-2 in Busan."
+    }
+  },
+  {
+    "id": "msi-2023",
+    "theme": "pros",
+    "date": "2023",
+    "source": "https://en.wikipedia.org/wiki/Mid-Season_Invitational",
+    "fr": {
+      "enonce": "Quelle équipe remporte le MSI 2023, à Londres ?",
+      "choix": ["JD Gaming", "Bilibili Gaming", "T1", "Gen.G"],
+      "explication": "JD Gaming bat Bilibili Gaming 3-1."
+    },
+    "en": {
+      "enonce": "Which team won MSI 2023, in London?",
+      "choix": ["JD Gaming", "Bilibili Gaming", "T1", "Gen.G"],
+      "explication": "JD Gaming beat Bilibili Gaming 3-1."
+    }
+  },
+  {
+    "id": "msi-2025",
+    "theme": "pros",
+    "date": "2025",
+    "source": "https://en.wikipedia.org/wiki/Mid-Season_Invitational",
+    "fr": {
+      "enonce": "Dans quelle ville Gen.G gagne-t-il son deuxième MSI de suite, en 2025 ?",
+      "choix": ["Vancouver", "Chengdu", "Londres", "Séoul"],
+      "explication": "Gen.G bat T1 3-2 en finale, un an après son titre de Chengdu."
+    },
+    "en": {
+      "enonce": "In which city did Gen.G win its second MSI in a row, in 2025?",
+      "choix": ["Vancouver", "Chengdu", "London", "Seoul"],
+      "explication": "Gen.G beat T1 3-2 in the final, a year after its title in Chengdu."
+    }
+  },
+  {
+    "id": "msi-2026",
+    "theme": "pros",
+    "date": "2026",
+    "source": "https://en.wikipedia.org/wiki/Mid-Season_Invitational",
+    "fr": {
+      "enonce": "Quelle équipe remporte le MSI 2026, à Daejeon ?",
+      "choix": ["Hanwha Life Esports", "Bilibili Gaming", "Gen.G", "T1"],
+      "explication": "Hanwha Life Esports bat Bilibili Gaming 3-2."
+    },
+    "en": {
+      "enonce": "Which team won MSI 2026, in Daejeon?",
+      "choix": ["Hanwha Life Esports", "Bilibili Gaming", "Gen.G", "T1"],
+      "explication": "Hanwha Life Esports beat Bilibili Gaming 3-2."
+    }
+  }
+]
