@@ -1,6 +1,17 @@
 import { requestJson } from "../api/httpClient";
 
+export const CONTACT_SUBJECTS = [
+  "ACCOUNT",
+  "WRONG_STATS",
+  "FEATURE",
+  "MINI_GAMES",
+  "OTHER",
+] as const;
+
+export type ContactSubject = (typeof CONTACT_SUBJECTS)[number];
+
 export interface ContactMessage {
+  subject: ContactSubject;
   name: string;
   email: string;
   message: string;
