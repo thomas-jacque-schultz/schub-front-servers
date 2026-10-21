@@ -24,6 +24,8 @@ export interface Regles<P extends EtatDePartie> {
   aDiffuser: (avant: P, apres: P) => boolean;
   /** Un geste propre au jeu (le choix du mot au scribble), jugé par le meneur. */
   action?: (p: P, de: string, valeur: unknown) => P;
+  /** Ce que le meneur diffuse : il garde le reste pour lui (la bonne réponse du quiz). */
+  publique?: (p: P) => P;
 }
 
 export type MessageJeu =
@@ -80,10 +82,14 @@ export function useMeneur<P extends EtatDePartie>({
     (suivante: P | null) => {
       const avant = courante.current;
       garde(suivante);
-      envoie({ jeu: "etat", partie: suivante });
+      envoie({
+        jeu: "etat",
+        partie:
+          suivante && regles.publique ? regles.publique(suivante) : suivante,
+      });
       apresPublication.current?.(avant, suivante);
     },
-    [envoie, garde],
+    [envoie, garde, regles],
   );
 
   const juge = useCallback(

@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { annonceSalon } from "./bridge";
+import { annonceSalon, attendInit, dansUnHote } from "./bridge";
 import { playerId } from "./identity";
 import { type Evenement, type Joueur, Relais } from "./relay";
-import type { CleCommune, Lang } from "./textes";
+import { type CleCommune, type Lang, langueDuNavigateur } from "./textes";
 
 export interface Contexte {
   lang: Lang;
@@ -15,6 +15,25 @@ export const salonDeLAdresse = (): string | null => {
   const code = location.pathname.split("/").pop() ?? "";
   return /^[A-Z]{4}$/.test(code) ? code : null;
 };
+
+/** La langue et le salon : de PremadeLab (iframe) ou de l'adresse. */
+export function useContexte(): Contexte | null {
+  const [contexte, setContexte] = useState<Contexte | null>(null);
+  useEffect(() => {
+    if (!dansUnHote()) {
+      setContexte({
+        lang: langueDuNavigateur(),
+        room: salonDeLAdresse(),
+        hote: null,
+      });
+      return;
+    }
+    void attendInit().then((init) =>
+      setContexte({ lang: init.lang, room: init.room, hote: init.origin }),
+    );
+  }, []);
+  return contexte;
+}
 
 export type EtatSalon = "connexion" | "salon" | "reconnexion" | "erreur";
 

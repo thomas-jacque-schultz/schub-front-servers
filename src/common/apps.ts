@@ -1,7 +1,7 @@
 // Les deux applications vivent sur deux domaines : un lien de l'une à l'autre est une URL absolue.
-// Le dev se reconnaît à son sous-domaine ; VITE_SCHUB_URL et VITE_PREMADELAB_URL priment (poste local).
+// Le dev se reconnaît à son sous-domaine (dev., ou dev- pour un mini-jeu) ; VITE_SCHUB_URL et VITE_PREMADELAB_URL priment (poste local).
 const enDev =
-  typeof window !== "undefined" && window.location.hostname.startsWith("dev.");
+  typeof window !== "undefined" && /^dev[.-]/.test(window.location.hostname);
 
 export const APP_URLS = {
   schub:
