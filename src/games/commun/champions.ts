@@ -1,9 +1,8 @@
 import type { Lang } from "./textes";
 
 // Data Dragon sert les noms traduits et les illustrations ; les jeux ne lisent que les champions (Schub#130).
-const DDRAGON = "https://ddragon.leagueoflegends.com";
-const LOCALES: Record<Lang, string> = { fr: "fr_FR", en: "en_US" };
-const lus = new Map<Lang, Promise<Catalogue>>();
+export const DDRAGON = "https://ddragon.leagueoflegends.com";
+export const LOCALES: Record<Lang, string> = { fr: "fr_FR", en: "en_US" };
 
 export interface Champion {
   id: string;
@@ -15,17 +14,37 @@ export interface Catalogue {
   champions: Champion[];
 }
 
-const lis = async (lang: Lang): Promise<Catalogue> => {
+/** Une lecture gardée en mémoire ; un échec n'est pas gardé, la suivante réessaie. */
+export const memorise = <C, T>(lis: (cle: C) => Promise<T>) => {
+  const lus = new Map<C, Promise<T>>();
+  return (cle: C): Promise<T> => {
+    if (!lus.has(cle)) {
+      lus.set(
+        cle,
+        lis(cle).catch((erreur: unknown) => {
+          lus.delete(cle);
+          throw erreur;
+        }),
+      );
+    }
+    return lus.get(cle)!;
+  };
+};
+
+export const derniereVersion = memorise<void, string>(async () => {
   const versions = (await (
     await fetch(`${DDRAGON}/api/versions.json`)
   ).json()) as string[];
+  return versions[0];
+});
+
+const lis = async (lang: Lang): Promise<Catalogue> => {
+  const version = await derniereVersion();
   const lu = (await (
-    await fetch(
-      `${DDRAGON}/cdn/${versions[0]}/data/${LOCALES[lang]}/champion.json`,
-    )
+    await fetch(`${DDRAGON}/cdn/${version}/data/${LOCALES[lang]}/champion.json`)
   ).json()) as { data: Record<string, { id: string; name: string }> };
   return {
-    version: versions[0],
+    version,
     champions: Object.values(lu.data).map((champion) => ({
       id: champion.id,
       nom: champion.name,
@@ -33,18 +52,7 @@ const lis = async (lang: Lang): Promise<Catalogue> => {
   };
 };
 
-export const catalogue = (lang: Lang): Promise<Catalogue> => {
-  if (!lus.has(lang)) {
-    lus.set(
-      lang,
-      lis(lang).catch((erreur: unknown) => {
-        lus.delete(lang);
-        throw erreur;
-      }),
-    );
-  }
-  return lus.get(lang)!;
-};
+export const catalogue = memorise(lis);
 
 /** L'illustration de base d'un champion, la même dans toutes les langues. */
 export const splash = (id: string): string =>
