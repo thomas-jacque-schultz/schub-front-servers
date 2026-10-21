@@ -8,7 +8,7 @@ const LANGUES = ["fr", "en"];
 const AFFICHES = {
   auth: [""],
   common: [""],
-  contact: ["feedback", "fields", "helpers", "submit", "sending", "success", "errors", "privacy", "feedbackMeta"],
+  contact: ["feedback", "fields", "subjects", "helpers", "submit", "sending", "success", "errors", "privacy", "feedbackMeta"],
   home: ["onboarding"],
   legal: [""],
   lol: [""],
