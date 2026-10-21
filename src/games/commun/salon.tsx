@@ -1,13 +1,7 @@
-import { type ReactNode, useEffect, useState } from "react";
-import { attendInit, dansUnHote } from "./bridge";
+import { type ReactNode, useState } from "react";
 import { playerName, rememberName } from "./identity";
-import {
-  type CleCommune,
-  type Lang,
-  langueDuNavigateur,
-  texteCommun,
-} from "./textes";
-import { type Contexte, salonDeLAdresse } from "./useSalon";
+import { type CleCommune, type Lang, texteCommun } from "./textes";
+import { type Contexte, useContexte } from "./useSalon";
 
 const NOM_MAX = 24;
 
@@ -19,22 +13,8 @@ export function JeuApp({
   titre: string;
   rendu: (contexte: Contexte, nom: string) => ReactNode;
 }) {
-  const [contexte, setContexte] = useState<Contexte | null>(null);
+  const contexte = useContexte();
   const [nom, setNom] = useState<string | null>(playerName());
-
-  useEffect(() => {
-    if (!dansUnHote()) {
-      setContexte({
-        lang: langueDuNavigateur(),
-        room: salonDeLAdresse(),
-        hote: null,
-      });
-      return;
-    }
-    void attendInit().then((init) =>
-      setContexte({ lang: init.lang, room: init.room, hote: init.origin }),
-    );
-  }, []);
 
   if (!contexte) {
     return null;
