@@ -3,20 +3,33 @@ import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import {
   APP_URLS,
+  BulletList,
   Button,
   Card,
   Columns,
-  EmbeddedApp,
+  GameFrame,
+  GamePoster,
   PageHeader,
+  playful,
+  SelectField,
   Stack,
-  Text,
+  TextField,
   Toast,
   useCurrentLanguage,
   useDocumentMeta,
   useLocalizedNavigate,
   useLocalizedPath,
 } from "../../common";
-import { estJeu, type Jeu, JEUX, origineDuJeu, urlDuJeu } from "../queueKiller";
+import {
+  CODE_SALON,
+  estJeu,
+  FICHES,
+  type Jeu,
+  JEUX,
+  JOUEURS_MAX,
+  origineDuJeu,
+  urlDuJeu,
+} from "../queueKiller";
 
 // Les mini-jeux entre premades (Schub#118). Le jeu vit sur son sous-domaine, dans une iframe ; avec lui, deux
 // messages seulement : l'init (salon et langue), puis le salon qu'il vient de créer.
@@ -28,39 +41,113 @@ export default function QueueKillerPage() {
     description: t("queueKiller.meta.description"),
   });
 
-  return (
-    <Stack spacing={2}>
+  return estJeu(game) ? (
+    <Salon key={game} jeu={game} room={room ?? null} />
+  ) : (
+    <Stack spacing={3}>
       <PageHeader
         title={t("queueKiller.title")}
         subtitle={t("queueKiller.subtitle")}
       />
-      {estJeu(game) ? (
-        <Salon key={game} jeu={game} room={room ?? null} />
-      ) : (
-        <Catalogue />
-      )}
+      <Catalogue />
+      <Columns count={2} minWidth={320}>
+        <Card title={t("queueKiller.how.title")}>
+          <BulletList
+            ordered
+            tone="secondary"
+            items={[
+              t("queueKiller.how.create"),
+              t("queueKiller.how.share"),
+              t("queueKiller.how.play"),
+            ]}
+          />
+        </Card>
+        <Rejoindre />
+      </Columns>
     </Stack>
   );
 }
 
 function Catalogue() {
   const { t } = useTranslation("lol");
-  const navigate = useLocalizedNavigate();
+  const localize = useLocalizedPath();
   return (
-    <Columns minWidth={280}>
-      {JEUX.map((jeu) => (
-        <Card key={jeu} title={t(`queueKiller.${jeu}.title`)}>
-          <Stack spacing={1.5}>
-            <Text>{t(`queueKiller.${jeu}.body`)}</Text>
-            <div>
-              <Button onClick={() => navigate(`/queue-killer/${jeu}`)}>
-                {t("queueKiller.create")}
-              </Button>
-            </div>
-          </Stack>
-        </Card>
-      ))}
+    <Columns count={JEUX.length} minWidth={240}>
+      {JEUX.map((jeu) => {
+        const fiche = FICHES[jeu];
+        return (
+          <GamePoster
+            key={jeu}
+            title={t(`queueKiller.${jeu}.title`)}
+            icon={fiche.icone}
+            accent={playful.confetti[fiche.teinte]}
+            genre={t(`queueKiller.${jeu}.genre`)}
+            tags={[
+              t("queueKiller.players", {
+                min: fiche.joueursMin,
+                max: JOUEURS_MAX,
+              }),
+              t("queueKiller.minutes", { n: fiche.minutes }),
+            ]}
+            body={t(`queueKiller.${jeu}.body`)}
+            action={t("queueKiller.create")}
+            to={localize(`/queue-killer/${jeu}`)}
+          />
+        );
+      })}
     </Columns>
+  );
+}
+
+function Rejoindre() {
+  const { t } = useTranslation("lol");
+  const navigate = useLocalizedNavigate();
+  const [jeu, setJeu] = useState<Jeu>(JEUX[0]);
+  const [code, setCode] = useState("");
+  const valide = CODE_SALON.test(code);
+  const rejoins = () => valide && navigate(`/queue-killer/${jeu}/${code}`);
+
+  return (
+    <Card
+      title={t("queueKiller.join.title")}
+      description={t("queueKiller.join.description")}
+    >
+      <Stack
+        component="form"
+        direction="responsive"
+        spacing={1.5}
+        onSubmit={(event) => {
+          event.preventDefault();
+          rejoins();
+        }}
+      >
+        <SelectField
+          label={t("queueKiller.join.game")}
+          value={jeu}
+          onChange={(valeur) => estJeu(valeur) && setJeu(valeur)}
+          options={JEUX.map((j) => ({
+            value: j,
+            label: `${FICHES[j].icone} ${t(`queueKiller.${j}.title`)}`,
+          }))}
+        />
+        <TextField
+          label={t("queueKiller.join.code")}
+          value={code}
+          onChange={(saisie) =>
+            setCode(
+              saisie
+                .toUpperCase()
+                .replace(/[^A-Z]/g, "")
+                .slice(0, 4),
+            )
+          }
+          onEnter={rejoins}
+        />
+        <Button type="submit" besideField disabled={!valide}>
+          {t("queueKiller.join.submit")}
+        </Button>
+      </Stack>
+    </Card>
   );
 }
 
@@ -92,7 +179,7 @@ function Salon({ jeu, room }: { jeu: Jeu; room: string | null }) {
       ) {
         return;
       }
-      if (/^[A-Z]{4}$/.test(data.room) && data.room !== room) {
+      if (CODE_SALON.test(data.room) && data.room !== room) {
         annonce.current = data.room;
         navigate(`/queue-killer/${jeu}/${data.room}`, { replace: true });
       }
@@ -106,44 +193,39 @@ function Salon({ jeu, room }: { jeu: Jeu; room: string | null }) {
     : null;
 
   return (
-    <Stack spacing={1.5}>
-      <EmbeddedApp
+    <>
+      <GameFrame
         key={transmis ?? "neuf"}
         ref={cadre}
         src={urlDuJeu(jeu)}
         title={t(`queueKiller.${jeu}.title`)}
+        icon={FICHES[jeu].icone}
         onLoad={() =>
           cadre.current?.contentWindow?.postMessage(
             { type: "premadelab:init", room: transmis, lang },
             origineDuJeu(jeu),
           )
         }
+        back={{ label: t("queueKiller.back"), to: localize("/queue-killer") }}
+        room={room}
+        roomLabel={t("queueKiller.room")}
+        waitingLabel={t("queueKiller.waiting")}
+        copyLabel={t("queueKiller.copy")}
+        onCopy={() =>
+          lien &&
+          void navigator.clipboard.writeText(lien).then(
+            () => setToast(t("queueKiller.copied")),
+            () => setToast(lien),
+          )
+        }
+        fullscreenLabel={t("queueKiller.fullscreen")}
+        exitFullscreenLabel={t("queueKiller.exitFullscreen")}
       />
-      {lien && (
-        <Stack direction="row" spacing={1} align="center" wrap>
-          <Text variant="caption">{t("queueKiller.share")}</Text>
-          <Text variant="caption" mono>
-            {lien}
-          </Text>
-          <Button
-            size="small"
-            variant="secondary"
-            onClick={() =>
-              void navigator.clipboard.writeText(lien).then(
-                () => setToast(t("queueKiller.copied")),
-                () => setToast(lien),
-              )
-            }
-          >
-            {t("queueKiller.copy")}
-          </Button>
-        </Stack>
-      )}
       <Toast
         open={Boolean(toast)}
         message={toast}
         onClose={() => setToast("")}
       />
-    </Stack>
+    </>
   );
 }
