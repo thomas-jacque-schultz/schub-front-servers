@@ -5,7 +5,7 @@
     "text": "{{product}} isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.",
     "sourceLabel": "Riot Games — General Policies"
   },
-  "updated": "Last updated: 30 September 2026.",
+  "updated": "Last updated: 23 October 2026.",
   "terms": {
     "meta": {
       "title": "Terms of use — {{product}}",
@@ -102,6 +102,8 @@
       "others": "A game holds ten participants. The Riot ID and game figures of the other nine are therefore recorded too, including when they have no {{product}} account and never will. That data is made public by the Riot Games API, but it is indeed kept here — and a deletion request covers it as well.",
       "teamsTitle": "Teams",
       "teams": "A team's name, its roster — a Riot ID, positions and a status per seat —, the champion pool it keeps per position and the compositions prepared, with their patch and notes.",
+      "presenceTitle": "Presence in the mini-games",
+      "presence": "When a signed-in account opens a mini-game room, the game and the room code are reported every 30 seconds, so that the members of its teams can join. Only they can see it. This presence stays in memory, is never written to the database, and is cleared 90 seconds after the last report. Without an account, nothing is reported.",
       "contactTitle": "Contact form",
       "contact": "The name, email address and message entered. The site does not store them: the message is delivered as is to the publisher through Discord, as a direct message or in a fallback channel, and stays in that messaging service until the publisher deletes it."
     },
