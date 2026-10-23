@@ -77,6 +77,7 @@ const SOURCES: Sources = {
       stats: [],
       composants: [`Composant ${i}`, `Composant ${i + 1}`],
       description: "",
+      tags: [],
     })),
   },
   univers: {

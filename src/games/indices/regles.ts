@@ -4,6 +4,7 @@ import {
   avancer,
   choisir,
   deviner,
+  devinerObjet,
   estPartieIndices,
   type PartieIndices,
   presence,
@@ -24,6 +25,10 @@ export const creerRegles = (
     apres.phase !== avant.phase ||
     apres.manche !== avant.manche ||
     apres.revele !== avant.revele,
-  action: (p, de, valeur) =>
-    choisir(p, de, valeur, presents(), donnees, Math.random),
+  action: (p, de, valeur) => {
+    const objet = (valeur as { objet?: unknown } | null)?.objet;
+    return objet !== undefined
+      ? devinerObjet(p, de, objet, donnees)
+      : choisir(p, de, valeur, presents(), donnees, Math.random);
+  },
 });

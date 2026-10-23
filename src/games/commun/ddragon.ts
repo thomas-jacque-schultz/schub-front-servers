@@ -24,6 +24,8 @@ export interface Objet {
   stats: string[];
   composants: string[];
   description: string;
+  /** Les tags de Data Dragon, en identifiants anglais : Boots, SpellDamage… */
+  tags: string[];
 }
 
 export interface Donnees {
@@ -115,6 +117,7 @@ export const versObjets = (data: Record<string, ObjetDD>): Objet[] => {
         ...new Set((o.from ?? []).map((composant) => data[composant]?.name)),
       ].filter((nom): nom is string => Boolean(nom)),
       description: texteSeul(o.plaintext ?? ""),
+      tags: o.tags ?? [],
     });
   }
   return objets;
