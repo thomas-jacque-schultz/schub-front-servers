@@ -2186,6 +2186,30 @@
       }
     },
     "/quiz/questions/{id}" : {
+      "delete" : {
+        "operationId" : "delete_3",
+        "parameters" : [ {
+          "in" : "header",
+          "name" : "X-Actor-Id",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "quiz-question-controller" ]
+      },
       "put" : {
         "operationId" : "save",
         "parameters" : [ {
@@ -6931,7 +6955,7 @@
         }
       },
       "QuizQuestionDto" : {
-        "required" : [ "active", "date", "en", "fr", "id", "source", "theme", "updatedAt" ],
+        "required" : [ "active", "date", "en", "fr", "id", "image", "imagesChoix", "source", "theme", "updatedAt" ],
         "type" : "object",
         "properties" : {
           "active" : {
@@ -6949,12 +6973,26 @@
           "id" : {
             "type" : "string"
           },
+          "image" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "imagesChoix" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "type" : "array",
+              "items" : {
+                "type" : "string"
+              }
+            }
+          },
           "source" : {
             "type" : "string"
           },
           "theme" : {
             "type" : "string",
-            "enum" : [ "PROS", "MONDE" ]
+            "enum" : [ "PROS", "MONDE", "OBJETS", "HISTOIRE", "SKINS" ]
           },
           "updatedAt" : {
             "type" : "string",
@@ -6978,12 +7016,26 @@
           "fr" : {
             "$ref" : "#/components/schemas/QuizWordingDto"
           },
+          "image" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "imagesChoix" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "type" : "array",
+              "items" : {
+                "type" : "string"
+              }
+            }
+          },
           "source" : {
             "type" : "string"
           },
           "theme" : {
             "type" : "string",
-            "enum" : [ "PROS", "MONDE" ]
+            "enum" : [ "PROS", "MONDE", "OBJETS", "HISTOIRE", "SKINS" ]
           }
         }
       },

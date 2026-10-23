@@ -8,17 +8,17 @@ import {
   presence,
   publique,
 } from "./partie";
-import type { Sources } from "./questions";
+import type { QuestionBanque } from "./questions";
 
-/** Les sources sont relues à chaque partie : la banque peut avoir changé dans Schub (Schub#137). */
+/** La banque est relue à chaque partie : elle peut avoir changé dans Schub (Schub#137). */
 export const creerRegles = (
-  sources: () => Sources,
+  banque: () => QuestionBanque[],
   presents: () => Present[],
 ): Regles<PartieQuiz> => ({
   estEtat: estPartieQuiz,
   enCours: (p) => p.phase !== "fin",
   avancer: (p, ecouleMs, joueurs, hasard) =>
-    avancer(p, ecouleMs, joueurs, sources(), hasard),
+    avancer(p, ecouleMs, joueurs, banque(), hasard),
   deviner: (p) => ({ partie: p, proche: false }),
   presence,
   aDiffuser: (avant, apres) =>
@@ -26,6 +26,6 @@ export const creerRegles = (
     apres.manche !== avant.manche ||
     Object.keys(apres.reponses).length !== Object.keys(avant.reponses).length,
   action: (p, de, valeur) =>
-    agir(p, de, valeur, presents(), sources(), Math.random),
+    agir(p, de, valeur, presents(), banque(), Math.random),
   publique,
 });

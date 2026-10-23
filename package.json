@@ -10,6 +10,7 @@
     "preview": "vite preview --host",
     "typecheck": "tsc --noEmit",
     "contrat": "node scripts/contrat.mjs",
+    "quiz:fabrique": "vite-node scripts/quiz-fabrique.ts --",
     "lint": "eslint . && node scripts/premadelab-sans-schub.mjs && node scripts/typographie-fr.mjs && node scripts/contrat.mjs --verifier",
     "lint:fix": "eslint . --fix",
     "test": "vitest run",

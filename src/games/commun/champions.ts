@@ -54,9 +54,9 @@ const lis = async (lang: Lang): Promise<Catalogue> => {
 
 export const catalogue = memorise(lis);
 
-/** L'illustration de base d'un champion, la même dans toutes les langues. */
-export const splash = (id: string): string =>
-  `${DDRAGON}/cdn/img/champion/splash/${id}_0.jpg`;
+/** L'illustration d'un champion, la même dans toutes les langues ; num choisit le skin, 0 pour celui de base. */
+export const splash = (id: string, num = 0): string =>
+  `${DDRAGON}/cdn/img/champion/splash/${id}_${num}.jpg`;
 
 /** L'icône carrée d'un champion, à la version du catalogue lu. */
 export const icone = (version: string, id: string): string =>
