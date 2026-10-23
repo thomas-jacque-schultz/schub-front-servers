@@ -214,7 +214,9 @@ export const playful = {
     prune: "rgba(192, 107, 160, 0.45)",
   },
   brush: brand.prune,
-  iconShadow: "drop-shadow(0 6px 10px rgba(0, 0, 0, 0.55))",
+  // Le bas d'une couverture se fond dans le panneau de la jaquette.
+  coverFade:
+    "linear-gradient(180deg, transparent 45%, rgba(40, 18, 44, 0.94) 100%)",
   confetti: [
     brand.gold,
     brand.goldBright,

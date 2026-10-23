@@ -11,7 +11,6 @@ import {
   GameFrame,
   GamePoster,
   PageHeader,
-  playful,
   SelectField,
   Stack,
   Text,
@@ -31,7 +30,9 @@ import {
   JEUX,
   JOUEURS_MAX,
   origineDuJeu,
+  splashDuJeu,
   urlDuJeu,
+  vignetteDuJeu,
 } from "../queueKiller";
 import {
   getSalonsDePremadeApi,
@@ -92,8 +93,7 @@ function Catalogue() {
           <GamePoster
             key={jeu}
             title={t(`queueKiller.${jeu}.title`)}
-            icon={fiche.icone}
-            accent={playful.confetti[fiche.teinte]}
+            image={splashDuJeu(jeu)}
             genre={t(`queueKiller.${jeu}.genre`)}
             tags={[
               t("queueKiller.players", {
@@ -158,10 +158,15 @@ function SalonsDePremade() {
             spacing={1}
           >
             <Stack direction="row" spacing={2} align="center" wrap>
-              <Text variant="subtitle">
-                {FICHES[salon.game].icone}{" "}
-                {t(`queueKiller.${salon.game}.title`)}
-              </Text>
+              <Stack direction="row" spacing={1} align="center">
+                <Avatar
+                  src={vignetteDuJeu(salon.game)}
+                  name={t(`queueKiller.${salon.game}.title`)}
+                />
+                <Text variant="subtitle">
+                  {t(`queueKiller.${salon.game}.title`)}
+                </Text>
+              </Stack>
               <Stack direction="row" spacing={1.5} align="center" wrap>
                 {salon.players.map((joueur, index) => (
                   <Stack
@@ -224,7 +229,7 @@ function Rejoindre() {
           onChange={(valeur) => estJeu(valeur) && setJeu(valeur)}
           options={JEUX.map((j) => ({
             value: j,
-            label: `${FICHES[j].icone} ${t(`queueKiller.${j}.title`)}`,
+            label: t(`queueKiller.${j}.title`),
           }))}
         />
         <TextField
@@ -318,7 +323,7 @@ function Salon({ jeu, room }: { jeu: Jeu; room: string | null }) {
         ref={cadre}
         src={urlDuJeu(jeu)}
         title={t(`queueKiller.${jeu}.title`)}
-        icon={FICHES[jeu].icone}
+        image={vignetteDuJeu(jeu)}
         onLoad={() =>
           cadre.current?.contentWindow?.postMessage(
             { type: "premadelab:init", room: transmis, lang },

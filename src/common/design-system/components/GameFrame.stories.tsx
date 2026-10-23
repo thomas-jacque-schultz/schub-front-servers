@@ -7,7 +7,8 @@ const meta = {
   args: {
     src: "about:blank",
     title: "Questions pour un invocateur",
-    icon: "🧠",
+    image:
+      "https://ddragon.leagueoflegends.com/cdn/img/champion/tiles/Heimerdinger_0.jpg",
     back: { label: "Tous les jeux", to: "/" },
     room: "KQXP",
     roomLabel: "Salon",

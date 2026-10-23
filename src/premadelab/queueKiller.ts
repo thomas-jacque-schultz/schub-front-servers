@@ -24,17 +24,26 @@ export const origineDuJeu = (jeu: Jeu): string => new URL(urlDuJeu(jeu)).origin;
 // La capacité d'un salon : max-players du relais (schub-together-games).
 export const JOUEURS_MAX = 10;
 
-/** Ce que montre la jaquette : le pictogramme (le même que dans le jeu), le minimum de joueurs, une durée de partie
- *  aux réglages par défaut, et la teinte de sa lueur (un rang de playful.confetti). */
+// Chaque jeu a son champion (Schub#150) : Hwei peint, Vel'Koz observe, Caitlyn enquête, Heimerdinger sait tout,
+// Neeko prend l'apparence des autres. Durées estimées aux réglages par défaut.
 export const FICHES: Record<
   Jeu,
-  { icone: string; joueursMin: number; minutes: number; teinte: number }
+  { champion: string; joueursMin: number; minutes: number }
 > = {
-  scribble: { icone: "🎨", joueursMin: 2, minutes: 8, teinte: 0 },
-  zoom: { icone: "🔍", joueursMin: 2, minutes: 5, teinte: 2 },
-  indices: { icone: "🕵️", joueursMin: 2, minutes: 10, teinte: 4 },
-  quiz: { icone: "🧠", joueursMin: 2, minutes: 10, teinte: 1 },
-  imposteur: { icone: "🎭", joueursMin: 3, minutes: 15, teinte: 3 },
+  scribble: { champion: "Hwei", joueursMin: 2, minutes: 8 },
+  zoom: { champion: "Velkoz", joueursMin: 2, minutes: 5 },
+  indices: { champion: "Caitlyn", joueursMin: 2, minutes: 10 },
+  quiz: { champion: "Heimerdinger", joueursMin: 2, minutes: 10 },
+  imposteur: { champion: "Neeko", joueursMin: 3, minutes: 15 },
 };
+
+// Sans version : Data Dragon sert les splashs et les vignettes du skin de base hors de tout patch.
+const ILLUSTRATIONS = "https://ddragon.leagueoflegends.com/cdn/img/champion";
+
+export const splashDuJeu = (jeu: Jeu): string =>
+  `${ILLUSTRATIONS}/splash/${FICHES[jeu].champion}_0.jpg`;
+
+export const vignetteDuJeu = (jeu: Jeu): string =>
+  `${ILLUSTRATIONS}/tiles/${FICHES[jeu].champion}_0.jpg`;
 
 export const CODE_SALON = /^[A-Z]{4}$/;
