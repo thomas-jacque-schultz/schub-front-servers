@@ -64,7 +64,9 @@
     "goldDiffAt15": "Gold difference at 15",
     "csDiffAt15": "CS difference at 15",
     "xpDiffAt15": "XP difference at 15",
-    "killsDiffAt15": "Kill difference at 15"
+    "killsDiffAt15": "Kill difference at 15",
+    "killsAssistsAt15": "Kills and assists at 15",
+    "soloKills": "Solo kills per game"
   },
   "delta": {
     "points": "{{value}} pts",
@@ -248,18 +250,21 @@
     "goldDiffAt15": "Gold @15",
     "csDiffAt15": "CS @15",
     "xpDiffAt15": "XP @15",
-    "killsDiffAt15": "Kills @15"
+    "killsDiffAt15": "Kills @15",
+    "killsAssistsAt15": "K+A @15",
+    "soloKills": "Solo kills"
   },
   "radar": {
     "title": "Profile",
-    "helper": "Five axes, further out = better, read against the chosen reference: the centre is its low end, the edge its high end.",
+    "helper": "Ten axes, further out = better, read against the chosen reference: the centre is its low end, the edge its high end. Dotted: the average player of every tier in this position.",
     "reference": {
       "label": "Reference",
       "met": "Opponents",
       "league": "Tier"
     },
     "series": {
-      "position": "As {{position}}"
+      "position": "As {{position}}",
+      "allTiers": "All-tier average"
     },
     "note": {
       "met": "As {{position}}, {{games}} game(s). Centre: 5th percentile of {{count}} direct opponents (at least {{min}} games each), edge: 95th.",

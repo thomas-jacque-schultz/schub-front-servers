@@ -2563,6 +2563,8 @@ export interface components {
       scope: string;
     };
     ReferenceGridMetric: {
+      /** Format: double */
+      allTiersMean: number | null;
       missingTiers: string[];
       polarity: string;
       rankMeans: {
@@ -2841,6 +2843,8 @@ export interface components {
       /** Format: double */
       killParticipation: number | null;
       /** Format: double */
+      killsAssistsAt15: number | null;
+      /** Format: double */
       killsDiffAt15: number | null;
       /** Format: double */
       killsPerGame: number | null;
@@ -2856,6 +2860,8 @@ export interface components {
       platesDiff: number | null;
       /** Format: int64 */
       secondsPlayed: number;
+      /** Format: double */
+      soloKills: number | null;
       /** Format: double */
       timeDeadShare: number | null;
       /** Format: double */
