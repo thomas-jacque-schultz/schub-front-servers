@@ -5,6 +5,7 @@ import {
   Button,
   Card,
   Columns,
+  Icon,
   PageContainer,
   SelectField,
   SideLayout,
@@ -237,7 +238,10 @@ export function Salon({
   );
 }
 
-/** Les joueurs du salon, rangés par score quand une partie a commencé. */
+/**
+ * Les joueurs du salon, rangés par score quand une partie a commencé. Le meneur a son nom en italique, sans le mot
+ * « meneur », qui se lisait comme « celui qui gagne » (Schub#141) ; une couronne marque qui est en tête.
+ */
 export function Classement({
   lang,
   joueurs,
@@ -257,6 +261,9 @@ export function Classement({
   const ranges = scores
     ? [...joueurs].sort((a, b) => (scores[b.id] ?? 0) - (scores[a.id] ?? 0))
     : joueurs;
+  const meilleur = scores
+    ? Math.max(0, ...joueurs.map((j) => scores[j.id] ?? 0))
+    : 0;
   return (
     <Card title={texteCommun(lang, scores ? "scores" : "joueurs")}>
       <Stack spacing={0.75}>
@@ -265,24 +272,34 @@ export function Classement({
           return (
             <Stack key={j.id} direction="row" justify="between" spacing={1}>
               <Stack spacing={0}>
-                <Text tone={j.id === moi ? "primary" : "default"} truncate>
+                <Text
+                  tone={j.id === moi ? "primary" : "default"}
+                  italic={j.id === meneur}
+                  truncate
+                >
                   {j.name}
                 </Text>
-                {(role || j.id === meneur) && (
+                {role && (
                   <Text variant="caption" tone="secondary">
-                    {[
-                      role,
-                      j.id === meneur ? texteCommun(lang, "meneur") : null,
-                    ]
-                      .filter(Boolean)
-                      .join(" · ")}
+                    {role}
                   </Text>
                 )}
               </Stack>
               {scores && (
-                <Text mono tone="secondary">
-                  {texteCommun(lang, "points", { n: scores[j.id] ?? 0 })}
-                </Text>
+                <Stack direction="row" spacing={0.5} align="center">
+                  <Text mono tone="secondary">
+                    {texteCommun(lang, "points", { n: scores[j.id] ?? 0 })}
+                  </Text>
+                  {meilleur > 0 && scores[j.id] === meilleur && (
+                    <Text tone="primary" component="span">
+                      <Icon
+                        name="crown"
+                        size="small"
+                        label={texteCommun(lang, "enTete")}
+                      />
+                    </Text>
+                  )}
+                </Stack>
               )}
             </Stack>
           );

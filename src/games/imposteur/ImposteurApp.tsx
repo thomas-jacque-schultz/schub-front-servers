@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import {
+  BulletList,
   Button,
   Card,
   ChampionIcon,
@@ -34,6 +35,9 @@ import {
   MANCHES_DEFAUT,
   MINIMUM,
   motValide,
+  POINT_DEMASQUE,
+  POINTS_CHANCE,
+  POINTS_IMPOSTEUR,
   nouvellePartie,
   type PartieImposteur,
   quiParle,
@@ -160,6 +164,7 @@ function Partie({
       {!partie ? (
         <Stack spacing={1.5}>
           <Text tone="secondary">{texte(lang, "regle")}</Text>
+          <Bareme lang={lang} />
           <Preparation
             lang={lang}
             estMeneur={jeu.estMeneur}
@@ -189,6 +194,8 @@ function Partie({
             lang={lang}
             partie={partie}
             moi={moi}
+            estMeneur={jeu.estMeneur}
+            nbPresents={joueurs.length}
             restantMs={restantMs}
             version={version}
             carte={carte}
@@ -201,10 +208,30 @@ function Partie({
   );
 }
 
+function Bareme({ lang }: { lang: Lang }) {
+  return (
+    <Stack spacing={0.5}>
+      <Text variant="overline" tone="secondary">
+        {texte(lang, "bareme")}
+      </Text>
+      <BulletList
+        tone="secondary"
+        items={[
+          texte(lang, "baremeDemasque", { n: POINT_DEMASQUE }),
+          texte(lang, "baremeCache", { n: POINTS_IMPOSTEUR }),
+          texte(lang, "baremeChance", { n: POINTS_CHANCE }),
+        ]}
+      />
+    </Stack>
+  );
+}
+
 function Consigne({
   lang,
   partie,
   moi,
+  estMeneur,
+  nbPresents,
   restantMs,
   version,
   carte,
@@ -213,6 +240,8 @@ function Consigne({
   lang: Lang;
   partie: PartieImposteur;
   moi: string;
+  estMeneur: boolean;
+  nbPresents: number;
   restantMs: number;
   version: string;
   carte: (id: string | undefined) => Carte | null;
@@ -222,10 +251,21 @@ function Consigne({
     partie.phase === "mots"
       ? `${texte(lang, "manche", { n: partie.manche, total: partie.manches })} · ${texte(lang, "tour", { n: partie.tour, total: TOURS })}`
       : texte(lang, "manche", { n: partie.manche, total: partie.manches });
-  const chrono = partie.phase !== "revelation" && (
+  const chrono = (partie.phase === "mots" || partie.phase === "vote") && (
     <Chrono lang={lang} restantMs={restantMs} />
   );
   const nomDe = (id: string) => partie.noms[id] ?? "";
+  const forcer = estMeneur && (
+    <div>
+      <Button
+        size="small"
+        variant="ghost"
+        onClick={() => onGeste({ forcer: true })}
+      >
+        {texte(lang, "forcer")}
+      </Button>
+    </div>
+  );
 
   if (partie.phase === "mots") {
     const parle = quiParle(partie);
@@ -246,6 +286,15 @@ function Consigne({
               erreur={texte(lang, "motRefuse")}
               onEnvoie={(mot) => onGeste({ mot: mot.trim() })}
             />
+            <div>
+              <Button
+                size="small"
+                variant="ghost"
+                onClick={() => onGeste({ passe: true })}
+              >
+                {texte(lang, "passer")}
+              </Button>
+            </div>
           </Stack>
         ) : (
           <Text tone="secondary">
@@ -271,76 +320,65 @@ function Consigne({
 
   if (partie.phase === "chance") {
     return (
-      <Card title={titre} actions={chrono}>
-        {partie.imposteur === moi ? (
-          <Stack spacing={1.5}>
-            <Text>{texte(lang, "chance")}</Text>
-            <Stack direction="row" spacing={1} wrap>
-              {partie.propositions.map((id) => {
-                const c = carte(id);
-                return (
-                  <Button
-                    key={id}
-                    variant="secondary"
-                    startIcon={
-                      <ChampionIcon
-                        src={icone(version, id)}
-                        name={c?.nom ?? id}
-                        size="small"
-                      />
-                    }
-                    onClick={() => onGeste({ chance: id })}
-                  >
-                    {c?.nom ?? id}
-                  </Button>
-                );
-              })}
-            </Stack>
-          </Stack>
-        ) : (
-          <Text tone="secondary">
-            {texte(lang, "chanceAutre", { nom: nomDe(partie.imposteur) })}
+      <Card title={titre}>
+        <Stack spacing={1.5}>
+          <Text variant="subtitle" tone="primary">
+            {texte(lang, partie.demasque ? "demasque" : "pasDemasque")}
           </Text>
-        )}
+          {partie.imposteur === moi ? (
+            <Stack spacing={1.5}>
+              <Text>{texte(lang, "chance")}</Text>
+              <Columns minWidth={150}>
+                {partie.propositions.map((id) => {
+                  const c = carte(id);
+                  return (
+                    <Button
+                      key={id}
+                      variant="secondary"
+                      fullWidth
+                      startIcon={
+                        <ChampionIcon
+                          src={icone(version, id)}
+                          name={c?.nom ?? id}
+                          size="small"
+                        />
+                      }
+                      onClick={() => onGeste({ chance: id })}
+                    >
+                      {c?.nom ?? id}
+                    </Button>
+                  );
+                })}
+              </Columns>
+            </Stack>
+          ) : (
+            <Text tone="secondary">
+              {texte(lang, "chanceAutre", { nom: nomDe(partie.imposteur) })}
+            </Text>
+          )}
+          {forcer}
+        </Stack>
       </Card>
     );
   }
 
   const champion = carte(partie.champion);
   const leurre = carte(partie.leurre);
+  const pret = partie.prets.includes(moi);
   return (
     <Card title={titre}>
-      <Stack spacing={1.5}>
+      <Stack spacing={2}>
         {partie.annulee ? (
           <Text>{texte(lang, "annulee")}</Text>
         ) : (
-          <>
+          <Stack spacing={0.5}>
             <Text variant="subtitle">
-              {texte(lang, "imposteurEtait", {
-                nom: nomDe(partie.imposteur),
-              })}
+              {texte(lang, "imposteurEtait", { nom: nomDe(partie.imposteur) })}
             </Text>
-            {partie.chance && (
-              <Text tone="secondary">
-                {texte(
-                  lang,
-                  partie.chance === partie.champion
-                    ? "chanceTrouvee"
-                    : "chanceRatee",
-                  { nom: nomDe(partie.imposteur) },
-                )}
-              </Text>
-            )}
-            <Stack direction="row" spacing={1} wrap>
-              {Object.entries(partie.gains).map(([id, n]) => (
-                <Chip
-                  key={id}
-                  tone="primary"
-                  label={texte(lang, "gain", { nom: nomDe(id), n })}
-                />
-              ))}
-            </Stack>
-          </>
+            <Text tone="primary">
+              {texte(lang, partie.demasque ? "demasque" : "pasDemasque")}
+            </Text>
+          </Stack>
         )}
         <Columns minWidth={180} count={2}>
           {champion && (
@@ -368,8 +406,108 @@ function Consigne({
             </Stack>
           )}
         </Columns>
+        {!partie.annulee && (
+          <Columns minWidth={220} count={2}>
+            <Stack spacing={0.75}>
+              <Text variant="overline" tone="secondary">
+                {texte(lang, "lesVotes")}
+              </Text>
+              <Stack direction="row" spacing={0.75} wrap>
+                {partie.places.map((id) => {
+                  const pour = partie.votes[id];
+                  return (
+                    <Chip
+                      key={id}
+                      tone={pour === partie.imposteur ? "success" : "neutral"}
+                      variant={pour ? "filled" : "outline"}
+                      label={
+                        pour
+                          ? texte(lang, "aVotePour", {
+                              de: nomDe(id),
+                              pour: nomDe(pour),
+                            })
+                          : texte(lang, "sansVote", { de: nomDe(id) })
+                      }
+                    />
+                  );
+                })}
+              </Stack>
+            </Stack>
+            <Stack spacing={0.75}>
+              <Text variant="overline" tone="secondary">
+                {texte(lang, "lesPoints")}
+              </Text>
+              <Text tone="secondary">
+                {texte(
+                  lang,
+                  partie.chance === null
+                    ? "chanceAucune"
+                    : partie.chance === partie.champion
+                      ? "chanceTrouvee"
+                      : "chanceRatee",
+                  {
+                    nom: nomDe(partie.imposteur),
+                    champion: carte(partie.chance ?? "")?.nom ?? "",
+                  },
+                )}
+              </Text>
+              <Gains lang={lang} partie={partie} />
+            </Stack>
+          </Columns>
+        )}
+        <Stack direction="row" spacing={1.5} align="center" wrap>
+          {pret ? (
+            <Text tone="secondary">{texte(lang, "tuEsPret")}</Text>
+          ) : (
+            <Button onClick={() => onGeste({ pret: true })}>
+              {texte(lang, "pret")}
+            </Button>
+          )}
+          <Text variant="caption" mono tone="secondary">
+            {texte(lang, "prets", {
+              n: partie.prets.length,
+              total: nbPresents,
+            })}
+          </Text>
+          {forcer}
+        </Stack>
       </Stack>
     </Card>
+  );
+}
+
+/** Chaque gain avec sa raison : le barème appliqué, ligne par ligne. */
+function Gains({ lang, partie }: { lang: Lang; partie: PartieImposteur }) {
+  const nomDe = (id: string) => partie.noms[id] ?? "";
+  const lignes: string[] = [];
+  if (partie.demasque) {
+    for (const id of partie.places) {
+      if (id !== partie.imposteur && partie.gains[id]) {
+        lignes.push(
+          texte(lang, "gainDemasque", { nom: nomDe(id), n: POINT_DEMASQUE }),
+        );
+      }
+    }
+  } else if (partie.gains[partie.imposteur]) {
+    lignes.push(
+      texte(lang, "gainCache", {
+        nom: nomDe(partie.imposteur),
+        n: POINTS_IMPOSTEUR,
+      }),
+    );
+  }
+  if (partie.chance === partie.champion) {
+    lignes.push(
+      texte(lang, "gainChance", {
+        nom: nomDe(partie.imposteur),
+        n: POINTS_CHANCE,
+      }),
+    );
+  }
+  return lignes.length > 0 ? (
+    <BulletList items={lignes} />
+  ) : (
+    <Text tone="secondary">{texte(lang, "aucunPoint")}</Text>
   );
 }
 
@@ -393,12 +531,12 @@ function Plateau({
   const revele = partie.phase === "revelation" && !partie.annulee;
   const peutVoter =
     partie.phase === "vote" &&
-    partie.ordre.includes(moi) &&
+    partie.places.includes(moi) &&
     !(moi in partie.votes);
 
   return (
     <Columns minWidth={180}>
-      {partie.ordre.map((id) => (
+      {partie.places.map((id) => (
         <Frame
           key={id}
           accent={
@@ -429,7 +567,11 @@ function Plateau({
             </Stack>
             <Stack direction="row" spacing={0.75} wrap>
               {(partie.mots[id] ?? []).map((mot, index) => (
-                <Chip key={index} label={mot} variant="outline" />
+                <Chip
+                  key={index}
+                  label={mot || texte(lang, "seche")}
+                  variant="outline"
+                />
               ))}
             </Stack>
             {peutVoter && id !== moi && (
