@@ -1,0 +1,3621 @@
+[
+  {
+    "id": "objet-recette-2520",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/2520.png",
+    "imagesChoix": [
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/2020.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3134.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3134.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/6690.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1036.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3134.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3133.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1037.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3134.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1018.png"
+      ]
+    ],
+    "fr": {
+      "enonce": "Avec quoi se construit Briseur de bastion ?",
+      "choix": [
+        "Brutaliseur + Dague dentelée",
+        "Dague dentelée + Rectrix + Épée longue",
+        "Dague dentelée + Marteau de Caulfield",
+        "Pioche + Dague dentelée + Cape d'agilité"
+      ],
+      "explication": "Briseur de bastion : Brutaliseur + Dague dentelée, 3 000 PO au total."
+    },
+    "en": {
+      "enonce": "What is Bastionbreaker built from?",
+      "choix": [
+        "The Brutalizer + Serrated Dirk",
+        "Serrated Dirk + Rectrix + Long Sword",
+        "Serrated Dirk + Caulfield's Warhammer",
+        "Pickaxe + Serrated Dirk + Cloak of Agility"
+      ],
+      "explication": "Bastionbreaker: The Brutalizer + Serrated Dirk, 3,000 gold in total."
+    }
+  },
+  {
+    "id": "objet-recette-3078",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3078.png",
+    "imagesChoix": [
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3057.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3044.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3051.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3044.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3067.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1037.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3057.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3133.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1018.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/6690.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3051.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1043.png"
+      ]
+    ],
+    "fr": {
+      "enonce": "Avec quoi se construit Force de la trinité ?",
+      "choix": [
+        "Brillance + Phage + Hache d'Âtrinsèque",
+        "Phage + Gemme exaltante + Pioche",
+        "Brillance + Marteau de Caulfield + Cape d'agilité",
+        "Rectrix + Hache d'Âtrinsèque + Arc courbe"
+      ],
+      "explication": "Force de la trinité : Brillance + Phage + Hache d'Âtrinsèque, 3 333 PO au total."
+    },
+    "en": {
+      "enonce": "What is Trinity Force built from?",
+      "choix": [
+        "Sheen + Phage + Hearthbound Axe",
+        "Phage + Kindlegem + Pickaxe",
+        "Sheen + Caulfield's Warhammer + Cloak of Agility",
+        "Rectrix + Hearthbound Axe + Recurve Bow"
+      ],
+      "explication": "Trinity Force: Sheen + Phage + Hearthbound Axe, 3,333 gold in total."
+    }
+  },
+  {
+    "id": "objet-recette-6617",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/6617.png",
+    "imagesChoix": [
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3067.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/4642.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3113.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/4642.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3067.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1029.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1033.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3067.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1011.png"
+      ]
+    ],
+    "fr": {
+      "enonce": "Avec quoi se construit Régénérateur de pierre de lune ?",
+      "choix": [
+        "Gemme exaltante + Miroir en verre de Bandle",
+        "Feu follet éthéré + Miroir en verre de Bandle",
+        "Gemme exaltante + Armure d'étoffe + Cape de néant",
+        "Gemme exaltante + Ceinture du géant"
+      ],
+      "explication": "Régénérateur de pierre de lune : Gemme exaltante + Miroir en verre de Bandle, 2 200 PO au total."
+    },
+    "en": {
+      "enonce": "What is Moonstone Renewer built from?",
+      "choix": [
+        "Kindlegem + Bandleglass Mirror",
+        "Aether Wisp + Bandleglass Mirror",
+        "Kindlegem + Cloth Armor + Null-Magic Mantle",
+        "Kindlegem + Giant's Belt"
+      ],
+      "explication": "Moonstone Renewer: Kindlegem + Bandleglass Mirror, 2,200 gold in total."
+    }
+  },
+  {
+    "id": "objet-recette-2517",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/2517.png",
+    "imagesChoix": [
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3133.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1037.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1036.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/2020.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1036.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1036.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1036.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1018.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1036.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/2022.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1036.png"
+      ]
+    ],
+    "fr": {
+      "enonce": "Avec quoi se construit Faim insatiable ?",
+      "choix": [
+        "Marteau de Caulfield + Pioche + Épée longue",
+        "Brutaliseur + Épée longue + Épée longue",
+        "Épée longue + Cape d'agilité",
+        "Épée longue + Poussière luisante + Épée longue"
+      ],
+      "explication": "Faim insatiable : Marteau de Caulfield + Pioche + Épée longue, 3 100 PO au total."
+    },
+    "en": {
+      "enonce": "What is Endless Hunger built from?",
+      "choix": [
+        "Caulfield's Warhammer + Pickaxe + Long Sword",
+        "The Brutalizer + Long Sword + Long Sword",
+        "Long Sword + Cloak of Agility",
+        "Long Sword + Glowing Mote + Long Sword"
+      ],
+      "explication": "Endless Hunger: Caulfield's Warhammer + Pickaxe + Long Sword, 3,100 gold in total."
+    }
+  },
+  {
+    "id": "objet-recette-4628",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/4628.png",
+    "imagesChoix": [
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3108.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3108.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1052.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3070.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3802.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3108.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1053.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3145.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1052.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3067.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3113.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3108.png"
+      ]
+    ],
+    "fr": {
+      "enonce": "Avec quoi se construit Concentration lointaine ?",
+      "choix": [
+        "Codex méphitique + Codex méphitique + Tome d'amplification",
+        "Larme de la déesse + Chapitre perdu + Codex méphitique",
+        "Sceptre vampirique + Alternateur Hextech + Tome d'amplification",
+        "Gemme exaltante + Feu follet éthéré + Codex méphitique"
+      ],
+      "explication": "Concentration lointaine : Codex méphitique + Codex méphitique + Tome d'amplification, 2 700 PO au total."
+    },
+    "en": {
+      "enonce": "What is Horizon Focus built from?",
+      "choix": [
+        "Fiendish Codex + Fiendish Codex + Amplifying Tome",
+        "Tear of the Goddess + Lost Chapter + Fiendish Codex",
+        "Vampiric Scepter + Hextech Alternator + Amplifying Tome",
+        "Kindlegem + Aether Wisp + Fiendish Codex"
+      ],
+      "explication": "Horizon Focus: Fiendish Codex + Fiendish Codex + Amplifying Tome, 2,700 gold in total."
+    }
+  },
+  {
+    "id": "objet-recette-3035",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3035.png",
+    "imagesChoix": [
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1036.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1036.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1036.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1033.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1036.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3133.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1037.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1036.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3134.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/6690.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1036.png"
+      ]
+    ],
+    "fr": {
+      "enonce": "Avec quoi se construit Dernier souffle ?",
+      "choix": [
+        "Épée longue + Épée longue",
+        "Épée longue + Cape de néant + Épée longue",
+        "Marteau de Caulfield + Pioche + Épée longue",
+        "Dague dentelée + Rectrix + Épée longue"
+      ],
+      "explication": "Dernier souffle : Épée longue + Épée longue, 1 450 PO au total."
+    },
+    "en": {
+      "enonce": "What is Last Whisper built from?",
+      "choix": [
+        "Long Sword + Long Sword",
+        "Long Sword + Null-Magic Mantle + Long Sword",
+        "Caulfield's Warhammer + Pickaxe + Long Sword",
+        "Serrated Dirk + Rectrix + Long Sword"
+      ],
+      "explication": "Last Whisper: Long Sword + Long Sword, 1,450 gold in total."
+    }
+  },
+  {
+    "id": "objet-recette-3089",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3089.png",
+    "imagesChoix": [
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1058.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1058.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1058.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/2420.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3145.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1058.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1058.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/4632.png"
+      ]
+    ],
+    "fr": {
+      "enonce": "Avec quoi se construit Coiffe de Rabadon ?",
+      "choix": [
+        "Baguette trop grosse + Baguette trop grosse",
+        "Baguette trop grosse + Protège-bras du savant",
+        "Alternateur Hextech + Baguette trop grosse",
+        "Baguette trop grosse + Barrière verdoyante"
+      ],
+      "explication": "Coiffe de Rabadon : Baguette trop grosse + Baguette trop grosse, 3 500 PO au total."
+    },
+    "en": {
+      "enonce": "What is Rabadon's Deathcap built from?",
+      "choix": [
+        "Needlessly Large Rod + Needlessly Large Rod",
+        "Needlessly Large Rod + Seeker's Armguard",
+        "Hextech Alternator + Needlessly Large Rod",
+        "Needlessly Large Rod + Verdant Barrier"
+      ],
+      "explication": "Rabadon's Deathcap: Needlessly Large Rod + Needlessly Large Rod, 3,500 gold in total."
+    }
+  },
+  {
+    "id": "objet-recette-6665",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/6665.png",
+    "imagesChoix": [
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1011.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1031.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1057.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3057.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1028.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1031.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3070.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1011.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3067.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3077.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/2021.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1011.png"
+      ]
+    ],
+    "fr": {
+      "enonce": "Avec quoi se construit Jak'Sho, le Protéiforme ?",
+      "choix": [
+        "Ceinture du géant + Cotte de mailles + Manteau de Négatron",
+        "Brillance + Cristal de rubis + Cotte de mailles",
+        "Larme de la déesse + Ceinture du géant + Gemme exaltante",
+        "Tiamat + Foreuse + Ceinture du géant"
+      ],
+      "explication": "Jak'Sho, le Protéiforme : Ceinture du géant + Cotte de mailles + Manteau de Négatron, 3 200 PO au total."
+    },
+    "en": {
+      "enonce": "What is Jak'Sho, The Protean built from?",
+      "choix": [
+        "Giant's Belt + Chain Vest + Negatron Cloak",
+        "Sheen + Ruby Crystal + Chain Vest",
+        "Tear of the Goddess + Giant's Belt + Kindlegem",
+        "Tiamat + Tunneler + Giant's Belt"
+      ],
+      "explication": "Jak'Sho, The Protean: Giant's Belt + Chain Vest + Negatron Cloak, 3,200 gold in total."
+    }
+  },
+  {
+    "id": "objet-recette-3802",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3802.png",
+    "imagesChoix": [
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1052.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1027.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/2022.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1028.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/2022.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1052.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1043.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1037.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1052.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1028.png"
+      ]
+    ],
+    "fr": {
+      "enonce": "Avec quoi se construit Chapitre perdu ?",
+      "choix": [
+        "Tome d'amplification + Cristal de saphir + Poussière luisante",
+        "Cristal de rubis + Poussière luisante",
+        "Tome d'amplification + Arc courbe + Pioche",
+        "Tome d'amplification + Cristal de rubis"
+      ],
+      "explication": "Chapitre perdu : Tome d'amplification + Cristal de saphir + Poussière luisante, 1 200 PO au total."
+    },
+    "en": {
+      "enonce": "What is Lost Chapter built from?",
+      "choix": [
+        "Amplifying Tome + Sapphire Crystal + Glowing Mote",
+        "Ruby Crystal + Glowing Mote",
+        "Amplifying Tome + Recurve Bow + Pickaxe",
+        "Amplifying Tome + Ruby Crystal"
+      ],
+      "explication": "Lost Chapter: Amplifying Tome + Sapphire Crystal + Glowing Mote, 1,200 gold in total."
+    }
+  },
+  {
+    "id": "objet-recette-6609",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/6609.png",
+    "imagesChoix": [
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3123.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1011.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3133.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3123.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3035.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1018.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/2019.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1037.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3133.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/2020.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3133.png"
+      ]
+    ],
+    "fr": {
+      "enonce": "Avec quoi se construit Épée dentelée chimico-punk ?",
+      "choix": [
+        "Marque du bourreau + Ceinture du géant + Marteau de Caulfield",
+        "Marque du bourreau + Dernier souffle + Cape d'agilité",
+        "Sceau d'acier + Pioche + Marteau de Caulfield",
+        "Brutaliseur + Marteau de Caulfield"
+      ],
+      "explication": "Épée dentelée chimico-punk : Marque du bourreau + Ceinture du géant + Marteau de Caulfield, 3 000 PO au total."
+    },
+    "en": {
+      "enonce": "What is Chempunk Chainsword built from?",
+      "choix": [
+        "Executioner's Calling + Giant's Belt + Caulfield's Warhammer",
+        "Executioner's Calling + Last Whisper + Cloak of Agility",
+        "Steel Sigil + Pickaxe + Caulfield's Warhammer",
+        "The Brutalizer + Caulfield's Warhammer"
+      ],
+      "explication": "Chempunk Chainsword: Executioner's Calling + Giant's Belt + Caulfield's Warhammer, 3,000 gold in total."
+    }
+  },
+  {
+    "id": "objet-recette-4645",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/4645.png",
+    "imagesChoix": [
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3145.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1058.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1058.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1058.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1058.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/2420.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3145.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3067.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1028.png"
+      ]
+    ],
+    "fr": {
+      "enonce": "Avec quoi se construit Flamme-ombre ?",
+      "choix": [
+        "Alternateur Hextech + Baguette trop grosse",
+        "Baguette trop grosse + Baguette trop grosse",
+        "Baguette trop grosse + Protège-bras du savant",
+        "Alternateur Hextech + Gemme exaltante + Cristal de rubis"
+      ],
+      "explication": "Flamme-ombre : Alternateur Hextech + Baguette trop grosse, 3 200 PO au total."
+    },
+    "en": {
+      "enonce": "What is Shadowflame built from?",
+      "choix": [
+        "Hextech Alternator + Needlessly Large Rod",
+        "Needlessly Large Rod + Needlessly Large Rod",
+        "Needlessly Large Rod + Seeker's Armguard",
+        "Hextech Alternator + Kindlegem + Ruby Crystal"
+      ],
+      "explication": "Shadowflame: Hextech Alternator + Needlessly Large Rod, 3,200 gold in total."
+    }
+  },
+  {
+    "id": "objet-recette-4629",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/4629.png",
+    "imagesChoix": [
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3067.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3113.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3108.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3057.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3113.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1026.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3044.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3067.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1037.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1031.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3067.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1028.png"
+      ]
+    ],
+    "fr": {
+      "enonce": "Avec quoi se construit Volonté cosmique ?",
+      "choix": [
+        "Gemme exaltante + Feu follet éthéré + Codex méphitique",
+        "Brillance + Feu follet éthéré + Baguette explosive",
+        "Phage + Gemme exaltante + Pioche",
+        "Cotte de mailles + Gemme exaltante + Cristal de rubis"
+      ],
+      "explication": "Volonté cosmique : Gemme exaltante + Feu follet éthéré + Codex méphitique, 3 000 PO au total."
+    },
+    "en": {
+      "enonce": "What is Cosmic Drive built from?",
+      "choix": [
+        "Kindlegem + Aether Wisp + Fiendish Codex",
+        "Sheen + Aether Wisp + Blasting Wand",
+        "Phage + Kindlegem + Pickaxe",
+        "Chain Vest + Kindlegem + Ruby Crystal"
+      ],
+      "explication": "Cosmic Drive: Kindlegem + Aether Wisp + Fiendish Codex, 3,000 gold in total."
+    }
+  },
+  {
+    "id": "objet-recette-2020",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/2020.png",
+    "imagesChoix": [
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/2022.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1037.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1028.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/2022.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/2021.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3066.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1037.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1037.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/6670.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1036.png"
+      ]
+    ],
+    "fr": {
+      "enonce": "Avec quoi se construit Brutaliseur ?",
+      "choix": [
+        "Poussière luisante + Pioche",
+        "Cristal de rubis + Poussière luisante",
+        "Foreuse + Plaque de lune ailée + Pioche",
+        "Pioche + Carquois zénithien + Épée longue"
+      ],
+      "explication": "Brutaliseur : Poussière luisante + Pioche, 1 337 PO au total."
+    },
+    "en": {
+      "enonce": "What is The Brutalizer built from?",
+      "choix": [
+        "Glowing Mote + Pickaxe",
+        "Ruby Crystal + Glowing Mote",
+        "Tunneler + Winged Moonplate + Pickaxe",
+        "Pickaxe + Noonquiver + Long Sword"
+      ],
+      "explication": "The Brutalizer: Glowing Mote + Pickaxe, 1,337 gold in total."
+    }
+  },
+  {
+    "id": "objet-recette-3153",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3153.png",
+    "imagesChoix": [
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1053.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1043.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1037.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3133.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1037.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1036.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/2021.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3066.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1037.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1038.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1037.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1018.png"
+      ]
+    ],
+    "fr": {
+      "enonce": "Avec quoi se construit Lame du roi déchu ?",
+      "choix": [
+        "Sceptre vampirique + Arc courbe + Pioche",
+        "Marteau de Caulfield + Pioche + Épée longue",
+        "Foreuse + Plaque de lune ailée + Pioche",
+        "BF Glaive + Pioche + Cape d'agilité"
+      ],
+      "explication": "Lame du roi déchu : Sceptre vampirique + Arc courbe + Pioche, 3 200 PO au total."
+    },
+    "en": {
+      "enonce": "What is Blade of The Ruined King built from?",
+      "choix": [
+        "Vampiric Scepter + Recurve Bow + Pickaxe",
+        "Caulfield's Warhammer + Pickaxe + Long Sword",
+        "Tunneler + Winged Moonplate + Pickaxe",
+        "B. F. Sword + Pickaxe + Cloak of Agility"
+      ],
+      "explication": "Blade of The Ruined King: Vampiric Scepter + Recurve Bow + Pickaxe, 3,200 gold in total."
+    }
+  },
+  {
+    "id": "objet-recette-3031",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3031.png",
+    "imagesChoix": [
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1038.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1037.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1018.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3057.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3133.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1018.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1052.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1043.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1037.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1037.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/2021.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1028.png"
+      ]
+    ],
+    "fr": {
+      "enonce": "Avec quoi se construit Lame d'infini ?",
+      "choix": [
+        "BF Glaive + Pioche + Cape d'agilité",
+        "Brillance + Marteau de Caulfield + Cape d'agilité",
+        "Tome d'amplification + Arc courbe + Pioche",
+        "Pioche + Foreuse + Cristal de rubis"
+      ],
+      "explication": "Lame d'infini : BF Glaive + Pioche + Cape d'agilité, 3 500 PO au total."
+    },
+    "en": {
+      "enonce": "What is Infinity Edge built from?",
+      "choix": [
+        "B. F. Sword + Pickaxe + Cloak of Agility",
+        "Sheen + Caulfield's Warhammer + Cloak of Agility",
+        "Amplifying Tome + Recurve Bow + Pickaxe",
+        "Pickaxe + Tunneler + Ruby Crystal"
+      ],
+      "explication": "Infinity Edge: B. F. Sword + Pickaxe + Cloak of Agility, 3,500 gold in total."
+    }
+  },
+  {
+    "id": "objet-recette-2510",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/2510.png",
+    "imagesChoix": [
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3057.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1026.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3067.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1042.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1026.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3114.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3114.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3067.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3114.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3067.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/4642.png"
+      ]
+    ],
+    "fr": {
+      "enonce": "Avec quoi se construit Aube et crépuscule ?",
+      "choix": [
+        "Brillance + Baguette explosive + Gemme exaltante + Dague",
+        "Baguette explosive + Idole interdite + Idole interdite",
+        "Gemme exaltante + Idole interdite",
+        "Gemme exaltante + Miroir en verre de Bandle"
+      ],
+      "explication": "Aube et crépuscule : Brillance + Baguette explosive + Gemme exaltante + Dague, 3 100 PO au total."
+    },
+    "en": {
+      "enonce": "What is Dusk and Dawn built from?",
+      "choix": [
+        "Sheen + Blasting Wand + Kindlegem + Dagger",
+        "Blasting Wand + Forbidden Idol + Forbidden Idol",
+        "Kindlegem + Forbidden Idol",
+        "Kindlegem + Bandleglass Mirror"
+      ],
+      "explication": "Dusk and Dawn: Sheen + Blasting Wand + Kindlegem + Dagger, 3,100 gold in total."
+    }
+  },
+  {
+    "id": "objet-recette-3181",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3181.png",
+    "imagesChoix": [
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/2021.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3066.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1037.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1037.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/2021.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1028.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1052.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1043.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1037.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3044.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3067.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1037.png"
+      ]
+    ],
+    "fr": {
+      "enonce": "Avec quoi se construit Brise-coques ?",
+      "choix": [
+        "Foreuse + Plaque de lune ailée + Pioche",
+        "Pioche + Foreuse + Cristal de rubis",
+        "Tome d'amplification + Arc courbe + Pioche",
+        "Phage + Gemme exaltante + Pioche"
+      ],
+      "explication": "Brise-coques : Foreuse + Plaque de lune ailée + Pioche, 3 000 PO au total."
+    },
+    "en": {
+      "enonce": "What is Hullbreaker built from?",
+      "choix": [
+        "Tunneler + Winged Moonplate + Pickaxe",
+        "Pickaxe + Tunneler + Ruby Crystal",
+        "Amplifying Tome + Recurve Bow + Pickaxe",
+        "Phage + Kindlegem + Pickaxe"
+      ],
+      "explication": "Hullbreaker: Tunneler + Winged Moonplate + Pickaxe, 3,000 gold in total."
+    }
+  },
+  {
+    "id": "objet-recette-3051",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3051.png",
+    "imagesChoix": [
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1036.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1042.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1036.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1018.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1042.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/2020.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1036.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1036.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1029.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1036.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1029.png"
+      ]
+    ],
+    "fr": {
+      "enonce": "Avec quoi se construit Hache d'Âtrinsèque ?",
+      "choix": [
+        "Épée longue + Dague + Épée longue",
+        "Cape d'agilité + Dague",
+        "Brutaliseur + Épée longue + Épée longue",
+        "Armure d'étoffe + Épée longue + Armure d'étoffe"
+      ],
+      "explication": "Hache d'Âtrinsèque : Épée longue + Dague + Épée longue, 1 200 PO au total."
+    },
+    "en": {
+      "enonce": "What is Hearthbound Axe built from?",
+      "choix": [
+        "Long Sword + Dagger + Long Sword",
+        "Cloak of Agility + Dagger",
+        "The Brutalizer + Long Sword + Long Sword",
+        "Cloth Armor + Long Sword + Cloth Armor"
+      ],
+      "explication": "Hearthbound Axe: Long Sword + Dagger + Long Sword, 1,200 gold in total."
+    }
+  },
+  {
+    "id": "objet-recette-3155",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3155.png",
+    "imagesChoix": [
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1036.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1033.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1036.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1036.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1036.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/2020.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1036.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1036.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3067.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1029.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1033.png"
+      ]
+    ],
+    "fr": {
+      "enonce": "Avec quoi se construit Hexterminateur ?",
+      "choix": [
+        "Épée longue + Cape de néant + Épée longue",
+        "Épée longue + Épée longue",
+        "Brutaliseur + Épée longue + Épée longue",
+        "Gemme exaltante + Armure d'étoffe + Cape de néant"
+      ],
+      "explication": "Hexterminateur : Épée longue + Cape de néant + Épée longue, 1 300 PO au total."
+    },
+    "en": {
+      "enonce": "What is Hexdrinker built from?",
+      "choix": [
+        "Long Sword + Null-Magic Mantle + Long Sword",
+        "Long Sword + Long Sword",
+        "The Brutalizer + Long Sword + Long Sword",
+        "Kindlegem + Cloth Armor + Null-Magic Mantle"
+      ],
+      "explication": "Hexdrinker: Long Sword + Null-Magic Mantle + Long Sword, 1,300 gold in total."
+    }
+  },
+  {
+    "id": "objet-recette-6631",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/6631.png",
+    "imagesChoix": [
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3077.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3044.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1042.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1042.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3086.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1042.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3057.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1026.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3067.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1042.png"
+      ],
+      [
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3077.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/2021.png",
+        "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1011.png"
+      ]
+    ],
+    "fr": {
+      "enonce": "Avec quoi se construit Estropieur ?",
+      "choix": [
+        "Tiamat + Phage + Dague",
+        "Dague + Zèle + Dague",
+        "Brillance + Baguette explosive + Gemme exaltante + Dague",
+        "Tiamat + Foreuse + Ceinture du géant"
+      ],
+      "explication": "Estropieur : Tiamat + Phage + Dague, 3 300 PO au total."
+    },
+    "en": {
+      "enonce": "What is Stridebreaker built from?",
+      "choix": [
+        "Tiamat + Phage + Dagger",
+        "Dagger + Zeal + Dagger",
+        "Sheen + Blasting Wand + Kindlegem + Dagger",
+        "Tiamat + Tunneler + Giant's Belt"
+      ],
+      "explication": "Stridebreaker: Tiamat + Phage + Dagger, 3,300 gold in total."
+    }
+  },
+  {
+    "id": "objet-prix-3157",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3157.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Combien coûte Sablier de Zhonya ?",
+      "choix": ["3 250 PO", "3 450 PO", "3 550 PO", "3 350 PO"],
+      "explication": "Sablier de Zhonya coûte 3 250 PO au total (patch 16.21)."
+    },
+    "en": {
+      "enonce": "How much does Zhonya's Hourglass cost?",
+      "choix": ["3,250 gold", "3,450 gold", "3,550 gold", "3,350 gold"],
+      "explication": "Zhonya's Hourglass costs 3,250 gold in total (patch 16.21)."
+    }
+  },
+  {
+    "id": "objet-prix-3147",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3147.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Combien coûte Déguisement hanté ?",
+      "choix": ["1 300 PO", "1 500 PO", "1 100 PO", "1 600 PO"],
+      "explication": "Déguisement hanté coûte 1 300 PO au total (patch 16.21)."
+    },
+    "en": {
+      "enonce": "How much does Haunting Guise cost?",
+      "choix": ["1,300 gold", "1,500 gold", "1,100 gold", "1,600 gold"],
+      "explication": "Haunting Guise costs 1,300 gold in total (patch 16.21)."
+    }
+  },
+  {
+    "id": "objet-prix-2522",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/2522.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Combien coûte Actualisateur ?",
+      "choix": ["2 800 PO", "3 200 PO", "3 000 PO", "2 500 PO"],
+      "explication": "Actualisateur coûte 2 800 PO au total (patch 16.21)."
+    },
+    "en": {
+      "enonce": "How much does Actualizer cost?",
+      "choix": ["2,800 gold", "3,200 gold", "3,000 gold", "2,500 gold"],
+      "explication": "Actualizer costs 2,800 gold in total (patch 16.21)."
+    }
+  },
+  {
+    "id": "objet-prix-2051",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/2051.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Combien coûte Corne du gardien ?",
+      "choix": ["950 PO", "1 350 PO", "650 PO", "1 050 PO"],
+      "explication": "Corne du gardien coûte 950 PO au total (patch 16.21)."
+    },
+    "en": {
+      "enonce": "How much does Guardian's Horn cost?",
+      "choix": ["950 gold", "1,350 gold", "650 gold", "1,050 gold"],
+      "explication": "Guardian's Horn costs 950 gold in total (patch 16.21)."
+    }
+  },
+  {
+    "id": "objet-prix-1038",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1038.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Combien coûte BF Glaive ?",
+      "choix": ["1 300 PO", "1 100 PO", "1 000 PO", "1 700 PO"],
+      "explication": "BF Glaive coûte 1 300 PO au total (patch 16.21)."
+    },
+    "en": {
+      "enonce": "How much does B. F. Sword cost?",
+      "choix": ["1,300 gold", "1,100 gold", "1,000 gold", "1,700 gold"],
+      "explication": "B. F. Sword costs 1,300 gold in total (patch 16.21)."
+    }
+  },
+  {
+    "id": "objet-prix-3135",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3135.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Combien coûte Bâton du vide ?",
+      "choix": ["3 000 PO", "2 800 PO", "3 200 PO", "3 400 PO"],
+      "explication": "Bâton du vide coûte 3 000 PO au total (patch 16.21)."
+    },
+    "en": {
+      "enonce": "How much does Void Staff cost?",
+      "choix": ["3,000 gold", "2,800 gold", "3,200 gold", "3,400 gold"],
+      "explication": "Void Staff costs 3,000 gold in total (patch 16.21)."
+    }
+  },
+  {
+    "id": "objet-prix-3112",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3112.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Combien coûte Orbe du gardien ?",
+      "choix": ["950 PO", "1 050 PO", "1 150 PO", "850 PO"],
+      "explication": "Orbe du gardien coûte 950 PO au total (patch 16.21)."
+    },
+    "en": {
+      "enonce": "How much does Guardian's Orb cost?",
+      "choix": ["950 gold", "1,050 gold", "1,150 gold", "850 gold"],
+      "explication": "Guardian's Orb costs 950 gold in total (patch 16.21)."
+    }
+  },
+  {
+    "id": "objet-prix-1018",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1018.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Combien coûte Cape d'agilité ?",
+      "choix": ["600 PO", "300 PO", "800 PO", "700 PO"],
+      "explication": "Cape d'agilité coûte 600 PO au total (patch 16.21)."
+    },
+    "en": {
+      "enonce": "How much does Cloak of Agility cost?",
+      "choix": ["600 gold", "300 gold", "800 gold", "700 gold"],
+      "explication": "Cloak of Agility costs 600 gold in total (patch 16.21)."
+    }
+  },
+  {
+    "id": "objet-prix-6664",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/6664.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Combien coûte Rayonnement du vide ?",
+      "choix": ["2 800 PO", "2 600 PO", "3 100 PO", "2 900 PO"],
+      "explication": "Rayonnement du vide coûte 2 800 PO au total (patch 16.21)."
+    },
+    "en": {
+      "enonce": "How much does Hollow Radiance cost?",
+      "choix": ["2,800 gold", "2,600 gold", "3,100 gold", "2,900 gold"],
+      "explication": "Hollow Radiance costs 2,800 gold in total (patch 16.21)."
+    }
+  },
+  {
+    "id": "objet-prix-3070",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3070.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Combien coûte Larme de la déesse ?",
+      "choix": ["400 PO", "200 PO", "500 PO", "600 PO"],
+      "explication": "Larme de la déesse coûte 400 PO au total (patch 16.21)."
+    },
+    "en": {
+      "enonce": "How much does Tear of the Goddess cost?",
+      "choix": ["400 gold", "200 gold", "500 gold", "600 gold"],
+      "explication": "Tear of the Goddess costs 400 gold in total (patch 16.21)."
+    }
+  },
+  {
+    "id": "objet-prix-3124",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3124.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Combien coûte Lame enragée de Guinsoo ?",
+      "choix": ["3 000 PO", "2 800 PO", "2 700 PO", "2 900 PO"],
+      "explication": "Lame enragée de Guinsoo coûte 3 000 PO au total (patch 16.21)."
+    },
+    "en": {
+      "enonce": "How much does Guinsoo's Rageblade cost?",
+      "choix": ["3,000 gold", "2,800 gold", "2,700 gold", "2,900 gold"],
+      "explication": "Guinsoo's Rageblade costs 3,000 gold in total (patch 16.21)."
+    }
+  },
+  {
+    "id": "objet-prix-4632",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/4632.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Combien coûte Barrière verdoyante ?",
+      "choix": ["1 600 PO", "1 500 PO", "1 900 PO", "1 800 PO"],
+      "explication": "Barrière verdoyante coûte 1 600 PO au total (patch 16.21)."
+    },
+    "en": {
+      "enonce": "How much does Verdant Barrier cost?",
+      "choix": ["1,600 gold", "1,500 gold", "1,900 gold", "1,800 gold"],
+      "explication": "Verdant Barrier costs 1,600 gold in total (patch 16.21)."
+    }
+  },
+  {
+    "id": "objet-prix-3869",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3869.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Combien coûte Opposition céleste ?",
+      "choix": ["400 PO", "100 PO", "600 PO", "800 PO"],
+      "explication": "Opposition céleste coûte 400 PO au total (patch 16.21)."
+    },
+    "en": {
+      "enonce": "How much does Celestial Opposition cost?",
+      "choix": ["400 gold", "100 gold", "600 gold", "800 gold"],
+      "explication": "Celestial Opposition costs 400 gold in total (patch 16.21)."
+    }
+  },
+  {
+    "id": "objet-prix-3173",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3173.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Combien coûte Broyeuses à chaînes ?",
+      "choix": ["1 250 PO", "1 650 PO", "950 PO", "1 450 PO"],
+      "explication": "Broyeuses à chaînes coûte 1 250 PO au total (patch 16.21)."
+    },
+    "en": {
+      "enonce": "How much does Chainlaced Crushers cost?",
+      "choix": ["1,250 gold", "1,650 gold", "950 gold", "1,450 gold"],
+      "explication": "Chainlaced Crushers costs 1,250 gold in total (patch 16.21)."
+    }
+  },
+  {
+    "id": "objet-prix-2502",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/2502.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Combien coûte Désespoir infini ?",
+      "choix": ["2 800 PO", "3 100 PO", "3 000 PO", "2 600 PO"],
+      "explication": "Désespoir infini coûte 2 800 PO au total (patch 16.21)."
+    },
+    "en": {
+      "enonce": "How much does Unending Despair cost?",
+      "choix": ["2,800 gold", "3,100 gold", "3,000 gold", "2,600 gold"],
+      "explication": "Unending Despair costs 2,800 gold in total (patch 16.21)."
+    }
+  },
+  {
+    "id": "objet-prix-3123",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3123.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Combien coûte Marque du bourreau ?",
+      "choix": ["800 PO", "1 000 PO", "1 100 PO", "1 200 PO"],
+      "explication": "Marque du bourreau coûte 800 PO au total (patch 16.21)."
+    },
+    "en": {
+      "enonce": "How much does Executioner's Calling cost?",
+      "choix": ["800 gold", "1,000 gold", "1,100 gold", "1,200 gold"],
+      "explication": "Executioner's Calling costs 800 gold in total (patch 16.21)."
+    }
+  },
+  {
+    "id": "objet-prix-3035",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3035.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Combien coûte Dernier souffle ?",
+      "choix": ["1 450 PO", "1 150 PO", "1 250 PO", "1 850 PO"],
+      "explication": "Dernier souffle coûte 1 450 PO au total (patch 16.21)."
+    },
+    "en": {
+      "enonce": "How much does Last Whisper cost?",
+      "choix": ["1,450 gold", "1,150 gold", "1,250 gold", "1,850 gold"],
+      "explication": "Last Whisper costs 1,450 gold in total (patch 16.21)."
+    }
+  },
+  {
+    "id": "objet-prix-3181",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3181.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Combien coûte Brise-coques ?",
+      "choix": ["3 000 PO", "3 400 PO", "2 800 PO", "2 700 PO"],
+      "explication": "Brise-coques coûte 3 000 PO au total (patch 16.21)."
+    },
+    "en": {
+      "enonce": "How much does Hullbreaker cost?",
+      "choix": ["3,000 gold", "3,400 gold", "2,800 gold", "2,700 gold"],
+      "explication": "Hullbreaker costs 3,000 gold in total (patch 16.21)."
+    }
+  },
+  {
+    "id": "objet-prix-6610",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/6610.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Combien coûte Ciel éventré ?",
+      "choix": ["3 100 PO", "2 900 PO", "2 800 PO", "3 000 PO"],
+      "explication": "Ciel éventré coûte 3 100 PO au total (patch 16.21)."
+    },
+    "en": {
+      "enonce": "How much does Sundered Sky cost?",
+      "choix": ["3,100 gold", "2,900 gold", "2,800 gold", "3,000 gold"],
+      "explication": "Sundered Sky costs 3,100 gold in total (patch 16.21)."
+    }
+  },
+  {
+    "id": "objet-prix-3146",
+    "theme": "objets",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/item.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3146.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Combien coûte Pistolame Hextech ?",
+      "choix": ["3 000 PO", "2 700 PO", "3 400 PO", "2 900 PO"],
+      "explication": "Pistolame Hextech coûte 3 000 PO au total (patch 16.21)."
+    },
+    "en": {
+      "enonce": "How much does Hextech Gunblade cost?",
+      "choix": ["3,000 gold", "2,700 gold", "3,400 gold", "2,900 gold"],
+      "explication": "Hextech Gunblade costs 3,000 gold in total (patch 16.21)."
+    }
+  },
+  {
+    "id": "histoire-yone",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quel champion parle cette histoire ? « Au cours de sa vie, ▢▢▢ fut le demi-frère de Yasuo et un disciple renommé de l'école d'armes de son village. Mais après avoir été tué par son propre frère, il se retrouva hanté par une entité malveillante dans le royaume spirituel. Il dut la tuer avec sa propre épée. »",
+      "choix": ["Yone", "Kayn", "Briar", "Gragas"],
+      "explication": "Yone, Inoublié."
+    },
+    "en": {
+      "enonce": "Which champion is this story about? \"In life, he was ▢▢▢—half-brother of Yasuo, and renowned student of his village's sword school. But upon his death at the hands of his brother, he found himself hunted by a malevolent entity of the spirit realm, and was forced to slay it with its own sword.\"",
+      "choix": ["Yone", "Kayn", "Briar", "Gragas"],
+      "explication": "Yone, the Unforgotten."
+    }
+  },
+  {
+    "id": "histoire-vi",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quel champion parle cette histoire ? « Élevée dans les quartiers louches de Zaun, ▢▢▢ est une femme sans peur, mais pas sans reproche, au tempérament bouillant, impulsif, qui n'a qu'un respect mesuré pour l'autorité. »",
+      "choix": ["Vi", "Pantheon", "Diana", "Lee Sin"],
+      "explication": "Vi, Pacifieuse de Piltover."
+    },
+    "en": {
+      "enonce": "Which champion is this story about? \"Raised on the mean streets of Zaun, ▢▢▢ is a hotheaded, impulsive, and fearsome woman with very little respect for authority. She has always been a shrewd survivor, both from her youthful troublemaking topside and an unfairly long stint in Stillwater Hold.\"",
+      "choix": ["Vi", "Pantheon", "Diana", "Lee Sin"],
+      "explication": "Vi, the Piltover Enforcer."
+    }
+  },
+  {
+    "id": "histoire-lux",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quel champion parle cette histoire ? « Luxanna Crownguard est originaire de Demacia, un royaume isolationniste où la magie inspire la peur et la méfiance. »",
+      "choix": ["Lux", "Karma", "Lissandra", "Viktor"],
+      "explication": "Lux, Dame de lumière."
+    },
+    "en": {
+      "enonce": "Which champion is this story about? \"Luxanna Crownguard hails from Demacia, an insular realm where magical abilities are viewed with fear and suspicion. Able to bend light to her will, she grew up dreading discovery and exile, and was forced to keep her power secret, in order to preserve her family's noble status.\"",
+      "choix": ["Lux", "Karma", "Lissandra", "Viktor"],
+      "explication": "Lux, the Lady of Luminosity."
+    }
+  },
+  {
+    "id": "histoire-kassadin",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quel champion parle cette histoire ? « ▢▢▢ se fraye un chemin brûlant dans les lieux les plus sombres du monde ; il sait que ses jours sont comptés. Guide et aventurier shurimien accompli, il avait choisi de fonder une famille parmi les tribus pacifiques du sud, jusqu'au jour où son village fut ravagé par le Néant. »",
+      "choix": ["Kassadin", "LeBlanc", "Katarina", "Shaco"],
+      "explication": "Kassadin, Chasseur du Néant."
+    },
+    "en": {
+      "enonce": "Which champion is this story about? \"Cutting a burning swath through the darkest places of the world, ▢▢▢ knows his days are numbered. A widely traveled Shuriman guide and adventurer, he had chosen to raise a family among the peaceful southern tribes—until the day his village was consumed by the Void.\"",
+      "choix": ["Kassadin", "LeBlanc", "Katarina", "Shaco"],
+      "explication": "Kassadin, the Void Walker."
+    }
+  },
+  {
+    "id": "histoire-malzahar",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quel champion parle cette histoire ? « Voyant fanatique ayant dédié son existence à l'unification de toute forme de vie, ▢▢▢ croit fermement que le Néant est la voie du salut de Runeterra. Dans les étendues désertiques de Shurima, il suivit les voix qui murmuraient dans son esprit jusqu'à l'antique cité d'Icathia. »",
+      "choix": ["Malzahar", "Karma", "Vladimir", "Cassiopeia"],
+      "explication": "Malzahar, Prophète du Néant."
+    },
+    "en": {
+      "enonce": "Which champion is this story about? \"A zealous seer dedicated to the unification of all life, ▢▢▢ truly believes the newly emergent Void to be the path to Runeterra's salvation. In the desert wastes of Shurima, he followed the voices that whispered in his mind, all the way to ancient Icathia.\"",
+      "choix": ["Malzahar", "Karma", "Vladimir", "Cassiopeia"],
+      "explication": "Malzahar, the Prophet of the Void."
+    }
+  },
+  {
+    "id": "histoire-ornn",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quel champion parle cette histoire ? « ▢▢▢ est le demi-dieu de la forge et de l'artisanat à Freljord. Avec comme seule compagne la solitude, il travaille dans sa forge enfouie au plus profond des cavernes de lave de l'Âtre-foyer. »",
+      "choix": ["Ornn", "Blitzcrank", "Sion", "K'Santé"],
+      "explication": "Ornn, Dieu de la forge volcanique."
+    },
+    "en": {
+      "enonce": "Which champion is this story about? \"▢▢▢ is the Freljordian spirit of forging and craftsmanship. He works in the solitude of a massive smithy, hammered out from the lava caverns beneath the volcano Hearth-Home.\"",
+      "choix": ["Ornn", "Blitzcrank", "Sion", "K'Sante"],
+      "explication": "Ornn, The Fire below the Mountain."
+    }
+  },
+  {
+    "id": "histoire-yuumi",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quel champion parle cette histoire ? « Originaire de Bandle, ▢▢▢ est un familier magique dont la maîtresse, une enchanteresse yordle du nom de Norra, a mystérieusement disparu. ▢▢▢ est désormais la gardienne du Grimoire des Seuils que possédait Norra, un livre permettant de franchir des portails. »",
+      "choix": ["Yuumi", "Lulu", "Nami", "Bard"],
+      "explication": "Yuumi, Gardienne du Grimoire."
+    },
+    "en": {
+      "enonce": "Which champion is this story about? \"A magical cat from Bandle City, ▢▢▢ was once the familiar of a yordle enchantress, Norra. When her master mysteriously disappeared, ▢▢▢ became the Keeper of Norra's sentient Book of Thresholds, traveling through portals in its pages to search for her.\"",
+      "choix": ["Yuumi", "Lulu", "Nami", "Bard"],
+      "explication": "Yuumi, the Magical Cat."
+    }
+  },
+  {
+    "id": "histoire-zaahen",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quel champion parle cette histoire ? « Dieu déchu maniant à la fois le divin et l'impie, ▢▢▢ traque ses frères et sœurs Darkin tout en résistant à la corruption qui menace de le consumer. »",
+      "choix": ["Zaahen", "Jayce", "Renekton", "Pantheon"],
+      "explication": "Zaahen, Incorruptible."
+    },
+    "en": {
+      "enonce": "Which champion is this story about? \"A fallen god wielding both divine and profane power, ▢▢▢ hunts his fellow Darkin while defying the corruption that threatens to consume him. Once willingly sealed within his glaive to stave off madness, he now walks free, noble in heart and vicious in purpose.\"",
+      "choix": ["Zaahen", "Jayce", "Renekton", "Pantheon"],
+      "explication": "Zaahen, The Unsundered."
+    }
+  },
+  {
+    "id": "histoire-yunara",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quel champion parle cette histoire ? « Par son dévouement inébranlable envers Ionia, ▢▢▢ a passé des siècles retirée dans le royaume spirituel pour perfectionner sa maîtrise des Aion Er'na, une relique légendaire du Kinkou. »",
+      "choix": ["Yunara", "Draven", "Varus", "Kalista"],
+      "explication": "Yunara, Foi inébranlable."
+    },
+    "en": {
+      "enonce": "Which champion is this story about? \"Unwavering in her devotion to Ionia, ▢▢▢ has spent centuries cloistered away in the spirit realm honing her skills with the Aion Er'na, a legendary Kinkou relic.\"",
+      "choix": ["Yunara", "Draven", "Varus", "Kalista"],
+      "explication": "Yunara, the Unbroken Faith."
+    }
+  },
+  {
+    "id": "histoire-aphelios",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quel champion parle cette histoire ? « Émergeant des ombres au clair de lune, ▢▢▢ abat ceux qui voudraient anéantir sa foi sans un mot ; ses armes et sa précision mortelle parlent pour lui. Un poison qui le rend muet coule dans ses veines, mais il est constamment guidé par sa sœur, Alune. »",
+      "choix": ["Aphelios", "Kalista", "Jinx", "Ashe"],
+      "explication": "Aphelios, Arme des Lunaris."
+    },
+    "en": {
+      "enonce": "Which champion is this story about? \"Emerging from moonlight's shadow with weapons drawn, ▢▢▢ kills the enemies of his faith in brooding silence—speaking only through the certainty of his aim, and the firing of each gun. Though fueled by a poison that renders him mute, he is guided by his sister Alune.\"",
+      "choix": ["Aphelios", "Kalista", "Jinx", "Ashe"],
+      "explication": "Aphelios, the Weapon of the Faithful."
+    }
+  },
+  {
+    "id": "histoire-akshan",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quel champion parle cette histoire ? « Se jouant du danger, ▢▢▢ combat le mal sans jamais se départir de son charisme (il ne faut jamais sous-estimer l'importance de la cape) et de sa droiture. »",
+      "choix": ["Akshan", "Ezreal", "Miss Fortune", "Twitch"],
+      "explication": "Akshan, Sentinelle rebelle."
+    },
+    "en": {
+      "enonce": "Which champion is this story about? \"Raising an eyebrow in the face of danger, ▢▢▢ fights evil with dashing charisma, righteous vengeance, and a conspicuous lack of shirts. He is highly skilled in the art of stealth combat, able to evade the eyes of his enemies and reappear when they least expect him.\"",
+      "choix": ["Akshan", "Ezreal", "Miss Fortune", "Twitch"],
+      "explication": "Akshan, the Rogue Sentinel."
+    }
+  },
+  {
+    "id": "histoire-yorick",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quel champion parle cette histoire ? « ▢▢▢ est le dernier survivant d'un ordre religieux disparu depuis longtemps et son pouvoir sur les morts est à la fois une bénédiction et une malédiction. Prisonnier des Îles obscures, il n'a pour compagnons que les cadavres pourrissants et les spectres hurlants qu'il rassemble. »",
+      "choix": ["Yorick", "Garen", "Udyr", "Yasuo"],
+      "explication": "Yorick, Berger des âmes."
+    },
+    "en": {
+      "enonce": "Which champion is this story about? \"The last survivor of a long-forgotten religious order, ▢▢▢ is both blessed and cursed with power over the dead. Trapped on the Shadow Isles, his only companions are the rotting corpses and shrieking wraiths that he gathers to him.\"",
+      "choix": ["Yorick", "Garen", "Udyr", "Yasuo"],
+      "explication": "Yorick, Shepherd of Souls."
+    }
+  },
+  {
+    "id": "histoire-lillia",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quel champion parle cette histoire ? « Profondément timide, ▢▢▢, le faon féérique, parcourt nerveusement les forêts d'Ionia. »",
+      "choix": ["Lillia", "Wukong", "Warwick", "Tryndamere"],
+      "explication": "Lillia, Fleur timide."
+    },
+    "en": {
+      "enonce": "Which champion is this story about? \"Intensely shy, the fae fawn ▢▢▢ skittishly wanders Ionia's forests. Hiding just out of sight of mortals—whose mysterious natures have long captivated, but intimidated, her—▢▢▢ hopes to discover why their dreams no longer reach the ancient Dreaming Tree.\"",
+      "choix": ["Lillia", "Wukong", "Warwick", "Tryndamere"],
+      "explication": "Lillia, the Bashful Bloom."
+    }
+  },
+  {
+    "id": "histoire-skarner",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quel champion parle cette histoire ? « L'antique Brackern ▢▢▢ est vénéré à Ixtal comme l'un des membres fondateurs de la caste dirigeante, les Yun Tal. Il protège farouchement sa nation du reste du monde en écoutant les vibrations de la terre pour détecter de potentielles menaces depuis son antre sous Ixaocan. »",
+      "choix": ["Skarner", "Dr. Mundo", "Braum", "Shen"],
+      "explication": "Skarner, Souverain originel."
+    },
+    "en": {
+      "enonce": "Which champion is this story about? \"The ancient, colossal brackern ▢▢▢ is revered in Ixtal as one of the founding members of its ruling caste, the Yun Tal.\"",
+      "choix": ["Skarner", "Dr. Mundo", "Braum", "Shen"],
+      "explication": "Skarner, the Primordial Sovereign."
+    }
+  },
+  {
+    "id": "histoire-rakan",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quel champion parle cette histoire ? « Aussi lunatique qu'il est charmeur, ▢▢▢ est un trublion vastaya tristement célèbre, et le plus grand danseur guerrier de l'histoire de la tribu Lhotla. »",
+      "choix": ["Rakan", "Senna", "Ivern", "Renata Glasc"],
+      "explication": "Rakan, Charmeur."
+    },
+    "en": {
+      "enonce": "Which champion is this story about? \"As mercurial as he is charming, ▢▢▢ is an infamous vastayan troublemaker and the greatest battle-dancer in Lhotlan tribal history. To the humans of the Ionian highlands, his name has long been synonymous with wild festivals, uncontrollable parties, and anarchic music.\"",
+      "choix": ["Rakan", "Senna", "Ivern", "Renata Glasc"],
+      "explication": "Rakan, The Charmer."
+    }
+  },
+  {
+    "id": "histoire-monkeyking",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quel champion parle cette histoire ? « ▢▢▢ est un Vastaya qui utilise sa force, son agilité et son intelligence pour semer la confusion parmi ses adversaires et prendre sur eux l'avantage. »",
+      "choix": ["Wukong", "Nilah", "Gragas", "Jax"],
+      "explication": "Wukong, Roi des singes."
+    },
+    "en": {
+      "enonce": "Which champion is this story about? \"▢▢▢ is a vastayan trickster who uses his strength, agility, and intelligence to confuse his opponents and gain the upper hand. After finding a lifelong friend in the warrior known as Master Yi, ▢▢▢ became the last student of the ancient martial art known as Wuju.\"",
+      "choix": ["Wukong", "Nilah", "Gragas", "Jax"],
+      "explication": "Wukong, the Monkey King."
+    }
+  },
+  {
+    "id": "histoire-nami",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quel champion parle cette histoire ? « Jeune Vastaya des mers, ▢▢▢ fut la première de la tribu des Marai à quitter les océans et à s'aventurer sur la terre ferme lorsque leur accord ancestral avec les Targoniens fut rompu. »",
+      "choix": ["Nami", "Senna", "Renata Glasc", "Yuumi"],
+      "explication": "Nami, Aquamancienne."
+    },
+    "en": {
+      "enonce": "Which champion is this story about? \"A headstrong young vastaya of the seas, ▢▢▢ was the first of the Marai tribe to leave the waves and venture onto dry land, when their ancient accord with the Targonians was broken.\"",
+      "choix": ["Nami", "Senna", "Renata Glasc", "Yuumi"],
+      "explication": "Nami, the Tidecaller."
+    }
+  },
+  {
+    "id": "histoire-syndra",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quel champion parle cette histoire ? « ▢▢▢ est une effrayante magicienne originaire d'Ionia, aux pouvoirs impressionnants. Enfant, elle perturba les anciens de son village avec sa magie sauvage et incontrôlée. »",
+      "choix": ["Syndra", "Xerath", "Ahri", "Sylas"],
+      "explication": "Syndra, Souveraine obscure."
+    },
+    "en": {
+      "enonce": "Which champion is this story about? \"▢▢▢ is a fearsome Ionian mage with incredible power at her command. As a child, she disturbed the village elders with her reckless and wild magic. She was sent away to be taught greater control, but eventually discovered her supposed mentor was restraining her abilities.\"",
+      "choix": ["Syndra", "Xerath", "Ahri", "Sylas"],
+      "explication": "Syndra, the Dark Sovereign."
+    }
+  },
+  {
+    "id": "histoire-janna",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quel champion parle cette histoire ? « Armée de la puissance des grands vents de Runeterra, ▢▢▢ est un mystérieux esprit élémentaire qui protège les parias de Zaun. »",
+      "choix": ["Janna", "Nami", "Senna", "Bard"],
+      "explication": "Janna, Avatar de l'air."
+    },
+    "en": {
+      "enonce": "Which champion is this story about? \"Armed with the power of Runeterra's gales, ▢▢▢ is a mysterious, elemental wind spirit who protects the dispossessed of Zaun.\"",
+      "choix": ["Janna", "Nami", "Senna", "Bard"],
+      "explication": "Janna, the Storm's Fury."
+    }
+  },
+  {
+    "id": "histoire-nocturne",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quel champion parle cette histoire ? « Expression démoniaque des cauchemars qui hantent tous les êtres doués d'intelligence, la chose que l'on nomme ▢▢▢ est devenue une force primordiale du mal. D'aspect liquide, c'est une ombre sans visage, au regard glacial, armée de lames effrayantes. »",
+      "choix": ["Nocturne", "Urgot", "Maître Yi", "Gnar"],
+      "explication": "Nocturne, Éternel cauchemar."
+    },
+    "en": {
+      "enonce": "Which champion is this story about? \"A demonic amalgamation drawn from the nightmares that haunt every sentient mind, the thing known as ▢▢▢ has become a primordial force of pure evil. It is liquidly chaotic in aspect, a faceless shadow with cold eyes and armed with wicked-looking blades.\"",
+      "choix": ["Nocturne", "Urgot", "Master Yi", "Gnar"],
+      "explication": "Nocturne, the Eternal Nightmare."
+    }
+  },
+  {
+    "id": "histoire-renata",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quel champion parle cette histoire ? « ▢▢▢ ▢▢▢ s'extirpa des cendres de sa maison natale avec son nom et les recherches alchimiques de ses parents pour seules possessions. »",
+      "choix": ["Renata Glasc", "Pyke", "Bard", "Morgana"],
+      "explication": "Renata Glasc, Baronne de la chimie."
+    },
+    "en": {
+      "enonce": "Which champion is this story about? \"▢▢▢ ▢▢▢ rose from the ashes of her childhood home with nothing but her name and her parents' alchemical research. In the decades since, she has become Zaun's wealthiest chem-baron, a business magnate who built her power by tying everyone's interests to her own.\"",
+      "choix": ["Renata Glasc", "Pyke", "Bard", "Morgana"],
+      "explication": "Renata Glasc, the Chem-Baroness."
+    }
+  },
+  {
+    "id": "histoire-leesin",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quel champion parle cette histoire ? « Maître des antiques arts martiaux d'Ionia, ▢▢▢ ▢▢▢ est un combattant dévoué à de nobles principes qui canalise l'esprit du dragon pour affronter tous les défis. »",
+      "choix": ["Lee Sin", "Camille", "Wukong", "Gwen"],
+      "explication": "Lee Sin, Moine aveugle."
+    },
+    "en": {
+      "enonce": "Which champion is this story about? \"A master of Ionia's ancient martial arts, ▢▢▢ ▢▢▢ is a principled fighter who channels the essence of the dragon spirit to face any challenge.\"",
+      "choix": ["Lee Sin", "Camille", "Wukong", "Gwen"],
+      "explication": "Lee Sin, the Blind Monk."
+    }
+  },
+  {
+    "id": "histoire-corki",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quel champion parle cette histoire ? « Il y a deux choses que ▢▢▢, le pilote yordle, aime plus que tout au monde : les sensations de vol et sa fantastique moustache... mais pas nécessairement dans cet ordre. »",
+      "choix": ["Corki", "Zeri", "Teemo", "Caitlyn"],
+      "explication": "Corki, Artilleur téméraire."
+    },
+    "en": {
+      "enonce": "Which champion is this story about? \"The yordle pilot ▢▢▢ loves two things above all others: flying, and his glamorous mustache... though not necessarily in that order. After leaving Bandle City, he settled in Piltover and fell in love with the wondrous machines he found there.\"",
+      "choix": ["Corki", "Zeri", "Teemo", "Caitlyn"],
+      "explication": "Corki, the Daring Bombardier."
+    }
+  },
+  {
+    "id": "histoire-ivern",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quel champion parle cette histoire ? « ▢▢▢ Roncepied, que beaucoup connaissent sous le nom d'Aîné de la forêt, est un être étrange mi-homme mi-arbre, qui arpente les forêts de Runeterra en cultivant la vie partout où il va. »",
+      "choix": ["Ivern", "Janna", "Morgana", "Yuumi"],
+      "explication": "Ivern, Aîné de la forêt."
+    },
+    "en": {
+      "enonce": "Which champion is this story about? \"▢▢▢ Bramblefoot, known to many as the Green Father, is a peculiar half man, half tree who roams Runeterra's forests, cultivating life everywhere he goes. He knows the secrets of the natural world, and holds deep friendships with all things that grow, fly, and scuttle.\"",
+      "choix": ["Ivern", "Janna", "Morgana", "Yuumi"],
+      "explication": "Ivern, the Green Father."
+    }
+  },
+  {
+    "id": "titre-olaf",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/champion/Olaf.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Quel est le titre du champion Olaf ?",
+      "choix": [
+        "Berzerker",
+        "Gardien des sables",
+        "Sagesse incarnée",
+        "Rebelle"
+      ],
+      "explication": "Olaf, Berzerker."
+    },
+    "en": {
+      "enonce": "What is Olaf's title?",
+      "choix": [
+        "The Berserker",
+        "The Curator of the Sands",
+        "The Enlightened One",
+        "The Rebel"
+      ],
+      "explication": "Olaf, the Berserker."
+    }
+  },
+  {
+    "id": "titre-ryze",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/champion/Ryze.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Quel est le titre du champion Ryze ?",
+      "choix": [
+        "Mage runique",
+        "Mercenaire du désert",
+        "Chasseresse bestiale",
+        "Virtuose"
+      ],
+      "explication": "Ryze, Mage runique."
+    },
+    "en": {
+      "enonce": "What is Ryze's title?",
+      "choix": [
+        "The Rune Mage",
+        "The Battle Mistress",
+        "The Bestial Huntress",
+        "The Virtuoso"
+      ],
+      "explication": "Ryze, the Rune Mage."
+    }
+  },
+  {
+    "id": "titre-amumu",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/champion/Amumu.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Quel est le titre du champion Amumu ?",
+      "choix": [
+        "Momie mélancolique",
+        "La meute de fer",
+        "Enfant des ténèbres",
+        "Exorciste cendré"
+      ],
+      "explication": "Amumu, Momie mélancolique."
+    },
+    "en": {
+      "enonce": "What is Amumu's title?",
+      "choix": [
+        "The Sad Mummy",
+        "The Hound of a Hundred Bites",
+        "The Dark Child",
+        "The Ashen Exorcist"
+      ],
+      "explication": "Amumu, the Sad Mummy."
+    }
+  },
+  {
+    "id": "titre-soraka",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/champion/Soraka.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Quel est le titre du champion Soraka ?",
+      "choix": [
+        "Enfant des étoiles",
+        "Terreur noire",
+        "Colosse",
+        "Traqueuse du Néant"
+      ],
+      "explication": "Soraka, Enfant des étoiles."
+    },
+    "en": {
+      "enonce": "What is Soraka's title?",
+      "choix": [
+        "The Starchild",
+        "The Terror of the Void",
+        "The Colossus",
+        "The Void Burrower"
+      ],
+      "explication": "Soraka, the Starchild."
+    }
+  },
+  {
+    "id": "titre-aphelios",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/champion/Aphelios.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Quel est le titre du champion Aphelios ?",
+      "choix": [
+        "Arme des Lunaris",
+        "Souverain originel",
+        "Aîné de la forêt",
+        "Bouffon des ténèbres"
+      ],
+      "explication": "Aphelios, Arme des Lunaris."
+    },
+    "en": {
+      "enonce": "What is Aphelios's title?",
+      "choix": [
+        "The Weapon of the Faithful",
+        "The Primordial Sovereign",
+        "The Green Father",
+        "The Demon Jester"
+      ],
+      "explication": "Aphelios, the Weapon of the Faithful."
+    }
+  },
+  {
+    "id": "titre-karma",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/champion/Karma.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Quel est le titre du champion Karma ?",
+      "choix": [
+        "Sagesse incarnée",
+        "Démon sadique",
+        "Rédemptrice",
+        "Lance de la vengeance"
+      ],
+      "explication": "Karma, Sagesse incarnée."
+    },
+    "en": {
+      "enonce": "What is Karma's title?",
+      "choix": [
+        "The Enlightened One",
+        "Agony's Embrace",
+        "The Redeemer",
+        "The Spear of Vengeance"
+      ],
+      "explication": "Karma, the Enlightened One."
+    }
+  },
+  {
+    "id": "titre-jax",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/champion/Jax.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Quel est le titre du champion Jax ?",
+      "choix": [
+        "Maître d'armes",
+        "Sénéchal de Demacia",
+        "Golem de vapeur",
+        "Visionnaire"
+      ],
+      "explication": "Jax, Maître d'armes."
+    },
+    "en": {
+      "enonce": "What is Jax's title?",
+      "choix": [
+        "Grandmaster at Arms",
+        "The Seneschal of Demacia",
+        "The Great Steam Golem",
+        "The Visionary"
+      ],
+      "explication": "Jax, Grandmaster at Arms."
+    }
+  },
+  {
+    "id": "titre-riven",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/champion/Riven.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Quel est le titre du champion Riven ?",
+      "choix": [
+        "Exilée brisée",
+        "Manifestation du Crépuscule",
+        "Gardienne du marteau",
+        "Sorcière d'entre les mondes"
+      ],
+      "explication": "Riven, Exilée brisée."
+    },
+    "en": {
+      "enonce": "What is Riven's title?",
+      "choix": [
+        "The Exile",
+        "The Aspect of Twilight",
+        "Keeper of the Hammer",
+        "The Witch Between Worlds"
+      ],
+      "explication": "Riven, the Exile."
+    }
+  },
+  {
+    "id": "titre-yorick",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/champion/Yorick.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Quel est le titre du champion Yorick ?",
+      "choix": [
+        "Berger des âmes",
+        "Cœur de Freljord",
+        "Déchue",
+        "Sorcière de glace"
+      ],
+      "explication": "Yorick, Berger des âmes."
+    },
+    "en": {
+      "enonce": "What is Yorick's title?",
+      "choix": [
+        "Shepherd of Souls",
+        "The Heart of the Freljord",
+        "The Fallen",
+        "The Ice Witch"
+      ],
+      "explication": "Yorick, Shepherd of Souls."
+    }
+  },
+  {
+    "id": "titre-kled",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/champion/Kled.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Quel est le titre du champion Kled ?",
+      "choix": [
+        "Cavalier colérique",
+        "Démon sadique",
+        "Sagesse incarnée",
+        "Manifestation du Crépuscule"
+      ],
+      "explication": "Kled, Cavalier colérique."
+    },
+    "en": {
+      "enonce": "What is Kled's title?",
+      "choix": [
+        "The Cantankerous Cavalier",
+        "Agony's Embrace",
+        "The Enlightened One",
+        "The Aspect of Twilight"
+      ],
+      "explication": "Kled, the Cantankerous Cavalier."
+    }
+  },
+  {
+    "id": "titre-orianna",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/champion/Orianna.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Quel est le titre du champion Orianna ?",
+      "choix": [
+        "Demoiselle mécanique",
+        "Œil du crépuscule",
+        "Expert des Hexplosifs",
+        "Gardienne du Grimoire"
+      ],
+      "explication": "Orianna, Demoiselle mécanique."
+    },
+    "en": {
+      "enonce": "What is Orianna's title?",
+      "choix": [
+        "The Lady of Clockwork",
+        "The Eye of Twilight",
+        "The Hexplosives Expert",
+        "The Magical Cat"
+      ],
+      "explication": "Orianna, the Lady of Clockwork."
+    }
+  },
+  {
+    "id": "titre-caitlyn",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/champion/Caitlyn.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Quel est le titre du champion Caitlyn ?",
+      "choix": [
+        "Shérif de Piltover",
+        "Chasseur du Néant",
+        "Œil du crépuscule",
+        "Garde aux chaînes"
+      ],
+      "explication": "Caitlyn, Shérif de Piltover."
+    },
+    "en": {
+      "enonce": "What is Caitlyn's title?",
+      "choix": [
+        "The Sheriff of Piltover",
+        "The Void Walker",
+        "The Eye of Twilight",
+        "The Chain Warden"
+      ],
+      "explication": "Caitlyn, the Sheriff of Piltover."
+    }
+  },
+  {
+    "id": "titre-kaisa",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/champion/Kaisa.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Quel est le titre du champion Kai'Sa ?",
+      "choix": [
+        "Fille du Néant",
+        "Sorcière de glace",
+        "Souveraine obscure",
+        "Vertueuse"
+      ],
+      "explication": "Kai'Sa, Fille du Néant."
+    },
+    "en": {
+      "enonce": "What is Kai'Sa's title?",
+      "choix": [
+        "Daughter of the Void",
+        "The Ice Witch",
+        "The Dark Sovereign",
+        "The Righteous"
+      ],
+      "explication": "Kai'Sa, Daughter of the Void."
+    }
+  },
+  {
+    "id": "titre-garen",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/champion/Garen.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Quel est le titre du champion Garen ?",
+      "choix": [
+        "Force de Demacia",
+        "Aîné de la forêt",
+        "Chimiste fou",
+        "Baronne de la chimie"
+      ],
+      "explication": "Garen, Force de Demacia."
+    },
+    "en": {
+      "enonce": "What is Garen's title?",
+      "choix": [
+        "The Might of Demacia",
+        "The Green Father",
+        "The Mad Chemist",
+        "The Chem-Baroness"
+      ],
+      "explication": "Garen, The Might of Demacia."
+    }
+  },
+  {
+    "id": "titre-vayne",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/champion/Vayne.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Quel est le titre du champion Vayne ?",
+      "choix": [
+        "Chasseresse nocturne",
+        "Reflet de l'âme",
+        "Démon sadique",
+        "Exorciste cendré"
+      ],
+      "explication": "Vayne, Chasseresse nocturne."
+    },
+    "en": {
+      "enonce": "What is Vayne's title?",
+      "choix": [
+        "The Night Hunter",
+        "The Soul's Reflection",
+        "Agony's Embrace",
+        "The Ashen Exorcist"
+      ],
+      "explication": "Vayne, the Night Hunter."
+    }
+  },
+  {
+    "id": "titre-irelia",
+    "theme": "histoire",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/champion/Irelia.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Quel est le titre du champion Irelia ?",
+      "choix": [
+        "Danseuse des lames",
+        "Impératrice des éléments",
+        "Revenant de fer",
+        "Joie incarnée"
+      ],
+      "explication": "Irelia, Danseuse des lames."
+    },
+    "en": {
+      "enonce": "What is Irelia's title?",
+      "choix": [
+        "The Blade Dancer",
+        "Empress of the Elements",
+        "The Iron Revenant",
+        "The Joy Unbound"
+      ],
+      "explication": "Irelia, the Blade Dancer."
+    }
+  },
+  {
+    "id": "skin-splash-taliyah-21",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Taliyah_21.jpg",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "À quel champion appartient ce skin ?",
+      "choix": ["Taliyah", "Brand", "Twisted Fate", "Karthus"],
+      "explication": "C'est Taliyah Crystalis."
+    },
+    "en": {
+      "enonce": "Which champion does this skin belong to?",
+      "choix": ["Taliyah", "Brand", "Twisted Fate", "Karthus"],
+      "explication": "It is Crystalis Motus Taliyah."
+    }
+  },
+  {
+    "id": "skin-splash-vex-20",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Vex_20.jpg",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "À quel champion appartient ce skin ?",
+      "choix": ["Vex", "Ryze", "Heimerdinger", "Swain"],
+      "explication": "C'est Vex visionnaire."
+    },
+    "en": {
+      "enonce": "Which champion does this skin belong to?",
+      "choix": ["Vex", "Ryze", "Heimerdinger", "Swain"],
+      "explication": "It is Stargazer Vex."
+    }
+  },
+  {
+    "id": "skin-splash-jayce-25",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Jayce_25.jpg",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "À quel champion appartient ce skin ?",
+      "choix": ["Jayce", "Viego", "Renekton", "Xin Zhao"],
+      "explication": "C'est Jayce des Jeux du zénith."
+    },
+    "en": {
+      "enonce": "Which champion does this skin belong to?",
+      "choix": ["Jayce", "Viego", "Renekton", "Xin Zhao"],
+      "explication": "It is Zenith Games Jayce."
+    }
+  },
+  {
+    "id": "skin-splash-maokai-1",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Maokai_1.jpg",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "À quel champion appartient ce skin ?",
+      "choix": ["Maokai", "K'Santé", "Amumu", "Cho'Gath"],
+      "explication": "C'est Maokai calciné."
+    },
+    "en": {
+      "enonce": "Which champion does this skin belong to?",
+      "choix": ["Maokai", "K'Sante", "Amumu", "Cho'Gath"],
+      "explication": "It is Charred Maokai."
+    }
+  },
+  {
+    "id": "skin-splash-kled-9",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Kled_9.jpg",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "À quel champion appartient ce skin ?",
+      "choix": ["Kled", "Fiora", "Yasuo", "Udyr"],
+      "explication": "C'est Kled maraudeur."
+    },
+    "en": {
+      "enonce": "Which champion does this skin belong to?",
+      "choix": ["Kled", "Fiora", "Yasuo", "Udyr"],
+      "explication": "It is Marauder Kled."
+    }
+  },
+  {
+    "id": "skin-splash-malphite-4",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Malphite_4.jpg",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "À quel champion appartient ce skin ?",
+      "choix": ["Malphite", "Maokai", "Sion", "Leona"],
+      "explication": "C'est Malphite d'obsidienne."
+    },
+    "en": {
+      "enonce": "Which champion does this skin belong to?",
+      "choix": ["Malphite", "Maokai", "Sion", "Leona"],
+      "explication": "It is Obsidian Malphite."
+    }
+  },
+  {
+    "id": "skin-splash-xayah-1",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Xayah_1.jpg",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "À quel champion appartient ce skin ?",
+      "choix": ["Xayah", "Teemo", "Draven", "Graves"],
+      "explication": "C'est Xayah du crépuscule cosmique."
+    },
+    "en": {
+      "enonce": "Which champion does this skin belong to?",
+      "choix": ["Xayah", "Teemo", "Draven", "Graves"],
+      "explication": "It is Cosmic Dusk Xayah."
+    }
+  },
+  {
+    "id": "skin-splash-kalista-3",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Kalista_3.jpg",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "À quel champion appartient ce skin ?",
+      "choix": ["Kalista", "Lucian", "Zeri", "Kog'Maw"],
+      "explication": "C'est SKT T1 Kalista."
+    },
+    "en": {
+      "enonce": "Which champion does this skin belong to?",
+      "choix": ["Kalista", "Lucian", "Zeri", "Kog'Maw"],
+      "explication": "It is SKT T1 Kalista."
+    }
+  },
+  {
+    "id": "skin-splash-zilean-4",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Zilean_4.jpg",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "À quel champion appartient ce skin ?",
+      "choix": ["Zilean", "Bard", "Sona", "Yuumi"],
+      "explication": "C'est Zilean voyageur du temps."
+    },
+    "en": {
+      "enonce": "Which champion does this skin belong to?",
+      "choix": ["Zilean", "Bard", "Sona", "Yuumi"],
+      "explication": "It is Time Machine Zilean."
+    }
+  },
+  {
+    "id": "skin-splash-nautilus-39",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Nautilus_39.jpg",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "À quel champion appartient ce skin ?",
+      "choix": ["Nautilus", "Rammus", "Tahm Kench", "Zac"],
+      "explication": "C'est Nautilus de pétricite."
+    },
+    "en": {
+      "enonce": "Which champion does this skin belong to?",
+      "choix": ["Nautilus", "Rammus", "Tahm Kench", "Zac"],
+      "explication": "It is Petricite Nautilus."
+    }
+  },
+  {
+    "id": "skin-splash-nidalee-58",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Nidalee_58.jpg",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "À quel champion appartient ce skin ?",
+      "choix": ["Nidalee", "Ekko", "Evelynn", "Locke"],
+      "explication": "C'est Nidalee fleur spirituelle."
+    },
+    "en": {
+      "enonce": "Which champion does this skin belong to?",
+      "choix": ["Nidalee", "Ekko", "Evelynn", "Locke"],
+      "explication": "It is Spirit Blossom Nidalee."
+    }
+  },
+  {
+    "id": "skin-splash-rell-1",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Rell_1.jpg",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "À quel champion appartient ce skin ?",
+      "choix": ["Rell", "Maokai", "Rammus", "Skarner"],
+      "explication": "C'est Rell reine du combat."
+    },
+    "en": {
+      "enonce": "Which champion does this skin belong to?",
+      "choix": ["Rell", "Maokai", "Rammus", "Skarner"],
+      "explication": "It is Battle Queen Rell."
+    }
+  },
+  {
+    "id": "skin-vrai-immortaljourney-shyvana",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Lequel de ces skins existe vraiment ?",
+      "choix": [
+        "Shyvana du Voyage immortel",
+        "Twisted Fate du Voyage immortel",
+        "Morgana du Voyage immortel",
+        "Nidalee du Voyage immortel"
+      ],
+      "explication": "Shyvana du Voyage immortel existe ; les trois autres sont inventés."
+    },
+    "en": {
+      "enonce": "Which of these skins really exists?",
+      "choix": [
+        "Immortal Journey Shyvana",
+        "Immortal Journey Twisted Fate",
+        "Immortal Journey Morgana",
+        "Immortal Journey Nidalee"
+      ],
+      "explication": "Immortal Journey Shyvana exists; the other three are made up."
+    }
+  },
+  {
+    "id": "skin-vrai-coven-syndra",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Lequel de ces skins existe vraiment ?",
+      "choix": [
+        "Syndra de l'assemblée",
+        "Graves de l'assemblée",
+        "Swain de l'assemblée",
+        "Viktor de l'assemblée"
+      ],
+      "explication": "Syndra de l'assemblée existe ; les trois autres sont inventés."
+    },
+    "en": {
+      "enonce": "Which of these skins really exists?",
+      "choix": ["Coven Syndra", "Coven Graves", "Coven Swain", "Coven Viktor"],
+      "explication": "Coven Syndra exists; the other three are made up."
+    }
+  },
+  {
+    "id": "skin-vrai-ig-irelia",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Lequel de ces skins existe vraiment ?",
+      "choix": ["iG Irelia", "iG Zeri", "iG Séraphine", "iG Hecarim"],
+      "explication": "iG Irelia existe ; les trois autres sont inventés."
+    },
+    "en": {
+      "enonce": "Which of these skins really exists?",
+      "choix": ["iG Irelia", "iG Zeri", "iG Seraphine", "iG Hecarim"],
+      "explication": "iG Irelia exists; the other three are made up."
+    }
+  },
+  {
+    "id": "skin-vrai-spacegroove-gragas",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Lequel de ces skins existe vraiment ?",
+      "choix": [
+        "Gragas astro-groove",
+        "Hwei astro-groove",
+        "Malzahar astro-groove",
+        "Ashe astro-groove"
+      ],
+      "explication": "Gragas astro-groove existe ; les trois autres sont inventés."
+    },
+    "en": {
+      "enonce": "Which of these skins really exists?",
+      "choix": [
+        "Space Groove Gragas",
+        "Space Groove Hwei",
+        "Space Groove Malzahar",
+        "Space Groove Ashe"
+      ],
+      "explication": "Space Groove Gragas exists; the other three are made up."
+    }
+  },
+  {
+    "id": "skin-vrai-worldbreaker-malzahar",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Lequel de ces skins existe vraiment ?",
+      "choix": [
+        "Malzahar brise-monde",
+        "Hwei brise-monde",
+        "Ziggs brise-monde",
+        "Kog'Maw brise-monde"
+      ],
+      "explication": "Malzahar brise-monde existe ; les trois autres sont inventés."
+    },
+    "en": {
+      "enonce": "Which of these skins really exists?",
+      "choix": [
+        "Worldbreaker Malzahar",
+        "Worldbreaker Hwei",
+        "Worldbreaker Ziggs",
+        "Worldbreaker Kog'Maw"
+      ],
+      "explication": "Worldbreaker Malzahar exists; the other three are made up."
+    }
+  },
+  {
+    "id": "skin-vrai-nightbringer-nasus",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Lequel de ces skins existe vraiment ?",
+      "choix": [
+        "Nasus héraut de la nuit",
+        "Annie héraut de la nuit",
+        "Xerath héraut de la nuit",
+        "Heimerdinger héraut de la nuit"
+      ],
+      "explication": "Nasus héraut de la nuit existe ; les trois autres sont inventés."
+    },
+    "en": {
+      "enonce": "Which of these skins really exists?",
+      "choix": [
+        "Nightbringer Nasus",
+        "Nightbringer Annie",
+        "Nightbringer Xerath",
+        "Nightbringer Heimerdinger"
+      ],
+      "explication": "Nightbringer Nasus exists; the other three are made up."
+    }
+  },
+  {
+    "id": "skin-vrai-odyssey-ziggs",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Lequel de ces skins existe vraiment ?",
+      "choix": [
+        "Ziggs de l'Odyssée",
+        "Briar de l'Odyssée",
+        "Zyra de l'Odyssée",
+        "Dr. Mundo de l'Odyssée"
+      ],
+      "explication": "Ziggs de l'Odyssée existe ; les trois autres sont inventés."
+    },
+    "en": {
+      "enonce": "Which of these skins really exists?",
+      "choix": [
+        "Odyssey Ziggs",
+        "Odyssey Briar",
+        "Odyssey Zyra",
+        "Odyssey Dr. Mundo"
+      ],
+      "explication": "Odyssey Ziggs exists; the other three are made up."
+    }
+  },
+  {
+    "id": "skin-vrai-pulsefire-lucian",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Lequel de ces skins existe vraiment ?",
+      "choix": [
+        "Lucian Pulsefire",
+        "Darius Pulsefire",
+        "Draven Pulsefire",
+        "Ziggs Pulsefire"
+      ],
+      "explication": "Lucian Pulsefire existe ; les trois autres sont inventés."
+    },
+    "en": {
+      "enonce": "Which of these skins really exists?",
+      "choix": [
+        "Pulsefire Lucian",
+        "Pulsefire Darius",
+        "Pulsefire Draven",
+        "Pulsefire Ziggs"
+      ],
+      "explication": "Pulsefire Lucian exists; the other three are made up."
+    }
+  },
+  {
+    "id": "skin-vrai-highnoon-evelynn",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Lequel de ces skins existe vraiment ?",
+      "choix": [
+        "Evelynn de l'Ouest",
+        "Aatrox de l'Ouest",
+        "Aurora de l'Ouest",
+        "Pyke de l'Ouest"
+      ],
+      "explication": "Evelynn de l'Ouest existe ; les trois autres sont inventés."
+    },
+    "en": {
+      "enonce": "Which of these skins really exists?",
+      "choix": [
+        "High Noon Evelynn",
+        "High Noon Aatrox",
+        "High Noon Aurora",
+        "High Noon Pyke"
+      ],
+      "explication": "High Noon Evelynn exists; the other three are made up."
+    }
+  },
+  {
+    "id": "skin-vrai-mechakingdoms-skarner",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Lequel de ces skins existe vraiment ?",
+      "choix": [
+        "Skarner du royaume des mechas",
+        "Azir du royaume des mechas",
+        "Yorick du royaume des mechas",
+        "Swain du royaume des mechas"
+      ],
+      "explication": "Skarner du royaume des mechas existe ; les trois autres sont inventés."
+    },
+    "en": {
+      "enonce": "Which of these skins really exists?",
+      "choix": [
+        "Mecha Kingdoms Skarner",
+        "Mecha Kingdoms Azir",
+        "Mecha Kingdoms Yorick",
+        "Mecha Kingdoms Swain"
+      ],
+      "explication": "Mecha Kingdoms Skarner exists; the other three are made up."
+    }
+  },
+  {
+    "id": "skin-vrai-brokencovenant-chogath",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Lequel de ces skins existe vraiment ?",
+      "choix": [
+        "Cho'Gath de l'Alliance brisée",
+        "Zoé de l'Alliance brisée",
+        "Karthus de l'Alliance brisée",
+        "Vel'Koz de l'Alliance brisée"
+      ],
+      "explication": "Cho'Gath de l'Alliance brisée existe ; les trois autres sont inventés."
+    },
+    "en": {
+      "enonce": "Which of these skins really exists?",
+      "choix": [
+        "Broken Covenant Cho'Gath",
+        "Broken Covenant Zoe",
+        "Broken Covenant Karthus",
+        "Broken Covenant Vel'Koz"
+      ],
+      "explication": "Broken Covenant Cho'Gath exists; the other three are made up."
+    }
+  },
+  {
+    "id": "skin-vrai-heavenscale-leesin",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Lequel de ces skins existe vraiment ?",
+      "choix": [
+        "Lee Sin écailles célestes",
+        "Yunara écailles célestes",
+        "Sylas écailles célestes",
+        "Ahri écailles célestes"
+      ],
+      "explication": "Lee Sin écailles célestes existe ; les trois autres sont inventés."
+    },
+    "en": {
+      "enonce": "Which of these skins really exists?",
+      "choix": [
+        "Heavenscale Lee Sin",
+        "Heavenscale Yunara",
+        "Heavenscale Sylas",
+        "Heavenscale Ahri"
+      ],
+      "explication": "Heavenscale Lee Sin exists; the other three are made up."
+    }
+  },
+  {
+    "id": "skin-gamme-jinx-65",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Jinx_65.jpg",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "À quelle gamme appartient ce skin ?",
+      "choix": ["Chant de l'océan", "iG", "HEARTSTEEL", "Pulsar sombre"],
+      "explication": "C'est Jinx du Chant de l'océan, de la gamme Chant de l'océan."
+    },
+    "en": {
+      "enonce": "Which skin line does this skin belong to?",
+      "choix": ["Ocean Song", "iG", "HEARTSTEEL", "Dark Star"],
+      "explication": "It is Ocean Song Jinx, from the Ocean Song line."
+    }
+  },
+  {
+    "id": "skin-gamme-draven-39",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Draven_39.jpg",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "À quelle gamme appartient ce skin ?",
+      "choix": [
+        "Nuit d'effroi",
+        "Alliance brisée",
+        "HEARTSTEEL",
+        "Héraut de l'aube"
+      ],
+      "explication": "C'est Draven Nuit d'effroi, de la gamme Nuit d'effroi."
+    },
+    "en": {
+      "enonce": "Which skin line does this skin belong to?",
+      "choix": ["Fright Night", "Broken Covenant", "HEARTSTEEL", "Dawnbringer"],
+      "explication": "It is Fright Night Draven, from the Fright Night line."
+    }
+  },
+  {
+    "id": "skin-gamme-varus-60",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Varus_60.jpg",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "À quelle gamme appartient ce skin ?",
+      "choix": [
+        "Fleur spirituelle",
+        "Voyage immortel",
+        "Académie du combat",
+        "Chant de l'océan"
+      ],
+      "explication": "C'est Varus fleur spirituelle, de la gamme Fleur spirituelle."
+    },
+    "en": {
+      "enonce": "Which skin line does this skin belong to?",
+      "choix": [
+        "Spirit Blossom",
+        "Immortal Journey",
+        "Battle Academia",
+        "Ocean Song"
+      ],
+      "explication": "It is Spirit Blossom Varus, from the Spirit Blossom line."
+    }
+  },
+  {
+    "id": "skin-gamme-lulu-46",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Lulu_46.jpg",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "À quelle gamme appartient ce skin ?",
+      "choix": ["Café Chouchous", "Boss de combat", "Lune de sang", "Odyssée"],
+      "explication": "C'est Lulu Café Chouchous, de la gamme Café Chouchous."
+    },
+    "en": {
+      "enonce": "Which skin line does this skin belong to?",
+      "choix": ["Cafe Cuties", "Battle Boss", "Blood Moon", "Odyssey"],
+      "explication": "It is Cafe Cuties Lulu, from the Cafe Cuties line."
+    }
+  },
+  {
+    "id": "skin-gamme-missfortune-18",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/MissFortune_18.jpg",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "À quelle gamme appartient ce skin ?",
+      "choix": [
+        "Sorcière",
+        "Fleur spirituelle",
+        "Académie du combat",
+        "Royaume en guerre"
+      ],
+      "explication": "C'est Miss Fortune sorcière, de la gamme Sorcière."
+    },
+    "en": {
+      "enonce": "Which skin line does this skin belong to?",
+      "choix": [
+        "Bewitching",
+        "Spirit Blossom",
+        "Battle Academia",
+        "Warring Kingdoms"
+      ],
+      "explication": "It is Bewitching Miss Fortune, from the Bewitching line."
+    }
+  },
+  {
+    "id": "skin-gamme-poppy-16",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Poppy_16.jpg",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "À quelle gamme appartient ce skin ?",
+      "choix": [
+        "Astronaute",
+        "Fleur spirituelle",
+        "Sylvestre",
+        "Pulsar sombre"
+      ],
+      "explication": "C'est Poppy astronaute, de la gamme Astronaute."
+    },
+    "en": {
+      "enonce": "Which skin line does this skin belong to?",
+      "choix": ["Astronaut", "Spirit Blossom", "Elderwood", "Dark Star"],
+      "explication": "It is Astronaut Poppy, from the Astronaut line."
+    }
+  },
+  {
+    "id": "skin-gamme-katarina-47",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Katarina_47.jpg",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "À quelle gamme appartient ce skin ?",
+      "choix": ["Cour féérique", "Café Chouchous", "Sylvestre", "Sorcière"],
+      "explication": "C'est Katarina de la cour féérique, de la gamme Cour féérique."
+    },
+    "en": {
+      "enonce": "Which skin line does this skin belong to?",
+      "choix": ["Faerie Court", "Cafe Cuties", "Elderwood", "Bewitching"],
+      "explication": "It is Faerie Court Katarina, from the Faerie Court line."
+    }
+  },
+  {
+    "id": "skin-gamme-sona-66",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Sona_66.jpg",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "À quelle gamme appartient ce skin ?",
+      "choix": [
+        "Fleur spirituelle onsen",
+        "Brise-monde",
+        "Odyssée",
+        "Café Chouchous"
+      ],
+      "explication": "C'est Sona fleur spirituelle onsen, de la gamme Fleur spirituelle onsen."
+    },
+    "en": {
+      "enonce": "Which skin line does this skin belong to?",
+      "choix": [
+        "Spirit Blossom Springs",
+        "Worldbreaker",
+        "Odyssey",
+        "Cafe Cuties"
+      ],
+      "explication": "It is Spirit Blossom Springs Sona, from the Spirit Blossom Springs line."
+    }
+  },
+  {
+    "id": "skin-gamme-aatrox-11",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Aatrox_11.jpg",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "À quelle gamme appartient ce skin ?",
+      "choix": ["Odyssée", "HEARTSTEEL", "Cour féérique", "Héraut de l'aube"],
+      "explication": "C'est Aatrox de l'Odyssée, de la gamme Odyssée."
+    },
+    "en": {
+      "enonce": "Which skin line does this skin belong to?",
+      "choix": ["Odyssey", "HEARTSTEEL", "Faerie Court", "Dawnbringer"],
+      "explication": "It is Odyssey Aatrox, from the Odyssey line."
+    }
+  },
+  {
+    "id": "skin-gamme-ahri-76",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Ahri_76.jpg",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "À quelle gamme appartient ce skin ?",
+      "choix": ["Lune de neige", "La Ilusión", "Héraut de l'aube", "DRX"],
+      "explication": "C'est Ahri lune de neige, de la gamme Lune de neige."
+    },
+    "en": {
+      "enonce": "Which skin line does this skin belong to?",
+      "choix": ["Snow Moon", "La Ilusión", "Dawnbringer", "DRX"],
+      "explication": "It is Snow Moon Ahri, from the Snow Moon line."
+    }
+  },
+  {
+    "id": "skin-gamme-fiora-69",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Fiora_69.jpg",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "À quelle gamme appartient ce skin ?",
+      "choix": [
+        "Cour féérique",
+        "Pentakill III : Lost Chapter",
+        "Proto",
+        "Chant de l'océan"
+      ],
+      "explication": "C'est Fiora de la cour féérique, de la gamme Cour féérique."
+    },
+    "en": {
+      "enonce": "Which skin line does this skin belong to?",
+      "choix": [
+        "Faerie Court",
+        "Pentakill III: Lost Chapter",
+        "Battlecast",
+        "Ocean Song"
+      ],
+      "explication": "It is Faerie Court Fiora, from the Faerie Court line."
+    }
+  },
+  {
+    "id": "skin-gamme-kaisa-16",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Kaisa_16.jpg",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "À quelle gamme appartient ce skin ?",
+      "choix": [
+        "iG",
+        "Lune de neige",
+        "Pentakill",
+        "Pentakill III : Lost Chapter"
+      ],
+      "explication": "C'est iG Kai'Sa, de la gamme iG."
+    },
+    "en": {
+      "enonce": "Which skin line does this skin belong to?",
+      "choix": ["iG", "Snow Moon", "Pentakill", "Pentakill III: Lost Chapter"],
+      "explication": "It is iG Kai'Sa, from the iG line."
+    }
+  },
+  {
+    "id": "skins-nombre-ahri",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/champion/Ahri.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Combien de skins a Ahri, hors skin de base et chromas ?",
+      "choix": ["20", "23", "21", "22"],
+      "explication": "20 skins pour Ahri selon Data Dragon (patch 16.21)."
+    },
+    "en": {
+      "enonce": "How many skins does Ahri have, base skin and chromas excluded?",
+      "choix": ["20", "23", "21", "22"],
+      "explication": "20 skins for Ahri according to Data Dragon (patch 16.21)."
+    }
+  },
+  {
+    "id": "skins-nombre-taliyah",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/champion/Taliyah.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Combien de skins a Taliyah, hors skin de base et chromas ?",
+      "choix": ["6", "7", "5", "3"],
+      "explication": "6 skins pour Taliyah selon Data Dragon (patch 16.21)."
+    },
+    "en": {
+      "enonce": "How many skins does Taliyah have, base skin and chromas excluded?",
+      "choix": ["6", "7", "5", "3"],
+      "explication": "6 skins for Taliyah according to Data Dragon (patch 16.21)."
+    }
+  },
+  {
+    "id": "skins-nombre-yasuo",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/champion/Yasuo.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Combien de skins a Yasuo, hors skin de base et chromas ?",
+      "choix": ["19", "17", "16", "18"],
+      "explication": "19 skins pour Yasuo selon Data Dragon (patch 16.21)."
+    },
+    "en": {
+      "enonce": "How many skins does Yasuo have, base skin and chromas excluded?",
+      "choix": ["19", "17", "16", "18"],
+      "explication": "19 skins for Yasuo according to Data Dragon (patch 16.21)."
+    }
+  },
+  {
+    "id": "skins-nombre-cassiopeia",
+    "theme": "skins",
+    "date": "2026-10-23",
+    "source": "https://ddragon.leagueoflegends.com/cdn/16.21.1/data/fr_FR/championFull.json",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/champion/Cassiopeia.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Combien de skins a Cassiopeia, hors skin de base et chromas ?",
+      "choix": ["12", "9", "15", "11"],
+      "explication": "12 skins pour Cassiopeia selon Data Dragon (patch 16.21)."
+    },
+    "en": {
+      "enonce": "How many skins does Cassiopeia have, base skin and chromas excluded?",
+      "choix": ["12", "9", "15", "11"],
+      "explication": "12 skins for Cassiopeia according to Data Dragon (patch 16.21)."
+    }
+  },
+  {
+    "id": "region-karthus",
+    "theme": "monde",
+    "date": "2026-10-23",
+    "source": "https://universe.leagueoflegends.com/",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/champion/Karthus.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quelle région vient Karthus ?",
+      "choix": ["Îles obscures", "Ixtal", "Freljord", "Bilgewater"],
+      "explication": "Karthus est rattaché à la région Îles obscures, selon le site Univers de Riot."
+    },
+    "en": {
+      "enonce": "Which region does Karthus come from?",
+      "choix": ["Shadow Isles", "Ixtal", "The Freljord", "Bilgewater"],
+      "explication": "Karthus comes from Shadow Isles, according to Riot's Universe site."
+    }
+  },
+  {
+    "id": "region-sylas",
+    "theme": "monde",
+    "date": "2026-10-23",
+    "source": "https://universe.leagueoflegends.com/",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/champion/Sylas.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quelle région vient Sylas ?",
+      "choix": ["Demacia", "Piltover", "Noxus", "Freljord"],
+      "explication": "Sylas est rattaché à la région Demacia, selon le site Univers de Riot."
+    },
+    "en": {
+      "enonce": "Which region does Sylas come from?",
+      "choix": ["Demacia", "Piltover", "Noxus", "The Freljord"],
+      "explication": "Sylas comes from Demacia, according to Riot's Universe site."
+    }
+  },
+  {
+    "id": "region-locke",
+    "theme": "monde",
+    "date": "2026-10-23",
+    "source": "https://universe.leagueoflegends.com/",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/champion/Locke.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quelle région vient Locke ?",
+      "choix": ["Demacia", "Ixtal", "Freljord", "Îles obscures"],
+      "explication": "Locke est rattaché à la région Demacia, selon le site Univers de Riot."
+    },
+    "en": {
+      "enonce": "Which region does Locke come from?",
+      "choix": ["Demacia", "Ixtal", "The Freljord", "Shadow Isles"],
+      "explication": "Locke comes from Demacia, according to Riot's Universe site."
+    }
+  },
+  {
+    "id": "region-nunu",
+    "theme": "monde",
+    "date": "2026-10-23",
+    "source": "https://universe.leagueoflegends.com/",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/champion/Nunu.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quelle région vient Nunu et Willump ?",
+      "choix": ["Freljord", "Shurima", "Piltover", "Ionia"],
+      "explication": "Nunu et Willump est rattaché à la région Freljord, selon le site Univers de Riot."
+    },
+    "en": {
+      "enonce": "Which region does Nunu & Willump come from?",
+      "choix": ["The Freljord", "Shurima", "Piltover", "Ionia"],
+      "explication": "Nunu & Willump comes from The Freljord, according to Riot's Universe site."
+    }
+  },
+  {
+    "id": "region-hwei",
+    "theme": "monde",
+    "date": "2026-10-23",
+    "source": "https://universe.leagueoflegends.com/",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/champion/Hwei.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quelle région vient Hwei ?",
+      "choix": ["Ionia", "Targon", "Demacia", "Noxus"],
+      "explication": "Hwei est rattaché à la région Ionia, selon le site Univers de Riot."
+    },
+    "en": {
+      "enonce": "Which region does Hwei come from?",
+      "choix": ["Ionia", "Targon", "Demacia", "Noxus"],
+      "explication": "Hwei comes from Ionia, according to Riot's Universe site."
+    }
+  },
+  {
+    "id": "region-velkoz",
+    "theme": "monde",
+    "date": "2026-10-23",
+    "source": "https://universe.leagueoflegends.com/",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/champion/Velkoz.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quelle région vient Vel'Koz ?",
+      "choix": ["Le Néant", "Zaun", "Ixtal", "Piltover"],
+      "explication": "Vel'Koz est rattaché à la région Le Néant, selon le site Univers de Riot."
+    },
+    "en": {
+      "enonce": "Which region does Vel'Koz come from?",
+      "choix": ["The Void", "Zaun", "Ixtal", "Piltover"],
+      "explication": "Vel'Koz comes from The Void, according to Riot's Universe site."
+    }
+  },
+  {
+    "id": "region-fiora",
+    "theme": "monde",
+    "date": "2026-10-23",
+    "source": "https://universe.leagueoflegends.com/",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/champion/Fiora.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quelle région vient Fiora ?",
+      "choix": ["Demacia", "Ixtal", "Îles obscures", "Ionia"],
+      "explication": "Fiora est rattaché à la région Demacia, selon le site Univers de Riot."
+    },
+    "en": {
+      "enonce": "Which region does Fiora come from?",
+      "choix": ["Demacia", "Ixtal", "Shadow Isles", "Ionia"],
+      "explication": "Fiora comes from Demacia, according to Riot's Universe site."
+    }
+  },
+  {
+    "id": "region-katarina",
+    "theme": "monde",
+    "date": "2026-10-23",
+    "source": "https://universe.leagueoflegends.com/",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/champion/Katarina.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quelle région vient Katarina ?",
+      "choix": ["Noxus", "Le Néant", "Freljord", "Zaun"],
+      "explication": "Katarina est rattaché à la région Noxus, selon le site Univers de Riot."
+    },
+    "en": {
+      "enonce": "Which region does Katarina come from?",
+      "choix": ["Noxus", "The Void", "The Freljord", "Zaun"],
+      "explication": "Katarina comes from Noxus, according to Riot's Universe site."
+    }
+  },
+  {
+    "id": "region-singed",
+    "theme": "monde",
+    "date": "2026-10-23",
+    "source": "https://universe.leagueoflegends.com/",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/champion/Singed.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quelle région vient Singed ?",
+      "choix": ["Zaun", "Targon", "Ionia", "Piltover"],
+      "explication": "Singed est rattaché à la région Zaun, selon le site Univers de Riot."
+    },
+    "en": {
+      "enonce": "Which region does Singed come from?",
+      "choix": ["Zaun", "Targon", "Ionia", "Piltover"],
+      "explication": "Singed comes from Zaun, according to Riot's Universe site."
+    }
+  },
+  {
+    "id": "region-rumble",
+    "theme": "monde",
+    "date": "2026-10-23",
+    "source": "https://universe.leagueoflegends.com/",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/champion/Rumble.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quelle région vient Rumble ?",
+      "choix": ["Bandle", "Le Néant", "Targon", "Shurima"],
+      "explication": "Rumble est rattaché à la région Bandle, selon le site Univers de Riot."
+    },
+    "en": {
+      "enonce": "Which region does Rumble come from?",
+      "choix": ["Bandle City", "The Void", "Targon", "Shurima"],
+      "explication": "Rumble comes from Bandle City, according to Riot's Universe site."
+    }
+  },
+  {
+    "id": "region-jinx",
+    "theme": "monde",
+    "date": "2026-10-23",
+    "source": "https://universe.leagueoflegends.com/",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/champion/Jinx.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quelle région vient Jinx ?",
+      "choix": ["Zaun", "Piltover", "Bandle", "Ixtal"],
+      "explication": "Jinx est rattaché à la région Zaun, selon le site Univers de Riot."
+    },
+    "en": {
+      "enonce": "Which region does Jinx come from?",
+      "choix": ["Zaun", "Piltover", "Bandle City", "Ixtal"],
+      "explication": "Jinx comes from Zaun, according to Riot's Universe site."
+    }
+  },
+  {
+    "id": "region-aurora",
+    "theme": "monde",
+    "date": "2026-10-23",
+    "source": "https://universe.leagueoflegends.com/",
+    "image": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/champion/Aurora.png",
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "De quelle région vient Aurora ?",
+      "choix": ["Freljord", "Piltover", "Bandle", "Zaun"],
+      "explication": "Aurora est rattaché à la région Freljord, selon le site Univers de Riot."
+    },
+    "en": {
+      "enonce": "Which region does Aurora come from?",
+      "choix": ["The Freljord", "Piltover", "Bandle City", "Zaun"],
+      "explication": "Aurora comes from The Freljord, according to Riot's Universe site."
+    }
+  },
+  {
+    "id": "vient-de-piltover-caitlyn",
+    "theme": "monde",
+    "date": "2026-10-23",
+    "source": "https://universe.leagueoflegends.com/",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Lequel de ces champions vient de la région Piltover ?",
+      "choix": ["Caitlyn", "Taliyah", "Milio", "Yorick"],
+      "explication": "Caitlyn est rattaché à la région Piltover, selon le site Univers de Riot."
+    },
+    "en": {
+      "enonce": "Which of these champions comes from Piltover?",
+      "choix": ["Caitlyn", "Taliyah", "Milio", "Yorick"],
+      "explication": "Caitlyn comes from Piltover, according to Riot's Universe site."
+    }
+  },
+  {
+    "id": "vient-de-shadowisles-vex",
+    "theme": "monde",
+    "date": "2026-10-23",
+    "source": "https://universe.leagueoflegends.com/",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Lequel de ces champions vient de la région Îles obscures ?",
+      "choix": ["Vex", "Nautilus", "Nidalee", "Lulu"],
+      "explication": "Vex est rattaché à la région Îles obscures, selon le site Univers de Riot."
+    },
+    "en": {
+      "enonce": "Which of these champions comes from Shadow Isles?",
+      "choix": ["Vex", "Nautilus", "Nidalee", "Lulu"],
+      "explication": "Vex comes from Shadow Isles, according to Riot's Universe site."
+    }
+  },
+  {
+    "id": "vient-de-ionia-hwei",
+    "theme": "monde",
+    "date": "2026-10-23",
+    "source": "https://universe.leagueoflegends.com/",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Lequel de ces champions vient de la région Ionia ?",
+      "choix": ["Hwei", "Talon", "Viego", "Renekton"],
+      "explication": "Hwei est rattaché à la région Ionia, selon le site Univers de Riot."
+    },
+    "en": {
+      "enonce": "Which of these champions comes from Ionia?",
+      "choix": ["Hwei", "Talon", "Viego", "Renekton"],
+      "explication": "Hwei comes from Ionia, according to Riot's Universe site."
+    }
+  },
+  {
+    "id": "vient-de-shadowisles-elise",
+    "theme": "monde",
+    "date": "2026-10-23",
+    "source": "https://universe.leagueoflegends.com/",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Lequel de ces champions vient de la région Îles obscures ?",
+      "choix": ["Elise", "Xin Zhao", "Morgana", "Heimerdinger"],
+      "explication": "Elise est rattaché à la région Îles obscures, selon le site Univers de Riot."
+    },
+    "en": {
+      "enonce": "Which of these champions comes from Shadow Isles?",
+      "choix": ["Elise", "Xin Zhao", "Morgana", "Heimerdinger"],
+      "explication": "Elise comes from Shadow Isles, according to Riot's Universe site."
+    }
+  },
+  {
+    "id": "vient-de-demacia-fiora",
+    "theme": "monde",
+    "date": "2026-10-23",
+    "source": "https://universe.leagueoflegends.com/",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Lequel de ces champions vient de la région Demacia ?",
+      "choix": ["Fiora", "Irelia", "Soraka", "Yorick"],
+      "explication": "Fiora est rattaché à la région Demacia, selon le site Univers de Riot."
+    },
+    "en": {
+      "enonce": "Which of these champions comes from Demacia?",
+      "choix": ["Fiora", "Irelia", "Soraka", "Yorick"],
+      "explication": "Fiora comes from Demacia, according to Riot's Universe site."
+    }
+  },
+  {
+    "id": "vient-de-demacia-sona",
+    "theme": "monde",
+    "date": "2026-10-23",
+    "source": "https://universe.leagueoflegends.com/",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Lequel de ces champions vient de la région Demacia ?",
+      "choix": ["Sona", "Zyra", "Rek'Sai", "Rakan"],
+      "explication": "Sona est rattaché à la région Demacia, selon le site Univers de Riot."
+    },
+    "en": {
+      "enonce": "Which of these champions comes from Demacia?",
+      "choix": ["Sona", "Zyra", "Rek'Sai", "Rakan"],
+      "explication": "Sona comes from Demacia, according to Riot's Universe site."
+    }
+  },
+  {
+    "id": "vient-de-demacia-quinn",
+    "theme": "monde",
+    "date": "2026-10-23",
+    "source": "https://universe.leagueoflegends.com/",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Lequel de ces champions vient de la région Demacia ?",
+      "choix": ["Quinn", "Darius", "Aurora", "Azir"],
+      "explication": "Quinn est rattaché à la région Demacia, selon le site Univers de Riot."
+    },
+    "en": {
+      "enonce": "Which of these champions comes from Demacia?",
+      "choix": ["Quinn", "Darius", "Aurora", "Azir"],
+      "explication": "Quinn comes from Demacia, according to Riot's Universe site."
+    }
+  },
+  {
+    "id": "vient-de-piltover-vi",
+    "theme": "monde",
+    "date": "2026-10-23",
+    "source": "https://universe.leagueoflegends.com/",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Lequel de ces champions vient de la région Piltover ?",
+      "choix": ["Vi", "Ziggs", "Ashe", "Janna"],
+      "explication": "Vi est rattaché à la région Piltover, selon le site Univers de Riot."
+    },
+    "en": {
+      "enonce": "Which of these champions comes from Piltover?",
+      "choix": ["Vi", "Ziggs", "Ashe", "Janna"],
+      "explication": "Vi comes from Piltover, according to Riot's Universe site."
+    }
+  },
+  {
+    "id": "vient-de-bilgewater-gangplank",
+    "theme": "monde",
+    "date": "2026-10-23",
+    "source": "https://universe.leagueoflegends.com/",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Lequel de ces champions vient de la région Bilgewater ?",
+      "choix": ["Gangplank", "Malphite", "Nasus", "Hecarim"],
+      "explication": "Gangplank est rattaché à la région Bilgewater, selon le site Univers de Riot."
+    },
+    "en": {
+      "enonce": "Which of these champions comes from Bilgewater?",
+      "choix": ["Gangplank", "Malphite", "Nasus", "Hecarim"],
+      "explication": "Gangplank comes from Bilgewater, according to Riot's Universe site."
+    }
+  },
+  {
+    "id": "vient-de-freljord-anivia",
+    "theme": "monde",
+    "date": "2026-10-23",
+    "source": "https://universe.leagueoflegends.com/",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Lequel de ces champions vient de la région Freljord ?",
+      "choix": ["Anivia", "Talon", "Jhin", "Orianna"],
+      "explication": "Anivia est rattaché à la région Freljord, selon le site Univers de Riot."
+    },
+    "en": {
+      "enonce": "Which of these champions comes from The Freljord?",
+      "choix": ["Anivia", "Talon", "Jhin", "Orianna"],
+      "explication": "Anivia comes from The Freljord, according to Riot's Universe site."
+    }
+  },
+  {
+    "id": "vient-de-ixtal-malphite",
+    "theme": "monde",
+    "date": "2026-10-23",
+    "source": "https://universe.leagueoflegends.com/",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Lequel de ces champions vient de la région Ixtal ?",
+      "choix": ["Malphite", "Veigar", "Lulu", "Caitlyn"],
+      "explication": "Malphite est rattaché à la région Ixtal, selon le site Univers de Riot."
+    },
+    "en": {
+      "enonce": "Which of these champions comes from Ixtal?",
+      "choix": ["Malphite", "Veigar", "Lulu", "Caitlyn"],
+      "explication": "Malphite comes from Ixtal, according to Riot's Universe site."
+    }
+  },
+  {
+    "id": "vient-de-ixtal-qiyana",
+    "theme": "monde",
+    "date": "2026-10-23",
+    "source": "https://universe.leagueoflegends.com/",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Lequel de ces champions vient de la région Ixtal ?",
+      "choix": ["Qiyana", "Xayah", "Draven", "Singed"],
+      "explication": "Qiyana est rattaché à la région Ixtal, selon le site Univers de Riot."
+    },
+    "en": {
+      "enonce": "Which of these champions comes from Ixtal?",
+      "choix": ["Qiyana", "Xayah", "Draven", "Singed"],
+      "explication": "Qiyana comes from Ixtal, according to Riot's Universe site."
+    }
+  },
+  {
+    "id": "sortie-ziggs-lissandra-kaisa-yone",
+    "theme": "monde",
+    "date": "2026-10-23",
+    "source": "https://universe.leagueoflegends.com/",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Lequel de ces champions est sorti en premier ?",
+      "choix": ["Ziggs", "Lissandra", "Kai'Sa", "Yone"],
+      "explication": "Ziggs (2012), Lissandra (2013), Kai'Sa (2018), Yone (2020)"
+    },
+    "en": {
+      "enonce": "Which of these champions was released first?",
+      "choix": ["Ziggs", "Lissandra", "Kai'Sa", "Yone"],
+      "explication": "Ziggs (2012), Lissandra (2013), Kai'Sa (2018), Yone (2020)"
+    }
+  },
+  {
+    "id": "sortie-urgot-senna-zaahen-locke",
+    "theme": "monde",
+    "date": "2026-10-23",
+    "source": "https://universe.leagueoflegends.com/",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Lequel de ces champions est sorti en premier ?",
+      "choix": ["Urgot", "Senna", "Zaahen", "Locke"],
+      "explication": "Urgot (2010), Senna (2019), Zaahen (2025), Locke (2026)"
+    },
+    "en": {
+      "enonce": "Which of these champions was released first?",
+      "choix": ["Urgot", "Senna", "Zaahen", "Locke"],
+      "explication": "Urgot (2010), Senna (2019), Zaahen (2025), Locke (2026)"
+    }
+  },
+  {
+    "id": "sortie-singed-kogmaw-camille-locke",
+    "theme": "monde",
+    "date": "2026-10-23",
+    "source": "https://universe.leagueoflegends.com/",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Lequel de ces champions est sorti en premier ?",
+      "choix": ["Singed", "Kog'Maw", "Camille", "Locke"],
+      "explication": "Singed (2009), Kog'Maw (2010), Camille (2016), Locke (2026)"
+    },
+    "en": {
+      "enonce": "Which of these champions was released first?",
+      "choix": ["Singed", "Kog'Maw", "Camille", "Locke"],
+      "explication": "Singed (2009), Kog'Maw (2010), Camille (2016), Locke (2026)"
+    }
+  },
+  {
+    "id": "sortie-jinx-aurelionsol-ambessa-locke",
+    "theme": "monde",
+    "date": "2026-10-23",
+    "source": "https://universe.leagueoflegends.com/",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Lequel de ces champions est sorti en premier ?",
+      "choix": ["Jinx", "Aurelion Sol", "Ambessa", "Locke"],
+      "explication": "Jinx (2013), Aurelion Sol (2016), Ambessa (2024), Locke (2026)"
+    },
+    "en": {
+      "enonce": "Which of these champions was released first?",
+      "choix": ["Jinx", "Aurelion Sol", "Ambessa", "Locke"],
+      "explication": "Jinx (2013), Aurelion Sol (2016), Ambessa (2024), Locke (2026)"
+    }
+  },
+  {
+    "id": "sortie-gangplank-vayne-braum-kindred",
+    "theme": "monde",
+    "date": "2026-10-23",
+    "source": "https://universe.leagueoflegends.com/",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Lequel de ces champions est sorti en premier ?",
+      "choix": ["Gangplank", "Vayne", "Braum", "Kindred"],
+      "explication": "Gangplank (2009), Vayne (2011), Braum (2014), Kindred (2015)"
+    },
+    "en": {
+      "enonce": "Which of these champions was released first?",
+      "choix": ["Gangplank", "Vayne", "Braum", "Kindred"],
+      "explication": "Gangplank (2009), Vayne (2011), Braum (2014), Kindred (2015)"
+    }
+  },
+  {
+    "id": "sortie-draven-gnar-aphelios-viego",
+    "theme": "monde",
+    "date": "2026-10-23",
+    "source": "https://universe.leagueoflegends.com/",
+    "image": null,
+    "imagesChoix": null,
+    "fr": {
+      "enonce": "Lequel de ces champions est sorti en premier ?",
+      "choix": ["Draven", "Gnar", "Aphelios", "Viego"],
+      "explication": "Draven (2012), Gnar (2014), Aphelios (2019), Viego (2021)"
+    },
+    "en": {
+      "enonce": "Which of these champions was released first?",
+      "choix": ["Draven", "Gnar", "Aphelios", "Viego"],
+      "explication": "Draven (2012), Gnar (2014), Aphelios (2019), Viego (2021)"
+    }
+  }
+]

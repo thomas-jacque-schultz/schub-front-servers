@@ -97,6 +97,8 @@ export type { FrameProps } from "./components/Frame";
 export { HoneypotField } from "./components/HoneypotField";
 export type { HoneypotFieldProps } from "./components/HoneypotField";
 export { Icon, ICON_NAMES } from "./components/Icon";
+export { Illustration } from "./components/Illustration";
+export type { IllustrationProps } from "./components/Illustration";
 export type { IconName, IconProps } from "./components/Icon";
 export { IconButton } from "./components/IconButton";
 export type { IconButtonProps } from "./components/IconButton";
