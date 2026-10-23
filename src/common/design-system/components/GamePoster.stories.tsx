@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { playful } from "../tokens";
 import { Columns } from "./Columns";
 import { GamePoster } from "./GamePoster";
 
@@ -9,13 +8,13 @@ const meta = {
   component: GamePoster,
   args: {
     title: "Scribble",
-    icon: "🎨",
+    image:
+      "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Hwei_0.jpg",
     genre: "Dessin",
     tags: ["2 à 10 joueurs", "≈ 8 min"],
     body: "Un joueur dessine un champion, les autres devinent.",
     action: "Créer un salon",
     to: "/",
-    accent: playful.confetti[0],
   },
 } satisfies Meta<typeof GamePoster>;
 
@@ -37,20 +36,18 @@ export const EnRayon: Story = {
       <GamePoster
         {...args}
         title="Zoom"
-        icon="🔍"
+        image="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Velkoz_0.jpg"
         genre="Coup d'œil"
         tags={["2 à 10 joueurs", "≈ 5 min"]}
         body="Un champion caché sous un zoom qui recule peu à peu."
-        accent={playful.confetti[2]}
       />
       <GamePoster
         {...args}
         title="In-vo-posteur"
-        icon="🎭"
+        image="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Neeko_0.jpg"
         genre="Bluff"
         tags={["3 à 10 joueurs", "≈ 15 min"]}
         body="Tous ont le même champion, sauf un."
-        accent={playful.confetti[3]}
       />
     </Columns>
   ),
