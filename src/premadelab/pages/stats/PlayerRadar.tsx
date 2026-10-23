@@ -11,22 +11,14 @@ import type {
   RadarReferencesDto,
   StatLineDto,
 } from "../../types/stats";
-import { type MetricKey, useMetrics } from "./metrics";
+import { type MetricKey, RADAR_AXES, useMetrics } from "./metrics";
 import { useStatsFormat } from "./statsFormat";
 import { groupeDePalier, noter } from "./grading";
 import { useReferenceGrid } from "./useReferenceGrid";
 
 type RadarReference = "met" | "league";
 
-// Cinq axes, tous « plus loin = mieux » (Schub#93) : les dégâts subis n'ont pas de bon sens, la part des morts
-// se lisait à l'envers, et le taux de victoire n'est pas une manière de jouer.
-const AXES: MetricKey[] = [
-  "damagePerMinute",
-  "goldPerMinute",
-  "kda",
-  "killParticipation",
-  "visionPerMinute",
-];
+const AXES = RADAR_AXES;
 
 export interface PlayerRadarProps {
   positions: StatLineDto[];
@@ -134,6 +126,9 @@ export function PlayerRadar({
     return definitions[key].polarity === "lower" ? 1 - position : position;
   };
 
+  // Le joueur moyen de tous les paliers à ce poste (Schub#146), sur la même échelle que la série du joueur.
+  const tousPaliers = (axe: MetricKey) =>
+    grille?.metrics[axe]?.allTiersMean ?? null;
   const series: RadarSeries[] = vue.line
     ? [
         {
@@ -143,6 +138,19 @@ export function PlayerRadar({
           values: AXES.map((axe) => normalise(axe, vue.line?.[axe])),
           display: AXES.map((axe) => definitions[axe].format(vue.line?.[axe])),
         },
+        ...(AXES.some((axe) => tousPaliers(axe) !== null)
+          ? [
+              {
+                key: "allTiers",
+                label: t("radar.series.allTiers"),
+                emphasis: "muted" as const,
+                values: AXES.map((axe) => normalise(axe, tousPaliers(axe))),
+                display: AXES.map((axe) =>
+                  definitions[axe].format(tousPaliers(axe)),
+                ),
+              },
+            ]
+          : []),
       ]
     : [];
 
