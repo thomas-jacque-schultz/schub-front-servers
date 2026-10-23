@@ -2,7 +2,7 @@
 import "@fontsource-variable/space-grotesk";
 import "@fontsource-variable/jetbrains-mono";
 
-import { createTheme } from "@mui/material/styles";
+import { createTheme, type ThemeOptions } from "@mui/material/styles";
 import {
   identity,
   radii,
@@ -11,12 +11,12 @@ import {
   type Identity,
 } from "./tokens";
 
-export const createAppTheme = (identity: Identity) => {
+export const appThemeOptions = (identity: Identity) => {
   const darkPalette = identity.palettes.dark;
   const lightPalette = identity.palettes.light;
   const elevations = identity.elevations;
 
-  return createTheme({
+  return {
     cssVariables: {
       // Nom complet de l'attribut : le raccourci "data" produit data-dark/data-light, que ni ce fichier ni addon-themes ne visent.
       colorSchemeSelector: "data-mui-color-scheme",
@@ -139,8 +139,11 @@ export const createAppTheme = (identity: Identity) => {
         },
       },
     },
-  });
+  } satisfies ThemeOptions;
 };
+
+export const createAppTheme = (identity: Identity) =>
+  createTheme(appThemeOptions(identity));
 
 export const appTheme = createAppTheme(identity);
 

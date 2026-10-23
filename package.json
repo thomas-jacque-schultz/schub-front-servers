@@ -10,8 +10,10 @@
     "preview": "vite preview --host",
     "typecheck": "tsc --noEmit",
     "contrat": "node scripts/contrat.mjs",
+    "quiz:fabrique": "vite-node scripts/quiz-fabrique.ts --",
     "lint": "eslint . && node scripts/premadelab-sans-schub.mjs && node scripts/typographie-fr.mjs && node scripts/contrat.mjs --verifier",
     "lint:fix": "eslint . --fix",
+    "test": "vitest run",
     "format": "prettier --write \"src/**/*.{ts,tsx,json}\" \".storybook/**/*.{ts,tsx}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,json}\" \".storybook/**/*.{ts,tsx}\"",
     "storybook": "storybook dev -p 6006",
@@ -20,6 +22,7 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@fontsource-variable/fredoka": "^5.3.0",
     "@fontsource-variable/jetbrains-mono": "^5.3.0",
     "@fontsource-variable/space-grotesk": "^5.3.0",
     "@hookform/resolvers": "^3.9.0",
@@ -55,6 +58,7 @@
     "storybook": "^8.6.18",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.70.0",
-    "vite": "^4.5.3"
+    "vite": "^4.5.3",
+    "vitest": "^0.34.6"
   }
 }

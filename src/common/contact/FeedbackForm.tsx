@@ -1,24 +1,43 @@
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router-dom";
 import {
   Alert,
   Button,
   Card,
   HoneypotField,
+  SelectField,
   Stack,
   Text,
   TextField,
 } from "../design-system";
 import { ApiError } from "../api/httpClient";
-import { sendContactMessageApi } from "./contactApi";
+import {
+  CONTACT_SUBJECTS,
+  type ContactSubject,
+  sendContactMessageApi,
+} from "./contactApi";
 import { TurnstileWidget } from "./TurnstileWidget";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MIN_MESSAGE_LENGTH = 20;
 
+// /contact?sujet=mini-jeux : le lien « Une question fausse ? » du quiz (Schub#136).
+const SUJETS_DE_L_ADRESSE: Record<string, ContactSubject> = {
+  compte: "ACCOUNT",
+  "stats-fausses": "WRONG_STATS",
+  fonctionnalite: "FEATURE",
+  "mini-jeux": "MINI_GAMES",
+  autre: "OTHER",
+};
+
 export function FeedbackForm() {
   const { t } = useTranslation("contact");
+  const [params] = useSearchParams();
 
+  const [subject, setSubject] = useState<ContactSubject | "">(
+    () => SUJETS_DE_L_ADRESSE[params.get("sujet") ?? ""] ?? "",
+  );
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -35,6 +54,9 @@ export function FeedbackForm() {
   const validate = (): boolean => {
     const next: Record<string, string> = {};
 
+    if (!subject) {
+      next.subject = t("errors.subjectRequired");
+    }
     if (!name.trim()) {
       next.name = t("errors.nameRequired");
     }
@@ -62,6 +84,7 @@ export function FeedbackForm() {
     setSending(true);
     try {
       await sendContactMessageApi({
+        subject: subject || "OTHER",
         name: name.trim(),
         email: email.trim(),
         message: message.trim(),
@@ -121,6 +144,19 @@ export function FeedbackForm() {
             helperText={errors.email || t("helpers.email")}
             required
             fullWidth
+          />
+
+          <SelectField
+            label={t("fields.subject")}
+            value={subject}
+            onChange={(value) => setSubject(value as ContactSubject)}
+            options={CONTACT_SUBJECTS.map((code) => ({
+              value: code,
+              label: t(`subjects.${code}`),
+            }))}
+            error={Boolean(errors.subject)}
+            helperText={errors.subject}
+            required
           />
 
           <TextField

@@ -48,6 +48,8 @@ export const ligne = (
   csDiffAt15: 6,
   xpDiffAt15: 120,
   killsDiffAt15: 0.3,
+  killsAssistsAt15: 4.6,
+  soloKills: 0.9,
   afkGames: 0,
   secondsPlayed: games * 1800,
   firstPlayedAt: IL_Y_A(14),
@@ -73,6 +75,11 @@ export const references: RadarReferencesDto = {
       deathShare: { low: 0.12, high: 0.27 },
       visionPerMinute: { low: 0.45, high: 1.25 },
       winRate: { low: 0.38, high: 0.63 },
+      damageShare: { low: 0.17, high: 0.33 },
+      goldDiffAt15: { low: -620, high: 650 },
+      csDiffAt15: { low: -14, high: 15 },
+      killsAssistsAt15: { low: 1.6, high: 6.1 },
+      soloKills: { low: 0.2, high: 1.6 },
     },
   },
 };
@@ -89,6 +96,11 @@ export const grilleOr = (position: string): ReferenceGridDto => {
     deathShare: [0.12, 0.16, 0.19, 0.22, 0.27],
     visionPerMinute: [0.45, 0.7, 0.85, 1.0, 1.25],
     winRate: [0.38, 0.46, 0.5, 0.54, 0.63],
+    damageShare: [0.17, 0.22, 0.25, 0.28, 0.33],
+    goldDiffAt15: [-620, -230, 10, 250, 650],
+    csDiffAt15: [-14, -5, 0, 5, 15],
+    killsAssistsAt15: [1.6, 2.8, 3.6, 4.5, 6.1],
+    soloKills: [0.2, 0.5, 0.7, 1.0, 1.6],
   };
   return {
     patches: ["16.19", "16.18"],
@@ -106,10 +118,12 @@ export const grilleOr = (position: string): ReferenceGridDto => {
               : "HIGHER",
           tiers: { GOLD: { count: 214, values } },
           rankMeans: null,
+          allTiersMean: values[2] * 1.04,
           missingTiers: [],
         },
       ]),
     ),
+    distributions: null,
   };
 };
 

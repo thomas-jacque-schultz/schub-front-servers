@@ -8,20 +8,16 @@ import {
   type RadarSeries,
 } from "../../../common";
 import type { PlayerStatsDto, StatLineDto } from "../../types/stats";
-import { KPI_ORDER, type MetricKey, useMetrics } from "./metrics";
+import {
+  KPI_ORDER,
+  type MetricKey,
+  RADAR_AXES,
+  useMetrics,
+} from "./metrics";
 import { bornesPremade, premadeFigure } from "./premade";
 import { useStatsFormat } from "./statsFormat";
 
-const AXES: MetricKey[] = [
-  "damagePerMinute",
-  "goldPerMinute",
-  "damageTakenPerMinute",
-  "kda",
-  "killParticipation",
-  "deathShare",
-  "visionPerMinute",
-  "winRate",
-];
+const AXES = RADAR_AXES;
 
 interface PremadeProps {
   player: PlayerStatsDto;

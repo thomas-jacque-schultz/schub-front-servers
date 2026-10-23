@@ -81,12 +81,13 @@
     "add": {
       "action": "Add a member",
       "title": "Add a member",
-      "description": "Search for the player's Riot account, then pick it from the list. If they already have a {{product}} account, the slot is attached to it right away.",
       "confirm": "Add",
       "failed": "Adding failed",
       "chosen": "Account chosen: {{riotId}}",
       "changeAccount": "Pick another account",
-      "pick": "Pick this player"
+      "pick": "Look up the full ID",
+      "partners": "Your gaming partners",
+      "partner": "{{riotId}} · {{count}} games together"
     },
     "edit": {
       "action": "Edit",
@@ -210,12 +211,12 @@
       "toTryConclusion": "Try: {{picks}}, which wins {{rate}} in general.",
       "toTryMethod": "Duos that win in general (at least 30 collected games, more than one win in two), with champions from the team pool or played at least 5 times by the player, that you played together fewer than 3 times.",
       "bansTitle": "Recommended bans",
-      "bansConclusion": "{{champion}}: you win {{rate}} against them ({{count}} games), they show up one game in {{every}}.",
+      "bansConclusion": "{{champion}}: {{wins}}\u00a0W – {{losses}}\u00a0L in {{count}} games against them.",
       "bansEmpty": "No champion is clearly a problem for you in this period.",
-      "banLine": "{{rate}} against · 1 game in {{every}}",
+      "banLine": "{{wins}}\u00a0W – {{losses}}\u00a0L against them · met in {{count}} of your {{games}} games",
       "banAdd": "Ban",
       "laneThreat": "Against {{champion}}, {{player}} loses {{gold}} gold at 15 min on average ({{count}} games).",
-      "bansMethod": "Ranked by impact: presence × win rate loss against your average, the loss taken at its cautious bound. Over {{games}} games.",
+      "bansMethod": "Ranked by impact: presence × win rate loss against your average, the loss taken at its cautious bound. A champion met fewer than {{duo}} times comes after the others. Over {{games}} games.",
       "details": "Show details",
       "hideDetails": "Hide details",
       "record_composition": "Played {{count}} times: {{wins}}W – {{losses}}L",

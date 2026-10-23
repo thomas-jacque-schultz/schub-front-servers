@@ -5,6 +5,7 @@ import {
   APP_URLS,
   Button,
   Card,
+  Columns,
   EmbeddedApp,
   PageHeader,
   Stack,
@@ -15,7 +16,7 @@ import {
   useLocalizedNavigate,
   useLocalizedPath,
 } from "../../common";
-import { SCRIBBLE_ORIGIN, SCRIBBLE_URL } from "../games";
+import { estJeu, type Jeu, JEUX, origineDuJeu, urlDuJeu } from "../queueKiller";
 
 // Les mini-jeux entre premades (Schub#118). Le jeu vit sur son sous-domaine, dans une iframe ; avec lui, deux
 // messages seulement : l'init (salon et langue), puis le salon qu'il vient de créer.
@@ -33,8 +34,8 @@ export default function QueueKillerPage() {
         title={t("queueKiller.title")}
         subtitle={t("queueKiller.subtitle")}
       />
-      {game === "scribble" ? (
-        <ScribbleRoom room={room ?? null} />
+      {estJeu(game) ? (
+        <Salon key={game} jeu={game} room={room ?? null} />
       ) : (
         <Catalogue />
       )}
@@ -46,20 +47,24 @@ function Catalogue() {
   const { t } = useTranslation("lol");
   const navigate = useLocalizedNavigate();
   return (
-    <Card title={t("queueKiller.scribble.title")}>
-      <Stack spacing={1.5}>
-        <Text>{t("queueKiller.scribble.body")}</Text>
-        <div>
-          <Button onClick={() => navigate("/queue-killer/scribble")}>
-            {t("queueKiller.scribble.create")}
-          </Button>
-        </div>
-      </Stack>
-    </Card>
+    <Columns minWidth={280}>
+      {JEUX.map((jeu) => (
+        <Card key={jeu} title={t(`queueKiller.${jeu}.title`)}>
+          <Stack spacing={1.5}>
+            <Text>{t(`queueKiller.${jeu}.body`)}</Text>
+            <div>
+              <Button onClick={() => navigate(`/queue-killer/${jeu}`)}>
+                {t("queueKiller.create")}
+              </Button>
+            </div>
+          </Stack>
+        </Card>
+      ))}
+    </Columns>
   );
 }
 
-function ScribbleRoom({ room }: { room: string | null }) {
+function Salon({ jeu, room }: { jeu: Jeu; room: string | null }) {
   const { t } = useTranslation("lol");
   const lang = useCurrentLanguage();
   const localize = useLocalizedPath();
@@ -81,7 +86,7 @@ function ScribbleRoom({ room }: { room: string | null }) {
     const ecoute = (event: MessageEvent) => {
       const data = event.data as { type?: unknown; room?: unknown } | null;
       if (
-        event.origin !== SCRIBBLE_ORIGIN ||
+        event.origin !== origineDuJeu(jeu) ||
         data?.type !== "premadelab:room" ||
         typeof data.room !== "string"
       ) {
@@ -89,15 +94,15 @@ function ScribbleRoom({ room }: { room: string | null }) {
       }
       if (/^[A-Z]{4}$/.test(data.room) && data.room !== room) {
         annonce.current = data.room;
-        navigate(`/queue-killer/scribble/${data.room}`, { replace: true });
+        navigate(`/queue-killer/${jeu}/${data.room}`, { replace: true });
       }
     };
     window.addEventListener("message", ecoute);
     return () => window.removeEventListener("message", ecoute);
-  }, [navigate, room]);
+  }, [jeu, navigate, room]);
 
   const lien = room
-    ? APP_URLS.premadelab + localize(`/queue-killer/scribble/${room}`)
+    ? APP_URLS.premadelab + localize(`/queue-killer/${jeu}/${room}`)
     : null;
 
   return (
@@ -105,18 +110,18 @@ function ScribbleRoom({ room }: { room: string | null }) {
       <EmbeddedApp
         key={transmis ?? "neuf"}
         ref={cadre}
-        src={SCRIBBLE_URL}
-        title={t("queueKiller.scribble.title")}
+        src={urlDuJeu(jeu)}
+        title={t(`queueKiller.${jeu}.title`)}
         onLoad={() =>
           cadre.current?.contentWindow?.postMessage(
             { type: "premadelab:init", room: transmis, lang },
-            SCRIBBLE_ORIGIN,
+            origineDuJeu(jeu),
           )
         }
       />
       {lien && (
         <Stack direction="row" spacing={1} align="center" wrap>
-          <Text variant="caption">{t("queueKiller.scribble.share")}</Text>
+          <Text variant="caption">{t("queueKiller.share")}</Text>
           <Text variant="caption" mono>
             {lien}
           </Text>
@@ -125,12 +130,12 @@ function ScribbleRoom({ room }: { room: string | null }) {
             variant="secondary"
             onClick={() =>
               void navigator.clipboard.writeText(lien).then(
-                () => setToast(t("queueKiller.scribble.copied")),
+                () => setToast(t("queueKiller.copied")),
                 () => setToast(lien),
               )
             }
           >
-            {t("queueKiller.scribble.copy")}
+            {t("queueKiller.copy")}
           </Button>
         </Stack>
       )}

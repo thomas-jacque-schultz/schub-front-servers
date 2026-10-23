@@ -5,59 +5,21 @@
   },
   "shell": {
     "tagline": "Your premade’s stats",
-    "presentation": "Overview",
     "stats": "My stats",
     "statsLocked": "Link your Riot account to open it",
     "teams": "Teams",
     "footerNote": "PremadeLab — stats and theorycraft for your League of Legends team",
-    "search": "Search",
     "combos": "Combos",
     "support": "Support",
     "queueKiller": "Queue Killer",
-    "experimental": "Experimental: more games are coming, and these will still change"
+    "experimental": "Experimental: more games are coming, and these will still change",
+    "home": "Home",
+    "howItWorks": "How it works"
   },
   "hero": {
     "eyebrow": "League of Legends",
     "title": "PremadeLab, the tool for your premade",
     "subtitle": "Look up a player, build a roster, gather the games you played together, and use them to prepare the next one."
-  },
-  "intro": {
-    "title": "What it is for",
-    "p1": "An amateur team plays together without ever being able to look back at what it played: the game client history is individual, short, and says nothing about what the group does when it is complete. PremadeLab gathers those games in one place and makes them readable at the team level.",
-    "p2": "PremadeLab is free, with no ads and no paid account. Looking up a player needs no account; building a team does.",
-    "p3": "Game data comes from the Riot Games API. PremadeLab only reads public games: those of accounts their owners declared, and the latest games of a player someone looks up."
-  },
-  "features": {
-    "title": "What the tool does today",
-    "intro": "Nothing beyond this list. Work in progress is not listed here.",
-    "roster": {
-      "title": "Build a roster",
-      "body": "A team is built by adding Riot IDs. Each seat carries its positions — top, jungle, mid, bot, support — and its status: starter, substitute or coach. A player added before he has an account keeps his seat: it reaches him when he signs in and links the same account."
-    },
-    "collect": {
-      "title": "Collect the history of games played together",
-      "body": "Once an account is declared, PremadeLab reads its history through the Riot API and spots the games where the team was present. A game counts for the team as soon as four of its members played it, all queues together."
-    },
-    "playerStats": {
-      "title": "Per-player statistics",
-      "body": "By champion, position, queue and month: games, wins, KDA, creep score, gold, damage and vision per minute, along with current rankings. Every figure states how many games and which period it covers."
-    },
-    "teamStats": {
-      "title": "Per-team statistics",
-      "body": "The group's record, broken down by queue, by side of the map and by patch, with each member's presence rate and the table of the games played together."
-    },
-    "pool": {
-      "title": "Champion pool by position",
-      "body": "The team declares, role by role, the champions it is ready to field. Under each champion, PremadeLab shows who in that role already played it and at what mastery level, above a floor set by the team."
-    },
-    "draft": {
-      "title": "Composition planning",
-      "body": "A composition holds five champions, one per position, and the player taking each line. It carries the patch it relates to and free-form notes, and is still there for the next game."
-    },
-    "search": {
-      "title": "Look up a player",
-      "body": "A Riot ID is enough: their rank, their top mastery champions, then the stats of their last ten games, collected on demand."
-    }
   },
   "limits": {
     "title": "What the tool does not do",
@@ -69,16 +31,6 @@
     "collectTime": "The first collection takes time — the Riot API quota limits it. The profile screen says how far along it is.",
     "historyUnknown": "PremadeLab only collects each player's recent games: older history is not collected."
   },
-  "access": {
-    "title": "Enter the tool",
-    "signedInBody": "Your account is signed in: the tool is open.",
-    "signedOutBody": "The tool requires an account. Sign-in goes through Discord, then you declare your Riot ID from your profile.",
-    "ctaTeams": "My teams",
-    "ctaStats": "My stats",
-    "ctaProfile": "Link my League of Legends account",
-    "ctaSignIn": "Sign in with Discord",
-    "noTeamPermission": "Your role does not grant access to teams yet. Personal statistics remain open."
-  },
   "legal": {
     "title": "Notices",
     "data": "What PremadeLab keeps, for how long, and how to request its deletion is described in the privacy policy.",
@@ -86,18 +38,21 @@
     "privacy": "Privacy policy"
   },
   "home": {
-    "features": {
-      "players": {
-        "title": "Every player's profile",
-        "body": "Look up a Riot ID: rank, most played champions, laning phase and play style, compared with players of the same tier in the same role. Profiles are public, no account needed."
+    "tiles": {
+      "player": {
+        "title": "Your profile: rank, champions, playstyle",
+        "alt": "A player’s income, laning phase and fights",
+        "image": "/premadelab/tuiles/en/fiche.jpg"
       },
       "team": {
-        "title": "What works as a five",
-        "body": "Build your premade: PremadeLab finds the games you play together and shows your winning duos, your early game, Early versus Late and the level of your opponents."
+        "title": "Your premade’s stats, game after game",
+        "alt": "A team’s record and its most played champions",
+        "image": "/premadelab/tuiles/en/premade.jpg"
       },
       "draft": {
-        "title": "Pool and draft",
-        "body": "The team's champion pool role by role, and a draft planner to save your compositions, with substitutes and planned bans."
+        "title": "Prepare your draft with winning combos",
+        "alt": "The champion duos that win the most at a tier",
+        "image": "/premadelab/tuiles/en/draft.jpg"
       }
     },
     "faq": {
@@ -225,9 +180,7 @@
   "support": {
     "title": "Support PremadeLab",
     "text": "PremadeLab is free and ad-free. The servers that collect and compute the stats are not: a coffee helps keep them running.",
-    "action": "Buy a coffee",
-    "reminder": "PremadeLab is free. If it helps you, you can support the site.",
-    "reminderAction": "Support PremadeLab"
+    "action": "Buy a coffee"
   },
   "companions": {
     "title": "Often plays with",
@@ -274,13 +227,29 @@
     },
     "title": "Queue Killer",
     "subtitle": "Something to kill queue time with your premade: multiplayer mini-games, playable without an account.",
+    "create": "Create a room",
+    "share": "Room link",
+    "copy": "Copy",
+    "copied": "Link copied",
     "scribble": {
       "title": "Scribble",
-      "body": "A shared board: everyone draws, everyone sees the strokes live. Create a room and send the link to your premade.",
-      "create": "Create a room",
-      "share": "Room link",
-      "copy": "Copy",
-      "copied": "Link copied"
+      "body": "One player draws a champion, the others guess. Create a room and send the link to your premade."
+    },
+    "zoom": {
+      "title": "Zoom",
+      "body": "A champion hidden under a zoom that slowly pulls back: the first to recognise it scores the most."
+    },
+    "indices": {
+      "title": "Clues",
+      "body": "A champion or an item, and clues that drop one by one: the fewer you need, the more you score."
+    },
+    "quiz": {
+      "title": "Summoner Quiz",
+      "body": "A four-choice quiz on items, lore, skins, the world and pro players: the fastest picks the next theme."
+    },
+    "imposteur": {
+      "title": "In-vo-posteur",
+      "body": "Everyone has the same champion except one. One word each, three turns, then vote to unmask the impostor."
     }
   }
 }

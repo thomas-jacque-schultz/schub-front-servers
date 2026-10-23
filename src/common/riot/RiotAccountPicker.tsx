@@ -39,6 +39,8 @@ export interface RiotAccountPickerProps {
   actionLabel: string;
   busy?: boolean;
   resetKey?: unknown;
+  /** Sans les textes d’aide : la boîte d’ajout d’un membre (#73). */
+  compact?: boolean;
 }
 
 export function RiotAccountPicker({
@@ -46,6 +48,7 @@ export function RiotAccountPicker({
   actionLabel,
   busy = false,
   resetKey,
+  compact = false,
 }: RiotAccountPickerProps) {
   const { t } = useTranslation("riot");
   const { formatDateTime } = useLocaleFormat();
@@ -220,7 +223,7 @@ export function RiotAccountPicker({
 
       <Stack spacing={1}>
         <TextField
-          label={t("search.label")}
+          label={compact ? t("search.labelShort") : t("search.label")}
           value={query}
           onChange={(value) => {
             setQuery(value);
@@ -228,7 +231,7 @@ export function RiotAccountPicker({
           }}
           onEnter={() => void verifier()}
           placeholder={t("search.placeholder")}
-          helperText={t("search.helper")}
+          helperText={compact ? undefined : t("search.helper")}
           autoFocus
         />
         {isSearching && (
@@ -251,11 +254,17 @@ export function RiotAccountPicker({
             {actionLabel}
           </Button>
         </Stack>
-        <Text variant="caption" tone="secondary">
-          {query.trim().length > 0 && !isRiotIdComplete(query)
-            ? t("verify.needsFullId")
-            : t("verify.helper")}
-        </Text>
+        {query.trim().length > 0 && !isRiotIdComplete(query) ? (
+          <Text variant="caption" tone="secondary">
+            {t("verify.needsFullId")}
+          </Text>
+        ) : (
+          !compact && (
+            <Text variant="caption" tone="secondary">
+              {t("verify.helper")}
+            </Text>
+          )
+        )}
         {verified && (
           <Alert severity="success">
             {t("verify.done", { riotId: verified })}
@@ -263,7 +272,7 @@ export function RiotAccountPicker({
         )}
       </Stack>
 
-      {hasSearched && !isSearching && suggestions.length > 0 && (
+      {!compact && hasSearched && !isSearching && suggestions.length > 0 && (
         <Text variant="caption" tone="secondary">
           {t("search.suggestions")}
         </Text>

@@ -69,6 +69,11 @@ export function PremadeLabLayout({ children }: { children: ReactNode }) {
       href: SUPPORT_URL,
       accent: true,
     },
+    {
+      key: "howItWorks",
+      label: t("shell.howItWorks", { ns: "lol" }),
+      to: localize("/presentation"),
+    },
     { key: "terms", label: t("shell.terms"), to: localize("/terms") },
     { key: "privacy", label: t("shell.privacy"), to: localize("/privacy") },
     { key: "github", label: t("shell.github"), href: GITHUB_URL },

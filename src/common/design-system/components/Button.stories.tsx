@@ -67,3 +67,7 @@ export const ToutesLesVariantes: Story = {
     </Stack>
   ),
 };
+
+export const ACoteDUnChamp: Story = {
+  args: { children: "Voir le joueur", size: "large", besideField: true },
+};

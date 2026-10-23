@@ -15,6 +15,8 @@ export interface ButtonProps {
   fullWidth?: boolean;
   /** start : un lien de liste, aligné sur le texte qui l'entoure. */
   align?: "center" | "start";
+  /** À côté d'un champ de saisie : sa hauteur, et le libellé sur une ligne. */
+  besideField?: boolean;
   startIcon?: ReactNode;
   endIcon?: ReactNode;
   onClick?: () => void;
@@ -37,6 +39,7 @@ export function Button({
   loading = false,
   fullWidth = false,
   align = "center",
+  besideField = false,
   startIcon,
   endIcon,
   onClick,
@@ -57,11 +60,17 @@ export function Button({
       disabled={disabled || loading}
       fullWidth={fullWidth}
       onClick={onClick}
-      sx={
-        align === "start"
-          ? { justifyContent: "flex-start", textAlign: "left" }
-          : undefined
-      }
+      sx={{
+        ...(align === "start" && {
+          justifyContent: "flex-start",
+          textAlign: "left",
+        }),
+        ...(besideField && {
+          minHeight: 56,
+          whiteSpace: "nowrap",
+          flexShrink: 0,
+        }),
+      }}
       startIcon={
         loading ? <CircularProgress size={16} color="inherit" /> : startIcon
       }

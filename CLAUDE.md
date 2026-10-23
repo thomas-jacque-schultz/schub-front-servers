@@ -117,6 +117,24 @@ dans ce dépôt, sur une base commune. **ESLint tient les pactes** (`pacte(...)`
   le vérifie à chaque `build` et `lint` : une section affichée par PremadeLab s'ajoute à sa liste.
   PremadeLab a son propre `/contact` (`FeedbackForm`, commun).
 
+**Les mini-jeux sont la troisième application** (Schub#139) : `src/games/<jeu>/`, sa page `games/<jeu>/index.html`
+(entrée Vite trouvée seule), servie sur `(dev-)<jeu>.premadelab.eu` par un bloc `server` de nginx et par le même
+middleware en dev. Un jeu n'importe que `common` (par sa porte) et `src/games/commun/`, jamais Schub, PremadeLab ni
+un autre jeu. La WebSocket `/ws` va droit au relais (`schub-together-games`) par le tunnel. Un jeu ajouté s'ajoute
+aussi à `src/premadelab/queueKiller.ts` et à la route `queue-killer/…` de `nginx.conf`.
+
+**Tous les jeux passent par les écrans de `games/commun/ecrans.tsx`**, sous `GameThemeProvider` (Schub#145). Leurs
+textes restent dans leur `textes.ts`. **L'ambiance des jeux n'est pas celle des applications**, et c'est voulu : un
+jeu qui ressemble au site de statistiques ne donne pas envie de jouer. Même prune, or et noir, mais police ronde
+(Fredoka, importée par `gameTheme.ts` seul : ses fichiers ne se téléchargent que dans les jeux), rayons ronds,
+liseré prune lumineux, bouton principal qui s'enfonce, griffonnages en fond (`GameBackdrop`), titre au pinceau
+(`GameTitle`). Ses jetons sont `playful` dans `tokens.ts`.
+Les jeux sont sombres seulement. `Frame` suit le rayon du thème : `radii.md` dans les applications, rond dans les jeux.
+
+**Le quiz ne fabrique rien pendant la partie** (Schub#143) : il tire dans la banque du cœur, que l'OWNER relit dans
+Schub › PremadeLab › Quiz. `npm run quiz:fabrique -- <lot.json>` fabrique un lot depuis Data Dragon et Univers ; le
+lot s'importe dans ce panneau.
+
 ## La coquille
 
 `AppShell` (design system) porte l'en-tête, les menus déroulants (`navItems` mêle entrées et menus),
@@ -168,7 +186,7 @@ décide de ce qu'elle reçoit.
 | `/stats` | Mes stats — ses parties, ses champions, ses postes | connecté, à la demande |
 | `/teams`, `/teams/:id` | les équipes | connecté, à la demande |
 | `/combos/:palier/:type` | les combos qui gagnent par palier (Schub#112), lus par les robots en SSI comme les profils | **public**, à la demande |
-| `/queue-killer`, `/queue-killer/scribble/:salon` | les mini-jeux (Schub#118), chacun en iframe depuis son sous-domaine ; deux messages avec le jeu, origine vérifiée | **public**, à la demande |
+| `/queue-killer`, `/queue-killer/:jeu/:salon` | les mini-jeux (Schub#118 : scribble, zoom, indices, quiz, imposteur), chacun en iframe depuis son sous-domaine (`queueKiller.ts`) ; deux messages avec le jeu, origine vérifiée | **public**, à la demande |
 
 **Communes** : `/profile` (connecté), `/login`, `/terms`, `/privacy` (publiques).
 

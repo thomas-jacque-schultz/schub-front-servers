@@ -34,7 +34,9 @@ type MetriqueDePartie =
   | "goldDiffAt15"
   | "csDiffAt15"
   | "xpDiffAt15"
-  | "killsDiffAt15";
+  | "killsDiffAt15"
+  | "killsAssistsAt15"
+  | "soloKills";
 
 interface MetricDefinition {
   key: MetricKey;
@@ -68,6 +70,23 @@ export const KPI_ORDER: MetricKey[] = [
   "visionPerMinute",
 ];
 
+/**
+ * Les axes des radars, profil comme équipe (Schub#146) : tous « plus loin = mieux ». Les dégâts subis et la part des
+ * morts en sont sortis : un tank encaisse par rôle, et une part des morts se lisait à l'envers.
+ */
+export const RADAR_AXES: MetricKey[] = [
+  "kda",
+  "killParticipation",
+  "damagePerMinute",
+  "visionPerMinute",
+  "damageShare",
+  "killsAssistsAt15",
+  "goldDiffAt15",
+  "csDiffAt15",
+  "goldPerMinute",
+  "soloKills",
+];
+
 /** Les six familles de la fiche détaillée, dans l'ordre de lecture d'une partie. */
 export const FAMILLES: { key: string; metrics: MetricKey[] }[] = [
   { key: "income", metrics: ["csPerMinute", "goldPerMinute"] },
@@ -78,6 +97,7 @@ export const FAMILLES: { key: string; metrics: MetricKey[] }[] = [
       "csDiffAt15",
       "xpDiffAt15",
       "killsDiffAt15",
+      "killsAssistsAt15",
       "platesDiff",
     ],
   },
@@ -87,6 +107,7 @@ export const FAMILLES: { key: string; metrics: MetricKey[] }[] = [
       "damagePerMinute",
       "damageShare",
       "killParticipation",
+      "soloKills",
       "deathShare",
     ],
   },
@@ -177,6 +198,13 @@ export const useMetrics = () => {
       csDiffAt15: simple("csDiffAt15", signeDecimal, decimal, "higher"),
       xpDiffAt15: simple("xpDiffAt15", signe, ecartEntier, "higher"),
       killsDiffAt15: simple("killsDiffAt15", signeDecimal, decimal, "higher"),
+      killsAssistsAt15: simple(
+        "killsAssistsAt15",
+        format.ratio,
+        decimal,
+        "higher",
+      ),
+      soloKills: simple("soloKills", format.ratio, decimal, "higher"),
     };
 
     const definitions: Record<MetricKey, MetricDefinition> = {

@@ -350,7 +350,6 @@ export function BansCard({
   onPick?: (ban: BanDto) => void;
 }) {
   const { t } = useTranslation("teams");
-  const taux = useStatsFormat().taux;
   const { formatNumber } = useLocaleFormat();
   const premier = advice.bans[0];
   return (
@@ -360,9 +359,9 @@ export function BansCard({
         premier
           ? t("draft.advice.bansConclusion", {
               champion: premier.championName ?? "",
-              rate: taux(premier.winRateAgainst),
+              wins: premier.winsAgainst,
+              losses: premier.gamesAgainst - premier.winsAgainst,
               count: premier.gamesAgainst,
-              every: Math.max(1, Math.round(1 / premier.presence)),
             })
           : t("draft.advice.bansEmpty")
       }
@@ -385,8 +384,10 @@ export function BansCard({
               <Text>{ban.championName}</Text>
               <Text variant="caption" mono>
                 {t("draft.advice.banLine", {
-                  rate: taux(ban.winRateAgainst),
-                  every: Math.max(1, Math.round(1 / ban.presence)),
+                  wins: ban.winsAgainst,
+                  losses: ban.gamesAgainst - ban.winsAgainst,
+                  count: ban.gamesAgainst,
+                  games: advice.games,
                 })}
               </Text>
               {ban.lowConfidence && (
@@ -427,7 +428,10 @@ export function BansCard({
             </Text>
           ))}
           <Text variant="caption" tone="secondary">
-            {t("draft.advice.bansMethod", { games: advice.games })}
+            {t("draft.advice.bansMethod", {
+              games: advice.games,
+              duo: advice.duoThreshold,
+            })}
           </Text>
         </Stack>
       }

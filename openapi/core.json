@@ -246,7 +246,7 @@
     },
     "/deployments" : {
       "get" : {
-        "operationId" : "all_4",
+        "operationId" : "all_5",
         "parameters" : [ {
           "in" : "header",
           "name" : "X-Actor-Id",
@@ -275,7 +275,7 @@
     },
     "/game-servers" : {
       "get" : {
-        "operationId" : "all_3",
+        "operationId" : "all_4",
         "parameters" : [ {
           "in" : "header",
           "name" : "X-Actor-Id",
@@ -2135,6 +2135,123 @@
         "tags" : [ "public-team-controller" ]
       }
     },
+    "/quiz/questions" : {
+      "get" : {
+        "operationId" : "active",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/QuizQuestionDto"
+                  }
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "quiz-question-controller" ]
+      }
+    },
+    "/quiz/questions/all" : {
+      "get" : {
+        "operationId" : "all_3",
+        "parameters" : [ {
+          "in" : "header",
+          "name" : "X-Actor-Id",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/QuizQuestionDto"
+                  }
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "quiz-question-controller" ]
+      }
+    },
+    "/quiz/questions/{id}" : {
+      "delete" : {
+        "operationId" : "delete_3",
+        "parameters" : [ {
+          "in" : "header",
+          "name" : "X-Actor-Id",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "quiz-question-controller" ]
+      },
+      "put" : {
+        "operationId" : "save",
+        "parameters" : [ {
+          "in" : "header",
+          "name" : "X-Actor-Id",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/QuizQuestionRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/QuizQuestionDto"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "quiz-question-controller" ]
+      }
+    },
     "/roles" : {
       "get" : {
         "operationId" : "all_2",
@@ -3759,7 +3876,7 @@
                   "type" : "array",
                   "items" : {
                     "type" : "string",
-                    "enum" : [ "SERVER_VIEW", "SERVER_INFRA_VIEW", "SERVER_START", "SERVER_STOP", "SERVER_CONTROL_ALL", "SERVER_CREATE", "SERVER_EDIT", "SERVER_DELETE", "PORT_VIEW", "PORT_RULE_EDIT", "DISCORD_CHANNEL_MANAGE", "USER_VIEW", "USER_ROLE_ASSIGN", "INGEST_VIEW", "INGEST_MANAGE", "TEAM_CREATE", "TEAM_VIEW", "TEAM_MANAGE", "ROSTER_EDIT", "COMPOSITION_EDIT", "AUGUR_PATTERN_EDIT", "ROLE_MANAGE" ]
+                    "enum" : [ "SERVER_VIEW", "SERVER_INFRA_VIEW", "SERVER_START", "SERVER_STOP", "SERVER_CONTROL_ALL", "SERVER_CREATE", "SERVER_EDIT", "SERVER_DELETE", "PORT_VIEW", "PORT_RULE_EDIT", "DISCORD_CHANNEL_MANAGE", "USER_VIEW", "USER_ROLE_ASSIGN", "INGEST_VIEW", "INGEST_MANAGE", "TEAM_CREATE", "TEAM_VIEW", "TEAM_MANAGE", "ROSTER_EDIT", "COMPOSITION_EDIT", "AUGUR_PATTERN_EDIT", "QUIZ_QUESTION_EDIT", "ROLE_MANAGE" ]
                   }
                 }
               }
@@ -6837,6 +6954,109 @@
           }
         }
       },
+      "QuizQuestionDto" : {
+        "required" : [ "active", "date", "en", "fr", "id", "image", "imagesChoix", "source", "theme", "updatedAt" ],
+        "type" : "object",
+        "properties" : {
+          "active" : {
+            "type" : "boolean"
+          },
+          "date" : {
+            "type" : "string"
+          },
+          "en" : {
+            "$ref" : "#/components/schemas/QuizWordingDto"
+          },
+          "fr" : {
+            "$ref" : "#/components/schemas/QuizWordingDto"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "image" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "imagesChoix" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "type" : "array",
+              "items" : {
+                "type" : "string"
+              }
+            }
+          },
+          "source" : {
+            "type" : "string"
+          },
+          "theme" : {
+            "type" : "string",
+            "enum" : [ "PROS", "MONDE", "OBJETS", "HISTOIRE", "SKINS" ]
+          },
+          "updatedAt" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }
+      },
+      "QuizQuestionRequest" : {
+        "required" : [ "active", "date", "en", "fr", "source", "theme" ],
+        "type" : "object",
+        "properties" : {
+          "active" : {
+            "type" : "boolean"
+          },
+          "date" : {
+            "type" : "string"
+          },
+          "en" : {
+            "$ref" : "#/components/schemas/QuizWordingDto"
+          },
+          "fr" : {
+            "$ref" : "#/components/schemas/QuizWordingDto"
+          },
+          "image" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "imagesChoix" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "type" : "array",
+              "items" : {
+                "type" : "string"
+              }
+            }
+          },
+          "source" : {
+            "type" : "string"
+          },
+          "theme" : {
+            "type" : "string",
+            "enum" : [ "PROS", "MONDE", "OBJETS", "HISTOIRE", "SKINS" ]
+          }
+        }
+      },
+      "QuizWordingDto" : {
+        "required" : [ "choix", "enonce", "explication" ],
+        "type" : "object",
+        "properties" : {
+          "choix" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "enonce" : {
+            "type" : "string"
+          },
+          "explication" : {
+            "type" : "string"
+          }
+        }
+      },
       "RadarReferencesDto" : {
         "required" : [ "met", "position", "tier" ],
         "type" : "object",
@@ -6929,13 +7149,41 @@
           }
         }
       },
+      "ReferenceGridDistribution" : {
+        "required" : [ "count", "counts", "step" ],
+        "type" : "object",
+        "properties" : {
+          "count" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "counts" : {
+            "type" : "array",
+            "items" : {
+              "type" : "integer",
+              "format" : "int64"
+            }
+          },
+          "step" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }
+      },
       "ReferenceGridDto" : {
-        "required" : [ "computedAt", "metrics", "patches", "percentiles", "position", "scope" ],
+        "required" : [ "computedAt", "distributions", "metrics", "patches", "percentiles", "position", "scope" ],
         "type" : "object",
         "properties" : {
           "computedAt" : {
             "type" : "string",
             "format" : "date-time"
+          },
+          "distributions" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "$ref" : "#/components/schemas/ReferenceGridDistribution"
+            },
+            "nullable" : true
           },
           "metrics" : {
             "type" : "object",
@@ -6965,9 +7213,14 @@
         }
       },
       "ReferenceGridMetric" : {
-        "required" : [ "missingTiers", "polarity", "rankMeans", "tiers" ],
+        "required" : [ "allTiersMean", "missingTiers", "polarity", "rankMeans", "tiers" ],
         "type" : "object",
         "properties" : {
+          "allTiersMean" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
           "missingTiers" : {
             "type" : "array",
             "items" : {
@@ -7292,7 +7545,7 @@
             "type" : "array",
             "items" : {
               "type" : "string",
-              "enum" : [ "SERVER_VIEW", "SERVER_INFRA_VIEW", "SERVER_START", "SERVER_STOP", "SERVER_CONTROL_ALL", "SERVER_CREATE", "SERVER_EDIT", "SERVER_DELETE", "PORT_VIEW", "PORT_RULE_EDIT", "DISCORD_CHANNEL_MANAGE", "USER_VIEW", "USER_ROLE_ASSIGN", "INGEST_VIEW", "INGEST_MANAGE", "TEAM_CREATE", "TEAM_VIEW", "TEAM_MANAGE", "ROSTER_EDIT", "COMPOSITION_EDIT", "AUGUR_PATTERN_EDIT", "ROLE_MANAGE" ]
+              "enum" : [ "SERVER_VIEW", "SERVER_INFRA_VIEW", "SERVER_START", "SERVER_STOP", "SERVER_CONTROL_ALL", "SERVER_CREATE", "SERVER_EDIT", "SERVER_DELETE", "PORT_VIEW", "PORT_RULE_EDIT", "DISCORD_CHANNEL_MANAGE", "USER_VIEW", "USER_ROLE_ASSIGN", "INGEST_VIEW", "INGEST_MANAGE", "TEAM_CREATE", "TEAM_VIEW", "TEAM_MANAGE", "ROSTER_EDIT", "COMPOSITION_EDIT", "AUGUR_PATTERN_EDIT", "QUIZ_QUESTION_EDIT", "ROLE_MANAGE" ]
             }
           },
           "system" : {
@@ -7312,7 +7565,7 @@
             "type" : "array",
             "items" : {
               "type" : "string",
-              "enum" : [ "SERVER_VIEW", "SERVER_INFRA_VIEW", "SERVER_START", "SERVER_STOP", "SERVER_CONTROL_ALL", "SERVER_CREATE", "SERVER_EDIT", "SERVER_DELETE", "PORT_VIEW", "PORT_RULE_EDIT", "DISCORD_CHANNEL_MANAGE", "USER_VIEW", "USER_ROLE_ASSIGN", "INGEST_VIEW", "INGEST_MANAGE", "TEAM_CREATE", "TEAM_VIEW", "TEAM_MANAGE", "ROSTER_EDIT", "COMPOSITION_EDIT", "AUGUR_PATTERN_EDIT", "ROLE_MANAGE" ]
+              "enum" : [ "SERVER_VIEW", "SERVER_INFRA_VIEW", "SERVER_START", "SERVER_STOP", "SERVER_CONTROL_ALL", "SERVER_CREATE", "SERVER_EDIT", "SERVER_DELETE", "PORT_VIEW", "PORT_RULE_EDIT", "DISCORD_CHANNEL_MANAGE", "USER_VIEW", "USER_ROLE_ASSIGN", "INGEST_VIEW", "INGEST_MANAGE", "TEAM_CREATE", "TEAM_VIEW", "TEAM_MANAGE", "ROSTER_EDIT", "COMPOSITION_EDIT", "AUGUR_PATTERN_EDIT", "QUIZ_QUESTION_EDIT", "ROLE_MANAGE" ]
             }
           }
         }
@@ -7512,7 +7765,7 @@
         }
       },
       "StatLineDto" : {
-        "required" : [ "afkGames", "assistsPerGame", "controlWardsPlaced", "csDiffAt15", "csPerMinute", "damagePerMinute", "damageShare", "damageTakenPerMinute", "deathShare", "deathsPer10", "deathsPerGame", "epicMonsterDamagePerMinute", "firstPlayedAt", "games", "goldDiffAt15", "goldPerMinute", "iconUrl", "kda", "key", "killParticipation", "killsDiffAt15", "killsPerGame", "label", "laningGames", "lastPlayedAt", "platesDiff", "secondsPlayed", "timeDeadShare", "turretDamagePerMinute", "turretTakedowns", "versusRest", "visionPerMinute", "wardsKilledPerMinute", "winRate", "wins", "xpDiffAt15" ],
+        "required" : [ "afkGames", "assistsPerGame", "controlWardsPlaced", "csDiffAt15", "csPerMinute", "damagePerMinute", "damageShare", "damageTakenPerMinute", "deathShare", "deathsPer10", "deathsPerGame", "epicMonsterDamagePerMinute", "firstPlayedAt", "games", "goldDiffAt15", "goldPerMinute", "iconUrl", "kda", "key", "killParticipation", "killsAssistsAt15", "killsDiffAt15", "killsPerGame", "label", "laningGames", "lastPlayedAt", "platesDiff", "secondsPlayed", "soloKills", "timeDeadShare", "turretDamagePerMinute", "turretTakedowns", "versusRest", "visionPerMinute", "wardsKilledPerMinute", "winRate", "wins", "xpDiffAt15" ],
         "type" : "object",
         "properties" : {
           "afkGames" : {
@@ -7610,6 +7863,11 @@
             "format" : "double",
             "nullable" : true
           },
+          "killsAssistsAt15" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
           "killsDiffAt15" : {
             "type" : "number",
             "format" : "double",
@@ -7642,6 +7900,11 @@
           "secondsPlayed" : {
             "type" : "integer",
             "format" : "int64"
+          },
+          "soloKills" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
           },
           "timeDeadShare" : {
             "type" : "number",
@@ -8848,7 +9111,7 @@
             "type" : "array",
             "items" : {
               "type" : "string",
-              "enum" : [ "SERVER_VIEW", "SERVER_INFRA_VIEW", "SERVER_START", "SERVER_STOP", "SERVER_CONTROL_ALL", "SERVER_CREATE", "SERVER_EDIT", "SERVER_DELETE", "PORT_VIEW", "PORT_RULE_EDIT", "DISCORD_CHANNEL_MANAGE", "USER_VIEW", "USER_ROLE_ASSIGN", "INGEST_VIEW", "INGEST_MANAGE", "TEAM_CREATE", "TEAM_VIEW", "TEAM_MANAGE", "ROSTER_EDIT", "COMPOSITION_EDIT", "AUGUR_PATTERN_EDIT", "ROLE_MANAGE" ]
+              "enum" : [ "SERVER_VIEW", "SERVER_INFRA_VIEW", "SERVER_START", "SERVER_STOP", "SERVER_CONTROL_ALL", "SERVER_CREATE", "SERVER_EDIT", "SERVER_DELETE", "PORT_VIEW", "PORT_RULE_EDIT", "DISCORD_CHANNEL_MANAGE", "USER_VIEW", "USER_ROLE_ASSIGN", "INGEST_VIEW", "INGEST_MANAGE", "TEAM_CREATE", "TEAM_VIEW", "TEAM_MANAGE", "ROSTER_EDIT", "COMPOSITION_EDIT", "AUGUR_PATTERN_EDIT", "QUIZ_QUESTION_EDIT", "ROLE_MANAGE" ]
             }
           },
           "user" : {

@@ -26,7 +26,7 @@ export function CompanionsCard({
   const format = useStatsFormat();
   const navigate = useLocalizedNavigate();
   const chemin = useLocalizedPath();
-  const { connected, loginWithDiscord } = useAuthStore();
+  const { connected } = useAuthStore();
   const { data } = useRequest(`companions/${slug}`, () =>
     getPlayerCompanionsApi(slug),
   );
@@ -42,7 +42,7 @@ export function CompanionsCard({
       navigate("/teams");
     } else {
       retenirApresConnexion("/teams");
-      loginWithDiscord();
+      navigate("/login");
     }
   };
 

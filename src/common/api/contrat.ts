@@ -87,7 +87,7 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
-    get: operations["all_4"];
+    get: operations["all_5"];
     put?: never;
     post?: never;
     delete?: never;
@@ -103,7 +103,7 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
-    get: operations["all_3"];
+    get: operations["all_4"];
     put?: never;
     post: operations["create_3"];
     delete?: never;
@@ -827,6 +827,54 @@ export interface paths {
     put?: never;
     post?: never;
     delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/quiz/questions": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["active"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/quiz/questions/all": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["all_3"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/quiz/questions/{id}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put: operations["save"];
+    post?: never;
+    delete: operations["delete_3"];
     options?: never;
     head?: never;
     patch?: never;
@@ -2430,6 +2478,36 @@ export interface components {
       /** Format: int64 */
       wins: number;
     };
+    QuizQuestionDto: {
+      active: boolean;
+      date: string;
+      en: components["schemas"]["QuizWordingDto"];
+      fr: components["schemas"]["QuizWordingDto"];
+      id: string;
+      image: string | null;
+      imagesChoix: string[][] | null;
+      source: string;
+      /** @enum {string} */
+      theme: "PROS" | "MONDE" | "OBJETS" | "HISTOIRE" | "SKINS";
+      /** Format: date-time */
+      updatedAt: string;
+    };
+    QuizQuestionRequest: {
+      active: boolean;
+      date: string;
+      en: components["schemas"]["QuizWordingDto"];
+      fr: components["schemas"]["QuizWordingDto"];
+      image?: string | null;
+      imagesChoix?: string[][] | null;
+      source: string;
+      /** @enum {string} */
+      theme: "PROS" | "MONDE" | "OBJETS" | "HISTOIRE" | "SKINS";
+    };
+    QuizWordingDto: {
+      choix: string[];
+      enonce: string;
+      explication: string;
+    };
     RadarReferencesDto: {
       met: components["schemas"]["MetricReferenceDto"] | null;
       position: string;
@@ -2463,9 +2541,19 @@ export interface components {
       /** Format: int64 */
       wins: number;
     };
+    ReferenceGridDistribution: {
+      /** Format: int64 */
+      count: number;
+      counts: number[];
+      /** Format: double */
+      step: number;
+    };
     ReferenceGridDto: {
       /** Format: date-time */
       computedAt: string;
+      distributions: {
+        [key: string]: components["schemas"]["ReferenceGridDistribution"];
+      } | null;
       metrics: {
         [key: string]: components["schemas"]["ReferenceGridMetric"];
       };
@@ -2475,6 +2563,8 @@ export interface components {
       scope: string;
     };
     ReferenceGridMetric: {
+      /** Format: double */
+      allTiersMean: number | null;
       missingTiers: string[];
       polarity: string;
       rankMeans: {
@@ -2619,6 +2709,7 @@ export interface components {
         | "ROSTER_EDIT"
         | "COMPOSITION_EDIT"
         | "AUGUR_PATTERN_EDIT"
+        | "QUIZ_QUESTION_EDIT"
         | "ROLE_MANAGE"
       )[];
       system: boolean;
@@ -2647,6 +2738,7 @@ export interface components {
         | "ROSTER_EDIT"
         | "COMPOSITION_EDIT"
         | "AUGUR_PATTERN_EDIT"
+        | "QUIZ_QUESTION_EDIT"
         | "ROLE_MANAGE"
       )[];
     };
@@ -2751,6 +2843,8 @@ export interface components {
       /** Format: double */
       killParticipation: number | null;
       /** Format: double */
+      killsAssistsAt15: number | null;
+      /** Format: double */
       killsDiffAt15: number | null;
       /** Format: double */
       killsPerGame: number | null;
@@ -2766,6 +2860,8 @@ export interface components {
       platesDiff: number | null;
       /** Format: int64 */
       secondsPlayed: number;
+      /** Format: double */
+      soloKills: number | null;
       /** Format: double */
       timeDeadShare: number | null;
       /** Format: double */
@@ -3223,6 +3319,7 @@ export interface components {
         | "ROSTER_EDIT"
         | "COMPOSITION_EDIT"
         | "AUGUR_PATTERN_EDIT"
+        | "QUIZ_QUESTION_EDIT"
         | "ROLE_MANAGE"
       )[];
       user: components["schemas"]["UserDto"];
@@ -3404,7 +3501,7 @@ export interface operations {
       };
     };
   };
-  all_4: {
+  all_5: {
     parameters: {
       query?: never;
       header?: {
@@ -3426,7 +3523,7 @@ export interface operations {
       };
     };
   };
-  all_3: {
+  all_4: {
     parameters: {
       query?: never;
       header?: {
@@ -4725,6 +4822,98 @@ export interface operations {
       };
     };
   };
+  active: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "*/*": components["schemas"]["QuizQuestionDto"][];
+        };
+      };
+    };
+  };
+  all_3: {
+    parameters: {
+      query?: never;
+      header?: {
+        "X-Actor-Id"?: string;
+      };
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "*/*": components["schemas"]["QuizQuestionDto"][];
+        };
+      };
+    };
+  };
+  save: {
+    parameters: {
+      query?: never;
+      header?: {
+        "X-Actor-Id"?: string;
+      };
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["QuizQuestionRequest"];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "*/*": components["schemas"]["QuizQuestionDto"];
+        };
+      };
+    };
+  };
+  delete_3: {
+    parameters: {
+      query?: never;
+      header?: {
+        "X-Actor-Id"?: string;
+      };
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
   all_2: {
     parameters: {
       query?: never;
@@ -5776,6 +5965,7 @@ export interface operations {
             | "ROSTER_EDIT"
             | "COMPOSITION_EDIT"
             | "AUGUR_PATTERN_EDIT"
+            | "QUIZ_QUESTION_EDIT"
             | "ROLE_MANAGE"
           )[];
         };

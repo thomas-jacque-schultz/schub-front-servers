@@ -64,7 +64,9 @@
     "goldDiffAt15": "Gold difference at 15",
     "csDiffAt15": "CS difference at 15",
     "xpDiffAt15": "XP difference at 15",
-    "killsDiffAt15": "Kill difference at 15"
+    "killsDiffAt15": "Kill difference at 15",
+    "killsAssistsAt15": "Kills and assists at 15",
+    "soloKills": "Solo kills per game"
   },
   "delta": {
     "points": "{{value}} pts",
@@ -248,18 +250,21 @@
     "goldDiffAt15": "Gold @15",
     "csDiffAt15": "CS @15",
     "xpDiffAt15": "XP @15",
-    "killsDiffAt15": "Kills @15"
+    "killsDiffAt15": "Kills @15",
+    "killsAssistsAt15": "K+A @15",
+    "soloKills": "Solo kills"
   },
   "radar": {
     "title": "Profile",
-    "helper": "Five axes, further out = better, read against the chosen reference: the centre is its low end, the edge its high end.",
+    "helper": "Ten axes, further out = better, read against the chosen reference: the centre is its low end, the edge its high end. Dotted: the average player of every tier in this position.",
     "reference": {
       "label": "Reference",
       "met": "Opponents",
       "league": "Tier"
     },
     "series": {
-      "position": "As {{position}}"
+      "position": "As {{position}}",
+      "allTiers": "All-tier average"
     },
     "note": {
       "met": "As {{position}}, {{games}} game(s). Centre: 5th percentile of {{count}} direct opponents (at least {{min}} games each), edge: 95th.",
@@ -698,5 +703,29 @@
     "listing": "Catching up your history since {{date}}: listing your games.",
     "progress_one": "Catching up your history: {{collected}} game out of {{count}}, back to {{date}}.",
     "progress_other": "Catching up your history: {{collected}} games out of {{count}}, back to {{date}}."
+  },
+  "distribution": {
+    "deaths": {
+      "title": "Deaths per game",
+      "high": "You die a lot: {{value}} times per game, more than in {{share}} of {{position}} games.",
+      "average": "You die about as often as most: {{value}} times per game as {{position}}.",
+      "low": "You play it safe: {{value}} deaths per game, fewer than in {{share}} of {{position}} games."
+    },
+    "kills": {
+      "title": "Kills per game",
+      "high": "You kill a lot: {{value}} kills per game, more than in {{share}} of {{position}} games.",
+      "average": "Your kills are average: {{value}} per game as {{position}}.",
+      "low": "You kill little: {{value}} kills per game, fewer than in {{share}} of {{position}} games."
+    },
+    "kda": {
+      "title": "KDA",
+      "high": "Your {{value}} KDA beats {{share}} of {{position}} games.",
+      "average": "Your {{value}} KDA is average for {{position}}.",
+      "low": "Your {{value}} KDA is below {{share}} of {{position}} games."
+    },
+    "you": "you: {{value}}",
+    "bar": "{{value}}: {{share}} of games",
+    "aria": "{{metric}}: spread of {{position}} games, your average at {{value}}.",
+    "basis": "Over {{games}} ranked {{position}} games from the last two patches, all tiers, against your average in that role."
   }
 }

@@ -48,6 +48,7 @@
     "ROSTER_EDIT": "Gérer l'effectif d'une équipe",
     "COMPOSITION_EDIT": "Modifier les compositions d'une équipe",
     "ROLE_MANAGE": "Administrer les rôles",
-    "AUGUR_PATTERN_EDIT": "Éditer les règles du moteur de constats (PremadeLab)"
+    "AUGUR_PATTERN_EDIT": "Éditer les règles du moteur de constats (PremadeLab)",
+    "QUIZ_QUESTION_EDIT": "Modifier les questions du quiz (PremadeLab)"
   }
 }

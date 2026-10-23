@@ -5,7 +5,7 @@ import { typographyTokens } from "../tokens";
 export type TextVariant =
   "title" | "section" | "subtitle" | "body" | "caption" | "overline";
 export type TextTone =
-  "default" | "secondary" | "disabled" | "primary" | "error";
+  "default" | "secondary" | "disabled" | "primary" | "success" | "error";
 
 export interface TextProps {
   children: ReactNode;
@@ -15,6 +15,7 @@ export interface TextProps {
   truncate?: boolean;
   /** Chasse fixe : pour un chiffre ou un identifiant, jamais pour de la prose. */
   mono?: boolean;
+  italic?: boolean;
   align?: "left" | "center" | "right";
 }
 
@@ -41,6 +42,7 @@ const TONE = {
   secondary: "text.secondary",
   disabled: "text.disabled",
   primary: "primary.main",
+  success: "success.main",
   error: "error.main",
 } as const;
 
@@ -51,6 +53,7 @@ export function Text({
   component,
   truncate = false,
   mono = false,
+  italic = false,
   align,
 }: TextProps) {
   return (
@@ -60,14 +63,13 @@ export function Text({
       color={TONE[tone]}
       noWrap={truncate}
       align={align}
-      sx={
-        mono
-          ? {
-              fontFamily: typographyTokens.monospaceFontFamily,
-              fontVariantNumeric: "tabular-nums",
-            }
-          : undefined
-      }
+      sx={{
+        ...(mono && {
+          fontFamily: typographyTokens.monospaceFontFamily,
+          fontVariantNumeric: "tabular-nums",
+        }),
+        ...(italic && { fontStyle: "italic" }),
+      }}
     >
       {children}
     </Typography>

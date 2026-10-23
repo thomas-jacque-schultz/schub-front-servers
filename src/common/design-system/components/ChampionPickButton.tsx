@@ -10,12 +10,14 @@ export interface ChampionPickButtonProps {
   champion?: { name: string; iconUrl?: string | null } | null;
   label: string;
   onClick: () => void;
-  size?: "small" | "large";
+  size?: "small" | "medium" | "large";
   /** Le sélecteur de cette case est ouvert. */
   active?: boolean;
+  /** Déjà essayé, ou plus proposé : grisé et inerte. */
+  disabled?: boolean;
 }
 
-const COTE = { small: 28, large: 56 } as const;
+const COTE = { small: 28, medium: 40, large: 56 } as const;
 
 export function ChampionPickButton({
   champion,
@@ -23,11 +25,13 @@ export function ChampionPickButton({
   onClick,
   size = "large",
   active = false,
+  disabled = false,
 }: ChampionPickButtonProps) {
   return (
     <MuiTooltip title={label}>
       <ButtonBase
         onClick={onClick}
+        disabled={disabled}
         aria-label={label}
         aria-expanded={active}
         sx={{
@@ -45,7 +49,9 @@ export function ChampionPickButton({
           <ChampionIcon
             src={champion.iconUrl}
             name={champion.name}
+            tooltip=""
             size={size}
+            dimmed={disabled}
           />
         ) : (
           <Box
