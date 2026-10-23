@@ -5,7 +5,7 @@ import { typographyTokens } from "../tokens";
 export type TextVariant =
   "title" | "section" | "subtitle" | "body" | "caption" | "overline";
 export type TextTone =
-  "default" | "secondary" | "disabled" | "primary" | "error";
+  "default" | "secondary" | "disabled" | "primary" | "success" | "error";
 
 export interface TextProps {
   children: ReactNode;
@@ -42,6 +42,7 @@ const TONE = {
   secondary: "text.secondary",
   disabled: "text.disabled",
   primary: "primary.main",
+  success: "success.main",
   error: "error.main",
 } as const;
 

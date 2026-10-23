@@ -17,6 +17,7 @@ import {
   AvecDonnees,
   Chrono,
   Classement,
+  type Fiche,
   Fin,
   Jeu,
   Preparation,
@@ -45,10 +46,16 @@ import {
 import { creerRegles } from "./regles";
 import { texte } from "./textes";
 
+const FICHE: Fiche = {
+  titre: (lang) => texte(lang, "titre"),
+  icone: "🧠",
+  accroche: (lang) => texte(lang, "accroche"),
+};
+
 export function QuizApp() {
   return (
     <Jeu
-      titre={(lang) => texte(lang, "titre")}
+      fiche={FICHE}
       rendu={(contexte, nom) => (
         <AvecDonnees
           charge={lisBanque}
@@ -127,13 +134,15 @@ function Partie({
 
   return (
     <Salon
-      titre={texte(lang, "titre")}
       lang={lang}
       room={salon.room}
       hote={contexte.hote}
       etat={salon.etat}
       erreur={salon.erreur}
       onNouveau={salon.nouveau}
+      fete={
+        partie?.phase === "bilan" && partie.gains[moi] ? partie.manche : null
+      }
       cote={
         <Classement
           lang={lang}

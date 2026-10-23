@@ -17,6 +17,7 @@ import {
   AvecDonnees,
   Chrono,
   Classement,
+  type Fiche,
   Fil,
   Fin,
   Jeu,
@@ -44,10 +45,16 @@ import { grille } from "./familles";
 import { creerRegles } from "./regles";
 import { texte } from "./textes";
 
+const FICHE: Fiche = {
+  titre: (lang) => texte(lang, "titre"),
+  icone: "🕵️",
+  accroche: (lang) => texte(lang, "accroche"),
+};
+
 export function IndicesApp() {
   return (
     <Jeu
-      titre={(lang) => texte(lang, "titre")}
+      fiche={FICHE}
       rendu={(contexte, nom) => (
         <AvecDonnees
           charge={() => donnees(contexte.lang)}
@@ -106,13 +113,17 @@ function Partie({
 
   return (
     <Salon
-      titre={texte(lang, "titre")}
       lang={lang}
       room={salon.room}
       hote={contexte.hote}
       etat={salon.etat}
       erreur={salon.erreur}
       onNouveau={salon.nouveau}
+      fete={
+        partie && partie.phase !== "fin" && partie.trouve.includes(moi)
+          ? partie.manche
+          : null
+      }
       cote={
         <Stack spacing={1.5}>
           <Classement

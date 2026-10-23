@@ -3,6 +3,7 @@ import { traduction } from "../commun/textes";
 export const texte = traduction({
   fr: {
     titre: "In-vo-posteur",
+    accroche: "Un intrus s'est glissé parmi vous : démasquez-le.",
     manches: "Nombre de manches",
     manche: "Manche {n}/{total}",
     chargement: "Chargement des champions…",
@@ -58,6 +59,7 @@ export const texte = traduction({
   },
   en: {
     titre: "In-vo-posteur",
+    accroche: "An impostor is hiding among you: unmask them.",
     manches: "Number of rounds",
     manche: "Round {n}/{total}",
     chargement: "Loading champions…",

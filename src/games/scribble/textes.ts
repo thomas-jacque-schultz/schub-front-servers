@@ -3,8 +3,12 @@ import { traduction } from "../commun/textes";
 export const texte = traduction({
   fr: {
     titre: "Scribble",
+    accroche: "Dessine un champion, fais-le deviner, trouve ceux des autres.",
     effacer: "Tout effacer",
     epaisseur: "Épaisseur",
+    fin: "Fin",
+    moyen: "Moyen",
+    epais: "Épais",
     choisisMot: "Choisis le champion à dessiner",
     choisitMot: "{nom} choisit un champion…",
     dessine: "Dessine : {mot}",
@@ -12,12 +16,15 @@ export const texte = traduction({
     tours: "Nombre de tours",
     tour: "Tour {n}/{total}",
     gomme: "Gomme",
-    recap: "Fin du tour",
   },
   en: {
     titre: "Scribble",
+    accroche: "Draw a champion, get it guessed, guess the others.",
     effacer: "Clear all",
     epaisseur: "Width",
+    fin: "Thin",
+    moyen: "Medium",
+    epais: "Thick",
     choisisMot: "Pick the champion to draw",
     choisitMot: "{nom} is picking a champion…",
     dessine: "Draw: {mot}",
@@ -25,6 +32,5 @@ export const texte = traduction({
     tours: "Number of rounds",
     tour: "Round {n}/{total}",
     gomme: "Eraser",
-    recap: "End of the round",
   },
 });

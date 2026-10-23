@@ -1,6 +1,5 @@
 import { type ReactNode } from "react";
 import Box from "@mui/material/Box";
-import { radii } from "../tokens";
 
 export interface FrameProps {
   children: ReactNode;
@@ -16,7 +15,8 @@ export function Frame({ children, accent = false, dense = false }: FrameProps) {
       sx={{
         border: "1px solid",
         borderColor: accent ? "primary.main" : "divider",
-        borderRadius: `${radii.md}px`,
+        // Le rayon du thème : radii.md dans les applications, plus rond dans les jeux.
+        borderRadius: 1,
         p: dense ? 0.75 : 1.5,
         bgcolor: "background.paper",
       }}
