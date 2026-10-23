@@ -2135,6 +2135,97 @@
         "tags" : [ "public-team-controller" ]
       }
     },
+    "/queue-killer/premade-rooms" : {
+      "get" : {
+        "operationId" : "premadeRooms",
+        "parameters" : [ {
+          "in" : "header",
+          "name" : "X-Actor-Id",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/PremadeRoomDto"
+                  }
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "queue-killer-controller" ]
+      }
+    },
+    "/queue-killer/presence" : {
+      "put" : {
+        "operationId" : "signal",
+        "parameters" : [ {
+          "in" : "header",
+          "name" : "X-Actor-Id",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PresenceRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "queue-killer-controller" ]
+      }
+    },
+    "/queue-killer/presence/{game}/{room}" : {
+      "delete" : {
+        "operationId" : "leave",
+        "parameters" : [ {
+          "in" : "header",
+          "name" : "X-Actor-Id",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "game",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "room",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "queue-killer-controller" ]
+      }
+    },
     "/quiz/questions" : {
       "get" : {
         "operationId" : "active",
@@ -6841,6 +6932,49 @@
           "unknownPlayerBudget" : {
             "type" : "integer",
             "format" : "int32"
+          }
+        }
+      },
+      "PremadeRoomDto" : {
+        "required" : [ "game", "players", "room" ],
+        "type" : "object",
+        "properties" : {
+          "game" : {
+            "type" : "string"
+          },
+          "players" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/PremadeRoomPlayerDto"
+            }
+          },
+          "room" : {
+            "type" : "string"
+          }
+        }
+      },
+      "PremadeRoomPlayerDto" : {
+        "required" : [ "avatarUrl", "displayName" ],
+        "type" : "object",
+        "properties" : {
+          "avatarUrl" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "displayName" : {
+            "type" : "string"
+          }
+        }
+      },
+      "PresenceRequest" : {
+        "required" : [ "game", "room" ],
+        "type" : "object",
+        "properties" : {
+          "game" : {
+            "type" : "string"
+          },
+          "room" : {
+            "type" : "string"
           }
         }
       },

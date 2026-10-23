@@ -274,6 +274,11 @@
       "create": "Choisis un jeu et crée un salon.",
       "share": "Envoie le lien, ou le code de quatre lettres, à ta premade.",
       "play": "Chacun choisit un pseudo, puis le créateur du salon lance la partie\u00a0: aucun compte n'est demandé."
+    },
+    "premade": {
+      "title": "Ta premade joue",
+      "description": "Les salons ouverts par tes coéquipiers, connectés à PremadeLab.",
+      "join": "Rejoindre"
     }
   }
 }

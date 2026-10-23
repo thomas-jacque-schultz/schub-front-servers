@@ -52,6 +52,11 @@ function PrivacyPage() {
       body: t("privacy.collected.teams"),
     },
     {
+      key: "presence",
+      title: t("privacy.collected.presenceTitle"),
+      body: t("privacy.collected.presence"),
+    },
+    {
       key: "contact",
       title: t("privacy.collected.contactTitle"),
       body: t("privacy.collected.contact"),

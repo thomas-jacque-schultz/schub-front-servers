@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import {
   APP_URLS,
+  Avatar,
   BulletList,
   Button,
   Card,
@@ -13,8 +14,10 @@ import {
   playful,
   SelectField,
   Stack,
+  Text,
   TextField,
   Toast,
+  useAuthStore,
   useCurrentLanguage,
   useDocumentMeta,
   useLocalizedNavigate,
@@ -30,6 +33,15 @@ import {
   origineDuJeu,
   urlDuJeu,
 } from "../queueKiller";
+import {
+  getSalonsDePremadeApi,
+  quitteSalonApi,
+  type SalonDePremade,
+  signalePresenceApi,
+} from "../api/queueKillerApi";
+
+// Le cœur oublie une présence après 90 s sans signal (Schub#149).
+const PRESENCE_MS = 30_000;
 
 // Les mini-jeux entre premades (Schub#118). Le jeu vit sur son sous-domaine, dans une iframe ; avec lui, deux
 // messages seulement : l'init (salon et langue), puis le salon qu'il vient de créer.
@@ -50,6 +62,7 @@ export default function QueueKillerPage() {
         subtitle={t("queueKiller.subtitle")}
       />
       <Catalogue />
+      <SalonsDePremade />
       <Columns count={2} minWidth={320}>
         <Card title={t("queueKiller.how.title")}>
           <BulletList
@@ -96,6 +109,90 @@ function Catalogue() {
         );
       })}
     </Columns>
+  );
+}
+
+function SalonsDePremade() {
+  const { t } = useTranslation("lol");
+  const { connected } = useAuthStore();
+  const navigate = useLocalizedNavigate();
+  const [salons, setSalons] = useState<SalonDePremade[]>([]);
+
+  useEffect(() => {
+    if (!connected) {
+      return;
+    }
+    let actif = true;
+    const lis = () =>
+      void getSalonsDePremadeApi().then(
+        (lus) => actif && setSalons(lus),
+        () => undefined,
+      );
+    lis();
+    const minuterie = window.setInterval(lis, PRESENCE_MS);
+    return () => {
+      actif = false;
+      window.clearInterval(minuterie);
+    };
+  }, [connected]);
+
+  const visibles = connected
+    ? salons.filter((salon): salon is SalonDePremade & { game: Jeu } =>
+        estJeu(salon.game),
+      )
+    : [];
+  if (visibles.length === 0) {
+    return null;
+  }
+  return (
+    <Card
+      title={t("queueKiller.premade.title")}
+      description={t("queueKiller.premade.description")}
+    >
+      <Stack spacing={1.5}>
+        {visibles.map((salon) => (
+          <Stack
+            key={`${salon.game}/${salon.room}`}
+            direction="responsive"
+            justify="between"
+            spacing={1}
+          >
+            <Stack direction="row" spacing={2} align="center" wrap>
+              <Text variant="subtitle">
+                {FICHES[salon.game].icone}{" "}
+                {t(`queueKiller.${salon.game}.title`)}
+              </Text>
+              <Stack direction="row" spacing={1.5} align="center" wrap>
+                {salon.players.map((joueur, index) => (
+                  <Stack
+                    key={index}
+                    direction="row"
+                    spacing={0.75}
+                    align="center"
+                  >
+                    <Avatar
+                      src={joueur.avatarUrl}
+                      name={joueur.displayName}
+                      size="small"
+                    />
+                    <Text variant="caption">{joueur.displayName}</Text>
+                  </Stack>
+                ))}
+              </Stack>
+            </Stack>
+            <div>
+              <Button
+                onClick={() =>
+                  navigate(`/queue-killer/${salon.game}/${salon.room}`)
+                }
+              >
+                {t("queueKiller.premade.join")}
+              </Button>
+            </div>
+          </Stack>
+        ))}
+      </Stack>
+    </Card>
   );
 }
 
@@ -151,6 +248,27 @@ function Rejoindre() {
   );
 }
 
+// Tant que le salon est ouvert, ses coéquipiers le voient dans Queue Killer.
+function usePresence(jeu: Jeu, room: string | null) {
+  const { connected } = useAuthStore();
+  useEffect(() => {
+    if (!connected || !room) {
+      return;
+    }
+    const signale = () =>
+      void signalePresenceApi(jeu, room).catch(() => undefined);
+    const quitte = () => void quitteSalonApi(jeu, room).catch(() => undefined);
+    signale();
+    const minuterie = window.setInterval(signale, PRESENCE_MS);
+    window.addEventListener("pagehide", quitte);
+    return () => {
+      window.clearInterval(minuterie);
+      window.removeEventListener("pagehide", quitte);
+      quitte();
+    };
+  }, [connected, jeu, room]);
+}
+
 function Salon({ jeu, room }: { jeu: Jeu; room: string | null }) {
   const { t } = useTranslation("lol");
   const lang = useCurrentLanguage();
@@ -162,6 +280,7 @@ function Salon({ jeu, room }: { jeu: Jeu; room: string | null }) {
   // Le salon transmis au jeu à son chargement ; un autre lien collé dans l'adresse recharge le jeu sur lui.
   const [transmis, setTransmis] = useState(room);
   const [toast, setToast] = useState("");
+  usePresence(jeu, room);
 
   useEffect(() => {
     if (room !== annonce.current) {

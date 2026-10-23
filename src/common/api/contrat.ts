@@ -832,6 +832,54 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/queue-killer/premade-rooms": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["premadeRooms"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/queue-killer/presence": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put: operations["signal"];
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/queue-killer/presence/{game}/{room}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    delete: operations["leave"];
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/quiz/questions": {
     parameters: {
       query?: never;
@@ -2437,6 +2485,19 @@ export interface components {
       budgetWindowMinutes: number;
       /** Format: int32 */
       unknownPlayerBudget: number;
+    };
+    PremadeRoomDto: {
+      game: string;
+      players: components["schemas"]["PremadeRoomPlayerDto"][];
+      room: string;
+    };
+    PremadeRoomPlayerDto: {
+      avatarUrl: string | null;
+      displayName: string;
+    };
+    PresenceRequest: {
+      game: string;
+      room: string;
     };
     PresenceWithDto: {
       displayName: string | null;
@@ -4819,6 +4880,75 @@ export interface operations {
         content: {
           "*/*": components["schemas"]["PublicTeamDto"];
         };
+      };
+    };
+  };
+  premadeRooms: {
+    parameters: {
+      query?: never;
+      header?: {
+        "X-Actor-Id"?: string;
+      };
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "*/*": components["schemas"]["PremadeRoomDto"][];
+        };
+      };
+    };
+  };
+  signal: {
+    parameters: {
+      query?: never;
+      header?: {
+        "X-Actor-Id"?: string;
+      };
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["PresenceRequest"];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  leave: {
+    parameters: {
+      query?: never;
+      header?: {
+        "X-Actor-Id"?: string;
+      };
+      path: {
+        game: string;
+        room: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
       };
     };
   };
