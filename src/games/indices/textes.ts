@@ -3,6 +3,7 @@ import { traduction } from "../commun/textes";
 export const texte = traduction({
   fr: {
     titre: "Indices",
+    accroche: "Les indices tombent un à un : trouve avant les autres.",
     manches: "Nombre de manches",
     manche: "Manche {n}/{total}",
     chargement: "Chargement des champions et des objets…",
@@ -52,6 +53,7 @@ export const texte = traduction({
   },
   en: {
     titre: "Clues",
+    accroche: "Clues drop one by one: find it before the others.",
     manches: "Number of rounds",
     manche: "Round {n}/{total}",
     chargement: "Loading champions and items…",
