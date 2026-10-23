@@ -1,7 +1,18 @@
 import { useCallback, useMemo, useRef, useState } from "react";
-import { Button, Card, ChampionIcon, Frame, Stack, Text } from "../../common";
+import {
+  Button,
+  Card,
+  ChampionIcon,
+  ChampionPickButton,
+  Columns,
+  Frame,
+  Stack,
+  Text,
+  TextField,
+} from "../../common";
 import { icone } from "../commun/champions";
 import { type Donnees, donnees, iconeObjet } from "../commun/ddragon";
+import { normalise } from "../commun/devinette";
 import {
   AvecDonnees,
   Chrono,
@@ -29,6 +40,7 @@ import {
   type PartieIndices,
   visibles,
 } from "./partie";
+import { grille } from "./familles";
 import { creerRegles } from "./regles";
 import { texte } from "./textes";
 
@@ -158,7 +170,9 @@ function Partie({
           moi={moi}
           restantMs={restantMs}
           proche={jeu.proche}
+          donnees={lues}
           onChoisis={jeu.agit}
+          onObjet={(id) => jeu.agit({ objet: id })}
           onDevine={jeu.devine}
         />
       )}
@@ -172,7 +186,9 @@ function Manche({
   moi,
   restantMs,
   proche,
+  donnees: lues,
   onChoisis,
+  onObjet,
   onDevine,
 }: {
   lang: Lang;
@@ -180,7 +196,9 @@ function Manche({
   moi: string;
   restantMs: number;
   proche: boolean;
+  donnees: Donnees;
   onChoisis: (categorie: "champion" | "objet") => void;
+  onObjet: (id: string) => void;
   onDevine: (texte: string) => void;
 }) {
   const titre = texte(lang, "manche", {
@@ -259,17 +277,96 @@ function Manche({
         </Stack>
       </Card>
       {enManche ? (
-        <Reponse
-          key={`${partie.manche}-${devine}`}
-          lang={lang}
-          proche={proche}
-          actif={devine}
-          onEnvoie={onDevine}
-        />
+        <>
+          {enigme.categorie === "objet" && (
+            <Text variant="caption" tone="secondary">
+              {texte(lang, "grille")}
+            </Text>
+          )}
+          <Reponse
+            key={`${partie.manche}-${devine}`}
+            lang={lang}
+            proche={proche}
+            actif={devine}
+            onEnvoie={onDevine}
+          />
+          {enigme.categorie === "objet" && (
+            <GrilleObjets
+              key={partie.manche}
+              lang={lang}
+              donnees={lues}
+              actif={devine}
+              onChoisis={onObjet}
+            />
+          )}
+        </>
       ) : (
         <Solution lang={lang} version={partie.version} enigme={enigme} />
       )}
     </Stack>
+  );
+}
+
+/** Tous les objets de la boutique, en colonnes par famille ; un essai raté se grise pour soi seul. */
+function GrilleObjets({
+  lang,
+  donnees: lues,
+  actif,
+  onChoisis,
+}: {
+  lang: Lang;
+  donnees: Donnees;
+  actif: boolean;
+  onChoisis: (id: string) => void;
+}) {
+  const [colonnes] = useState(() => grille(lues.objets, Math.random));
+  const [essayes, setEssayes] = useState<string[]>([]);
+  const [filtre, setFiltre] = useState("");
+  const cherche = normalise(filtre);
+  return (
+    <Card>
+      <Stack spacing={1.5}>
+        <TextField
+          label={texte(lang, "filtre")}
+          value={filtre}
+          onChange={setFiltre}
+        />
+        <Columns minWidth={200}>
+          {colonnes.map(({ famille, objets }) => {
+            const vus = objets.filter((o) =>
+              normalise(o.nom).includes(cherche),
+            );
+            return (
+              vus.length > 0 && (
+                <Stack key={famille} spacing={0.75}>
+                  <Text variant="overline" tone="secondary">
+                    {texte(lang, `famille_${famille}`)}
+                  </Text>
+                  <Stack direction="row" spacing={0.5} wrap>
+                    {vus.map((o) => (
+                      <ChampionPickButton
+                        key={o.id}
+                        champion={{
+                          name: o.nom,
+                          iconUrl: iconeObjet(lues.version, o.id),
+                        }}
+                        label={o.nom}
+                        size="medium"
+                        disabled={!actif || essayes.includes(o.id)}
+                        onClick={() => {
+                          setEssayes((deja) => [...deja, o.id]);
+                          onChoisis(o.id);
+                        }}
+                      />
+                    ))}
+                  </Stack>
+                </Stack>
+              )
+            );
+          })}
+        </Columns>
+      </Stack>
+    </Card>
   );
 }
 

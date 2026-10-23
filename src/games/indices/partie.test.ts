@@ -6,12 +6,15 @@ import {
   CATEGORIE_MS,
   choisir,
   deviner,
+  devinerObjet,
   enigmeDe,
   nouvellePartie,
+  type PartieIndices,
   presence,
   tranche,
   visibles,
 } from "./partie";
+import { familleDe } from "./familles";
 
 const A = { id: "a", name: "Ana" };
 const B = { id: "b", name: "Bob" };
@@ -39,6 +42,22 @@ const DONNEES: Donnees = {
       stats: ["+75 dégâts d'attaque"],
       composants: ["Pioche", "BF Glaive"],
       description: "Améliore considérablement les coups critiques.",
+      tags: ["Damage", "CriticalStrike"],
+    },
+  ],
+};
+const DONNEES_PLUS: Donnees = {
+  ...DONNEES,
+  objets: [
+    ...DONNEES.objets,
+    {
+      id: "1038",
+      nom: "BF Glaive",
+      prix: 1300,
+      stats: [],
+      composants: [],
+      description: "",
+      tags: ["Damage"],
     },
   ],
 };
@@ -104,5 +123,41 @@ describe("indices", () => {
     const p = presence(partie(), [B, C]);
     expect(p.choisit).toBe("b");
     expect(p.restantMs).toBe(CATEGORIE_MS);
+  });
+});
+
+describe("indices : la grille d'objets", () => {
+  const manche = (): PartieIndices => {
+    const p = choisir(partie(), A.id, "objet", [A, B, C], DONNEES, premier);
+    return { ...p, devineurs: [A.id, B.id] };
+  };
+
+  it("la bonne icône vaut une bonne réponse ; une mauvaise s'inscrit au fil, sans pénalité", () => {
+    const p = manche();
+    expect(p.enigme?.id).toBe("3031");
+    const rate = devinerObjet(p, A.id, "1038", DONNEES_PLUS);
+    expect(rate.fil.at(-1)).toEqual({ joueur: A.id, texte: "BF Glaive" });
+    expect(rate.scores[A.id]).toBe(0);
+    const trouve = devinerObjet(rate, A.id, "3031", DONNEES_PLUS);
+    expect(trouve.trouve).toContain(A.id);
+    expect(trouve.scores[A.id]).toBeGreaterThan(0);
+    expect(devinerObjet(trouve, A.id, "3031", DONNEES_PLUS)).toBe(trouve);
+  });
+
+  it("chaque objet tombe dans une famille, comme à la boutique", () => {
+    expect(familleDe({ tags: ["Boots", "AttackSpeed"] })).toBe("bottes");
+    expect(familleDe({ tags: ["Health", "Lane", "SpellDamage"] })).toBe(
+      "depart",
+    );
+    expect(familleDe({ tags: ["SpellDamage", "ManaRegen"] })).toBe("support");
+    expect(familleDe({ tags: ["AttackSpeed", "SpellDamage", "OnHit"] })).toBe(
+      "mage",
+    );
+    expect(familleDe({ tags: ["Damage", "CriticalStrike"] })).toBe("tireur");
+    expect(familleDe({ tags: ["Damage", "ArmorPenetration"] })).toBe(
+      "assassin",
+    );
+    expect(familleDe({ tags: ["Damage", "Health"] })).toBe("combattant");
+    expect(familleDe({ tags: ["Health", "Armor"] })).toBe("tank");
   });
 });

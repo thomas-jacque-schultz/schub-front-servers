@@ -249,36 +249,37 @@ const bilan = (p: PartieIndices): PartieIndices => ({
   restantMs: BILAN_MS,
 });
 
+const peutDeviner = (p: PartieIndices, joueur: string) =>
+  p.phase === "manche" &&
+  p.enigme !== null &&
+  p.devineurs.includes(joueur) &&
+  !p.trouve.includes(joueur);
+
+const aTrouve = (p: PartieIndices, joueur: string): PartieIndices => {
+  const gain = POINTS[Math.min(p.revele, POINTS.length) - 1] ?? 0;
+  const suite: PartieIndices = {
+    ...p,
+    trouve: [...p.trouve, joueur],
+    scores: { ...p.scores, [joueur]: (p.scores[joueur] ?? 0) + gain },
+    fil: ajouteAuFil(p.fil, { joueur, trouve: true }),
+  };
+  return p.devineurs.every((id) => suite.trouve.includes(id))
+    ? bilan(suite)
+    : suite;
+};
+
 export const deviner = (
   p: PartieIndices,
   joueur: string,
   texte: string,
 ): { partie: PartieIndices; proche: boolean } => {
   const propre = texte.trim().slice(0, 60);
-  if (
-    p.phase !== "manche" ||
-    !p.enigme ||
-    !propre ||
-    !p.devineurs.includes(joueur) ||
-    p.trouve.includes(joueur)
-  ) {
+  if (!propre || !peutDeviner(p, joueur) || !p.enigme) {
     return { partie: p, proche: false };
   }
   const verdict = compare(propre, p.enigme.nom);
   if (verdict === "juste") {
-    const gain = POINTS[Math.min(p.revele, POINTS.length) - 1] ?? 0;
-    const suite: PartieIndices = {
-      ...p,
-      trouve: [...p.trouve, joueur],
-      scores: { ...p.scores, [joueur]: (p.scores[joueur] ?? 0) + gain },
-      fil: ajouteAuFil(p.fil, { joueur, trouve: true }),
-    };
-    return {
-      partie: p.devineurs.every((id) => suite.trouve.includes(id))
-        ? bilan(suite)
-        : suite,
-      proche: false,
-    };
+    return { partie: aTrouve(p, joueur), proche: false };
   }
   if (verdict === "proche") {
     return { partie: p, proche: true };
@@ -287,6 +288,30 @@ export const deviner = (
     partie: { ...p, fil: ajouteAuFil(p.fil, { joueur, texte: propre }) },
     proche: false,
   };
+};
+
+/**
+ * Une icône de la grille (Schub#144) : comme une réponse tapée, mais par identifiant, donc dans toutes les langues.
+ * Ni pénalité ni limite d'essais, le chrono suffit.
+ */
+export const devinerObjet = (
+  p: PartieIndices,
+  joueur: string,
+  id: unknown,
+  donnees: Donnees,
+): PartieIndices => {
+  if (
+    typeof id !== "string" ||
+    !peutDeviner(p, joueur) ||
+    p.enigme?.categorie !== "objet"
+  ) {
+    return p;
+  }
+  if (id === p.enigme.id) {
+    return aTrouve(p, joueur);
+  }
+  const nom = donnees.objets.find((o) => o.id === id)?.nom;
+  return nom ? { ...p, fil: ajouteAuFil(p.fil, { joueur, texte: nom }) } : p;
 };
 
 /** Le nombre d'indices visibles : un de plus à chaque part égale du chrono. */
