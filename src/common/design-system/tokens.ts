@@ -214,6 +214,7 @@ export const playful = {
     prune: "rgba(192, 107, 160, 0.45)",
   },
   brush: brand.prune,
+  iconShadow: "drop-shadow(0 6px 10px rgba(0, 0, 0, 0.55))",
   confetti: [
     brand.gold,
     brand.goldBright,

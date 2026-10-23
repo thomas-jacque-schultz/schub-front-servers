@@ -228,28 +228,52 @@
     "title": "Queue Killer",
     "subtitle": "De quoi tuer l’attente en file avec ta premade\u00a0: des mini-jeux à plusieurs, jouables sans compte.",
     "create": "Créer un salon",
-    "share": "Lien du salon",
-    "copy": "Copier",
+    "copy": "Copier le lien",
     "copied": "Lien copié",
     "scribble": {
       "title": "Scribble",
-      "body": "Un joueur dessine un champion, les autres devinent. Crée un salon et envoie le lien à ta premade."
+      "body": "Un joueur dessine un champion, les autres devinent. Crée un salon et envoie le lien à ta premade.",
+      "genre": "Dessin"
     },
     "zoom": {
       "title": "Zoom",
-      "body": "Un champion caché sous un zoom qui recule peu à peu\u00a0: le premier qui le reconnaît marque le plus."
+      "body": "Un champion caché sous un zoom qui recule peu à peu\u00a0: le premier qui le reconnaît marque le plus.",
+      "genre": "Coup d'œil"
     },
     "indices": {
       "title": "Indices",
-      "body": "Un champion ou un objet, et des indices qui tombent un à un\u00a0: moins il en faut, plus on marque."
+      "body": "Un champion ou un objet, et des indices qui tombent un à un\u00a0: moins il en faut, plus on marque.",
+      "genre": "Déduction"
     },
     "quiz": {
       "title": "Questions pour un invocateur",
-      "body": "Un quiz à quatre choix sur les objets, l’histoire, les skins, le monde et les joueurs pro\u00a0: le plus rapide choisit le thème suivant."
+      "body": "Un quiz à quatre choix sur les objets, l’histoire, les skins, le monde et les joueurs pro\u00a0: le plus rapide choisit le thème suivant.",
+      "genre": "Culture LoL"
     },
     "imposteur": {
       "title": "In-vo-posteur",
-      "body": "Tous ont le même champion, sauf un. Un mot chacun, trois tours, puis on vote pour démasquer l’imposteur."
+      "body": "Tous ont le même champion, sauf un. Un mot chacun, trois tours, puis on vote pour démasquer l’imposteur.",
+      "genre": "Bluff"
+    },
+    "players": "{{min}} à {{max}} joueurs",
+    "minutes": "≈\u00a0{{n}}\u00a0min",
+    "back": "Tous les jeux",
+    "room": "Salon",
+    "waiting": "Ouverture du salon…",
+    "fullscreen": "Plein écran",
+    "exitFullscreen": "Quitter le plein écran",
+    "join": {
+      "title": "Ta premade a déjà un salon\u202f?",
+      "description": "Le code s'affiche en haut du jeu, chez celui qui a créé le salon.",
+      "game": "Jeu",
+      "code": "Code du salon",
+      "submit": "Rejoindre"
+    },
+    "how": {
+      "title": "Comment ça marche",
+      "create": "Choisis un jeu et crée un salon.",
+      "share": "Envoie le lien, ou le code de quatre lettres, à ta premade.",
+      "play": "Chacun choisit un pseudo, puis le créateur du salon lance la partie\u00a0: aucun compte n'est demandé."
     }
   }
 }

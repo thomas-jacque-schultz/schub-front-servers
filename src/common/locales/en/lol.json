@@ -228,28 +228,52 @@
     "title": "Queue Killer",
     "subtitle": "Something to kill queue time with your premade: multiplayer mini-games, playable without an account.",
     "create": "Create a room",
-    "share": "Room link",
-    "copy": "Copy",
+    "copy": "Copy link",
     "copied": "Link copied",
     "scribble": {
       "title": "Scribble",
-      "body": "One player draws a champion, the others guess. Create a room and send the link to your premade."
+      "body": "One player draws a champion, the others guess. Create a room and send the link to your premade.",
+      "genre": "Drawing"
     },
     "zoom": {
       "title": "Zoom",
-      "body": "A champion hidden under a zoom that slowly pulls back: the first to recognise it scores the most."
+      "body": "A champion hidden under a zoom that slowly pulls back: the first to recognise it scores the most.",
+      "genre": "Quick eye"
     },
     "indices": {
       "title": "Clues",
-      "body": "A champion or an item, and clues that drop one by one: the fewer you need, the more you score."
+      "body": "A champion or an item, and clues that drop one by one: the fewer you need, the more you score.",
+      "genre": "Deduction"
     },
     "quiz": {
       "title": "Summoner Quiz",
-      "body": "A four-choice quiz on items, lore, skins, the world and pro players: the fastest picks the next theme."
+      "body": "A four-choice quiz on items, lore, skins, the world and pro players: the fastest picks the next theme.",
+      "genre": "LoL trivia"
     },
     "imposteur": {
       "title": "In-vo-posteur",
-      "body": "Everyone has the same champion except one. One word each, three turns, then vote to unmask the impostor."
+      "body": "Everyone has the same champion except one. One word each, three turns, then vote to unmask the impostor.",
+      "genre": "Bluff"
+    },
+    "players": "{{min}} to {{max}} players",
+    "minutes": "≈ {{n}} min",
+    "back": "All games",
+    "room": "Room",
+    "waiting": "Opening the room…",
+    "fullscreen": "Full screen",
+    "exitFullscreen": "Exit full screen",
+    "join": {
+      "title": "Your premade already has a room?",
+      "description": "The code shows at the top of the game, for whoever created the room.",
+      "game": "Game",
+      "code": "Room code",
+      "submit": "Join"
+    },
+    "how": {
+      "title": "How it works",
+      "create": "Pick a game and create a room.",
+      "share": "Send the link, or the four-letter code, to your premade.",
+      "play": "Everyone picks a nickname, then the room creator starts the game: no account needed."
     }
   }
 }
