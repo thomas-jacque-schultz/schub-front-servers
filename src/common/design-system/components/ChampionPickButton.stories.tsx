@@ -22,7 +22,12 @@ export const Tailles: Story = {
     <Stack direction="row" spacing={1} align="center">
       <ChampionPickButton {...args} size="small" />
       <ChampionPickButton {...args} champion={{ name: "Jax" }} size="small" />
+      <ChampionPickButton {...args} champion={{ name: "Jax" }} size="medium" />
       <ChampionPickButton {...args} />
     </Stack>
   ),
+};
+
+export const Grise: Story = {
+  args: { champion: { name: "Jax" }, size: "medium", disabled: true },
 };
