@@ -26,8 +26,17 @@ export const creerRegles = (
       apres.manche !== avant.manche ||
       apres.tour !== avant.tour ||
       apres.parle !== avant.parle ||
+      apres.prets.length !== avant.prets.length ||
       Object.keys(apres.votes).length !== Object.keys(avant.votes).length,
-    action: (p, de, geste) =>
-      agir(p, de, geste, presents(), (id) => noms.get(id) ?? ""),
+    action: (p, de, geste, parMeneur) =>
+      agir(
+        p,
+        de,
+        geste,
+        presents(),
+        (id) => noms.get(id) ?? "",
+        Math.random,
+        parMeneur,
+      ),
   };
 };

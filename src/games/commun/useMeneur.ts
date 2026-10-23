@@ -22,8 +22,8 @@ export interface Regles<P extends EtatDePartie> {
   presence: (p: P, presents: Present[]) => P;
   /** Un changement qui part tout de suite ; le reste part avec la resynchro. */
   aDiffuser: (avant: P, apres: P) => boolean;
-  /** Un geste propre au jeu (le choix du mot au scribble), jugé par le meneur. */
-  action?: (p: P, de: string, valeur: unknown) => P;
+  /** Un geste propre au jeu (le choix du mot au scribble), jugé par le meneur ; parMeneur pour ses gestes à lui (forcer la suite). */
+  action?: (p: P, de: string, valeur: unknown, parMeneur: boolean) => P;
   /** Ce que le meneur diffuse : il garde le reste pour lui (la bonne réponse du quiz). */
   publique?: (p: P) => P;
 }
@@ -137,7 +137,14 @@ export function useMeneur<P extends EtatDePartie>({
           break;
         case "action":
           if (jeMene && p && de && regles.action) {
-            publie(regles.action(p, de, message.valeur));
+            publie(
+              regles.action(
+                p,
+                de,
+                message.valeur,
+                de === meneurCourant.current,
+              ),
+            );
           }
           break;
         case "proche":
@@ -228,7 +235,7 @@ export function useMeneur<P extends EtatDePartie>({
     (valeur: unknown) => {
       const p = courante.current;
       if (estMeneur && p && regles.action) {
-        publie(regles.action(p, moi, valeur));
+        publie(regles.action(p, moi, valeur, true));
       } else {
         envoie({ jeu: "action", valeur });
       }

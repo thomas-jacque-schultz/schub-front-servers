@@ -94,6 +94,7 @@ export function Scores({
   const classes = [...joueurs].sort(
     (a, b) => (scores[b.id] ?? 0) - (scores[a.id] ?? 0),
   );
+  const meilleur = Math.max(0, ...joueurs.map((j) => scores[j.id] ?? 0));
   return (
     <>
       <h2>{texteCommun(lang, "scores")}</h2>
@@ -103,18 +104,24 @@ export function Scores({
           return (
             <li key={j.id} className={j.id === moi ? "moi" : undefined}>
               <span>
-                {j.name}
-                {role && <span className="meneur"> · {role}</span>}
-                {j.id === meneur && (
-                  <span className="meneur">
-                    {" "}
-                    · {texteCommun(lang, "meneur")}
-                  </span>
-                )}
+                <span className={j.id === meneur ? "meneur" : undefined}>
+                  {j.name}
+                </span>
+                {role && <span className="role"> · {role}</span>}
                 {trouve.includes(j.id) && <span className="trouve"> ✓</span>}
               </span>
               <span className="points">
                 {texteCommun(lang, "points", { n: scores[j.id] ?? 0 })}
+                {meilleur > 0 && scores[j.id] === meilleur && (
+                  <span
+                    className="couronne"
+                    role="img"
+                    aria-label={texteCommun(lang, "enTete")}
+                  >
+                    {" "}
+                    👑
+                  </span>
+                )}
               </span>
             </li>
           );
@@ -197,10 +204,9 @@ export function Joueurs({
       <ul>
         {joueurs.map((j) => (
           <li key={j.id} className={j.id === moi ? "moi" : undefined}>
-            {j.name}
-            {j.id === meneur && (
-              <span className="meneur"> · {texteCommun(lang, "meneur")}</span>
-            )}
+            <span className={j.id === meneur ? "meneur" : undefined}>
+              {j.name}
+            </span>
           </li>
         ))}
       </ul>

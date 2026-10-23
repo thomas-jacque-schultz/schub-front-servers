@@ -21,12 +21,19 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircleOutline";
 import HourglassIcon from "@mui/icons-material/HourglassEmpty";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import { createSvgIcon } from "@mui/material/utils";
+
+const CrownIcon = createSvgIcon(
+  <path d="M3 7l4.5 4L12 4l4.5 7L21 7l-2 12H5L3 7zm2.7 14h12.6v-1.5H5.7V21z" />,
+  "Crown",
+);
 
 // Répertoire fermé : ajouter une icône ici plutôt qu'importer @mui/icons-material ailleurs.
 const ICONS = {
   add: AddIcon,
   chevron: ChevronRightIcon,
   code: CodeIcon,
+  crown: CrownIcon,
   delete: DeleteOutlineIcon,
   done: CheckCircleIcon,
   edit: EditIcon,
