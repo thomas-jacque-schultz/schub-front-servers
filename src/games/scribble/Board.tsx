@@ -117,7 +117,7 @@ export function Board({
   return (
     <canvas
       ref={canvas}
-      className={actif ? "tableau" : "tableau inactif"}
+      style={{ touchAction: "none", cursor: actif ? "crosshair" : "default" }}
       onPointerDown={(event) => {
         if (!actif) {
           return;

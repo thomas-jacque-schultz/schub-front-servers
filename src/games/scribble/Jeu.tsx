@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { type ReactNode, useState } from "react";
+import { Button, ChampionIcon, Frame, Stack, Text } from "../../common";
 import { type Champion, icone } from "../commun/champions";
-import { Choix, Chrono } from "../commun/jeu";
+import { Chrono, Fin, Preparation, Reglage } from "../commun/ecrans";
 import type { Lang } from "../commun/textes";
 import {
   DUREE_DEFAUT,
@@ -12,14 +13,57 @@ import {
 } from "./partie";
 import { texte } from "./textes";
 
-function Icone({ version, champion }: { version: string; champion: Champion }) {
+/** Le mot à trouver, lettres cachées : une case par lettre, les mots bien séparés. */
+const enCases = (mot: string) =>
+  [...mot].map((c) => (c === " " ? "  " : c)).join(" ");
+
+function Bandeau({
+  gauche,
+  droite,
+  children,
+}: {
+  gauche?: ReactNode;
+  droite?: ReactNode;
+  children: ReactNode;
+}) {
   return (
-    <img
-      className="icone"
-      src={icone(version, champion.id)}
-      alt=""
-      draggable={false}
-    />
+    <Frame dense>
+      <Stack
+        direction="row"
+        spacing={1.5}
+        align="center"
+        justify="between"
+        wrap
+      >
+        {gauche}
+        <Stack direction="row" spacing={1} align="center" wrap>
+          {children}
+        </Stack>
+        {droite ?? <span />}
+      </Stack>
+    </Frame>
+  );
+}
+
+function AvecIcone({
+  version,
+  champion,
+  children,
+}: {
+  version: string;
+  champion: Champion;
+  children: ReactNode;
+}) {
+  return (
+    <Stack direction="row" spacing={1} align="center">
+      <ChampionIcon
+        src={icone(version, champion.id)}
+        name={champion.nom}
+        tooltip=""
+        size="small"
+      />
+      <Text variant="subtitle">{children}</Text>
+    </Stack>
   );
 }
 
@@ -49,128 +93,110 @@ export function Consigne({
 
   if (!partie) {
     return (
-      <div className="consigne">
-        {estMeneur ? (
-          <>
-            <Choix
-              libelle={texte(lang, "duree")}
-              valeurs={DUREES}
-              valeur={duree}
-              format={(n) => texte(lang, "secondes", { n })}
-              onChange={setDuree}
-            />
-            <Choix
-              libelle={texte(lang, "tours")}
-              valeurs={TOURS}
-              valeur={tours}
-              format={String}
-              onChange={setTours}
-            />
-            <button
-              type="submit"
-              disabled={nbJoueurs < 2}
-              onClick={() => onLance(duree, tours)}
-            >
-              {texte(lang, "lancer")}
-            </button>
-            {nbJoueurs < 2 && (
-              <span className="aide">{texte(lang, "attenteJoueurs")}</span>
-            )}
-          </>
-        ) : (
-          <span className="aide">{texte(lang, "attenteMeneur")}</span>
-        )}
-        {erreur && <span className="erreur">{texte(lang, "erreurMots")}</span>}
-      </div>
+      <Preparation
+        lang={lang}
+        estMeneur={estMeneur}
+        nbJoueurs={nbJoueurs}
+        minimum={2}
+        erreur={erreur ? texte(lang, "erreurMots") : null}
+        onLance={() => onLance(duree, tours)}
+      >
+        <Reglage
+          libelle={texte(lang, "duree")}
+          valeurs={DUREES}
+          valeur={duree}
+          format={(n) => texte(lang, "secondes", { n })}
+          onChange={setDuree}
+        />
+        <Reglage
+          libelle={texte(lang, "tours")}
+          valeurs={TOURS}
+          valeur={tours}
+          format={String}
+          onChange={setTours}
+        />
+      </Preparation>
+    );
+  }
+
+  if (partie.phase === "fin") {
+    return (
+      <Fin
+        lang={lang}
+        estMeneur={estMeneur}
+        onRejoue={() => onLance(partie.duree, partie.tours)}
+      />
     );
   }
 
   const nom = partie.noms[partie.dessinateur] ?? "";
   const tour = (
-    <span className="aide">
+    <Text variant="caption" mono tone="secondary">
       {texte(lang, "tour", { n: partie.cycle, total: partie.tours })}
-    </span>
+    </Text>
   );
-  const chrono =
-    partie.phase === "dessin" || partie.phase === "choix" ? (
-      <Chrono lang={lang} restantMs={restantMs} />
-    ) : null;
+  const chrono = partie.phase !== "bilan" && (
+    <Chrono lang={lang} restantMs={restantMs} />
+  );
 
   if (partie.phase === "choix") {
     return (
-      <div className="consigne">
-        {tour}
+      <Bandeau gauche={tour} droite={chrono}>
         {partie.dessinateur === moi ? (
           <>
-            <span>{texte(lang, "choisisMot")}</span>
+            <Text>{texte(lang, "choisisMot")}</Text>
             {partie.choix.map((champion, index) => (
-              <button
+              <Button
                 key={champion.id}
-                className="champion"
+                variant="secondary"
+                startIcon={
+                  <ChampionIcon
+                    src={icone(partie.version, champion.id)}
+                    name={champion.nom}
+                    tooltip=""
+                    size="small"
+                  />
+                }
                 onClick={() => onChoisis(index)}
               >
-                <Icone version={partie.version} champion={champion} />
                 {champion.nom}
-              </button>
+              </Button>
             ))}
           </>
         ) : (
-          <span className="aide">{texte(lang, "choisitMot", { nom })}</span>
+          <Text tone="secondary">{texte(lang, "choisitMot", { nom })}</Text>
         )}
-        {chrono}
-      </div>
+      </Bandeau>
     );
   }
 
-  if (partie.phase === "dessin" && partie.mot) {
+  const mot = partie.mot;
+  if (partie.phase === "dessin" && mot) {
     const vu = partie.dessinateur === moi || partie.trouve.includes(moi);
     return (
-      <div className="consigne">
-        {tour}
+      <Bandeau gauche={tour} droite={chrono}>
         {vu ? (
-          <strong className="champion">
-            <Icone version={partie.version} champion={partie.mot} />
+          <AvecIcone version={partie.version} champion={mot}>
             {texte(lang, partie.dessinateur === moi ? "dessine" : "trouveMoi", {
-              mot: partie.mot.nom,
+              mot: mot.nom,
             })}
-          </strong>
+          </AvecIcone>
         ) : (
-          <span className="masque">
-            {masque(partie.mot.nom, partie.revele)}
-          </span>
+          <Text variant="section" mono>
+            {enCases(masque(mot.nom, partie.revele))}
+          </Text>
         )}
-        {chrono}
-      </div>
-    );
-  }
-
-  if (partie.phase === "bilan") {
-    return (
-      <div className="consigne">
-        {tour}
-        {partie.mot && (
-          <strong className="champion">
-            <Icone version={partie.version} champion={partie.mot} />
-            {texte(lang, "cetait", { mot: partie.mot.nom })}
-          </strong>
-        )}
-      </div>
+      </Bandeau>
     );
   }
 
   return (
-    <div className="consigne">
-      <strong>{texte(lang, "recap")}</strong>
-      {estMeneur ? (
-        <button
-          type="submit"
-          onClick={() => onLance(partie.duree, partie.tours)}
-        >
-          {texte(lang, "rejouer")}
-        </button>
-      ) : (
-        <span className="aide">{texte(lang, "recapAttente")}</span>
+    <Bandeau gauche={tour}>
+      {mot && (
+        <AvecIcone version={partie.version} champion={mot}>
+          {texte(lang, "cetait", { mot: mot.nom })}
+        </AvecIcone>
       )}
-    </div>
+    </Bandeau>
   );
 }

@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { Frame, Stack, Text } from "../../common";
 import { splash } from "../commun/champions";
-import { Choix, Chrono } from "../commun/jeu";
+import { Chrono, Fin, Preparation, Reglage } from "../commun/ecrans";
 import type { Lang } from "../commun/textes";
 import {
   DUREE_DEFAUT,
@@ -36,87 +37,68 @@ export function Consigne({
 
   if (!partie) {
     return (
-      <div className="consigne">
-        {estMeneur ? (
-          <>
-            <Choix
-              libelle={texte(lang, "duree")}
-              valeurs={DUREES}
-              valeur={duree}
-              format={(n) => texte(lang, "secondes", { n })}
-              onChange={setDuree}
-            />
-            <Choix
-              libelle={texte(lang, "manches")}
-              valeurs={MANCHES}
-              valeur={manches}
-              format={String}
-              onChange={setManches}
-            />
-            <button
-              type="submit"
-              disabled={nbJoueurs < 2}
-              onClick={() => onLance(duree, manches)}
-            >
-              {texte(lang, "lancer")}
-            </button>
-            {nbJoueurs < 2 && (
-              <span className="aide">{texte(lang, "attenteJoueurs")}</span>
-            )}
-          </>
-        ) : (
-          <span className="aide">{texte(lang, "attenteMeneur")}</span>
-        )}
-        {erreur && <span className="erreur">{texte(lang, "erreurMots")}</span>}
-      </div>
+      <Preparation
+        lang={lang}
+        estMeneur={estMeneur}
+        nbJoueurs={nbJoueurs}
+        minimum={2}
+        erreur={erreur ? texte(lang, "erreurMots") : null}
+        onLance={() => onLance(duree, manches)}
+      >
+        <Reglage
+          libelle={texte(lang, "duree")}
+          valeurs={DUREES}
+          valeur={duree}
+          format={(n) => texte(lang, "secondes", { n })}
+          onChange={setDuree}
+        />
+        <Reglage
+          libelle={texte(lang, "manches")}
+          valeurs={MANCHES}
+          valeur={manches}
+          format={String}
+          onChange={setManches}
+        />
+      </Preparation>
     );
   }
 
-  const numero = (
-    <span className="aide">
-      {texte(lang, "manche", { n: partie.manche, total: partie.manches })}
-    </span>
-  );
-
-  if (partie.phase === "manche") {
+  if (partie.phase === "fin") {
     return (
-      <div className="consigne">
-        {numero}
-        <strong>
-          {partie.trouve.includes(moi) && partie.champion
-            ? texte(lang, "trouveMoi", { mot: partie.champion.nom })
-            : texte(lang, "question")}
-        </strong>
-        <Chrono lang={lang} restantMs={restantMs} />
-      </div>
-    );
-  }
-
-  if (partie.phase === "bilan") {
-    return (
-      <div className="consigne">
-        {numero}
-        <strong>
-          {texte(lang, "cetait", { mot: partie.champion?.nom ?? "" })}
-        </strong>
-      </div>
+      <Fin
+        lang={lang}
+        estMeneur={estMeneur}
+        onRejoue={() => onLance(partie.duree, partie.manches)}
+      />
     );
   }
 
   return (
-    <div className="consigne">
-      <strong>{texte(lang, "recap")}</strong>
-      {estMeneur ? (
-        <button
-          type="submit"
-          onClick={() => onLance(partie.duree, partie.manches)}
-        >
-          {texte(lang, "rejouer")}
-        </button>
-      ) : (
-        <span className="aide">{texte(lang, "recapAttente")}</span>
-      )}
-    </div>
+    <Frame dense>
+      <Stack
+        direction="row"
+        spacing={1.5}
+        align="center"
+        justify="between"
+        wrap
+      >
+        <Text variant="caption" mono tone="secondary">
+          {texte(lang, "manche", { n: partie.manche, total: partie.manches })}
+        </Text>
+        <Text variant="subtitle">
+          {partie.phase === "bilan"
+            ? texte(lang, "cetait", { mot: partie.champion?.nom ?? "" })
+            : partie.trouve.includes(moi) && partie.champion
+              ? texte(lang, "trouveMoi", { mot: partie.champion.nom })
+              : texte(lang, "question")}
+        </Text>
+        {partie.phase === "manche" ? (
+          <Chrono lang={lang} restantMs={restantMs} />
+        ) : (
+          <span />
+        )}
+      </Stack>
+    </Frame>
   );
 }
 
@@ -127,24 +109,26 @@ export function Image({
   restantMs,
 }: {
   lang: Lang;
-  partie: PartieZoom | null;
+  partie: PartieZoom;
   restantMs: number;
 }) {
-  const champion = partie?.phase === "fin" ? null : partie?.champion;
+  const champion = partie.phase === "fin" ? null : partie.champion;
+  if (!champion) {
+    return null;
+  }
   return (
-    <div className="cadre">
-      {champion && partie && (
-        <img
-          key={champion.id}
-          src={splash(champion.id)}
-          alt={partie.phase === "bilan" ? champion.nom : texte(lang, "image")}
-          draggable={false}
-          style={{
-            transform: `scale(${grossissement(partie, restantMs)})`,
-            transformOrigin: `${partie.foyer.x * 100}% ${partie.foyer.y * 100}%`,
-          }}
-        />
-      )}
-    </div>
+    <img
+      key={champion.id}
+      src={splash(champion.id)}
+      alt={partie.phase === "bilan" ? champion.nom : texte(lang, "image")}
+      draggable={false}
+      style={{
+        objectFit: "cover",
+        userSelect: "none",
+        transition: "transform 250ms linear",
+        transform: `scale(${grossissement(partie, restantMs)})`,
+        transformOrigin: `${partie.foyer.x * 100}% ${partie.foyer.y * 100}%`,
+      }}
+    />
   );
 }

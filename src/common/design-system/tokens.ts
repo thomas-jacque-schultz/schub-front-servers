@@ -188,6 +188,41 @@ export const typographyTokens = {
   },
 } as const;
 
+// L'ambiance des mini-jeux (Schub#145) : la même identité, prune, or et noir, en plus joueur. Les jeux sont
+// sombres seulement. Rayons ronds, police ronde, liseré prune lumineux : ce que le site de statistiques ne fait
+// pas, pour qu'un jeu ne se lise plus comme un tableau de bord.
+export const playful = {
+  fontFamily:
+    "'Fredoka Variable', 'Fredoka', 'Space Grotesk Variable', 'Segoe UI', sans-serif",
+  radii: { control: 12, card: 18 },
+  edge: "rgba(164, 71, 126, 0.55)",
+  glow: "0 0 0 1px rgba(164, 71, 126, 0.30), 0 0 32px rgba(164, 71, 126, 0.22), 0 18px 40px rgba(0, 0, 0, 0.55)",
+  panel:
+    "linear-gradient(180deg, rgba(40, 18, 44, 0.94) 0%, rgba(21, 13, 24, 0.94) 100%)",
+  // Les boutons secondaires sont des tuiles prune, les champs un fond opaque : les griffonnages ne passent pas dessous.
+  tile: "rgba(164, 71, 126, 0.18)",
+  tileHover: "rgba(164, 71, 126, 0.34)",
+  field: "rgba(21, 13, 24, 0.88)",
+  // Le bouton principal a une tranche d'or foncé : il s'enfonce quand on appuie.
+  press: { depth: 4, edge: brand.goldDeep },
+  page:
+    "radial-gradient(900px 560px at 15% -10%, rgba(164, 71, 126, 0.40) 0%, transparent 60%), " +
+    "radial-gradient(800px 520px at 100% 110%, rgba(107, 40, 83, 0.48) 0%, transparent 60%), " +
+    "linear-gradient(180deg, #1A0B1A 0%, #0D060E 100%)",
+  doodle: {
+    gold: "rgba(201, 162, 39, 0.40)",
+    prune: "rgba(192, 107, 160, 0.45)",
+  },
+  brush: brand.prune,
+  confetti: [
+    brand.gold,
+    brand.goldBright,
+    brand.pruneBright,
+    "#C36BA0",
+    "#4FB783",
+  ],
+} as const;
+
 export const motion = {
   fast: 120,
   normal: 200,

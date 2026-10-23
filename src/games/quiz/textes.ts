@@ -3,6 +3,8 @@ import { traduction } from "../commun/textes";
 export const texte = traduction({
   fr: {
     titre: "Questions pour un invocateur",
+    accroche:
+      "Quatre réponses, une seule bonne : le plus rapide marque le plus.",
     manches: "Nombre de questions",
     manche: "Question {n}/{total}",
     chargement: "Chargement des questions…",
@@ -27,6 +29,7 @@ export const texte = traduction({
   },
   en: {
     titre: "Summoner Quiz",
+    accroche: "Four answers, one right: the fastest scores the most.",
     manches: "Number of questions",
     manche: "Question {n}/{total}",
     chargement: "Loading questions…",

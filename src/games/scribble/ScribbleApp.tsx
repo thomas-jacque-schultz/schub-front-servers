@@ -1,10 +1,23 @@
 import { useCallback, useRef, useState } from "react";
+import {
+  Button,
+  GameStage,
+  SegmentedControl,
+  Stack,
+  SwatchButton,
+} from "../../common";
 import { catalogue } from "../commun/champions";
-import { Devinette, Joueurs, Scores } from "../commun/jeu";
+import {
+  Classement,
+  type Fiche,
+  Fil,
+  Jeu,
+  Reponse,
+  Salon,
+} from "../commun/ecrans";
 import type { Evenement } from "../commun/relay";
-import { Bandeau, ErreurSalon, JeuApp } from "../commun/salon";
+import type { Lang } from "../commun/textes";
 import { type Contexte, useMaintenant, useSalon } from "../commun/useSalon";
-import { langueDuNavigateur } from "../commun/textes";
 import { estMessageJeu, type MessageJeu, useMeneur } from "../commun/useMeneur";
 import { Board } from "./Board";
 import { Flux } from "./flux";
@@ -12,7 +25,7 @@ import { Consigne } from "./Jeu";
 import { nouvellePartie, type Partie } from "./partie";
 import { nouvelleManche, REGLES } from "./regles";
 import { texte } from "./textes";
-import { estMorceau, GOMME, type Morceau, Tableau } from "./traits";
+import { estMorceau, GOMME, type Morceau, RATIO, Tableau } from "./traits";
 
 const COULEURS = [
   "#F2E9EE",
@@ -33,17 +46,26 @@ const COULEURS = [
   "#FF77B7",
 ];
 const EPAISSEURS = [0.004, 0.009, 0.02];
+const NOMS_EPAISSEURS = ["fin", "moyen", "epais"] as const;
+// Le titre, la consigne, le champ de réponse et les outils : le tableau prend la hauteur qui reste.
+const RESERVE_PX = 330;
+
+const FICHE: Fiche = {
+  titre: (lang) => texte(lang, "titre"),
+  icone: "🎨",
+  accroche: (lang) => texte(lang, "accroche"),
+};
 
 export function ScribbleApp() {
   return (
-    <JeuApp
-      titre={texte(langueDuNavigateur(), "titre")}
-      rendu={(contexte, nom) => <Salon contexte={contexte} nom={nom} />}
+    <Jeu
+      fiche={FICHE}
+      rendu={(contexte, nom) => <Salle contexte={contexte} nom={nom} />}
     />
   );
 }
 
-function Salon({ contexte, nom }: { contexte: Contexte; nom: string }) {
+function Salle({ contexte, nom }: { contexte: Contexte; nom: string }) {
   const { lang } = contexte;
   const tableau = useRef(new Tableau()).current;
   const recus = useRef(new Flux<Morceau>()).current;
@@ -91,7 +113,7 @@ function Salon({ contexte, nom }: { contexte: Contexte; nom: string }) {
   );
 
   const salon = useSalon({ jeu: "scribble", contexte, nom, surEvenement });
-  const { moi, joueurs, meneur, etat, erreur, efface } = salon;
+  const { moi, joueurs, meneur, efface } = salon;
 
   const effaceTout = useCallback(() => {
     efface();
@@ -117,6 +139,7 @@ function Salon({ contexte, nom }: { contexte: Contexte; nom: string }) {
   const maintenant = useMaintenant(
     partie?.phase === "choix" || partie?.phase === "dessin",
   );
+  const enCours = partie !== null && partie.phase !== "fin";
 
   // Tout le monde dessine en attendant la première partie ; ensuite, le dessinateur seul, et personne à la fin.
   const dessinable =
@@ -125,146 +148,156 @@ function Salon({ contexte, nom }: { contexte: Contexte; nom: string }) {
     partie?.phase === "dessin" &&
     partie.devineurs.includes(moi) &&
     !partie.trouve.includes(moi);
+  const dessinateur = enCours && partie.dessinateur === moi;
 
   return (
-    <main className="salon">
-      <Bandeau
-        titre={texte(lang, "titre")}
-        lang={lang}
-        room={salon.room}
-        hote={contexte.hote}
-      />
-
-      {etat === "erreur" && erreur ? (
-        <ErreurSalon lang={lang} erreur={erreur} onNouveau={salon.nouveau} />
-      ) : (
-        <div className="jeu">
-          <div className="zone">
-            {etat !== "salon" && (
-              <p className="etat">
-                {texte(
-                  lang,
-                  etat === "reconnexion" ? "reconnexion" : "connexion",
-                )}
-              </p>
-            )}
-            {etat === "salon" && (
-              <Consigne
-                lang={lang}
-                partie={partie}
-                moi={moi}
-                estMeneur={jeu.estMeneur}
-                restantMs={
-                  partie
-                    ? Math.max(0, partie.restantMs - (maintenant - jeu.recuA))
-                    : 0
-                }
-                nbJoueurs={joueurs.length}
-                erreur={jeu.erreur}
-                onLance={(duree, tours) =>
-                  jeu.lance(() =>
-                    catalogue(lang).then(({ version, champions }) =>
-                      nouvellePartie(
-                        jeu.presents.current,
-                        duree,
-                        tours,
-                        lang,
-                        version,
-                        champions,
-                        Math.random,
-                      ),
-                    ),
-                  )
-                }
-                onChoisis={jeu.agit}
-              />
-            )}
-            <Board
-              tableau={tableau}
-              actif={dessinable}
-              couleur={couleur}
-              epaisseur={epaisseur}
-              version={version}
-              auteur={moi}
-              onMorceau={(morceau) => salon.envoie(morceau, true)}
-              recus={recus}
-            />
-            {partie && partie.phase !== "fin" && (
-              <Devinette
-                lang={lang}
-                proche={jeu.proche}
-                actif={devine}
-                cache={partie.dessinateur === moi && partie.phase !== "bilan"}
-                onDevine={jeu.devine}
-              />
-            )}
-            <div className={dessinable ? "outils" : "outils cache"}>
-              <div className="palette">
-                {COULEURS.map((c) => (
-                  <button
-                    key={c}
-                    className={c === couleur ? "couleur choisie" : "couleur"}
-                    style={{ background: c }}
-                    aria-label={c}
-                    onClick={() => setCouleur(c)}
-                  />
-                ))}
-              </div>
-              <span className="separateur" />
-              {EPAISSEURS.map((e) => (
-                <button
-                  key={e}
-                  className={
-                    e === epaisseur ? "epaisseur choisie" : "epaisseur"
-                  }
-                  aria-label={`${texte(lang, "epaisseur")} ${e}`}
-                  onClick={() => setEpaisseur(e)}
-                >
-                  <span
-                    style={{ width: `${e * 600}px`, height: `${e * 600}px` }}
-                  />
-                </button>
-              ))}
-              <button
-                className={couleur === GOMME ? "discret choisie" : "discret"}
-                onClick={() => setCouleur(GOMME)}
-              >
-                {texte(lang, "gomme")}
-              </button>
-              <span className="separateur" />
-              <button className="discret" onClick={effaceTout}>
-                {texte(lang, "effacer")}
-              </button>
-            </div>
-          </div>
-          <aside className="joueurs">
-            {partie ? (
-              <Scores
-                lang={lang}
-                scores={partie.scores}
-                noms={partie.noms}
-                fil={partie.fil}
-                trouve={partie.phase === "fin" ? [] : partie.trouve}
-                joueurs={joueurs}
-                moi={moi}
-                meneur={meneur}
-                etiquette={(id) =>
-                  partie.phase !== "fin" && id === partie.dessinateur
-                    ? texte(lang, "dessinateur")
+    <Salon
+      lang={lang}
+      room={salon.room}
+      hote={contexte.hote}
+      etat={salon.etat}
+      erreur={salon.erreur}
+      onNouveau={salon.nouveau}
+      fete={
+        enCours && partie.trouve.includes(moi)
+          ? `${partie.cycle}-${partie.dessinateur}`
+          : null
+      }
+      cote={
+        <Stack spacing={1.5}>
+          <Classement
+            lang={lang}
+            joueurs={joueurs}
+            moi={moi}
+            meneur={meneur}
+            scores={partie?.scores}
+            etiquette={(id) =>
+              !enCours
+                ? null
+                : id === partie.dessinateur
+                  ? texte(lang, "dessinateur")
+                  : partie.trouve.includes(id)
+                    ? "✓"
                     : null
-                }
-              />
-            ) : (
-              <Joueurs
-                lang={lang}
-                joueurs={joueurs}
-                moi={moi}
-                meneur={meneur}
-              />
-            )}
-          </aside>
-        </div>
-      )}
-    </main>
+            }
+          />
+          {enCours && <Fil lang={lang} fil={partie.fil} noms={partie.noms} />}
+        </Stack>
+      }
+    >
+      <Stack spacing={1.5}>
+        <Consigne
+          lang={lang}
+          partie={partie}
+          moi={moi}
+          estMeneur={jeu.estMeneur}
+          restantMs={
+            partie
+              ? Math.max(0, partie.restantMs - (maintenant - jeu.recuA))
+              : 0
+          }
+          nbJoueurs={joueurs.length}
+          erreur={jeu.erreur}
+          onLance={(duree, tours) =>
+            jeu.lance(() =>
+              catalogue(lang).then(({ version: v, champions }) =>
+                nouvellePartie(
+                  jeu.presents.current,
+                  duree,
+                  tours,
+                  lang,
+                  v,
+                  champions,
+                  Math.random,
+                ),
+              ),
+            )
+          }
+          onChoisis={jeu.agit}
+        />
+        <GameStage ratio={RATIO} reserve={RESERVE_PX}>
+          <Board
+            tableau={tableau}
+            actif={dessinable}
+            couleur={couleur}
+            epaisseur={epaisseur}
+            version={version}
+            auteur={moi}
+            onMorceau={(morceau) => salon.envoie(morceau, true)}
+            recus={recus}
+          />
+        </GameStage>
+        {enCours && !dessinateur && (
+          <Reponse
+            key={`${partie.cycle}-${partie.dessinateur}-${devine}`}
+            lang={lang}
+            proche={jeu.proche}
+            actif={devine}
+            onEnvoie={jeu.devine}
+          />
+        )}
+        {dessinable && (
+          <Outils
+            lang={lang}
+            couleur={couleur}
+            epaisseur={epaisseur}
+            onCouleur={setCouleur}
+            onEpaisseur={setEpaisseur}
+            onEfface={effaceTout}
+          />
+        )}
+      </Stack>
+    </Salon>
+  );
+}
+
+function Outils({
+  lang,
+  couleur,
+  epaisseur,
+  onCouleur,
+  onEpaisseur,
+  onEfface,
+}: {
+  lang: Lang;
+  couleur: string;
+  epaisseur: number;
+  onCouleur: (couleur: string) => void;
+  onEpaisseur: (epaisseur: number) => void;
+  onEfface: () => void;
+}) {
+  return (
+    <Stack direction="row" spacing={1.5} align="center" wrap>
+      <Stack direction="row" spacing={0.5} wrap>
+        {COULEURS.map((c) => (
+          <SwatchButton
+            key={c}
+            color={c}
+            label={c}
+            selected={c === couleur}
+            onClick={() => onCouleur(c)}
+          />
+        ))}
+      </Stack>
+      <SegmentedControl
+        label={texte(lang, "epaisseur")}
+        value={String(EPAISSEURS.indexOf(epaisseur))}
+        onChange={(rang) => onEpaisseur(EPAISSEURS[Number(rang)])}
+        options={NOMS_EPAISSEURS.map((n, rang) => ({
+          value: String(rang),
+          label: texte(lang, n),
+        }))}
+      />
+      <Button
+        size="small"
+        variant={couleur === GOMME ? "primary" : "secondary"}
+        onClick={() => onCouleur(GOMME)}
+      >
+        {texte(lang, "gomme")}
+      </Button>
+      <Button size="small" variant="ghost" onClick={onEfface}>
+        {texte(lang, "effacer")}
+      </Button>
+    </Stack>
   );
 }

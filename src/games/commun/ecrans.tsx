@@ -1,10 +1,21 @@
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import {
+  createContext,
+  type ReactNode,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import {
   Alert,
-  AppThemeProvider,
   Button,
   Card,
+  Celebration,
   Columns,
+  Countdown,
+  GameBackdrop,
+  GameThemeProvider,
+  GameTitle,
   Icon,
   PageContainer,
   SelectField,
@@ -19,35 +30,49 @@ import type { Joueur } from "./relay";
 import { type CleCommune, type Lang, texteCommun } from "./textes";
 import { type Contexte, type EtatSalon, useContexte } from "./useSalon";
 
-// Les écrans communs des jeux sur le design system de PremadeLab (Schub#139). Scribble et Zoom ont encore leurs
-// équivalents en CSS (salon.tsx, jeu.tsx).
+// Les écrans communs des jeux, sur le design system et l'ambiance des jeux (Schub#139, #145).
 
 const NOM_MAX = 24;
 const REPONSE_MAX = 60;
 const FIL_AFFICHE = 8;
 
-/** L'entrée d'un jeu : le thème, puis la langue et le salon (PremadeLab ou l'adresse), puis le pseudo. */
+/** Ce qui présente un jeu : son nom, son pictogramme et la phrase qui dit à quoi l'on joue. */
+export interface Fiche {
+  titre: (lang: Lang) => string;
+  icone: string;
+  accroche: (lang: Lang) => string;
+}
+
+const FicheJeu = createContext<Fiche>({
+  titre: () => "",
+  icone: "",
+  accroche: () => "",
+});
+
+/** L'entrée d'un jeu : l'ambiance, puis la langue et le salon (PremadeLab ou l'adresse), puis le pseudo. */
 export function Jeu({
-  titre,
+  fiche,
   rendu,
 }: {
-  titre: (lang: Lang) => string;
+  fiche: Fiche;
   rendu: (contexte: Contexte, nom: string) => ReactNode;
 }) {
   return (
-    <AppThemeProvider defaultMode="dark">
-      <Entree titre={titre} rendu={rendu} />
-    </AppThemeProvider>
+    <GameThemeProvider>
+      <GameBackdrop />
+      <FicheJeu.Provider value={fiche}>
+        <Entree rendu={rendu} />
+      </FicheJeu.Provider>
+    </GameThemeProvider>
   );
 }
 
 function Entree({
-  titre,
   rendu,
 }: {
-  titre: (lang: Lang) => string;
   rendu: (contexte: Contexte, nom: string) => ReactNode;
 }) {
+  const fiche = useContext(FicheJeu);
   const contexte = useContexte();
   const [nom, setNom] = useState<string | null>(playerName());
   const [saisie, setSaisie] = useState("");
@@ -73,9 +98,11 @@ function Entree({
           }
         }}
       >
-        <Text variant="title" component="h1">
-          {titre(lang)}
-        </Text>
+        <GameTitle
+          title={fiche.titre(lang)}
+          icon={fiche.icone}
+          tagline={fiche.accroche(lang)}
+        />
         <TextField
           label={texteCommun(lang, "pseudoInvite")}
           value={saisie}
@@ -148,23 +175,23 @@ export function AvecDonnees<T>({
 
 /** Le titre, le code du salon, et le lien à copier quand le jeu est ouvert seul. */
 export function EnTete({
-  titre,
   lang,
   room,
   hote,
 }: {
-  titre: string;
   lang: Lang;
   room: string | null;
   hote: string | null;
 }) {
+  const fiche = useContext(FicheJeu);
   const [copie, setCopie] = useState(false);
   const lien = room ? `${location.origin}/${room}` : null;
   return (
-    <Stack direction="row" spacing={1.5} align="center" wrap>
-      <Text variant="section" component="h1" tone="primary">
-        {titre}
-      </Text>
+    <GameTitle
+      title={fiche.titre(lang)}
+      icon={fiche.icone}
+      tagline={fiche.accroche(lang)}
+    >
       {room && (
         <Text mono tone="secondary">
           {room}
@@ -184,13 +211,12 @@ export function EnTete({
           {texteCommun(lang, copie ? "copie" : "copier")}
         </Button>
       )}
-    </Stack>
+    </GameTitle>
   );
 }
 
 /** Le salon : l'en-tête, puis le jeu et sa colonne de joueurs, ou l'erreur qui l'a fermé. */
 export function Salon({
-  titre,
   lang,
   room,
   hote,
@@ -198,9 +224,9 @@ export function Salon({
   erreur,
   onNouveau,
   cote,
+  fete = null,
   children,
 }: {
-  titre: string;
   lang: Lang;
   room: string | null;
   hote: string | null;
@@ -208,11 +234,14 @@ export function Salon({
   erreur: CleCommune | null;
   onNouveau: () => void;
   cote: ReactNode;
+  /** Une valeur neuve quand le joueur marque : une gerbe de confettis. */
+  fete?: string | number | null;
   children: ReactNode;
 }) {
   return (
-    <Stack spacing={1.5}>
-      <EnTete titre={titre} lang={lang} room={room} hote={hote} />
+    <Stack spacing={2}>
+      <EnTete lang={lang} room={room} hote={hote} />
+      <Celebration trigger={fete} />
       {etat === "erreur" && erreur ? (
         <Stack spacing={1} align="start">
           <Alert severity="error">{texteCommun(lang, erreur)}</Alert>
@@ -329,10 +358,10 @@ export function Fil({
           <Text
             key={index}
             variant="caption"
-            tone={ligne.trouve ? "primary" : "secondary"}
+            tone={ligne.trouve ? "success" : "secondary"}
           >
             {ligne.trouve
-              ? texteCommun(lang, "aTrouve", { nom: noms[ligne.joueur] ?? "" })
+              ? `${texteCommun(lang, "aTrouve", { nom: noms[ligne.joueur] ?? "" })} ✓`
               : texteCommun(lang, "ligne", {
                   nom: noms[ligne.joueur] ?? "",
                   texte: ligne.texte ?? "",
@@ -346,11 +375,10 @@ export function Fil({
 
 export function Chrono({ lang, restantMs }: { lang: Lang; restantMs: number }) {
   return (
-    <span aria-label={texteCommun(lang, "chrono")}>
-      <Text variant="section" mono tone="primary">
-        {Math.ceil(restantMs / 1000)}
-      </Text>
-    </span>
+    <Countdown
+      seconds={Math.ceil(restantMs / 1000)}
+      label={texteCommun(lang, "chrono")}
+    />
   );
 }
 

@@ -120,9 +120,20 @@ dans ce dépôt, sur une base commune. **ESLint tient les pactes** (`pacte(...)`
 **Les mini-jeux sont la troisième application** (Schub#139) : `src/games/<jeu>/`, sa page `games/<jeu>/index.html`
 (entrée Vite trouvée seule), servie sur `(dev-)<jeu>.premadelab.eu` par un bloc `server` de nginx et par le même
 middleware en dev. Un jeu n'importe que `common` (par sa porte) et `src/games/commun/`, jamais Schub, PremadeLab ni
-un autre jeu. La WebSocket `/ws` va droit au relais (`schub-together-games`) par le tunnel. Ils ont encore leur
-propre CSS et leurs textes dans `textes.ts` : ils passent au design system jeu par jeu. Un jeu ajouté s'ajoute aussi à
-`src/premadelab/queueKiller.ts` et à la route `queue-killer/…` de `nginx.conf`.
+un autre jeu. La WebSocket `/ws` va droit au relais (`schub-together-games`) par le tunnel. Un jeu ajouté s'ajoute
+aussi à `src/premadelab/queueKiller.ts` et à la route `queue-killer/…` de `nginx.conf`.
+
+**Tous les jeux passent par les écrans de `games/commun/ecrans.tsx`**, sous `GameThemeProvider` (Schub#145). Leurs
+textes restent dans leur `textes.ts`. **L'ambiance des jeux n'est pas celle des applications**, et c'est voulu : un
+jeu qui ressemble au site de statistiques ne donne pas envie de jouer. Même prune, or et noir, mais police ronde
+(Fredoka, importée par `gameTheme.ts` seul : ses fichiers ne se téléchargent que dans les jeux), rayons ronds,
+liseré prune lumineux, bouton principal qui s'enfonce, griffonnages en fond (`GameBackdrop`), titre au pinceau
+(`GameTitle`). Ses jetons sont `playful` dans `tokens.ts`.
+Les jeux sont sombres seulement. `Frame` suit le rayon du thème : `radii.md` dans les applications, rond dans les jeux.
+
+**Le quiz ne fabrique rien pendant la partie** (Schub#143) : il tire dans la banque du cœur, que l'OWNER relit dans
+Schub › PremadeLab › Quiz. `npm run quiz:fabrique -- <lot.json>` fabrique un lot depuis Data Dragon et Univers ; le
+lot s'importe dans ce panneau.
 
 ## La coquille
 
