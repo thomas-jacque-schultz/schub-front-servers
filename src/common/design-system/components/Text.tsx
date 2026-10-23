@@ -15,6 +15,7 @@ export interface TextProps {
   truncate?: boolean;
   /** Chasse fixe : pour un chiffre ou un identifiant, jamais pour de la prose. */
   mono?: boolean;
+  italic?: boolean;
   align?: "left" | "center" | "right";
 }
 
@@ -51,6 +52,7 @@ export function Text({
   component,
   truncate = false,
   mono = false,
+  italic = false,
   align,
 }: TextProps) {
   return (
@@ -60,14 +62,13 @@ export function Text({
       color={TONE[tone]}
       noWrap={truncate}
       align={align}
-      sx={
-        mono
-          ? {
-              fontFamily: typographyTokens.monospaceFontFamily,
-              fontVariantNumeric: "tabular-nums",
-            }
-          : undefined
-      }
+      sx={{
+        ...(mono && {
+          fontFamily: typographyTokens.monospaceFontFamily,
+          fontVariantNumeric: "tabular-nums",
+        }),
+        ...(italic && { fontStyle: "italic" }),
+      }}
     >
       {children}
     </Typography>

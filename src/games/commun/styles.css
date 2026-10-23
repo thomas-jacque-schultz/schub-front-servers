@@ -214,6 +214,10 @@ input {
 }
 
 .meneur {
+  font-style: italic;
+}
+
+.role {
   color: var(--texte-2);
   font-size: 0.8rem;
 }
