@@ -21,6 +21,10 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircleOutline";
 import HourglassIcon from "@mui/icons-material/HourglassEmpty";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import FullscreenIcon from "@mui/icons-material/Fullscreen";
+import FullscreenExitIcon from "@mui/icons-material/FullscreenExit";
 import { createSvgIcon } from "@mui/material/utils";
 
 const CrownIcon = createSvgIcon(
@@ -31,8 +35,10 @@ const CrownIcon = createSvgIcon(
 // Répertoire fermé : ajouter une icône ici plutôt qu'importer @mui/icons-material ailleurs.
 const ICONS = {
   add: AddIcon,
+  back: ArrowBackIcon,
   chevron: ChevronRightIcon,
   code: CodeIcon,
+  copy: ContentCopyIcon,
   crown: CrownIcon,
   delete: DeleteOutlineIcon,
   done: CheckCircleIcon,
@@ -40,6 +46,8 @@ const ICONS = {
   email: EmailIcon,
   expand: ExpandMoreIcon,
   external: LaunchIcon,
+  fullscreen: FullscreenIcon,
+  fullscreenExit: FullscreenExitIcon,
   heart: FavoriteIcon,
   infrastructure: HubIcon,
   languages: TranslateIcon,
