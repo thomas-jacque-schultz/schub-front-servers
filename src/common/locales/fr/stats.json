@@ -64,7 +64,9 @@
     "goldDiffAt15": "Écart d’or à 15\u00a0min",
     "csDiffAt15": "Écart de CS à 15\u00a0min",
     "xpDiffAt15": "Écart d’XP à 15\u00a0min",
-    "killsDiffAt15": "Écart de kills à 15\u00a0min"
+    "killsDiffAt15": "Écart de kills à 15\u00a0min",
+    "killsAssistsAt15": "Kills et assists à 15\u00a0min",
+    "soloKills": "Solo kills par partie"
   },
   "delta": {
     "points": "{{value}} pts",
@@ -248,18 +250,21 @@
     "goldDiffAt15": "Or @15",
     "csDiffAt15": "CS @15",
     "xpDiffAt15": "XP @15",
-    "killsDiffAt15": "Kills @15"
+    "killsDiffAt15": "Kills @15",
+    "killsAssistsAt15": "K+A @15",
+    "soloKills": "Solo kills"
   },
   "radar": {
     "title": "Profil",
-    "helper": "Cinq axes, plus loin = mieux, lus contre le référentiel choisi\u00a0: le centre est le bas du référentiel, le bord son haut.",
+    "helper": "Dix axes, plus loin = mieux, lus contre le référentiel choisi\u00a0: le centre est le bas du référentiel, le bord son haut. En pointillé, la moyenne des joueurs de tous les paliers à ce poste.",
     "reference": {
       "label": "Référentiel",
       "met": "Adversaires",
       "league": "Palier"
     },
     "series": {
-      "position": "Au poste {{position}}"
+      "position": "Au poste {{position}}",
+      "allTiers": "Moyenne tous paliers"
     },
     "note": {
       "met": "Au poste {{position}}, {{games}} partie(s). Centre\u00a0: 5e percentile de {{count}} adversaires directs (au moins {{min}} parties chacun), bord\u00a0: 95e.",

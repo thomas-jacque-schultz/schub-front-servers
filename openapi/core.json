@@ -7213,9 +7213,14 @@
         }
       },
       "ReferenceGridMetric" : {
-        "required" : [ "missingTiers", "polarity", "rankMeans", "tiers" ],
+        "required" : [ "allTiersMean", "missingTiers", "polarity", "rankMeans", "tiers" ],
         "type" : "object",
         "properties" : {
+          "allTiersMean" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
           "missingTiers" : {
             "type" : "array",
             "items" : {
@@ -7760,7 +7765,7 @@
         }
       },
       "StatLineDto" : {
-        "required" : [ "afkGames", "assistsPerGame", "controlWardsPlaced", "csDiffAt15", "csPerMinute", "damagePerMinute", "damageShare", "damageTakenPerMinute", "deathShare", "deathsPer10", "deathsPerGame", "epicMonsterDamagePerMinute", "firstPlayedAt", "games", "goldDiffAt15", "goldPerMinute", "iconUrl", "kda", "key", "killParticipation", "killsDiffAt15", "killsPerGame", "label", "laningGames", "lastPlayedAt", "platesDiff", "secondsPlayed", "timeDeadShare", "turretDamagePerMinute", "turretTakedowns", "versusRest", "visionPerMinute", "wardsKilledPerMinute", "winRate", "wins", "xpDiffAt15" ],
+        "required" : [ "afkGames", "assistsPerGame", "controlWardsPlaced", "csDiffAt15", "csPerMinute", "damagePerMinute", "damageShare", "damageTakenPerMinute", "deathShare", "deathsPer10", "deathsPerGame", "epicMonsterDamagePerMinute", "firstPlayedAt", "games", "goldDiffAt15", "goldPerMinute", "iconUrl", "kda", "key", "killParticipation", "killsAssistsAt15", "killsDiffAt15", "killsPerGame", "label", "laningGames", "lastPlayedAt", "platesDiff", "secondsPlayed", "soloKills", "timeDeadShare", "turretDamagePerMinute", "turretTakedowns", "versusRest", "visionPerMinute", "wardsKilledPerMinute", "winRate", "wins", "xpDiffAt15" ],
         "type" : "object",
         "properties" : {
           "afkGames" : {
@@ -7858,6 +7863,11 @@
             "format" : "double",
             "nullable" : true
           },
+          "killsAssistsAt15" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
           "killsDiffAt15" : {
             "type" : "number",
             "format" : "double",
@@ -7890,6 +7900,11 @@
           "secondsPlayed" : {
             "type" : "integer",
             "format" : "int64"
+          },
+          "soloKills" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
           },
           "timeDeadShare" : {
             "type" : "number",
