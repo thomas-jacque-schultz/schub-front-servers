@@ -274,6 +274,11 @@
       "create": "Pick a game and create a room.",
       "share": "Send the link, or the four-letter code, to your premade.",
       "play": "Everyone picks a nickname, then the room creator starts the game: no account needed."
+    },
+    "premade": {
+      "title": "Your premade is playing",
+      "description": "Rooms opened by your teammates, signed in to PremadeLab.",
+      "join": "Join"
     }
   }
 }
