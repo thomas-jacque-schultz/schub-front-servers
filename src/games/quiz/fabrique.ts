@@ -209,6 +209,10 @@ const capitale = (texte: string) =>
     ? texte.charAt(0).toUpperCase() + texte.slice(1)
     : texte;
 
+/** Une recette sans ordre : deux listes des mêmes composants se valent. */
+const empreinte = (ids: string[]) =>
+  [...ids].sort((a, b) => a.localeCompare(b)).join("+");
+
 const nomDeGamme = ({ forme }: { forme: string }) =>
   capitale(forme.replace(/^(de la |de l'|du |des |de )/i, ""));
 
@@ -284,7 +288,7 @@ class Fabrique {
     if (!o) {
       return null;
     }
-    const recette = (x: Objet) => [...x.composantIds].sort().join("+");
+    const recette = (x: Objet) => empreinte(x.composantIds);
     const partagent = avecRecette.filter(
       (x) =>
         recette(x) !== recette(o) &&
@@ -297,7 +301,7 @@ class Fabrique {
       3,
     );
     const rangees = [o, ...autres].map((x) => x.composantIds);
-    if (new Set(rangees.map((r) => [...r].sort().join("+"))).size !== 4) {
+    if (new Set(rangees.map(empreinte)).size !== 4) {
       return null;
     }
     const noms = (lang: Lang, ids: string[]) =>

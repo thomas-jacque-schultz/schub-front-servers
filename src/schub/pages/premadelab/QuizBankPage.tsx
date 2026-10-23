@@ -119,7 +119,7 @@ function QuizBankPage() {
           onEnregistree={(message) => {
             setEdition(null);
             setToast(message);
-            reload();
+            void reload();
           }}
         />
       ) : (
@@ -244,7 +244,7 @@ function QuizBankPage() {
         onImporte={(message) => {
           setImporte(false);
           setToast(message);
-          reload();
+          void reload();
         }}
       />
       <Toast
