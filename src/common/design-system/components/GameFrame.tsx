@@ -22,7 +22,8 @@ export interface GameFrameProps {
   /** L'adresse du jeu, sur son sous-domaine. */
   src: string;
   title: string;
-  icon: string;
+  /** La vignette du champion qui évoque le jeu. */
+  image: string;
   onLoad?: () => void;
   ref?: Ref<HTMLIFrameElement>;
   back: { label: string; to: string };
@@ -40,7 +41,7 @@ export interface GameFrameProps {
 export function GameFrame({
   src,
   title,
-  icon,
+  image,
   onLoad,
   ref,
   back,
@@ -129,9 +130,21 @@ export function GameFrame({
             fontSize: { xs: "1.0625rem", sm: "1.25rem" },
           }}
         >
-          <Box component="span" aria-hidden sx={{ mr: 1 }}>
-            {icon}
-          </Box>
+          <Box
+            component="img"
+            src={image}
+            alt=""
+            sx={{
+              width: 28,
+              height: 28,
+              mr: 1,
+              verticalAlign: "middle",
+              objectFit: "cover",
+              borderRadius: `${playful.radii.control / 2}px`,
+              border: "1px solid",
+              borderColor: playful.edge,
+            }}
+          />
           {title}
         </Typography>
         {room ? (

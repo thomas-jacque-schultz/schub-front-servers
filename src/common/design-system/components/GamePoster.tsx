@@ -9,8 +9,8 @@ const encre = palettes.dark.text;
 
 export interface GamePosterProps {
   title: string;
-  /** Le pictogramme du jeu, en grand sur la jaquette. */
-  icon: string;
+  /** Le splash du champion qui évoque le jeu, en couverture. */
+  image: string;
   /** Le genre du jeu, en surtitre. */
   genre: string;
   /** Joueurs et durée. */
@@ -19,19 +19,16 @@ export interface GamePosterProps {
   /** Le libellé de l'appel, la jaquette entière étant le lien. */
   action: string;
   to: string;
-  /** La lueur derrière le pictogramme : une teinte de playful.confetti. */
-  accent: string;
 }
 
 export function GamePoster({
   title,
-  icon,
+  image,
   genre,
   tags,
   body,
   action,
   to,
-  accent,
 }: GamePosterProps) {
   return (
     <CardActionArea
@@ -54,36 +51,45 @@ export function GamePoster({
           transform: "translateY(-3px)",
           boxShadow: playful.glow,
         },
-        "&:hover .jaquette-icone": { transform: "rotate(-6deg) scale(1.08)" },
+        "&:hover .jaquette-couverture": { transform: "scale(1.06)" },
         "@media (prefers-reduced-motion: reduce)": {
           transition: "none",
           "&:hover, &.Mui-focusVisible": { transform: "none" },
-          "&:hover .jaquette-icone": { transform: "none" },
+          "&:hover .jaquette-couverture": { transform: "none" },
         },
       }}
     >
       <Box
         aria-hidden
         sx={{
-          display: "grid",
-          placeItems: "center",
-          height: { xs: 92, sm: 132 },
-          background: `radial-gradient(120px 90px at 50% 55%, color-mix(in srgb, ${accent} 40%, transparent) 0%, transparent 70%), ${playful.page}`,
+          position: "relative",
+          height: { xs: 104, sm: 136 },
+          overflow: "hidden",
           borderBottom: "1px solid",
           borderColor: playful.edge,
+          "&::after": {
+            content: '""',
+            position: "absolute",
+            inset: 0,
+            background: playful.coverFade,
+          },
         }}
       >
         <Box
-          className="jaquette-icone"
+          className="jaquette-couverture"
+          component="img"
+          src={image}
+          alt=""
+          loading="lazy"
           sx={{
-            fontSize: { xs: 46, sm: 64 },
-            lineHeight: 1,
-            filter: playful.iconShadow,
+            display: "block",
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "center 30%",
             transition: `transform ${motion.slow}ms ease`,
           }}
-        >
-          {icon}
-        </Box>
+        />
       </Box>
       <Box
         sx={{
@@ -138,10 +144,7 @@ export function GamePoster({
             </Box>
           ))}
         </Box>
-        <Typography
-          variant="body2"
-          sx={{ color: encre.secondary, flex: 1 }}
-        >
+        <Typography variant="body2" sx={{ color: encre.secondary, flex: 1 }}>
           {body}
         </Typography>
         <Box
