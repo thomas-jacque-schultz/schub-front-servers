@@ -124,7 +124,74 @@ export function EarlyGameView({ early, names }: EarlyGameViewProps) {
           presence={early.theirJungler}
         />
       </Columns>
+      <Proximite early={early} />
     </Stack>
+  );
+}
+
+const AVEC = ["TOP", "MIDDLE", "BOTTOM", "UTILITY"] as const;
+const estAvec = (poste: string): poste is (typeof AVEC)[number] =>
+  (AVEC as readonly string[]).includes(poste);
+
+// Qui joue avec qui (Schub#152) : le support avec son ADC puis son jungler, le jungler avec son plus proche.
+function Proximite({ early }: { early: EarlyGameDto }) {
+  const { t } = useTranslation("stats");
+  const camps = [
+    {
+      key: "ours",
+      support: early.ourSupport,
+      jungler: early.ourJunglerClosest,
+    },
+    {
+      key: "theirs",
+      support: early.theirSupport,
+      jungler: early.theirJunglerClosest,
+    },
+  ] as const;
+  const lignes = (camp: (typeof camps)[number]): string[] => [
+    ...(camp.support?.adcShareEarly != null
+      ? [
+          t("early.proximity.adc", { share: camp.support.adcShareEarly }),
+          t("early.proximity.roams", { count: camp.support.roams }),
+        ]
+      : []),
+    ...(camp.support?.junglerShareLate != null
+      ? [t("early.proximity.jungler", { share: camp.support.junglerShareLate })]
+      : []),
+    ...(camp.jungler && estAvec(camp.jungler.position)
+      ? [
+          t("early.proximity.closest", {
+            who: t(`early.proximity.with.${camp.jungler.position}`),
+            share: camp.jungler.share,
+          }),
+        ]
+      : []),
+  ];
+  if (camps.every((camp) => lignes(camp).length === 0)) {
+    return null;
+  }
+  return (
+    <Card
+      title={t("early.proximity.title")}
+      description={t("early.proximity.helper")}
+    >
+      <Columns minWidth={220} count={2}>
+        {camps.map((camp) => (
+          <Stack key={camp.key} spacing={0.5}>
+            <Text variant="caption" tone="secondary">
+              {t(`early.proximity.${camp.key}`)}
+            </Text>
+            {lignes(camp).length === 0 ? (
+              <Text variant="caption" tone="disabled">
+                {t("early.proximity.none")}
+              </Text>
+            ) : (
+              lignes(camp).map((ligne) => <Text key={ligne}>{ligne}</Text>)
+            )}
+          </Stack>
+        ))}
+      </Columns>
+    </Card>
   );
 }
 

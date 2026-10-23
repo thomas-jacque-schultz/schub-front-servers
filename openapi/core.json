@@ -5251,7 +5251,7 @@
         }
       },
       "EarlyGameDto" : {
-        "required" : [ "ganks", "ourJungler", "ourObjectives", "theirJungler", "theirObjectives" ],
+        "required" : [ "ganks", "ourJungler", "ourJunglerClosest", "ourObjectives", "ourSupport", "theirJungler", "theirJunglerClosest", "theirObjectives", "theirSupport" ],
         "type" : "object",
         "properties" : {
           "ganks" : {
@@ -5266,8 +5266,20 @@
               "$ref" : "#/components/schemas/JunglePresenceDto"
             } ]
           },
+          "ourJunglerClosest" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/JunglerProximityDto"
+            } ]
+          },
           "ourObjectives" : {
             "$ref" : "#/components/schemas/ObjectivesDto"
+          },
+          "ourSupport" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/SupportProximityDto"
+            } ]
           },
           "theirJungler" : {
             "nullable" : true,
@@ -5275,8 +5287,20 @@
               "$ref" : "#/components/schemas/JunglePresenceDto"
             } ]
           },
+          "theirJunglerClosest" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/JunglerProximityDto"
+            } ]
+          },
           "theirObjectives" : {
             "$ref" : "#/components/schemas/ObjectivesDto"
+          },
+          "theirSupport" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/SupportProximityDto"
+            } ]
           }
         }
       },
@@ -5983,6 +6007,24 @@
             "format" : "int32"
           }
         }
+      },
+      "JunglerProximityDto" : {
+        "required" : [ "minutes", "position", "share" ],
+        "type" : "object",
+        "properties" : {
+          "minutes" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "position" : {
+            "type" : "string"
+          },
+          "share" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        },
+        "description" : "Le coÃ©quipier dont le jungler a Ã©tÃ© le plus souvent proche, sur toute la partie."
       },
       "LaneThreat" : {
         "required" : [ "championId", "championKey", "championName", "games", "goldDiffAt15", "iconUrl", "memberId", "memberName", "role" ],
@@ -8237,6 +8279,36 @@
             "format" : "int32"
           }
         }
+      },
+      "SupportProximityDto" : {
+        "required" : [ "adcMinutesEarly", "adcShareEarly", "junglerMinutesLate", "junglerShareLate", "roams" ],
+        "type" : "object",
+        "properties" : {
+          "adcMinutesEarly" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "adcShareEarly" : {
+            "type" : "integer",
+            "format" : "int32",
+            "nullable" : true
+          },
+          "junglerMinutesLate" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "junglerShareLate" : {
+            "type" : "integer",
+            "format" : "int32",
+            "nullable" : true
+          },
+          "roams" : {
+            "type" : "integer",
+            "description" : "DÃ©parts d'auprÃ¨s de l'ADC avant 15 min.",
+            "format" : "int32"
+          }
+        },
+        "description" : "Parts en pourcentage des minutes comptÃ©es : Ã  moins de 2 000 unitÃ©s, sans fontaine ni mort rÃ©cente. Null sous 5 minutes comptÃ©es."
       },
       "TeamDto" : {
         "required" : [ "createdAt", "id", "memberCount", "members", "name", "publicPage", "trainingSlots", "updatedAt", "viewerCanEditCompositions", "viewerCanEditRoster", "viewerCanManage", "viewerMemberId" ],

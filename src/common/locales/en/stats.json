@@ -466,6 +466,24 @@
       "junglerConclusion_one": "{{player}}: {{made}} gank per game, {{decisive}} decisive, over {{count}} game.",
       "junglerConclusion_other": "{{player}}: {{made}} ganks per game, {{decisive}} decisive, over {{count}} games.",
       "sideConclusion": "You win {{rate}} when your jungler plays {{side}} ({{count}} games)."
+    },
+    "proximity": {
+      "title": "Who plays with whom",
+      "helper": "Share of minutes spent within 2,000 units of each other, about one screen. Minutes in the fountain, or within 30 s of a death, do not count.",
+      "ours": "Our side",
+      "theirs": "Their side",
+      "adc": "Support with the ADC: {{share}}% of minutes before 15 min",
+      "roams_one": "{{count}} support roam before 15 min",
+      "roams_other": "{{count}} support roams before 15 min",
+      "jungler": "Support with the jungler: {{share}}% of minutes after 15 min",
+      "closest": "Jungler, most often with {{who}}: {{share}}% of minutes",
+      "none": "Not enough counted minutes.",
+      "with": {
+        "TOP": "the top laner",
+        "MIDDLE": "the mid laner",
+        "BOTTOM": "the ADC",
+        "UTILITY": "the support"
+      }
     }
   },
   "family": {

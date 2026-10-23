@@ -1887,9 +1887,13 @@ export interface components {
     EarlyGameDto: {
       ganks: components["schemas"]["GankDto"][];
       ourJungler: components["schemas"]["JunglePresenceDto"] | null;
+      ourJunglerClosest: components["schemas"]["JunglerProximityDto"] | null;
       ourObjectives: components["schemas"]["ObjectivesDto"];
+      ourSupport: components["schemas"]["SupportProximityDto"] | null;
       theirJungler: components["schemas"]["JunglePresenceDto"] | null;
+      theirJunglerClosest: components["schemas"]["JunglerProximityDto"] | null;
       theirObjectives: components["schemas"]["ObjectivesDto"];
+      theirSupport: components["schemas"]["SupportProximityDto"] | null;
     };
     EvaluationDto: {
       conditions: components["schemas"]["ConditionTraceDto"][];
@@ -2145,6 +2149,14 @@ export interface components {
       strongSide: "TOP" | "BOT" | "BALANCED";
       /** Format: int32 */
       topMinutes: number;
+    };
+    /** @description Le coÃ©quipier dont le jungler a Ã©tÃ© le plus souvent proche, sur toute la partie. */
+    JunglerProximityDto: {
+      /** Format: int32 */
+      minutes: number;
+      position: string;
+      /** Format: int32 */
+      share: number;
     };
     LaneThreat: {
       /** Format: int32 */
@@ -2999,6 +3011,22 @@ export interface components {
       side: "TOP" | "BOT" | "BALANCED";
       /** Format: int32 */
       wins: number;
+    };
+    /** @description Parts en pourcentage des minutes comptÃ©es : Ã  moins de 2 000 unitÃ©s, sans fontaine ni mort rÃ©cente. Null sous 5 minutes comptÃ©es. */
+    SupportProximityDto: {
+      /** Format: int32 */
+      adcMinutesEarly: number;
+      /** Format: int32 */
+      adcShareEarly: number | null;
+      /** Format: int32 */
+      junglerMinutesLate: number;
+      /** Format: int32 */
+      junglerShareLate: number | null;
+      /**
+       * Format: int32
+       * @description DÃ©parts d'auprÃ¨s de l'ADC avant 15 min.
+       */
+      roams: number;
     };
     TeamDto: {
       /** Format: date-time */

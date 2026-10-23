@@ -466,6 +466,24 @@
       "junglerConclusion_one": "{{player}}\u00a0: {{made}} gank par partie, {{decisive}} décisifs, sur {{count}} partie.",
       "junglerConclusion_other": "{{player}}\u00a0: {{made}} ganks par partie, {{decisive}} décisifs, sur {{count}} parties.",
       "sideConclusion": "Vous gagnez {{rate}} quand votre jungler joue {{side}} ({{count}} parties)."
+    },
+    "proximity": {
+      "title": "Qui joue avec qui",
+      "helper": "Part des minutes passées à moins de 2\u00a0000 unités l'un de l'autre, à peu près un écran. Les minutes à la fontaine, ou dans les 30\u00a0s qui suivent une mort, ne comptent pas.",
+      "ours": "Notre camp",
+      "theirs": "Leur camp",
+      "adc": "Support avec l'ADC\u00a0: {{share}}\u00a0% des minutes avant 15\u00a0min",
+      "roams_one": "{{count}} roam du support avant 15\u00a0min",
+      "roams_other": "{{count}} roams du support avant 15\u00a0min",
+      "jungler": "Support avec le jungler\u00a0: {{share}}\u00a0% des minutes après 15\u00a0min",
+      "closest": "Jungler, le plus souvent avec {{who}}\u00a0: {{share}}\u00a0% des minutes",
+      "none": "Pas assez de minutes comptées.",
+      "with": {
+        "TOP": "le top",
+        "MIDDLE": "le mid",
+        "BOTTOM": "l'ADC",
+        "UTILITY": "le support"
+      }
     }
   },
   "family": {
