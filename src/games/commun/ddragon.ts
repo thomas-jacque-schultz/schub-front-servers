@@ -13,8 +13,13 @@ export interface ChampionComplet {
   aDistance: boolean;
   sorts: string[];
   /** Hors skin de base et hors chromas : Data Dragon range les chromas parmi les skins, « Ahri sylvestre (rubis) ». */
-  skins: number;
+  skins: Skin[];
   histoire: string;
+}
+
+export interface Skin {
+  num: number;
+  nom: string;
 }
 
 export interface Objet {
@@ -23,6 +28,8 @@ export interface Objet {
   prix: number;
   stats: string[];
   composants: string[];
+  /** Les identifiants des composants, doublons compris : deux Épées longues font deux entrées. */
+  composantIds: string[];
   description: string;
   /** Les tags de Data Dragon, en identifiants anglais : Boots, SpellDamage… */
   tags: string[];
@@ -80,7 +87,9 @@ export const versChampion = (c: ChampionDD): ChampionComplet => ({
   ressource: c.partype,
   aDistance: c.stats.attackrange > PORTEE_A_DISTANCE,
   sorts: [c.passive.name, ...c.spells.map((sort) => sort.name)],
-  skins: c.skins.filter((s) => s.num > 0 && !/\)\s*$/.test(s.name)).length,
+  skins: c.skins
+    .filter((s) => s.num > 0 && !/\)\s*$/.test(s.name))
+    .map((s) => ({ num: s.num, nom: s.name })),
   histoire: texteSeul(c.lore),
 });
 
@@ -116,6 +125,7 @@ export const versObjets = (data: Record<string, ObjetDD>): Objet[] => {
       composants: [
         ...new Set((o.from ?? []).map((composant) => data[composant]?.name)),
       ].filter((nom): nom is string => Boolean(nom)),
+      composantIds: (o.from ?? []).filter((composant) => composant in data),
       description: texteSeul(o.plaintext ?? ""),
       tags: o.tags ?? [],
     });

@@ -1,6 +1,6 @@
 import { type Hasard, type Present, tire } from "../commun/devinette";
 import type { Lang } from "../commun/textes";
-import { genere, type Sources, type Theme } from "./questions";
+import { genere, type QuestionBanque, type Theme } from "./questions";
 
 // Questions pour un invocateur (Schub#136) : un QCM à quatre choix, plus on répond tôt plus on marque. Le plus
 // rapide à avoir trouvé choisit le thème suivant parmi trois. Le meneur garde la bonne réponse pour lui pendant la
@@ -23,7 +23,9 @@ export interface PartieQuiz {
   themes: Theme[];
   theme: Theme | null;
   enonce: string;
+  image: string | null;
   choix: string[];
+  imagesChoix: string[][] | null;
   secret: Solution | null;
   /** La solution au bilan ; null si la question est annulée (le meneur est parti avec sa réponse). */
   solution: Solution | null;
@@ -54,7 +56,7 @@ const versQuestion = (
   theme: Theme,
   numero: number,
   presents: Present[],
-  s: Sources,
+  banque: QuestionBanque[],
   hasard: Hasard,
 ): PartieQuiz => {
   const fin = { ...p, phase: "fin" as const, choisit: null, restantMs: 0 };
@@ -71,7 +73,7 @@ const versQuestion = (
     ).tires,
   ];
   for (const t of essais) {
-    const q = genere(t, s, p.lang, p.posees, hasard);
+    const q = genere(t, banque, p.lang, p.posees, hasard);
     if (q) {
       return {
         ...p,
@@ -79,7 +81,9 @@ const versQuestion = (
         manche: numero,
         theme: t,
         enonce: q.enonce,
+        image: q.image,
         choix: q.choix,
+        imagesChoix: q.imagesChoix,
         secret: {
           bonne: q.bonne,
           explication: q.explication,
@@ -105,7 +109,7 @@ export const nouvellePartie = (
   duree: number,
   manches: number,
   lang: Lang,
-  s: Sources,
+  banque: QuestionBanque[],
   hasard: Hasard,
 ): PartieQuiz => {
   const base: PartieQuiz = {
@@ -117,7 +121,9 @@ export const nouvellePartie = (
     themes,
     theme: null,
     enonce: "",
+    image: null,
     choix: [],
+    imagesChoix: null,
     secret: null,
     solution: null,
     reponses: {},
@@ -134,7 +140,7 @@ export const nouvellePartie = (
   };
   const [theme] = tire(themes, 1, hasard).tires;
   return theme
-    ? versQuestion(base, theme, 1, presents, s, hasard)
+    ? versQuestion(base, theme, 1, presents, banque, hasard)
     : { ...base, phase: "fin" };
 };
 
@@ -188,14 +194,14 @@ const choisisseur = (
 const apresBilan = (
   p: PartieQuiz,
   presents: Present[],
-  s: Sources,
+  banque: QuestionBanque[],
   hasard: Hasard,
 ): PartieQuiz => {
   if (p.manche >= p.manches) {
     return { ...p, phase: "fin", restantMs: 0 };
   }
   if (p.themes.length <= 1) {
-    return versQuestion(p, p.themes[0], p.manche + 1, presents, s, hasard);
+    return versQuestion(p, p.themes[0], p.manche + 1, presents, banque, hasard);
   }
   const { choisit, rangChoix } = choisisseur(p, presents);
   if (!choisit) {
@@ -216,7 +222,7 @@ export const agir = (
   de: string,
   valeur: unknown,
   presents: Present[],
-  s: Sources,
+  banque: QuestionBanque[],
   hasard: Hasard,
 ): PartieQuiz => {
   if (p.phase === "question" && typeof valeur === "number") {
@@ -248,7 +254,14 @@ export const agir = (
     typeof valeur === "string" &&
     p.proposes.includes(valeur as Theme)
   ) {
-    return versQuestion(p, valeur as Theme, p.manche + 1, presents, s, hasard);
+    return versQuestion(
+      p,
+      valeur as Theme,
+      p.manche + 1,
+      presents,
+      banque,
+      hasard,
+    );
   }
   return p;
 };
@@ -257,7 +270,7 @@ export const avancer = (
   p: PartieQuiz,
   ecouleMs: number,
   presents: Present[],
-  s: Sources,
+  banque: QuestionBanque[],
   hasard: Hasard,
 ): PartieQuiz => {
   if (p.phase === "fin") {
@@ -272,10 +285,10 @@ export const avancer = (
     case "question":
       return bilan(suite);
     case "bilan":
-      return apresBilan(suite, presents, s, hasard);
+      return apresBilan(suite, presents, banque, hasard);
     case "theme": {
       const [theme] = tire(p.proposes, 1, hasard).tires;
-      return versQuestion(suite, theme, p.manche + 1, presents, s, hasard);
+      return versQuestion(suite, theme, p.manche + 1, presents, banque, hasard);
     }
   }
 };

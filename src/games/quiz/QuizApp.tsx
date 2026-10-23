@@ -4,14 +4,15 @@ import {
   Button,
   Card,
   Checkbox,
+  ChampionIcon,
   Chip,
   Columns,
   Frame,
+  Illustration,
   Link,
   Stack,
   Text,
 } from "../../common";
-import { donnees } from "../commun/ddragon";
 import {
   AvecDonnees,
   Chrono,
@@ -24,7 +25,6 @@ import {
 } from "../commun/ecrans";
 import type { Evenement } from "../commun/relay";
 import type { Lang } from "../commun/textes";
-import { univers } from "../commun/univers";
 import { estMessageJeu, type MessageJeu, useMeneur } from "../commun/useMeneur";
 import { type Contexte, useMaintenant, useSalon } from "../commun/useSalon";
 import { lisBanque } from "./banque";
@@ -37,7 +37,7 @@ import {
   type PartieQuiz,
 } from "./partie";
 import {
-  type Sources,
+  type QuestionBanque,
   type Theme,
   THEMES,
   themesDisponibles,
@@ -45,29 +45,18 @@ import {
 import { creerRegles } from "./regles";
 import { texte } from "./textes";
 
-const lisSources = async (lang: Lang): Promise<Sources> => {
-  const [lues, monde, banque] = await Promise.all([
-    donnees(lang),
-    univers(lang).catch(() => null),
-    lisBanque(),
-  ]);
-  return { donnees: lues, univers: monde, banque };
-};
-
 export function QuizApp() {
   return (
     <Jeu
       titre={(lang) => texte(lang, "titre")}
       rendu={(contexte, nom) => (
         <AvecDonnees
-          charge={() => lisSources(contexte.lang)}
+          charge={lisBanque}
           chargement={texte(contexte.lang, "chargement")}
           echec={texte(contexte.lang, "erreurDonnees")}
           reessayer={texte(contexte.lang, "reessayer")}
         >
-          {(sources) => (
-            <Partie contexte={contexte} nom={nom} sources={sources} />
-          )}
+          {(banque) => <Partie contexte={contexte} nom={nom} banque={banque} />}
         </AvecDonnees>
       )}
     />
@@ -79,11 +68,11 @@ const nomDuTheme = (lang: Lang, theme: Theme) => texte(lang, `theme_${theme}`);
 function Partie({
   contexte,
   nom,
-  sources,
+  banque,
 }: {
   contexte: Contexte;
   nom: string;
-  sources: Sources;
+  banque: QuestionBanque[];
 }) {
   const { lang } = contexte;
   const recoitJeu = useRef<(de: string | null, m: MessageJeu) => void>(
@@ -99,11 +88,11 @@ function Partie({
   const { moi, joueurs, meneur } = salon;
   const presents = useRef(joueurs);
   presents.current = joueurs;
-  const courantes = useRef(sources);
+  const courante = useRef(banque);
   const regles = useMemo(
     () =>
       creerRegles(
-        () => courantes.current,
+        () => courante.current,
         () => presents.current,
       ),
     [],
@@ -116,21 +105,21 @@ function Partie({
   const restantMs = partie
     ? Math.max(0, partie.restantMs - (maintenant - jeu.recuA))
     : 0;
-  const disponibles = themesDisponibles(sources);
+  const disponibles = themesDisponibles(banque);
   const [themes, setThemes] = useState<Theme[]>(disponibles);
   const [duree, setDuree] = useState(DUREE_DEFAUT);
   const [manches, setManches] = useState(MANCHES_DEFAUT);
   const lance = (t: Theme[], d: number, m: number) =>
     jeu.lance(() =>
-      lisBanque().then((banque) => {
-        courantes.current = { ...courantes.current, banque };
+      lisBanque().then((relue) => {
+        courante.current = relue;
         return nouvellePartie(
           jeu.presents.current,
           t,
           d,
           m,
           lang,
-          courantes.current,
+          relue,
           Math.random,
         );
       }),
@@ -184,11 +173,6 @@ function Partie({
                   />
                 ))}
               </Stack>
-              {!sources.univers && (
-                <Text variant="caption" tone="secondary">
-                  {texte(lang, "mondeIndisponible")}
-                </Text>
-              )}
             </Card>
           )}
           <Preparation
@@ -289,7 +273,7 @@ function Manche({
     return (
       <Card title={titre} actions={chrono}>
         <Stack spacing={1.5}>
-          <Text variant="subtitle">{partie.enonce}</Text>
+          <Enonce partie={partie} />
           <Columns minWidth={220} count={2}>
             {partie.choix.map((choix, index) => (
               <Button
@@ -299,7 +283,7 @@ function Manche({
                 disabled={!joue || mienne !== undefined}
                 onClick={() => onAgit(index)}
               >
-                {choix}
+                <Choix partie={partie} index={index} texte={choix} />
               </Button>
             ))}
           </Columns>
@@ -318,7 +302,7 @@ function Manche({
   return (
     <Card title={titre}>
       <Stack spacing={1.5}>
-        <Text variant="subtitle">{partie.enonce}</Text>
+        <Enonce partie={partie} />
         {solution ? (
           <>
             <Columns minWidth={220} count={2}>
@@ -332,8 +316,9 @@ function Manche({
                   >
                     <Text
                       tone={index === solution.bonne ? "primary" : "secondary"}
+                      component="div"
                     >
-                      {choix}
+                      <Choix partie={partie} index={index} texte={choix} />
                     </Text>
                     {index === solution.bonne ? (
                       <Chip
@@ -367,5 +352,50 @@ function Manche({
         )}
       </Stack>
     </Card>
+  );
+}
+
+/** L'énoncé, et son illustration : l'icône d'un objet, ou le splash d'un skin en grand. */
+function Enonce({ partie }: { partie: PartieQuiz }) {
+  return (
+    <Stack spacing={1}>
+      {partie.image &&
+        (partie.image.includes("/splash/") ? (
+          <Illustration src={partie.image} alt={partie.enonce} />
+        ) : (
+          <ChampionIcon src={partie.image} name={partie.enonce} size="large" />
+        ))}
+      <Text variant="subtitle">{partie.enonce}</Text>
+    </Stack>
+  );
+}
+
+/** Un choix : sa rangée d'icônes quand il en a une, puis son texte. */
+function Choix({
+  partie,
+  index,
+  texte: libelle,
+}: {
+  partie: PartieQuiz;
+  index: number;
+  texte: string;
+}) {
+  const icones = partie.imagesChoix?.[index];
+  if (!icones) {
+    return <>{libelle}</>;
+  }
+  const noms = libelle.split(" + ");
+  return (
+    <Stack direction="row" spacing={0.5} align="center" wrap>
+      {icones.map((src, i) => (
+        <ChampionIcon
+          key={i}
+          src={src}
+          name={noms[i] ?? libelle}
+          size="small"
+        />
+      ))}
+      <span>{libelle}</span>
+    </Stack>
   );
 }

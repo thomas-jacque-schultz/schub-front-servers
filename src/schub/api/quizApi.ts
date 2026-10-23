@@ -18,3 +18,9 @@ export const saveQuizQuestionApi = async (
     method: "PUT",
     body: JSON.stringify(request),
   });
+
+export const deleteQuizQuestionApi = async (id: string): Promise<void> => {
+  await requestJson<unknown>(`${base}/${encodeURIComponent(id)}`, {
+    method: "DELETE",
+  });
+};

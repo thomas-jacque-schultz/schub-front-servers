@@ -874,7 +874,7 @@ export interface paths {
     get?: never;
     put: operations["save"];
     post?: never;
-    delete?: never;
+    delete: operations["delete_3"];
     options?: never;
     head?: never;
     patch?: never;
@@ -2484,9 +2484,11 @@ export interface components {
       en: components["schemas"]["QuizWordingDto"];
       fr: components["schemas"]["QuizWordingDto"];
       id: string;
+      image: string | null;
+      imagesChoix: string[][] | null;
       source: string;
       /** @enum {string} */
-      theme: "PROS" | "MONDE";
+      theme: "PROS" | "MONDE" | "OBJETS" | "HISTOIRE" | "SKINS";
       /** Format: date-time */
       updatedAt: string;
     };
@@ -2495,9 +2497,11 @@ export interface components {
       date: string;
       en: components["schemas"]["QuizWordingDto"];
       fr: components["schemas"]["QuizWordingDto"];
+      image?: string | null;
+      imagesChoix?: string[][] | null;
       source: string;
       /** @enum {string} */
-      theme: "PROS" | "MONDE";
+      theme: "PROS" | "MONDE" | "OBJETS" | "HISTOIRE" | "SKINS";
     };
     QuizWordingDto: {
       choix: string[];
@@ -4879,6 +4883,28 @@ export interface operations {
         content: {
           "*/*": components["schemas"]["QuizQuestionDto"];
         };
+      };
+    };
+  };
+  delete_3: {
+    parameters: {
+      query?: never;
+      header?: {
+        "X-Actor-Id"?: string;
+      };
+      path: {
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
       };
     };
   };
