@@ -19,6 +19,19 @@ const METRIQUES_A_TIMELINE: MetricKey[] = [
   "killsDiffAt15",
 ];
 
+// Schub#153 : chaque indicateur du support a son propre nombre de parties.
+const PARTIES_DU_SUPPORT: Partial<
+  Record<MetricKey, (ligne: StatLineDto) => number>
+> = {
+  adcEarlyShare: (ligne) => ligne.supportEarlyGames,
+  roams: (ligne) => ligne.supportEarlyGames,
+  junglerLateShare: (ligne) => ligne.supportLateGames,
+};
+
+const tropPeu = (key: MetricKey, ligne: StatLineDto) =>
+  (METRIQUES_A_TIMELINE.includes(key) && ligne.laningGames < PARTIES_MINIMUM) ||
+  (PARTIES_DU_SUPPORT[key]?.(ligne) ?? PARTIES_MINIMUM) < PARTIES_MINIMUM;
+
 /**
  * Note chaque indicateur sur les parties du joueur à son poste principal : un CS/min de support et un
  * de tireur ne se comparent pas. Sans assez de parties à ce poste, pas de note plutôt qu'une fausse.
@@ -43,10 +56,7 @@ export const useGrades = (
     if (SOMME_NULLE.includes(key)) {
       return null;
     }
-    if (
-      METRIQUES_A_TIMELINE.includes(key) &&
-      ligne.laningGames < PARTIES_MINIMUM
-    ) {
+    if (tropPeu(key, ligne)) {
       return null;
     }
     return noter(ligne[key], grille.metrics[key], grille, references.tier);
@@ -64,10 +74,7 @@ export const useGrades = (
     ) {
       return false;
     }
-    if (
-      METRIQUES_A_TIMELINE.includes(key) &&
-      ligne.laningGames < PARTIES_MINIMUM
-    ) {
+    if (tropPeu(key, ligne)) {
       return false;
     }
     if (grille === null) {

@@ -36,7 +36,10 @@ type MetriqueDePartie =
   | "xpDiffAt15"
   | "killsDiffAt15"
   | "killsAssistsAt15"
-  | "soloKills";
+  | "soloKills"
+  | "adcEarlyShare"
+  | "junglerLateShare"
+  | "roams";
 
 interface MetricDefinition {
   key: MetricKey;
@@ -87,8 +90,12 @@ export const RADAR_AXES: MetricKey[] = [
   "soloKills",
 ];
 
-/** Les six familles de la fiche détaillée, dans l'ordre de lecture d'une partie. */
-export const FAMILLES: { key: string; metrics: MetricKey[] }[] = [
+/** Les familles de la fiche détaillée, dans l'ordre de lecture d'une partie ; position : la seule où elle se lit. */
+export const FAMILLES: {
+  key: string;
+  metrics: MetricKey[];
+  position?: string;
+}[] = [
   { key: "income", metrics: ["csPerMinute", "goldPerMinute"] },
   {
     key: "laning",
@@ -127,7 +134,15 @@ export const FAMILLES: { key: string; metrics: MetricKey[] }[] = [
       "epicMonsterDamagePerMinute",
     ],
   },
+  {
+    key: "support",
+    metrics: ["adcEarlyShare", "roams", "junglerLateShare"],
+    position: "UTILITY",
+  },
 ];
+
+export const famillesDu = (poste: string | null | undefined) =>
+  FAMILLES.filter((famille) => !famille.position || famille.position === poste);
 
 export const useMetrics = () => {
   const { t } = useTranslation("stats");
@@ -205,6 +220,15 @@ export const useMetrics = () => {
         "higher",
       ),
       soloKills: simple("soloKills", format.ratio, decimal, "higher"),
+      // Rester collé à l'ADC ou partir en roam : aucun des deux n'est mieux en soi (Schub#153).
+      adcEarlyShare: simple("adcEarlyShare", format.taux, points, "neutral"),
+      junglerLateShare: simple(
+        "junglerLateShare",
+        format.taux,
+        points,
+        "neutral",
+      ),
+      roams: simple("roams", format.ratio, decimal, "neutral"),
     };
 
     const definitions: Record<MetricKey, MetricDefinition> = {

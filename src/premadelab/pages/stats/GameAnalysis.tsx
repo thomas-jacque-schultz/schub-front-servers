@@ -11,7 +11,7 @@ import {
   verdictOf,
 } from "../../../common";
 import type { RadarReferencesDto, StatLineDto } from "../../types/stats";
-import { FAMILLES, type MetricKey, useMetrics } from "./metrics";
+import { famillesDu, type MetricKey, useMetrics } from "./metrics";
 import { familyAnchor } from "./anchors";
 import { useStatsFormat } from "./statsFormat";
 import { useKpiSentence } from "./kpiSentence";
@@ -152,11 +152,29 @@ export function GameAnalysis({
     <Stack spacing={2}>
       <Text variant="section">{t("family.title")}</Text>
       <Columns minWidth={300} count={3}>
-        {FAMILLES.map((famille) => {
+        {famillesDu(references?.position).map((famille) => {
           if (famille.key === "laning") {
             return (
               <div key={famille.key} id={familyAnchor(famille.key)}>
                 {couloir(famille.metrics)}
+              </div>
+            );
+          }
+          if (famille.key === "support") {
+            return (
+              <div key={famille.key} id={familyAnchor(famille.key)}>
+                <InsightCard
+                  title={t("family.support")}
+                  conclusion={
+                    overall.supportEarlyGames + overall.supportLateGames === 0
+                      ? t("family.supportNone")
+                      : t("family.supportBasis", {
+                          early: overall.supportEarlyGames,
+                          late: overall.supportLateGames,
+                        })
+                  }
+                  visual={lignes(famille.metrics)}
+                />
               </div>
             );
           }

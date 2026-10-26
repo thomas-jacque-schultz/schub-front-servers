@@ -8,6 +8,7 @@ import {
   DataTable,
   Disclosure,
   Frame,
+  MeterBar,
   ProgressBar,
   Stack,
   Text,
@@ -16,7 +17,7 @@ import {
   type ChipTone,
 } from "../../../common";
 import { getTeamSynergyApi } from "../../api/statsApi";
-import type { DuoDto, ResourceDto } from "../../types/stats";
+import type { ClosenessDto, DuoDto, ResourceDto } from "../../types/stats";
 import { useStatsFormat } from "./statsFormat";
 
 // Au-delà de cinq points d'écart à l'attendu, une paire est notable.
@@ -179,6 +180,27 @@ export function SynergyPanel({ teamId, periode }: SynergyPanelProps) {
               />
             </Disclosure>
           </Stack>
+        )}
+      </Card>
+
+      <Card
+        title={t("synergy.closeness.title")}
+        footnote={t("synergy.closeness.hint", {
+          count: data.minimumClosenessGames,
+        })}
+      >
+        {data.closeness.every((membre) => membre.mates.length === 0) ? (
+          <Text tone="secondary">{t("synergy.closeness.none")}</Text>
+        ) : (
+          <Columns minWidth={240} count={Math.min(data.closeness.length, 5)}>
+            {data.closeness.map((membre) => (
+              <Proches
+                key={membre.memberId}
+                membre={membre}
+                minimum={data.minimumClosenessGames}
+              />
+            ))}
+          </Columns>
         )}
       </Card>
 
@@ -354,6 +376,53 @@ function PosteOr({
           <Text variant="caption" tone="secondary">
             {t("synergy.notConverting")}
           </Text>
+        )}
+      </Stack>
+    </Frame>
+  );
+}
+
+// Schub#154 : une barre par coéquipier, de celui près duquel il joue le plus à celui qu'il croise le moins.
+function Proches({
+  membre,
+  minimum,
+}: {
+  membre: ClosenessDto;
+  minimum: number;
+}) {
+  const { t } = useTranslation("stats");
+  const format = useStatsFormat();
+  return (
+    <Frame>
+      <Stack spacing={1}>
+        <Text variant="subtitle">{membre.displayName ?? "?"}</Text>
+        {membre.mates.length === 0 && (
+          <Text variant="caption" tone="secondary">
+            {t("synergy.closeness.noMate")}
+          </Text>
+        )}
+        {membre.mates.map((proche) =>
+          proche.share === null ? (
+            <Text key={proche.memberId} variant="caption" tone="secondary">
+              {t("synergy.closeness.tooFew", {
+                name: proche.displayName ?? "?",
+                count: proche.games,
+                minimum,
+              })}
+            </Text>
+          ) : (
+            <MeterBar
+              key={proche.memberId}
+              value={proche.share}
+              label={proche.displayName ?? "?"}
+              valueLabel={format.taux(proche.share)}
+              hint={t("synergy.closeness.detail", {
+                early: format.taux(proche.earlyShare),
+                late: format.taux(proche.lateShare),
+                count: proche.games,
+              })}
+            />
+          ),
         )}
       </Stack>
     </Frame>

@@ -4696,6 +4696,25 @@
           }
         }
       },
+      "Closeness" : {
+        "required" : [ "displayName", "mates", "memberId" ],
+        "type" : "object",
+        "properties" : {
+          "displayName" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "mates" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Mate"
+            }
+          },
+          "memberId" : {
+            "type" : "string"
+          }
+        }
+      },
       "Combo" : {
         "required" : [ "expected", "games", "kind", "lowConfidence", "lowerBound", "picks", "referenceGames", "referenceWinRate", "winRate", "wins" ],
         "type" : "object",
@@ -5251,7 +5270,7 @@
         }
       },
       "EarlyGameDto" : {
-        "required" : [ "ganks", "ourJungler", "ourObjectives", "theirJungler", "theirObjectives" ],
+        "required" : [ "ganks", "ourJungler", "ourJunglerMate", "ourObjectives", "ourSupport", "theirJungler", "theirJunglerMate", "theirObjectives", "theirSupport" ],
         "type" : "object",
         "properties" : {
           "ganks" : {
@@ -5266,8 +5285,20 @@
               "$ref" : "#/components/schemas/JunglePresenceDto"
             } ]
           },
+          "ourJunglerMate" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/JunglerLineDto"
+            } ]
+          },
           "ourObjectives" : {
             "$ref" : "#/components/schemas/ObjectivesDto"
+          },
+          "ourSupport" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/SupportLineDto"
+            } ]
           },
           "theirJungler" : {
             "nullable" : true,
@@ -5275,8 +5306,20 @@
               "$ref" : "#/components/schemas/JunglePresenceDto"
             } ]
           },
+          "theirJunglerMate" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/JunglerLineDto"
+            } ]
+          },
           "theirObjectives" : {
             "$ref" : "#/components/schemas/ObjectivesDto"
+          },
+          "theirSupport" : {
+            "nullable" : true,
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/SupportLineDto"
+            } ]
           }
         }
       },
@@ -5984,6 +6027,29 @@
           }
         }
       },
+      "JunglerLineDto" : {
+        "required" : [ "championId", "memberId", "position", "share" ],
+        "type" : "object",
+        "properties" : {
+          "championId" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "memberId" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "position" : {
+            "type" : "string",
+            "enum" : [ "TOP", "MIDDLE", "BOTTOM", "UTILITY" ]
+          },
+          "share" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        },
+        "description" : "Le poste dont le jungler a Ã©tÃ© le plus proche sur toute la partie, et la part des images."
+      },
       "LaneThreat" : {
         "required" : [ "championId", "championKey", "championName", "games", "goldDiffAt15", "iconUrl", "memberId", "memberName", "role" ],
         "type" : "object",
@@ -6110,6 +6176,38 @@
             "type" : "string"
           },
           "rankGap" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          }
+        }
+      },
+      "Mate" : {
+        "required" : [ "displayName", "earlyShare", "games", "lateShare", "memberId", "share" ],
+        "type" : "object",
+        "properties" : {
+          "displayName" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "earlyShare" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
+          "games" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "lateShare" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
+          "memberId" : {
+            "type" : "string"
+          },
+          "share" : {
             "type" : "number",
             "format" : "double",
             "nullable" : true
@@ -7899,9 +7997,14 @@
         }
       },
       "StatLineDto" : {
-        "required" : [ "afkGames", "assistsPerGame", "controlWardsPlaced", "csDiffAt15", "csPerMinute", "damagePerMinute", "damageShare", "damageTakenPerMinute", "deathShare", "deathsPer10", "deathsPerGame", "epicMonsterDamagePerMinute", "firstPlayedAt", "games", "goldDiffAt15", "goldPerMinute", "iconUrl", "kda", "key", "killParticipation", "killsAssistsAt15", "killsDiffAt15", "killsPerGame", "label", "laningGames", "lastPlayedAt", "platesDiff", "secondsPlayed", "soloKills", "timeDeadShare", "turretDamagePerMinute", "turretTakedowns", "versusRest", "visionPerMinute", "wardsKilledPerMinute", "winRate", "wins", "xpDiffAt15" ],
+        "required" : [ "adcEarlyShare", "afkGames", "assistsPerGame", "controlWardsPlaced", "csDiffAt15", "csPerMinute", "damagePerMinute", "damageShare", "damageTakenPerMinute", "deathShare", "deathsPer10", "deathsPerGame", "epicMonsterDamagePerMinute", "firstPlayedAt", "games", "goldDiffAt15", "goldPerMinute", "iconUrl", "junglerLateShare", "kda", "key", "killParticipation", "killsAssistsAt15", "killsDiffAt15", "killsPerGame", "label", "laningGames", "lastPlayedAt", "platesDiff", "roams", "secondsPlayed", "soloKills", "supportEarlyGames", "supportLateGames", "timeDeadShare", "turretDamagePerMinute", "turretTakedowns", "versusRest", "visionPerMinute", "wardsKilledPerMinute", "winRate", "wins", "xpDiffAt15" ],
         "type" : "object",
         "properties" : {
+          "adcEarlyShare" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
           "afkGames" : {
             "type" : "integer",
             "format" : "int64"
@@ -7984,6 +8087,11 @@
             "type" : "string",
             "nullable" : true
           },
+          "junglerLateShare" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
           "kda" : {
             "type" : "number",
             "format" : "double",
@@ -8031,6 +8139,11 @@
             "format" : "double",
             "nullable" : true
           },
+          "roams" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
           "secondsPlayed" : {
             "type" : "integer",
             "format" : "int64"
@@ -8039,6 +8152,14 @@
             "type" : "number",
             "format" : "double",
             "nullable" : true
+          },
+          "supportEarlyGames" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "supportLateGames" : {
+            "type" : "integer",
+            "format" : "int64"
           },
           "timeDeadShare" : {
             "type" : "number",
@@ -8237,6 +8358,36 @@
             "format" : "int32"
           }
         }
+      },
+      "SupportLineDto" : {
+        "required" : [ "adcEarlyShare", "championId", "junglerLateShare", "memberId", "roams" ],
+        "type" : "object",
+        "properties" : {
+          "adcEarlyShare" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
+          "championId" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "junglerLateShare" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
+          "memberId" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "roams" : {
+            "type" : "integer",
+            "format" : "int32",
+            "nullable" : true
+          }
+        },
+        "description" : "Le support avec son ADC avant 15 min (part des images Ã  moins de 2 000 unitÃ©s, et dÃ©parts) et avec son\njungler aprÃ¨s. Une part est absente sous 5 images comptÃ©es."
       },
       "TeamDto" : {
         "required" : [ "createdAt", "id", "memberCount", "members", "name", "publicPage", "trainingSlots", "updatedAt", "viewerCanEditCompositions", "viewerCanEditRoster", "viewerCanManage", "viewerMemberId" ],
@@ -9037,9 +9188,15 @@
         }
       },
       "TeamSynergyDto" : {
-        "required" : [ "duos", "games", "minimumDuoGames", "resources" ],
+        "required" : [ "closeness", "duos", "games", "minimumClosenessGames", "minimumDuoGames", "resources" ],
         "type" : "object",
         "properties" : {
+          "closeness" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Closeness"
+            }
+          },
           "duos" : {
             "type" : "array",
             "items" : {
@@ -9049,6 +9206,10 @@
           "games" : {
             "type" : "integer",
             "format" : "int64"
+          },
+          "minimumClosenessGames" : {
+            "type" : "integer",
+            "format" : "int32"
           },
           "minimumDuoGames" : {
             "type" : "integer",
