@@ -1,5 +1,6 @@
 import { type Hasard, type Present, tire } from "../commun/devinette";
 import type { Lang } from "../commun/textes";
+import type { Vigilance } from "../commun/vigilance";
 import { genere, type QuestionBanque, type Theme } from "./questions";
 
 // Questions pour un invocateur (Schub#136) : un QCM à quatre choix, plus on répond tôt plus on marque. Le plus
@@ -12,6 +13,16 @@ export interface Solution {
   bonne: number;
   explication: string;
   source: string | null;
+}
+
+/**
+ * vu (Schub#163) : le joueur a quitté le jeu pendant la question (sans bonus de rapidité) ou copié-collé (0 point).
+ * Tout le monde le voit : 👀 à côté de son nom.
+ */
+export interface Reponse {
+  choix: number;
+  restantMs: number;
+  vu: "absent" | "copie" | null;
 }
 
 export interface PartieQuiz {
@@ -29,7 +40,7 @@ export interface PartieQuiz {
   secret: Solution | null;
   /** La solution au bilan ; null si la question est annulée (le meneur est parti avec sa réponse). */
   solution: Solution | null;
-  reponses: Record<string, { choix: number; restantMs: number }>;
+  reponses: Record<string, Reponse>;
   joueursManche: string[];
   gains: Record<string, number>;
   choisit: string | null;
@@ -149,11 +160,13 @@ const bilan = (p: PartieQuiz): PartieQuiz => {
   const gains = s
     ? Object.fromEntries(
         Object.entries(p.reponses)
-          .filter(([, r]) => r.choix === s.bonne)
+          .filter(([, r]) => r.choix === s.bonne && r.vu !== "copie")
           .map(([id, r]) => [
             id,
-            POINTS +
-              Math.round(POINTS_RAPIDITE * (r.restantMs / (p.duree * 1000))),
+            r.vu === "absent"
+              ? POINTS
+              : POINTS +
+                Math.round(POINTS_RAPIDITE * (r.restantMs / (p.duree * 1000))),
           ]),
       )
     : {};
@@ -170,6 +183,9 @@ const bilan = (p: PartieQuiz): PartieQuiz => {
   };
 };
 
+// Qui a quitté le jeu pendant la question n'est pas compté rapide.
+const rapidite = (r: Reponse) => (r.vu === "absent" ? 0 : r.restantMs);
+
 /** Le plus rapide à avoir trouvé ; sinon le joueur suivant dans l'ordre du salon. */
 const choisisseur = (
   p: PartieQuiz,
@@ -178,7 +194,7 @@ const choisisseur = (
   const ids = presents.map((j) => j.id);
   const gagnants = Object.keys(p.gains)
     .filter((id) => ids.includes(id))
-    .sort((a, b) => p.reponses[b].restantMs - p.reponses[a].restantMs);
+    .sort((a, b) => rapidite(p.reponses[b]) - rapidite(p.reponses[a]));
   if (gagnants[0]) {
     return { choisit: gagnants[0], rangChoix: p.ordre.indexOf(gagnants[0]) };
   }
@@ -217,6 +233,20 @@ const apresBilan = (
   };
 };
 
+/** Une réponse envoyée au meneur : le choix et ce que le joueur a fait pendant la question. */
+export interface Choix extends Vigilance {
+  choix: number;
+}
+
+const estChoix = (valeur: unknown): valeur is Choix => {
+  const c = valeur as Partial<Choix> | null;
+  return (
+    typeof c?.choix === "number" &&
+    typeof c.absent === "boolean" &&
+    typeof c.copie === "boolean"
+  );
+};
+
 export const agir = (
   p: PartieQuiz,
   de: string,
@@ -225,21 +255,26 @@ export const agir = (
   banque: QuestionBanque[],
   hasard: Hasard,
 ): PartieQuiz => {
-  if (p.phase === "question" && typeof valeur === "number") {
+  if (p.phase === "question" && estChoix(valeur)) {
     if (
       !p.joueursManche.includes(de) ||
       de in p.reponses ||
-      !Number.isInteger(valeur) ||
-      valeur < 0 ||
-      valeur >= p.choix.length
+      !Number.isInteger(valeur.choix) ||
+      valeur.choix < 0 ||
+      valeur.choix >= p.choix.length
     ) {
       return p;
     }
+    const vu: Reponse["vu"] = valeur.copie
+      ? "copie"
+      : valeur.absent
+        ? "absent"
+        : null;
     const suite = {
       ...p,
       reponses: {
         ...p.reponses,
-        [de]: { choix: valeur, restantMs: p.restantMs },
+        [de]: { choix: valeur.choix, restantMs: p.restantMs, vu },
       },
     };
     const ids = presents.map((j) => j.id);

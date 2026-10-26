@@ -17,6 +17,7 @@ import {
   THEMES,
   themesDisponibles,
 } from "./questions";
+import type { Vigilance } from "../commun/vigilance";
 
 const A = { id: "a", name: "Ana" };
 const B = { id: "b", name: "Bob" };
@@ -36,6 +37,12 @@ const partie = (themes = [...THEMES]) =>
     BANQUE,
     sequence([0.1, 0.7, 0.3, 0.9, 0.5]),
   );
+const rep = (choix: number, vu: Partial<Vigilance> = {}) => ({
+  choix,
+  absent: false,
+  copie: false,
+  ...vu,
+});
 
 describe("questions pour un invocateur", () => {
   it("la banque : chaque question a quatre choix distincts dans les deux langues, une date et une source", () => {
@@ -95,11 +102,11 @@ describe("questions pour un invocateur", () => {
     let p = partie();
     const bonne = p.secret!.bonne;
     const fausse = (bonne + 1) % 4;
-    p = agir(p, "b", bonne, [A, B, C], BANQUE, Math.random);
+    p = agir(p, "b", rep(bonne), [A, B, C], BANQUE, Math.random);
     p = avancer(p, 10_000, [A, B, C], BANQUE, Math.random);
-    p = agir(p, "c", bonne, [A, B, C], BANQUE, Math.random);
-    expect(agir(p, "c", fausse, [A, B, C], BANQUE, Math.random)).toBe(p);
-    p = agir(p, "a", fausse, [A, B, C], BANQUE, Math.random);
+    p = agir(p, "c", rep(bonne), [A, B, C], BANQUE, Math.random);
+    expect(agir(p, "c", rep(fausse), [A, B, C], BANQUE, Math.random)).toBe(p);
+    p = agir(p, "a", rep(fausse), [A, B, C], BANQUE, Math.random);
     expect(p.phase).toBe("bilan");
     expect(p.solution?.bonne).toBe(bonne);
     expect(p.scores).toEqual({ a: 0, b: 100, c: 65 });
@@ -113,6 +120,34 @@ describe("questions pour un invocateur", () => {
     expect(avancer(p, THEME_MS, [A, B, C], BANQUE, Math.random).phase).toBe(
       "question",
     );
+  });
+
+  it("qui quitte le jeu perd la rapidité ; qui copie-colle ne marque rien et ne choisit pas le thème", () => {
+    let p = partie();
+    const bonne = p.secret!.bonne;
+    p = agir(
+      p,
+      "a",
+      rep(bonne, { copie: true }),
+      [A, B, C],
+      BANQUE,
+      Math.random,
+    );
+    p = agir(
+      p,
+      "b",
+      rep(bonne, { absent: true }),
+      [A, B, C],
+      BANQUE,
+      Math.random,
+    );
+    p = avancer(p, 10_000, [A, B, C], BANQUE, Math.random);
+    p = agir(p, "c", rep(bonne), [A, B, C], BANQUE, Math.random);
+    expect(p.reponses.a.vu).toBe("copie");
+    expect(p.reponses.b.vu).toBe("absent");
+    expect(p.scores).toEqual({ a: 0, b: 30, c: 65 });
+    p = avancer(p, BILAN_MS, [A, B, C], BANQUE, Math.random);
+    expect(p.choisit).toBe("c");
   });
 
   it("si personne ne trouve, le joueur suivant dans l'ordre choisit", () => {
