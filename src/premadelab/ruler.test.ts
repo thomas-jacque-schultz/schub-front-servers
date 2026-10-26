@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { MAP_BOUNDS } from "../common";
-import { lireMesure, REPERES } from "./ruler";
+import { lireMesure, REPERES, TRAJETS_DE_REFERENCE } from "./ruler";
 
 describe("les repères de la règle", () => {
   it("n'a qu'un repère par nom et par camp", () => {
@@ -30,6 +30,14 @@ describe("les repères de la règle", () => {
     expect(
       REPERES.filter((repere) => repere.approche).map((repere) => repere.id),
     ).toEqual(["nexus", "nexus"]);
+  });
+
+  it("relie chaque trajet de référence à deux repères distincts", () => {
+    const trajets = TRAJETS_DE_REFERENCE.flatMap((groupe) => groupe.trajets);
+    expect(trajets).toHaveLength(21);
+    for (const { de, vers } of trajets) {
+      expect(de).not.toBe(vers);
+    }
   });
 
   it("rend la mesure par défaut sans stockage", () => {

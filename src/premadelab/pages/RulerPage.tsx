@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Card,
+  Columns,
+  DataTable,
+  IconButton,
   MapRuler,
   PageHeader,
   SegmentedControl,
@@ -12,6 +15,7 @@ import {
   Text,
   TextField,
   distance,
+  type DataTableColumn,
   useDocumentMeta,
   useLocaleFormat,
   type MapPoint,
@@ -22,8 +26,10 @@ import {
   PORTEES,
   REPERES,
   repereEn,
+  TRAJETS_DE_REFERENCE,
   VITESSE_PAR_DEFAUT,
   type Mesure,
+  type Repere,
 } from "../ruler";
 
 const PERSO = "custom";
@@ -66,7 +72,51 @@ export default function RulerPage() {
   };
   const unites = (valeur: number) =>
     t("ruler.units", { value: formatNumber(Math.round(valeur)) });
+  const marche = (valeur: number) =>
+    vitesse > 0
+      ? t("ruler.seconds", {
+          value: formatNumber(Math.round((valeur / vitesse) * 10) / 10),
+        })
+      : "—";
   const aPortee = d <= r;
+  const colonnes: Array<DataTableColumn<{ de: Repere; vers: Repere }>> = [
+    {
+      key: "route",
+      header: t("ruler.reference.route"),
+      render: ({ de, vers }) =>
+        t("ruler.reference.fromTo", { from: nom(de), to: nom(vers) }),
+    },
+    {
+      key: "distance",
+      header: t("ruler.distanceShort"),
+      align: "right",
+      width: 120,
+      render: ({ de, vers }) => unites(distance(de, vers)),
+    },
+    {
+      key: "walk",
+      header: t("ruler.walk"),
+      align: "right",
+      width: 90,
+      render: ({ de, vers }) => marche(distance(de, vers)),
+    },
+    {
+      key: "show",
+      header: "",
+      width: 56,
+      render: ({ de, vers }) => (
+        <IconButton
+          icon="ruler"
+          size="small"
+          label={t("ruler.reference.show")}
+          onClick={() => {
+            setMesure({ ...mesure, a: de, b: vers });
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+        />
+      ),
+    },
+  ];
 
   return (
     <Stack spacing={2}>
@@ -80,15 +130,7 @@ export default function RulerPage() {
                 <StatTile label={t("ruler.distance")} value={unites(d)} />
                 <StatTile
                   label={t("ruler.walk")}
-                  value={
-                    vitesse > 0
-                      ? t("ruler.seconds", {
-                          value: formatNumber(
-                            Math.round((d / vitesse) * 10) / 10,
-                          ),
-                        })
-                      : "—"
-                  }
+                  value={marche(d)}
                   hint={
                     vitesse > 0
                       ? t("ruler.walkHint", { speed: formatNumber(vitesse) })
@@ -195,6 +237,40 @@ export default function RulerPage() {
           </Text>
         </Stack>
       </SideLayout>
+      <Card
+        title={t("ruler.reference.title")}
+        description={t("ruler.reference.description", {
+          speed: formatNumber(vitesse > 0 ? vitesse : VITESSE_PAR_DEFAUT),
+        })}
+      >
+        <Columns minWidth={460}>
+          {TRAJETS_DE_REFERENCE.map(({ groupe, trajets }) => (
+            <Stack key={groupe} spacing={1}>
+              <Text variant="section" component="h3">
+                {t(`ruler.reference.groups.${groupe}`)}
+              </Text>
+              <DataTable
+                dense
+                layout="fixed"
+                caption={t(`ruler.reference.groups.${groupe}`)}
+                columns={colonnes}
+                rows={trajets}
+                rowKey={({ de, vers }) =>
+                  `${de.side}:${de.id}-${vers.side}:${vers.id}`
+                }
+                emptyTitle={t("ruler.reference.title")}
+              />
+            </Stack>
+          ))}
+        </Columns>
+      </Card>
+      <Card title={t("ruler.method.title")}>
+        <Stack spacing={1.5}>
+          <Text>{t("ruler.method.sources")}</Text>
+          <Text>{t("ruler.method.units")}</Text>
+          <Text>{t("ruler.method.straight")}</Text>
+        </Stack>
+      </Card>
     </Stack>
   );
 }
