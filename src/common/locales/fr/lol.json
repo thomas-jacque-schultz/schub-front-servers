@@ -367,6 +367,21 @@
       "sources": "Les tours et les inhibiteurs sont placés aux positions relevées dans les parties collectées par PremadeLab, identiques d’une partie à l’autre. Les fontaines, les camps, les carapateurs, le Baron et le Dragon viennent des fichiers de la carte du jeu. Seul le nexus est estimé. Le côté rouge n’est pas le miroir exact du bleu\u00a0: chaque repère est relevé à sa place.",
       "units": "Les distances sont en unités du jeu, celles des portées de sorts et de la vitesse de déplacement. La carte fait environ 15 000 unités de côté.",
       "straight": "Une distance se mesure à vol d’oiseau. Le temps de marche est donc un minimum\u00a0: les murs allongent le trajet réel, et la vitesse change avec le champion, les bottes et les bonus."
+    },
+    "rangeOf": "Portée de {{radius}} autour de A · {{source}}",
+    "champions": {
+      "title": "Champions",
+      "panel": "Champion",
+      "description": "Choisis un champion pour voir ses sorts et leurs portées. Portées publiées par Riot (Data Dragon {{version}}).",
+      "pick": "Choisis un champion sous la carte\u00a0: ses sorts et leurs portées s’affichent ici, et un clic sur une portée la trace autour de A.",
+      "context": "{{title}} · vitesse de base {{speed}}, reprise pour le temps de marche",
+      "attack": "Attaque de base",
+      "spellLabel": "{{key}} · {{name}}",
+      "noRange": "portée non publiée",
+      "search": "Chercher un champion",
+      "noResult": "Aucun champion à ce nom.",
+      "loading": "Chargement des champions…",
+      "error": "Data Dragon ne répond pas\u00a0: les champions ne peuvent pas être chargés pour l’instant."
     }
   }
 }

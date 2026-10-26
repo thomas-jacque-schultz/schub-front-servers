@@ -16,8 +16,10 @@ import {
   TextField,
   distance,
   type DataTableColumn,
+  useCurrentLanguage,
   useDocumentMeta,
   useLocaleFormat,
+  useRequest,
   type MapPoint,
 } from "../../common";
 import {
@@ -31,6 +33,12 @@ import {
   type Mesure,
   type Repere,
 } from "../ruler";
+import { chargerChampions } from "../rulerChampions";
+import {
+  ChampionPicker,
+  ChampionSpells,
+  type PorteeTracee,
+} from "./ruler/ChampionRanges";
 
 const PERSO = "custom";
 
@@ -50,6 +58,36 @@ export default function RulerPage() {
   const [vitesseSaisie, setVitesseSaisie] = useState(
     String(VITESSE_PAR_DEFAUT),
   );
+  const langue = useCurrentLanguage();
+  const catalogue = useRequest(`ddragon/${langue}`, () =>
+    chargerChampions(langue),
+  );
+  const [championId, setChampionId] = useState<string | null>(null);
+  const champion =
+    catalogue.data?.champions.find((candidat) => candidat.id === championId) ??
+    null;
+  // La portée tracée par un sort : elle nomme le cercle tant que personne ne change le rayon à la main.
+  const [tracee, setTracee] = useState<PorteeTracee | null>(null);
+  const changerRayon = (portee: number) => {
+    setTracee(null);
+    setMesure({ ...mesure, r: portee });
+  };
+  const tracer = (portee: PorteeTracee) => {
+    setTracee(portee);
+    setPerso(!PORTEES.includes(portee.range));
+    setPorteeSaisie(String(portee.range));
+    setMesure({ ...mesure, r: portee.range });
+  };
+  const choisirChampion = (id: string | null) => {
+    setChampionId(id);
+    setTracee(null);
+    const choisi = catalogue.data?.champions.find(
+      (candidat) => candidat.id === id,
+    );
+    if (choisi) {
+      setVitesseSaisie(String(choisi.moveSpeed));
+    }
+  };
 
   useEffect(() => ecrireMesure(mesure), [mesure]);
 
@@ -138,7 +176,14 @@ export default function RulerPage() {
                   }
                 />
                 <StatTile
-                  label={t("ruler.range", { radius: formatNumber(r) })}
+                  label={
+                    tracee?.range === r
+                      ? t("ruler.rangeOf", {
+                          radius: formatNumber(r),
+                          source: tracee.label,
+                        })
+                      : t("ruler.range", { radius: formatNumber(r) })
+                  }
                   value={
                     aPortee
                       ? t("ruler.inRange")
@@ -153,6 +198,13 @@ export default function RulerPage() {
                 </Text>
               </Stack>
             </Card>
+            <ChampionSpells
+              champion={champion}
+              version={catalogue.data?.version ?? null}
+              langue={langue}
+              traced={tracee}
+              onTrace={tracer}
+            />
             <Card title={t("ruler.settings")}>
               <Stack spacing={2}>
                 <Switch
@@ -182,7 +234,7 @@ export default function RulerPage() {
                         return;
                       }
                       setPerso(false);
-                      setMesure({ ...mesure, r: Number(choix) });
+                      changerRayon(Number(choix));
                     }}
                   />
                   {perso && (
@@ -194,7 +246,7 @@ export default function RulerPage() {
                         setPorteeSaisie(valeur);
                         const portee = Number(valeur);
                         if (portee > 0) {
-                          setMesure({ ...mesure, r: portee });
+                          changerRayon(portee);
                         }
                       }}
                       error={!(Number(porteeSaisie) > 0)}
@@ -235,6 +287,13 @@ export default function RulerPage() {
           <Text variant="caption" tone="secondary" align="center">
             {t("ruler.help")}
           </Text>
+          <ChampionPicker
+            catalogue={catalogue.data}
+            isLoading={catalogue.isLoading}
+            error={catalogue.error}
+            selected={championId}
+            onSelect={choisirChampion}
+          />
         </Stack>
       </SideLayout>
       <Card
