@@ -824,13 +824,13 @@
       "fights": "Fights won in their jungle: {{helped}} with help ({{helpedCount}}), {{alone}} alone ({{aloneCount}})."
     },
     "holders": {
-      "caption": "Who played the position",
-      "player": "Player",
-      "games": "Games",
-      "lateAlone": "Alone after 15 min",
-      "withJungler": "With the jungler after 15 min",
-      "objectives": "At objectives",
-      "position": "Position"
+      "caption": "Who played the position, after 15 min",
+      "games_one": "{{count}} game",
+      "games_other": "{{count}} games",
+      "atPosition": "{{name}} ({{position}})",
+      "withJungler": "with the jungler {{share}}",
+      "alone": "alone {{share}}",
+      "objectives": "at objectives {{share}}"
     },
     "pairs": {
       "title": "Every pair of positions",

@@ -310,7 +310,6 @@ function JunglerCard({ roles }: { roles: RolesDto }) {
         <Titulaires
           roles={roles}
           postes={["JUNGLE", "TOP", "MIDDLE", "BOTTOM", "UTILITY"]}
-          avecJungler
         />
       }
       detailsLabel={t("verdict.details")}
@@ -344,16 +343,9 @@ function JunglerCard({ roles }: { roles: RolesDto }) {
   );
 }
 
-// La personne qui tient le poste compte (Schub#107) : ses chiffres à ce poste, partie par partie groupées.
-function Titulaires({
-  roles,
-  postes,
-  avecJungler = false,
-}: {
-  roles: RolesDto;
-  postes: Poste[];
-  avecJungler?: boolean;
-}) {
+// La personne qui tient le poste compte (Schub#107) : ses chiffres à ce poste. Une ligne par joueur, pas un tableau :
+// l'encart est trop étroit pour cinq colonnes.
+function Titulaires({ roles, postes }: { roles: RolesDto; postes: Poste[] }) {
   const { t } = useTranslation("stats");
   const format = useStatsFormat();
   const { nom } = useNoms();
@@ -364,58 +356,46 @@ function Titulaires({
         postes.indexOf(x.position as Poste) -
           postes.indexOf(y.position as Poste) || y.games - x.games,
     );
+  const detail = (h: HolderDto) =>
+    [
+      h.lateWithJungler == null
+        ? null
+        : t("roles.holders.withJungler", {
+            share: format.taux(h.lateWithJungler),
+          }),
+      t("roles.holders.alone", { share: format.taux(h.lateAlone) }),
+      t("roles.holders.objectives", {
+        share: format.taux(h.objectivePresence),
+      }),
+    ]
+      .filter((partie) => partie !== null)
+      .join(" · ");
   return (
-    <DataTable<HolderDto>
-      dense
-      caption={t("roles.holders.caption")}
-      emptyTitle={t("roles.none")}
-      rows={lignes}
-      rowKey={(h) => `${h.position}:${h.memberId}`}
-      columns={[
-        ...(postes.length > 1
-          ? [
-              {
-                key: "position",
-                header: t("roles.holders.position"),
-                render: (h: HolderDto) => nom(h.position as Poste),
-              },
-            ]
-          : []),
-        {
-          key: "player",
-          header: t("roles.holders.player"),
-          render: (h) => h.displayName ?? "?",
-        },
-        {
-          key: "games",
-          header: t("roles.holders.games"),
-          align: "right",
-          render: (h) => h.games,
-        },
-        {
-          key: "lateAlone",
-          header: t("roles.holders.lateAlone"),
-          align: "right",
-          render: (h) => format.taux(h.lateAlone),
-        },
-        ...(avecJungler || postes.includes("UTILITY")
-          ? [
-              {
-                key: "withJungler",
-                header: t("roles.holders.withJungler"),
-                align: "right" as const,
-                render: (h: HolderDto) => format.taux(h.lateWithJungler),
-              },
-            ]
-          : []),
-        {
-          key: "objectives",
-          header: t("roles.holders.objectives"),
-          align: "right",
-          render: (h) => format.taux(h.objectivePresence),
-        },
-      ]}
-    />
+    <Stack spacing={1}>
+      <Text variant="caption" tone="secondary">
+        {t("roles.holders.caption")}
+      </Text>
+      {lignes.map((h) => (
+        <Stack key={`${h.position}:${h.memberId}`} spacing={0}>
+          <Stack direction="row" spacing={1} justify="between">
+            <Text>
+              {postes.length > 1
+                ? t("roles.holders.atPosition", {
+                    name: h.displayName ?? "?",
+                    position: nom(h.position as Poste),
+                  })
+                : (h.displayName ?? "?")}
+            </Text>
+            <Text variant="caption" tone="secondary" mono>
+              {t("roles.holders.games", { count: h.games })}
+            </Text>
+          </Stack>
+          <Text variant="caption" tone="secondary">
+            {detail(h)}
+          </Text>
+        </Stack>
+      ))}
+    </Stack>
   );
 }
 
