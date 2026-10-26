@@ -14,6 +14,7 @@ import SchoolIcon from "@mui/icons-material/School";
 import ScienceIcon from "@mui/icons-material/ScienceOutlined";
 import SendIcon from "@mui/icons-material/Send";
 import StorageIcon from "@mui/icons-material/Storage";
+import StraightenIcon from "@mui/icons-material/Straighten";
 import TranslateIcon from "@mui/icons-material/Translate";
 import WorkIcon from "@mui/icons-material/WorkOutline";
 import AddIcon from "@mui/icons-material/Add";
@@ -56,6 +57,7 @@ const ICONS = {
   pending: HourglassIcon,
   play: PlayArrowIcon,
   refresh: RefreshIcon,
+  ruler: StraightenIcon,
   school: SchoolIcon,
   science: ScienceIcon,
   send: SendIcon,

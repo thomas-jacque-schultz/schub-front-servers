@@ -136,6 +136,14 @@ export type {
   LaneMapProps,
   LaneMapZone,
 } from "./components/LaneMap";
+export { MapRuler } from "./components/MapRuler";
+export type {
+  MapRulerLandmark,
+  MapRulerLandmarkKind,
+  MapRulerProps,
+} from "./components/MapRuler";
+export { MAP_SIZE, distance, mirror } from "./components/mapRuler";
+export type { MapPoint } from "./components/mapRuler";
 export { ConfidenceBadge } from "./components/ConfidenceBadge";
 export type { ConfidenceBadgeProps } from "./components/ConfidenceBadge";
 export { DivergingBar } from "./components/DivergingBar";

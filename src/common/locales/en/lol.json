@@ -14,7 +14,9 @@
     "queueKiller": "Queue Killer",
     "experimental": "Experimental: more games are coming, and these will still change",
     "home": "Home",
-    "howItWorks": "How it works"
+    "howItWorks": "How it works",
+    "ruler": "Ruler",
+    "rulerHint": "Measure distances on the map, in game units"
   },
   "hero": {
     "eyebrow": "League of Legends",
@@ -279,6 +281,67 @@
       "title": "Your premade is playing",
       "description": "Rooms opened by your teammates, signed in to PremadeLab.",
       "join": "Join"
+    }
+  },
+  "ruler": {
+    "meta": {
+      "title": "Map ruler · PremadeLab",
+      "description": "Measure distances on Summoner’s Rift in game units: spell range, walking time, tower to tower."
+    },
+    "title": "Ruler",
+    "subtitle": "Distances on Summoner’s Rift, in game units. Landmarks sit at approximate positions.",
+    "help": "Drag to measure from A to B. Tap without dragging to move A: B stays put.",
+    "measure": "Measure",
+    "settings": "Settings",
+    "distance": "Distance from A to B",
+    "units": "{{value}}\u00a0units",
+    "walk": "Walking time",
+    "seconds": "{{value}}\u00a0s",
+    "walkHint": "at {{speed}} movement speed",
+    "range": "{{radius}} range around A",
+    "inRange": "B is in range",
+    "missing": "{{value}} short",
+    "pointA": "A: {{name}}",
+    "pointB": "B: {{name}}",
+    "freePoint": "free point",
+    "landmarkOnSide": "{{name}} ({{side}})",
+    "sides": {
+      "blue": "blue",
+      "red": "red",
+      "neutral": "river"
+    },
+    "snap": "Snap to landmarks",
+    "snapHint": "A point dropped near a tower, a camp or an objective sticks to it.",
+    "radius": "Range circle",
+    "custom": "Custom",
+    "customRadius": "Custom range, in units",
+    "speed": "Movement speed",
+    "speedHint": "345 by default. It sets the walking time.",
+    "mapLabel": "Summoner’s Rift map. A: {{a}}. B: {{b}}. Distance: {{distance}}.",
+    "landmarks": {
+      "fountain": "Fountain",
+      "nexus": "Nexus",
+      "nexusTowerTop": "Nexus tower, top side",
+      "nexusTowerBot": "Nexus tower, bot side",
+      "inhibTowerTop": "Top inhibitor tower",
+      "innerTowerTop": "Top inner tower",
+      "outerTowerTop": "Top outer tower",
+      "inhibTowerMid": "Mid inhibitor tower",
+      "innerTowerMid": "Mid inner tower",
+      "outerTowerMid": "Mid outer tower",
+      "inhibTowerBot": "Bot inhibitor tower",
+      "innerTowerBot": "Bot inner tower",
+      "outerTowerBot": "Bot outer tower",
+      "blueBuff": "Blue buff",
+      "gromp": "Gromp",
+      "wolves": "Wolves",
+      "raptors": "Raptors",
+      "redBuff": "Red buff",
+      "krugs": "Krugs",
+      "baron": "Baron Nashor",
+      "dragon": "Dragon",
+      "scuttleTop": "Top scuttle crab",
+      "scuttleBot": "Bot scuttle crab"
     }
   }
 }

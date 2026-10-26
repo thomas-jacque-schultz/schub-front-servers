@@ -22,6 +22,7 @@ const TeamsPage = lazyPage(() => import("./pages/TeamsPage"));
 const ContactPage = lazyPage(() => import("./pages/ContactPage"));
 const TierCombosPage = lazyPage(() => import("./pages/TierCombosPage"));
 const QueueKillerPage = lazyPage(() => import("./pages/QueueKillerPage"));
+const RulerPage = lazyPage(() => import("./pages/RulerPage"));
 
 // Le bouton « Crée ton premade » ramène sur les équipes une fois la connexion faite.
 function AfterLogin() {
@@ -63,6 +64,8 @@ export function PremadeLabRoutes() {
         <Route path="queue-killer" element={<QueueKillerPage />} />
         <Route path="queue-killer/:game" element={<QueueKillerPage />} />
         <Route path="queue-killer/:game/:room" element={<QueueKillerPage />} />
+        {/* Publique : la règle ne lit rien sur le serveur. */}
+        <Route path="ruler" element={<RulerPage />} />
         <Route
           path="stats"
           element={

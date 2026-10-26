@@ -14,7 +14,9 @@
     "queueKiller": "Queue Killer",
     "experimental": "Expérimental\u00a0: de nouveaux jeux arrivent, et ceux-ci bougeront encore",
     "home": "Accueil",
-    "howItWorks": "Comment ça marche"
+    "howItWorks": "Comment ça marche",
+    "ruler": "Règle",
+    "rulerHint": "Mesurer les distances sur la carte, en unités du jeu"
   },
   "hero": {
     "eyebrow": "League of Legends",
@@ -279,6 +281,67 @@
       "title": "Ta premade joue",
       "description": "Les salons ouverts par tes coéquipiers, connectés à PremadeLab.",
       "join": "Rejoindre"
+    }
+  },
+  "ruler": {
+    "meta": {
+      "title": "Règle de la carte · PremadeLab",
+      "description": "Mesure les distances sur la Faille de l’invocateur en unités du jeu\u00a0: portée d’un sort, temps de marche, de tour à tour."
+    },
+    "title": "Règle",
+    "subtitle": "Les distances sur la Faille de l’invocateur, en unités du jeu. Les repères sont placés à des positions approchées.",
+    "help": "Glisse pour tracer une mesure de A à B. Touche sans glisser pour déplacer A\u00a0: B reste en place.",
+    "measure": "Mesure",
+    "settings": "Réglages",
+    "distance": "Distance de A à B",
+    "units": "{{value}}\u00a0unités",
+    "walk": "Temps de marche",
+    "seconds": "{{value}}\u00a0s",
+    "walkHint": "à {{speed}} de vitesse de déplacement",
+    "range": "Portée de {{radius}} autour de A",
+    "inRange": "B est à portée",
+    "missing": "Manque {{value}}",
+    "pointA": "A\u00a0: {{name}}",
+    "pointB": "B\u00a0: {{name}}",
+    "freePoint": "point libre",
+    "landmarkOnSide": "{{name}} ({{side}})",
+    "sides": {
+      "blue": "bleu",
+      "red": "rouge",
+      "neutral": "rivière"
+    },
+    "snap": "Aimanter aux repères",
+    "snapHint": "Un point posé près d’une tour, d’un camp ou d’un objectif s’y accroche.",
+    "radius": "Cercle de portée",
+    "custom": "Perso",
+    "customRadius": "Portée perso, en unités",
+    "speed": "Vitesse de déplacement",
+    "speedHint": "345 par défaut. Elle compte pour le temps de marche.",
+    "mapLabel": "Carte de la Faille. A\u00a0: {{a}}. B\u00a0: {{b}}. Distance\u00a0: {{distance}}.",
+    "landmarks": {
+      "fountain": "Fontaine",
+      "nexus": "Nexus",
+      "nexusTowerTop": "Tour du nexus côté top",
+      "nexusTowerBot": "Tour du nexus côté bot",
+      "inhibTowerTop": "Tour d’inhibiteur top",
+      "innerTowerTop": "Tour intérieure top",
+      "outerTowerTop": "Tour extérieure top",
+      "inhibTowerMid": "Tour d’inhibiteur mid",
+      "innerTowerMid": "Tour intérieure mid",
+      "outerTowerMid": "Tour extérieure mid",
+      "inhibTowerBot": "Tour d’inhibiteur bot",
+      "innerTowerBot": "Tour intérieure bot",
+      "outerTowerBot": "Tour extérieure bot",
+      "blueBuff": "Buff bleu",
+      "gromp": "Gromp",
+      "wolves": "Loups",
+      "raptors": "Raptors",
+      "redBuff": "Buff rouge",
+      "krugs": "Krugs",
+      "baron": "Baron Nashor",
+      "dragon": "Dragon",
+      "scuttleTop": "Carapateur top",
+      "scuttleBot": "Carapateur bot"
     }
   }
 }

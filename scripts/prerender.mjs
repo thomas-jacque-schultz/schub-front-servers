@@ -8,7 +8,7 @@ const racine = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const dist = path.join(racine, "dist");
 const origine = process.env.PREMADELAB_ORIGIN ?? "https://premadelab.eu";
 
-const PAGES = { index: "/", presentation: "/presentation", contact: "/contact", terms: "/terms", privacy: "/privacy" };
+const PAGES = { index: "/", presentation: "/presentation", ruler: "/ruler", contact: "/contact", terms: "/terms", privacy: "/privacy" };
 const LANGUES = ["fr", "en"];
 
 const cheminPour = (langue, chemin) => (langue === "en" ? (chemin === "/" ? "/en" : `/en${chemin}`) : chemin);
