@@ -769,5 +769,75 @@
     "bar": "{{value}}: {{share}} of games",
     "aria": "{{metric}}: spread of {{position}} games, your average at {{value}}.",
     "basis": "Over {{games}} ranked {{position}} games from the last two patches, all tiers, against your average in that role."
+  },
+  "roles": {
+    "title": "Who supports whom",
+    "intro_one": "By position, whoever plays it, over {{count}} team game with a timeline and our five positions known.",
+    "intro_other": "By position, whoever plays it, over {{count}} team games with a timeline and our five positions known.",
+    "none": "No team game with a timeline and our five positions known over this period.",
+    "method": "Alone: no teammate within 2,000 units on the minute's frame (deaths and fountain visits left out). Present at an objective or a fight: within 3,000 units on the frame before or after, or involved in a kill. Positions are only known once a minute: these are orders of magnitude.",
+    "name": {
+      "TOP": "Top",
+      "JUNGLE": "Jungler",
+      "MIDDLE": "Mid",
+      "BOTTOM": "ADC",
+      "UTILITY": "Support"
+    },
+    "the": {
+      "TOP": "the top laner",
+      "JUNGLE": "the jungler",
+      "MIDDLE": "the mid laner",
+      "BOTTOM": "the ADC",
+      "UTILITY": "the support"
+    },
+    "alone": "Alone",
+    "before": "Before 15 min: {{share}}",
+    "lowGames_one": "{{count}} game: {{minimum}} needed to conclude.",
+    "lowGames_other": "{{count}} games: {{minimum}} needed to conclude.",
+    "lowObjectives_one": "{{count}} objective: {{minimum}} needed to conclude.",
+    "lowObjectives_other": "{{count}} objectives: {{minimum}} needed to conclude.",
+    "lowFights_one": "{{count}} fight in their jungle: {{minimum}} needed to conclude.",
+    "lowFights_other": "{{count}} fights in their jungle: {{minimum}} needed to conclude.",
+    "support": {
+      "title": "The support",
+      "conclusion": "After 15 min, mostly with {{mate}}",
+      "conclusionAlone": "After 15 min, mostly playing alone",
+      "caption": "Share of time near each one after 15 min",
+      "objectives": "Objectives taken: {{takenWith}}/{{with}} with them, {{takenWithout}}/{{without}} without. They are there for {{share}} of them.",
+      "fights": "They are there in {{share}} of the jungler's fights in their own jungle.",
+      "early": "Before 15 min"
+    },
+    "adc": {
+      "title": "The ADC",
+      "conclusion": "Alone {{share}} of the time after 15 min",
+      "caption": "Share of time alone after 15 min, by position",
+      "closest": "Most often near them after 15 min: {{mate}} ({{share}}).",
+      "mates": "Near the ADC, by position"
+    },
+    "jungler": {
+      "title": "The jungler",
+      "conclusionFights": "Alone in {{alone}} of {{total}} fights in their jungle",
+      "conclusionObjectives": "Joined at objectives mostly by {{mate}}",
+      "caption": "Presence at objectives, by position",
+      "fightsHint": "Fights in their jungle: {{share}}",
+      "crowd": "Objectives taken: {{takenCrowded}}/{{crowded}} with three or more around, {{takenSparse}}/{{sparse}} with fewer.",
+      "fights": "Fights won in their jungle: {{wonAlone}}/{{alone}} alone, {{wonHelped}}/{{helped}} with help."
+    },
+    "holders": {
+      "caption": "Who played the position",
+      "player": "Player",
+      "games": "Games",
+      "lateAlone": "Alone after 15 min",
+      "withJungler": "With the jungler after 15 min",
+      "objectives": "At objectives",
+      "position": "Position"
+    },
+    "pairs": {
+      "title": "Every pair of positions",
+      "pair": "Pair",
+      "label": "{{a}} and {{b}}",
+      "before": "Before 15 min",
+      "after": "After 15 min"
+    }
   }
 }

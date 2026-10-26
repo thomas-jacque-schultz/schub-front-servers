@@ -30,9 +30,9 @@ const MODES = [
 
 type Mode = (typeof MODES)[number];
 
-const POSTES = ["TOP", "JUNGLE", "MIDDLE", "BOTTOM", "UTILITY"] as const;
+export const POSTES = ["TOP", "JUNGLE", "MIDDLE", "BOTTOM", "UTILITY"] as const;
 
-type Poste = (typeof POSTES)[number];
+export type Poste = (typeof POSTES)[number];
 
 export const useStatsFormat = () => {
   const { t } = useTranslation("stats");
