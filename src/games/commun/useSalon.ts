@@ -91,8 +91,10 @@ export function useSalon({
           setErreur(`erreur_${evenement.code}` as CleCommune);
           setEtat("erreur");
           break;
+        // Coupé du salon, il ne mène plus : le relais a passé la main, la partie avance chez un autre.
         case "deconnecte":
           setEtat("reconnexion");
+          setMeneur(null);
           break;
       }
       relaie.current(evenement);
