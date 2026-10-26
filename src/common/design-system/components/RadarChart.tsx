@@ -29,6 +29,8 @@ export interface RadarChartProps {
   emptyLabel: string;
   /** Ce que représentent le centre et le bord, en toutes lettres. */
   scaleNote?: string;
+  /** Pour une colonne étroite : rayon réduit, libellés agrandis, pour qu’ils restent lisibles une fois le dessin rétréci. */
+  dense?: boolean;
 }
 
 const LARGEUR = 380;
@@ -36,24 +38,25 @@ const HAUTEUR = 300;
 const CX = LARGEUR / 2;
 const CY = HAUTEUR / 2;
 const RAYON = 104;
+const RAYON_DENSE = 80;
 const ANNEAUX = [0.25, 0.5, 0.75, 1];
 const ORDRE: RadarEmphasis[] = ["muted", "secondary", "primary"];
 
 const angle = (index: number, total: number) =>
   -Math.PI / 2 + (2 * Math.PI * index) / total;
 
-const point = (index: number, total: number, ratio: number) => {
+const point = (index: number, total: number, ratio: number, rayon: number) => {
   const a = angle(index, total);
   return {
-    x: CX + Math.cos(a) * RAYON * ratio,
-    y: CY + Math.sin(a) * RAYON * ratio,
+    x: CX + Math.cos(a) * rayon * ratio,
+    y: CY + Math.sin(a) * rayon * ratio,
   };
 };
 
 const borne = (value: number) => Math.min(1, Math.max(0, value));
 
 // Un axe sans donnée coupe le tracé : relier ses voisins inventerait une valeur.
-const segments = (values: Array<number | null>) => {
+const segments = (values: Array<number | null>, rayon: number) => {
   const total = values.length;
   const traits: string[] = [];
   for (let index = 0; index < total; index += 1) {
@@ -63,17 +66,17 @@ const segments = (values: Array<number | null>) => {
     if (a === null || b === null) {
       continue;
     }
-    const p = point(index, total, borne(a));
-    const q = point(suivant, total, borne(b));
+    const p = point(index, total, borne(a), rayon);
+    const q = point(suivant, total, borne(b), rayon);
     traits.push(`M${p.x},${p.y}L${q.x},${q.y}`);
   }
   return traits.join("");
 };
 
-const polygone = (values: Array<number | null>) =>
+const polygone = (values: Array<number | null>, rayon: number) =>
   values
     .map((value, index) => {
-      const p = point(index, values.length, borne(value ?? 0));
+      const p = point(index, values.length, borne(value ?? 0), rayon);
       return `${p.x},${p.y}`;
     })
     .join(" ");
@@ -84,6 +87,7 @@ export function RadarChart({
   series,
   emptyLabel,
   scaleNote,
+  dense = false,
 }: RadarChartProps) {
   const { chart: couleurs, palette } = useChartScheme();
   const surface = palette.background.paper;
@@ -107,6 +111,7 @@ export function RadarChart({
   }
 
   const n = axes.length;
+  const rayon = dense ? RAYON_DENSE : RAYON;
 
   return (
     <Box>
@@ -157,15 +162,18 @@ export function RadarChart({
         {ANNEAUX.map((ratio) => (
           <polygon
             key={ratio}
-            points={polygone(axes.map(() => ratio))}
+            points={polygone(
+              axes.map(() => ratio),
+              rayon,
+            )}
             fill="none"
             stroke={couleurs.grid}
             strokeWidth={1}
           />
         ))}
         {axes.map((axe, index) => {
-          const bout = point(index, n, 1);
-          const etiquette = point(index, n, 1.16);
+          const bout = point(index, n, 1, rayon);
+          const etiquette = point(index, n, 1.16, rayon);
           const cos = Math.cos(angle(index, n));
           return (
             <Fragment key={axe.key}>
@@ -182,7 +190,7 @@ export function RadarChart({
                 y={etiquette.y}
                 textAnchor={cos > 0.2 ? "start" : cos < -0.2 ? "end" : "middle"}
                 dominantBaseline="middle"
-                fontSize={11}
+                fontSize={dense ? 16 : 11}
                 fontFamily={typographyTokens.monospaceFontFamily}
                 fill={palette.text.secondary}
               >
@@ -202,13 +210,13 @@ export function RadarChart({
                 <g key={serie.key}>
                   {complet && emphasis === "primary" && (
                     <polygon
-                      points={polygone(serie.values)}
+                      points={polygone(serie.values, rayon)}
                       fill={couleurs.markSoft}
                       stroke="none"
                     />
                   )}
                   <path
-                    d={segments(serie.values)}
+                    d={segments(serie.values, rayon)}
                     fill="none"
                     stroke={style.stroke}
                     strokeWidth={style.width}
@@ -220,8 +228,8 @@ export function RadarChart({
                       value === null ? null : (
                         <circle
                           key={axes[index].key}
-                          cx={point(index, n, borne(value)).x}
-                          cy={point(index, n, borne(value)).y}
+                          cx={point(index, n, borne(value), rayon).x}
+                          cy={point(index, n, borne(value), rayon).y}
                           r={4}
                           fill={style.stroke}
                           stroke={surface}
@@ -235,7 +243,7 @@ export function RadarChart({
         )}
 
         {axes.map((axe, index) => {
-          const bout = point(index, n, 0.9);
+          const bout = point(index, n, 0.9, rayon);
           return (
             <MuiTooltip
               key={axe.key}

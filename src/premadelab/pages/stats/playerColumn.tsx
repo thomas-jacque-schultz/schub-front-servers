@@ -9,6 +9,8 @@ import { StatsStateNote } from "./StatsStateNote";
 export interface PlayerColumnOptions {
   isViewer: boolean;
   showRadar: boolean;
+  // Quatre ou cinq colonnes : le radar rétréci garde des libellés lisibles (Schub#158).
+  denseRadar?: boolean;
   premadeLines: { memberId: string; line: StatLineDto }[];
   champions: string[];
   onChampionsChange: (keys: string[]) => void;
@@ -22,6 +24,7 @@ export const playerColumn = (
   {
     isViewer,
     showRadar,
+    denseRadar = false,
     premadeLines,
     champions,
     onChampionsChange,
@@ -43,7 +46,12 @@ export const playerColumn = (
       ...(showRadar
         ? [
             connu ? (
-              <PremadeRadar key="radar" player={player} lines={premadeLines} />
+              <PremadeRadar
+                key="radar"
+                player={player}
+                lines={premadeLines}
+                dense={denseRadar}
+              />
             ) : null,
           ]
         : []),
