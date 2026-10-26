@@ -14,6 +14,7 @@ export const useChartScheme = () => {
   return {
     scheme,
     chart: identity.chart[scheme],
+    map: identity.map[scheme],
     palette: identity.palettes[scheme],
   };
 };

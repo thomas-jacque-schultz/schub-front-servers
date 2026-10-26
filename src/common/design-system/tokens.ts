@@ -275,6 +275,49 @@ export const chartColors: Record<
   },
 };
 
+// La Faille dessinée par la règle (MapRuler) : un fond de jungle, des couloirs à peine plus clairs, la rivière
+// et les deux camps en bleu et rouge, dilués pour que la mesure, en or, reste ce qu'on lit d'abord.
+export const mapColors: Record<
+  ColorSchemeName,
+  {
+    jungle: string;
+    lane: string;
+    river: string;
+    grid: string;
+    blue: string;
+    blueBase: string;
+    red: string;
+    redBase: string;
+    camp: string;
+    objective: string;
+  }
+> = {
+  dark: {
+    jungle: "#1C1322",
+    lane: "rgba(182, 163, 180, 0.17)",
+    river: "rgba(91, 155, 232, 0.13)",
+    grid: "rgba(201, 162, 39, 0.07)",
+    blue: darkPalette.info.main,
+    blueBase: "rgba(91, 155, 232, 0.16)",
+    red: darkPalette.error.main,
+    redBase: "rgba(224, 87, 107, 0.16)",
+    camp: darkPalette.text.secondary,
+    objective: "#C07AA6",
+  },
+  light: {
+    jungle: "#E8DEE4",
+    lane: "rgba(255, 255, 255, 0.85)",
+    river: "rgba(31, 95, 169, 0.12)",
+    grid: "rgba(107, 40, 83, 0.08)",
+    blue: lightPalette.info.main,
+    blueBase: "rgba(31, 95, 169, 0.12)",
+    red: lightPalette.error.main,
+    redBase: "rgba(176, 42, 60, 0.12)",
+    camp: lightPalette.text.secondary,
+    objective: "#8E3E6F",
+  },
+};
+
 // ---------------------------------------------------------------------------------------------
 // L'identité commune à Schub et à PremadeLab (Schub#60) : prune, or et noir. Seuls le nom, le logo
 // et le titre de l'onglet distinguent les deux applications.
@@ -285,6 +328,7 @@ export interface Identity {
   backdrops: Record<ColorSchemeName, { page: string; panel: string }>;
   textures: Record<ColorSchemeName, { grid: string; gridSize: number }>;
   chart: typeof chartColors;
+  map: typeof mapColors;
   status: typeof statusColors;
   elevations: typeof elevations;
   selection: string;
@@ -295,6 +339,7 @@ export const identity: Identity = {
   backdrops,
   textures,
   chart: chartColors,
+  map: mapColors,
   status: statusColors,
   elevations,
   selection: "rgba(164, 71, 126, 0.45)",

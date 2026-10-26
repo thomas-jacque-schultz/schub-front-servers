@@ -52,6 +52,13 @@ export const usePremadeLabShell = (route: string) => {
     to: localize("/queue-killer"),
     current: route.startsWith("/queue-killer"),
   });
+  navItems.push({
+    key: "ruler",
+    label: t("shell.ruler"),
+    icon: "ruler",
+    hint: t("shell.rulerHint"),
+    to: localize("/ruler"),
+  });
 
   return {
     tagline: t("shell.tagline"),

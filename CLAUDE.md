@@ -187,10 +187,11 @@ décide de ce qu'elle reçoit.
 | `/teams`, `/teams/:id` | les équipes | connecté, à la demande |
 | `/combos/:palier/:type` | les combos qui gagnent par palier (Schub#112), lus par les robots en SSI comme les profils | **public**, à la demande |
 | `/queue-killer`, `/queue-killer/:jeu/:salon` | les mini-jeux (Schub#118 : scribble, zoom, indices, quiz, imposteur), chacun en iframe depuis son sous-domaine (`queueKiller.ts`) ; deux messages avec le jeu, origine vérifiée | **public**, à la demande |
+| `/ruler` | la règle : distances sur la Faille en unités du jeu, cercle de portée, temps de marche (`MapRuler`, repères dans `ruler.ts`) ; la mesure reste dans le navigateur (`riftruler`) | **public**, à la demande |
 
 **Communes** : `/profile` (connecté), `/login`, `/terms`, `/privacy` (publiques).
 
-**Les pages publiques de PremadeLab sont prérendues au build** (Schub#90) : `/`, `/presentation`,
+**Les pages publiques de PremadeLab sont prérendues au build** (Schub#90) : `/`, `/presentation`, `/ruler`,
 `/contact`, `/terms`, `/privacy`, en fr et en en. `npm run prerender` construit
 `src/premadelab/prerender.tsx` pour Node et écrit `dist/prerendu/<langue>/<page>.html` ; nginx les sert, puis
 React remplace le contenu au montage. Le rendu se fait **en visiteur anonyme** (`AuthStoreProvider anonymous`) et
