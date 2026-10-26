@@ -773,7 +773,7 @@
     "intro_one": "Par poste, quel que soit le joueur qui le tient, sur {{count}} partie d’équipe dont on a la timeline et nos cinq postes.",
     "intro_other": "Par poste, quel que soit le joueur qui le tient, sur {{count}} parties d’équipe dont on a la timeline et nos cinq postes.",
     "none": "Aucune partie d’équipe dont on a la timeline et nos cinq postes sur cette période.",
-    "method": "Seul\u00a0: aucun coéquipier à moins de 2\u00a0000 unités sur l’image de la minute (morts et passages à la fontaine écartés). Présent à un objectif ou à un combat\u00a0: à moins de 3\u00a0000 unités sur l’image d’avant ou d’après, ou impliqué dans un kill. Les positions ne sont connues qu’une fois par minute\u00a0: ce sont des ordres de grandeur.",
+    "method": "Seul\u00a0: aucun coéquipier à moins de 2\u00a0000 unités sur l’image de la minute (morts et passages à la fontaine écartés). Présent à un objectif\u00a0: le tueur, ceux qui l’ont frappé, et ceux à moins de 3\u00a0000 unités de la fosse sur l’image d’avant ou d’après. Présent à un combat\u00a0: impliqué dans un kill, ou à moins de 2\u00a0000 unités sur l’image la plus proche si elle est à moins de 20\u00a0s. Les positions ne sont connues qu’une fois par minute\u00a0: ce sont des ordres de grandeur.",
     "name": {
       "TOP": "Top",
       "JUNGLE": "Jungler",
@@ -801,7 +801,7 @@
       "conclusion": "Après 15\u00a0min, surtout avec {{mate}}",
       "conclusionAlone": "Après 15\u00a0min, il joue surtout seul",
       "caption": "Part du temps près de chacun après 15\u00a0min",
-      "objectives": "Objectifs pris\u00a0: {{takenWith}}/{{with}} avec lui, {{takenWithout}}/{{without}} sans lui. Il est là pour {{share}} d’entre eux.",
+      "objectives": "Objectifs pris\u00a0: {{with}} quand il est là ({{withCount}}), {{without}} sinon ({{withoutCount}}). Il est là pour {{share}} d’entre eux.",
       "fights": "Il est là dans {{share}} des combats du jungler dans sa jungle.",
       "early": "Avant 15\u00a0min"
     },
@@ -814,12 +814,12 @@
     },
     "jungler": {
       "title": "Le jungler",
-      "conclusionFights": "Seul dans {{alone}} combats sur {{total}} dans sa jungle",
+      "conclusionFights": "Accompagné dans {{share}} de ses combats dans sa jungle",
       "conclusionObjectives": "Rejoint aux objectifs surtout par {{mate}}",
       "caption": "Présence aux objectifs, par poste",
       "fightsHint": "Combats dans sa jungle\u00a0: {{share}}",
-      "crowd": "Objectifs pris\u00a0: {{takenCrowded}}/{{crowded}} à trois ou plus autour, {{takenSparse}}/{{sparse}} à moins.",
-      "fights": "Combats gagnés dans sa jungle\u00a0: {{wonAlone}}/{{alone}} seul, {{wonHelped}}/{{helped}} accompagné."
+      "crowd": "Objectifs pris\u00a0: {{crowded}} à trois ou plus autour ({{crowdedCount}}), {{sparse}} à moins ({{sparseCount}}).",
+      "fights": "Combats gagnés dans sa jungle\u00a0: {{helped}} accompagné ({{helpedCount}}), {{alone}} seul ({{aloneCount}})."
     },
     "holders": {
       "caption": "Qui a tenu le poste",

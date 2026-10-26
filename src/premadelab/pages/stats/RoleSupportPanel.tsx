@@ -17,6 +17,7 @@ import {
   PARTIES_MINIMUM,
   compagnonDuSupport,
   ligneDu,
+  part,
   prochesDu,
 } from "./soutiens";
 import { POSTES, useStatsFormat, type Poste } from "./statsFormat";
@@ -144,10 +145,14 @@ function SupportCard({ roles }: { roles: RolesDto }) {
       <Stack spacing={0.5}>
         <Text variant="caption">
           {t("roles.support.objectives", {
-            takenWith: prises.takenWithSupport,
-            with: prises.withSupport,
-            takenWithout: prises.takenWithoutSupport,
-            without: prises.withoutSupport,
+            with: format.taux(
+              part(prises.takenWithSupport, prises.withSupport),
+            ),
+            withCount: prises.withSupport,
+            without: format.taux(
+              part(prises.takenWithoutSupport, prises.withoutSupport),
+            ),
+            withoutCount: prises.withoutSupport,
             share: format.taux(support?.objectivePresence),
           })}
         </Text>
@@ -271,8 +276,7 @@ function JunglerCard({ roles }: { roles: RolesDto }) {
       conclusion={
         roles.jungleFights > 0
           ? t("roles.jungler.conclusionFights", {
-              alone: combats.alone,
-              total: roles.jungleFights,
+              share: format.taux(part(combats.helped, roles.jungleFights)),
             })
           : premier?.ligne?.objectivePresence != null
             ? t("roles.jungler.conclusionObjectives", {
@@ -315,19 +319,23 @@ function JunglerCard({ roles }: { roles: RolesDto }) {
       <Stack spacing={0.5}>
         <Text variant="caption">
           {t("roles.jungler.crowd", {
-            takenCrowded: roles.takes.takenCrowded,
-            crowded: roles.takes.crowded,
-            takenSparse: roles.takes.takenSparse,
-            sparse: roles.takes.sparse,
+            crowded: format.taux(
+              part(roles.takes.takenCrowded, roles.takes.crowded),
+            ),
+            crowdedCount: roles.takes.crowded,
+            sparse: format.taux(
+              part(roles.takes.takenSparse, roles.takes.sparse),
+            ),
+            sparseCount: roles.takes.sparse,
           })}
         </Text>
         {roles.jungleFights > 0 && (
           <Text variant="caption">
             {t("roles.jungler.fights", {
-              wonAlone: combats.wonAlone,
-              alone: combats.alone,
-              wonHelped: combats.wonHelped,
-              helped: combats.helped,
+              helped: format.taux(part(combats.wonHelped, combats.helped)),
+              helpedCount: combats.helped,
+              alone: format.taux(part(combats.wonAlone, combats.alone)),
+              aloneCount: combats.alone,
             })}
           </Text>
         )}

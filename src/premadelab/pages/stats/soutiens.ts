@@ -45,3 +45,6 @@ export function compagnonDuSupport(roles: RolesDto): Poste | "alone" | null {
   }
   return seul !== null && seul > premier.apres ? "alone" : premier.poste;
 }
+
+export const part = (pris: number, total: number) =>
+  total === 0 ? null : pris / total;
