@@ -822,13 +822,13 @@
       "fights": "Combats gagnés dans sa jungle\u00a0: {{helped}} accompagné ({{helpedCount}}), {{alone}} seul ({{aloneCount}})."
     },
     "holders": {
-      "caption": "Qui a tenu le poste",
-      "player": "Joueur",
-      "games": "Parties",
-      "lateAlone": "Seul après 15\u00a0min",
-      "withJungler": "Avec le jungler après 15\u00a0min",
-      "objectives": "Aux objectifs",
-      "position": "Poste"
+      "caption": "Qui a tenu le poste, après 15\u00a0min",
+      "games_one": "{{count}} partie",
+      "games_other": "{{count}} parties",
+      "atPosition": "{{name}} ({{position}})",
+      "withJungler": "avec le jungler {{share}}",
+      "alone": "seul {{share}}",
+      "objectives": "aux objectifs {{share}}"
     },
     "pairs": {
       "title": "Toutes les paires de postes",
