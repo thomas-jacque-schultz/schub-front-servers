@@ -1690,6 +1690,11 @@ export interface components {
       /** Format: double */
       winRate: number | null;
     };
+    Closeness: {
+      displayName: string | null;
+      mates: components["schemas"]["Mate"][];
+      memberId: string;
+    };
     Combo: {
       /** Format: double */
       expected: number | null;
@@ -1887,9 +1892,13 @@ export interface components {
     EarlyGameDto: {
       ganks: components["schemas"]["GankDto"][];
       ourJungler: components["schemas"]["JunglePresenceDto"] | null;
+      ourJunglerMate: components["schemas"]["JunglerLineDto"] | null;
       ourObjectives: components["schemas"]["ObjectivesDto"];
+      ourSupport: components["schemas"]["SupportLineDto"] | null;
       theirJungler: components["schemas"]["JunglePresenceDto"] | null;
+      theirJunglerMate: components["schemas"]["JunglerLineDto"] | null;
       theirObjectives: components["schemas"]["ObjectivesDto"];
+      theirSupport: components["schemas"]["SupportLineDto"] | null;
     };
     EvaluationDto: {
       conditions: components["schemas"]["ConditionTraceDto"][];
@@ -2146,6 +2155,16 @@ export interface components {
       /** Format: int32 */
       topMinutes: number;
     };
+    /** @description Le poste dont le jungler a Ã©tÃ© le plus proche sur toute la partie, et la part des images. */
+    JunglerLineDto: {
+      /** Format: int32 */
+      championId: number;
+      memberId: string | null;
+      /** @enum {string} */
+      position: "TOP" | "MIDDLE" | "BOTTOM" | "UTILITY";
+      /** Format: double */
+      share: number;
+    };
     LaneThreat: {
       /** Format: int32 */
       championId: number;
@@ -2191,6 +2210,18 @@ export interface components {
       position: string;
       /** Format: double */
       rankGap: number | null;
+    };
+    Mate: {
+      displayName: string | null;
+      /** Format: double */
+      earlyShare: number | null;
+      /** Format: int64 */
+      games: number;
+      /** Format: double */
+      lateShare: number | null;
+      memberId: string;
+      /** Format: double */
+      share: number | null;
     };
     MeDto: {
       discord: components["schemas"]["DiscordIdentityDto"];
@@ -2865,6 +2896,8 @@ export interface components {
     };
     /** @description Sur les parties d'Ã©quipe de la pÃ©riode seulement. Absente : aucune partie d'Ã©quipe. */
     StatLineDto: {
+      /** Format: double */
+      adcEarlyShare: number | null;
       /** Format: int64 */
       afkGames: number;
       /** Format: double */
@@ -2899,6 +2932,8 @@ export interface components {
       goldPerMinute: number | null;
       iconUrl: string | null;
       /** Format: double */
+      junglerLateShare: number | null;
+      /** Format: double */
       kda: number | null;
       key: string;
       /** Format: double */
@@ -2919,10 +2954,16 @@ export interface components {
       lastPlayedAt: string | null;
       /** Format: double */
       platesDiff: number | null;
+      /** Format: double */
+      roams: number | null;
       /** Format: int64 */
       secondsPlayed: number;
       /** Format: double */
       soloKills: number | null;
+      /** Format: int64 */
+      supportEarlyGames: number;
+      /** Format: int64 */
+      supportLateGames: number;
       /** Format: double */
       timeDeadShare: number | null;
       /** Format: double */
@@ -2999,6 +3040,21 @@ export interface components {
       side: "TOP" | "BOT" | "BALANCED";
       /** Format: int32 */
       wins: number;
+    };
+    /**
+     * @description Le support avec son ADC avant 15 min (part des images Ã  moins de 2 000 unitÃ©s, et dÃ©parts) et avec son
+     *     jungler aprÃ¨s. Une part est absente sous 5 images comptÃ©es.
+     */
+    SupportLineDto: {
+      /** Format: double */
+      adcEarlyShare: number | null;
+      /** Format: int32 */
+      championId: number;
+      /** Format: double */
+      junglerLateShare: number | null;
+      memberId: string | null;
+      /** Format: int32 */
+      roams: number | null;
     };
     TeamDto: {
       /** Format: date-time */
@@ -3288,9 +3344,12 @@ export interface components {
       viewerMemberId: string | null;
     };
     TeamSynergyDto: {
+      closeness: components["schemas"]["Closeness"][];
       duos: components["schemas"]["Duo"][];
       /** Format: int64 */
       games: number;
+      /** Format: int32 */
+      minimumClosenessGames: number;
       /** Format: int32 */
       minimumDuoGames: number;
       resources: components["schemas"]["Resource"][];

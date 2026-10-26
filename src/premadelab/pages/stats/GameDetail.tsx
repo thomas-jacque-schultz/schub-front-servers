@@ -116,6 +116,19 @@ export function GameDetail({
           <Divider />
           <EarlyGameView
             early={detail.early}
+            champions={Object.fromEntries(
+              [
+                ...detail.game.players,
+                ...detail.matchups.flatMap((ligne) => [
+                  ligne.ally,
+                  ligne.enemy,
+                ]),
+              ].flatMap((joueur) =>
+                joueur?.championName
+                  ? [[joueur.championId, joueur.championName]]
+                  : [],
+              ),
+            )}
             names={Object.fromEntries(
               detail.game.players.flatMap((membre) =>
                 membre.memberId && membre.displayName

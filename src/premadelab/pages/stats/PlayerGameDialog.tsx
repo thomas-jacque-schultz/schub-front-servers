@@ -14,7 +14,7 @@ import type {
 } from "../../types/stats";
 import { noter } from "./grading";
 import { GradeLabel } from "./LevelCrest";
-import { FAMILLES, type MetricKey, useMetrics } from "./metrics";
+import { famillesDu, type MetricKey, useMetrics } from "./metrics";
 import { useStatsFormat } from "./statsFormat";
 import { useReferenceGrid } from "./useReferenceGrid";
 
@@ -168,7 +168,7 @@ function Familles({ metrics }: { metrics: GamePlayerMetricsDto }) {
 
   return (
     <Stack spacing={2.5}>
-      {FAMILLES.map((famille) => (
+      {famillesDu(position).map((famille) => (
         <Stack key={famille.key} spacing={1}>
           <Text variant="section">
             {t(`family.${famille.key}`, { defaultValue: famille.key })}

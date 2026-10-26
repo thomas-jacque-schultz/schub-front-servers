@@ -66,7 +66,10 @@
     "xpDiffAt15": "XP difference at 15",
     "killsDiffAt15": "Kill difference at 15",
     "killsAssistsAt15": "Kills and assists at 15",
-    "soloKills": "Solo kills per game"
+    "soloKills": "Solo kills per game",
+    "adcEarlyShare": "With the ADC before 15 min",
+    "junglerLateShare": "With the jungler after 15 min",
+    "roams": "Roams before 15 min, per game"
   },
   "delta": {
     "points": "{{value}} pts",
@@ -252,7 +255,10 @@
     "xpDiffAt15": "XP @15",
     "killsDiffAt15": "Kills @15",
     "killsAssistsAt15": "K+A @15",
-    "soloKills": "Solo kills"
+    "soloKills": "Solo kills",
+    "adcEarlyShare": "With ADC",
+    "junglerLateShare": "With jungler",
+    "roams": "Roams"
   },
   "radar": {
     "title": "Profile",
@@ -466,6 +472,19 @@
       "junglerConclusion_one": "{{player}}: {{made}} gank per game, {{decisive}} decisive, over {{count}} game.",
       "junglerConclusion_other": "{{player}}: {{made}} ganks per game, {{decisive}} decisive, over {{count}} games.",
       "sideConclusion": "You win {{rate}} when your jungler plays {{side}} ({{count}} games)."
+    },
+    "proximity": {
+      "ours": "Our side",
+      "theirs": "Their side",
+      "helper": "Share of minutes within 2,000 units (about one screen), on each minute's snapshot. A minute does not count if either player is dead or at their fountain. A roam is leaving the ADC between two minutes.",
+      "support": "Support, {{player}}",
+      "adc_one": "With the ADC: {{share}} of minutes before 15 min, {{count}} roam.",
+      "adc_other": "With the ADC: {{share}} of minutes before 15 min, {{count}} roams.",
+      "adcNone": "With the ADC: too few minutes counted before 15 min.",
+      "jungler": "With the jungler: {{share}} of minutes after 15 min.",
+      "junglerNone": "With the jungler: too few minutes counted after 15 min.",
+      "junglerTitle": "Jungler, {{player}}",
+      "closest": "Most often near {{position}}: {{share}} of the game's minutes."
     }
   },
   "family": {
@@ -491,7 +510,10 @@
       "average": "On par with {{tier}} {{position}}s.",
       "below": "Below {{tier}} {{position}}s.",
       "veryBelow": "Well below {{tier}} {{position}}s."
-    }
+    },
+    "support": "Support",
+    "supportBasis": "Over {{early}} game(s) with a timeline before 15 min, {{late}} after.",
+    "supportNone": "No support game with a timeline over the period."
   },
   "grade": {
     "level": "{{tier}} level in the {{position}} role: the value is closest to their per-game average ({{mean}}).",
@@ -611,6 +633,16 @@
       "goldLoss": "Gold share in losses",
       "damageWin": "Damage share in wins",
       "damageLoss": "Damage share in losses"
+    },
+    "closeness": {
+      "title": "Who plays near whom",
+      "hint": "For each player, the share of minutes spent within 2,000 units of each teammate, over their team games with a timeline. A minute does not count if either is dead or at their fountain. A bar from {{count}} shared games.",
+      "none": "No team game with a timeline over this period.",
+      "noMate": "No shared game with a timeline.",
+      "tooFew_one": "{{name}}: {{count}} shared game, {{minimum}} needed.",
+      "tooFew_other": "{{name}}: {{count}} shared games, {{minimum}} needed.",
+      "detail_one": "Before 15 min {{early}}, after {{late}}, over {{count}} game.",
+      "detail_other": "Before 15 min {{early}}, after {{late}}, over {{count}} games."
     }
   },
   "premade": {

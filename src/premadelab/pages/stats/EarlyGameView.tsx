@@ -15,7 +15,9 @@ import type {
   GankDto,
   GankOutcome,
   JunglePresenceDto,
+  JunglerLineDto,
   Lane,
+  SupportLineDto,
 } from "../../types/stats";
 import { useStatsFormat } from "./statsFormat";
 
@@ -40,9 +42,15 @@ const TON: Record<"ours" | "theirs", Record<GankOutcome, ChipTone>> = {
 export interface EarlyGameViewProps {
   early: EarlyGameDto;
   names: Record<string, string>;
+  /** Par championId : le nom du champion, pour dire de qui parle une ligne de proximité. */
+  champions?: Record<number, string>;
 }
 
-export function EarlyGameView({ early, names }: EarlyGameViewProps) {
+export function EarlyGameView({
+  early,
+  names,
+  champions = {},
+}: EarlyGameViewProps) {
   const { t } = useTranslation("stats");
   const fort = early.ourJungler?.strongSide ?? "BALANCED";
   const adverses = early.ganks.filter((gank) => !gank.ours);
@@ -124,7 +132,102 @@ export function EarlyGameView({ early, names }: EarlyGameViewProps) {
           presence={early.theirJungler}
         />
       </Columns>
+      {(early.ourSupport ||
+        early.theirSupport ||
+        early.ourJunglerMate ||
+        early.theirJunglerMate) && (
+        <>
+          <Columns minWidth={260} count={2}>
+            {(["ours", "theirs"] as const).map((camp) => (
+              <Proximite
+                key={camp}
+                title={t(`early.proximity.${camp}`)}
+                support={
+                  camp === "ours" ? early.ourSupport : early.theirSupport
+                }
+                jungler={
+                  camp === "ours"
+                    ? early.ourJunglerMate
+                    : early.theirJunglerMate
+                }
+                qui={(memberId, championId) =>
+                  (memberId ? names[memberId] : undefined) ??
+                  champions[championId] ??
+                  ""
+                }
+              />
+            ))}
+          </Columns>
+          <Text variant="caption" tone="secondary">
+            {t("early.proximity.helper")}
+          </Text>
+        </>
+      )}
     </Stack>
+  );
+}
+
+// Schub#152 : le support avec son ADC et son jungler, le jungler et le poste dont il a été le plus proche.
+function Proximite({
+  title,
+  support,
+  jungler,
+  qui,
+}: {
+  title: string;
+  support: SupportLineDto | null;
+  jungler: JunglerLineDto | null;
+  qui: (memberId: string | null, championId: number) => string;
+}) {
+  const { t } = useTranslation("stats");
+  const format = useStatsFormat();
+  if (!support && !jungler) {
+    return null;
+  }
+  return (
+    <Card title={title}>
+      <Stack spacing={1}>
+        {support && (
+          <Stack spacing={0.25}>
+            <Text variant="subtitle">
+              {t("early.proximity.support", {
+                player: qui(support.memberId, support.championId),
+              })}
+            </Text>
+            <Text variant="body">
+              {support.adcEarlyShare === null
+                ? t("early.proximity.adcNone")
+                : t("early.proximity.adc", {
+                    share: format.taux(support.adcEarlyShare),
+                    count: support.roams ?? 0,
+                  })}
+            </Text>
+            <Text variant="body">
+              {support.junglerLateShare === null
+                ? t("early.proximity.junglerNone")
+                : t("early.proximity.jungler", {
+                    share: format.taux(support.junglerLateShare),
+                  })}
+            </Text>
+          </Stack>
+        )}
+        {jungler && (
+          <Stack spacing={0.25}>
+            <Text variant="subtitle">
+              {t("early.proximity.junglerTitle", {
+                player: qui(jungler.memberId, jungler.championId),
+              })}
+            </Text>
+            <Text variant="body">
+              {t("early.proximity.closest", {
+                position: format.poste(jungler.position),
+                share: format.taux(jungler.share),
+              })}
+            </Text>
+          </Stack>
+        )}
+      </Stack>
+    </Card>
   );
 }
 

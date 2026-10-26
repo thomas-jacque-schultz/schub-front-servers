@@ -66,7 +66,10 @@
     "xpDiffAt15": "Écart d’XP à 15\u00a0min",
     "killsDiffAt15": "Écart de kills à 15\u00a0min",
     "killsAssistsAt15": "Kills et assists à 15\u00a0min",
-    "soloKills": "Solo kills par partie"
+    "soloKills": "Solo kills par partie",
+    "adcEarlyShare": "Avec l’ADC avant 15\u00a0min",
+    "junglerLateShare": "Avec le jungler après 15\u00a0min",
+    "roams": "Roams avant 15\u00a0min, par partie"
   },
   "delta": {
     "points": "{{value}} pts",
@@ -252,7 +255,10 @@
     "xpDiffAt15": "XP @15",
     "killsDiffAt15": "Kills @15",
     "killsAssistsAt15": "K+A @15",
-    "soloKills": "Solo kills"
+    "soloKills": "Solo kills",
+    "adcEarlyShare": "Avec l’ADC",
+    "junglerLateShare": "Avec le jungler",
+    "roams": "Roams"
   },
   "radar": {
     "title": "Profil",
@@ -466,6 +472,19 @@
       "junglerConclusion_one": "{{player}}\u00a0: {{made}} gank par partie, {{decisive}} décisifs, sur {{count}} partie.",
       "junglerConclusion_other": "{{player}}\u00a0: {{made}} ganks par partie, {{decisive}} décisifs, sur {{count}} parties.",
       "sideConclusion": "Vous gagnez {{rate}} quand votre jungler joue {{side}} ({{count}} parties)."
+    },
+    "proximity": {
+      "ours": "Notre camp",
+      "theirs": "Leur camp",
+      "helper": "Part des minutes à moins de 2\u00a0000 unités (à peu près un écran), sur l’image de chaque minute. Une minute ne compte pas si l’un des deux est mort ou à sa fontaine. Un roam, c’est quitter l’ADC entre deux minutes.",
+      "support": "Support, {{player}}",
+      "adc_one": "Avec l’ADC\u00a0: {{share}} des minutes avant 15\u00a0min, {{count}} roam.",
+      "adc_other": "Avec l’ADC\u00a0: {{share}} des minutes avant 15\u00a0min, {{count}} roams.",
+      "adcNone": "Avec l’ADC\u00a0: trop peu de minutes comptées avant 15\u00a0min.",
+      "jungler": "Avec le jungler\u00a0: {{share}} des minutes après 15\u00a0min.",
+      "junglerNone": "Avec le jungler\u00a0: trop peu de minutes comptées après 15\u00a0min.",
+      "junglerTitle": "Jungler, {{player}}",
+      "closest": "Le plus souvent près du {{position}}\u00a0: {{share}} des minutes de la partie."
     }
   },
   "family": {
@@ -491,7 +510,10 @@
       "average": "Au niveau des {{position}} {{tier}}.",
       "below": "En dessous des {{position}} {{tier}}.",
       "veryBelow": "Bien en dessous des {{position}} {{tier}}."
-    }
+    },
+    "support": "Support",
+    "supportBasis": "Sur {{early}} partie(s) à timeline avant 15\u00a0min, {{late}} après.",
+    "supportNone": "Aucune partie au support dont on a la timeline sur la période."
   },
   "grade": {
     "level": "Au niveau des {{tier}} au poste {{position}}\u00a0: c’est de leur moyenne par partie ({{mean}}) que la valeur est la plus proche.",
@@ -611,6 +633,16 @@
       "goldLoss": "Part de l’or en défaite",
       "damageWin": "Part des dégâts en victoire",
       "damageLoss": "Part des dégâts en défaite"
+    },
+    "closeness": {
+      "title": "Qui joue près de qui",
+      "hint": "Pour chaque joueur, la part des minutes passées à moins de 2\u00a0000 unités de chaque coéquipier, sur leurs parties d’équipe dont on a la timeline. Une minute ne compte pas si l’un des deux est mort ou à sa fontaine. Une barre à partir de {{count}} parties communes.",
+      "none": "Aucune partie d’équipe dont on a la timeline sur cette période.",
+      "noMate": "Aucune partie commune à timeline.",
+      "tooFew_one": "{{name}}\u00a0: {{count}} partie commune, il en faut {{minimum}}.",
+      "tooFew_other": "{{name}}\u00a0: {{count}} parties communes, il en faut {{minimum}}.",
+      "detail_one": "Avant 15\u00a0min {{early}}, après {{late}}, sur {{count}} partie.",
+      "detail_other": "Avant 15\u00a0min {{early}}, après {{late}}, sur {{count}} parties."
     }
   },
   "premade": {

@@ -64,6 +64,10 @@ export type ObjectivesDto = Schemas["ObjectivesDto"];
 
 export type EarlyGameDto = Schemas["EarlyGameDto"];
 
+export type SupportLineDto = Schemas["SupportLineDto"];
+
+export type JunglerLineDto = Schemas["JunglerLineDto"];
+
 export type MemberEarlyDto = Schemas["MemberEarlyDto"];
 
 export type PresenceWithDto = Schemas["PresenceWithDto"];
@@ -104,5 +108,7 @@ export type TeamLevelMetricDto = Schemas["TeamLevelMetric"];
 export type DuoDto = Schemas["Duo"];
 
 export type ResourceDto = Schemas["Resource"];
+
+export type ClosenessDto = Schemas["Closeness"];
 
 export type TeamSynergyDto = Schemas["TeamSynergyDto"];
