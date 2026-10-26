@@ -11,12 +11,9 @@ import {
   ProgressBar,
   Stack,
   Text,
-  messageOf,
-  useRequest,
   type ChipTone,
 } from "../../../common";
-import { getTeamSynergyApi } from "../../api/statsApi";
-import type { DuoDto, ResourceDto } from "../../types/stats";
+import type { DuoDto, ResourceDto, TeamSynergyDto } from "../../types/stats";
 import { ClosenessCard } from "./ClosenessCard";
 import { useStatsFormat } from "./statsFormat";
 
@@ -58,26 +55,27 @@ interface Ligne {
 }
 
 export interface SynergyPanelProps {
-  teamId: string;
-  periode: string;
+  dto: TeamSynergyDto | null;
+  error: string;
+  isLoading: boolean;
 }
 
 /** Les paires qui gagnent au-delà de ce qu'on attendrait d'elles, et qui reçoit l'or de l'équipe (Schub#24, #25). */
-export function SynergyPanel({ teamId, periode }: SynergyPanelProps) {
+export function SynergyPanel({
+  dto: data,
+  error,
+  isLoading,
+}: SynergyPanelProps) {
   const { t } = useTranslation("stats");
   const format = useStatsFormat();
   const [chiffresOuverts, setChiffresOuverts] = useState(false);
   const [matriceOuverte, setMatriceOuverte] = useState(false);
-  const { data, error, isLoading } = useRequest(
-    `synergy/${teamId}/${periode}`,
-    () => getTeamSynergyApi(teamId, periode),
-  );
 
   if (isLoading && !data) {
     return <ProgressBar label={t("synergy.title")} />;
   }
-  if (error !== null && !data) {
-    return <Alert severity="error">{messageOf(error, t("loadFailed"))}</Alert>;
+  if (error && !data) {
+    return <Alert severity="error">{error}</Alert>;
   }
   if (!data) {
     return null;

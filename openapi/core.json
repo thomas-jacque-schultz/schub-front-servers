@@ -5864,6 +5864,41 @@
           }
         }
       },
+      "Holder" : {
+        "required" : [ "displayName", "games", "lateAlone", "lateWithJungler", "memberId", "objectivePresence", "position" ],
+        "type" : "object",
+        "properties" : {
+          "displayName" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "games" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "lateAlone" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
+          "lateWithJungler" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
+          "memberId" : {
+            "type" : "string"
+          },
+          "objectivePresence" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
+          "position" : {
+            "type" : "string"
+          }
+        }
+      },
       "ImpactDto" : {
         "required" : [ "appearing", "byTier", "disappearing", "examples", "sampled", "unchanged" ],
         "type" : "object",
@@ -5998,6 +6033,28 @@
           },
           "profiles" : {
             "$ref" : "#/components/schemas/Counts"
+          }
+        }
+      },
+      "JungleFights" : {
+        "required" : [ "alone", "helped", "wonAlone", "wonHelped" ],
+        "type" : "object",
+        "properties" : {
+          "alone" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "helped" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "wonAlone" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "wonHelped" : {
+            "type" : "integer",
+            "format" : "int32"
           }
         }
       },
@@ -6486,6 +6543,44 @@
           }
         }
       },
+      "ObjectiveTakes" : {
+        "required" : [ "crowded", "sparse", "takenCrowded", "takenSparse", "takenWithSupport", "takenWithoutSupport", "withSupport", "withoutSupport" ],
+        "type" : "object",
+        "properties" : {
+          "crowded" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "sparse" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "takenCrowded" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "takenSparse" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "takenWithSupport" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "takenWithoutSupport" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "withSupport" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "withoutSupport" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }
+      },
       "ObjectivesDto" : {
         "required" : [ "dragons", "grubs", "heralds" ],
         "type" : "object",
@@ -6501,6 +6596,28 @@
           "heralds" : {
             "type" : "integer",
             "format" : "int32"
+          }
+        }
+      },
+      "PairLine" : {
+        "required" : [ "earlyShare", "lateShare", "matePosition", "position" ],
+        "type" : "object",
+        "properties" : {
+          "earlyShare" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
+          "lateShare" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
+          "matePosition" : {
+            "type" : "string"
+          },
+          "position" : {
+            "type" : "string"
           }
         }
       },
@@ -7785,6 +7902,35 @@
           }
         }
       },
+      "RoleLine" : {
+        "required" : [ "earlyAlone", "jungleFightPresence", "lateAlone", "objectivePresence", "position" ],
+        "type" : "object",
+        "properties" : {
+          "earlyAlone" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
+          "jungleFightPresence" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
+          "lateAlone" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
+          "objectivePresence" : {
+            "type" : "number",
+            "format" : "double",
+            "nullable" : true
+          },
+          "position" : {
+            "type" : "string"
+          }
+        }
+      },
       "RoleSummaryDto" : {
         "required" : [ "name", "permissions" ],
         "type" : "object",
@@ -7799,6 +7945,48 @@
               "type" : "string",
               "enum" : [ "SERVER_VIEW", "SERVER_INFRA_VIEW", "SERVER_START", "SERVER_STOP", "SERVER_CONTROL_ALL", "SERVER_CREATE", "SERVER_EDIT", "SERVER_DELETE", "PORT_VIEW", "PORT_RULE_EDIT", "DISCORD_CHANNEL_MANAGE", "USER_VIEW", "USER_ROLE_ASSIGN", "INGEST_VIEW", "INGEST_MANAGE", "TEAM_CREATE", "TEAM_VIEW", "TEAM_MANAGE", "ROSTER_EDIT", "COMPOSITION_EDIT", "AUGUR_PATTERN_EDIT", "QUIZ_QUESTION_EDIT", "ROLE_MANAGE" ]
             }
+          }
+        }
+      },
+      "Roles" : {
+        "required" : [ "fights", "games", "holders", "jungleFights", "objectives", "pairs", "roles", "takes" ],
+        "type" : "object",
+        "properties" : {
+          "fights" : {
+            "$ref" : "#/components/schemas/JungleFights"
+          },
+          "games" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "holders" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Holder"
+            }
+          },
+          "jungleFights" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "objectives" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "pairs" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/PairLine"
+            }
+          },
+          "roles" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/RoleLine"
+            }
+          },
+          "takes" : {
+            "$ref" : "#/components/schemas/ObjectiveTakes"
           }
         }
       },
@@ -9188,7 +9376,7 @@
         }
       },
       "TeamSynergyDto" : {
-        "required" : [ "closeness", "duos", "games", "minimumClosenessGames", "minimumDuoGames", "resources" ],
+        "required" : [ "closeness", "duos", "games", "minimumClosenessGames", "minimumDuoGames", "resources", "roles" ],
         "type" : "object",
         "properties" : {
           "closeness" : {
@@ -9220,6 +9408,9 @@
             "items" : {
               "$ref" : "#/components/schemas/Resource"
             }
+          },
+          "roles" : {
+            "$ref" : "#/components/schemas/Roles"
           }
         }
       },

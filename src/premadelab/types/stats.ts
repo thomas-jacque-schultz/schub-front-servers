@@ -111,4 +111,7 @@ export type ResourceDto = Schemas["Resource"];
 
 export type ClosenessDto = Schemas["Closeness"];
 
+export type RolesDto = Schemas["Roles"];
+export type HolderDto = Schemas["Holder"];
+
 export type TeamSynergyDto = Schemas["TeamSynergyDto"];

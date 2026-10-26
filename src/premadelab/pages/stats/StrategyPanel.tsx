@@ -4,10 +4,12 @@ import { SelectField, Stack, Text, useRequest } from "../../../common";
 import { getTeamFindingsApi } from "../../api/findingsApi";
 import { GameVerdict } from "../../components/GameVerdict";
 import { OppositionPanel } from "./OppositionPanel";
+import { RoleSupportPanel } from "./RoleSupportPanel";
 import { SynergyPanel } from "./SynergyPanel";
 import { TeamEarlyGame } from "./TeamEarlyGame";
 import { TeamSummary } from "./TeamSummary";
 import { useTeamOpposition } from "./useTeamOpposition";
+import { useTeamSynergy } from "./useTeamSynergy";
 import { useWindowOptions } from "./windows";
 
 export interface StrategyPanelProps {
@@ -20,6 +22,7 @@ export function StrategyPanel({ teamId }: StrategyPanelProps) {
   const fenetres = useWindowOptions();
   const [periode, setPeriode] = useState<string>("");
   const opposition = useTeamOpposition(teamId, periode);
+  const synergie = useTeamSynergy(teamId, periode);
   const { data: constats } = useRequest(
     `team-findings/${teamId}/${periode}`,
     () => getTeamFindingsApi(teamId, periode),
@@ -51,8 +54,14 @@ export function StrategyPanel({ teamId }: StrategyPanelProps) {
       </Stack>
       <Stack spacing={2}>
         <Text variant="section">{t("synergy.title")}</Text>
-        <SynergyPanel teamId={teamId} periode={periode} />
+        <SynergyPanel {...synergie} />
       </Stack>
+      {synergie.dto && (
+        <Stack spacing={2}>
+          <Text variant="section">{t("roles.title")}</Text>
+          <RoleSupportPanel roles={synergie.dto.roles} />
+        </Stack>
+      )}
       {opposition.dto?.state === "STATISTIQUES_CONNUES" && (
         <Stack spacing={2}>
           <Text variant="section">{t("strategy.early")}</Text>

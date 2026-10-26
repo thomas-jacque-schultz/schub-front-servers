@@ -767,5 +767,75 @@
     "bar": "{{value}}\u00a0: {{share}} des parties",
     "aria": "{{metric}}\u00a0: répartition des parties au poste {{position}}, ta moyenne à {{value}}.",
     "basis": "Sur {{games}} parties classées au poste {{position}} des deux derniers patchs, tous paliers confondus, face à ta moyenne au même poste."
+  },
+  "roles": {
+    "title": "Qui soutient qui",
+    "intro_one": "Par poste, quel que soit le joueur qui le tient, sur {{count}} partie d’équipe dont on a la timeline et nos cinq postes.",
+    "intro_other": "Par poste, quel que soit le joueur qui le tient, sur {{count}} parties d’équipe dont on a la timeline et nos cinq postes.",
+    "none": "Aucune partie d’équipe dont on a la timeline et nos cinq postes sur cette période.",
+    "method": "Seul\u00a0: aucun coéquipier à moins de 2\u00a0000 unités sur l’image de la minute (morts et passages à la fontaine écartés). Présent à un objectif ou à un combat\u00a0: à moins de 3\u00a0000 unités sur l’image d’avant ou d’après, ou impliqué dans un kill. Les positions ne sont connues qu’une fois par minute\u00a0: ce sont des ordres de grandeur.",
+    "name": {
+      "TOP": "Top",
+      "JUNGLE": "Jungler",
+      "MIDDLE": "Mid",
+      "BOTTOM": "ADC",
+      "UTILITY": "Support"
+    },
+    "the": {
+      "TOP": "le top",
+      "JUNGLE": "le jungler",
+      "MIDDLE": "le mid",
+      "BOTTOM": "l’ADC",
+      "UTILITY": "le support"
+    },
+    "alone": "Seul",
+    "before": "Avant 15\u00a0min\u00a0: {{share}}",
+    "lowGames_one": "{{count}} partie\u00a0: il en faut {{minimum}} pour conclure.",
+    "lowGames_other": "{{count}} parties\u00a0: il en faut {{minimum}} pour conclure.",
+    "lowObjectives_one": "{{count}} objectif\u00a0: il en faut {{minimum}} pour conclure.",
+    "lowObjectives_other": "{{count}} objectifs\u00a0: il en faut {{minimum}} pour conclure.",
+    "lowFights_one": "{{count}} combat dans sa jungle\u00a0: il en faut {{minimum}} pour conclure.",
+    "lowFights_other": "{{count}} combats dans sa jungle\u00a0: il en faut {{minimum}} pour conclure.",
+    "support": {
+      "title": "Le support",
+      "conclusion": "Après 15\u00a0min, surtout avec {{mate}}",
+      "conclusionAlone": "Après 15\u00a0min, il joue surtout seul",
+      "caption": "Part du temps près de chacun après 15\u00a0min",
+      "objectives": "Objectifs pris\u00a0: {{takenWith}}/{{with}} avec lui, {{takenWithout}}/{{without}} sans lui. Il est là pour {{share}} d’entre eux.",
+      "fights": "Il est là dans {{share}} des combats du jungler dans sa jungle.",
+      "early": "Avant 15\u00a0min"
+    },
+    "adc": {
+      "title": "L’ADC",
+      "conclusion": "Seul {{share}} du temps après 15\u00a0min",
+      "caption": "Part du temps seul après 15\u00a0min, par poste",
+      "closest": "Le plus souvent près de lui après 15\u00a0min\u00a0: {{mate}} ({{share}}).",
+      "mates": "Près de l’ADC, par poste"
+    },
+    "jungler": {
+      "title": "Le jungler",
+      "conclusionFights": "Seul dans {{alone}} combats sur {{total}} dans sa jungle",
+      "conclusionObjectives": "Rejoint aux objectifs surtout par {{mate}}",
+      "caption": "Présence aux objectifs, par poste",
+      "fightsHint": "Combats dans sa jungle\u00a0: {{share}}",
+      "crowd": "Objectifs pris\u00a0: {{takenCrowded}}/{{crowded}} à trois ou plus autour, {{takenSparse}}/{{sparse}} à moins.",
+      "fights": "Combats gagnés dans sa jungle\u00a0: {{wonAlone}}/{{alone}} seul, {{wonHelped}}/{{helped}} accompagné."
+    },
+    "holders": {
+      "caption": "Qui a tenu le poste",
+      "player": "Joueur",
+      "games": "Parties",
+      "lateAlone": "Seul après 15\u00a0min",
+      "withJungler": "Avec le jungler après 15\u00a0min",
+      "objectives": "Aux objectifs",
+      "position": "Poste"
+    },
+    "pairs": {
+      "title": "Toutes les paires de postes",
+      "pair": "Paire",
+      "label": "{{a}} et {{b}}",
+      "before": "Avant 15\u00a0min",
+      "after": "Après 15\u00a0min"
+    }
   }
 }

@@ -2087,6 +2087,19 @@ export interface components {
       /** Format: int32 */
       minGames: number;
     };
+    Holder: {
+      displayName: string | null;
+      /** Format: int32 */
+      games: number;
+      /** Format: double */
+      lateAlone: number | null;
+      /** Format: double */
+      lateWithJungler: number | null;
+      memberId: string;
+      /** Format: double */
+      objectivePresence: number | null;
+      position: string;
+    };
     ImpactDto: {
       /** Format: int32 */
       appearing: number;
@@ -2143,6 +2156,16 @@ export interface components {
       available: boolean;
       matches: components["schemas"]["Counts"];
       profiles: components["schemas"]["Counts"];
+    };
+    JungleFights: {
+      /** Format: int32 */
+      alone: number;
+      /** Format: int32 */
+      helped: number;
+      /** Format: int32 */
+      wonAlone: number;
+      /** Format: int32 */
+      wonHelped: number;
     };
     JunglePresenceDto: {
       /** Format: int32 */
@@ -2323,6 +2346,24 @@ export interface components {
         | "EFFECTIF_INCOMPLET"
         | "CONNECTEUR_INDISPONIBLE";
     };
+    ObjectiveTakes: {
+      /** Format: int32 */
+      crowded: number;
+      /** Format: int32 */
+      sparse: number;
+      /** Format: int32 */
+      takenCrowded: number;
+      /** Format: int32 */
+      takenSparse: number;
+      /** Format: int32 */
+      takenWithSupport: number;
+      /** Format: int32 */
+      takenWithoutSupport: number;
+      /** Format: int32 */
+      withSupport: number;
+      /** Format: int32 */
+      withoutSupport: number;
+    };
     ObjectivesDto: {
       /** Format: int32 */
       dragons: number;
@@ -2330,6 +2371,14 @@ export interface components {
       grubs: number;
       /** Format: int32 */
       heralds: number;
+    };
+    PairLine: {
+      /** Format: double */
+      earlyShare: number | null;
+      /** Format: double */
+      lateShare: number | null;
+      matePosition: string;
+      position: string;
     };
     PatternDto: {
       /** Format: date-time */
@@ -2806,6 +2855,17 @@ export interface components {
       )[];
       system: boolean;
     };
+    RoleLine: {
+      /** Format: double */
+      earlyAlone: number | null;
+      /** Format: double */
+      jungleFightPresence: number | null;
+      /** Format: double */
+      lateAlone: number | null;
+      /** Format: double */
+      objectivePresence: number | null;
+      position: string;
+    };
     RoleSummaryDto: {
       name: string;
       permissions: (
@@ -2833,6 +2893,19 @@ export interface components {
         | "QUIZ_QUESTION_EDIT"
         | "ROLE_MANAGE"
       )[];
+    };
+    Roles: {
+      fights: components["schemas"]["JungleFights"];
+      /** Format: int32 */
+      games: number;
+      holders: components["schemas"]["Holder"][];
+      /** Format: int32 */
+      jungleFights: number;
+      /** Format: int32 */
+      objectives: number;
+      pairs: components["schemas"]["PairLine"][];
+      roles: components["schemas"]["RoleLine"][];
+      takes: components["schemas"]["ObjectiveTakes"];
     };
     Row: {
       /** Format: int64 */
@@ -3353,6 +3426,7 @@ export interface components {
       /** Format: int32 */
       minimumDuoGames: number;
       resources: components["schemas"]["Resource"][];
+      roles: components["schemas"]["Roles"];
     };
     Tier: {
       /** Format: int64 */
