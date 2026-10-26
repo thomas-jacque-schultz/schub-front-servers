@@ -775,7 +775,7 @@
     "intro_one": "By position, whoever plays it, over {{count}} team game with a timeline and our five positions known.",
     "intro_other": "By position, whoever plays it, over {{count}} team games with a timeline and our five positions known.",
     "none": "No team game with a timeline and our five positions known over this period.",
-    "method": "Alone: no teammate within 2,000 units on the minute's frame (deaths and fountain visits left out). Present at an objective or a fight: within 3,000 units on the frame before or after, or involved in a kill. Positions are only known once a minute: these are orders of magnitude.",
+    "method": "Alone: no teammate within 2,000 units on the minute's frame (deaths and fountain visits left out). Present at an objective: the killer, those who hit it, and those within 3,000 units of the pit on the frame before or after. Present at a fight: involved in a kill, or within 2,000 units on the closest frame if it is within 20 s. Positions are only known once a minute: these are orders of magnitude.",
     "name": {
       "TOP": "Top",
       "JUNGLE": "Jungler",
@@ -803,7 +803,7 @@
       "conclusion": "After 15 min, mostly with {{mate}}",
       "conclusionAlone": "After 15 min, mostly playing alone",
       "caption": "Share of time near each one after 15 min",
-      "objectives": "Objectives taken: {{takenWith}}/{{with}} with them, {{takenWithout}}/{{without}} without. They are there for {{share}} of them.",
+      "objectives": "Objectives taken: {{with}} when they are there ({{withCount}}), {{without}} otherwise ({{withoutCount}}). They are there for {{share}} of them.",
       "fights": "They are there in {{share}} of the jungler's fights in their own jungle.",
       "early": "Before 15 min"
     },
@@ -816,12 +816,12 @@
     },
     "jungler": {
       "title": "The jungler",
-      "conclusionFights": "Alone in {{alone}} of {{total}} fights in their jungle",
+      "conclusionFights": "With help in {{share}} of their fights in their jungle",
       "conclusionObjectives": "Joined at objectives mostly by {{mate}}",
       "caption": "Presence at objectives, by position",
       "fightsHint": "Fights in their jungle: {{share}}",
-      "crowd": "Objectives taken: {{takenCrowded}}/{{crowded}} with three or more around, {{takenSparse}}/{{sparse}} with fewer.",
-      "fights": "Fights won in their jungle: {{wonAlone}}/{{alone}} alone, {{wonHelped}}/{{helped}} with help."
+      "crowd": "Objectives taken: {{crowded}} with three or more around ({{crowdedCount}}), {{sparse}} with fewer ({{sparseCount}}).",
+      "fights": "Fights won in their jungle: {{helped}} with help ({{helpedCount}}), {{alone}} alone ({{aloneCount}})."
     },
     "holders": {
       "caption": "Who played the position",
