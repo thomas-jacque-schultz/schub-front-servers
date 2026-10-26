@@ -88,16 +88,16 @@ export default function RulerPage() {
     },
     {
       key: "distance",
-      header: t("ruler.distanceShort"),
+      header: t("ruler.reference.unitsHeader"),
       align: "right",
-      width: 120,
-      render: ({ de, vers }) => unites(distance(de, vers)),
+      width: 96,
+      render: ({ de, vers }) => formatNumber(Math.round(distance(de, vers))),
     },
     {
       key: "walk",
-      header: t("ruler.walk"),
+      header: t("ruler.reference.walkHeader"),
       align: "right",
-      width: 90,
+      width: 84,
       render: ({ de, vers }) => marche(distance(de, vers)),
     },
     {
