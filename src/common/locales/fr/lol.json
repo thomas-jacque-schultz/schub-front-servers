@@ -260,7 +260,7 @@
       "description": "Mesure les distances sur la Faille de l’invocateur en unités du jeu\u00a0: portée d’un sort, temps de marche, de tour à tour."
     },
     "title": "Règle",
-    "subtitle": "Les distances sur la Faille de l’invocateur, en unités du jeu. Les repères sont placés à des positions approchées.",
+    "subtitle": "Les distances sur la Faille de l’invocateur, en unités du jeu. La carte est la minimap du jeu\u202f; tours et inhibiteurs sont placés d’après les parties relevées, camps et objectifs d’après les fichiers du jeu. Seul le nexus est estimé.",
     "help": "Glisse pour tracer une mesure de A à B. Touche sans glisser pour déplacer A\u00a0: B reste en place.",
     "measure": "Mesure",
     "settings": "Réglages",
@@ -276,6 +276,7 @@
     "pointB": "B\u00a0: {{name}}",
     "freePoint": "point libre",
     "landmarkOnSide": "{{name}} ({{side}})",
+      "landmarkOnSideApproximate": "{{name}} ({{side}}, position estimée)",
     "sides": {
       "blue": "bleu",
       "red": "rouge",
@@ -293,7 +294,10 @@
       "fountain": "Fontaine",
       "nexus": "Nexus",
       "nexusTowerTop": "Tour du nexus côté top",
-      "nexusTowerBot": "Tour du nexus côté bot",
+      "inhibTop": "Inhibiteur top",
+        "inhibMid": "Inhibiteur mid",
+        "inhibBot": "Inhibiteur bot",
+        "nexusTowerBot": "Tour du nexus côté bot",
       "inhibTowerTop": "Tour d’inhibiteur top",
       "innerTowerTop": "Tour intérieure top",
       "outerTowerTop": "Tour extérieure top",

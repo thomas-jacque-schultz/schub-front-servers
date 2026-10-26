@@ -1,11 +1,22 @@
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 import Box from "@mui/material/Box";
 import { useChartScheme } from "./useChartScheme";
-import { MAP_SIZE, snapTo, toScreen, toWorld, type MapPoint } from "./mapRuler";
+import {
+  MAP_BOUNDS,
+  radiusOnScreen,
+  snapTo,
+  terrainAt,
+  toScreen,
+  toWorld,
+  type MapPoint,
+} from "./mapRuler";
 import { typographyTokens } from "../tokens";
+// La minimap de la Faille, tirée des fichiers du jeu (Community Dragon,
+// game/assets/maps/info/map11/2dlevelminimap_base_baron1.png) : seule sa forme sert, repeinte aux couleurs du site.
+import minimap from "../assets/faille-minimap.png";
 
 export type MapRulerLandmarkKind =
-  "fountain" | "nexus" | "tower" | "camp" | "objective" | "crab";
+  "fountain" | "nexus" | "tower" | "inhibitor" | "camp" | "objective" | "crab";
 
 export interface MapRulerLandmark extends MapPoint {
   kind: MapRulerLandmarkKind;
@@ -31,34 +42,102 @@ const AIMANT_PX = 14;
 // En deçà, un toucher reste un toucher : il déplace A et garde B.
 const SEUIL_GLISSER_PX = 4;
 
-// Le dessin de la carte, schématique : couloirs, rivière, bases en quarts de disque, tracés en unités du jeu.
-const RAYON_BASE = 4600;
-const LARGEUR_COULOIR = 820;
-const LARGEUR_RIVIERE = 1300;
-const COULOIRS: MapPoint[][] = [
-  [
-    { x: 1100, y: 4200 },
-    { x: 1100, y: 13800 },
-    { x: 10700, y: 13800 },
-  ],
-  [
-    { x: 4000, y: 4000 },
-    { x: 10900, y: 10900 },
-  ],
-  [
-    { x: 4200, y: 1100 },
-    { x: 13800, y: 1100 },
-    { x: 13800, y: 10700 },
-  ],
-];
-const RIVIERE: MapPoint[] = [
-  { x: 1200, y: 13700 },
-  { x: 13700, y: 1200 },
-];
-const FOSSES: MapPoint[] = [
-  { x: 5007, y: 10471 },
-  { x: 9866, y: 4414 },
-];
+interface Masques {
+  sol: HTMLCanvasElement;
+  riviere: HTMLCanvasElement;
+  baseBleue: HTMLCanvasElement;
+  baseRouge: HTMLCanvasElement;
+}
+
+// Un masque par zone, en blanc : son alpha dit la part du pixel qui appartient à la zone.
+const masquesDe = (image: HTMLImageElement): Masques => {
+  const cote = image.naturalWidth;
+  const source = document.createElement("canvas");
+  source.width = source.height = cote;
+  const ctx = source.getContext("2d");
+  if (!ctx) {
+    throw new Error("canvas 2D indisponible");
+  }
+  ctx.drawImage(image, 0, 0);
+  const pixels = ctx.getImageData(0, 0, cote, cote).data;
+  const vides = Array.from({ length: 4 }, () => new ImageData(cote, cote));
+  const [sol, riviere, baseBleue, baseRouge] = vides;
+  for (let i = 0; i < pixels.length; i += 4) {
+    const u = ((i / 4) % cote) / cote;
+    const v = Math.floor(i / 4 / cote) / cote;
+    const zone = terrainAt(
+      pixels[i],
+      pixels[i + 1],
+      pixels[i + 2],
+      pixels[i + 3],
+      u,
+      v,
+    );
+    for (const masque of vides) {
+      masque.data.fill(255, i, i + 3);
+    }
+    sol.data[i + 3] = zone.ground * 255;
+    riviere.data[i + 3] = zone.river * 255;
+    // La base bleue est en bas à gauche, la rouge en haut à droite.
+    (u < v ? baseBleue : baseRouge).data[i + 3] = zone.base * 255;
+  }
+  return {
+    sol: affiner(sol, true),
+    riviere: affiner(riviere, false),
+    baseBleue: affiner(baseBleue, false),
+    baseRouge: affiner(baseRouge, false),
+  };
+};
+
+// La minimap n'a pas d'anticrénelage : agrandie, elle montrerait ses marches. Le masque passe au double, flouté d'un
+// pixel de l'image, puis le bord du sol se resserre autour de la mi-hauteur : les marches deviennent des courbes.
+// Sans `filter` (Safari avant la 18), les marches restent, en plus fines.
+const AFFINAGE = 2;
+const affiner = (donnees: ImageData, net: boolean) => {
+  const source = document.createElement("canvas");
+  source.width = donnees.width;
+  source.height = donnees.height;
+  source.getContext("2d")?.putImageData(donnees, 0, 0);
+  const canvas = document.createElement("canvas");
+  canvas.width = canvas.height = donnees.width * AFFINAGE;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) {
+    return source;
+  }
+  ctx.imageSmoothingQuality = "high";
+  if (net) {
+    ctx.filter = `blur(${AFFINAGE}px)`;
+  }
+  ctx.drawImage(source, 0, 0, canvas.width, canvas.height);
+  ctx.filter = "none";
+  if (net) {
+    const agrandi = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    for (let i = 3; i < agrandi.data.length; i += 4) {
+      agrandi.data[i] = (agrandi.data[i] - 128) * 4 + 128;
+    }
+    ctx.putImageData(agrandi, 0, 0);
+  }
+  return canvas;
+};
+
+const peindre = (
+  cible: CanvasRenderingContext2D,
+  masque: HTMLCanvasElement,
+  couleur: string,
+) => {
+  const calque = document.createElement("canvas");
+  calque.width = masque.width;
+  calque.height = masque.height;
+  const ctx = calque.getContext("2d");
+  if (!ctx) {
+    return;
+  }
+  ctx.fillStyle = couleur;
+  ctx.fillRect(0, 0, calque.width, calque.height);
+  ctx.globalCompositeOperation = "destination-in";
+  ctx.drawImage(masque, 0, 0);
+  cible.drawImage(calque, 0, 0);
+};
 
 export function MapRuler({
   label,
@@ -77,6 +156,8 @@ export function MapRuler({
   const [size, setSize] = useState(0);
   // Un canvas ne se redessine pas seul quand la police arrive : on attend qu'elle soit là.
   const [policesPretes, setPolicesPretes] = useState(false);
+  const [masques, setMasques] = useState<Masques | null>(null);
+  const [terrain, setTerrain] = useState<HTMLCanvasElement | null>(null);
   const geste = useRef<{ depart: MapPoint; glisse: boolean } | null>(null);
 
   useEffect(() => {
@@ -94,10 +175,33 @@ export function MapRuler({
   useEffect(() => {
     let actif = true;
     document.fonts?.ready.then(() => actif && setPolicesPretes(true));
+    const image = new Image();
+    image.onload = () => actif && setMasques(masquesDe(image));
+    image.src = minimap;
     return () => {
       actif = false;
     };
   }, []);
+
+  // La carte peinte une fois par thème, à la taille de la minimap ; chaque mesure ne fait que la recopier.
+  useEffect(() => {
+    if (!masques) {
+      return;
+    }
+    const canvas = document.createElement("canvas");
+    canvas.width = canvas.height = masques.sol.width;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) {
+      return;
+    }
+    ctx.fillStyle = map.jungle;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    peindre(ctx, masques.sol, map.lane);
+    peindre(ctx, masques.riviere, map.river);
+    peindre(ctx, masques.baseBleue, map.blueBase);
+    peindre(ctx, masques.baseRouge, map.redBase);
+    setTerrain(canvas);
+  }, [masques, map]);
 
   useEffect(() => {
     const canvas = toile.current;
@@ -109,64 +213,25 @@ export function MapRuler({
     canvas.width = size * ratio;
     canvas.height = size * ratio;
     ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-    const echelle = size / MAP_SIZE;
     const ecran = (point: MapPoint) => toScreen(point, size);
-    const trace = (points: MapPoint[]) => {
-      ctx.beginPath();
-      points.forEach((point, index) => {
-        const { x, y } = ecran(point);
-        if (index === 0) {
-          ctx.moveTo(x, y);
-        } else {
-          ctx.lineTo(x, y);
-        }
-      });
-    };
 
     ctx.fillStyle = map.jungle;
     ctx.fillRect(0, 0, size, size);
+    if (terrain) {
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "high";
+      ctx.drawImage(terrain, 0, 0, size, size);
+    }
 
     ctx.strokeStyle = map.grid;
     ctx.lineWidth = 1;
-    for (let pas = 1000; pas < MAP_SIZE; pas += 1000) {
-      const p = pas * echelle;
+    for (let pas = 0; pas <= MAP_BOUNDS.maxY; pas += 1000) {
+      const { x, y } = ecran({ x: pas, y: pas });
       ctx.beginPath();
-      ctx.moveTo(p, 0);
-      ctx.lineTo(p, size);
-      ctx.moveTo(0, size - p);
-      ctx.lineTo(size, size - p);
-      ctx.stroke();
-    }
-
-    ctx.fillStyle = map.blueBase;
-    ctx.beginPath();
-    ctx.moveTo(0, size);
-    ctx.arc(0, size, RAYON_BASE * echelle, -Math.PI / 2, 0);
-    ctx.fill();
-    ctx.fillStyle = map.redBase;
-    ctx.beginPath();
-    ctx.moveTo(size, 0);
-    ctx.arc(size, 0, RAYON_BASE * echelle, Math.PI / 2, Math.PI);
-    ctx.fill();
-
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
-    ctx.strokeStyle = map.river;
-    ctx.lineWidth = LARGEUR_RIVIERE * echelle;
-    trace(RIVIERE);
-    ctx.stroke();
-    ctx.fillStyle = map.river;
-    for (const fosse of FOSSES) {
-      const { x, y } = ecran(fosse);
-      ctx.beginPath();
-      ctx.arc(x, y, 900 * echelle, 0, Math.PI * 2);
-      ctx.fill();
-    }
-
-    ctx.strokeStyle = map.lane;
-    ctx.lineWidth = LARGEUR_COULOIR * echelle;
-    for (const couloir of COULOIRS) {
-      trace(couloir);
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, size);
+      ctx.moveTo(0, y);
+      ctx.lineTo(size, y);
       ctx.stroke();
     }
 
@@ -186,6 +251,10 @@ export function MapRuler({
         case "tower":
           ctx.rect(x - 3.5, y - 3.5, 7, 7);
           ctx.fill();
+          break;
+        case "inhibitor":
+          ctx.arc(x, y, 4, 0, Math.PI * 2);
+          ctx.stroke();
           break;
         case "nexus":
           ctx.moveTo(x, y - 7);
@@ -217,13 +286,14 @@ export function MapRuler({
 
     const pa = ecran(a);
     const pb = ecran(b);
+    const portee = radiusOnScreen(radius, size);
 
     ctx.setLineDash([6, 4]);
     ctx.fillStyle = chart.markSoft;
     ctx.strokeStyle = chart.mark;
     ctx.lineWidth = 1.5;
     ctx.beginPath();
-    ctx.arc(pa.x, pa.y, radius * echelle, 0, Math.PI * 2);
+    ctx.ellipse(pa.x, pa.y, portee.x, portee.y, 0, 0, Math.PI * 2);
     ctx.fill();
     ctx.stroke();
     ctx.setLineDash([]);
@@ -279,6 +349,7 @@ export function MapRuler({
     map,
     chart,
     palette,
+    terrain,
     policesPretes,
   ]);
 
@@ -292,10 +363,10 @@ export function MapRuler({
   const monde = (point: MapPoint): MapPoint => {
     const brut = toWorld(point, size);
     if (!snap) {
-      return brut;
+      return { x: Math.round(brut.x), y: Math.round(brut.y) };
     }
     const aimante = snapTo(brut, landmarks, size, AIMANT_PX);
-    return { x: aimante.x, y: aimante.y };
+    return { x: Math.round(aimante.x), y: Math.round(aimante.y) };
   };
 
   return (
