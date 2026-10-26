@@ -60,8 +60,9 @@ export function resumeDeProximite(membres: ClosenessDto[]): ResumeDeProximite {
     .map((membre) => {
       const proches = membre.mates.filter((m) => m.share !== null);
       if (proches.length < 2) return null;
-      const plusProche = proches.reduce((x, y) =>
-        y.share! > x.share! ? y : x,
+      const plusProche = proches.reduce(
+        (x, y) => (y.share! > x.share! ? y : x),
+        proches[0],
       );
       return {
         nom: membre.displayName ?? "?",
