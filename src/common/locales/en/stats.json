@@ -642,7 +642,17 @@
       "tooFew_one": "{{name}}: {{count}} shared game, {{minimum}} needed.",
       "tooFew_other": "{{name}}: {{count}} shared games, {{minimum}} needed.",
       "detail_one": "Before 15 min {{early}}, after {{late}}, over {{count}} game.",
-      "detail_other": "Before 15 min {{early}}, after {{late}}, over {{count}} games."
+      "detail_other": "Before 15 min {{early}}, after {{late}}, over {{count}} games.",
+      "noPair_one": "No pair has {{count}} shared game with a timeline yet.",
+      "noPair_other": "No pair has {{count}} shared games with a timeline yet.",
+      "tightest": "The tightest duo",
+      "tightestText_one": "{{a}} and {{b}} play together: {{early}} of the time before 15 min, {{late}} after, over {{count}} game.",
+      "tightestText_other": "{{a}} and {{b}} play together: {{early}} of the time before 15 min, {{late}} after, over {{count}} games.",
+      "apart": "The most apart",
+      "apartText": "{{name}} is near each teammate {{share}} of the time on average. Closest to {{mate}} ({{mateShare}}).",
+      "regroup": "Grouping up",
+      "regroupText": "Two teammates are together {{early}} of the time before 15 min, {{late}} after.",
+      "byPlayer": "Details by player"
     }
   },
   "premade": {

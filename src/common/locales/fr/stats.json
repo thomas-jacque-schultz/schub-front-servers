@@ -642,7 +642,17 @@
       "tooFew_one": "{{name}}\u00a0: {{count}} partie commune, il en faut {{minimum}}.",
       "tooFew_other": "{{name}}\u00a0: {{count}} parties communes, il en faut {{minimum}}.",
       "detail_one": "Avant 15\u00a0min {{early}}, après {{late}}, sur {{count}} partie.",
-      "detail_other": "Avant 15\u00a0min {{early}}, après {{late}}, sur {{count}} parties."
+      "detail_other": "Avant 15\u00a0min {{early}}, après {{late}}, sur {{count}} parties.",
+      "noPair_one": "Aucune paire n’a encore {{count}} partie commune à timeline.",
+      "noPair_other": "Aucune paire n’a encore {{count}} parties communes à timeline.",
+      "tightest": "Le duo le plus soudé",
+      "tightestText_one": "{{a}} et {{b}} jouent ensemble\u00a0: {{early}} du temps avant 15\u00a0min, {{late}} après, sur {{count}} partie.",
+      "tightestText_other": "{{a}} et {{b}} jouent ensemble\u00a0: {{early}} du temps avant 15\u00a0min, {{late}} après, sur {{count}} parties.",
+      "apart": "Le plus à l’écart",
+      "apartText": "{{name}} est près de chaque coéquipier {{share}} du temps en moyenne. Au plus près de {{mate}} ({{mateShare}}).",
+      "regroup": "Le regroupement",
+      "regroupText": "Deux coéquipiers sont ensemble {{early}} du temps avant 15\u00a0min, {{late}} après.",
+      "byPlayer": "Le détail par joueur"
     }
   },
   "premade": {
