@@ -318,7 +318,6 @@
       "scuttleTop": "Top scuttle crab",
       "scuttleBot": "Bot scuttle crab"
     },
-    "distanceShort": "Distance",
     "reference": {
       "title": "Reference distances",
       "description": "As the crow flies between landmarks, walking time at {{speed}} movement speed. The button shows the route on the map.",
@@ -330,7 +329,9 @@
         "fountain": "From the fountain",
         "objectives": "Objectives",
         "jungle": "Jungle"
-      }
+      },
+      "unitsHeader": "Units",
+      "walkHeader": "Walk"
     },
     "method": {
       "title": "How it is measured",

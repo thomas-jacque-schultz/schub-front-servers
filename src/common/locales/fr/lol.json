@@ -318,7 +318,6 @@
       "scuttleTop": "Carapateur top",
       "scuttleBot": "Carapateur bot"
     },
-    "distanceShort": "Distance",
     "reference": {
       "title": "Distances de référence",
       "description": "À vol d’oiseau entre les repères, temps de marche à {{speed}} de vitesse de déplacement. Le bouton affiche le trajet sur la carte.",
@@ -330,7 +329,9 @@
         "fountain": "Depuis la fontaine",
         "objectives": "Objectifs",
         "jungle": "Jungle"
-      }
+      },
+      "unitsHeader": "Unités",
+      "walkHeader": "Marche"
     },
     "method": {
       "title": "Comment c’est mesuré",
