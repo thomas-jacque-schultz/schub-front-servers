@@ -285,11 +285,11 @@
   },
   "ruler": {
     "meta": {
-      "title": "Règle de la carte · PremadeLab",
-      "description": "Mesure les distances sur la Faille de l’invocateur en unités du jeu\u00a0: portée d’un sort, temps de marche, de tour à tour."
+      "title": "Distances sur la Faille de l’invocateur\u00a0: règle, portées, temps de trajet · PremadeLab",
+      "description": "Mesure toute distance de la Faille de l’invocateur en unités du jeu, sur la vraie carte\u00a0: portée d’un sort, temps de trajet, de tour à tour. Tours et camps placés d’après les parties et les fichiers du jeu."
     },
-    "title": "Règle",
-    "subtitle": "Les distances sur la Faille de l’invocateur, en unités du jeu. La carte est la minimap du jeu\u202f; tours et inhibiteurs sont placés d’après les parties relevées, camps et objectifs d’après les fichiers du jeu. Seul le nexus est estimé.",
+    "title": "Règle de la Faille de l’invocateur",
+    "subtitle": "Mesure toute distance sur la vraie carte, en unités du jeu\u00a0: portée d’un sort, temps de trajet, de tour à tour.",
     "help": "Glisse pour tracer une mesure de A à B. Touche sans glisser pour déplacer A\u00a0: B reste en place.",
     "measure": "Mesure",
     "settings": "Réglages",
@@ -305,7 +305,7 @@
     "pointB": "B\u00a0: {{name}}",
     "freePoint": "point libre",
     "landmarkOnSide": "{{name}} ({{side}})",
-      "landmarkOnSideApproximate": "{{name}} ({{side}}, position estimée)",
+    "landmarkOnSideApproximate": "{{name}} ({{side}}, position estimée)",
     "sides": {
       "blue": "bleu",
       "red": "rouge",
@@ -324,9 +324,9 @@
       "nexus": "Nexus",
       "nexusTowerTop": "Tour du nexus côté top",
       "inhibTop": "Inhibiteur top",
-        "inhibMid": "Inhibiteur mid",
-        "inhibBot": "Inhibiteur bot",
-        "nexusTowerBot": "Tour du nexus côté bot",
+      "inhibMid": "Inhibiteur mid",
+      "inhibBot": "Inhibiteur bot",
+      "nexusTowerBot": "Tour du nexus côté bot",
       "inhibTowerTop": "Tour d’inhibiteur top",
       "innerTowerTop": "Tour intérieure top",
       "outerTowerTop": "Tour extérieure top",
@@ -346,6 +346,26 @@
       "dragon": "Dragon",
       "scuttleTop": "Carapateur top",
       "scuttleBot": "Carapateur bot"
+    },
+    "distanceShort": "Distance",
+    "reference": {
+      "title": "Distances de référence",
+      "description": "À vol d’oiseau entre les repères, temps de marche à {{speed}} de vitesse de déplacement. Le bouton affiche le trajet sur la carte.",
+      "route": "Trajet",
+      "fromTo": "{{from}} → {{to}}",
+      "show": "Voir sur la carte",
+      "groups": {
+        "lanes": "D’un camp à l’autre",
+        "fountain": "Depuis la fontaine",
+        "objectives": "Objectifs",
+        "jungle": "Jungle"
+      }
+    },
+    "method": {
+      "title": "Comment c’est mesuré",
+      "sources": "Les tours et les inhibiteurs sont placés aux positions relevées dans les parties collectées par PremadeLab, identiques d’une partie à l’autre. Les fontaines, les camps, les carapateurs, le Baron et le Dragon viennent des fichiers de la carte du jeu. Seul le nexus est estimé. Le côté rouge n’est pas le miroir exact du bleu\u00a0: chaque repère est relevé à sa place.",
+      "units": "Les distances sont en unités du jeu, celles des portées de sorts et de la vitesse de déplacement. La carte fait environ 15 000 unités de côté.",
+      "straight": "Une distance se mesure à vol d’oiseau. Le temps de marche est donc un minimum\u00a0: les murs allongent le trajet réel, et la vitesse change avec le champion, les bottes et les bonus."
     }
   }
 }

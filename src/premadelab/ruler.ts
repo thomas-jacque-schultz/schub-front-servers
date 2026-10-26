@@ -119,6 +119,126 @@ export const repereEn = (point: MapPoint) =>
   REPERES.find((repere) => repere.x === point.x && repere.y === point.y) ??
   null;
 
+// Les distances de référence affichées sous la carte, et lues par les robots dans la page prérendue : des paires de
+// repères, jamais des nombres écrits à la main.
+export type GroupeDeTrajets = "lanes" | "fountain" | "objectives" | "jungle";
+type Bout = [RepereId, Repere["side"]];
+
+const TRAJETS: Record<GroupeDeTrajets, [Bout, Bout][]> = {
+  lanes: [
+    [
+      ["outerTowerTop", "blue"],
+      ["outerTowerTop", "red"],
+    ],
+    [
+      ["outerTowerMid", "blue"],
+      ["outerTowerMid", "red"],
+    ],
+    [
+      ["outerTowerBot", "blue"],
+      ["outerTowerBot", "red"],
+    ],
+    [
+      ["fountain", "blue"],
+      ["fountain", "red"],
+    ],
+  ],
+  fountain: [
+    [
+      ["fountain", "blue"],
+      ["outerTowerTop", "blue"],
+    ],
+    [
+      ["fountain", "blue"],
+      ["outerTowerMid", "blue"],
+    ],
+    [
+      ["fountain", "blue"],
+      ["outerTowerBot", "blue"],
+    ],
+    [
+      ["fountain", "red"],
+      ["outerTowerTop", "red"],
+    ],
+    [
+      ["fountain", "red"],
+      ["outerTowerMid", "red"],
+    ],
+    [
+      ["fountain", "red"],
+      ["outerTowerBot", "red"],
+    ],
+  ],
+  objectives: [
+    [
+      ["baron", "neutral"],
+      ["dragon", "neutral"],
+    ],
+    [
+      ["fountain", "blue"],
+      ["baron", "neutral"],
+    ],
+    [
+      ["fountain", "blue"],
+      ["dragon", "neutral"],
+    ],
+    [
+      ["fountain", "red"],
+      ["baron", "neutral"],
+    ],
+    [
+      ["fountain", "red"],
+      ["dragon", "neutral"],
+    ],
+  ],
+  jungle: [
+    [
+      ["redBuff", "blue"],
+      ["blueBuff", "blue"],
+    ],
+    [
+      ["blueBuff", "blue"],
+      ["scuttleTop", "neutral"],
+    ],
+    [
+      ["redBuff", "blue"],
+      ["scuttleBot", "neutral"],
+    ],
+    [
+      ["redBuff", "red"],
+      ["blueBuff", "red"],
+    ],
+    [
+      ["blueBuff", "red"],
+      ["scuttleBot", "neutral"],
+    ],
+    [
+      ["redBuff", "red"],
+      ["scuttleTop", "neutral"],
+    ],
+  ],
+};
+
+const trouver = ([id, side]: Bout): Repere => {
+  const repere = REPERES.find(
+    (candidat) => candidat.id === id && candidat.side === side,
+  );
+  if (!repere) {
+    throw new Error(`repère inconnu : ${side}:${id}`);
+  }
+  return repere;
+};
+
+export const TRAJETS_DE_REFERENCE = (
+  Object.entries(TRAJETS) as [GroupeDeTrajets, [Bout, Bout][]][]
+).map(([groupe, paires]) => ({
+  groupe,
+  trajets: paires.map(([de, vers]) => ({
+    de: trouver(de),
+    vers: trouver(vers),
+  })),
+}));
+
 export const PORTEES = [125, 400, 550, 600, 1000, 1200, 2000, 3000, 5500];
 export const VITESSE_PAR_DEFAUT = 345;
 

@@ -285,11 +285,11 @@
   },
   "ruler": {
     "meta": {
-      "title": "Map ruler · PremadeLab",
-      "description": "Measure distances on Summoner’s Rift in game units: spell range, walking time, tower to tower."
+      "title": "Summoner’s Rift distances: ruler, ranges, travel times · PremadeLab",
+      "description": "Measure any distance on Summoner’s Rift in game units, on the real map: spell range, travel time, tower to tower. Towers and camps placed from real games and the game files."
     },
-    "title": "Ruler",
-    "subtitle": "Distances on Summoner’s Rift, in game units. The map is the game’s minimap; towers and inhibitors are placed from recorded games, camps and objectives from the game files. Only the nexus is estimated.",
+    "title": "Summoner’s Rift ruler",
+    "subtitle": "Measure any distance on the real map, in game units: spell range, travel time, tower to tower.",
     "help": "Drag to measure from A to B. Tap without dragging to move A: B stays put.",
     "measure": "Measure",
     "settings": "Settings",
@@ -305,7 +305,7 @@
     "pointB": "B: {{name}}",
     "freePoint": "free point",
     "landmarkOnSide": "{{name}} ({{side}})",
-      "landmarkOnSideApproximate": "{{name}} ({{side}}, estimated position)",
+    "landmarkOnSideApproximate": "{{name}} ({{side}}, estimated position)",
     "sides": {
       "blue": "blue",
       "red": "red",
@@ -324,9 +324,9 @@
       "nexus": "Nexus",
       "nexusTowerTop": "Nexus tower, top side",
       "inhibTop": "Top inhibitor",
-        "inhibMid": "Mid inhibitor",
-        "inhibBot": "Bot inhibitor",
-        "nexusTowerBot": "Nexus tower, bot side",
+      "inhibMid": "Mid inhibitor",
+      "inhibBot": "Bot inhibitor",
+      "nexusTowerBot": "Nexus tower, bot side",
       "inhibTowerTop": "Top inhibitor tower",
       "innerTowerTop": "Top inner tower",
       "outerTowerTop": "Top outer tower",
@@ -346,6 +346,26 @@
       "dragon": "Dragon",
       "scuttleTop": "Top scuttle crab",
       "scuttleBot": "Bot scuttle crab"
+    },
+    "distanceShort": "Distance",
+    "reference": {
+      "title": "Reference distances",
+      "description": "As the crow flies between landmarks, walking time at {{speed}} movement speed. The button shows the route on the map.",
+      "route": "Route",
+      "fromTo": "{{from}} → {{to}}",
+      "show": "Show on the map",
+      "groups": {
+        "lanes": "Across the map",
+        "fountain": "From the fountain",
+        "objectives": "Objectives",
+        "jungle": "Jungle"
+      }
+    },
+    "method": {
+      "title": "How it is measured",
+      "sources": "Towers and inhibitors sit at the positions recorded in the games PremadeLab collects, identical from one game to the next. Fountains, camps, scuttle crabs, Baron and Dragon come from the game’s map files. Only the nexus is estimated. The red side is not an exact mirror of the blue side: each landmark is recorded where it stands.",
+      "units": "Distances are in game units, the ones used by spell ranges and movement speed. The map is about 15,000 units across.",
+      "straight": "A distance is measured as the crow flies. Walking time is therefore a minimum: walls make the real path longer, and speed changes with the champion, boots and bonuses."
     }
   }
 }
