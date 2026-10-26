@@ -289,7 +289,7 @@
       "description": "Measure distances on Summoner’s Rift in game units: spell range, walking time, tower to tower."
     },
     "title": "Ruler",
-    "subtitle": "Distances on Summoner’s Rift, in game units. Landmarks sit at approximate positions.",
+    "subtitle": "Distances on Summoner’s Rift, in game units. The map is the game’s minimap; towers and inhibitors are placed from recorded games, camps and objectives from the game files. Only the nexus is estimated.",
     "help": "Drag to measure from A to B. Tap without dragging to move A: B stays put.",
     "measure": "Measure",
     "settings": "Settings",
@@ -305,6 +305,7 @@
     "pointB": "B: {{name}}",
     "freePoint": "free point",
     "landmarkOnSide": "{{name}} ({{side}})",
+      "landmarkOnSideApproximate": "{{name}} ({{side}}, estimated position)",
     "sides": {
       "blue": "blue",
       "red": "red",
@@ -322,7 +323,10 @@
       "fountain": "Fountain",
       "nexus": "Nexus",
       "nexusTowerTop": "Nexus tower, top side",
-      "nexusTowerBot": "Nexus tower, bot side",
+      "inhibTop": "Top inhibitor",
+        "inhibMid": "Mid inhibitor",
+        "inhibBot": "Bot inhibitor",
+        "nexusTowerBot": "Nexus tower, bot side",
       "inhibTowerTop": "Top inhibitor tower",
       "innerTowerTop": "Top inner tower",
       "outerTowerTop": "Top outer tower",

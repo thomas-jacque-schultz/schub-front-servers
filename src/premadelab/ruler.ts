@@ -1,17 +1,21 @@
-import {
-  MAP_SIZE,
-  mirror,
-  type MapPoint,
-  type MapRulerLandmark,
-} from "../common";
+import { MAP_BOUNDS, type MapPoint, type MapRulerLandmark } from "../common";
 
-// Les repères de la règle, à des positions approchées. Le côté rouge est le miroir du bleu autour du centre :
-// la tour extérieure top du bleu tombe sur la tour extérieure bot du rouge.
+// Les repères de la règle, en coordonnées du jeu. Deux sources, et aucune symétrie supposée : le rouge n'est pas le
+// miroir exact du bleu (jusqu'à une centaine d'unités d'écart).
+// - Tours et inhibiteurs : les positions des BUILDING_KILL des timelines collectées (riot_match_timeline), les
+//   mêmes à l'unité près d'une partie à l'autre.
+// - Fontaines, camps, carapateurs, Baron, Dragon : les points de la carte dans les fichiers du jeu (Community
+//   Dragon, game/data/maps/shipping/map11/map11.bin.json : MapLocator), recoupés par les timelines pour la
+//   fontaine bleue et le Baron. Un camp est pris à son premier point, les raptors au centre de leurs six.
+// - Nexus : aucune source, position estimée.
 export type RepereId =
   | "fountain"
   | "nexus"
   | "nexusTowerTop"
   | "nexusTowerBot"
+  | "inhibTop"
+  | "inhibMid"
+  | "inhibBot"
   | "inhibTowerTop"
   | "innerTowerTop"
   | "outerTowerTop"
@@ -34,53 +38,81 @@ export type RepereId =
 
 export interface Repere extends MapRulerLandmark {
   id: RepereId;
+  approche?: boolean;
 }
 
-const BLEU: Omit<Repere, "side">[] = [
-  { id: "fountain", kind: "fountain", x: 400, y: 420 },
-  { id: "nexus", kind: "nexus", x: 1550, y: 1660 },
-  { id: "nexusTowerTop", kind: "tower", x: 1748, y: 2270 },
-  { id: "nexusTowerBot", kind: "tower", x: 2177, y: 1807 },
-  { id: "inhibTowerTop", kind: "tower", x: 1169, y: 4287 },
-  { id: "innerTowerTop", kind: "tower", x: 1512, y: 6699 },
-  { id: "outerTowerTop", kind: "tower", x: 981, y: 10441 },
-  { id: "inhibTowerMid", kind: "tower", x: 3651, y: 3696 },
-  { id: "innerTowerMid", kind: "tower", x: 5048, y: 4812 },
-  { id: "outerTowerMid", kind: "tower", x: 5846, y: 6396 },
-  { id: "inhibTowerBot", kind: "tower", x: 4281, y: 1253 },
-  { id: "innerTowerBot", kind: "tower", x: 6919, y: 1483 },
-  { id: "outerTowerBot", kind: "tower", x: 10504, y: 1029 },
-  { id: "blueBuff", kind: "camp", x: 3872, y: 7900 },
-  { id: "gromp", kind: "camp", x: 2090, y: 8427 },
-  { id: "wolves", kind: "camp", x: 3800, y: 6500 },
-  { id: "raptors", kind: "camp", x: 6943, y: 5422 },
-  { id: "redBuff", kind: "camp", x: 7765, y: 4020 },
-  { id: "krugs", kind: "camp", x: 8482, y: 2705 },
-];
+type Ligne = [RepereId, MapRulerLandmark["kind"], number, number];
 
-const MIROIR_DU_NOM = (id: RepereId): RepereId =>
-  id.endsWith("Top")
-    ? (id.replace(/Top$/, "Bot") as RepereId)
-    : id.endsWith("Bot")
-      ? (id.replace(/Bot$/, "Top") as RepereId)
-      : id;
+const camp = (side: "blue" | "red", lignes: Ligne[]): Repere[] =>
+  lignes.map(([id, kind, x, y]) => ({ id, kind, side, x, y }));
 
-const NEUTRES: Repere[] = [
+export const REPERES: readonly Repere[] = [
+  ...camp("blue", [
+    ["fountain", "fountain", 410, 422],
+    ["nexusTowerTop", "tower", 1748, 2270],
+    ["nexusTowerBot", "tower", 2177, 1807],
+    ["inhibTop", "inhibitor", 1172, 3583],
+    ["inhibMid", "inhibitor", 3210, 3217],
+    ["inhibBot", "inhibitor", 3468, 1230],
+    ["inhibTowerTop", "tower", 1169, 4287],
+    ["innerTowerTop", "tower", 1512, 6699],
+    ["outerTowerTop", "tower", 981, 10441],
+    ["inhibTowerMid", "tower", 3651, 3696],
+    ["innerTowerMid", "tower", 5048, 4812],
+    ["outerTowerMid", "tower", 5846, 6396],
+    ["inhibTowerBot", "tower", 4281, 1253],
+    ["innerTowerBot", "tower", 6919, 1483],
+    ["outerTowerBot", "tower", 10504, 1029],
+    ["blueBuff", "camp", 3821, 7901],
+    ["gromp", "camp", 2111, 8451],
+    ["wolves", "camp", 3781, 6444],
+    ["raptors", "camp", 6936, 5419],
+    ["redBuff", "camp", 7765, 4020],
+    ["krugs", "camp", 8482, 2706],
+  ]),
+  {
+    id: "nexus",
+    kind: "nexus",
+    side: "blue",
+    x: 1551,
+    y: 1659,
+    approche: true,
+  },
+  ...camp("red", [
+    ["fountain", "fountain", 14298, 14384],
+    ["nexusTowerTop", "tower", 12611, 13084],
+    ["nexusTowerBot", "tower", 13052, 12612],
+    ["inhibTop", "inhibitor", 11275, 13657],
+    ["inhibMid", "inhibitor", 11593, 11669],
+    ["inhibBot", "inhibitor", 13599, 11319],
+    ["inhibTowerTop", "tower", 10481, 13650],
+    ["innerTowerTop", "tower", 7943, 13411],
+    ["outerTowerTop", "tower", 4318, 13875],
+    ["inhibTowerMid", "tower", 11134, 11207],
+    ["innerTowerMid", "tower", 9767, 10113],
+    ["outerTowerMid", "tower", 8955, 8510],
+    ["inhibTowerBot", "tower", 13624, 10572],
+    ["innerTowerBot", "tower", 13327, 8226],
+    ["outerTowerBot", "tower", 13866, 4505],
+    ["blueBuff", "camp", 11032, 6991],
+    ["gromp", "camp", 12704, 6444],
+    ["wolves", "camp", 11008, 8387],
+    ["raptors", "camp", 7868, 9557],
+    ["redBuff", "camp", 7102, 10901],
+    ["krugs", "camp", 6317, 12146],
+  ]),
+  {
+    id: "nexus",
+    kind: "nexus",
+    side: "red",
+    x: 13231,
+    y: 13230,
+    approche: true,
+  },
   { id: "baron", kind: "objective", side: "neutral", x: 5007, y: 10471 },
   { id: "dragon", kind: "objective", side: "neutral", x: 9866, y: 4414 },
   { id: "scuttleTop", kind: "crab", side: "neutral", x: 4400, y: 9600 },
-  { id: "scuttleBot", kind: "crab", side: "neutral", x: 10500, y: 5300 },
-];
-
-export const REPERES: readonly Repere[] = [
-  ...BLEU.map((repere) => ({ ...repere, side: "blue" as const })),
-  ...BLEU.map((repere) => ({
-    ...repere,
-    ...mirror(repere),
-    id: MIROIR_DU_NOM(repere.id),
-    side: "red" as const,
-  })),
-  ...NEUTRES,
+  { id: "scuttleBot", kind: "crab", side: "neutral", x: 10500, y: 5170 },
 ];
 
 export const repereEn = (point: MapPoint) =>
@@ -105,19 +137,24 @@ const MESURE_PAR_DEFAUT: Mesure = {
   r: 1000,
 };
 
-const estPoint = (valeur: unknown): valeur is MapPoint =>
-  typeof valeur === "object" &&
-  valeur !== null &&
-  [(valeur as MapPoint).x, (valeur as MapPoint).y].every(
-    (n) => typeof n === "number" && n >= 0 && n <= MAP_SIZE,
+const dansLaCarte = (valeur: unknown): valeur is MapPoint => {
+  const point = valeur as MapPoint | null;
+  return (
+    typeof point?.x === "number" &&
+    typeof point.y === "number" &&
+    point.x >= MAP_BOUNDS.minX &&
+    point.x <= MAP_BOUNDS.maxX &&
+    point.y >= MAP_BOUNDS.minY &&
+    point.y <= MAP_BOUNDS.maxY
   );
+};
 
 export const lireMesure = (): Mesure => {
   try {
     const brut = JSON.parse(localStorage.getItem(CLE) ?? "null");
     if (
-      estPoint(brut?.a) &&
-      estPoint(brut?.b) &&
+      dansLaCarte(brut?.a) &&
+      dansLaCarte(brut?.b) &&
       typeof brut.r === "number" &&
       brut.r > 0
     ) {

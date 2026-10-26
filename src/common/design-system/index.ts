@@ -142,7 +142,7 @@ export type {
   MapRulerLandmarkKind,
   MapRulerProps,
 } from "./components/MapRuler";
-export { MAP_SIZE, distance, mirror } from "./components/mapRuler";
+export { MAP_BOUNDS, distance } from "./components/mapRuler";
 export type { MapPoint } from "./components/mapRuler";
 export { ConfidenceBadge } from "./components/ConfidenceBadge";
 export type { ConfidenceBadgeProps } from "./components/ConfidenceBadge";

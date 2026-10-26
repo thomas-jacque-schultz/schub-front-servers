@@ -308,7 +308,7 @@ export const mapColors: Record<
     objective: "#C07AA6",
   },
   light: {
-    jungle: "#E8DEE4",
+    jungle: "#DCCDD6",
     lane: "rgba(255, 255, 255, 0.85)",
     river: "rgba(31, 95, 169, 0.12)",
     grid: "rgba(107, 40, 83, 0.08)",

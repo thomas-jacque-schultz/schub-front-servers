@@ -53,10 +53,15 @@ export default function RulerPage() {
   const nom = (point: MapPoint) => {
     const repere = repereEn(point);
     return repere
-      ? t("ruler.landmarkOnSide", {
-          name: t(`ruler.landmarks.${repere.id}`),
-          side: t(`ruler.sides.${repere.side}`),
-        })
+      ? t(
+          repere.approche
+            ? "ruler.landmarkOnSideApproximate"
+            : "ruler.landmarkOnSide",
+          {
+            name: t(`ruler.landmarks.${repere.id}`),
+            side: t(`ruler.sides.${repere.side}`),
+          },
+        )
       : t("ruler.freePoint");
   };
   const unites = (valeur: number) =>
