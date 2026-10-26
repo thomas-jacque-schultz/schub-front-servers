@@ -174,7 +174,8 @@ export function MapRuler({
 
   useEffect(() => {
     let actif = true;
-    document.fonts?.ready.then(() => actif && setPolicesPretes(true));
+    // fonts.ready ne rejette jamais : la promesse est ignorée exprès.
+    void document.fonts?.ready.then(() => actif && setPolicesPretes(true));
     const image = new Image();
     image.onload = () => actif && setMasques(masquesDe(image));
     image.src = minimap;
