@@ -20,6 +20,10 @@ export const texte = traduction({
     choisis: "Bien joué ! Choisis le thème de la question suivante.",
     choisit: "{nom} choisit le thème de la question suivante.",
     aRepondu: "a répondu",
+    vuAbsent: "👀 a quitté le jeu",
+    vuCopie: "👀 copier-coller, 0 point",
+    regleVigilance:
+      "👀 Pendant une question, quitter le jeu (autre onglet, alt-tab) retire le bonus de rapidité, et un copier-coller vaut 0 point. Tout le monde le voit.",
     attenteReponses: "Réponse enregistrée, on attend les autres.",
     annulee: "Question annulée : le meneur est parti avec la réponse.",
     bonneReponse: "Bonne réponse",
@@ -45,6 +49,10 @@ export const texte = traduction({
     choisis: "Well played! Pick the theme of the next question.",
     choisit: "{nom} picks the theme of the next question.",
     aRepondu: "answered",
+    vuAbsent: "👀 left the game",
+    vuCopie: "👀 copy-paste, 0 points",
+    regleVigilance:
+      "👀 During a question, leaving the game (another tab, alt-tab) removes the speed bonus, and a copy-paste scores 0. Everyone sees it.",
     attenteReponses: "Answer saved, waiting for the others.",
     annulee: "Question cancelled: the leader left with the answer.",
     bonneReponse: "Right answer",

@@ -28,6 +28,7 @@ import type { Evenement } from "../commun/relay";
 import type { Lang } from "../commun/textes";
 import { estMessageJeu, type MessageJeu, useMeneur } from "../commun/useMeneur";
 import { type Contexte, useMaintenant, useSalon } from "../commun/useSalon";
+import { useVigilance } from "../commun/vigilance";
 import { lisBanque } from "./banque";
 import {
   DUREE_DEFAUT,
@@ -112,6 +113,9 @@ function Partie({
   const restantMs = partie
     ? Math.max(0, partie.restantMs - (maintenant - jeu.recuA))
     : 0;
+  const releve = useVigilance(
+    partie?.phase === "question" ? String(partie.manche) : null,
+  );
   const disponibles = themesDisponibles(banque);
   const [themes, setThemes] = useState<Theme[]>(disponibles);
   const [duree, setDuree] = useState(DUREE_DEFAUT);
@@ -150,18 +154,15 @@ function Partie({
           moi={moi}
           meneur={meneur}
           scores={partie?.scores}
-          etiquette={(id) =>
-            partie?.phase === "question" && id in partie.reponses
-              ? texte(lang, "aRepondu")
-              : partie?.phase === "bilan" && partie.gains[id]
-                ? `+${partie.gains[id]}`
-                : null
-          }
+          etiquette={(id) => (partie ? etiquette(lang, partie, id) : null)}
         />
       }
     >
       {!partie ? (
         <Stack spacing={1.5}>
+          <Text variant="caption" tone="secondary">
+            {texte(lang, "regleVigilance")}
+          </Text>
           {jeu.estMeneur && (
             <Card title={texte(lang, "themes")}>
               <Stack direction="row" spacing={1.5} wrap>
@@ -221,11 +222,35 @@ function Partie({
           moi={moi}
           restantMs={restantMs}
           onAgit={jeu.agit}
+          onRepond={(choix) => jeu.agit({ choix, ...releve() })}
         />
       )}
     </Salon>
   );
 }
+
+/** Ce que fait un joueur dans la question, et 👀 s'il l'a quittée ou a copié-collé (Schub#163). */
+const etiquette = (lang: Lang, partie: PartieQuiz, id: string) => {
+  const reponse = partie.reponses[id];
+  const gain = partie.gains[id];
+  if (partie.phase === "question") {
+    return reponse
+      ? `${reponse.vu ? "👀 " : ""}${texte(lang, "aRepondu")}`
+      : null;
+  }
+  if (partie.phase !== "bilan") {
+    return null;
+  }
+  if (reponse?.vu === "copie") {
+    return texte(lang, "vuCopie");
+  }
+  if (reponse?.vu === "absent") {
+    return gain
+      ? `${texte(lang, "vuAbsent")} · +${gain}`
+      : texte(lang, "vuAbsent");
+  }
+  return gain ? `+${gain}` : null;
+};
 
 function Manche({
   lang,
@@ -233,12 +258,14 @@ function Manche({
   moi,
   restantMs,
   onAgit,
+  onRepond,
 }: {
   lang: Lang;
   partie: PartieQuiz;
   moi: string;
   restantMs: number;
   onAgit: (valeur: unknown) => void;
+  onRepond: (choix: number) => void;
 }) {
   const titre = [
     texte(lang, "manche", { n: partie.manche, total: partie.manches }),
@@ -290,7 +317,7 @@ function Manche({
                 fullWidth
                 variant={mienne === index ? "primary" : "secondary"}
                 disabled={!joue || mienne !== undefined}
-                onClick={() => onAgit(index)}
+                onClick={() => onRepond(index)}
               >
                 <Choix partie={partie} index={index} texte={choix} />
               </Button>
