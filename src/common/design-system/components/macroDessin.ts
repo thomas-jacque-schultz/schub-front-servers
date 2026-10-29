@@ -23,17 +23,17 @@ export function dessineFormes(
   const ecran = (point: MapPoint) => toScreen(point, size);
   const epaisseur = (largeur: number) => Math.max(1.5, largeur * size);
   const mono = typographyTokens.monospaceFontFamily;
-  const etiquette = (texte: string, x: number, y: number, police: string) => {
+  const etiquette = (contenu: string, x: number, y: number, police: string) => {
     ctx.font = police;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    const largeur = ctx.measureText(texte).width + 10;
+    const largeur = ctx.measureText(contenu).width + 10;
     const mx = Math.min(size - largeur / 2, Math.max(largeur / 2, x));
     const my = Math.min(size - 10, Math.max(10, y));
     ctx.fillStyle = papier;
     ctx.fillRect(mx - largeur / 2, my - 10, largeur, 20);
     ctx.fillStyle = texte;
-    ctx.fillText(texte, mx, my + 1);
+    ctx.fillText(contenu, mx, my + 1);
   };
 
   const icone = tailleIcone(size);
