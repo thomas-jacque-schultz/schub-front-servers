@@ -8,12 +8,7 @@ import {
   type RadarSeries,
 } from "../../../common";
 import type { PlayerStatsDto, StatLineDto } from "../../types/stats";
-import {
-  KPI_ORDER,
-  type MetricKey,
-  RADAR_AXES,
-  useMetrics,
-} from "./metrics";
+import { KPI_ORDER, type MetricKey, RADAR_AXES, useMetrics } from "./metrics";
 import { bornesPremade, premadeFigure } from "./premade";
 import { useStatsFormat } from "./statsFormat";
 
@@ -96,7 +91,11 @@ export function PremadeTiles({ player, lines }: PremadeProps) {
   );
 }
 
-export function PremadeRadar({ player, lines }: PremadeProps) {
+export function PremadeRadar({
+  player,
+  lines,
+  dense = false,
+}: PremadeProps & { dense?: boolean }) {
   const { t } = useTranslation("stats");
   const { definitions } = useMetrics();
   const bornes = bornesPremade(
@@ -147,6 +146,7 @@ export function PremadeRadar({ player, lines }: PremadeProps) {
         lines.length < 2 ? t("premade.radar.fewMembers") : t("premade.none")
       }
       scaleNote={series.length > 0 ? t("premade.radar.note") : undefined}
+      dense={dense}
     />
   );
 }

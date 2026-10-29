@@ -103,6 +103,14 @@ export { Celebration } from "./components/Celebration";
 export type { CelebrationProps } from "./components/Celebration";
 export { Countdown } from "./components/Countdown";
 export type { CountdownProps } from "./components/Countdown";
+export { CursorCooldown } from "./components/CursorCooldown";
+export type { CursorCooldownProps } from "./components/CursorCooldown";
+export { DrawingGuide } from "./components/DrawingGuide";
+export type {
+  DrawingGuideProps,
+  DrawingPoint,
+  DrawingShape,
+} from "./components/DrawingGuide";
 export { GameBackdrop } from "./components/GameBackdrop";
 export { GameStage } from "./components/GameStage";
 export type { GameStageProps } from "./components/GameStage";

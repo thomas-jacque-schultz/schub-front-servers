@@ -1,4 +1,5 @@
 import type { Champion } from "../commun/champions";
+import type { Lang } from "../commun/textes";
 import {
   ajouteAuFil,
   compare,
@@ -15,7 +16,7 @@ export type Phase = "choix" | "dessin" | "bilan" | "fin";
 
 export interface Partie {
   phase: Phase;
-  lang: string;
+  lang: Lang;
   // La version de Data Dragon des icônes.
   version: string;
   duree: number;
@@ -27,7 +28,6 @@ export interface Partie {
   dessinateur: string;
   choix: Champion[];
   mot: Champion | null;
-  revele: number[];
   devineurs: string[];
   trouve: string[];
   scores: Record<string, number>;
@@ -46,19 +46,6 @@ export const BILAN_MS = 5_000;
 const POINTS_DEVINEUR = 50;
 const POINTS_DEVINEUR_RAPIDITE = 50;
 const POINTS_DESSINATEUR = 25;
-
-const estLettre = (caractere: string) => /[\p{L}\p{N}]/u.test(caractere);
-
-export const lettres = (mot: string): number =>
-  [...mot].filter(estLettre).length;
-
-/** Le mot tel que le voit qui devine : les lettres cachées, la ponctuation et les espaces visibles. */
-export const masque = (mot: string, revele: number[]): string =>
-  [...mot]
-    .map((caractere, index) =>
-      !estLettre(caractere) || revele.includes(index) ? caractere : "_",
-    )
-    .join("");
 
 const manche = (
   p: Partie,
@@ -92,7 +79,6 @@ const manche = (
     dessinateur: p.ordre[suivant],
     choix: tires,
     mot: null,
-    revele: [],
     devineurs: ids.filter((id) => id !== p.ordre[suivant]),
     trouve: [],
     restantMs: CHOIX_MS,
@@ -104,7 +90,7 @@ export const nouvellePartie = (
   presents: Present[],
   duree: number,
   tours: number,
-  lang: string,
+  lang: Lang,
   version: string,
   mots: Champion[],
   hasard: Hasard,
@@ -122,7 +108,6 @@ export const nouvellePartie = (
       dessinateur: presents[0]?.id ?? "",
       choix: [],
       mot: null,
-      revele: [],
       devineurs: [],
       trouve: [],
       scores: Object.fromEntries(presents.map((j) => [j.id, 0])),
@@ -204,25 +189,7 @@ export const deviner = (
   };
 };
 
-// Une lettre à mi-temps, une autre aux trois quarts ; jamais plus d'un tiers du mot.
-const indices = (p: Partie, hasard: Hasard): number[] => {
-  if (!p.mot) {
-    return p.revele;
-  }
-  const ecoule = 1 - p.restantMs / (p.duree * 1000);
-  const voulu = (ecoule >= 0.5 ? 1 : 0) + (ecoule >= 0.75 ? 1 : 0);
-  const plafond = Math.floor(lettres(p.mot.nom) / 3);
-  const cachees = [...p.mot.nom]
-    .map((caractere, index) => (estLettre(caractere) ? index : -1))
-    .filter((index) => index >= 0 && !p.revele.includes(index));
-  const revele = [...p.revele];
-  while (revele.length < Math.min(voulu, plafond) && cachees.length > 0) {
-    revele.push(...cachees.splice(Math.floor(hasard() * cachees.length), 1));
-  }
-  return revele;
-};
-
-/** Le temps qui passe, chez le meneur : indices, fin de manche, manche suivante. */
+/** Le temps qui passe, chez le meneur : fin de manche, manche suivante. */
 export const avancer = (
   p: Partie,
   ecouleMs: number,
@@ -238,9 +205,7 @@ export const avancer = (
     return restantMs === 0 ? choisir(suite, 0) : suite;
   }
   if (p.phase === "dessin") {
-    return restantMs === 0
-      ? bilan(suite)
-      : { ...suite, revele: indices(suite, hasard) };
+    return restantMs === 0 ? bilan(suite) : suite;
   }
   return restantMs === 0 ? manche(suite, p.tour + 1, presents, hasard) : suite;
 };

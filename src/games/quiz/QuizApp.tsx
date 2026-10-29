@@ -28,6 +28,7 @@ import type { Evenement } from "../commun/relay";
 import type { Lang } from "../commun/textes";
 import { estMessageJeu, type MessageJeu, useMeneur } from "../commun/useMeneur";
 import { type Contexte, useMaintenant, useSalon } from "../commun/useSalon";
+import { useVigilance } from "../commun/vigilance";
 import { lisBanque } from "./banque";
 import {
   DUREE_DEFAUT,
@@ -112,6 +113,9 @@ function Partie({
   const restantMs = partie
     ? Math.max(0, partie.restantMs - (maintenant - jeu.recuA))
     : 0;
+  const releve = useVigilance(
+    partie?.phase === "question" ? String(partie.manche) : null,
+  );
   const disponibles = themesDisponibles(banque);
   const [themes, setThemes] = useState<Theme[]>(disponibles);
   const [duree, setDuree] = useState(DUREE_DEFAUT);
@@ -150,18 +154,18 @@ function Partie({
           moi={moi}
           meneur={meneur}
           scores={partie?.scores}
-          etiquette={(id) =>
-            partie?.phase === "question" && id in partie.reponses
-              ? texte(lang, "aRepondu")
-              : partie?.phase === "bilan" && partie.gains[id]
-                ? `+${partie.gains[id]}`
-                : null
-          }
+          etiquette={(id) => (partie ? etiquette(lang, partie, id) : null)}
         />
       }
     >
       {!partie ? (
         <Stack spacing={1.5}>
+          <Text variant="caption" tone="secondary">
+            {texte(lang, "regleBareme")}
+          </Text>
+          <Text variant="caption" tone="secondary">
+            {texte(lang, "regleVigilance")}
+          </Text>
           {jeu.estMeneur && (
             <Card title={texte(lang, "themes")}>
               <Stack direction="row" spacing={1.5} wrap>
@@ -221,11 +225,44 @@ function Partie({
           moi={moi}
           restantMs={restantMs}
           onAgit={jeu.agit}
+          onRepond={(choix) => jeu.agit({ choix, ...releve() })}
         />
       )}
     </Salon>
   );
 }
+
+const ensemble = (...morceaux: (string | false | null)[]) =>
+  morceaux.filter(Boolean).join(" · ") || null;
+
+/**
+ * Ce que fait un joueur dans la question, 👀 s'il l'a quittée ou a copié-collé (Schub#163), sa série en cours et,
+ * au bilan, celle qu'il vient de perdre (Schub#162).
+ */
+const etiquette = (lang: Lang, partie: PartieQuiz, id: string) => {
+  const reponse = partie.reponses[id];
+  const gain = partie.gains[id];
+  const n = partie.series[id] ?? 0;
+  const serie = n >= 2 && texte(lang, "serie", { n });
+  if (partie.phase === "question") {
+    return ensemble(
+      serie,
+      reponse !== undefined &&
+        `${reponse.vu ? "👀 " : ""}${texte(lang, "aRepondu")}`,
+    );
+  }
+  if (partie.phase !== "bilan") {
+    return ensemble(serie);
+  }
+  const rompue = partie.rompues[id];
+  return ensemble(
+    reponse?.vu === "copie" && texte(lang, "vuCopie"),
+    reponse?.vu === "absent" && texte(lang, "vuAbsent"),
+    gain !== undefined && `+${gain}`,
+    gain !== undefined && serie,
+    rompue !== undefined && texte(lang, "serieRompue", { n: rompue }),
+  );
+};
 
 function Manche({
   lang,
@@ -233,12 +270,14 @@ function Manche({
   moi,
   restantMs,
   onAgit,
+  onRepond,
 }: {
   lang: Lang;
   partie: PartieQuiz;
   moi: string;
   restantMs: number;
   onAgit: (valeur: unknown) => void;
+  onRepond: (choix: number) => void;
 }) {
   const titre = [
     texte(lang, "manche", { n: partie.manche, total: partie.manches }),
@@ -290,7 +329,7 @@ function Manche({
                 fullWidth
                 variant={mienne === index ? "primary" : "secondary"}
                 disabled={!joue || mienne !== undefined}
-                onClick={() => onAgit(index)}
+                onClick={() => onRepond(index)}
               >
                 <Choix partie={partie} index={index} texte={choix} />
               </Button>

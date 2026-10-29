@@ -58,3 +58,15 @@ export const AxeSansDonnee: Story = {
 };
 
 export const Vide: Story = { args: { series: [] } };
+
+// Dans une colonne étroite (cinq joueurs côte à côte) : les libellés restent lisibles.
+export const Dense: Story = {
+  args: { dense: true },
+  decorators: [
+    (Story) => (
+      <div style={{ width: 240 }}>
+        <Story />
+      </div>
+    ),
+  ],
+};

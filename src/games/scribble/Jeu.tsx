@@ -6,16 +6,11 @@ import type { Lang } from "../commun/textes";
 import {
   DUREE_DEFAUT,
   DUREES,
-  masque,
   type Partie,
   TOURS,
   TOURS_DEFAUT,
 } from "./partie";
 import { texte } from "./textes";
-
-/** Le mot à trouver, lettres cachées : une case par lettre, les mots bien séparés. */
-const enCases = (mot: string) =>
-  [...mot].map((c) => (c === " " ? "  " : c)).join(" ");
 
 function Bandeau({
   gauche,
@@ -182,9 +177,7 @@ export function Consigne({
             })}
           </AvecIcone>
         ) : (
-          <Text variant="section" mono>
-            {enCases(masque(mot.nom, partie.revele))}
-          </Text>
+          <Text variant="subtitle">{texte(lang, "devine")}</Text>
         )}
       </Bandeau>
     );

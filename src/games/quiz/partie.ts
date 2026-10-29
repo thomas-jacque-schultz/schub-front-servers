@@ -1,10 +1,12 @@
 import { type Hasard, type Present, tire } from "../commun/devinette";
 import type { Lang } from "../commun/textes";
+import type { Vigilance } from "../commun/vigilance";
 import { genere, type QuestionBanque, type Theme } from "./questions";
 
-// Questions pour un invocateur (Schub#136) : un QCM à quatre choix, plus on répond tôt plus on marque. Le plus
-// rapide à avoir trouvé choisit le thème suivant parmi trois. Le meneur garde la bonne réponse pour lui pendant la
-// question (secret, retiré de ce qu'il diffuse) : elle n'est dans la page de personne avant le bilan.
+// Questions pour un invocateur (Schub#136) : un QCM à quatre choix. Une série de bonnes réponses rapporte plus que
+// la vitesse (Schub#162). Chacun choisit le thème suivant parmi trois à tour de rôle, dans un ordre tiré au début.
+// Le meneur garde la bonne réponse pour lui pendant la question (secret, retiré de ce qu'il diffuse) : elle n'est
+// dans la page de personne avant le bilan.
 
 export type Phase = "question" | "bilan" | "theme" | "fin";
 
@@ -12,6 +14,16 @@ export interface Solution {
   bonne: number;
   explication: string;
   source: string | null;
+}
+
+/**
+ * vu (Schub#163) : le joueur a quitté le jeu pendant la question (sans bonus de rapidité) ou copié-collé (0 point).
+ * Tout le monde le voit : 👀 à côté de son nom.
+ */
+export interface Reponse {
+  choix: number;
+  restantMs: number;
+  vu: "absent" | "copie" | null;
 }
 
 export interface PartieQuiz {
@@ -29,7 +41,7 @@ export interface PartieQuiz {
   secret: Solution | null;
   /** La solution au bilan ; null si la question est annulée (le meneur est parti avec sa réponse). */
   solution: Solution | null;
-  reponses: Record<string, { choix: number; restantMs: number }>;
+  reponses: Record<string, Reponse>;
   joueursManche: string[];
   gains: Record<string, number>;
   choisit: string | null;
@@ -37,6 +49,10 @@ export interface PartieQuiz {
   ordre: string[];
   rangChoix: number;
   scores: Record<string, number>;
+  /** Les bonnes réponses d'affilée de chacun. */
+  series: Record<string, number>;
+  /** Au bilan, les séries d'au moins deux que la question vient de rompre. */
+  rompues: Record<string, number>;
   noms: Record<string, string>;
   restantMs: number;
   posees: string[];
@@ -48,8 +64,14 @@ export const MANCHES = [10, 15, 20];
 export const MANCHES_DEFAUT = 15;
 export const BILAN_MS = 7_000;
 export const THEME_MS = 10_000;
-const POINTS = 30;
-const POINTS_RAPIDITE = 70;
+const POINTS = 50;
+const POINTS_RAPIDITE = 20;
+const POINTS_SERIE = 15;
+const POINTS_SERIE_MAX = 60;
+
+/** Le bonus d'une bonne réponse qui porte la série à n : rien pour la première, puis +15 par réponse. */
+const bonusSerie = (n: number) =>
+  Math.min(POINTS_SERIE_MAX, POINTS_SERIE * Math.max(0, n - 1));
 
 const versQuestion = (
   p: PartieQuiz,
@@ -93,6 +115,7 @@ const versQuestion = (
         reponses: {},
         joueursManche: presents.map((j) => j.id),
         gains: {},
+        rompues: {},
         choisit: null,
         proposes: [],
         restantMs: p.duree * 1000,
@@ -131,9 +154,11 @@ export const nouvellePartie = (
     gains: {},
     choisit: null,
     proposes: [],
-    ordre: presents.map((j) => j.id),
+    ordre: tire(presents, presents.length, hasard).tires.map((j) => j.id),
     rangChoix: -1,
     scores: Object.fromEntries(presents.map((j) => [j.id, 0])),
+    series: {},
+    rompues: {},
     noms: Object.fromEntries(presents.map((j) => [j.id, j.name])),
     restantMs: 0,
     posees: [],
@@ -144,25 +169,39 @@ export const nouvellePartie = (
     : { ...base, phase: "fin" };
 };
 
+/**
+ * Une question annulée (le meneur est parti avec la réponse) ne compte pour personne, séries comprises. Sinon, qui
+ * jouait la question et n'a pas trouvé (faux, pas de réponse, copier-coller) perd sa série.
+ */
 const bilan = (p: PartieQuiz): PartieQuiz => {
   const s = p.secret;
-  const gains = s
-    ? Object.fromEntries(
-        Object.entries(p.reponses)
-          .filter(([, r]) => r.choix === s.bonne)
-          .map(([id, r]) => [
-            id,
-            POINTS +
-              Math.round(POINTS_RAPIDITE * (r.restantMs / (p.duree * 1000))),
-          ]),
-      )
-    : {};
+  const series = { ...p.series };
+  const rompues: Record<string, number> = {};
+  const gains: Record<string, number> = {};
+  for (const id of s ? p.joueursManche : []) {
+    const r = p.reponses[id];
+    if (r && r.choix === s?.bonne && r.vu !== "copie") {
+      series[id] = (series[id] ?? 0) + 1;
+      const rapidite =
+        r.vu === "absent"
+          ? 0
+          : Math.round(POINTS_RAPIDITE * (r.restantMs / (p.duree * 1000)));
+      gains[id] = POINTS + rapidite + bonusSerie(series[id]);
+    } else {
+      if ((series[id] ?? 0) >= 2) {
+        rompues[id] = series[id];
+      }
+      series[id] = 0;
+    }
+  }
   return {
     ...p,
     phase: "bilan",
     solution: s,
     secret: null,
     gains,
+    series,
+    rompues,
     scores: Object.fromEntries(
       Object.entries(p.scores).map(([id, n]) => [id, n + (gains[id] ?? 0)]),
     ),
@@ -170,18 +209,12 @@ const bilan = (p: PartieQuiz): PartieQuiz => {
   };
 };
 
-/** Le plus rapide à avoir trouvé ; sinon le joueur suivant dans l'ordre du salon. */
+/** Le joueur suivant dans l'ordre tiré au début de la partie. */
 const choisisseur = (
   p: PartieQuiz,
   presents: Present[],
 ): { choisit: string | null; rangChoix: number } => {
   const ids = presents.map((j) => j.id);
-  const gagnants = Object.keys(p.gains)
-    .filter((id) => ids.includes(id))
-    .sort((a, b) => p.reponses[b].restantMs - p.reponses[a].restantMs);
-  if (gagnants[0]) {
-    return { choisit: gagnants[0], rangChoix: p.ordre.indexOf(gagnants[0]) };
-  }
   for (let pas = 1; pas <= p.ordre.length; pas++) {
     const rang = (p.rangChoix + pas + p.ordre.length) % p.ordre.length;
     if (ids.includes(p.ordre[rang])) {
@@ -217,6 +250,20 @@ const apresBilan = (
   };
 };
 
+/** Une réponse envoyée au meneur : le choix et ce que le joueur a fait pendant la question. */
+export interface Choix extends Vigilance {
+  choix: number;
+}
+
+const estChoix = (valeur: unknown): valeur is Choix => {
+  const c = valeur as Partial<Choix> | null;
+  return (
+    typeof c?.choix === "number" &&
+    typeof c.absent === "boolean" &&
+    typeof c.copie === "boolean"
+  );
+};
+
 export const agir = (
   p: PartieQuiz,
   de: string,
@@ -225,21 +272,26 @@ export const agir = (
   banque: QuestionBanque[],
   hasard: Hasard,
 ): PartieQuiz => {
-  if (p.phase === "question" && typeof valeur === "number") {
+  if (p.phase === "question" && estChoix(valeur)) {
     if (
       !p.joueursManche.includes(de) ||
       de in p.reponses ||
-      !Number.isInteger(valeur) ||
-      valeur < 0 ||
-      valeur >= p.choix.length
+      !Number.isInteger(valeur.choix) ||
+      valeur.choix < 0 ||
+      valeur.choix >= p.choix.length
     ) {
       return p;
     }
+    const vu: Reponse["vu"] = valeur.copie
+      ? "copie"
+      : valeur.absent
+        ? "absent"
+        : null;
     const suite = {
       ...p,
       reponses: {
         ...p.reponses,
-        [de]: { choix: valeur, restantMs: p.restantMs },
+        [de]: { choix: valeur.choix, restantMs: p.restantMs, vu },
       },
     };
     const ids = presents.map((j) => j.id);
@@ -332,6 +384,7 @@ export const estPartieQuiz = (data: unknown): data is PartieQuiz => {
     Array.isArray(p.choix) &&
     Array.isArray(p.ordre) &&
     typeof p.scores === "object" &&
+    typeof p.series === "object" &&
     typeof p.restantMs === "number"
   );
 };
