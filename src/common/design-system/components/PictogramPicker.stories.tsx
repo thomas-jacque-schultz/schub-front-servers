@@ -10,8 +10,16 @@ function Interactive() {
       label="Balises"
       options={[
         { value: "ward", name: "Balise", src: MACRO_ICONS.ward },
-        { value: "controlWard", name: "Balise de contrôle", src: MACRO_ICONS.controlWard },
-        { value: "farsight", name: "Altération : longue-vue", src: MACRO_ICONS.farsight },
+        {
+          value: "controlWard",
+          name: "Balise de contrôle",
+          src: MACRO_ICONS.controlWard,
+        },
+        {
+          value: "farsight",
+          name: "Altération : longue-vue",
+          src: MACRO_ICONS.farsight,
+        },
       ]}
       value={choix}
       onChange={setChoix}

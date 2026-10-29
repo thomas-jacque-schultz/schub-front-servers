@@ -52,13 +52,21 @@ describe("les outils du Macro Planner", () => {
     const fait = geste(mesure, ctx, { x: 5100, y: 5100 }, { x: 8000, y: 8000 });
     const plan = appliqueTout([], fait.operations);
     expect(plan).toMatchObject([
-      { type: "mesure", a: { x: 5000, y: 5000 }, b: { x: 8000, y: 8000 }, r: 1000 },
+      {
+        type: "mesure",
+        a: { x: 5000, y: 5000 },
+        b: { x: 8000, y: 8000 },
+        r: 1000,
+      },
     ]);
     expect(fait.actif).toBe(plan[0].id);
   });
 
   it("un toucher sans glisser déplace A de la mesure choisie et garde B", () => {
-    const fait = geste(mesure, contexte([uneMesure], "m"), { x: 9000, y: 9000 });
+    const fait = geste(mesure, contexte([uneMesure], "m"), {
+      x: 9000,
+      y: 9000,
+    });
     expect(appliqueTout([uneMesure], fait.operations)).toEqual([
       { ...uneMesure, a: { x: 9000, y: 9000 } },
     ]);
@@ -79,7 +87,9 @@ describe("les outils du Macro Planner", () => {
   it("la gomme retire l'élément touché, entier", () => {
     const fait = geste(gomme, contexte([uneMesure]), { x: 2000, y: 1100 });
     expect(fait.operations).toEqual([{ t: "retire", id: "m" }]);
-    expect(geste(gomme, contexte([uneMesure]), { x: 2000, y: 4000 }).operations).toEqual([]);
+    expect(
+      geste(gomme, contexte([uneMesure]), { x: 2000, y: 4000 }).operations,
+    ).toEqual([]);
   });
 
   it("une icône posée se déplace en la glissant, sans en créer une autre", () => {
@@ -87,7 +97,9 @@ describe("les outils du Macro Planner", () => {
       [],
       geste(icones, contexte([]), { x: 6000, y: 6000 }).operations,
     );
-    expect(posee).toMatchObject([{ type: "icone", icone: "ward", vision: true }]);
+    expect(posee).toMatchObject([
+      { type: "icone", icone: "ward", vision: true },
+    ]);
     const deplacee = geste(
       icones,
       contexte(posee),
@@ -100,16 +112,35 @@ describe("les outils du Macro Planner", () => {
   });
 
   it("la flèche va du début du geste à sa fin ; un trait trop court n'est rien", () => {
-    const fait = geste(fleche, contexte([]), { x: 1000, y: 1000 }, { x: 4000, y: 2000 });
+    const fait = geste(
+      fleche,
+      contexte([]),
+      { x: 1000, y: 1000 },
+      { x: 4000, y: 2000 },
+    );
     expect(appliqueTout([], fait.operations)).toMatchObject([
-      { type: "forme", forme: "fleche", a: { x: 1000, y: 1000 }, b: { x: 4000, y: 2000 } },
+      {
+        type: "forme",
+        forme: "fleche",
+        a: { x: 1000, y: 1000 },
+        b: { x: 4000, y: 2000 },
+      },
     ]);
-    expect(geste(fleche, contexte([]), { x: 1000, y: 1000 }, { x: 1010, y: 1000 }).operations).toEqual([]);
+    expect(
+      geste(fleche, contexte([]), { x: 1000, y: 1000 }, { x: 1010, y: 1000 })
+        .operations,
+    ).toEqual([]);
   });
 
   it("le feutre garde un point tous les quelques pixels", () => {
-    const points = Array.from({ length: 50 }, (_, i) => ({ x: 1000 + i * 10, y: 1000 }));
-    const [trait] = appliqueTout([], geste(feutre, contexte([]), ...points).operations);
+    const points = Array.from({ length: 50 }, (_, i) => ({
+      x: 1000 + i * 10,
+      y: 1000,
+    }));
+    const [trait] = appliqueTout(
+      [],
+      geste(feutre, contexte([]), ...points).operations,
+    );
     expect(trait.type === "trait" && trait.points.length).toBeLessThan(10);
   });
 });

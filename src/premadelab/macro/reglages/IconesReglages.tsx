@@ -84,7 +84,9 @@ export function IconesReglages({
             }))}
             mode="single"
             selected={
-              icone.startsWith("champion:") ? [icone.slice("champion:".length)] : []
+              icone.startsWith("champion:")
+                ? [icone.slice("champion:".length)]
+                : []
             }
             onChange={([id]) => id && onIcone(iconeDeChampion(id))}
             searchLabel={t("ruler.champions.search")}

@@ -55,7 +55,11 @@ export const renduIcone: Rendu<ElementIcone> = {
             },
       );
     } else if (estPictogramme(icone.icone)) {
-      formes.push({ kind: "icon", at: icone.at, src: MACRO_ICONS[icone.icone] });
+      formes.push({
+        kind: "icon",
+        at: icone.at,
+        src: MACRO_ICONS[icone.icone],
+      });
     }
     if (ctx.actif) {
       formes.push({ kind: "selection", at: icone.at });

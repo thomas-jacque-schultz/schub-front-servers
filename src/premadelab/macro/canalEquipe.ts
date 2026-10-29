@@ -18,9 +18,7 @@ import {
 
 export type Connexion = "connexion" | "salon" | "reconnexion" | "refuse";
 export type Enregistrement =
-  | { etat: "a-jour"; a: Date | null }
-  | { etat: "en-cours" }
-  | { etat: "echec" };
+  { etat: "a-jour"; a: Date | null } | { etat: "en-cours" } | { etat: "echec" };
 
 export interface EtatEquipe {
   connexion: Connexion;
@@ -232,7 +230,8 @@ export class CanalEquipe implements Canal {
       this.sale = false;
       this.publie({ enregistrement: { etat: "en-cours" } });
       this.options.enregistre(this.plan).then(
-        () => this.publie({ enregistrement: { etat: "a-jour", a: new Date() } }),
+        () =>
+          this.publie({ enregistrement: { etat: "a-jour", a: new Date() } }),
         () => {
           this.sale = true;
           this.publie({ enregistrement: { etat: "echec" } });

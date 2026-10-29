@@ -51,7 +51,8 @@ const REGLAGES_DE_DEPART: Reglages = {
 
 const saisieEnCours = (cible: EventTarget | null) =>
   cible instanceof HTMLElement &&
-  (cible.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(cible.tagName));
+  (cible.isContentEditable ||
+    ["INPUT", "TEXTAREA", "SELECT"].includes(cible.tagName));
 
 export interface MacroPlannerProps {
   macro: MacroPlan;
@@ -64,7 +65,7 @@ export interface MacroPlannerProps {
 
 /**
  * Le Macro Planner (Schub#166) : la carte, et à droite les outils par menu. Le même composant sert seul sur /ruler et
- * à plusieurs dans l'équipe ; seul change le canal derrière \`macro\`.
+ * à plusieurs dans l'équipe ; seul change le canal derrière `macro`.
  */
 export function MacroPlanner({
   macro,
@@ -189,12 +190,16 @@ export function MacroPlanner({
     ...plan
       .filter((element) => !masques.has(element.id))
       .flatMap((element) => dessineElement(element, rendu(element))),
-    ...apercu.flatMap((element) => dessineElement(element, rendu(element, true))),
+    ...apercu.flatMap((element) =>
+      dessineElement(element, rendu(element, true)),
+    ),
   ];
 
   const pas = (sens: 1 | -1) =>
     setReglages((avant) => {
-      const rang = inkWidths.indexOf(avant.epaisseur as (typeof inkWidths)[number]);
+      const rang = inkWidths.indexOf(
+        avant.epaisseur as (typeof inkWidths)[number],
+      );
       return {
         ...avant,
         epaisseur:

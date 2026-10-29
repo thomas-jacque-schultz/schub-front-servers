@@ -27,7 +27,9 @@ describe("le plan du Macro Planner", () => {
     plan = applique(plan, { t: "pose", e: icone("a", 2000) });
     expect(plan.map((e) => e.id)).toEqual(["a", "b"]);
     expect(plan[0]).toEqual(icone("a", 2000));
-    expect(applique(plan, { t: "retire", id: "a" }).map((e) => e.id)).toEqual(["b"]);
+    expect(applique(plan, { t: "retire", id: "a" }).map((e) => e.id)).toEqual([
+      "b",
+    ]);
   });
 
   it("rejouer un historique sur un plan qui en contient déjà une partie donne le même plan", () => {
@@ -51,8 +53,14 @@ describe("le plan du Macro Planner", () => {
     for (const geste of [
       [{ t: "retire", id: "b" }],
       [{ t: "vide" }],
-      [{ t: "pose", e: icone("b", 5000) }, { t: "pose", e: icone("d") }],
-      [{ t: "retire", id: "a" }, { t: "retire", id: "c" }],
+      [
+        { t: "pose", e: icone("b", 5000) },
+        { t: "pose", e: icone("d") },
+      ],
+      [
+        { t: "retire", id: "a" },
+        { t: "retire", id: "c" },
+      ],
     ] as Operation[][]) {
       const apres = appliqueTout(avant, geste);
       expect(appliqueTout(apres, inverse(avant, geste))).toEqual(avant);
@@ -60,9 +68,27 @@ describe("le plan du Macro Planner", () => {
   });
 
   it("écarte ce qui ne se lit pas, d'un autre membre ou du stockage", () => {
-    expect(lisOperation({ t: "pose", e: { id: "x", type: "trait", points: [], encre: "#FFFFFF", epaisseur: 0.01 } })).toBeNull();
+    expect(
+      lisOperation({
+        t: "pose",
+        e: {
+          id: "x",
+          type: "trait",
+          points: [],
+          encre: "#FFFFFF",
+          epaisseur: 0.01,
+        },
+      }),
+    ).toBeNull();
     expect(lisOperation({ t: "retire", id: "<script>" })).toBeNull();
-    expect(lisOperation({ t: "pose", e: { ...icone("a"), icone: "https://ailleurs" } })).toBeNull();
-    expect(lisPlan([icone("a"), { id: "b", type: "inconnu" }, null])).toEqual([icone("a")]);
+    expect(
+      lisOperation({
+        t: "pose",
+        e: { ...icone("a"), icone: "https://ailleurs" },
+      }),
+    ).toBeNull();
+    expect(lisPlan([icone("a"), { id: "b", type: "inconnu" }, null])).toEqual([
+      icone("a"),
+    ]);
   });
 });

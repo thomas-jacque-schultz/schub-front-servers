@@ -29,13 +29,7 @@ import { TeamSharing } from "./team/TeamSharing";
 import { TrainingCard } from "./team/TrainingCard";
 
 type PanelKey =
-  | "roster"
-  | "players"
-  | "team"
-  | "opposition"
-  | "macro"
-  | "pool"
-  | "draft";
+  "roster" | "players" | "team" | "opposition" | "macro" | "pool" | "draft";
 
 function TeamPage() {
   const { t } = useTranslation("teams");

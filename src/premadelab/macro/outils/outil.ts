@@ -11,13 +11,7 @@ import type { Camp, Element, Operation, Plan } from "../plan";
 export type Menu = "mesure" | "dessin" | "icones";
 
 export type CleOutil =
-  | "mesure"
-  | "feutre"
-  | "fleche"
-  | "rectangle"
-  | "ellipse"
-  | "gomme"
-  | "icone";
+  "mesure" | "feutre" | "fleche" | "rectangle" | "ellipse" | "gomme" | "icone";
 
 /** Ce que l'utilisateur a réglé dans le panneau ; chaque outil y lit ce qui le concerne. */
 export interface Reglages {
@@ -103,11 +97,14 @@ export const distanceAuSegment = (p: MapPoint, a: MapPoint, b: MapPoint) => {
   const t =
     longueur === 0
       ? 0
-      : Math.max(0, Math.min(1, ((p.x - a.x) * dx + (p.y - a.y) * dy) / longueur));
+      : Math.max(
+          0,
+          Math.min(1, ((p.x - a.x) * dx + (p.y - a.y) * dy) / longueur),
+        );
   return distance(p, { x: a.x + t * dx, y: a.y + t * dy });
 };
 
-/** Le repère le plus proche à moins de \`tolerance\` unités, sinon le point tel quel. */
+/** Le repère le plus proche à moins de `tolerance` unités, sinon le point tel quel. */
 export const aimante = (
   point: MapPoint,
   reperes: readonly MapPoint[],
