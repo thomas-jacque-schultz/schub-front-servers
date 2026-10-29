@@ -20,7 +20,7 @@ export interface ElementTrait {
   type: "trait";
   points: MapPoint[];
   encre: string;
-  /** Relative à la largeur de la carte, comme \`inkWidths\`. */
+  /** Relative à la largeur de la carte, comme `inkWidths`. */
   epaisseur: number;
 }
 
@@ -39,7 +39,7 @@ export interface ElementForme {
 export interface ElementIcone {
   id: string;
   type: "icone";
-  /** Un pictogramme (\`MacroIconKey\`) ou \`champion:<id Data Dragon>\`. */
+  /** Un pictogramme (`MacroIconKey`) ou `champion:<id Data Dragon>`. */
   icone: string;
   at: MapPoint;
   camp: Camp | null;
@@ -47,7 +47,8 @@ export interface ElementIcone {
   vision: boolean;
 }
 
-export type Element = ElementMesure | ElementTrait | ElementForme | ElementIcone;
+export type Element =
+  ElementMesure | ElementTrait | ElementForme | ElementIcone;
 
 export type Plan = readonly Element[];
 
@@ -64,7 +65,10 @@ export const applique = (plan: Plan, operation: Operation): Plan => {
       if (rang >= 0) {
         return plan.map((element, i) => (i === rang ? operation.e : element));
       }
-      const place = Math.min(plan.length, Math.max(0, operation.rang ?? plan.length));
+      const place = Math.min(
+        plan.length,
+        Math.max(0, operation.rang ?? plan.length),
+      );
       return [...plan.slice(0, place), operation.e, ...plan.slice(place)];
     }
     case "retire":
@@ -77,12 +81,16 @@ export const applique = (plan: Plan, operation: Operation): Plan => {
 export const appliqueTout = (plan: Plan, operations: readonly Operation[]) =>
   operations.reduce(applique, plan);
 
-/** Les opérations qui défont \`operations\`, jouées sur \`plan\` : l'annulation d'un geste. */
-export const inverse = (plan: Plan, operations: readonly Operation[]): Operation[] => {
+/** Les opérations qui défont `operations`, jouées sur `plan` : l'annulation d'un geste. */
+export const inverse = (
+  plan: Plan,
+  operations: readonly Operation[],
+): Operation[] => {
   const defaites: Operation[] = [];
   let courant = plan;
   for (const operation of operations) {
-    const rangDe = (id: string) => courant.findIndex((element) => element.id === id);
+    const rangDe = (id: string) =>
+      courant.findIndex((element) => element.id === id);
     switch (operation.t) {
       case "pose": {
         const rang = rangDe(operation.e.id);
@@ -126,7 +134,10 @@ const objet = (valeur: unknown): Record<string, unknown> | null =>
     ? (valeur as Record<string, unknown>)
     : null;
 const nombre = (valeur: unknown, min: number, max: number): valeur is number =>
-  typeof valeur === "number" && Number.isFinite(valeur) && valeur >= min && valeur <= max;
+  typeof valeur === "number" &&
+  Number.isFinite(valeur) &&
+  valeur >= min &&
+  valeur <= max;
 const point = (valeur: unknown): MapPoint | null => {
   const lu = objet(valeur);
   return lu &&
@@ -176,10 +187,20 @@ export const lisElement = (valeur: unknown): Element | null => {
       const b = point(lu.b);
       return a &&
         b &&
-        (lu.forme === "fleche" || lu.forme === "rectangle" || lu.forme === "ellipse") &&
+        (lu.forme === "fleche" ||
+          lu.forme === "rectangle" ||
+          lu.forme === "ellipse") &&
         encre(lu.encre) &&
         nombre(lu.epaisseur, 0.0001, 0.1)
-        ? { id: lu.id, type: "forme", forme: lu.forme, a, b, encre: lu.encre, epaisseur: lu.epaisseur }
+        ? {
+            id: lu.id,
+            type: "forme",
+            forme: lu.forme,
+            a,
+            b,
+            encre: lu.encre,
+            epaisseur: lu.epaisseur,
+          }
         : null;
     }
     case "icone": {
@@ -214,7 +235,11 @@ export const lisOperation = (valeur: unknown): Operation | null => {
     case "pose": {
       const e = lisElement(lu.e);
       return e
-        ? { t: "pose", e, ...(nombre(lu.rang, 0, 1e6) ? { rang: lu.rang } : {}) }
+        ? {
+            t: "pose",
+            e,
+            ...(nombre(lu.rang, 0, 1e6) ? { rang: lu.rang } : {}),
+          }
         : null;
     }
     case "retire":

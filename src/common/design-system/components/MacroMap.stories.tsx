@@ -17,7 +17,13 @@ const REPERES: MacroMapLandmark[] = [
 
 const MESURE: MacroShape[] = [
   { kind: "range", center: REPERES[2], radius: 1200, color: "mark" },
-  { kind: "line", from: REPERES[2], to: REPERES[4], color: "mark", width: 0.0033 },
+  {
+    kind: "line",
+    from: REPERES[2],
+    to: REPERES[4],
+    color: "mark",
+    width: 0.0033,
+  },
   { kind: "point", at: REPERES[2], letter: "A", color: "mark" },
   { kind: "point", at: REPERES[4], letter: "B", color: "markSecondary" },
   { kind: "label", at: { x: 5426, y: 8433 }, text: "4 095" },
@@ -50,7 +56,12 @@ const PLAN: MacroShape[] = [
     color: "#FFD23F",
     width: 0.003,
   },
-  { kind: "range", center: { x: 8300, y: 6200 }, radius: 900, color: "#FFD23F" },
+  {
+    kind: "range",
+    center: { x: 8300, y: 6200 },
+    radius: 900,
+    color: "#FFD23F",
+  },
   { kind: "icon", at: { x: 8300, y: 6200 }, src: MACRO_ICONS.ward },
   { kind: "icon", at: { x: 9866, y: 4414 }, src: MACRO_ICONS.dragon },
   { kind: "icon", at: { x: 6200, y: 7600 }, src: MACRO_ICONS.danger },
@@ -76,6 +87,8 @@ export const UneMesure: Story = {};
 export const UnPlan: Story = {
   args: {
     shapes: PLAN,
-    cursors: [{ id: "1", name: "Membre 2", at: { x: 7600, y: 7000 }, color: "#4FB783" }],
+    cursors: [
+      { id: "1", name: "Membre 2", at: { x: 7600, y: 7000 }, color: "#4FB783" },
+    ],
   },
 };

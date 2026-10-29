@@ -45,7 +45,9 @@ export function DessinReglages({
         </Text>
         <SegmentedControl
           label={t("macro.width")}
-          value={String(inkWidths.indexOf(epaisseur as (typeof inkWidths)[number]))}
+          value={String(
+            inkWidths.indexOf(epaisseur as (typeof inkWidths)[number]),
+          )}
           onChange={(rang) => onEpaisseur(inkWidths[Number(rang)])}
           options={inkWidths.map((_, rang) => ({
             value: String(rang),
