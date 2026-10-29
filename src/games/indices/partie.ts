@@ -8,6 +8,8 @@ import {
   type Present,
   tire,
 } from "../commun/devinette";
+import { regionDe, type Univers } from "../commun/univers";
+import { type Famille, typesDe } from "./familles";
 
 // Indices (Schub#133) : un champion ou un objet, choisi à chaque manche par un joueur, et des indices tirés de
 // Data Dragon qui tombent un à un. Plus on trouve tôt, plus on marque. Les indices sont des données : chacun les
@@ -21,8 +23,12 @@ export type Indice =
   | { type: "portee"; aDistance: boolean; ressource: string }
   | { type: "sort"; nom: string }
   | { type: "titre"; texte: string }
+  | { type: "region"; nom: string }
+  | { type: "skin"; nom: string }
   | { type: "prix"; tranche: number }
+  | { type: "roles"; familles: Famille[] }
   | { type: "stats"; lignes: string[] }
+  | { type: "recette"; noms: string[] }
   | { type: "composants"; noms: string[] }
   | { type: "description"; texte: string };
 
@@ -53,16 +59,23 @@ export interface PartieIndices {
   fil: Ligne[];
   restantMs: number;
   restants: Record<Categorie, string[]>;
+  /** Le chrono de la manche au dernier essai raté de chacun : un essai pendant le délai qui suit est ignoré. */
+  erreurs: Record<string, number>;
 }
 
-export const DUREES = [30, 45, 60];
-export const DUREE_DEFAUT = 45;
+export const DUREES = [45, 60, 90];
+export const DUREE_DEFAUT = 60;
 export const MANCHES = [5, 10, 15];
 export const MANCHES_DEFAUT = 10;
 export const CATEGORIE_MS = 10_000;
 export const BILAN_MS = 5_000;
 /** Les points selon le nombre d'indices visibles quand on trouve. */
-const POINTS = [100, 70, 45, 25];
+const POINTS = [100, 80, 60, 45, 30, 20];
+/** L'attente après un essai raté (Schub#161). */
+export const DELAI_ERREUR_MS = 2_000;
+// Le chrono du meneur n'avance qu'à chaque pas (500 ms) : un essai envoyé après deux secondes pile peut lui paraître
+// plus tôt d'autant.
+const TOLERANCE_MS = 500;
 /** Les tranches de prix (réponse du 20/10) : un prix exact se devinerait trop vite. */
 export const TRANCHES = [100, 1000, 2000, 2750, 3000];
 
@@ -72,11 +85,29 @@ export const tranche = (prix: number): number =>
 const contient = (texte: string, nom: string) =>
   normalise(texte).includes(normalise(nom));
 
+/** Le nom d'un skin sans celui du champion : « Nautilus astronaute » devient « Astronaute ». */
+export const skinSansNom = (skin: string, nom: string): string | null => {
+  const mots = new Set(nom.split(/\s+/).map(normalise));
+  const reste = skin
+    .split(/\s+/)
+    .filter((mot) => normalise(mot) !== "" && !mots.has(normalise(mot)))
+    .join(" ");
+  if (normalise(reste) === "" || contient(reste, nom)) {
+    return null;
+  }
+  return reste.charAt(0).toUpperCase() + reste.slice(1);
+};
+
+/**
+ * Six indices au plus, du plus vague au plus parlant (Schub#161). Champion : classes, portée, région, un skin, un
+ * sort, le titre. Objet : prix, rôles, statistiques, ce qu'il permet de construire, ses composants, sa description.
+ */
 export const enigmeDe = (
   categorie: Categorie,
   id: string,
   donnees: Donnees,
   hasard: Hasard,
+  univers: Univers | null = null,
 ): Enigme | null => {
   if (categorie === "champion") {
     const c = donnees.champions.find((champion) => champion.id === id);
@@ -88,6 +119,19 @@ export const enigmeDe = (
       { type: "classes", classes: c.classes },
       { type: "portee", aDistance: c.aDistance, ressource: c.ressource },
     ];
+    const region = regionDe(univers, c.nom);
+    if (region && univers?.regions[region]) {
+      indices.push({ type: "region", nom: univers.regions[region] });
+    }
+    const skins = c.skins
+      .map((skin) => skinSansNom(skin.nom, c.nom))
+      .filter((nom): nom is string => nom !== null);
+    if (skins.length > 0) {
+      indices.push({
+        type: "skin",
+        nom: skins[Math.floor(hasard() * skins.length)],
+      });
+    }
     if (sorts.length > 0) {
       indices.push({
         type: "sort",
@@ -105,7 +149,15 @@ export const enigmeDe = (
   }
   const indices: Indice[] = [
     { type: "prix", tranche: tranche(o.prix) },
+    { type: "roles", familles: typesDe(o) },
     { type: "stats", lignes: o.stats },
+    {
+      type: "recette",
+      noms: donnees.objets
+        .filter((autre) => autre.composantIds.includes(o.id))
+        .map((autre) => autre.nom)
+        .filter((nom) => !contient(nom, o.nom)),
+    },
     {
       type: "composants",
       noms: o.composants.filter((nom) => !contient(nom, o.nom)),
@@ -161,6 +213,7 @@ const versManche = (
   voulue: Categorie,
   presents: Present[],
   donnees: Donnees,
+  univers: Univers | null,
   hasard: Hasard,
 ): PartieIndices => {
   const categorie: Categorie =
@@ -171,7 +224,7 @@ const versManche = (
         : "champion";
   const { tires, restants } = tire(p.restants[categorie], 1, hasard);
   const enigme = tires[0]
-    ? enigmeDe(categorie, tires[0], donnees, hasard)
+    ? enigmeDe(categorie, tires[0], donnees, hasard, univers)
     : null;
   const suite = {
     ...p,
@@ -188,6 +241,7 @@ const versManche = (
     revele: 1,
     devineurs: presents.map((j) => j.id),
     trouve: [],
+    erreurs: {},
     restantMs: p.duree * 1000,
   };
 };
@@ -222,6 +276,7 @@ export const nouvellePartie = (
         champion: donnees.champions.map((c) => c.id),
         objet: donnees.objets.map((o) => o.id),
       },
+      erreurs: {},
     },
     1,
     presents,
@@ -234,12 +289,13 @@ export const choisir = (
   categorie: unknown,
   presents: Present[],
   donnees: Donnees,
+  univers: Univers | null,
   hasard: Hasard,
 ): PartieIndices =>
   p.phase === "categorie" &&
   de === p.choisit &&
   (categorie === "champion" || categorie === "objet")
-    ? versManche(p, categorie, presents, donnees, hasard)
+    ? versManche(p, categorie, presents, donnees, univers, hasard)
     : p;
 
 const bilan = (p: PartieIndices): PartieIndices => ({
@@ -249,11 +305,22 @@ const bilan = (p: PartieIndices): PartieIndices => ({
   restantMs: BILAN_MS,
 });
 
+const enAttente = (p: PartieIndices, joueur: string) =>
+  joueur in p.erreurs &&
+  p.erreurs[joueur] - p.restantMs < DELAI_ERREUR_MS - TOLERANCE_MS;
+
 const peutDeviner = (p: PartieIndices, joueur: string) =>
   p.phase === "manche" &&
   p.enigme !== null &&
   p.devineurs.includes(joueur) &&
-  !p.trouve.includes(joueur);
+  !p.trouve.includes(joueur) &&
+  !enAttente(p, joueur);
+
+const rate = (p: PartieIndices, joueur: string, texte: string) => ({
+  ...p,
+  fil: ajouteAuFil(p.fil, { joueur, texte }),
+  erreurs: { ...p.erreurs, [joueur]: p.restantMs },
+});
 
 const aTrouve = (p: PartieIndices, joueur: string): PartieIndices => {
   const gain = POINTS[Math.min(p.revele, POINTS.length) - 1] ?? 0;
@@ -284,16 +351,10 @@ export const deviner = (
   if (verdict === "proche") {
     return { partie: p, proche: true };
   }
-  return {
-    partie: { ...p, fil: ajouteAuFil(p.fil, { joueur, texte: propre }) },
-    proche: false,
-  };
+  return { partie: rate(p, joueur, propre), proche: false };
 };
 
-/**
- * Une icône de la grille (Schub#144) : comme une réponse tapée, mais par identifiant, donc dans toutes les langues.
- * Ni pénalité ni limite d'essais, le chrono suffit.
- */
+/** Une icône de la grille (Schub#144) : comme une réponse tapée, mais par identifiant, donc dans toutes les langues. */
 export const devinerObjet = (
   p: PartieIndices,
   joueur: string,
@@ -311,7 +372,7 @@ export const devinerObjet = (
     return aTrouve(p, joueur);
   }
   const nom = donnees.objets.find((o) => o.id === id)?.nom;
-  return nom ? { ...p, fil: ajouteAuFil(p.fil, { joueur, texte: nom }) } : p;
+  return nom ? rate(p, joueur, nom) : p;
 };
 
 /** Le nombre d'indices visibles : un de plus à chaque part égale du chrono. */
@@ -329,6 +390,7 @@ export const avancer = (
   ecouleMs: number,
   presents: Present[],
   donnees: Donnees,
+  univers: Univers | null,
   hasard: Hasard,
 ): PartieIndices => {
   if (p.phase === "fin") {
@@ -344,6 +406,7 @@ export const avancer = (
           hasard() < 0.5 ? "champion" : "objet",
           presents,
           donnees,
+          univers,
           hasard,
         );
   }
@@ -392,6 +455,7 @@ export const estPartieIndices = (data: unknown): data is PartieIndices => {
     typeof p.manche === "number" &&
     Array.isArray(p.ordre) &&
     typeof p.scores === "object" &&
+    typeof p.erreurs === "object" &&
     typeof p.restantMs === "number"
   );
 };
