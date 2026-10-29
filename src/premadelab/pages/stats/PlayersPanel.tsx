@@ -24,7 +24,9 @@ export interface PlayersPanelProps {
   teamId: string;
 }
 
-const RADAR_JUSQU_A = 3;
+// Une équipe complète garde son radar (Schub#158) ; au-delà de trois colonnes, il passe en version dense.
+const RADAR_JUSQU_A = 5;
+const COLONNES_LARGES = 3;
 
 export function PlayersPanel({ teamId }: PlayersPanelProps) {
   const { t } = useTranslation("stats");
@@ -126,6 +128,7 @@ export function PlayersPanel({ teamId }: PlayersPanelProps) {
               playerColumn(player, {
                 isViewer: player.memberId === stats?.viewerMemberId,
                 showRadar: radars,
+                denseRadar: visibles.length > COLONNES_LARGES,
                 premadeLines,
                 champions: choixChampions[player.memberId] ?? [],
                 onChampionsChange: (keys) =>

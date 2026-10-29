@@ -1,13 +1,19 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { annonceSalon, attendInit, dansUnHote } from "./bridge";
 import { playerId } from "./identity";
-import { type Evenement, type Joueur, Relais } from "./relay";
+import {
+  Relais,
+  type RelaisEvenement as Evenement,
+  type RelaisJoueur as Joueur,
+} from "../../common";
 import { type CleCommune, type Lang, langueDuNavigateur } from "./textes";
 
 export interface Contexte {
   lang: Lang;
   room: string | null;
   hote: string | null;
+  /** Le pseudo du compte PremadeLab connecté, quand le jeu tourne dans PremadeLab. */
+  nom: string | null;
 }
 
 // Le salon demandé par l'adresse : scribble.premadelab.eu/ABCD.
@@ -25,11 +31,17 @@ export function useContexte(): Contexte | null {
         lang: langueDuNavigateur(),
         room: salonDeLAdresse(),
         hote: null,
+        nom: null,
       });
       return;
     }
     void attendInit().then((init) =>
-      setContexte({ lang: init.lang, room: init.room, hote: init.origin }),
+      setContexte({
+        lang: init.lang,
+        room: init.room,
+        hote: init.origin,
+        nom: init.nom,
+      }),
     );
   }, []);
   return contexte;
@@ -91,8 +103,10 @@ export function useSalon({
           setErreur(`erreur_${evenement.code}` as CleCommune);
           setEtat("erreur");
           break;
+        // Coupé du salon, il ne mène plus : le relais a passé la main, la partie avance chez un autre.
         case "deconnecte":
           setEtat("reconnexion");
+          setMeneur(null);
           break;
       }
       relaie.current(evenement);

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { MAP_BOUNDS } from "../common";
-import { lireMesure, REPERES, TRAJETS_DE_REFERENCE } from "./ruler";
+import { planDeDepart, REPERES, TRAJETS_DE_REFERENCE } from "./ruler";
 
 describe("les repères de la règle", () => {
   it("n'a qu'un repère par nom et par camp", () => {
@@ -40,7 +40,7 @@ describe("les repères de la règle", () => {
     }
   });
 
-  it("rend la mesure par défaut sans stockage", () => {
-    expect(lireMesure().r).toBe(1000);
+  it("commence par une mesure, de la tour extérieure du mid au Baron", () => {
+    expect(planDeDepart()).toMatchObject([{ type: "mesure", r: 1000 }]);
   });
 });

@@ -9,7 +9,7 @@ import {
   Reponse,
   Salon,
 } from "../commun/ecrans";
-import type { Evenement } from "../commun/relay";
+import type { RelaisEvenement as Evenement } from "../../common";
 import { type Contexte, useMaintenant, useSalon } from "../commun/useSalon";
 import { estMessageJeu, type MessageJeu, useMeneur } from "../commun/useMeneur";
 import { Consigne, Image } from "./Jeu";

@@ -1,49 +1,35 @@
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Card,
   Columns,
   DataTable,
   IconButton,
-  MapRuler,
   PageHeader,
-  SegmentedControl,
-  SideLayout,
   Stack,
-  StatTile,
-  Switch,
   Text,
-  TextField,
   distance,
   type DataTableColumn,
-  useCurrentLanguage,
   useDocumentMeta,
   useLocaleFormat,
-  useRequest,
-  type MapPoint,
 } from "../../common";
 import {
-  ecrireMesure,
-  lireMesure,
-  PORTEES,
-  REPERES,
-  repereEn,
+  planDeDepart,
   TRAJETS_DE_REFERENCE,
   VITESSE_PAR_DEFAUT,
-  type Mesure,
   type Repere,
 } from "../ruler";
-import { chargerChampions } from "../rulerChampions";
-import {
-  ChampionPicker,
-  ChampionSpells,
-  type PorteeTracee,
-} from "./ruler/ChampionRanges";
+import { CanalLocal } from "../macro/canal";
+import { MacroPlanner } from "../macro/MacroPlanner";
+import { nouvelId } from "../macro/plan";
+import { mesureActive } from "../macro/outils/mesure";
+import { useMacroPlan } from "../macro/useMacroPlan";
+import { useNomDuPoint } from "../macro/useNomDuPoint";
 
-const PERSO = "custom";
+const CLE = "premadelab.macro";
 
-// La règle : une mesure de A à B sur la Faille, en unités du jeu, un cercle de portée autour de A et le temps
-// de marche. Aucun appel au serveur ; la mesure reste dans le navigateur.
+// Le Macro Planner seul (Schub#166) : mesurer, dessiner et poser des icônes sur la Faille, en unités du jeu. Aucun
+// appel au serveur ; le plan reste dans le navigateur.
 export default function RulerPage() {
   const { t } = useTranslation("lol");
   const { formatNumber } = useLocaleFormat();
@@ -51,72 +37,25 @@ export default function RulerPage() {
     title: t("ruler.meta.title"),
     description: t("ruler.meta.description"),
   });
-  const [mesure, setMesure] = useState<Mesure>(lireMesure);
-  const [aimant, setAimant] = useState(true);
-  const [perso, setPerso] = useState(() => !PORTEES.includes(mesure.r));
-  const [porteeSaisie, setPorteeSaisie] = useState(String(mesure.r));
-  const [vitesseSaisie, setVitesseSaisie] = useState(
-    String(VITESSE_PAR_DEFAUT),
-  );
-  const langue = useCurrentLanguage();
-  const catalogue = useRequest(`ddragon/${langue}`, () =>
-    chargerChampions(langue),
-  );
-  const [championId, setChampionId] = useState<string | null>(null);
-  const champion =
-    catalogue.data?.champions.find((candidat) => candidat.id === championId) ??
-    null;
-  // La portée tracée par un sort : elle nomme le cercle tant que personne ne change le rayon à la main.
-  const [tracee, setTracee] = useState<PorteeTracee | null>(null);
-  const changerRayon = (portee: number) => {
-    setTracee(null);
-    setMesure({ ...mesure, r: portee });
-  };
-  const tracer = (portee: PorteeTracee) => {
-    setTracee(portee);
-    setPerso(!PORTEES.includes(portee.range));
-    setPorteeSaisie(String(portee.range));
-    setMesure({ ...mesure, r: portee.range });
-  };
-  const choisirChampion = (id: string | null) => {
-    setChampionId(id);
-    setTracee(null);
-    const choisi = catalogue.data?.champions.find(
-      (candidat) => candidat.id === id,
-    );
-    if (choisi) {
-      setVitesseSaisie(String(choisi.moveSpeed));
-    }
-  };
-
-  useEffect(() => ecrireMesure(mesure), [mesure]);
-
-  const { a, b, r } = mesure;
-  const d = distance(a, b);
-  const vitesse = Number(vitesseSaisie);
-  const nom = (point: MapPoint) => {
-    const repere = repereEn(point);
-    return repere
-      ? t(
-          repere.approche
-            ? "ruler.landmarkOnSideApproximate"
-            : "ruler.landmarkOnSide",
-          {
-            name: t(`ruler.landmarks.${repere.id}`),
-            side: t(`ruler.sides.${repere.side}`),
-          },
-        )
-      : t("ruler.freePoint");
-  };
-  const unites = (valeur: number) =>
-    t("ruler.units", { value: formatNumber(Math.round(valeur)) });
+  const canal = useMemo(() => new CanalLocal(CLE, planDeDepart), []);
+  const macro = useMacroPlan(canal);
+  const nom = useNomDuPoint();
   const marche = (valeur: number) =>
-    vitesse > 0
-      ? t("ruler.seconds", {
-          value: formatNumber(Math.round((valeur / vitesse) * 10) / 10),
-        })
-      : "—";
-  const aPortee = d <= r;
+    t("ruler.seconds", {
+      value: formatNumber(Math.round((valeur / VITESSE_PAR_DEFAUT) * 10) / 10),
+    });
+  const montre = (de: Repere, vers: Repere) => {
+    const active = mesureActive(macro);
+    const id = active?.id ?? nouvelId();
+    macro.joue([
+      {
+        t: "pose",
+        e: { id, type: "mesure", a: de, b: vers, r: active?.r ?? 1000 },
+      },
+    ]);
+    macro.choisis(id);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
   const colonnes: Array<DataTableColumn<{ de: Repere; vers: Repere }>> = [
     {
       key: "route",
@@ -147,10 +86,7 @@ export default function RulerPage() {
           icon="ruler"
           size="small"
           label={t("ruler.reference.show")}
-          onClick={() => {
-            setMesure({ ...mesure, a: de, b: vers });
-            window.scrollTo({ top: 0, behavior: "smooth" });
-          }}
+          onClick={() => montre(de, vers)}
         />
       ),
     },
@@ -159,147 +95,11 @@ export default function RulerPage() {
   return (
     <Stack spacing={2}>
       <PageHeader title={t("ruler.title")} subtitle={t("ruler.subtitle")} />
-      <SideLayout
-        sideWidth={300}
-        side={
-          <Stack spacing={2}>
-            <Card title={t("ruler.measure")}>
-              <Stack spacing={1.5}>
-                <StatTile label={t("ruler.distance")} value={unites(d)} />
-                <StatTile
-                  label={t("ruler.walk")}
-                  value={marche(d)}
-                  hint={
-                    vitesse > 0
-                      ? t("ruler.walkHint", { speed: formatNumber(vitesse) })
-                      : undefined
-                  }
-                />
-                <StatTile
-                  label={
-                    tracee?.range === r
-                      ? t("ruler.rangeOf", {
-                          radius: formatNumber(r),
-                          source: tracee.label,
-                        })
-                      : t("ruler.range", { radius: formatNumber(r) })
-                  }
-                  value={
-                    aPortee
-                      ? t("ruler.inRange")
-                      : t("ruler.missing", { value: unites(d - r) })
-                  }
-                />
-                <Text variant="caption" tone="secondary">
-                  {t("ruler.pointA", { name: nom(a) })}
-                </Text>
-                <Text variant="caption" tone="secondary">
-                  {t("ruler.pointB", { name: nom(b) })}
-                </Text>
-              </Stack>
-            </Card>
-            <ChampionSpells
-              champion={champion}
-              version={catalogue.data?.version ?? null}
-              langue={langue}
-              traced={tracee}
-              onTrace={tracer}
-            />
-            <Card title={t("ruler.settings")}>
-              <Stack spacing={2}>
-                <Switch
-                  checked={aimant}
-                  onChange={setAimant}
-                  label={t("ruler.snap")}
-                  helperText={t("ruler.snapHint")}
-                />
-                <Stack spacing={1}>
-                  <Text variant="caption" tone="secondary">
-                    {t("ruler.radius")}
-                  </Text>
-                  <SegmentedControl
-                    label={t("ruler.radius")}
-                    value={perso ? PERSO : String(r)}
-                    options={[
-                      ...PORTEES.map((portee) => ({
-                        value: String(portee),
-                        label: formatNumber(portee),
-                      })),
-                      { value: PERSO, label: t("ruler.custom") },
-                    ]}
-                    onChange={(choix) => {
-                      if (choix === PERSO) {
-                        setPerso(true);
-                        setPorteeSaisie(String(r));
-                        return;
-                      }
-                      setPerso(false);
-                      changerRayon(Number(choix));
-                    }}
-                  />
-                  {perso && (
-                    <TextField
-                      type="number"
-                      label={t("ruler.customRadius")}
-                      value={porteeSaisie}
-                      onChange={(valeur) => {
-                        setPorteeSaisie(valeur);
-                        const portee = Number(valeur);
-                        if (portee > 0) {
-                          changerRayon(portee);
-                        }
-                      }}
-                      error={!(Number(porteeSaisie) > 0)}
-                    />
-                  )}
-                </Stack>
-                <TextField
-                  type="number"
-                  label={t("ruler.speed")}
-                  value={vitesseSaisie}
-                  onChange={setVitesseSaisie}
-                  helperText={t("ruler.speedHint")}
-                  error={!(vitesse > 0)}
-                />
-              </Stack>
-            </Card>
-          </Stack>
-        }
-      >
-        <Stack spacing={1}>
-          <MapRuler
-            label={t("ruler.mapLabel", {
-              a: nom(a),
-              b: nom(b),
-              distance: unites(d),
-            })}
-            landmarks={REPERES}
-            a={a}
-            b={b}
-            radius={r}
-            snap={aimant}
-            measureLabel={unites(d)}
-            maxWidth={760}
-            onChange={(nouveauA, nouveauB) =>
-              setMesure({ ...mesure, a: nouveauA, b: nouveauB })
-            }
-          />
-          <Text variant="caption" tone="secondary" align="center">
-            {t("ruler.help")}
-          </Text>
-          <ChampionPicker
-            catalogue={catalogue.data}
-            isLoading={catalogue.isLoading}
-            error={catalogue.error}
-            selected={championId}
-            onSelect={choisirChampion}
-          />
-        </Stack>
-      </SideLayout>
+      <MacroPlanner macro={macro} />
       <Card
         title={t("ruler.reference.title")}
         description={t("ruler.reference.description", {
-          speed: formatNumber(vitesse > 0 ? vitesse : VITESSE_PAR_DEFAUT),
+          speed: formatNumber(VITESSE_PAR_DEFAUT),
         })}
       >
         <Columns minWidth={460}>

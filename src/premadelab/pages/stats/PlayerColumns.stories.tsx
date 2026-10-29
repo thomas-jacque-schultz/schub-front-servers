@@ -72,24 +72,47 @@ const JOUEURS = [
     ],
     null,
   ),
+  joueur(
+    "d",
+    "Delta",
+    [ligne("84", "Akali", 14), ligne("238", "Zed", 6)],
+    ligne("premade", null, 22, {
+      winRate: 0.5,
+      kda: 2.8,
+      damagePerMinute: 680,
+    }),
+  ),
+  joueur(
+    "e",
+    "Echo",
+    [ligne("99", "Lux", 20)],
+    ligne("premade", null, 22, {
+      winRate: 0.6,
+      kda: 3.6,
+      damagePerMinute: 590,
+    }),
+  ),
 ];
 
-function Colonnes() {
+// Une équipe complète garde son radar (Schub#158) : cinq colonnes au plus large du bandeau.
+function Colonnes({ nombre }: { nombre: number }) {
+  const joueurs = JOUEURS.slice(0, nombre);
   const [choix, setChoix] = useState<Record<string, string[]>>({});
   const championRows = Math.max(
-    ...JOUEURS.map(
+    ...joueurs.map(
       (p) => championsEnColonne(p, choix[p.memberId] ?? []).length,
     ),
   );
   return (
     <AlignedColumns
       minWidth={220}
-      count={JOUEURS.length}
-      columns={JOUEURS.map((player) =>
+      count={joueurs.length}
+      columns={joueurs.map((player) =>
         playerColumn(player, {
           isViewer: false,
           showRadar: true,
-          premadeLines: lignesPremade(JOUEURS),
+          denseRadar: joueurs.length > 3,
+          premadeLines: lignesPremade(joueurs),
           champions: choix[player.memberId] ?? [],
           onChampionsChange: (keys) =>
             setChoix((avant) => ({ ...avant, [player.memberId]: keys })),
@@ -108,4 +131,6 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const TroisJoueurs: Story = {};
+export const TroisJoueurs: Story = { args: { nombre: 3 } };
+
+export const CinqJoueurs: Story = { args: { nombre: 5 } };

@@ -1,12 +1,6 @@
-import { useCallback, useRef, useState } from "react";
-import {
-  Button,
-  GameStage,
-  SegmentedControl,
-  Stack,
-  SwatchButton,
-} from "../../common";
-import { catalogue } from "../commun/champions";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Frame, GameStage, Illustration, Stack, Text } from "../../common";
+import { catalogue, splash } from "../commun/champions";
 import {
   Classement,
   type Fiche,
@@ -15,38 +9,20 @@ import {
   Reponse,
   Salon,
 } from "../commun/ecrans";
-import type { Evenement } from "../commun/relay";
-import type { Lang } from "../commun/textes";
+import type { RelaisEvenement as Evenement } from "../../common";
 import { type Contexte, useMaintenant, useSalon } from "../commun/useSalon";
 import { estMessageJeu, type MessageJeu, useMeneur } from "../commun/useMeneur";
-import { Board } from "./Board";
+import { AideChampions } from "./Aide";
+import { Board, type Outil } from "./Board";
 import { Flux } from "./flux";
 import { Consigne } from "./Jeu";
+import { Outils } from "./Outils";
+import { COULEURS, EPAISSEURS } from "./palette";
 import { nouvellePartie, type Partie } from "./partie";
 import { nouvelleManche, REGLES } from "./regles";
 import { texte } from "./textes";
-import { estMorceau, GOMME, type Morceau, RATIO, Tableau } from "./traits";
+import { estOperation, type Operation, RATIO, Tableau } from "./traits";
 
-const COULEURS = [
-  "#F2E9EE",
-  "#8A8A8A",
-  "#E0576B",
-  "#FF8C42",
-  "#FFD23F",
-  "#C9A227",
-  "#8B5A2B",
-  "#9BE564",
-  "#4FB783",
-  "#2E7D32",
-  "#3DDBD9",
-  "#5B9BE8",
-  "#1E3A8A",
-  "#8E5CF7",
-  "#A4477E",
-  "#FF77B7",
-];
-const EPAISSEURS = [0.004, 0.009, 0.02];
-const NOMS_EPAISSEURS = ["fin", "moyen", "epais"] as const;
 // Le titre, la consigne, le champ de réponse et les outils : le tableau prend la hauteur qui reste.
 const RESERVE_PX = 330;
 
@@ -68,10 +44,21 @@ export function ScribbleApp() {
 function Salle({ contexte, nom }: { contexte: Contexte; nom: string }) {
   const { lang } = contexte;
   const tableau = useRef(new Tableau()).current;
-  const recus = useRef(new Flux<Morceau>()).current;
+  const recus = useRef(new Flux<Operation>()).current;
   const [version, setVersion] = useState(0);
   const [couleur, setCouleur] = useState(COULEURS[0]);
-  const [epaisseur, setEpaisseur] = useState(EPAISSEURS[1]);
+  const [outil, setOutil] = useState<Outil>("feutre");
+  // Mes traits et remplissages encore sur le tableau, du plus ancien au plus récent : Ctrl + Z retire le dernier.
+  const [mesFaits, setMesFaits] = useState<string[]>([]);
+  const [epaisseur, setEpaisseur] = useState(EPAISSEURS[2]);
+  const changeEpaisseur = useCallback(
+    (sens: 1 | -1) =>
+      setEpaisseur((avant) => {
+        const rang = EPAISSEURS.indexOf(avant) + sens;
+        return EPAISSEURS[Math.min(EPAISSEURS.length - 1, Math.max(0, rang))];
+      }),
+    [],
+  );
   const enPartie = useRef<{ current: Partie | null }>({ current: null });
   const recoitJeu = useRef<(de: string | null, m: MessageJeu) => void>(
     () => undefined,
@@ -79,6 +66,7 @@ function Salle({ contexte, nom }: { contexte: Contexte; nom: string }) {
 
   const vide = useCallback(() => {
     tableau.vide();
+    setMesFaits([]);
     setVersion((v) => v + 1);
   }, [tableau]);
 
@@ -88,8 +76,9 @@ function Salle({ contexte, nom }: { contexte: Contexte; nom: string }) {
         case "joined":
           tableau.vide();
           evenement.history
-            .filter(estMorceau)
-            .forEach((morceau) => tableau.ajoute(morceau));
+            .filter(estOperation)
+            .forEach((operation) => tableau.enregistre(operation));
+          setMesFaits([]);
           setVersion((v) => v + 1);
           break;
         case "message": {
@@ -97,7 +86,7 @@ function Salle({ contexte, nom }: { contexte: Contexte; nom: string }) {
           if (estMessageJeu(evenement.data)) {
             recoitJeu.current(evenement.from, evenement.data);
           } else if (
-            estMorceau(evenement.data) &&
+            estOperation(evenement.data) &&
             (!p || (p.phase === "dessin" && evenement.from === p.dessinateur))
           ) {
             recus.emet(evenement.data);
@@ -150,6 +139,46 @@ function Salle({ contexte, nom }: { contexte: Contexte; nom: string }) {
     !partie.trouve.includes(moi);
   const dessinateur = enCours && partie.dessinateur === moi;
 
+  const fait = (operation: Operation) => {
+    salon.envoie(operation, true);
+    if (operation.k !== "u") {
+      setMesFaits((faits) =>
+        faits.includes(operation.id) ? faits : [...faits, operation.id],
+      );
+    }
+  };
+  const annule = useCallback(() => {
+    const id = mesFaits.at(-1);
+    if (id === undefined) {
+      return;
+    }
+    const annulation: Operation = { k: "u", id };
+    recus.emet(annulation);
+    salon.envoie(annulation, true);
+    setMesFaits((faits) => faits.slice(0, -1));
+  }, [mesFaits, recus, salon]);
+
+  useEffect(() => {
+    if (!dessinable) {
+      return;
+    }
+    const touche = (event: KeyboardEvent) => {
+      const saisie = (event.target as HTMLElement | null)?.closest(
+        "input, textarea",
+      );
+      if (
+        (event.ctrlKey || event.metaKey) &&
+        event.key.toLowerCase() === "z" &&
+        !saisie
+      ) {
+        event.preventDefault();
+        annule();
+      }
+    };
+    window.addEventListener("keydown", touche);
+    return () => window.removeEventListener("keydown", touche);
+  }, [annule, dessinable]);
+
   return (
     <Salon
       lang={lang}
@@ -181,6 +210,20 @@ function Salle({ contexte, nom }: { contexte: Contexte; nom: string }) {
                     : null
             }
           />
+          {dessinateur && partie.phase === "dessin" && partie.mot && (
+            <Frame dense>
+              <Stack spacing={0.75}>
+                <Text variant="overline" tone="secondary">
+                  {texte(lang, "modele")}
+                </Text>
+                <Illustration
+                  src={splash(partie.mot.id)}
+                  alt={partie.mot.nom}
+                  maxHeight={180}
+                />
+              </Stack>
+            </Frame>
+          )}
           {enCours && <Fil lang={lang} fil={partie.fil} noms={partie.noms} />}
         </Stack>
       }
@@ -223,81 +266,46 @@ function Salle({ contexte, nom }: { contexte: Contexte; nom: string }) {
             epaisseur={epaisseur}
             version={version}
             auteur={moi}
-            onMorceau={(morceau) => salon.envoie(morceau, true)}
+            outil={outil}
+            onOperation={fait}
             recus={recus}
+            onCran={changeEpaisseur}
           />
         </GameStage>
         {enCours && !dessinateur && (
-          <Reponse
-            key={`${partie.cycle}-${partie.dessinateur}-${devine}`}
-            lang={lang}
-            proche={jeu.proche}
-            actif={devine}
-            onEnvoie={jeu.devine}
-          />
+          <>
+            <Reponse
+              key={`${partie.cycle}-${partie.dessinateur}-${devine}`}
+              lang={lang}
+              proche={jeu.proche}
+              actif={devine}
+              onEnvoie={jeu.devine}
+            />
+            {devine && (
+              <AideChampions
+                key={`${partie.cycle}-${partie.dessinateur}`}
+                lang={lang}
+                langPartie={partie.lang}
+                onPropose={jeu.devine}
+              />
+            )}
+          </>
         )}
         {dessinable && (
           <Outils
             lang={lang}
             couleur={couleur}
             epaisseur={epaisseur}
+            outil={outil}
+            peutAnnuler={mesFaits.length > 0}
             onCouleur={setCouleur}
             onEpaisseur={setEpaisseur}
+            onOutil={setOutil}
+            onAnnule={annule}
             onEfface={effaceTout}
           />
         )}
       </Stack>
     </Salon>
-  );
-}
-
-function Outils({
-  lang,
-  couleur,
-  epaisseur,
-  onCouleur,
-  onEpaisseur,
-  onEfface,
-}: {
-  lang: Lang;
-  couleur: string;
-  epaisseur: number;
-  onCouleur: (couleur: string) => void;
-  onEpaisseur: (epaisseur: number) => void;
-  onEfface: () => void;
-}) {
-  return (
-    <Stack direction="row" spacing={1.5} align="center" wrap>
-      <Stack direction="row" spacing={0.5} wrap>
-        {COULEURS.map((c) => (
-          <SwatchButton
-            key={c}
-            color={c}
-            label={c}
-            selected={c === couleur}
-            onClick={() => onCouleur(c)}
-          />
-        ))}
-      </Stack>
-      <SegmentedControl
-        label={texte(lang, "epaisseur")}
-        value={String(EPAISSEURS.indexOf(epaisseur))}
-        onChange={(rang) => onEpaisseur(EPAISSEURS[Number(rang)])}
-        options={NOMS_EPAISSEURS.map((n, rang) => ({
-          value: String(rang),
-          label: texte(lang, n),
-        }))}
-      />
-      <Button
-        size="small"
-        variant={couleur === GOMME ? "primary" : "secondary"}
-        onClick={() => onCouleur(GOMME)}
-      >
-        {texte(lang, "gomme")}
-      </Button>
-      <Button size="small" variant="ghost" onClick={onEfface}>
-        {texte(lang, "effacer")}
-      </Button>
-    </Stack>
   );
 }

@@ -42,7 +42,7 @@
     },
     "content": {
       "title": "Ce que tu publies",
-      "p1": "Les noms d'équipe, les compositions et leurs notes sont écrits par les utilisateurs. Ils sont visibles des membres de l'équipe concernée, et de personne d'autre.",
+      "p1": "Les noms d'équipe, les compositions et leurs notes, et les plans du Macro Planner d'une équipe sont écrits par les utilisateurs. Ils sont visibles des membres de l'équipe concernée, et de personne d'autre.",
       "p2": "Tu restes responsable de ce que tu écris. Sont exclus, et supprimés sans préavis\u00a0:",
       "i1": "les injures, le harcèlement et les propos discriminatoires, y compris visant un coéquipier\u202f;",
       "i2": "les données personnelles de tiers — adresse, numéro, identité civile — qui n'ont rien à faire dans une note de partie\u202f;",
@@ -101,9 +101,9 @@
       "othersTitle": "Les autres joueurs de ces parties",
       "others": "Une partie compte dix participants. Le Riot ID et les chiffres de partie des neuf autres sont donc enregistrés eux aussi, y compris lorsqu'ils n'ont pas de compte {{product}} et n'en auront jamais. Ce sont des données que l'API de Riot Games rend publiques, mais elles sont bien conservées ici — et une demande de suppression les concerne aussi.",
       "teamsTitle": "Équipes",
-      "teams": "Le nom d'une équipe, son effectif — un Riot ID, des postes, un statut par place —, le pool de champions retenu par poste et les compositions préparées, avec leur patch et leurs notes.",
+      "teams": "Le nom d'une équipe, son effectif — un Riot ID, des postes, un statut par place —, le pool de champions retenu par poste, les compositions préparées, avec leur patch et leurs notes, et les plans du Macro Planner\u00a0: leur nom et ce qui y est dessiné, la date et le compte de la dernière modification.",
       "presenceTitle": "Présence dans les mini-jeux",
-      "presence": "Quand un compte connecté ouvre un salon de mini-jeu, le jeu et le code du salon sont signalés toutes les 30\u00a0secondes, pour que les membres de ses équipes puissent le rejoindre. Eux seuls la voient. Cette présence reste en mémoire, n'est jamais écrite en base et s'efface 90\u00a0secondes après le dernier signal. Sans compte, rien n'est signalé.",
+      "presence": "Quand un compte connecté ouvre un salon de mini-jeu, le jeu et le code du salon sont signalés toutes les 30\u00a0secondes, pour que les membres de ses équipes puissent le rejoindre. Eux seuls la voient. Cette présence reste en mémoire, n'est jamais écrite en base et s'efface 90\u00a0secondes après le dernier signal. Sans compte, rien n'est signalé. Un compte connecté joue sous son pseudo, que voient les autres joueurs du salon.",
       "contactTitle": "Formulaire de contact",
       "contact": "Le nom, l’adresse électronique et le message saisis. Le site ne les enregistre pas\u00a0: le message est remis tel quel à l’éditeur par Discord, en message privé ou dans un salon de repli, et reste dans cette messagerie tant que l’éditeur ne le supprime pas."
     },
@@ -117,7 +117,7 @@
     "cookies": {
       "title": "Cookies et stockage du navigateur",
       "session": "Un cookie de session, posé par le serveur et inaccessible au JavaScript du site, porte le jeton d'authentification. Il est nécessaire au fonctionnement\u00a0: sans lui, il n'y a pas de connexion possible. Se déconnecter l'efface.",
-      "local": "Le navigateur mémorise localement un seul réglage, sous la clé color-mode\u00a0: le choix entre thème clair et thème sombre. Il ne quitte jamais l'appareil.",
+      "local": "Le navigateur mémorise localement le choix entre thème clair et thème sombre (clé color-mode), le plan dessiné dans le Macro Planner hors équipe, et l'affichage des curseurs dans celui d'une équipe. Rien de cela ne quitte l'appareil.",
       "turnstile": "Le formulaire de contact peut être protégé par Cloudflare Turnstile, un service anti-robots. Quand il est activé, le navigateur contacte Cloudflare, qui voit alors l'adresse IP du visiteur et applique sa propre politique. Sans clé configurée, ce widget n'est pas chargé du tout."
     },
     "purposes": {
@@ -142,7 +142,7 @@
       "permanent": "Les parties collectées, leurs projections par joueur et l'index des comptes de jeu croisés n'ont aucune date d'expiration.",
       "riotPurge": "Il faut le dire clairement\u00a0: {{product}} ne relève que les parties récentes de chaque joueur, et Riot ne sert lui-même qu'un historique borné. Les parties déjà collectées, elles, restent. Autrement dit, {{product}} conserve des parties que Riot ne sert plus, et c'est ce qui rend une demande de suppression utile.",
       "accountTitle": "Le reste",
-      "account": "Le compte, ses équipes et ses compositions sont conservés tant que le compte existe. Supprimer une équipe supprime ses compositions."
+      "account": "Le compte, ses équipes, leurs compositions et leurs plans sont conservés tant que le compte existe. Supprimer une équipe supprime ses compositions et ses plans."
     },
     "sharing": {
       "title": "À qui ces données sont transmises",

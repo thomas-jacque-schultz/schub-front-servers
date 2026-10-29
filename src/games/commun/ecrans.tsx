@@ -25,14 +25,14 @@ import {
   TextField,
 } from "../../common";
 import type { Ligne } from "./devinette";
+import { NOM_MAX } from "./bridge";
 import { playerName, rememberName } from "./identity";
-import type { Joueur } from "./relay";
+import type { RelaisJoueur as Joueur } from "../../common";
 import { type CleCommune, type Lang, texteCommun } from "./textes";
 import { type Contexte, type EtatSalon, useContexte } from "./useSalon";
 
 // Les écrans communs des jeux, sur le design system et l'ambiance des jeux (Schub#139, #145).
 
-const NOM_MAX = 24;
 const REPONSE_MAX = 60;
 const FIL_AFFICHE = 8;
 
@@ -80,8 +80,10 @@ function Entree({
   if (!contexte) {
     return null;
   }
-  if (nom) {
-    return <PageContainer>{rendu(contexte, nom)}</PageContainer>;
+  // Connecté à PremadeLab, on joue sous le pseudo du compte (Schub#167).
+  const joueur = contexte.nom ?? nom;
+  if (joueur) {
+    return <PageContainer>{rendu(contexte, joueur)}</PageContainer>;
   }
   const { lang } = contexte;
   const propre = saisie.trim().slice(0, NOM_MAX);

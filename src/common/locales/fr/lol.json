@@ -15,8 +15,8 @@
     "experimental": "Expérimental\u00a0: de nouveaux jeux arrivent, et ceux-ci bougeront encore",
     "home": "Accueil",
     "howItWorks": "Comment ça marche",
-    "ruler": "Règle",
-    "rulerHint": "Mesurer les distances sur la carte, en unités du jeu"
+    "ruler": "Macro Planner",
+    "rulerHint": "Mesurer, dessiner et poser des icônes sur la carte, en unités du jeu"
   },
   "hero": {
     "eyebrow": "League of Legends",
@@ -283,13 +283,106 @@
       "join": "Rejoindre"
     }
   },
+  "macro": {
+    "panel": "Outils",
+    "menus": {
+      "mesure": "Mesure",
+      "dessin": "Dessin",
+      "icones": "Icônes"
+    },
+    "tools": {
+      "mesure": "Règle",
+      "feutre": "Feutre",
+      "fleche": "Flèche",
+      "rectangle": "Rectangle",
+      "ellipse": "Cercle",
+      "gomme": "Gomme",
+      "icone": "Poser"
+    },
+    "help": {
+      "mesure": "Glisse pour tracer une mesure de A à B. Touche sans glisser pour déplacer A. Un bout de mesure se reprend en le glissant.",
+      "feutre": "Dessine à main levée. La molette, au-dessus de la carte, change l’épaisseur.",
+      "fleche": "Glisse de l’origine vers la cible\u00a0: la pointe suit le geste.",
+      "rectangle": "Glisse d’un coin à l’autre.",
+      "ellipse": "Glisse d’un coin à l’autre du cadre du cercle.",
+      "gomme": "Touche un élément pour le retirer\u202f; glisse pour en retirer plusieurs. Ctrl + Z le remet.",
+      "icone": "Clique pour poser l’icône choisie. Glisse une icône pour la déplacer\u202f; Suppr retire celle qui est choisie."
+    },
+    "noMeasure": "Aucune mesure sur la carte. Glisse avec la règle pour en tracer une.",
+    "undo": "Annuler (Ctrl + Z)",
+    "clear": "Tout effacer",
+    "clearTitle": "Tout effacer\u202f?",
+    "clearDescription": "Tout ce qui est posé sur la carte disparaît. Ctrl + Z le remet.",
+    "clearConfirm": "Effacer",
+    "ink": "Couleur",
+    "width": "Épaisseur",
+    "widthHint": "La molette, au-dessus de la carte, change aussi l’épaisseur.",
+    "mapLabel_one": "Carte de la Faille de l’invocateur, {{count}} élément posé.",
+    "mapLabel_other": "Carte de la Faille de l’invocateur, {{count}} éléments posés.",
+    "icons": {
+      "wards": "Balises",
+      "objectives": "Objectifs",
+      "pings": "Pings",
+      "champions": "Champions",
+      "names": {
+        "ward": "Balise invisible",
+        "controlWard": "Balise de contrôle",
+        "farsight": "Altération\u00a0: longue-vue",
+        "dragon": "Dragon",
+        "baron": "Baron Nashor",
+        "herald": "Héraut de la Faille",
+        "grubs": "Larves du Néant",
+        "atakhan": "Atakhan",
+        "danger": "Danger",
+        "onMyWay": "J’arrive",
+        "caution": "Attention",
+        "push": "Pousser"
+      },
+      "vision": "Rayon de vision",
+      "visionHint": "Autour d’une balise\u00a0: 900 unités, 500 pour la longue-vue.",
+      "side": "Camp du champion",
+      "sides": {
+        "blue": "Bleu",
+        "red": "Rouge",
+        "none": "Aucun"
+      },
+      "remove": "Retirer l’élément choisi"
+    },
+    "team": {
+      "plan": "Plan",
+      "create": "Nouveau plan",
+      "rename": "Renommer",
+      "duplicate": "Dupliquer",
+      "delete": "Supprimer",
+      "name": "Nom du plan",
+      "nameHint": "Par exemple\u00a0: Early bleu, Setup Baron.",
+      "defaultName": "Plan de l’équipe",
+      "copyName": "{{name}} (copie)",
+      "createTitle": "Nouveau plan",
+      "renameTitle": "Renommer le plan",
+      "deleteTitle": "Supprimer «\u00a0{{name}}\u00a0»\u202f?",
+      "deleteDescription": "Le plan disparaît pour toute l’équipe.",
+      "save": "Enregistrer",
+      "empty": "Aucun plan pour l’instant. Le premier se crée tout seul à l’ouverture.",
+      "present": "Sur la carte",
+      "cursors": "Voir les curseurs",
+      "cursorsHint": "Ton curseur n’est montré aux autres que si tu vois les leurs.",
+      "connecting": "Connexion au salon de l’équipe…",
+      "reconnecting": "Connexion perdue, reprise en cours…",
+      "forbidden": "Ce plan n’est ouvert qu’aux membres de l’équipe.",
+      "saved": "Enregistré à {{time}}",
+      "saving": "Enregistrement…",
+      "saveFailed": "Le plan n’a pas pu être enregistré. Il reste visible tant qu’un membre est sur la carte.",
+      "loadFailed": "Les plans de l’équipe ne se chargent pas pour l’instant."
+    }
+  },
   "ruler": {
     "meta": {
-      "title": "Distances sur la Faille de l’invocateur\u00a0: règle, portées, temps de trajet · PremadeLab",
+      "title": "Macro Planner\u00a0: distances, portées, temps de trajet et plans sur la Faille de l’invocateur · PremadeLab",
       "description": "Mesure toute distance de la Faille de l’invocateur en unités du jeu, sur la vraie carte\u00a0: portée d’un sort, temps de trajet, de tour à tour. Tours et camps placés d’après les parties et les fichiers du jeu."
     },
-    "title": "Règle de la Faille de l’invocateur",
-    "subtitle": "Mesure toute distance sur la vraie carte, en unités du jeu\u00a0: portée d’un sort, temps de trajet, de tour à tour.",
+    "title": "Macro Planner",
+    "subtitle": "La Faille de l’invocateur en unités du jeu\u00a0: mesure une distance, la portée d’un sort ou un temps de trajet, et dessine le plan de ta premade.",
     "help": "Glisse pour tracer une mesure de A à B. Touche sans glisser pour déplacer A\u00a0: B reste en place.",
     "measure": "Mesure",
     "settings": "Réglages",

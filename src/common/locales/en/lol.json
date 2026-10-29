@@ -15,8 +15,8 @@
     "experimental": "Experimental: more games are coming, and these will still change",
     "home": "Home",
     "howItWorks": "How it works",
-    "ruler": "Ruler",
-    "rulerHint": "Measure distances on the map, in game units"
+    "ruler": "Macro Planner",
+    "rulerHint": "Measure, draw and place icons on the map, in game units"
   },
   "hero": {
     "eyebrow": "League of Legends",
@@ -283,13 +283,106 @@
       "join": "Join"
     }
   },
+  "macro": {
+    "panel": "Tools",
+    "menus": {
+      "mesure": "Measure",
+      "dessin": "Draw",
+      "icones": "Icons"
+    },
+    "tools": {
+      "mesure": "Ruler",
+      "feutre": "Pen",
+      "fleche": "Arrow",
+      "rectangle": "Rectangle",
+      "ellipse": "Circle",
+      "gomme": "Eraser",
+      "icone": "Place"
+    },
+    "help": {
+      "mesure": "Drag to measure from A to B. Tap without dragging to move A. Drag either end of a measure to adjust it.",
+      "feutre": "Draw freehand. The mouse wheel, over the map, changes the width.",
+      "fleche": "Drag from the origin to the target: the head follows your gesture.",
+      "rectangle": "Drag from one corner to the other.",
+      "ellipse": "Drag across the box of the circle.",
+      "gomme": "Tap an element to remove it; drag to remove several. Ctrl + Z brings it back.",
+      "icone": "Click to place the chosen icon. Drag an icon to move it; Delete removes the selected one."
+    },
+    "noMeasure": "No measure on the map. Drag with the ruler to draw one.",
+    "undo": "Undo (Ctrl + Z)",
+    "clear": "Clear all",
+    "clearTitle": "Clear everything?",
+    "clearDescription": "Everything placed on the map disappears. Ctrl + Z brings it back.",
+    "clearConfirm": "Clear",
+    "ink": "Colour",
+    "width": "Width",
+    "widthHint": "The mouse wheel, over the map, also changes the width.",
+    "mapLabel_one": "Map of Summoner's Rift, {{count}} element placed.",
+    "mapLabel_other": "Map of Summoner's Rift, {{count}} elements placed.",
+    "icons": {
+      "wards": "Wards",
+      "objectives": "Objectives",
+      "pings": "Pings",
+      "champions": "Champions",
+      "names": {
+        "ward": "Stealth ward",
+        "controlWard": "Control ward",
+        "farsight": "Farsight alteration",
+        "dragon": "Dragon",
+        "baron": "Baron Nashor",
+        "herald": "Rift Herald",
+        "grubs": "Voidgrubs",
+        "atakhan": "Atakhan",
+        "danger": "Danger",
+        "onMyWay": "On my way",
+        "caution": "Caution",
+        "push": "Push"
+      },
+      "vision": "Vision radius",
+      "visionHint": "Around a ward: 900 units, 500 for farsight.",
+      "side": "Champion side",
+      "sides": {
+        "blue": "Blue",
+        "red": "Red",
+        "none": "None"
+      },
+      "remove": "Remove the selected element"
+    },
+    "team": {
+      "plan": "Plan",
+      "create": "New plan",
+      "rename": "Rename",
+      "duplicate": "Duplicate",
+      "delete": "Delete",
+      "name": "Plan name",
+      "nameHint": "For instance: Blue early game, Baron setup.",
+      "defaultName": "Team plan",
+      "copyName": "{{name}} (copy)",
+      "createTitle": "New plan",
+      "renameTitle": "Rename the plan",
+      "deleteTitle": "Delete “{{name}}”?",
+      "deleteDescription": "The plan disappears for the whole team.",
+      "save": "Save",
+      "empty": "No plan yet. The first one is created when you open the tab.",
+      "present": "On the map",
+      "cursors": "Show cursors",
+      "cursorsHint": "Your cursor is shown to others only while you see theirs.",
+      "connecting": "Joining the team room…",
+      "reconnecting": "Connection lost, reconnecting…",
+      "forbidden": "This plan is open to team members only.",
+      "saved": "Saved at {{time}}",
+      "saving": "Saving…",
+      "saveFailed": "The plan could not be saved. It stays visible while a member is on the map.",
+      "loadFailed": "The team plans cannot be loaded right now."
+    }
+  },
   "ruler": {
     "meta": {
-      "title": "Summoner’s Rift distances: ruler, ranges, travel times · PremadeLab",
+      "title": "Macro Planner: Summoner’s Rift distances, ranges, travel times and plans · PremadeLab",
       "description": "Measure any distance on Summoner’s Rift in game units, on the real map: spell range, travel time, tower to tower. Towers and camps placed from real games and the game files."
     },
-    "title": "Summoner’s Rift ruler",
-    "subtitle": "Measure any distance on the real map, in game units: spell range, travel time, tower to tower.",
+    "title": "Macro Planner",
+    "subtitle": "Summoner’s Rift in game units: measure a distance, a spell range or a travel time, and draw your premade’s plan.",
     "help": "Drag to measure from A to B. Tap without dragging to move A: B stays put.",
     "measure": "Measure",
     "settings": "Settings",

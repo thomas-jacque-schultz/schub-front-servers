@@ -7,9 +7,9 @@ import {
   terrainAt,
   toScreen,
   toWorld,
-} from "./mapRuler";
+} from "./macroMap";
 
-describe("la géométrie de la règle", () => {
+describe("la géométrie du Macro Planner", () => {
   it("cale les coins de la minimap sur les bornes de la Faille", () => {
     expect(toScreen({ x: MAP_BOUNDS.minX, y: MAP_BOUNDS.minY }, 512)).toEqual({
       x: 0,

@@ -103,6 +103,14 @@ export { Celebration } from "./components/Celebration";
 export type { CelebrationProps } from "./components/Celebration";
 export { Countdown } from "./components/Countdown";
 export type { CountdownProps } from "./components/Countdown";
+export { CursorCooldown } from "./components/CursorCooldown";
+export type { CursorCooldownProps } from "./components/CursorCooldown";
+export { DrawingGuide } from "./components/DrawingGuide";
+export type {
+  DrawingGuideProps,
+  DrawingPoint,
+  DrawingShape,
+} from "./components/DrawingGuide";
 export { GameBackdrop } from "./components/GameBackdrop";
 export { GameStage } from "./components/GameStage";
 export type { GameStageProps } from "./components/GameStage";
@@ -136,14 +144,31 @@ export type {
   LaneMapProps,
   LaneMapZone,
 } from "./components/LaneMap";
-export { MapRuler } from "./components/MapRuler";
+export { MacroMap } from "./components/MacroMap";
 export type {
-  MapRulerLandmark,
-  MapRulerLandmarkKind,
-  MapRulerProps,
-} from "./components/MapRuler";
-export { MAP_BOUNDS, distance } from "./components/mapRuler";
-export type { MapPoint } from "./components/mapRuler";
+  MacroColor,
+  MacroCursor,
+  MacroMapLandmark,
+  MacroMapLandmarkKind,
+  MacroMapProps,
+  MacroPointer,
+  MacroShape,
+} from "./components/MacroMap";
+export { MAP_BOUNDS, distance } from "./components/macroMap";
+export type { MapPoint } from "./components/macroMap";
+export { MACRO_ICONS } from "./components/macroIcons";
+export type { MacroIconKey } from "./components/macroIcons";
+export { PictogramPicker } from "./components/PictogramPicker";
+export type {
+  PictogramOption,
+  PictogramPickerProps,
+} from "./components/PictogramPicker";
+export { ToolPanel } from "./components/ToolPanel";
+export type {
+  ToolPanelMenu,
+  ToolPanelProps,
+  ToolPanelTool,
+} from "./components/ToolPanel";
 export { ConfidenceBadge } from "./components/ConfidenceBadge";
 export type { ConfidenceBadgeProps } from "./components/ConfidenceBadge";
 export { DivergingBar } from "./components/DivergingBar";

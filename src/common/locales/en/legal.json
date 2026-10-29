@@ -42,7 +42,7 @@
     },
     "content": {
       "title": "What you publish",
-      "p1": "Team names, compositions and their notes are written by users. They are visible to the members of the team concerned, and to no one else.",
+      "p1": "Team names, compositions and their notes, and a team's Macro Planner plans are written by users. They are visible to the members of the team concerned, and to no one else.",
       "p2": "You remain responsible for what you write. The following are excluded, and removed without notice:",
       "i1": "insults, harassment and discriminatory statements, including those aimed at a teammate;",
       "i2": "third parties' personal data — address, phone number, civil identity — which has no place in a game note;",
@@ -101,9 +101,9 @@
       "othersTitle": "The other players in those games",
       "others": "A game holds ten participants. The Riot ID and game figures of the other nine are therefore recorded too, including when they have no {{product}} account and never will. That data is made public by the Riot Games API, but it is indeed kept here — and a deletion request covers it as well.",
       "teamsTitle": "Teams",
-      "teams": "A team's name, its roster — a Riot ID, positions and a status per seat —, the champion pool it keeps per position and the compositions prepared, with their patch and notes.",
+      "teams": "A team's name, its roster — a Riot ID, positions and a status per seat —, the champion pool it keeps per position, the compositions prepared, with their patch and notes, and the Macro Planner plans: their name and what is drawn on them, the date and account of the last change.",
       "presenceTitle": "Presence in the mini-games",
-      "presence": "When a signed-in account opens a mini-game room, the game and the room code are reported every 30 seconds, so that the members of its teams can join. Only they can see it. This presence stays in memory, is never written to the database, and is cleared 90 seconds after the last report. Without an account, nothing is reported.",
+      "presence": "When a signed-in account opens a mini-game room, the game and the room code are reported every 30 seconds, so that the members of its teams can join. Only they can see it. This presence stays in memory, is never written to the database, and is cleared 90 seconds after the last report. Without an account, nothing is reported. A signed-in account plays under its display name, which the other players in the room can see.",
       "contactTitle": "Contact form",
       "contact": "The name, email address and message entered. The site does not store them: the message is delivered as is to the publisher through Discord, as a direct message or in a fallback channel, and stays in that messaging service until the publisher deletes it."
     },
@@ -117,7 +117,7 @@
     "cookies": {
       "title": "Cookies and browser storage",
       "session": "A session cookie, set by the server and unreachable from the site's JavaScript, carries the authentication token. It is required to operate: without it there is no sign-in. Signing out erases it.",
-      "local": "The browser keeps one setting locally, under the key color-mode: the choice between light and dark theme. It never leaves the device.",
+      "local": "The browser keeps locally the choice between light and dark theme (key color-mode), the plan drawn in the Macro Planner outside a team, and whether cursors are shown in a team's one. None of it leaves the device.",
       "turnstile": "The contact form may be protected by Cloudflare Turnstile, an anti-bot service. When it is enabled, the browser contacts Cloudflare, which then sees the visitor's IP address and applies its own policy. With no key configured, the widget is not loaded at all."
     },
     "purposes": {
@@ -142,7 +142,7 @@
       "permanent": "Collected games, their per-player projections and the index of game accounts encountered have no expiry date.",
       "riotPurge": "This has to be said plainly: {{product}} only collects each player's recent games, and Riot itself only serves a capped history. The games already collected, however, stay. In other words, {{product}} keeps games that Riot no longer serves, and that is what makes a deletion request meaningful.",
       "accountTitle": "The rest",
-      "account": "The account, its teams and its compositions are kept as long as the account exists. Deleting a team deletes its compositions."
+      "account": "The account, its teams, their compositions and their plans are kept as long as the account exists. Deleting a team deletes its compositions and its plans."
     },
     "sharing": {
       "title": "Who this data is shared with",

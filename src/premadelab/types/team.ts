@@ -86,3 +86,9 @@ export type WeekDay =
 export type TrainingSlotDto = Schemas["TrainingSlotDto"];
 
 export type TeamSessionDto = Schemas["TeamSessionDto"];
+
+export type MacroPlanSummaryDto = Schemas["MacroPlanSummaryDto"];
+
+export type MacroPlanDto = Schemas["MacroPlanDto"];
+
+export type MacroPlanRequest = Schemas["MacroPlanRequest"];

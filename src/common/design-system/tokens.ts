@@ -278,7 +278,30 @@ export const chartColors: Record<
   },
 };
 
-// La Faille dessinée par la règle (MapRuler) : un fond de jungle, des couloirs à peine plus clairs, la rivière
+// Les encres d'un dessin (scribble, Macro Planner) : des couleurs de données, les mêmes dans les deux schémas.
+export const inkColors = [
+  "#F2E9EE",
+  "#8A8A8A",
+  "#E0576B",
+  "#FF8C42",
+  "#FFD23F",
+  "#C9A227",
+  "#8B5A2B",
+  "#9BE564",
+  "#4FB783",
+  "#2E7D32",
+  "#3DDBD9",
+  "#5B9BE8",
+  "#1E3A8A",
+  "#8E5CF7",
+  "#A4477E",
+  "#FF77B7",
+] as const;
+
+// Les épaisseurs d'un trait, relatives à la largeur du tableau ou de la carte : six crans, choisis à la molette.
+export const inkWidths = [0.003, 0.006, 0.01, 0.015, 0.022, 0.032] as const;
+
+// La Faille dessinée par le Macro Planner (MacroMap) : un fond de jungle, des couloirs à peine plus clairs, la rivière
 // et les deux camps en bleu et rouge, dilués pour que la mesure, en or, reste ce qu'on lit d'abord.
 export const mapColors: Record<
   ColorSchemeName,
