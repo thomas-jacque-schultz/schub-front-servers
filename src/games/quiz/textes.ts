@@ -4,7 +4,7 @@ export const texte = traduction({
   fr: {
     titre: "Questions pour un invocateur",
     accroche:
-      "Quatre réponses, une seule bonne : le plus rapide marque le plus.",
+      "Quatre réponses, une seule bonne : enchaîne les bonnes réponses pour marquer gros.",
     manches: "Nombre de questions",
     manche: "Question {n}/{total}",
     chargement: "Chargement des questions…",
@@ -17,11 +17,15 @@ export const texte = traduction({
     theme_skins: "Skins et gammes",
     theme_monde: "Monde",
     theme_pros: "Joueurs pro",
-    choisis: "Bien joué ! Choisis le thème de la question suivante.",
+    choisis: "À toi ! Choisis le thème de la question suivante.",
     choisit: "{nom} choisit le thème de la question suivante.",
     aRepondu: "a répondu",
     vuAbsent: "👀 a quitté le jeu",
     vuCopie: "👀 copier-coller, 0 point",
+    serie: "🔥 {n}",
+    serieRompue: "série de {n} perdue",
+    regleBareme:
+      "Une bonne réponse vaut 50 points, plus jusqu'à 20 pour la rapidité. Chaque bonne réponse d'affilée ajoute 15 points de plus, jusqu'à +60 : une série vaut mieux que la vitesse.",
     regleVigilance:
       "👀 Pendant une question, quitter le jeu (autre onglet, alt-tab) retire le bonus de rapidité, et un copier-coller vaut 0 point. Tout le monde le voit.",
     attenteReponses: "Réponse enregistrée, on attend les autres.",
@@ -33,7 +37,7 @@ export const texte = traduction({
   },
   en: {
     titre: "Summoner Quiz",
-    accroche: "Four answers, one right: the fastest scores the most.",
+    accroche: "Four answers, one right: chain right answers to score big.",
     manches: "Number of questions",
     manche: "Question {n}/{total}",
     chargement: "Loading questions…",
@@ -46,11 +50,15 @@ export const texte = traduction({
     theme_skins: "Skins and skin lines",
     theme_monde: "World",
     theme_pros: "Pro players",
-    choisis: "Well played! Pick the theme of the next question.",
+    choisis: "Your turn! Pick the theme of the next question.",
     choisit: "{nom} picks the theme of the next question.",
     aRepondu: "answered",
     vuAbsent: "👀 left the game",
     vuCopie: "👀 copy-paste, 0 points",
+    serie: "🔥 {n}",
+    serieRompue: "lost a {n} streak",
+    regleBareme:
+      "A right answer scores 50 points, plus up to 20 for speed. Each right answer in a row adds 15 more, up to +60: a streak beats speed.",
     regleVigilance:
       "👀 During a question, leaving the game (another tab, alt-tab) removes the speed bonus, and a copy-paste scores 0. Everyone sees it.",
     attenteReponses: "Answer saved, waiting for the others.",
