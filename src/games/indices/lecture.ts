@@ -5,34 +5,23 @@ import { texte } from "./textes";
 
 // Un indice tel que le lit chaque joueur, dans sa langue : son libellé et sa valeur.
 
-export const libelle = (lang: Lang, indice: Indice): string => {
-  switch (indice.type) {
-    case "classes":
-      return texte(lang, "classes");
-    case "portee":
-      return texte(lang, "portee");
-    case "sort":
-      return texte(lang, "sort");
-    case "titre":
-      return texte(lang, "titreChampion");
-    case "region":
-      return texte(lang, "region");
-    case "skin":
-      return texte(lang, "skin");
-    case "roles":
-      return texte(lang, "roles");
-    case "recette":
-      return texte(lang, "recette");
-    case "prix":
-      return texte(lang, "prix");
-    case "stats":
-      return texte(lang, "stats");
-    case "composants":
-      return texte(lang, "composants");
-    case "description":
-      return texte(lang, "description");
-  }
+const LIBELLES: Record<Indice["type"], Parameters<typeof texte>[1]> = {
+  classes: "classes",
+  portee: "portee",
+  region: "region",
+  skin: "skin",
+  sort: "sort",
+  titre: "titreChampion",
+  prix: "prix",
+  roles: "roles",
+  stats: "stats",
+  recette: "recette",
+  composants: "composants",
+  description: "description",
 };
+
+export const libelle = (lang: Lang, indice: Indice): string =>
+  texte(lang, LIBELLES[indice.type]);
 
 export const nomFamille = (lang: Lang, famille: Famille) =>
   texte(lang, `famille_${famille}`);
