@@ -161,6 +161,9 @@ function Partie({
       {!partie ? (
         <Stack spacing={1.5}>
           <Text variant="caption" tone="secondary">
+            {texte(lang, "regleBareme")}
+          </Text>
+          <Text variant="caption" tone="secondary">
             {texte(lang, "regleVigilance")}
           </Text>
           {jeu.estMeneur && (
@@ -229,27 +232,36 @@ function Partie({
   );
 }
 
-/** Ce que fait un joueur dans la question, et 👀 s'il l'a quittée ou a copié-collé (Schub#163). */
+const ensemble = (...morceaux: (string | false | null)[]) =>
+  morceaux.filter(Boolean).join(" · ") || null;
+
+/**
+ * Ce que fait un joueur dans la question, 👀 s'il l'a quittée ou a copié-collé (Schub#163), sa série en cours et,
+ * au bilan, celle qu'il vient de perdre (Schub#162).
+ */
 const etiquette = (lang: Lang, partie: PartieQuiz, id: string) => {
   const reponse = partie.reponses[id];
   const gain = partie.gains[id];
+  const n = partie.series[id] ?? 0;
+  const serie = n >= 2 && texte(lang, "serie", { n });
   if (partie.phase === "question") {
-    return reponse
-      ? `${reponse.vu ? "👀 " : ""}${texte(lang, "aRepondu")}`
-      : null;
+    return ensemble(
+      serie,
+      reponse !== undefined &&
+        `${reponse.vu ? "👀 " : ""}${texte(lang, "aRepondu")}`,
+    );
   }
   if (partie.phase !== "bilan") {
-    return null;
+    return ensemble(serie);
   }
-  if (reponse?.vu === "copie") {
-    return texte(lang, "vuCopie");
-  }
-  if (reponse?.vu === "absent") {
-    return gain
-      ? `${texte(lang, "vuAbsent")} · +${gain}`
-      : texte(lang, "vuAbsent");
-  }
-  return gain ? `+${gain}` : null;
+  const rompue = partie.rompues[id];
+  return ensemble(
+    reponse?.vu === "copie" && texte(lang, "vuCopie"),
+    reponse?.vu === "absent" && texte(lang, "vuAbsent"),
+    gain !== undefined && `+${gain}`,
+    gain !== undefined && serie,
+    rompue !== undefined && texte(lang, "serieRompue", { n: rompue }),
+  );
 };
 
 function Manche({

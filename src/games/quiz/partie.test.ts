@@ -98,7 +98,7 @@ describe("questions pour un invocateur", () => {
     expect(JSON.stringify(publique(p))).not.toContain("explication");
   });
 
-  it("plus tôt vaut plus ; le plus rapide à avoir trouvé choisit le thème suivant", () => {
+  it("une bonne réponse vaut 50, plus jusqu'à 20 de rapidité ; chacun choisit le thème à tour de rôle", () => {
     let p = partie();
     const bonne = p.secret!.bonne;
     const fausse = (bonne + 1) % 4;
@@ -109,20 +109,49 @@ describe("questions pour un invocateur", () => {
     p = agir(p, "a", rep(fausse), [A, B, C], BANQUE, Math.random);
     expect(p.phase).toBe("bilan");
     expect(p.solution?.bonne).toBe(bonne);
-    expect(p.scores).toEqual({ a: 0, b: 100, c: 65 });
+    expect(p.scores).toEqual({ a: 0, b: 70, c: 60 });
+    expect([...p.ordre].sort()).toEqual(["a", "b", "c"]);
     p = avancer(p, BILAN_MS, [A, B, C], BANQUE, Math.random);
     expect(p.phase).toBe("theme");
-    expect(p.choisit).toBe("b");
+    expect(p.choisit).toBe(p.ordre[0]);
     expect(p.proposes).toHaveLength(3);
-    const choisi = agir(p, "b", p.proposes[0], [A, B, C], BANQUE, Math.random);
+    const choisi = agir(
+      p,
+      p.ordre[0],
+      p.proposes[0],
+      [A, B, C],
+      BANQUE,
+      Math.random,
+    );
     expect(choisi.phase).toBe("question");
     expect(choisi.theme).toBe(p.proposes[0]);
-    expect(avancer(p, THEME_MS, [A, B, C], BANQUE, Math.random).phase).toBe(
-      "question",
-    );
+    p = avancer(p, THEME_MS, [A, B, C], BANQUE, Math.random);
+    expect(p.phase).toBe("question");
+    p = avancer(p, 20_000, [A, B, C], BANQUE, Math.random);
+    p = avancer(p, BILAN_MS, [A, B, C], BANQUE, Math.random);
+    expect(p.choisit).toBe(p.ordre[1]);
   });
 
-  it("qui quitte le jeu perd la rapidité ; qui copie-colle ne marque rien et ne choisit pas le thème", () => {
+  it("sur cinq questions, un joueur lent qui a tout juste bat un joueur rapide qui en rate une", () => {
+    let p = nouvellePartie([A, B], [...THEMES], 20, 5, "fr", BANQUE, Math.random);
+    for (let n = 1; n <= 5; n++) {
+      const bonne = p.secret!.bonne;
+      p = agir(p, "b", rep(n === 3 ? (bonne + 1) % 4 : bonne), [A, B], BANQUE, Math.random);
+      p = avancer(p, 19_000, [A, B], BANQUE, Math.random);
+      p = agir(p, "a", rep(bonne), [A, B], BANQUE, Math.random);
+      expect(p.phase).toBe("bilan");
+      if (n === 3) {
+        expect(p.rompues).toEqual({ b: 2 });
+      }
+      p = avancer(p, BILAN_MS, [A, B], BANQUE, Math.random);
+      p = avancer(p, THEME_MS, [A, B], BANQUE, Math.random);
+    }
+    expect(p.series).toEqual({ a: 5, b: 2 });
+    // a : 5 × (50 + 1) + 15 + 30 + 45 + 60 ; b : 4 × 70 + 15 + 15.
+    expect(p.scores).toEqual({ a: 405, b: 310 });
+  });
+
+  it("qui quitte le jeu perd la rapidité ; qui copie-colle ne marque rien et perd sa série", () => {
     let p = partie();
     const bonne = p.secret!.bonne;
     p = agir(
@@ -145,16 +174,8 @@ describe("questions pour un invocateur", () => {
     p = agir(p, "c", rep(bonne), [A, B, C], BANQUE, Math.random);
     expect(p.reponses.a.vu).toBe("copie");
     expect(p.reponses.b.vu).toBe("absent");
-    expect(p.scores).toEqual({ a: 0, b: 30, c: 65 });
-    p = avancer(p, BILAN_MS, [A, B, C], BANQUE, Math.random);
-    expect(p.choisit).toBe("c");
-  });
-
-  it("si personne ne trouve, le joueur suivant dans l'ordre choisit", () => {
-    let p = partie();
-    p = avancer(p, 20_000, [A, B, C], BANQUE, Math.random);
-    p = avancer(p, BILAN_MS, [A, B, C], BANQUE, Math.random);
-    expect(p.choisit).toBe("a");
+    expect(p.scores).toEqual({ a: 0, b: 50, c: 60 });
+    expect(p.series).toEqual({ a: 0, b: 1, c: 1 });
   });
 
   it("un meneur qui reprend sans la réponse annule la question, la partie continue", () => {
@@ -171,7 +192,8 @@ describe("questions pour un invocateur", () => {
     let p = partie();
     p = avancer(p, 20_000, [A, B, C], BANQUE, Math.random);
     p = avancer(p, BILAN_MS, [A, B, C], BANQUE, Math.random);
-    p = presence(p, [B, C]);
-    expect(avancer(p, 0, [B, C], BANQUE, Math.random).phase).toBe("question");
+    const restent = [A, B, C].filter((j) => j.id !== p.choisit);
+    p = presence(p, restent);
+    expect(avancer(p, 0, restent, BANQUE, Math.random).phase).toBe("question");
   });
 });
