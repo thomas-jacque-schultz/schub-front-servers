@@ -8,6 +8,8 @@ export interface Contexte {
   lang: Lang;
   room: string | null;
   hote: string | null;
+  /** Le pseudo du compte PremadeLab connecté, quand le jeu tourne dans PremadeLab. */
+  nom: string | null;
 }
 
 // Le salon demandé par l'adresse : scribble.premadelab.eu/ABCD.
@@ -25,11 +27,17 @@ export function useContexte(): Contexte | null {
         lang: langueDuNavigateur(),
         room: salonDeLAdresse(),
         hote: null,
+        nom: null,
       });
       return;
     }
     void attendInit().then((init) =>
-      setContexte({ lang: init.lang, room: init.room, hote: init.origin }),
+      setContexte({
+        lang: init.lang,
+        room: init.room,
+        hote: init.origin,
+        nom: init.nom,
+      }),
     );
   }, []);
   return contexte;

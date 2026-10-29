@@ -17,6 +17,7 @@ import {
   TextField,
   Toast,
   useAuthStore,
+  useProfileStore,
   useCurrentLanguage,
   useDocumentMeta,
   useLocalizedNavigate,
@@ -285,7 +286,27 @@ function Salon({ jeu, room }: { jeu: Jeu; room: string | null }) {
   // Le salon transmis au jeu à son chargement ; un autre lien collé dans l'adresse recharge le jeu sur lui.
   const [transmis, setTransmis] = useState(room);
   const [toast, setToast] = useState("");
+  // Compte les chargements de l'iframe : chacun attend son init.
+  const [charges, setCharges] = useState(0);
+  const { connected } = useAuthStore();
+  const { profile, isLoading } = useProfileStore();
   usePresence(jeu, room);
+
+  // Le pseudo du compte part avec l'init (Schub#167) : on attend le profil, sinon le jeu demanderait un pseudo.
+  useEffect(() => {
+    if (charges === 0 || (connected && !profile && isLoading)) {
+      return;
+    }
+    cadre.current?.contentWindow?.postMessage(
+      {
+        type: "premadelab:init",
+        room: transmis,
+        lang,
+        nom: connected ? (profile?.displayName ?? null) : null,
+      },
+      origineDuJeu(jeu),
+    );
+  }, [charges, connected, isLoading, jeu, lang, profile, transmis]);
 
   useEffect(() => {
     if (room !== annonce.current) {
@@ -324,12 +345,7 @@ function Salon({ jeu, room }: { jeu: Jeu; room: string | null }) {
         src={urlDuJeu(jeu)}
         title={t(`queueKiller.${jeu}.title`)}
         image={vignetteDuJeu(jeu)}
-        onLoad={() =>
-          cadre.current?.contentWindow?.postMessage(
-            { type: "premadelab:init", room: transmis, lang },
-            origineDuJeu(jeu),
-          )
-        }
+        onLoad={() => setCharges((n) => n + 1)}
         back={{ label: t("queueKiller.back"), to: localize("/queue-killer") }}
         room={room}
         roomLabel={t("queueKiller.room")}
