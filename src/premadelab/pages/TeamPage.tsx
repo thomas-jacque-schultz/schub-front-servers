@@ -24,10 +24,18 @@ import { DraftPanel } from "./DraftPanel";
 import { StatsRefreshButton } from "./stats/StatsRefreshButton";
 import { RosterPanel } from "./RosterPanel";
 import { PublicTeamView } from "./team/PublicTeamView";
+import { TeamMacroPanel } from "./team/TeamMacroPanel";
 import { TeamSharing } from "./team/TeamSharing";
 import { TrainingCard } from "./team/TrainingCard";
 
-type PanelKey = "roster" | "players" | "team" | "opposition" | "pool" | "draft";
+type PanelKey =
+  | "roster"
+  | "players"
+  | "team"
+  | "opposition"
+  | "macro"
+  | "pool"
+  | "draft";
 
 function TeamPage() {
   const { t } = useTranslation("teams");
@@ -130,6 +138,7 @@ function TeamPage() {
     { key: "players", label: t("tabs.players") },
     { key: "team", label: t("tabs.team") },
     { key: "opposition", label: t("opposition.tab", { ns: "stats" }) },
+    { key: "macro", label: t("tabs.macro") },
     { key: "pool", label: t("tabs.pool") },
     { key: "draft", label: t("tabs.draft") },
   ];
@@ -191,6 +200,7 @@ function TeamPage() {
           />
         )}
         {panel === "opposition" && <StrategyPanel teamId={team.id} />}
+        {panel === "macro" && <TeamMacroPanel teamId={team.id} />}
         {panel === "pool" && <PoolPanel teamId={team.id} />}
         {panel === "draft" && <DraftPanel team={team} />}
       </Tabs>
