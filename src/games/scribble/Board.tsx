@@ -4,8 +4,8 @@ import type { Flux } from "./flux";
 import { arrondi, GOMME, type Morceau, RATIO, Tableau } from "./traits";
 
 const ENVOI_MS = 50;
-// Un cran d'épaisseur par cran de molette ; un pavé tactile envoie des pas bien plus petits, qui s'additionnent.
-const PAS_MOLETTE = 50;
+// Un cran d'épaisseur par cran de molette (100 dans Chrome) ; un pavé tactile envoie des pas plus petits, qui s'additionnent.
+const PAS_MOLETTE = 100;
 const LIGNE_PX = 33;
 
 interface Props {
