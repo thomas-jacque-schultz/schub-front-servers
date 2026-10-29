@@ -1,10 +1,10 @@
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Button,
   Card,
   ChampionIcon,
   ChampionPickButton,
-  Columns,
+  CursorCooldown,
   Frame,
   Stack,
   Text,
@@ -28,9 +28,11 @@ import {
 } from "../commun/ecrans";
 import type { Evenement } from "../commun/relay";
 import type { Lang } from "../commun/textes";
+import { type Univers, univers } from "../commun/univers";
 import { estMessageJeu, type MessageJeu, useMeneur } from "../commun/useMeneur";
 import { type Contexte, useMaintenant, useSalon } from "../commun/useSalon";
 import {
+  DELAI_ERREUR_MS,
   DUREE_DEFAUT,
   DUREES,
   type Enigme,
@@ -41,7 +43,7 @@ import {
   type PartieIndices,
   visibles,
 } from "./partie";
-import { grille } from "./familles";
+import { type Famille, grille } from "./familles";
 import { creerRegles } from "./regles";
 import { texte } from "./textes";
 
@@ -57,12 +59,19 @@ export function IndicesApp() {
       fiche={FICHE}
       rendu={(contexte, nom) => (
         <AvecDonnees
-          charge={() => donnees(contexte.lang)}
+          charge={() =>
+            Promise.all([
+              donnees(contexte.lang),
+              univers(contexte.lang).catch(() => null),
+            ])
+          }
           chargement={texte(contexte.lang, "chargement")}
           echec={texte(contexte.lang, "erreurDonnees")}
           reessayer={texte(contexte.lang, "reessayer")}
         >
-          {(lues) => <Partie contexte={contexte} nom={nom} donnees={lues} />}
+          {([lues, u]) => (
+            <Partie contexte={contexte} nom={nom} donnees={lues} univers={u} />
+          )}
         </AvecDonnees>
       )}
     />
@@ -73,10 +82,12 @@ function Partie({
   contexte,
   nom,
   donnees: lues,
+  univers: u,
 }: {
   contexte: Contexte;
   nom: string;
   donnees: Donnees;
+  univers: Univers | null;
 }) {
   const { lang } = contexte;
   const recoitJeu = useRef<(de: string | null, m: MessageJeu) => void>(
@@ -93,8 +104,8 @@ function Partie({
   const presents = useRef(joueurs);
   presents.current = joueurs;
   const regles = useMemo(
-    () => creerRegles(lues, () => presents.current),
-    [lues],
+    () => creerRegles(lues, u, () => presents.current),
+    [lues, u],
   );
   const jeu = useMeneur({ moi, meneur, joueurs, regles, envoie: salon.envoie });
   recoitJeu.current = jeu.recoit;
@@ -212,6 +223,22 @@ function Manche({
   onObjet: (id: string) => void;
   onDevine: (texte: string) => void;
 }) {
+  // Après chaque essai, deux secondes d'attente (Schub#161) ; le meneur ignore aussi ceux qui arrivent pendant.
+  const [essai, setEssai] = useState<number | null>(null);
+  const [attente, setAttente] = useState(false);
+  const minuterie = useRef<number | undefined>(undefined);
+  useEffect(() => () => window.clearTimeout(minuterie.current), []);
+  const essaie = (envoi: () => void) => {
+    envoi();
+    setEssai((n) => (n ?? 0) + 1);
+    setAttente(true);
+    window.clearTimeout(minuterie.current);
+    minuterie.current = window.setTimeout(
+      () => setAttente(false),
+      DELAI_ERREUR_MS,
+    );
+  };
+
   const titre = texte(lang, "manche", {
     n: partie.manche,
     total: partie.manches,
@@ -298,18 +325,22 @@ function Manche({
             key={`${partie.manche}-${devine}`}
             lang={lang}
             proche={proche}
-            actif={devine}
-            onEnvoie={onDevine}
+            actif={devine && !attente}
+            onEnvoie={(t) => essaie(() => onDevine(t))}
           />
           {enigme.categorie === "objet" && (
             <GrilleObjets
               key={partie.manche}
               lang={lang}
               donnees={lues}
-              actif={devine}
-              onChoisis={onObjet}
+              actif={devine && !attente}
+              onChoisis={(id) => essaie(() => onObjet(id))}
             />
           )}
+          <CursorCooldown
+            trigger={devine ? essai : null}
+            durationMs={DELAI_ERREUR_MS}
+          />
         </>
       ) : (
         <Solution lang={lang} version={partie.version} enigme={enigme} />
@@ -318,7 +349,10 @@ function Manche({
   );
 }
 
-/** Tous les objets de la boutique, en colonnes par famille ; un essai raté se grise pour soi seul. */
+/**
+ * Tous les objets de la boutique en petites icônes, une rangée serrée par famille, le nom au survol (Schub#161) :
+ * la grille tient sans défiler. Un essai raté se grise pour soi seul.
+ */
 function GrilleObjets({
   lang,
   donnees: lues,
@@ -342,40 +376,44 @@ function GrilleObjets({
           value={filtre}
           onChange={setFiltre}
         />
-        <Columns minWidth={200}>
+        <Stack spacing={0.5}>
           {colonnes.map(({ famille, objets }) => {
             const vus = objets.filter((o) =>
               normalise(o.nom).includes(cherche),
             );
             return (
               vus.length > 0 && (
-                <Stack key={famille} spacing={0.75}>
+                <Stack
+                  key={famille}
+                  direction="row"
+                  spacing={0.25}
+                  align="center"
+                  wrap
+                >
                   <Text variant="overline" tone="secondary">
-                    {texte(lang, `famille_${famille}`)}
+                    {nomFamille(lang, famille)}
                   </Text>
-                  <Stack direction="row" spacing={0.5} wrap>
-                    {vus.map((o) => (
-                      <ChampionPickButton
-                        key={o.id}
-                        champion={{
-                          name: o.nom,
-                          iconUrl: iconeObjet(lues.version, o.id),
-                        }}
-                        label={o.nom}
-                        size="medium"
-                        disabled={!actif || essayes.includes(o.id)}
-                        onClick={() => {
-                          setEssayes((deja) => [...deja, o.id]);
-                          onChoisis(o.id);
-                        }}
-                      />
-                    ))}
-                  </Stack>
+                  {vus.map((o) => (
+                    <ChampionPickButton
+                      key={o.id}
+                      champion={{
+                        name: o.nom,
+                        iconUrl: iconeObjet(lues.version, o.id),
+                      }}
+                      label={o.nom}
+                      size="small"
+                      disabled={!actif || essayes.includes(o.id)}
+                      onClick={() => {
+                        setEssayes((deja) => [...deja, o.id]);
+                        onChoisis(o.id);
+                      }}
+                    />
+                  ))}
                 </Stack>
               )
             );
           })}
-        </Columns>
+        </Stack>
       </Stack>
     </Card>
   );
@@ -420,6 +458,14 @@ const libelle = (lang: Lang, indice: Indice): string => {
       return texte(lang, "sort");
     case "titre":
       return texte(lang, "titreChampion");
+    case "region":
+      return texte(lang, "region");
+    case "skin":
+      return texte(lang, "skin");
+    case "roles":
+      return texte(lang, "roles");
+    case "recette":
+      return texte(lang, "recette");
     case "prix":
       return texte(lang, "prix");
     case "stats":
@@ -430,6 +476,9 @@ const libelle = (lang: Lang, indice: Indice): string => {
       return texte(lang, "description");
   }
 };
+
+const nomFamille = (lang: Lang, famille: Famille) =>
+  texte(lang, `famille_${famille}`);
 
 const CLASSES = ["Fighter", "Mage", "Assassin", "Marksman", "Tank", "Support"];
 
@@ -449,7 +498,13 @@ const valeur = (lang: Lang, indice: Indice): string => {
         .filter(Boolean)
         .join(" · ");
     case "sort":
+    case "region":
+    case "skin":
       return indice.nom;
+    case "roles":
+      return indice.familles.map((f) => nomFamille(lang, f)).join(", ");
+    case "recette":
+      return indice.noms.join(", ") || texte(lang, "aucuneRecette");
     case "titre":
     case "description":
       return indice.texte;
