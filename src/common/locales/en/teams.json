@@ -55,7 +55,8 @@
     "pool": "Champion pool",
     "draft": "Draft planner",
     "ariaLabel": "The team panels",
-    "team": "Matches"
+    "team": "Matches",
+    "macro": "Macro Planner"
   },
   "roster": {
     "title": "The roster",

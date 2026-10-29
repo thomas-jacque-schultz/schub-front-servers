@@ -1,4 +1,4 @@
-// La géométrie de la règle. Les coordonnées sont celles du jeu (timelines de Riot) : origine côté bleu, en bas à
+// La géométrie du Macro Planner. Les coordonnées sont celles du jeu (timelines de Riot) : origine côté bleu, en bas à
 // gauche, y vers le haut. La minimap de la Faille couvre ce rectangle, un peu plus haut que large ; les tours
 // relevées dans les timelines s'y posent sur leurs socles.
 export const MAP_BOUNDS = {
@@ -39,6 +39,9 @@ export const radiusOnScreen = (radius: number, size: number): MapPoint => ({
   x: (radius / LARGEUR) * size,
   y: (radius / HAUTEUR) * size,
 });
+
+/** Les unités du jeu que couvre un pixel de la carte, en largeur. */
+export const unitsPerPixel = (size: number) => LARGEUR / size;
 
 const borne = (valeur: number, min: number, max: number) =>
   Math.min(max, Math.max(min, valeur));

@@ -1,7 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { annonceSalon, attendInit, dansUnHote } from "./bridge";
 import { playerId } from "./identity";
-import { type Evenement, type Joueur, Relais } from "./relay";
+import {
+  Relais,
+  type RelaisEvenement as Evenement,
+  type RelaisJoueur as Joueur,
+} from "../../common";
 import { type CleCommune, type Lang, langueDuNavigateur } from "./textes";
 
 export interface Contexte {

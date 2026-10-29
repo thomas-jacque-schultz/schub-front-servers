@@ -1,5 +1,5 @@
-// Le client du relais (schub-together-games). Il rejoint, se reconnecte seul, et garde la connexion ouverte :
-// le tunnel Cloudflare ferme un WebSocket muet au bout de 100 secondes.
+// Le client du relais (schub-together-games), pour les jeux et le Macro Planner. Il rejoint, se reconnecte seul, et
+// garde la connexion ouverte : le tunnel Cloudflare ferme un WebSocket muet au bout de 100 secondes.
 export interface Joueur {
   id: string;
   name: string;
@@ -30,7 +30,13 @@ const DEFINITIFS = new Set([
   "RATE_LIMITED",
   "ROOM_EXPIRED",
   "REPLACED",
+  "FORBIDDEN",
 ]);
+
+export interface RelaisOptions {
+  /** Un salon d'équipe : un laissez-passer neuf à chaque connexion, il n'en vaut que quelques minutes. */
+  pass?: () => Promise<string>;
+}
 
 export class Relais {
   private socket: WebSocket | null = null;
@@ -44,6 +50,7 @@ export class Relais {
     private readonly game: string,
     private readonly joueur: Joueur,
     private readonly ecoute: (evenement: Evenement) => void,
+    private readonly options: RelaisOptions = {},
   ) {
     this.room = room;
     this.ouvre();
@@ -69,12 +76,19 @@ export class Relais {
     this.socket = socket;
     socket.onopen = () => {
       this.essais = 0;
-      this.ecrit({
-        type: "join",
-        room: this.room,
-        game: this.game,
-        player: this.joueur,
-      });
+      const rejoint = (pass?: string) =>
+        this.ecrit({
+          type: "join",
+          room: this.room,
+          game: this.game,
+          player: this.joueur,
+          pass,
+        });
+      if (this.options.pass) {
+        this.options.pass().then(rejoint, () => socket.close());
+      } else {
+        rejoint();
+      }
       this.ping = window.setInterval(
         () => this.ecrit({ type: "ping" }),
         PING_MS,
