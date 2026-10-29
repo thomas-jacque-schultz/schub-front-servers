@@ -7,6 +7,12 @@ export interface DrawingPoint {
   y: number;
 }
 
+/** Une forme en préparation, de son point d'origine au curseur. */
+export interface DrawingShape {
+  kind: "line" | "rectangle" | "ellipse";
+  from: DrawingPoint;
+}
+
 export interface DrawingGuideProps {
   /** Le curseur au-dessus du tableau ; null quand il en sort. */
   point: DrawingPoint | null;
@@ -14,20 +20,20 @@ export interface DrawingGuideProps {
   width: number;
   /** La couleur du feutre ; absente, c'est la gomme (cercle en pointillés). */
   color?: string;
-  /** L'origine d'une droite en préparation : elle s'affiche du point d'origine au curseur. */
-  from?: DrawingPoint | null;
+  /** La forme que tracera le prochain clic ou le relâchement. */
+  shape?: DrawingShape | null;
 }
 
 /**
- * L'aperçu du feutre posé sur un tableau à dessin (Schub#160) : un cercle de la taille du trait sous le curseur, et
- * la droite que tracera le prochain clic. Il se place dans une `GameStage`, au-dessus du canvas, sans capter la
- * souris.
+ * L'aperçu du feutre posé sur un tableau à dessin (Schub#160, #164) : un cercle de la taille du trait sous le
+ * curseur, et la droite, le rectangle ou l'ellipse en préparation. Il se place dans une `GameStage`, au-dessus du
+ * canvas, sans capter la souris.
  */
 export function DrawingGuide({
   point,
   width,
   color,
-  from = null,
+  shape = null,
 }: DrawingGuideProps) {
   const calque = useRef<SVGSVGElement>(null);
   const [taille, setTaille] = useState({ l: 0, h: 0 });
@@ -46,6 +52,44 @@ export function DrawingGuide({
 
   const { l, h } = taille;
   const diametre = Math.max(2, width * l);
+  const trait = {
+    fill: "none",
+    stroke: color ?? "currentColor",
+    strokeOpacity: 0.55,
+    strokeWidth: diametre,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+  };
+  const forme = (de: DrawingPoint, a: DrawingPoint) => {
+    const [x1, y1, x2, y2] = [de.x * l, de.y * h, a.x * l, a.y * h];
+    switch (shape?.kind) {
+      case "line":
+        return <line x1={x1} y1={y1} x2={x2} y2={y2} {...trait} />;
+      case "rectangle":
+        return (
+          <rect
+            x={Math.min(x1, x2)}
+            y={Math.min(y1, y2)}
+            width={Math.abs(x2 - x1)}
+            height={Math.abs(y2 - y1)}
+            {...trait}
+          />
+        );
+      case "ellipse":
+        return (
+          <ellipse
+            cx={(x1 + x2) / 2}
+            cy={(y1 + y2) / 2}
+            rx={Math.abs(x2 - x1) / 2}
+            ry={Math.abs(y2 - y1) / 2}
+            {...trait}
+          />
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <Box
       component="svg"
@@ -58,30 +102,19 @@ export function DrawingGuide({
         width: "100%",
         height: "100%",
         pointerEvents: "none",
+        color: "text.secondary",
       }}
     >
-      {point && from && (
-        <line
-          x1={from.x * l}
-          y1={from.y * h}
-          x2={point.x * l}
-          y2={point.y * h}
-          stroke={color ?? "currentColor"}
-          strokeOpacity={0.55}
-          strokeWidth={diametre}
-          strokeLinecap="round"
-        />
-      )}
+      {point && shape && forme(shape.from, point)}
       {point && (
-        <Box
-          component="circle"
+        <circle
           cx={point.x * l}
           cy={point.y * h}
           r={diametre / 2}
           fill="none"
+          stroke={color ?? "currentColor"}
           strokeWidth={1.5}
           strokeDasharray={color ? undefined : "3 3"}
-          sx={{ stroke: color ?? "currentColor", color: "text.secondary" }}
         />
       )}
     </Box>

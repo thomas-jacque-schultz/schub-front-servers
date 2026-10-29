@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { DrawingGuide } from "./DrawingGuide";
 import { GameStage } from "./GameStage";
 
-// L'aperçu du feutre au-dessus d'un tableau vide : le cercle suit le curseur, la droite part du dernier point.
+// L'aperçu du feutre au-dessus d'un tableau vide : le cercle suit le curseur, la forme va de son origine au curseur.
 const meta = {
   title: "Jeux/DrawingGuide",
   component: DrawingGuide,
@@ -22,7 +22,15 @@ type Story = StoryObj<typeof meta>;
 export const Feutre: Story = {};
 
 export const Droite: Story = {
-  args: { from: { x: 0.2, y: 0.75 } },
+  args: { shape: { kind: "line", from: { x: 0.2, y: 0.75 } } },
+};
+
+export const Rectangle: Story = {
+  args: { shape: { kind: "rectangle", from: { x: 0.2, y: 0.15 } } },
+};
+
+export const Ellipse: Story = {
+  args: { shape: { kind: "ellipse", from: { x: 0.2, y: 0.15 } } },
 };
 
 export const Gomme: Story = {
