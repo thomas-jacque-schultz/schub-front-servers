@@ -1,7 +1,22 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { DrawingGuide, type DrawingPoint } from "../../common";
+import {
+  DrawingGuide,
+  type DrawingPoint,
+  type DrawingShape,
+} from "../../common";
 import type { Flux } from "./flux";
-import { arrondi, GOMME, type Morceau, RATIO, Tableau } from "./traits";
+import {
+  arrondi,
+  forme,
+  GOMME,
+  type Morceau,
+  type Operation,
+  RATIO,
+  Tableau,
+} from "./traits";
+
+/** Le feutre à main levée, deux formes à glisser d'un coin à l'autre, et le pot de peinture (Schub#164). */
+export type Outil = "feutre" | "rectangle" | "cercle" | "pot";
 
 const ENVOI_MS = 50;
 // Un cran d'épaisseur par cran de molette (100 dans Chrome) ; un pavé tactile envoie des pas plus petits, qui s'additionnent.
@@ -17,8 +32,9 @@ interface Props {
   auteur: string;
   // Pendant une partie, seul le dessinateur dessine.
   actif: boolean;
-  onMorceau: (morceau: Morceau) => void;
-  recus: Flux<Morceau>;
+  outil: Outil;
+  onOperation: (operation: Operation) => void;
+  recus: Flux<Operation>;
   /** La molette au-dessus du tableau : +1 pour un trait plus épais, -1 pour plus fin. */
   onCran: (sens: 1 | -1) => void;
 }
@@ -30,12 +46,15 @@ export function Board({
   version,
   auteur,
   actif,
-  onMorceau,
+  outil,
+  onOperation,
   recus,
   onCran,
 }: Props) {
   const canvas = useRef<HTMLCanvasElement>(null);
   const enCours = useRef<{ id: string; points: number[] } | null>(null);
+  // L'origine d'un rectangle ou d'un cercle qu'on glisse.
+  const origine = useRef<number[] | null>(null);
   const compteur = useRef(0);
   // Le dernier point de mon dernier trait : Alt + clic trace une droite depuis lui (Schub#160).
   const dernier = useRef<number[] | null>(null);
@@ -115,10 +134,10 @@ export function Board({
 
   useEffect(
     () =>
-      recus.abonne((morceau) => {
+      recus.abonne((operation) => {
         const lu = contexte();
         if (lu) {
-          tableau.dessineMorceau(lu.ctx, lu.largeur, lu.hauteur, morceau);
+          tableau.applique(lu.ctx, lu.largeur, lu.hauteur, operation);
         }
       }),
     [contexte, recus, tableau],
@@ -137,8 +156,8 @@ export function Board({
       p: trait.points,
     };
     trait.points = [];
-    onMorceau(morceau);
-  }, [couleur, epaisseur, onMorceau]);
+    onOperation(morceau);
+  }, [couleur, epaisseur, onOperation]);
 
   useEffect(() => {
     const minuterie = window.setInterval(envoie, ENVOI_MS);
@@ -153,40 +172,69 @@ export function Board({
     ];
   };
 
-  const droite = (vers: number[]) => {
-    const depuis = dernier.current;
-    if (!depuis) {
-      return false;
-    }
-    const morceau: Morceau = {
-      k: "t",
-      id: `${auteur}-${compteur.current++}`,
-      c: couleur,
-      w: epaisseur,
-      p: [...depuis, ...vers],
-    };
+  const nouvelId = () => `${auteur}-${compteur.current++}`;
+
+  const dessineLocal = (operation: Operation) => {
     const lu = contexte();
     if (lu) {
-      tableau.dessineMorceau(lu.ctx, lu.largeur, lu.hauteur, morceau);
+      tableau.applique(lu.ctx, lu.largeur, lu.hauteur, operation);
     }
-    onMorceau(morceau);
-    dernier.current = vers;
+  };
+
+  /** Un trait d'un seul envoi : la droite à l'Alt + clic, un rectangle, un cercle. */
+  const traitEntier = (points: number[]) => {
+    const morceau: Morceau = {
+      k: "t",
+      id: nouvelId(),
+      c: couleur,
+      w: epaisseur,
+      p: points,
+    };
+    dessineLocal(morceau);
+    onOperation(morceau);
+    dernier.current = points.slice(-2);
+  };
+
+  const commence = (p: number[]) => {
+    if (outil === "pot") {
+      const remplissage: Operation = { k: "r", id: nouvelId(), c: couleur, p };
+      dessineLocal(remplissage);
+      onOperation(remplissage);
+      return false;
+    }
+    if (outil !== "feutre") {
+      origine.current = p;
+      return true;
+    }
+    enCours.current = { id: nouvelId(), points: [...p] };
+    dernier.current = p;
+    dessineLocal({
+      k: "t",
+      id: enCours.current.id,
+      c: couleur,
+      w: epaisseur,
+      p,
+    });
     return true;
   };
 
-  const dessineLocal = (points: number[]) => {
-    const lu = contexte();
-    const trait = enCours.current;
-    if (lu && trait) {
-      tableau.dessineMorceau(lu.ctx, lu.largeur, lu.hauteur, {
-        k: "t",
-        id: trait.id,
-        c: couleur,
-        w: epaisseur,
-        p: points,
-      });
+  const termine = (p: number[] | null) => {
+    if (origine.current && p && outil !== "feutre" && outil !== "pot") {
+      traitEntier(forme(outil, origine.current, p));
     }
+    origine.current = null;
+    envoie();
+    enCours.current = null;
   };
+
+  const apercu: DrawingShape | null = origine.current
+    ? {
+        kind: outil === "cercle" ? "ellipse" : "rectangle",
+        from: versPoint(origine.current),
+      }
+    : alt && outil === "feutre" && !enCours.current && dernier.current
+      ? { kind: "line", from: versPoint(dernier.current) }
+      : null;
 
   return (
     <>
@@ -198,17 +246,13 @@ export function Board({
             return;
           }
           const p = point(event);
-          if (event.altKey && droite(p)) {
+          if (event.altKey && outil === "feutre" && dernier.current) {
+            traitEntier([...dernier.current, ...p]);
             return;
           }
-          event.currentTarget.setPointerCapture(event.pointerId);
-          enCours.current = {
-            id: `${auteur}-${compteur.current++}`,
-            points: [],
-          };
-          enCours.current.points.push(...p);
-          dernier.current = p;
-          dessineLocal(p);
+          if (commence(p)) {
+            event.currentTarget.setPointerCapture(event.pointerId);
+          }
         }}
         onPointerMove={(event) => {
           if (actif && event.pointerType === "mouse") {
@@ -216,7 +260,8 @@ export function Board({
             setSurvol({ x, y });
             setAlt(event.altKey);
           }
-          if (!enCours.current) {
+          const trait = enCours.current;
+          if (!trait) {
             return;
           }
           const nouveaux = event.nativeEvent.getCoalescedEvents?.().length
@@ -228,31 +273,30 @@ export function Board({
                 ];
               })
             : point(event);
-          enCours.current.points.push(...nouveaux);
+          trait.points.push(...nouveaux);
           dernier.current = nouveaux.slice(-2);
-          dessineLocal(nouveaux);
+          dessineLocal({
+            k: "t",
+            id: trait.id,
+            c: couleur,
+            w: epaisseur,
+            p: nouveaux,
+          });
         }}
         onPointerLeave={() => setSurvol(null)}
-        onPointerUp={() => {
-          envoie();
-          enCours.current = null;
-        }}
-        onPointerCancel={() => {
-          envoie();
-          enCours.current = null;
-        }}
+        onPointerUp={(event) => termine(point(event))}
+        onPointerCancel={() => termine(null)}
       />
       {actif && (
         <DrawingGuide
           point={survol}
           width={epaisseur}
           color={couleur === GOMME ? undefined : couleur}
-          from={alt && !enCours.current ? dernierPoint(dernier.current) : null}
+          shape={apercu}
         />
       )}
     </>
   );
 }
 
-const dernierPoint = (p: number[] | null): DrawingPoint | null =>
-  p ? { x: p[0], y: p[1] } : null;
+const versPoint = ([x, y]: number[]): DrawingPoint => ({ x, y });

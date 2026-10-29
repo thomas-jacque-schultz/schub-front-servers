@@ -109,6 +109,7 @@ export { DrawingGuide } from "./components/DrawingGuide";
 export type {
   DrawingGuideProps,
   DrawingPoint,
+  DrawingShape,
 } from "./components/DrawingGuide";
 export { GameBackdrop } from "./components/GameBackdrop";
 export { GameStage } from "./components/GameStage";
