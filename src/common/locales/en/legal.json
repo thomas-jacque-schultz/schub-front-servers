@@ -103,7 +103,7 @@
       "teamsTitle": "Teams",
       "teams": "A team's name, its roster — a Riot ID, positions and a status per seat —, the champion pool it keeps per position and the compositions prepared, with their patch and notes.",
       "presenceTitle": "Presence in the mini-games",
-      "presence": "When a signed-in account opens a mini-game room, the game and the room code are reported every 30 seconds, so that the members of its teams can join. Only they can see it. This presence stays in memory, is never written to the database, and is cleared 90 seconds after the last report. Without an account, nothing is reported.",
+      "presence": "When a signed-in account opens a mini-game room, the game and the room code are reported every 30 seconds, so that the members of its teams can join. Only they can see it. This presence stays in memory, is never written to the database, and is cleared 90 seconds after the last report. Without an account, nothing is reported. A signed-in account plays under its display name, which the other players in the room can see.",
       "contactTitle": "Contact form",
       "contact": "The name, email address and message entered. The site does not store them: the message is delivered as is to the publisher through Discord, as a direct message or in a fallback channel, and stays in that messaging service until the publisher deletes it."
     },

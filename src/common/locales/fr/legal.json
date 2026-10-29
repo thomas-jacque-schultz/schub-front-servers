@@ -103,7 +103,7 @@
       "teamsTitle": "Équipes",
       "teams": "Le nom d'une équipe, son effectif — un Riot ID, des postes, un statut par place —, le pool de champions retenu par poste et les compositions préparées, avec leur patch et leurs notes.",
       "presenceTitle": "Présence dans les mini-jeux",
-      "presence": "Quand un compte connecté ouvre un salon de mini-jeu, le jeu et le code du salon sont signalés toutes les 30\u00a0secondes, pour que les membres de ses équipes puissent le rejoindre. Eux seuls la voient. Cette présence reste en mémoire, n'est jamais écrite en base et s'efface 90\u00a0secondes après le dernier signal. Sans compte, rien n'est signalé.",
+      "presence": "Quand un compte connecté ouvre un salon de mini-jeu, le jeu et le code du salon sont signalés toutes les 30\u00a0secondes, pour que les membres de ses équipes puissent le rejoindre. Eux seuls la voient. Cette présence reste en mémoire, n'est jamais écrite en base et s'efface 90\u00a0secondes après le dernier signal. Sans compte, rien n'est signalé. Un compte connecté joue sous son pseudo, que voient les autres joueurs du salon.",
       "contactTitle": "Formulaire de contact",
       "contact": "Le nom, l’adresse électronique et le message saisis. Le site ne les enregistre pas\u00a0: le message est remis tel quel à l’éditeur par Discord, en message privé ou dans un salon de repli, et reste dans cette messagerie tant que l’éditeur ne le supprime pas."
     },
