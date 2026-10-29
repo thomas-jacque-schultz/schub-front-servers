@@ -5,6 +5,7 @@ import {
   SegmentedControl,
   Stack,
   SwatchButton,
+  Text,
 } from "../../common";
 import { catalogue } from "../commun/champions";
 import {
@@ -19,6 +20,7 @@ import type { Evenement } from "../commun/relay";
 import type { Lang } from "../commun/textes";
 import { type Contexte, useMaintenant, useSalon } from "../commun/useSalon";
 import { estMessageJeu, type MessageJeu, useMeneur } from "../commun/useMeneur";
+import { AideChampions } from "./Aide";
 import { Board } from "./Board";
 import { Flux } from "./flux";
 import { Consigne } from "./Jeu";
@@ -45,8 +47,7 @@ const COULEURS = [
   "#A4477E",
   "#FF77B7",
 ];
-const EPAISSEURS = [0.004, 0.009, 0.02];
-const NOMS_EPAISSEURS = ["fin", "moyen", "epais"] as const;
+const EPAISSEURS = [0.003, 0.006, 0.01, 0.015, 0.022, 0.032];
 // Le titre, la consigne, le champ de réponse et les outils : le tableau prend la hauteur qui reste.
 const RESERVE_PX = 330;
 
@@ -71,7 +72,15 @@ function Salle({ contexte, nom }: { contexte: Contexte; nom: string }) {
   const recus = useRef(new Flux<Morceau>()).current;
   const [version, setVersion] = useState(0);
   const [couleur, setCouleur] = useState(COULEURS[0]);
-  const [epaisseur, setEpaisseur] = useState(EPAISSEURS[1]);
+  const [epaisseur, setEpaisseur] = useState(EPAISSEURS[2]);
+  const changeEpaisseur = useCallback(
+    (sens: 1 | -1) =>
+      setEpaisseur((avant) => {
+        const rang = EPAISSEURS.indexOf(avant) + sens;
+        return EPAISSEURS[Math.min(EPAISSEURS.length - 1, Math.max(0, rang))];
+      }),
+    [],
+  );
   const enPartie = useRef<{ current: Partie | null }>({ current: null });
   const recoitJeu = useRef<(de: string | null, m: MessageJeu) => void>(
     () => undefined,
@@ -225,16 +234,27 @@ function Salle({ contexte, nom }: { contexte: Contexte; nom: string }) {
             auteur={moi}
             onMorceau={(morceau) => salon.envoie(morceau, true)}
             recus={recus}
+            onCran={changeEpaisseur}
           />
         </GameStage>
         {enCours && !dessinateur && (
-          <Reponse
-            key={`${partie.cycle}-${partie.dessinateur}-${devine}`}
-            lang={lang}
-            proche={jeu.proche}
-            actif={devine}
-            onEnvoie={jeu.devine}
-          />
+          <>
+            <Reponse
+              key={`${partie.cycle}-${partie.dessinateur}-${devine}`}
+              lang={lang}
+              proche={jeu.proche}
+              actif={devine}
+              onEnvoie={jeu.devine}
+            />
+            {devine && (
+              <AideChampions
+                key={`${partie.cycle}-${partie.dessinateur}`}
+                lang={lang}
+                langPartie={partie.lang}
+                onPropose={jeu.devine}
+              />
+            )}
+          </>
         )}
         {dessinable && (
           <Outils
@@ -283,9 +303,9 @@ function Outils({
         label={texte(lang, "epaisseur")}
         value={String(EPAISSEURS.indexOf(epaisseur))}
         onChange={(rang) => onEpaisseur(EPAISSEURS[Number(rang)])}
-        options={NOMS_EPAISSEURS.map((n, rang) => ({
+        options={EPAISSEURS.map((_, rang) => ({
           value: String(rang),
-          label: texte(lang, n),
+          label: String(rang + 1),
         }))}
       />
       <Button
@@ -298,6 +318,9 @@ function Outils({
       <Button size="small" variant="ghost" onClick={onEfface}>
         {texte(lang, "effacer")}
       </Button>
+      <Text variant="caption" tone="secondary">
+        {texte(lang, "astuces")}
+      </Text>
     </Stack>
   );
 }
