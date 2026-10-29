@@ -39,6 +39,13 @@ export type { Permission } from "./types/permission";
 export type { AccountLinks } from "./types/auth";
 export type { KnownRiotAccountDto } from "./types/profile";
 
+export { Relais } from "./realtime/relay";
+export type {
+  Evenement as RelaisEvenement,
+  Joueur as RelaisJoueur,
+  RelaisOptions,
+} from "./realtime/relay";
+
 export { FeedbackForm } from "./contact/FeedbackForm";
 export { RiotAccountPicker } from "./riot/RiotAccountPicker";
 export { RiotDisclaimer } from "./riot/RiotDisclaimer";

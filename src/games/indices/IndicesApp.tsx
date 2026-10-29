@@ -23,7 +23,7 @@ import {
   Reponse,
   Salon,
 } from "../commun/ecrans";
-import type { Evenement } from "../commun/relay";
+import type { RelaisEvenement as Evenement } from "../../common";
 import type { Lang } from "../commun/textes";
 import { type Univers, univers } from "../commun/univers";
 import { estMessageJeu, type MessageJeu, useMeneur } from "../commun/useMeneur";

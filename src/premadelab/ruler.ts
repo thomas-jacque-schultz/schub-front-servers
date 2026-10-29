@@ -1,4 +1,5 @@
-import { MAP_BOUNDS, type MapPoint, type MapRulerLandmark } from "../common";
+import type { MacroMapLandmark, MapPoint } from "../common";
+import { lisElement, type ElementMesure, type Plan } from "./macro/plan";
 
 // Les repères de la règle, en coordonnées du jeu. Deux sources, et aucune symétrie supposée : le rouge n'est pas le
 // miroir exact du bleu (jusqu'à une centaine d'unités d'écart).
@@ -36,12 +37,12 @@ export type RepereId =
   | "scuttleTop"
   | "scuttleBot";
 
-export interface Repere extends MapRulerLandmark {
+export interface Repere extends MacroMapLandmark {
   id: RepereId;
   approche?: boolean;
 }
 
-type Ligne = [RepereId, MapRulerLandmark["kind"], number, number];
+type Ligne = [RepereId, MacroMapLandmark["kind"], number, number];
 
 const camp = (side: "blue" | "red", lignes: Ligne[]): Repere[] =>
   lignes.map(([id, kind, x, y]) => ({ id, kind, side, x, y }));
@@ -242,57 +243,30 @@ export const TRAJETS_DE_REFERENCE = (
 export const PORTEES = [125, 400, 550, 600, 1000, 1200, 2000, 3000, 5500];
 export const VITESSE_PAR_DEFAUT = 345;
 
-// La clé de l'outil d'origine : une mesure faite avant l'intégration se retrouve.
-const CLE = "riftruler";
+// La clé de l'outil d'origine : une mesure faite avant le Macro Planner devient la première mesure du plan.
+const ANCIENNE_CLE = "riftruler";
 
-export interface Mesure {
-  a: MapPoint;
-  b: MapPoint;
-  r: number;
-}
-
-const MESURE_PAR_DEFAUT: Mesure = {
+const MESURE_PAR_DEFAUT: ElementMesure = {
+  id: "depart",
+  type: "mesure",
   a: REPERES.find((repere) => repere.id === "outerTowerMid") ?? REPERES[0],
   b: REPERES.find((repere) => repere.id === "baron") ?? REPERES[0],
   r: 1000,
 };
 
-const dansLaCarte = (valeur: unknown): valeur is MapPoint => {
-  const point = valeur as MapPoint | null;
-  return (
-    typeof point?.x === "number" &&
-    typeof point.y === "number" &&
-    point.x >= MAP_BOUNDS.minX &&
-    point.x <= MAP_BOUNDS.maxX &&
-    point.y >= MAP_BOUNDS.minY &&
-    point.y <= MAP_BOUNDS.maxY
-  );
-};
-
-export const lireMesure = (): Mesure => {
+/** Le plan de /ruler à la première visite. */
+export const planDeDepart = (): Plan => {
   try {
-    const brut = JSON.parse(localStorage.getItem(CLE) ?? "null");
-    if (
-      dansLaCarte(brut?.a) &&
-      dansLaCarte(brut?.b) &&
-      typeof brut.r === "number" &&
-      brut.r > 0
-    ) {
-      return { a: brut.a, b: brut.b, r: brut.r };
+    const ancienne = lisElement({
+      ...JSON.parse(localStorage.getItem(ANCIENNE_CLE) ?? "null"),
+      id: "depart",
+      type: "mesure",
+    });
+    if (ancienne) {
+      return [ancienne];
     }
   } catch {
     // Stockage refusé ou contenu illisible : la mesure par défaut.
   }
-  return MESURE_PAR_DEFAUT;
-};
-
-export const ecrireMesure = ({ a, b, r }: Mesure) => {
-  try {
-    localStorage.setItem(
-      CLE,
-      JSON.stringify({ a: { x: a.x, y: a.y }, b: { x: b.x, y: b.y }, r }),
-    );
-  } catch {
-    // Navigation privée ou quota plein : la mesure vit le temps de la page.
-  }
+  return [MESURE_PAR_DEFAUT];
 };

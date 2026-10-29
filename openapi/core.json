@@ -2994,6 +2994,202 @@
         "tags" : [ "composition-controller" ]
       }
     },
+    "/teams/{teamId}/macro-plans" : {
+      "get" : {
+        "operationId" : "macroPlans",
+        "parameters" : [ {
+          "in" : "header",
+          "name" : "X-Actor-Id",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "teamId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/MacroPlanSummaryDto"
+                  }
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "macro-plan-controller" ]
+      },
+      "post" : {
+        "operationId" : "createMacroPlan",
+        "parameters" : [ {
+          "in" : "header",
+          "name" : "X-Actor-Id",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "teamId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/MacroPlanRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MacroPlanDto"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "macro-plan-controller" ]
+      }
+    },
+    "/teams/{teamId}/macro-plans/{planId}" : {
+      "delete" : {
+        "operationId" : "deleteMacroPlan",
+        "parameters" : [ {
+          "in" : "header",
+          "name" : "X-Actor-Id",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "teamId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "planId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "macro-plan-controller" ]
+      },
+      "get" : {
+        "operationId" : "macroPlan",
+        "parameters" : [ {
+          "in" : "header",
+          "name" : "X-Actor-Id",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "teamId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "planId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MacroPlanDto"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "macro-plan-controller" ]
+      },
+      "put" : {
+        "operationId" : "updateMacroPlan",
+        "parameters" : [ {
+          "in" : "header",
+          "name" : "X-Actor-Id",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "teamId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "planId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/MacroPlanRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MacroPlanDto"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "macro-plan-controller" ]
+      }
+    },
     "/teams/{teamId}/members" : {
       "post" : {
         "operationId" : "addMember",
@@ -6184,6 +6380,73 @@
           },
           "name" : {
             "type" : "string"
+          }
+        }
+      },
+      "MacroPlanDto" : {
+        "required" : [ "createdAt", "elements", "id", "name", "teamId", "updatedAt" ],
+        "type" : "object",
+        "properties" : {
+          "createdAt" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "elements" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "additionalProperties" : {
+                "type" : "object"
+              }
+            }
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "teamId" : {
+            "type" : "string"
+          },
+          "updatedAt" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }
+      },
+      "MacroPlanRequest" : {
+        "type" : "object",
+        "properties" : {
+          "elements" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "type" : "object",
+              "additionalProperties" : {
+                "type" : "object"
+              }
+            }
+          },
+          "name" : {
+            "type" : "string",
+            "nullable" : true
+          }
+        }
+      },
+      "MacroPlanSummaryDto" : {
+        "required" : [ "id", "name", "updatedAt" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "updatedAt" : {
+            "type" : "string",
+            "format" : "date-time"
           }
         }
       },

@@ -1088,6 +1088,38 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/teams/{teamId}/macro-plans": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["macroPlans"];
+    put?: never;
+    post: operations["createMacroPlan"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/teams/{teamId}/macro-plans/{planId}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["macroPlan"];
+    put: operations["updateMacroPlan"];
+    post?: never;
+    delete: operations["deleteMacroPlan"];
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/teams/{teamId}/members": {
     parameters: {
       query?: never;
@@ -2216,6 +2248,32 @@ export interface components {
     Listed: {
       id: string;
       name: string;
+    };
+    MacroPlanDto: {
+      /** Format: date-time */
+      createdAt: string;
+      elements: {
+        [key: string]: Record<string, never>;
+      }[];
+      id: string;
+      name: string;
+      teamId: string;
+      /** Format: date-time */
+      updatedAt: string;
+    };
+    MacroPlanRequest: {
+      elements?:
+        | {
+            [key: string]: Record<string, never>;
+          }[]
+        | null;
+      name?: string | null;
+    };
+    MacroPlanSummaryDto: {
+      id: string;
+      name: string;
+      /** Format: date-time */
+      updatedAt: string;
     };
     MasteryDto: {
       /** Format: int32 */
@@ -5617,6 +5675,135 @@ export interface operations {
       path: {
         teamId: string;
         compositionId: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  macroPlans: {
+    parameters: {
+      query?: never;
+      header?: {
+        "X-Actor-Id"?: string;
+      };
+      path: {
+        teamId: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "*/*": components["schemas"]["MacroPlanSummaryDto"][];
+        };
+      };
+    };
+  };
+  createMacroPlan: {
+    parameters: {
+      query?: never;
+      header?: {
+        "X-Actor-Id"?: string;
+      };
+      path: {
+        teamId: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["MacroPlanRequest"];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "*/*": components["schemas"]["MacroPlanDto"];
+        };
+      };
+    };
+  };
+  macroPlan: {
+    parameters: {
+      query?: never;
+      header?: {
+        "X-Actor-Id"?: string;
+      };
+      path: {
+        teamId: string;
+        planId: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "*/*": components["schemas"]["MacroPlanDto"];
+        };
+      };
+    };
+  };
+  updateMacroPlan: {
+    parameters: {
+      query?: never;
+      header?: {
+        "X-Actor-Id"?: string;
+      };
+      path: {
+        teamId: string;
+        planId: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["MacroPlanRequest"];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "*/*": components["schemas"]["MacroPlanDto"];
+        };
+      };
+    };
+  };
+  deleteMacroPlan: {
+    parameters: {
+      query?: never;
+      header?: {
+        "X-Actor-Id"?: string;
+      };
+      path: {
+        teamId: string;
+        planId: string;
       };
       cookie?: never;
     };
