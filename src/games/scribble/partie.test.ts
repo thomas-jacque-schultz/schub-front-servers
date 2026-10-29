@@ -5,7 +5,6 @@ import {
   BILAN_MS,
   choisir,
   deviner,
-  masque,
   nouvellePartie,
   presence,
 } from "./partie";
@@ -34,11 +33,6 @@ describe("partie", () => {
     expect(distance("kaisa", "kaisaa")).toBe(1);
     expect(distance("kaisa", "kaiza")).toBe(1);
     expect(distance("kaisa", "kasia")).toBe(2);
-  });
-
-  it("le masque garde la ponctuation et les espaces", () => {
-    expect(masque("Dr. Mundo", [])).toBe("__. _____");
-    expect(masque("Kai'Sa", [0])).toBe("K__'__");
   });
 
   it("le premier joueur dessine et choisit parmi trois mots", () => {
@@ -76,7 +70,7 @@ describe("partie", () => {
     expect(deviner(un, "c", "Kai'Sa").partie.phase).toBe("bilan");
   });
 
-  it("le chrono révèle des lettres, puis passe la main au joueur suivant", () => {
+  it("le chrono passe la main au joueur suivant", () => {
     const p = choisir(
       nouvellePartie(
         [A, B, C],
@@ -90,7 +84,7 @@ describe("partie", () => {
       0,
     );
     const mi = avancer(p, 41_000, [A, B, C], premier);
-    expect(mi.revele).toHaveLength(1);
+    expect(mi.phase).toBe("dessin");
     const fin = avancer(mi, 40_000, [A, B, C], premier);
     expect(fin.phase).toBe("bilan");
     const suivante = avancer(fin, BILAN_MS, [A, B, C], premier);

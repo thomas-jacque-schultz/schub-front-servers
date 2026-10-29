@@ -15,9 +15,7 @@ export const REGLES: Regles<Partie> = {
   deviner,
   presence,
   aDiffuser: (avant, apres) =>
-    apres.phase !== avant.phase ||
-    apres.tour !== avant.tour ||
-    apres.revele.length !== avant.revele.length,
+    apres.phase !== avant.phase || apres.tour !== avant.tour,
   // Le choix du mot, par le seul dessinateur.
   action: (p, de, valeur) =>
     de === p.dessinateur && typeof valeur === "number" ? choisir(p, valeur) : p,
