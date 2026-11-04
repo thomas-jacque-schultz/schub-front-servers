@@ -187,7 +187,7 @@ décide de ce qu'elle reçoit.
 | `/teams`, `/teams/:id` | les équipes | connecté, à la demande |
 | `/combos/:palier/:type` | les combos qui gagnent par palier (Schub#112), lus par les robots en SSI comme les profils | **public**, à la demande |
 | `/queue-killer`, `/queue-killer/:jeu/:salon` | les mini-jeux (Schub#118 : scribble, zoom, indices, quiz, imposteur), chacun en iframe depuis son sous-domaine (`queueKiller.ts`) ; deux messages avec le jeu, origine vérifiée | **public**, à la demande |
-| `/ruler` | la règle : distances sur la Faille en unités du jeu, cercle de portée, temps de marche (`MapRuler`, repères dans `ruler.ts`) ; la carte est la minimap du jeu repeinte aux couleurs du site, en coordonnées de Riot (`MAP_BOUNDS`) ; repères relevés, jamais symétrisés (sources dans `ruler.ts`) ; la mesure reste dans le navigateur (`riftruler`) | **public**, à la demande |
+| `/ruler` | le Macro Planner seul (Schub#166) : mesurer, dessiner, poser des icônes sur la Faille en unités du jeu (`MacroMap`, repères dans `ruler.ts`) ; la carte est la minimap du jeu repeinte aux couleurs du site, en coordonnées de Riot (`MAP_BOUNDS`) ; repères relevés, jamais symétrisés (sources dans `ruler.ts`) ; le plan reste dans le navigateur (`premadelab.macro`) | **public**, à la demande |
 
 **Communes** : `/profile` (connecté), `/login`, `/terms`, `/privacy` (publiques).
 
@@ -289,8 +289,8 @@ ne pas défaire :
   menu ne peuvent les exiger — la route demande d'être connecté, le menu se contente de
   `TEAM_CREATE` ou `TEAM_VIEW`. Le BFF fait de même et le cœur tranche.
 
-Six onglets : effectif, joueurs, matchs (la liste des parties), stratégie (bilan de l'équipe et niveau
-adverse, sous une seule fenêtre de dates), pool de champions, préparateur de draft.
+Sept onglets : effectif, joueurs, matchs (la liste des parties), stratégie (bilan de l'équipe et niveau
+adverse, sous une seule fenêtre de dates), Macro Planner, pool de champions, préparateur de draft.
 Un coach peut aussi être titulaire ou remplaçant (`coach`, à part du statut) ; sa ligne est
 encadrée. Le statut `COACH` seul désigne un coach qui ne joue pas.
 
@@ -323,6 +323,24 @@ lit autrement selon sa cause : personne au-dessus du plancher, ou personne ne l'
 **Désigner un compte Riot passe par `RiotAccountPicker`**, partagé par le profil et l'ajout d'un
 membre. Deux champs libres laissaient écrire un Riot ID qui n'existe pas, et le refus n'arrivait
 qu'à l'enregistrement.
+
+## Le Macro Planner (Schub#166)
+
+Un seul outil, seul sur `/ruler` et à plusieurs dans l'onglet d'une équipe. Trois pièces dans `src/premadelab/macro/`,
+à ne pas mélanger :
+
+- **Le plan est un journal** (`plan.ts`) : des opérations `pose` (crée ou remplace par identifiant), `retire`,
+  `vide`, appliquées par une fonction pure. Elles sont idempotentes : rejouer l'historique du relais sur un plan déjà
+  enregistré donne le même plan. L'annulation joue les opérations inverses ; on n'annule que ses propres gestes.
+- **Un outil est un fichier** de `outils/`, inscrit au registre : son menu, son bouton, et ce qu'il fait d'un geste.
+  Ni la carte (`MacroMap`, design system) ni le canal ne connaissent les outils.
+- **Le canal est une interface** (`canal.ts`) : `CanalLocal` (navigateur, `/ruler`) et `CanalEquipe` (salon privé
+  du relais). Ce dernier recharge le plan enregistré et un laissez-passer neuf à chaque connexion ; seul le meneur du
+  salon enregistre. Le laissez-passer est signé par le BFF pour un membre (`TEAM_VIEW`) et vérifié par le relais.
+- Ce qui arrive d'ailleurs (autre membre, stockage, cœur) passe par `lisElement` / `lisOperation` avant d'entrer.
+  Une icône de champion est un identifiant, jamais une URL : un membre ne fait pas charger d'adresse aux autres.
+
+Sur `premadelab.eu`, `/ws` va au relais par le nginx du front (`RELAY_UPSTREAM`), par Vite en dev (`RELAY_URL`).
 
 ## Les statistiques
 

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { Hasard, Present } from "./devinette";
-import type { Joueur } from "./relay";
+import type { RelaisJoueur as Joueur } from "../../common";
 
 // Les règles tournent chez le meneur, qui diffuse l'état entier à chaque changement (Schub#118) : un joueur
 // qui arrive le reçoit au suivant, et le joueur suivant reprend du dernier état reçu si le meneur part.

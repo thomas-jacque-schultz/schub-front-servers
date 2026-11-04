@@ -144,14 +144,31 @@ export type {
   LaneMapProps,
   LaneMapZone,
 } from "./components/LaneMap";
-export { MapRuler } from "./components/MapRuler";
+export { MacroMap } from "./components/MacroMap";
 export type {
-  MapRulerLandmark,
-  MapRulerLandmarkKind,
-  MapRulerProps,
-} from "./components/MapRuler";
-export { MAP_BOUNDS, distance } from "./components/mapRuler";
-export type { MapPoint } from "./components/mapRuler";
+  MacroColor,
+  MacroCursor,
+  MacroMapLandmark,
+  MacroMapLandmarkKind,
+  MacroMapProps,
+  MacroPointer,
+  MacroShape,
+} from "./components/MacroMap";
+export { MAP_BOUNDS, distance } from "./components/macroMap";
+export type { MapPoint } from "./components/macroMap";
+export { MACRO_ICONS } from "./components/macroIcons";
+export type { MacroIconKey } from "./components/macroIcons";
+export { PictogramPicker } from "./components/PictogramPicker";
+export type {
+  PictogramOption,
+  PictogramPickerProps,
+} from "./components/PictogramPicker";
+export { ToolPanel } from "./components/ToolPanel";
+export type {
+  ToolPanelMenu,
+  ToolPanelProps,
+  ToolPanelTool,
+} from "./components/ToolPanel";
 export { ConfidenceBadge } from "./components/ConfidenceBadge";
 export type { ConfidenceBadgeProps } from "./components/ConfidenceBadge";
 export { DivergingBar } from "./components/DivergingBar";

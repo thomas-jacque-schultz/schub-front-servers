@@ -55,7 +55,8 @@
     "pool": "Pool de champions",
     "draft": "Préparateur de draft",
     "ariaLabel": "Les panneaux de l'équipe",
-    "team": "Matchs"
+    "team": "Matchs",
+    "macro": "Macro Planner"
   },
   "roster": {
     "title": "L'effectif",

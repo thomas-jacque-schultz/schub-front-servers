@@ -27,7 +27,7 @@ import {
 import type { Ligne } from "./devinette";
 import { NOM_MAX } from "./bridge";
 import { playerName, rememberName } from "./identity";
-import type { Joueur } from "./relay";
+import type { RelaisJoueur as Joueur } from "../../common";
 import { type CleCommune, type Lang, texteCommun } from "./textes";
 import { type Contexte, type EtatSalon, useContexte } from "./useSalon";
 
