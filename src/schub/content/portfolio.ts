@@ -72,6 +72,7 @@ const REPOSITORY_URL = "https://github.com/thomas-jacque-schultz";
 
 const PLAN_URL = `${REPOSITORY_URL}/Schub/blob/main/docs/evolutions-2026-09.md`;
 const MIGRATION_URL = `${REPOSITORY_URL}/Schub/blob/main/docs/migration-microservices.md`;
+const PREMADELAB_URL = "https://premadelab.eu";
 
 const fr: PortfolioContent = {
   hero: {
@@ -118,11 +119,11 @@ const fr: PortfolioContent = {
       key: "schub",
       name: "Schub",
       tagline:
-        "La boîte à outils de la communauté Miam — serveurs de jeu, équipes League of Legends —, en production.",
+        "Les serveurs de jeu de la communauté Miam, en production, et le socle sur lequel PremadeLab a grandi.",
       body: [
-        "Sept dépôts, un cœur métier et quatre connecteurs, déployés en Docker Swarm derrière " +
-          "un tunnel Cloudflare. L'interface est un SPA React bilingue adossé à un BFF Spring " +
-          "Boot ; l'identité passe par Discord, sans compte local.",
+        "Un cœur métier, un BFF et cinq connecteurs, chacun dans son dépôt, déployés en Docker " +
+          "Swarm derrière un tunnel Cloudflare. L'interface est un SPA React bilingue ; l'identité " +
+          "passe par Discord, sans compte local.",
         "Un bot Discord relaie les commandes et les changements d'état dans les salons abonnés. " +
           "Les redirections de ports de la box ne sont pas ouvertes à la main : un connecteur " +
           "les réconcilie par API à partir de l'état déclaré des serveurs, ce qui les rend " +
@@ -152,12 +153,39 @@ const fr: PortfolioContent = {
       ],
     },
     {
+      key: "premadelab",
+      name: "PremadeLab",
+      tagline:
+        "L'analyse de parties League of Legends, pour un joueur et pour son équipe, ouverte à tous.",
+      body: [
+        "Il a commencé comme un onglet de Schub, et il a pris son propre domaine quand il a " +
+          "cessé de s'adresser à la seule communauté Miam : même cœur et mêmes comptes, mais son " +
+          "application et son bot Discord.",
+        "Le connecteur Riot collecte les parties sous le quota de l'API, et le cœur en tire les " +
+          "statistiques d'équipe : pool de champions par poste, préparateur de draft, résumés de " +
+          "session. S'y ajoutent un Macro Planner à plusieurs et des mini-jeux dont les règles " +
+          "tournent chez un joueur, derrière un simple relais WebSocket.",
+      ],
+      stack: [
+        "Java 21",
+        "Spring Boot",
+        "React",
+        "TypeScript",
+        "MongoDB",
+        "WebSocket",
+        "API Riot Games",
+      ],
+      links: [
+        { key: "site", label: "Ouvrir PremadeLab", href: PREMADELAB_URL },
+      ],
+    },
+    {
       key: "design-system",
-      name: "Le design system de Schub",
+      name: "Le design system de Schub et de PremadeLab",
       tagline:
         "Une contrainte outillée, pas une bibliothèque de composants de plus.",
       body: [
-        "Vingt primitives documentées dans un Storybook public. L'intérêt n'est pas la " +
+        "Une base commune documentée dans un Storybook public. L'intérêt n'est pas la " +
           "collection : c'est la règle ESLint qui interdit d'importer MUI ailleurs que dans le " +
           "design system, et qui fait échouer la compilation d'un écran qui contourne.",
         "Un Storybook seul documente ; il ne force rien. Ce qui force, c'est un verrou dans la " +
@@ -303,11 +331,11 @@ const en: PortfolioContent = {
       key: "schub",
       name: "Schub",
       tagline:
-        "The Miam community toolkit — game servers, League of Legends teams — running in production.",
+        "The Miam community's game servers, running in production, and the base PremadeLab grew from.",
       body: [
-        "Seven repositories — one business core and four connectors — deployed on Docker Swarm " +
-          "behind a Cloudflare tunnel. The interface is a bilingual React SPA backed by a Spring " +
-          "Boot BFF; identity goes through Discord, with no local accounts at all.",
+        "A business core, a BFF and five connectors, each in its own repository, deployed on " +
+          "Docker Swarm behind a Cloudflare tunnel. The interface is a bilingual React SPA; " +
+          "identity goes through Discord, with no local accounts at all.",
         "A Discord bot relays commands and status changes into subscribed channels. Router port " +
           "forwarding is not opened by hand: a connector reconciles it through the ISP box API " +
           "from the servers' declared state, which makes it reproducible and revocable.",
@@ -336,11 +364,36 @@ const en: PortfolioContent = {
       ],
     },
     {
+      key: "premadelab",
+      name: "PremadeLab",
+      tagline:
+        "League of Legends game analysis, for a player and their team, open to everyone.",
+      body: [
+        "It started as a tab in Schub and took its own domain when it stopped being only for " +
+          "the Miam community: same core and same accounts, but its own application and Discord " +
+          "bot.",
+        "The Riot connector collects games within the API quota, and the core turns them into " +
+          "team statistics: champion pool per role, draft planner, session summaries. On top " +
+          "of that come a shared Macro Planner and mini-games whose rules run on one player's " +
+          "machine, behind a plain WebSocket relay.",
+      ],
+      stack: [
+        "Java 21",
+        "Spring Boot",
+        "React",
+        "TypeScript",
+        "MongoDB",
+        "WebSocket",
+        "Riot Games API",
+      ],
+      links: [{ key: "site", label: "Open PremadeLab", href: PREMADELAB_URL }],
+    },
+    {
       key: "design-system",
-      name: "Schub's design system",
+      name: "The design system of Schub and PremadeLab",
       tagline: "An enforced constraint, not one more component library.",
       body: [
-        "Twenty primitives documented in a public Storybook. The point is not the collection: " +
+        "A shared base documented in a public Storybook. The point is not the collection: " +
           "it is the ESLint rule forbidding MUI imports anywhere but the design system, which " +
           "fails the build of any screen that works around it.",
         "A Storybook on its own documents; it enforces nothing. What enforces is a lock in the " +

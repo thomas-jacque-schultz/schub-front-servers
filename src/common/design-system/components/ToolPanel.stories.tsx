@@ -29,7 +29,7 @@ const MENUS: ToolPanelMenu[] = [
 ];
 
 function Interactive() {
-  const [outil, setOutil] = useState("pen");
+  const [outil, setOutil] = useState<string | null>("pen");
   return (
     <ToolPanel
       label="Outils"

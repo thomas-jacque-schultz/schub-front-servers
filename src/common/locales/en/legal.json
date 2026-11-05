@@ -5,7 +5,7 @@
     "text": "{{product}} isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.",
     "sourceLabel": "Riot Games — General Policies"
   },
-  "updated": "Last updated: 23 October 2026.",
+  "updated": "Last updated: 5 November 2026.",
   "terms": {
     "meta": {
       "title": "Terms of use — {{product}}",
@@ -18,7 +18,7 @@
     },
     "purpose": {
       "title": "Purpose",
-      "p1": "Schub is a personal, free and non-commercial project hosted on schultz-thomas.fr. It gathers the tools of the Miam Discord community: today, control over game servers hosted at home and support for a League of Legends team — roster, statistics, champion pool and composition planning.",
+      "p1": "Schub is a personal, free and non-commercial project hosted on schultz-thomas.fr. It drives the game servers of the Miam Discord community, hosted at home, and administers PremadeLab, the League of Legends game analysis tool by the same publisher, which lives on premadelab.eu.",
       "p2": "Using the site means accepting these terms. Anyone who does not accept them simply does not create an account; server status and the text pages remain readable without one.",
       "p1_PremadeLab": "PremadeLab is a personal, free and non-commercial project hosted on premadelab.eu. It is a League of Legends game analysis tool, for a player and for their team: player search, statistics and findings on their games, roster, champion pool and composition planning.",
       "p2_PremadeLab": "Using the site means accepting these terms. Anyone who does not accept them simply does not create an account; the presentation, player pages and text pages remain readable without one."

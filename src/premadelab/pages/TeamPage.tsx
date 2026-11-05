@@ -26,10 +26,17 @@ import { RosterPanel } from "./RosterPanel";
 import { PublicTeamView } from "./team/PublicTeamView";
 import { TeamMacroPanel } from "./team/TeamMacroPanel";
 import { TeamSharing } from "./team/TeamSharing";
-import { TrainingCard } from "./team/TrainingCard";
+import { SessionsPanel } from "./team/SessionsPanel";
 
 type PanelKey =
-  "roster" | "players" | "team" | "opposition" | "macro" | "pool" | "draft";
+  | "roster"
+  | "players"
+  | "team"
+  | "sessions"
+  | "opposition"
+  | "macro"
+  | "pool"
+  | "draft";
 
 function TeamPage() {
   const { t } = useTranslation("teams");
@@ -131,6 +138,7 @@ function TeamPage() {
     { key: "roster", label: t("tabs.roster") },
     { key: "players", label: t("tabs.players") },
     { key: "team", label: t("tabs.team") },
+    { key: "sessions", label: t("tabs.sessions") },
     { key: "opposition", label: t("opposition.tab", { ns: "stats" }) },
     { key: "macro", label: t("tabs.macro") },
     { key: "pool", label: t("tabs.pool") },
@@ -180,7 +188,6 @@ function TeamPage() {
         {panel === "roster" && (
           <Stack spacing={2}>
             <RosterPanel team={team} onTeamChange={setTeam} />
-            <TrainingCard team={team} onTeamChange={setTeam} />
             <TeamSharing team={team} onTeamChange={setTeam} />
           </Stack>
         )}
@@ -192,6 +199,9 @@ function TeamPage() {
               team.members.map((member) => [member.memberId, member.avatarUrl]),
             )}
           />
+        )}
+        {panel === "sessions" && (
+          <SessionsPanel team={team} onTeamChange={setTeam} />
         )}
         {panel === "opposition" && <StrategyPanel teamId={team.id} />}
         {panel === "macro" && <TeamMacroPanel teamId={team.id} />}

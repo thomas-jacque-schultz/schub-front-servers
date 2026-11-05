@@ -1,4 +1,5 @@
 import { requestJson } from "../../common";
+import type { TeamGameDto } from "../types/stats";
 import type {
   AddMemberRequest,
   CompositionDto,
@@ -155,7 +156,17 @@ export const setTrainingSlotsApi = async (
 
 export const getTeamSessionsApi = async (
   teamId: string,
+  days: number,
 ): Promise<TeamSessionDto[]> =>
-  requestJson<TeamSessionDto[]>(`/teams/${teamId}/sessions`, {
+  requestJson<TeamSessionDto[]>(`/teams/${teamId}/sessions?days=${days}`, {
     method: "GET",
   });
+
+export const getTeamSessionGamesApi = async (
+  teamId: string,
+  sessionId: string,
+): Promise<TeamGameDto[]> =>
+  requestJson<TeamGameDto[]>(
+    `/teams/${teamId}/sessions/games?session=${encodeURIComponent(sessionId)}`,
+    { method: "GET" },
+  );

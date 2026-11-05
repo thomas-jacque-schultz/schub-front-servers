@@ -131,6 +131,11 @@ liseré prune lumineux, bouton principal qui s'enfonce, griffonnages en fond (`G
 (`GameTitle`). Ses jetons sont `playful` dans `tokens.ts`.
 Les jeux sont sombres seulement. `Frame` suit le rayon du thème : `radii.md` dans les applications, rond dans les jeux.
 
+**La juste mesure lit des portraits déjà faits** (Schub#174) : `npm run mesure:portraits` les tire des modèles et des
+textures du jeu (Community Dragon) dans `public/premadelab/mesure/`, pour chaque champion de `tailles.json`. Ces tailles
+sont celles **du lore**, écrites à la main en centimètres : Riot n'en publie presque aucune, ce sont des estimations de
+la communauté, et l'écran le dit. Un nouveau champion s'y ajoute une fois sa taille recoupée, puis le script se relance.
+
 **Le quiz ne fabrique rien pendant la partie** (Schub#143) : il tire dans la banque du cœur, que l'OWNER relit dans
 Schub › PremadeLab › Quiz. `npm run quiz:fabrique -- <lot.json>` fabrique un lot depuis Data Dragon et Univers ; le
 lot s'importe dans ce panneau.
@@ -186,7 +191,7 @@ décide de ce qu'elle reçoit.
 | `/stats` | Mes stats — ses parties, ses champions, ses postes | connecté, à la demande |
 | `/teams`, `/teams/:id` | les équipes | connecté, à la demande |
 | `/combos/:palier/:type` | les combos qui gagnent par palier (Schub#112), lus par les robots en SSI comme les profils | **public**, à la demande |
-| `/queue-killer`, `/queue-killer/:jeu/:salon` | les mini-jeux (Schub#118 : scribble, zoom, indices, quiz, imposteur), chacun en iframe depuis son sous-domaine (`queueKiller.ts`) ; deux messages avec le jeu, origine vérifiée | **public**, à la demande |
+| `/queue-killer`, `/queue-killer/:jeu/:salon` | les mini-jeux (Schub#118 : scribble, zoom, indices, quiz, imposteur, mesure), chacun en iframe depuis son sous-domaine (`queueKiller.ts`) ; deux messages avec le jeu, origine vérifiée | **public**, à la demande |
 | `/ruler` | le Macro Planner seul (Schub#166) : mesurer, dessiner, poser des icônes sur la Faille en unités du jeu (`MacroMap`, repères dans `ruler.ts`) ; la carte est la minimap du jeu repeinte aux couleurs du site, en coordonnées de Riot (`MAP_BOUNDS`) ; repères relevés, jamais symétrisés (sources dans `ruler.ts`) ; le plan reste dans le navigateur (`premadelab.macro`) | **public**, à la demande |
 
 **Communes** : `/profile` (connecté), `/login`, `/terms`, `/privacy` (publiques).
@@ -205,17 +210,14 @@ embarquer ni formulaire d'administration, ni sa validation.
 
 ## L'accueil, et le contenu personnel
 
-**`/` est la page produit de Schub**, pas un CV : ce que fait l'outil, puis **la liste de ce qui
-reste à faire pour s'en servir**. Les actions sont **déduites de `GET /me`** — compte Riot non
-lié, résolution en attente, collecte en cours, nom d'affichage non choisi — et chacune mène à
-`/profile`. Elles ne se devinent pas : `displayNameChosen` est un fait servi par le cœur, parce
-que comparer le nom affiché au pseudo Discord proposerait « choisis ton nom » à qui l'a choisi.
-Un **visiteur non connecté** ne voit pas une liste vide mais la seule action qui le concerne : se
-connecter.
+**`/` est la page produit de Schub**, pas un CV : ce que fait l'outil, en un encart pour Schub et un
+pour PremadeLab (Schub#176), jamais mélangés ; un visiteur non connecté y voit en plus la seule action qui le
+concerne, se connecter. **La liste de ce qui reste à faire vit sur l'accueil de PremadeLab** (`SearchPage`) : ses
+actions sont déduites de `GET /me` — compte Riot non lié, résolution en attente, collecte en cours, équipe.
 
 **Le contenu personnel vit sur `/contact`** — accroche, projets, parcours, formation, langues —
 et le formulaire est en bas de cette page, sous le titre *Feedback*. Il vit dans
-**`src/content/portfolio.ts`, en données**, pas en JSX : c'est ce qui garde un pré-rendu possible
+**`src/schub/content/portfolio.ts`, en données**, pas en JSX : c'est ce qui garde un pré-rendu possible
 plus tard sans réécrire la page. Les deux langues y sont côte à côte, et `PortfolioSections.tsx`
 ne contient aucune phrase.
 

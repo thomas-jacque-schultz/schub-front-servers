@@ -37,17 +37,17 @@
 
   <rect x="80" y="150" width="40" height="5" fill="#C9A227" />
   <text x="136" y="160" font-family="'JetBrains Mono', Menlo, Consolas, monospace" font-size="24"
-    fill="#C9A227" letter-spacing="7">SERVEURS · DISCORD · LEAGUE OF LEGENDS</text>
+    fill="#C9A227" letter-spacing="7">SERVEURS DE JEU · DISCORD</text>
 
   <text x="80" y="300" font-family="Helvetica, Arial, sans-serif" font-size="112" font-weight="bold"
     fill="#F2E9EE" letter-spacing="-3">Schub</text>
   <rect x="420" y="248" width="22" height="52" fill="#C9A227" />
 
   <text x="80" y="386" font-family="Helvetica, Arial, sans-serif" font-size="36" fill="#B6A3B4">
-    La boîte à outils de la communauté Miam :
+    Les serveurs de jeu de la communauté Miam :
   </text>
   <text x="80" y="438" font-family="Helvetica, Arial, sans-serif" font-size="36" fill="#B6A3B4">
-    serveurs de jeu et équipes League of Legends.
+    leur état en direct, un démarrage à la demande.
   </text>
 
   <rect x="80" y="516" width="1040" height="1" fill="#C9A227" fill-opacity="0.22" />

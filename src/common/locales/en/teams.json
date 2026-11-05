@@ -56,7 +56,8 @@
     "draft": "Draft planner",
     "ariaLabel": "The team panels",
     "team": "Matches",
-    "macro": "Macro Planner"
+    "macro": "Macro Planner",
+    "sessions": "Sessions"
   },
   "roster": {
     "title": "The roster",
@@ -303,11 +304,7 @@
     "minutes": "min",
     "add": "Add",
     "saveFailed": "Could not save the slots.",
-    "helper": "Paris time. Every night, PremadeLab spots your sessions: at least three members, two games in a row, no break longer than an hour. A session overlapping a slot is a training session; a slot without a game counts as missed.",
-    "sessions": "Latest sessions",
-    "sessionPlanned": "{{date}} · training session · {{count}} games, {{wins}}W – {{losses}}L",
-    "sessionFree": "{{date}} · free session · {{count}} games, {{wins}}W – {{losses}}L",
-    "missed": "{{date}} · missed session",
+    "helper": "Paris time. A session overlapping a slot becomes a training session; a slot without a game counts as missed.",
     "days": {
       "MONDAY": "Monday",
       "TUESDAY": "Tuesday",
@@ -316,6 +313,32 @@
       "FRIDAY": "Friday",
       "SATURDAY": "Saturday",
       "SUNDAY": "Sunday"
-    }
+    },
+    "addTitle": "Add a slot"
+  },
+  "sessions": {
+    "loading": "Reading the sessions…",
+    "failed": "Could not read the sessions.",
+    "gamesFailed": "Could not read the games of this session.",
+    "emptyTitle": "No session yet",
+    "emptyBody": "Every night, PremadeLab spots your sessions: at least three members, two games in a row, no break longer than an hour.",
+    "trend": "The trend",
+    "window": "Over the last {{days}} days.",
+    "played": "Sessions played",
+    "record": "Record",
+    "recordValue": "{{wins}}W – {{losses}}L",
+    "games_one": "{{count}} game",
+    "games_other": "{{count}} games",
+    "kept": "Slots kept",
+    "histogram_one": "Win rate of the last session",
+    "histogram_other": "Win rate of the last {{count}} sessions",
+    "barTooltip": "{{date}}: {{percent}}%, {{wins}}W – {{losses}}L",
+    "list": "The sessions",
+    "listHelper": "Open a session to go back over its games, in the order you played them.",
+    "kindPlanned": "Training",
+    "kindFree": "Free",
+    "kindMissed": "Missed session",
+    "hours": "from {{start}} to {{end}}",
+    "more": "Show earlier ones"
   }
 }

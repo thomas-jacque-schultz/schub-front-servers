@@ -85,11 +85,12 @@ export interface MacroMapProps {
   landmarks: readonly MacroMapLandmark[];
   shapes: readonly MacroShape[];
   cursors?: readonly MacroCursor[];
-  cursor?: "crosshair" | "pointer" | "grab" | "cell";
+  cursor?: "crosshair" | "pointer" | "grab" | "cell" | "default";
   onPointer?: (pointer: MacroPointer) => void;
   /** La molette, cran par cran : 1 vers le haut. Sans elle, la molette fait défiler la page. */
   onWheelStep?: (step: 1 | -1) => void;
-  maxWidth?: number;
+  /** Une longueur CSS, ou des pixels. */
+  maxWidth?: number | string;
 }
 
 // Chrome envoie 100 par cran de molette, Firefox des lignes.

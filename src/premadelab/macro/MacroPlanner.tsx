@@ -49,6 +49,9 @@ const REGLAGES_DE_DEPART: Reglages = {
   vision: true,
 };
 
+// La carte est carrée : elle doit tenir entière à l'écran, en haut comme en bas, pour qu'on dessine sans défiler.
+const CARTE_MAX = "min(760px, calc(100dvh - 120px))";
+
 const saisieEnCours = (cible: EventTarget | null) =>
   cible instanceof HTMLElement &&
   (cible.isContentEditable ||
@@ -79,8 +82,8 @@ export function MacroPlanner({
   const catalogue = useRequest(`ddragon/${langue}`, () =>
     chargerChampions(langue),
   );
-  const [cle, setCle] = useState<CleOutil>("mesure");
-  const outil = outilDe(cle);
+  const [cle, setCle] = useState<CleOutil | null>("mesure");
+  const outil = cle ? outilDe(cle) : null;
   const [reglages, setReglages] = useState<Reglages>(REGLAGES_DE_DEPART);
   const regle = (changement: Partial<Reglages>) =>
     setReglages((avant) => ({ ...avant, ...changement }));
@@ -97,7 +100,7 @@ export function MacroPlanner({
   const [, setImage] = useState(0);
   const redessine = () => setImage((n) => n + 1);
 
-  const { plan, actif, joue, annule, choisis } = macro;
+  const { plan, actif, joue, annule, refais, choisis } = macro;
   const active = mesureActive({ plan, actif });
 
   const changeRayon = (rayon: number, source: PorteeTracee | null = null) => {
@@ -113,9 +116,23 @@ export function MacroPlanner({
       if (saisieEnCours(event.target)) {
         return;
       }
-      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "z") {
+      const commande = event.ctrlKey || event.metaKey;
+      const lettre = event.key.toLowerCase();
+      if (commande && (lettre === "y" || (lettre === "z" && event.shiftKey))) {
+        event.preventDefault();
+        refais();
+      } else if (commande && lettre === "z") {
         event.preventDefault();
         annule();
+      } else if (event.key === "Escape") {
+        if (geste.current) {
+          geste.current = null;
+          redessine();
+        } else {
+          setCle(null);
+        }
+      } else if (!commande && !event.altKey && OUTILS[Number(event.key) - 1]) {
+        setCle(OUTILS[Number(event.key) - 1].cle);
       } else if (
         (event.key === "Delete" || event.key === "Backspace") &&
         actif &&
@@ -128,7 +145,7 @@ export function MacroPlanner({
     };
     window.addEventListener("keydown", touche);
     return () => window.removeEventListener("keydown", touche);
-  }, [actif, annule, choisis, joue, plan]);
+  }, [actif, annule, choisis, joue, plan, refais]);
 
   const contexte = (unitesParPixel: number): Contexte => ({
     plan,
@@ -140,6 +157,9 @@ export function MacroPlanner({
 
   const surPointeur = (pointeur: MacroPointer) => {
     onCursor?.(pointeur.phase === "leave" ? null : pointeur.at);
+    if (!outil) {
+      return;
+    }
     const ctx = contexte(pointeur.unitsPerPixel);
     switch (pointeur.phase) {
       case "down":
@@ -225,11 +245,12 @@ export function MacroPlanner({
                   key: candidat.cle,
                   label: t(`macro.tools.${candidat.cle}`),
                   icon: candidat.icone,
+                  shortcut: String(OUTILS.indexOf(candidat) + 1),
                 }),
               ),
             }))}
             value={cle}
-            onChange={(choisi) => setCle(choisi as CleOutil)}
+            onChange={(choisi) => setCle(choisi as CleOutil | null)}
             actions={
               <>
                 <IconButton
@@ -237,6 +258,12 @@ export function MacroPlanner({
                   label={t("macro.undo")}
                   disabled={!macro.peutAnnuler}
                   onClick={annule}
+                />
+                <IconButton
+                  icon="redo"
+                  label={t("macro.redo")}
+                  disabled={!macro.peutRefaire}
+                  onClick={refais}
                 />
                 <IconButton
                   icon="clearAll"
@@ -248,7 +275,12 @@ export function MacroPlanner({
               </>
             }
           >
-            {outil.menu === "mesure" && (
+            {!outil && (
+              <Text variant="caption" tone="secondary">
+                {t("macro.help.aucun")}
+              </Text>
+            )}
+            {outil?.menu === "mesure" && (
               <MesureReglages
                 aimant={reglages.aimant}
                 onAimant={(aimant) => regle({ aimant })}
@@ -258,7 +290,7 @@ export function MacroPlanner({
                 onVitesse={setVitesseSaisie}
               />
             )}
-            {outil.menu === "dessin" && cle !== "gomme" && (
+            {outil?.menu === "dessin" && cle !== "gomme" && (
               <DessinReglages
                 encre={reglages.encre}
                 onEncre={(encre) => regle({ encre })}
@@ -266,7 +298,7 @@ export function MacroPlanner({
                 onEpaisseur={(epaisseur) => regle({ epaisseur })}
               />
             )}
-            {outil.menu === "icones" && (
+            {outil?.menu === "icones" && (
               <IconesReglages
                 icone={reglages.icone}
                 onIcone={(choisie) => regle({ icone: choisie })}
@@ -285,7 +317,7 @@ export function MacroPlanner({
               />
             )}
           </ToolPanel>
-          {outil.menu === "mesure" && (
+          {outil?.menu === "mesure" && (
             <>
               <MesureLue mesure={active} vitesse={vitesse} tracee={tracee} />
               <ChampionSpells
@@ -307,15 +339,15 @@ export function MacroPlanner({
           landmarks={REPERES}
           shapes={formes}
           cursors={cursors}
-          cursor={outil.curseur}
+          cursor={outil ? outil.curseur : "default"}
           onPointer={surPointeur}
-          onWheelStep={outil.molette ? pas : undefined}
-          maxWidth={760}
+          onWheelStep={outil?.molette ? pas : undefined}
+          maxWidth={CARTE_MAX}
         />
         <Text variant="caption" tone="secondary" align="center">
-          {t(`macro.help.${cle}`)}
+          {cle && t(`macro.help.${cle}`)} {t("macro.keys")}
         </Text>
-        {outil.menu === "mesure" && (
+        {outil?.menu === "mesure" && (
           <ChampionPicker
             catalogue={catalogue.data}
             isLoading={catalogue.isLoading}

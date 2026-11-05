@@ -31,6 +31,7 @@ import GestureIcon from "@mui/icons-material/Gesture";
 import CallMadeIcon from "@mui/icons-material/CallMade";
 import CropSquareIcon from "@mui/icons-material/CropSquare";
 import PanoramaFishEyeIcon from "@mui/icons-material/PanoramaFishEye";
+import RedoIcon from "@mui/icons-material/Redo";
 import UndoIcon from "@mui/icons-material/Undo";
 import DeleteSweepIcon from "@mui/icons-material/DeleteSweepOutlined";
 import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
@@ -89,6 +90,7 @@ const ICONS = {
   storage: StorageIcon,
   todo: RadioButtonUncheckedIcon,
   undo: UndoIcon,
+  redo: RedoIcon,
   work: WorkIcon,
 } as const;
 

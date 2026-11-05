@@ -6,6 +6,7 @@ export const JEUX = [
   "indices",
   "quiz",
   "imposteur",
+  "mesure",
 ] as const;
 
 export type Jeu = (typeof JEUX)[number];
@@ -25,7 +26,7 @@ export const origineDuJeu = (jeu: Jeu): string => new URL(urlDuJeu(jeu)).origin;
 export const JOUEURS_MAX = 10;
 
 // Chaque jeu a son champion (Schub#150) : Hwei peint, Vel'Koz observe, Caitlyn enquête, Heimerdinger sait tout,
-// Neeko prend l'apparence des autres. Durées estimées aux réglages par défaut.
+// Neeko prend l'apparence des autres, Teemo est l'étalon des petits. Durées estimées aux réglages par défaut.
 export const FICHES: Record<
   Jeu,
   { champion: string; joueursMin: number; minutes: number }
@@ -35,6 +36,7 @@ export const FICHES: Record<
   indices: { champion: "Caitlyn", joueursMin: 2, minutes: 10 },
   quiz: { champion: "Heimerdinger", joueursMin: 2, minutes: 10 },
   imposteur: { champion: "Neeko", joueursMin: 3, minutes: 15 },
+  mesure: { champion: "Teemo", joueursMin: 1, minutes: 5 },
 };
 
 // Sans version : Data Dragon sert les splashs et les vignettes du skin de base hors de tout patch.

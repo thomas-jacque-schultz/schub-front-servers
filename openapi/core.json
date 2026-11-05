@@ -343,7 +343,7 @@
     },
     "/game-servers/games" : {
       "get" : {
-        "operationId" : "games_2",
+        "operationId" : "games_3",
         "parameters" : [ {
           "in" : "header",
           "name" : "X-Actor-Id",
@@ -1194,7 +1194,7 @@
     },
     "/me/stats/games" : {
       "get" : {
-        "operationId" : "games_1",
+        "operationId" : "games_2",
         "parameters" : [ {
           "in" : "header",
           "name" : "X-Actor-Id",
@@ -1593,7 +1593,7 @@
     },
     "/players/{riotId}/games" : {
       "get" : {
-        "operationId" : "games",
+        "operationId" : "games_1",
         "parameters" : [ {
           "in" : "path",
           "name" : "riotId",
@@ -3493,6 +3493,49 @@
                   "type" : "array",
                   "items" : {
                     "$ref" : "#/components/schemas/TeamSessionDto"
+                  }
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "team-session-controller" ]
+      }
+    },
+    "/teams/{teamId}/sessions/games" : {
+      "get" : {
+        "operationId" : "games",
+        "parameters" : [ {
+          "in" : "header",
+          "name" : "X-Actor-Id",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "teamId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "query",
+          "name" : "session",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/TeamGameDto"
                   }
                 }
               }
