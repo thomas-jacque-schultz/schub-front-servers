@@ -3,8 +3,12 @@ import type { Hasard, Present } from "../commun/devinette";
 import { tire } from "../commun/devinette";
 import TAILLES from "./tailles.json";
 
-// La juste mesure (Schub#174) : un champion sert d'étalon, on donne à l'autre sa vraie taille à côté de lui. Tout le
-// monde règle en même temps, et le bilan montre ce que chacun a répondu.
+// La juste mesure (Schub#174) : un champion sert d'étalon, on donne à l'autre sa taille dans le lore à côté de lui. Tout
+// le monde règle en même temps, et le bilan montre ce que chacun a répondu.
+//
+// tailles.json, en centimètres : Riot n'en publie presque aucune, ce sont les estimations de la communauté, recoupées sur
+// esportstales.com, esports.net, gameriv.com et theglobalgaming.com. La forme de base, celle du modèle affiché, accessoires
+// compris (chapeau de Veigar, cornes d'Alistar). Un champion sans taille recoupée ou sans portrait lisible n'y est pas.
 
 export type Phase = "manche" | "bilan" | "fin";
 
@@ -44,22 +48,24 @@ export const BILAN_MS = 8_000;
 export const HAUTEUR_ETALON = 0.33;
 export const HAUTEUR_MIN = 0.08;
 export const HAUTEUR_MAX = 1;
-// Assez d'écart pour qu'il y ait quelque chose à juger, et une réponse qui tient dans la scène.
-const RAPPORT_MIN = 1.15;
+// Assez d'écart pour qu'il y ait quelque chose à juger : entre deux humains, les estimations ne départagent personne. Et
+// une réponse qui tient dans la scène.
+const RAPPORT_MIN = 1.25;
 const JUSTE_MAX = 0.95;
 const DEPART_ECART = 1.5;
 // À ce facteur de la bonne taille, plus aucun point.
 const FACTEUR_NUL = 1.75;
 const POINTS = 100;
 
-const hauteurDe = (champion: Champion) =>
-  (TAILLES as Record<string, { hauteur: number }>)[champion.id]?.hauteur ?? 0;
+/** Sa taille dans le lore, en centimètres. */
+export const tailleDe = (champion: Champion) =>
+  (TAILLES as Record<string, number>)[champion.id] ?? 0;
 
-export const estMesurable = (champion: Champion) => hauteurDe(champion) > 0;
+export const estMesurable = (champion: Champion) => tailleDe(champion) > 0;
 
 /** La hauteur juste de la cible, en part de la scène : le monde réel, ramené à l'étalon. */
 export const hauteurJuste = (etalon: Champion, cible: Champion) =>
-  (HAUTEUR_ETALON * hauteurDe(cible)) / hauteurDe(etalon);
+  (HAUTEUR_ETALON * tailleDe(cible)) / tailleDe(etalon);
 
 export const pointsDe = (choix: number, juste: number) =>
   Math.round(
@@ -103,13 +109,18 @@ const lancerManche = (
   if (numero > p.manches || presents.length === 0) {
     return fin;
   }
-  const { tires, restants } = tire(p.reserve, 1, hasard);
-  const etalon = tires[0];
-  const candidates = etalon ? restants.filter((c) => jouable(etalon, c)) : [];
-  if (candidates.length === 0) {
+  // Malphite et Yuumi n'ont presque personne à leur échelle : seul un étalon qui a un vis-à-vis peut être tiré.
+  const etalons = p.reserve.filter((e) => p.reserve.some((c) => jouable(e, c)));
+  if (etalons.length === 0) {
     return fin;
   }
-  const cible = tire(candidates, 1, hasard).tires[0];
+  const etalon = tire(etalons, 1, hasard).tires[0];
+  const restants = p.reserve.filter((c) => c.id !== etalon.id);
+  const cible = tire(
+    restants.filter((c) => jouable(etalon, c)),
+    1,
+    hasard,
+  ).tires[0];
   return {
     ...p,
     phase: "manche",

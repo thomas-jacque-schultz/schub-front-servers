@@ -131,9 +131,10 @@ liseré prune lumineux, bouton principal qui s'enfonce, griffonnages en fond (`G
 (`GameTitle`). Ses jetons sont `playful` dans `tokens.ts`.
 Les jeux sont sombres seulement. `Frame` suit le rayon du thème : `radii.md` dans les applications, rond dans les jeux.
 
-**La juste mesure lit des croquis déjà faits** (Schub#174) : `npm run mesure:silhouettes` les tire des modèles du jeu
-(Community Dragon), à la même échelle, dans `public/premadelab/mesure/`, avec leurs tailles dans `tailles.json`. À
-relancer pour un nouveau champion.
+**La juste mesure lit des portraits déjà faits** (Schub#174) : `npm run mesure:portraits` les tire des modèles et des
+textures du jeu (Community Dragon) dans `public/premadelab/mesure/`, pour chaque champion de `tailles.json`. Ces tailles
+sont celles **du lore**, écrites à la main en centimètres : Riot n'en publie presque aucune, ce sont des estimations de
+la communauté, et l'écran le dit. Un nouveau champion s'y ajoute une fois sa taille recoupée, puis le script se relance.
 
 **Le quiz ne fabrique rien pendant la partie** (Schub#143) : il tire dans la banque du cœur, que l'OWNER relit dans
 Schub › PremadeLab › Quiz. `npm run quiz:fabrique -- <lot.json>` fabrique un lot depuis Data Dragon et Univers ; le
