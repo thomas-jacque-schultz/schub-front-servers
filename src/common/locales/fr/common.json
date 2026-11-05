@@ -1,7 +1,7 @@
 {
   "app": {
     "name": "Schub",
-    "tagline": "La boîte à outils de la communauté Miam"
+    "tagline": "Les serveurs de jeu de la communauté Miam"
   },
   "actions": {
     "add": "Ajouter",
@@ -58,7 +58,7 @@
     "github": "GitHub",
     "terms": "Conditions d’utilisation",
     "privacy": "Confidentialité",
-    "footerNote": "Schub — la boîte à outils de la communauté Miam",
+    "footerNote": "Schub — les serveurs de jeu de la communauté Miam",
     "contact": "Contact",
     "profile": "Mon profil",
     "creator": "Créateur",
