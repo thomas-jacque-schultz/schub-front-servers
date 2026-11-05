@@ -345,8 +345,7 @@ export function MacroPlanner({
           maxWidth={CARTE_MAX}
         />
         <Text variant="caption" tone="secondary" align="center">
-          {cle ? t(`macro.help.${cle}`) : t("macro.help.aucun")}{" "}
-          {t("macro.keys")}
+          {cle && t(`macro.help.${cle}`)} {t("macro.keys")}
         </Text>
         {outil?.menu === "mesure" && (
           <ChampionPicker
