@@ -306,10 +306,12 @@
       "rectangle": "Glisse d’un coin à l’autre.",
       "ellipse": "Glisse d’un coin à l’autre du cadre du cercle.",
       "gomme": "Touche un élément pour le retirer\u202f; glisse pour en retirer plusieurs. Ctrl + Z le remet.",
-      "icone": "Clique pour poser l’icône choisie. Glisse une icône pour la déplacer\u202f; Suppr retire celle qui est choisie."
+      "icone": "Clique pour poser l’icône choisie. Glisse une icône pour la déplacer\u202f; Suppr retire celle qui est choisie.",
+      "aucun": "Aucun outil\u00a0: la carte ne réagit plus à la souris."
     },
     "noMeasure": "Aucune mesure sur la carte. Glisse avec la règle pour en tracer une.",
     "undo": "Annuler (Ctrl + Z)",
+    "redo": "Refaire (Ctrl + Y)",
     "clear": "Tout effacer",
     "clearTitle": "Tout effacer\u202f?",
     "clearDescription": "Tout ce qui est posé sur la carte disparaît. Ctrl + Z le remet.",
@@ -374,7 +376,8 @@
       "saving": "Enregistrement…",
       "saveFailed": "Le plan n’a pas pu être enregistré. Il reste visible tant qu’un membre est sur la carte.",
       "loadFailed": "Les plans de l’équipe ne se chargent pas pour l’instant."
-    }
+    },
+    "keys": "1 à 7 choisissent un outil, Échap le lâche."
   },
   "ruler": {
     "meta": {

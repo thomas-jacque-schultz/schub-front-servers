@@ -306,10 +306,12 @@
       "rectangle": "Drag from one corner to the other.",
       "ellipse": "Drag across the box of the circle.",
       "gomme": "Tap an element to remove it; drag to remove several. Ctrl + Z brings it back.",
-      "icone": "Click to place the chosen icon. Drag an icon to move it; Delete removes the selected one."
+      "icone": "Click to place the chosen icon. Drag an icon to move it; Delete removes the selected one.",
+      "aucun": "No tool: the map no longer reacts to the mouse."
     },
     "noMeasure": "No measure on the map. Drag with the ruler to draw one.",
     "undo": "Undo (Ctrl + Z)",
+    "redo": "Redo (Ctrl + Y)",
     "clear": "Clear all",
     "clearTitle": "Clear everything?",
     "clearDescription": "Everything placed on the map disappears. Ctrl + Z brings it back.",
@@ -374,7 +376,8 @@
       "saving": "Saving…",
       "saveFailed": "The plan could not be saved. It stays visible while a member is on the map.",
       "loadFailed": "The team plans cannot be loaded right now."
-    }
+    },
+    "keys": "1 to 7 pick a tool, Esc lets go of it."
   },
   "ruler": {
     "meta": {

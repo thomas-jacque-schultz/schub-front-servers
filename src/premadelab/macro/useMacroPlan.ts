@@ -14,6 +14,9 @@ export interface MacroPlan {
   joue: (operations: Operation[]) => void;
   annule: () => void;
   peutAnnuler: boolean;
+  /** Rejoue le dernier geste annulé ; un nouveau geste vide cette pile. */
+  refais: () => void;
+  peutRefaire: boolean;
 }
 
 /**
@@ -25,8 +28,10 @@ export function useMacroPlan(canal: Canal): MacroPlan {
   const [pret, setPret] = useState(false);
   const [actif, setActif] = useState<string | null>(null);
   const [annulables, setAnnulables] = useState(0);
+  const [refaisables, setRefaisables] = useState(0);
   const courant = useRef<Plan>([]);
   const annulations = useRef<Operation[][]>([]);
+  const retablissements = useRef<Operation[][]>([]);
 
   const remplace = useCallback((suivant: Plan) => {
     courant.current = suivant;
@@ -38,7 +43,9 @@ export function useMacroPlan(canal: Canal): MacroPlan {
     return canal.ouvre({
       depart: (depart) => {
         annulations.current = [];
+        retablissements.current = [];
         setAnnulables(0);
+        setRefaisables(0);
         remplace(depart);
         setPret(true);
       },
@@ -56,7 +63,9 @@ export function useMacroPlan(canal: Canal): MacroPlan {
         ...annulations.current.slice(-(ANNULATIONS_MAX - 1)),
         inverse(courant.current, operations),
       ];
+      retablissements.current = [];
       setAnnulables(annulations.current.length);
+      setRefaisables(0);
       remplace(appliqueTout(courant.current, operations));
       canal.envoie(operations);
     },
@@ -69,8 +78,22 @@ export function useMacroPlan(canal: Canal): MacroPlan {
     if (!defaites || defaites.length === 0) {
       return;
     }
+    retablissements.current.push(inverse(courant.current, defaites));
+    setRefaisables(retablissements.current.length);
     remplace(appliqueTout(courant.current, defaites));
     canal.envoie(defaites);
+  }, [canal, remplace]);
+
+  const refais = useCallback(() => {
+    const operations = retablissements.current.pop();
+    setRefaisables(retablissements.current.length);
+    if (!operations) {
+      return;
+    }
+    annulations.current.push(inverse(courant.current, operations));
+    setAnnulables(annulations.current.length);
+    remplace(appliqueTout(courant.current, operations));
+    canal.envoie(operations);
   }, [canal, remplace]);
 
   return {
@@ -81,5 +104,7 @@ export function useMacroPlan(canal: Canal): MacroPlan {
     joue,
     annule,
     peutAnnuler: annulables > 0,
+    refais,
+    peutRefaire: refaisables > 0,
   };
 }
