@@ -30,6 +30,39 @@ describe("la juste mesure", () => {
     expect(partie().reserve.map((c) => c.id)).not.toContain("ChampionInconnu");
   });
 
+  it("un étalon sans vis-à-vis à son échelle n'est jamais tiré", () => {
+    const p = nouvellePartie(
+      [A],
+      30,
+      5,
+      "fr",
+      [
+        { id: "Yuumi", nom: "Yuumi" },
+        { id: "Malphite", nom: "Malphite" },
+        { id: "Teemo", nom: "Teemo" },
+        { id: "Darius", nom: "Darius" },
+      ],
+      premier,
+    );
+    expect(p.phase).toBe("manche");
+    expect(p.etalon?.id).toBe("Teemo");
+  });
+
+  it("deux champions de même gabarit ne se comparent pas", () => {
+    const p = nouvellePartie(
+      [A],
+      30,
+      5,
+      "fr",
+      [
+        { id: "Garen", nom: "Garen" },
+        { id: "Darius", nom: "Darius" },
+      ],
+      premier,
+    );
+    expect(p.phase).toBe("fin");
+  });
+
   it("la bonne hauteur tient dans la scène, et le curseur part loin d'elle", () => {
     const p = partie();
     const juste = hauteurJuste(p.etalon!, p.cible!);
@@ -56,7 +89,7 @@ describe("la juste mesure", () => {
     expect(p.valides).toEqual(["a"]);
     const figee = action(p, "a", { choix: 0.2 }, false);
     expect(figee.choix.a).toBe(juste);
-    p = action(p, "b", { choix: juste * 2, valide: true }, false);
+    p = action(p, "b", { choix: juste / 2, valide: true }, false);
     expect(p.phase).toBe("bilan");
     expect(p.resultats.a.points).toBe(100);
     expect(p.resultats.b.points).toBe(0);

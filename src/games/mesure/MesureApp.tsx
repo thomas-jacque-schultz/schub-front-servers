@@ -190,11 +190,9 @@ function Toise({
           </div>
         )
       )}
-      {partie.phase === "manche" && (
-        <Text variant="caption" tone="secondary">
-          {texte(lang, "regler")}
-        </Text>
-      )}
+      <Text variant="caption" tone="secondary">
+        {texte(lang, partie.phase === "manche" ? "regler" : "source")}
+      </Text>
     </Stack>
   );
 }

@@ -259,7 +259,7 @@
     },
     "mesure": {
       "title": "Right Size",
-      "body": "One champion stands on the scale: give the other their true size next to them. Alone or with friends, and everyone sees what the others answered at the end.",
+      "body": "One champion stands on the scale: give the other their size in the lore next to them. Alone or with friends, and everyone sees what the others answered at the end.",
       "genre": "Eye test"
     },
     "players": "{{min}} to {{max}} players",

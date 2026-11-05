@@ -12,6 +12,7 @@ import {
   MANCHES,
   MANCHES_DEFAUT,
   type PartieMesure,
+  tailleDe,
 } from "./partie";
 import { texte } from "./textes";
 
@@ -22,7 +23,17 @@ const SOL = 0.1;
 const X_ETALON = "28%";
 const X_CIBLE = "66%";
 
-const croquis = (id: string) => `/premadelab/mesure/${id}.png`;
+// Le jeton du thème : ce cadre n'est pas un composant, et l'or y marque le geste à faire.
+const OR = "var(--mui-palette-primary-main)";
+const COTE_POIGNEE = 14;
+const ZONE_POIGNEE = 36;
+
+const portrait = (id: string) => `/premadelab/mesure/${id}.png`;
+
+const enMetres = (lang: Lang, cm: number) =>
+  cm < 100
+    ? `${cm} cm`
+    : `${(cm / 100).toLocaleString(lang, { maximumFractionDigits: cm < 1000 ? 2 : 1 })} m`;
 
 export function Consigne({
   lang,
@@ -90,10 +101,6 @@ export function Consigne({
     cible: partie.cible?.nom ?? "",
     etalon: partie.etalon?.nom ?? "",
   };
-  const juste =
-    partie.etalon && partie.cible
-      ? hauteurJuste(partie.etalon, partie.cible)
-      : HAUTEUR_ETALON;
   return (
     <Frame dense>
       <Stack
@@ -110,9 +117,12 @@ export function Consigne({
           {partie.phase === "bilan"
             ? texte(lang, "verite", {
                 ...noms,
-                rapport: (juste / HAUTEUR_ETALON).toLocaleString(lang, {
-                  maximumFractionDigits: 2,
-                }),
+                tailleCible: partie.cible
+                  ? enMetres(lang, tailleDe(partie.cible))
+                  : "",
+                tailleEtalon: partie.etalon
+                  ? enMetres(lang, tailleDe(partie.etalon))
+                  : "",
               })
             : texte(lang, "consigne", noms)}
         </Text>
@@ -132,15 +142,21 @@ const pose = (x: string, hauteur: number, extra = {}) => ({
   bottom: `${SOL * 100}%`,
   height: `${hauteur * UTILE * 100}%`,
   transform: "translateX(-50%)",
-  maxWidth: "none",
-  userSelect: "none" as const,
-  pointerEvents: "none" as const,
   ...extra,
 });
 
+const IMAGE = {
+  display: "block",
+  height: "100%",
+  width: "auto",
+  maxWidth: "none",
+  userSelect: "none" as const,
+  pointerEvents: "none" as const,
+};
+
 /**
- * La toise : l'étalon à hauteur fixe, la cible que l'on règle, sur le même sol. Au bilan, la cible prend sa vraie taille
- * et chaque réponse y laisse un trait à son nom.
+ * La toise : l'étalon à hauteur fixe, la cible dans son cadre, sur le même sol. Au bilan, la cible prend sa taille dans
+ * le lore et chaque réponse y laisse un trait à son nom.
  */
 export function Scene({
   lang,
@@ -159,9 +175,6 @@ export function Scene({
   onHauteur: (hauteur: number) => void;
   onLache: (hauteur: number) => void;
 }) {
-  const appuye = useRef(false);
-  const courante = useRef(hauteur);
-  courante.current = hauteur;
   const { etalon, cible } = partie;
   if (!etalon || !cible) {
     return null;
@@ -169,41 +182,8 @@ export function Scene({
   const auBilan = partie.phase === "bilan";
   const juste = hauteurJuste(etalon, cible);
 
-  const suit = (evenement: PointerEvent<HTMLDivElement>) => {
-    const cadre = evenement.currentTarget.getBoundingClientRect();
-    const voulue =
-      (1 - SOL - (evenement.clientY - cadre.top) / cadre.height) / UTILE;
-    onHauteur(Math.min(HAUTEUR_MAX, Math.max(HAUTEUR_MIN, voulue)));
-  };
-
   return (
-    <div
-      role="presentation"
-      onPointerDown={(evenement) => {
-        if (actif) {
-          evenement.currentTarget.setPointerCapture(evenement.pointerId);
-          appuye.current = true;
-          suit(evenement);
-        }
-      }}
-      onPointerMove={(evenement) => {
-        if (appuye.current) {
-          suit(evenement);
-        }
-      }}
-      onPointerUp={() => {
-        if (appuye.current) {
-          appuye.current = false;
-          onLache(courante.current);
-        }
-      }}
-      style={{
-        position: "absolute",
-        inset: 0,
-        touchAction: "none",
-        cursor: actif ? "ns-resize" : "default",
-      }}
-    >
+    <div style={{ position: "absolute", inset: 0 }}>
       <div
         style={{
           position: "absolute",
@@ -214,22 +194,43 @@ export function Scene({
           opacity: 0.35,
         }}
       />
-      <img
-        src={croquis(etalon.id)}
-        alt={texte(lang, "croquis", { nom: etalon.nom })}
-        draggable={false}
-        style={pose(X_ETALON, HAUTEUR_ETALON)}
-      />
-      <img
-        src={croquis(cible.id)}
-        alt={texte(lang, "croquis", { nom: cible.nom })}
-        draggable={false}
-        // Le sépia distingue la cible de l'étalon, deux croquis du même gris.
+      <div style={pose(X_ETALON, HAUTEUR_ETALON)}>
+        <img
+          src={portrait(etalon.id)}
+          alt={texte(lang, "portrait", { nom: etalon.nom })}
+          draggable={false}
+          style={IMAGE}
+        />
+      </div>
+      <div
         style={pose(X_CIBLE, auBilan ? juste : hauteur, {
-          filter: "sepia(1) saturate(1.6)",
           transition: auBilan ? "height 400ms ease-out" : undefined,
+          outline: actif ? `1px dashed ${OR}` : undefined,
         })}
-      />
+      >
+        <img
+          src={portrait(cible.id)}
+          alt={texte(lang, "portrait", { nom: cible.nom })}
+          draggable={false}
+          style={IMAGE}
+        />
+        {actif && (
+          <>
+            <Poignee
+              cote="gauche"
+              hauteur={hauteur}
+              onHauteur={onHauteur}
+              onLache={onLache}
+            />
+            <Poignee
+              cote="droite"
+              hauteur={hauteur}
+              onHauteur={onHauteur}
+              onLache={onLache}
+            />
+          </>
+        )}
+      </div>
       <div
         style={{
           position: "absolute",
@@ -264,6 +265,101 @@ export function Scene({
           })}
         </>
       )}
+    </div>
+  );
+}
+
+/**
+ * Un coin du cadre, tiré en diagonale. Le cadre grandit depuis le milieu de sa base : la nouvelle taille vient de la
+ * projection du pointeur sur la droite qui va de ce milieu au coin, rapportée à celle du point de départ.
+ */
+function Poignee({
+  cote,
+  hauteur,
+  onHauteur,
+  onLache,
+}: {
+  cote: "gauche" | "droite";
+  hauteur: number;
+  onHauteur: (hauteur: number) => void;
+  onLache: (hauteur: number) => void;
+}) {
+  const prise = useRef<{
+    ancreX: number;
+    ancreY: number;
+    dx: number;
+    dy: number;
+    depart: number;
+    hauteur: number;
+  } | null>(null);
+  const courante = useRef(hauteur);
+  courante.current = hauteur;
+  const projection = (
+    p: NonNullable<typeof prise.current>,
+    x: number,
+    y: number,
+  ) => (x - p.ancreX) * p.dx + (y - p.ancreY) * p.dy;
+
+  return (
+    <div
+      role="presentation"
+      onPointerDown={(evenement: PointerEvent<HTMLDivElement>) => {
+        const cadre =
+          evenement.currentTarget.parentElement?.getBoundingClientRect();
+        if (!cadre) {
+          return;
+        }
+        evenement.stopPropagation();
+        evenement.currentTarget.setPointerCapture(evenement.pointerId);
+        const dx = (cote === "droite" ? 1 : -1) * (cadre.width / 2);
+        const dy = -cadre.height;
+        const p = {
+          ancreX: cadre.left + cadre.width / 2,
+          ancreY: cadre.bottom,
+          dx,
+          dy,
+          depart: 0,
+          hauteur,
+        };
+        p.depart = projection(p, evenement.clientX, evenement.clientY);
+        prise.current = p;
+      }}
+      onPointerMove={(evenement) => {
+        const p = prise.current;
+        if (p) {
+          const voulue =
+            (p.hauteur * projection(p, evenement.clientX, evenement.clientY)) /
+            p.depart;
+          onHauteur(Math.min(HAUTEUR_MAX, Math.max(HAUTEUR_MIN, voulue)));
+        }
+      }}
+      onPointerUp={() => {
+        if (prise.current) {
+          prise.current = null;
+          onLache(courante.current);
+        }
+      }}
+      style={{
+        position: "absolute",
+        top: -ZONE_POIGNEE / 2,
+        [cote === "droite" ? "right" : "left"]: -ZONE_POIGNEE / 2,
+        width: ZONE_POIGNEE,
+        height: ZONE_POIGNEE,
+        display: "grid",
+        placeItems: "center",
+        touchAction: "none",
+        cursor: cote === "droite" ? "nesw-resize" : "nwse-resize",
+      }}
+    >
+      <div
+        style={{
+          width: COTE_POIGNEE,
+          height: COTE_POIGNEE,
+          borderRadius: "50%",
+          background: OR,
+          border: "2px solid var(--mui-palette-background-paper)",
+        }}
+      />
     </div>
   );
 }
