@@ -11,6 +11,8 @@ export interface ToolPanelTool {
   key: string;
   label: string;
   icon: IconName;
+  /** La touche qui choisit l'outil, dite au survol. */
+  shortcut?: string;
 }
 
 export interface ToolPanelMenu {
@@ -22,8 +24,10 @@ export interface ToolPanelMenu {
 export interface ToolPanelProps {
   label: string;
   menus: readonly ToolPanelMenu[];
-  value: string;
-  onChange: (tool: string) => void;
+  /** null : aucun outil choisi. */
+  value: string | null;
+  /** Recliquer sur l'outil choisi le lâche : null. */
+  onChange: (tool: string | null) => void;
   /** Ce qui vaut pour tous les outils : annuler, tout effacer. */
   actions?: ReactNode;
   /** Les réglages de l'outil choisi, sous les menus. */
@@ -32,7 +36,7 @@ export interface ToolPanelProps {
 
 /**
  * Les outils d'un tableau, dans une colonne de côté : des menus repliables, comme le ruban d'un traitement de texte
- * mis debout (Schub#168). Un outil choisi reste en surbrillance ; ses réglages suivent.
+ * mis debout (Schub#168). Un outil choisi reste en surbrillance, ses réglages suivent ; recliquer dessus le lâche.
  */
 export function ToolPanel({
   label,
@@ -107,7 +111,15 @@ export function ToolPanel({
                     key={tool.key}
                     value={tool.key}
                     selected={tool.key === value}
-                    onChange={() => onChange(tool.key)}
+                    onChange={() =>
+                      onChange(tool.key === value ? null : tool.key)
+                    }
+                    title={
+                      tool.shortcut
+                        ? `${tool.label} (${tool.shortcut})`
+                        : tool.label
+                    }
+                    aria-keyshortcuts={tool.shortcut}
                     size="small"
                     sx={{
                       flexDirection: "column",
