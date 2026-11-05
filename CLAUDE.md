@@ -205,17 +205,14 @@ embarquer ni formulaire d'administration, ni sa validation.
 
 ## L'accueil, et le contenu personnel
 
-**`/` est la page produit de Schub**, pas un CV : ce que fait l'outil, puis **la liste de ce qui
-reste à faire pour s'en servir**. Les actions sont **déduites de `GET /me`** — compte Riot non
-lié, résolution en attente, collecte en cours, nom d'affichage non choisi — et chacune mène à
-`/profile`. Elles ne se devinent pas : `displayNameChosen` est un fait servi par le cœur, parce
-que comparer le nom affiché au pseudo Discord proposerait « choisis ton nom » à qui l'a choisi.
-Un **visiteur non connecté** ne voit pas une liste vide mais la seule action qui le concerne : se
-connecter.
+**`/` est la page produit de Schub**, pas un CV : ce que fait l'outil, en un encart pour Schub et un
+pour PremadeLab (Schub#176), jamais mélangés ; un visiteur non connecté y voit en plus la seule action qui le
+concerne, se connecter. **La liste de ce qui reste à faire vit sur l'accueil de PremadeLab** (`SearchPage`) : ses
+actions sont déduites de `GET /me` — compte Riot non lié, résolution en attente, collecte en cours, équipe.
 
 **Le contenu personnel vit sur `/contact`** — accroche, projets, parcours, formation, langues —
 et le formulaire est en bas de cette page, sous le titre *Feedback*. Il vit dans
-**`src/content/portfolio.ts`, en données**, pas en JSX : c'est ce qui garde un pré-rendu possible
+**`src/schub/content/portfolio.ts`, en données**, pas en JSX : c'est ce qui garde un pré-rendu possible
 plus tard sans réécrire la page. Les deux langues y sont côte à côte, et `PortfolioSections.tsx`
 ne contient aucune phrase.
 

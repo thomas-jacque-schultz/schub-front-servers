@@ -1,21 +1,24 @@
 {
   "meta": {
-    "title": "Schub — la boîte à outils de la communauté Miam",
-    "description": "Schub rassemble les outils de la communauté Discord Miam\u00a0: des serveurs de jeu démarrés à la demande, et de quoi faire vivre une équipe League of Legends — effectif, statistiques, pool de champions, préparation de draft."
+    "title": "Schub — les serveurs de jeu de la communauté Miam",
+    "description": "Schub pilote les serveurs de jeu de la communauté Discord Miam\u00a0: leur état en direct, un démarrage à la demande depuis le site ou Discord, et des redirections de ports qui suivent toutes seules."
   },
   "hero": {
     "eyebrow": "Schub",
-    "title": "La boîte à outils de la communauté Miam",
-    "subtitle": "Des serveurs de jeu qui s'allument quand on en a besoin et, pour League of Legends, de quoi faire vivre une équipe."
+    "title": "Les serveurs de jeu de la communauté Miam",
+    "subtitle": "Des serveurs hébergés à la maison, qui s'allument quand on en a besoin."
   },
-  "about": {
+  "schub": {
     "title": "Ce que fait Schub",
-    "community": "Schub est la boîte à outils de la communauté Discord Miam\u00a0: ses serveurs de jeu, ses équipes League of Legends, et les outils qui s'y ajoutent au fil des besoins. Il s'ouvrira peut-être un jour à un cercle plus large, une fois les outils éprouvés et stabilisés — pour l'instant, il est fait pour nous.",
-    "servers": "Les serveurs de jeu sont hébergés à la maison et pilotés depuis le site ou depuis Discord\u00a0: leur état est visible en direct, et démarrer ou arrêter est un bouton. Les redirections de ports s'ouvrent et se referment toutes seules avec le serveur.",
-    "lol": "Côté League of Legends, PremadeLab lit tes parties par l’API de Riot\u00a0: statistiques personnelles et d’équipe, pool de champions par poste, préparateur de draft et débrief d’après-match. Il vit sur son propre site, ouvert à tous.",
+    "community": "Schub est l'outil de la communauté Discord Miam\u00a0: il est fait pour elle, et il rassemble ses serveurs de jeu.",
+    "servers": "Les serveurs sont hébergés à la maison et pilotés depuis le site ou depuis Discord\u00a0: leur état est visible en direct, et démarrer ou arrêter est un bouton. Les redirections de ports s'ouvrent et se referment toutes seules avec le serveur.",
     "identity": "L'identité passe par Discord. Il n'y a pas de mot de passe à retenir, et les droits suivent le rôle.",
-    "ctaServers": "Voir l'état des serveurs",
-    "ctaLol": "Ouvrir PremadeLab"
+    "cta": "Voir l'état des serveurs"
+  },
+  "premadelab": {
+    "title": "PremadeLab, pour League of Legends",
+    "body": "L'analyse de parties a son propre site, ouvert à tous\u00a0: statistiques personnelles et d'équipe, pool de champions par poste, préparateur de draft, Macro Planner et mini-jeux à plusieurs pour tuer l'attente en file. Schub n'en garde que l'administration.",
+    "cta": "Ouvrir PremadeLab"
   },
   "onboarding": {
     "title": "Pour être opérationnel",
@@ -24,7 +27,7 @@
     "loading": "Lecture de ton profil…",
     "unavailable": "Ton profil n'a pas pu être lu. La liste des actions reste incomplète tant que c'est le cas.",
     "signedOutTitle": "Connecte-toi pour utiliser {{product}}",
-    "signedOutBody": "L'état des serveurs est public, mais démarrer un serveur, lier ton compte League of Legends et rejoindre une équipe demandent un compte Discord.",
+    "signedOutBody": "L'état des serveurs est public, mais démarrer un serveur demande un compte Discord.",
     "signIn": "Se connecter avec Discord",
     "riotAbsent": "Lier ton compte League of Legends",
     "riotAbsentHint": "Sans lui, {{product}} n'a aucune partie à compter et l'écran Mes stats reste fermé.",

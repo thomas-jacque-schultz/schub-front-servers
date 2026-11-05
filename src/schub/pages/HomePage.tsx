@@ -35,21 +35,28 @@ function HomePage() {
         subtitle={t("hero.subtitle")}
       />
 
-      <Card title={t("about.title")}>
+      <Card title={t("schub.title")}>
         <Stack spacing={2}>
-          <Text>{t("about.community")}</Text>
-          <Text>{t("about.servers")}</Text>
-          <Text>{t("about.lol")}</Text>
-          <Text>{t("about.identity")}</Text>
+          <Text>{t("schub.community")}</Text>
+          <Text>{t("schub.servers")}</Text>
+          <Text>{t("schub.identity")}</Text>
           <Stack direction="responsive" spacing={1.5}>
             <Button onClick={() => navigate("/servers")}>
-              {t("about.ctaServers")}
+              {t("schub.cta")}
             </Button>
+          </Stack>
+        </Stack>
+      </Card>
+
+      <Card title={t("premadelab.title")}>
+        <Stack spacing={2}>
+          <Text>{t("premadelab.body")}</Text>
+          <Stack direction="responsive" spacing={1.5}>
             <Button
               variant="secondary"
               onClick={() => window.location.assign(premadelab)}
             >
-              {t("about.ctaLol")}
+              {t("premadelab.cta")}
             </Button>
           </Stack>
         </Stack>

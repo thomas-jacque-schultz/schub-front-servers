@@ -1,6 +1,12 @@
 # Front
 
-Front de Schub, la boîte à outils de la communauté Miam : React + Vite + MUI.
+Les trois applications web, sur une base commune (React + Vite + MUI) :
+
+- **Schub** (`src/schub/`, schultz-thomas.fr) : les serveurs de jeu de la communauté Miam, et l'administration ;
+- **PremadeLab** (`src/premadelab/`, premadelab.eu) : l'analyse de parties League of Legends ;
+- **les mini-jeux** (`src/games/`, `<jeu>.premadelab.eu`).
+
+`CLAUDE.md` décrit les règles du dépôt.
 
 ## Installation
 
