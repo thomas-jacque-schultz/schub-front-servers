@@ -119,7 +119,7 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
-    get: operations["games_2"];
+    get: operations["games_3"];
     put?: never;
     post?: never;
     delete?: never;
@@ -471,7 +471,7 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
-    get: operations["games_1"];
+    get: operations["games_2"];
     put?: never;
     post?: never;
     delete?: never;
@@ -631,7 +631,7 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
-    get: operations["games"];
+    get: operations["games_1"];
     put?: never;
     post?: never;
     delete?: never;
@@ -1210,6 +1210,22 @@ export interface paths {
     get?: never;
     put?: never;
     post: operations["detect"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/teams/{teamId}/sessions/games": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["games"];
+    put?: never;
+    post?: never;
     delete?: never;
     options?: never;
     head?: never;
@@ -3827,7 +3843,7 @@ export interface operations {
       };
     };
   };
-  games_2: {
+  games_3: {
     parameters: {
       query?: never;
       header?: {
@@ -4452,7 +4468,7 @@ export interface operations {
       };
     };
   };
-  games_1: {
+  games_2: {
     parameters: {
       query?: {
         days?: number;
@@ -4695,7 +4711,7 @@ export interface operations {
       };
     };
   };
-  games: {
+  games_1: {
     parameters: {
       query?: {
         days?: number;
@@ -6005,6 +6021,32 @@ export interface operations {
         };
         content: {
           "*/*": components["schemas"]["TeamSessionDto"][];
+        };
+      };
+    };
+  };
+  games: {
+    parameters: {
+      query: {
+        session: string;
+      };
+      header?: {
+        "X-Actor-Id"?: string;
+      };
+      path: {
+        teamId: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description OK */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "*/*": components["schemas"]["TeamGameDto"][];
         };
       };
     };

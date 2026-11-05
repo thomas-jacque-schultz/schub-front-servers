@@ -56,7 +56,8 @@
     "draft": "Préparateur de draft",
     "ariaLabel": "Les panneaux de l'équipe",
     "team": "Matchs",
-    "macro": "Macro Planner"
+    "macro": "Macro Planner",
+    "sessions": "Sessions"
   },
   "roster": {
     "title": "L'effectif",
@@ -303,11 +304,7 @@
     "minutes": "min",
     "add": "Ajouter",
     "saveFailed": "Impossible d'enregistrer les créneaux.",
-    "helper": "Heure de Paris. Chaque nuit, PremadeLab repère vos sessions\u00a0: au moins trois membres, deux parties à la suite, sans pause de plus d'une heure. Une session qui recoupe un créneau est une séance d'entraînement\u202f; un créneau sans partie compte comme séance manquée.",
-    "sessions": "Dernières sessions",
-    "sessionPlanned": "{{date}} · séance d'entraînement · {{count}} parties, {{wins}} V – {{losses}} D",
-    "sessionFree": "{{date}} · session libre · {{count}} parties, {{wins}} V – {{losses}} D",
-    "missed": "{{date}} · séance manquée",
+    "helper": "Heure de Paris. Une session qui recoupe un créneau devient une séance d'entraînement\u202f; un créneau sans partie compte comme séance manquée.",
     "days": {
       "MONDAY": "lundi",
       "TUESDAY": "mardi",
@@ -316,6 +313,32 @@
       "FRIDAY": "vendredi",
       "SATURDAY": "samedi",
       "SUNDAY": "dimanche"
-    }
+    },
+    "addTitle": "Ajouter un créneau"
+  },
+  "sessions": {
+    "loading": "Lecture des sessions…",
+    "failed": "Impossible de lire les sessions.",
+    "gamesFailed": "Impossible de lire les parties de cette session.",
+    "emptyTitle": "Aucune session pour l'instant",
+    "emptyBody": "Chaque nuit, PremadeLab repère vos sessions\u00a0: au moins trois membres, deux parties à la suite, sans pause de plus d'une heure.",
+    "trend": "La tendance",
+    "window": "Sur les {{days}} derniers jours.",
+    "played": "Sessions jouées",
+    "record": "Bilan",
+    "recordValue": "{{wins}} V – {{losses}} D",
+    "games_one": "{{count}} partie",
+    "games_other": "{{count}} parties",
+    "kept": "Créneaux tenus",
+    "histogram_one": "Taux de victoires de la dernière session",
+    "histogram_other": "Taux de victoires des {{count}} dernières sessions",
+    "barTooltip": "{{date}}\u00a0: {{percent}}\u00a0%, {{wins}} V – {{losses}} D",
+    "list": "Les soirées",
+    "listHelper": "Ouvre une soirée pour revoir ses parties, dans l'ordre où vous les avez jouées.",
+    "kindPlanned": "Entraînement",
+    "kindFree": "Libre",
+    "kindMissed": "Séance manquée",
+    "hours": "de {{start}} à {{end}}",
+    "more": "Voir les précédentes"
   }
 }

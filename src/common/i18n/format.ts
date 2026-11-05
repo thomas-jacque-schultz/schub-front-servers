@@ -19,6 +19,14 @@ export const useLocaleFormat = () => {
     });
     const date = new Intl.DateTimeFormat(locale, { dateStyle: "medium" });
     const month = new Intl.DateTimeFormat(locale, { month: "short" });
+    const hour = new Intl.DateTimeFormat(locale, {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    const dayMonth = new Intl.DateTimeFormat(locale, {
+      day: "numeric",
+      month: "short",
+    });
     const number = new Intl.NumberFormat(locale);
 
     return {
@@ -28,6 +36,8 @@ export const useLocaleFormat = () => {
       formatNumber: (value: number) => number.format(value),
       formatDate: (value: Date) => date.format(value),
       formatMonth: (value: Date) => month.format(value),
+      formatHour: (value: Date) => hour.format(value),
+      formatDayMonth: (value: Date) => dayMonth.format(value),
     };
   }, [locale]);
 };
