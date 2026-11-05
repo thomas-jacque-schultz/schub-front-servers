@@ -257,6 +257,11 @@
       "body": "Everyone has the same champion except one. One word each, three turns, then vote to unmask the impostor.",
       "genre": "Bluff"
     },
+    "mesure": {
+      "title": "Right Size",
+      "body": "One champion stands on the scale: give the other their true size next to them. Alone or with friends, and everyone sees what the others answered at the end.",
+      "genre": "Eye test"
+    },
     "players": "{{min}} to {{max}} players",
     "minutes": "≈ {{n}} min",
     "back": "All games",

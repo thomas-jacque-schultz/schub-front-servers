@@ -131,6 +131,10 @@ liseré prune lumineux, bouton principal qui s'enfonce, griffonnages en fond (`G
 (`GameTitle`). Ses jetons sont `playful` dans `tokens.ts`.
 Les jeux sont sombres seulement. `Frame` suit le rayon du thème : `radii.md` dans les applications, rond dans les jeux.
 
+**La juste mesure lit des croquis déjà faits** (Schub#174) : `npm run mesure:silhouettes` les tire des modèles du jeu
+(Community Dragon), à la même échelle, dans `public/premadelab/mesure/`, avec leurs tailles dans `tailles.json`. À
+relancer pour un nouveau champion.
+
 **Le quiz ne fabrique rien pendant la partie** (Schub#143) : il tire dans la banque du cœur, que l'OWNER relit dans
 Schub › PremadeLab › Quiz. `npm run quiz:fabrique -- <lot.json>` fabrique un lot depuis Data Dragon et Univers ; le
 lot s'importe dans ce panneau.
@@ -186,7 +190,7 @@ décide de ce qu'elle reçoit.
 | `/stats` | Mes stats — ses parties, ses champions, ses postes | connecté, à la demande |
 | `/teams`, `/teams/:id` | les équipes | connecté, à la demande |
 | `/combos/:palier/:type` | les combos qui gagnent par palier (Schub#112), lus par les robots en SSI comme les profils | **public**, à la demande |
-| `/queue-killer`, `/queue-killer/:jeu/:salon` | les mini-jeux (Schub#118 : scribble, zoom, indices, quiz, imposteur), chacun en iframe depuis son sous-domaine (`queueKiller.ts`) ; deux messages avec le jeu, origine vérifiée | **public**, à la demande |
+| `/queue-killer`, `/queue-killer/:jeu/:salon` | les mini-jeux (Schub#118 : scribble, zoom, indices, quiz, imposteur, mesure), chacun en iframe depuis son sous-domaine (`queueKiller.ts`) ; deux messages avec le jeu, origine vérifiée | **public**, à la demande |
 | `/ruler` | le Macro Planner seul (Schub#166) : mesurer, dessiner, poser des icônes sur la Faille en unités du jeu (`MacroMap`, repères dans `ruler.ts`) ; la carte est la minimap du jeu repeinte aux couleurs du site, en coordonnées de Riot (`MAP_BOUNDS`) ; repères relevés, jamais symétrisés (sources dans `ruler.ts`) ; le plan reste dans le navigateur (`premadelab.macro`) | **public**, à la demande |
 
 **Communes** : `/profile` (connecté), `/login`, `/terms`, `/privacy` (publiques).

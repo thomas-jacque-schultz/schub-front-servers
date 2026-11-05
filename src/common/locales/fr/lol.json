@@ -257,6 +257,11 @@
       "body": "Tous ont le même champion, sauf un. Un mot chacun, trois tours, puis on vote pour démasquer l’imposteur.",
       "genre": "Bluff"
     },
+    "mesure": {
+      "title": "La juste mesure",
+      "body": "Un champion est sur la toise\u00a0: donne à l'autre sa vraie taille à côté de lui. Seul ou à plusieurs, et chacun voit à la fin ce que les autres ont répondu.",
+      "genre": "Coup d'œil"
+    },
     "players": "{{min}} à {{max}} joueurs",
     "minutes": "≈\u00a0{{n}}\u00a0min",
     "back": "Tous les jeux",

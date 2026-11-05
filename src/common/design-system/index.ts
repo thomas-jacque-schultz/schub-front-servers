@@ -79,6 +79,8 @@ export { DataTable } from "./components/DataTable";
 export type { DataTableColumn, DataTableProps } from "./components/DataTable";
 export { Dialog } from "./components/Dialog";
 export type { DialogProps } from "./components/Dialog";
+export { Slider } from "./components/Slider";
+export type { SliderProps } from "./components/Slider";
 export { Disclosure } from "./components/Disclosure";
 export { Expandable } from "./components/Expandable";
 export type { ExpandableProps } from "./components/Expandable";
