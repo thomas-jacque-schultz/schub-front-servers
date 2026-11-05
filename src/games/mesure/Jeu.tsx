@@ -226,7 +226,7 @@ export function Scene({
         draggable={false}
         // Le sépia distingue la cible de l'étalon, deux croquis du même gris.
         style={pose(X_CIBLE, auBilan ? juste : hauteur, {
-          filter: "sepia(1) saturate(2.5)",
+          filter: "sepia(1) saturate(1.6)",
           transition: auBilan ? "height 400ms ease-out" : undefined,
         })}
       />

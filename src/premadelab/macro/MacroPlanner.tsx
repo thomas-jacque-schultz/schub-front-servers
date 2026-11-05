@@ -49,6 +49,9 @@ const REGLAGES_DE_DEPART: Reglages = {
   vision: true,
 };
 
+// La carte est carrée : elle doit tenir entière à l'écran, en haut comme en bas, pour qu'on dessine sans défiler.
+const CARTE_MAX = "min(760px, calc(100dvh - 120px))";
+
 const saisieEnCours = (cible: EventTarget | null) =>
   cible instanceof HTMLElement &&
   (cible.isContentEditable ||
@@ -272,6 +275,11 @@ export function MacroPlanner({
               </>
             }
           >
+            {!outil && (
+              <Text variant="caption" tone="secondary">
+                {t("macro.help.aucun")}
+              </Text>
+            )}
             {outil?.menu === "mesure" && (
               <MesureReglages
                 aimant={reglages.aimant}
@@ -334,7 +342,7 @@ export function MacroPlanner({
           cursor={outil ? outil.curseur : "default"}
           onPointer={surPointeur}
           onWheelStep={outil?.molette ? pas : undefined}
-          maxWidth={760}
+          maxWidth={CARTE_MAX}
         />
         <Text variant="caption" tone="secondary" align="center">
           {cle ? t(`macro.help.${cle}`) : t("macro.help.aucun")}{" "}
