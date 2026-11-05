@@ -29,8 +29,7 @@ const SEVERITE = {
 // Discord met en gras ce qui est entre ** et affiche ses emojis <:Gnar:123> ; l’aperçu se contente du texte.
 const enClair = (texte: string) =>
   texte
-    .split("**")
-    .join("")
+    .replace(/\*\*|`/g, "")
     .replace(/<:(\w+):\d+>/g, "$1");
 
 export function SessionSummaryTestCard() {

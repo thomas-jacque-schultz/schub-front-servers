@@ -22,6 +22,10 @@ export interface HistogramProps {
   /** Une étiquette d'axe toutes les n barres, la dernière toujours. */
   labelEvery?: number;
   height?: number;
+  /** La valeur d'une barre pleine ; sans elle, la plus haute barre. */
+  max?: number;
+  /** Une barre en couleur de marque, sans repère : la dernière d'une série, par exemple. */
+  highlight?: number;
 }
 
 /** Une répartition en barres : la barre du repère en couleur de marque, les autres en retrait. */
@@ -32,13 +36,17 @@ export function Histogram({
   ariaLabel,
   labelEvery = 5,
   height = 96,
+  max: plafond,
+  highlight,
 }: HistogramProps) {
   const { chart } = useChartScheme();
-  const max = Math.max(...bars.map((bar) => bar.value), Number.EPSILON);
+  const max =
+    plafond ?? Math.max(...bars.map((bar) => bar.value), Number.EPSILON);
   const n = bars.length;
   const repere =
     markerAt === undefined ? null : Math.min(Math.max(markerAt, 0), n);
-  const marquee = repere === null ? -1 : Math.min(Math.floor(repere), n - 1);
+  const marquee =
+    highlight ?? (repere === null ? -1 : Math.min(Math.floor(repere), n - 1));
 
   return (
     <Box role="img" aria-label={ariaLabel}>
