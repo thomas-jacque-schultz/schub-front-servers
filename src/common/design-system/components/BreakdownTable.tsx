@@ -98,10 +98,10 @@ export function BreakdownTable({
   const plafond = (lire: (ligne: BreakdownRow) => number) =>
     Math.max(1, ...lignes.map(lire));
   const maxima = Object.fromEntries(
-    cellules.map((cellule) => [
-      cellule.key,
-      plafond((ligne) => valeur(ligne, cellule.parts)),
-    ]),
+    cellules.map((cellule) => {
+      const lire = (ligne: BreakdownRow) => valeur(ligne, cellule.parts);
+      return [cellule.key, egales(lire) ? null : plafond(lire)];
+    }),
   );
   const maxDernier = plafond((ligne) => ligne.last?.value ?? 0);
   const nbColonnes = 2 + cellules.length + (lastLabel ? 1 : 0);
@@ -125,9 +125,16 @@ export function BreakdownTable({
     fontVariantNumeric: "tabular-nums",
     fontSize: "0.82rem",
   };
-  // La barre est le fond de la cellule : elle ne prend aucune hauteur et ne s'ajoute pas au chiffre.
-  const fond = (sens: "left" | "right", part: number, couleur: string) =>
-    `linear-gradient(to ${sens}, ${couleur} ${part}%, transparent ${part}%)`;
+  // La barre est un trait au pied de la cellule : elle ne prend aucune hauteur. Une colonne où tous valent autant
+  // n'en a pas : elle ne départage personne.
+  const egales = (lire: (ligne: BreakdownRow) => number) =>
+    lignes.every((ligne) => lire(ligne) === lire(lignes[0]));
+  const trait = (sens: "left" | "right", part: number, couleur: string) => ({
+    backgroundImage: `linear-gradient(to ${sens}, ${couleur} ${part}%, transparent ${part}%)`,
+    backgroundSize: "100% 3px",
+    backgroundPosition: "bottom",
+    backgroundRepeat: "no-repeat",
+  });
 
   return (
     <Box
@@ -330,11 +337,13 @@ export function BreakdownTable({
                           px: 1,
                           textAlign: "right",
                           color: v > 0 ? "text.primary" : "text.disabled",
-                          backgroundImage: fond(
-                            "left",
-                            (100 * v) / maxima[cellule.key],
-                            chart.markSoft,
-                          ),
+                          ...(maxima[cellule.key] === null
+                            ? {}
+                            : trait(
+                                "left",
+                                (100 * v) / (maxima[cellule.key] ?? 1),
+                                chart.mark,
+                              )),
                         }}
                       >
                         {format(v)}
@@ -361,13 +370,13 @@ export function BreakdownTable({
                         ...separation,
                         px: 1,
                         whiteSpace: "nowrap",
-                        backgroundImage: ligne.last
-                          ? fond(
+                        ...(ligne.last
+                          ? trait(
                               "right",
                               (100 * ligne.last.value) / maxDernier,
-                              chart.track,
+                              chart.markMuted,
                             )
-                          : "none",
+                          : {}),
                       }}
                     >
                       {ligne.last && (
