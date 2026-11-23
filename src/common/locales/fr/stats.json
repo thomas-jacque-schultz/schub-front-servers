@@ -837,5 +837,44 @@
       "before": "Avant 15\u00a0min",
       "after": "Après 15\u00a0min"
     }
+  },
+  "gold": {
+    "title": "D'où vient l'or",
+    "topCeded": "Le plus d'or cédé en mourant\u00a0: {{champion}}, {{gold}}, dont {{streak}} en primes de série.",
+    "caption": "Or gagné par chaque joueur sur la partie, par source, et or cédé à l'adversaire par ses morts",
+    "player": "Joueur",
+    "total": "Total",
+    "ours": "Notre camp",
+    "theirs": "En face",
+    "ceded": "Or cédé",
+    "deaths_one": "{{count}} mort",
+    "deaths_other": "{{count}} morts",
+    "deathsStreak_one": "{{count}} mort · dont {{streak}} en série",
+    "deathsStreak_other": "{{count}} morts · dont {{streak}} en série",
+    "expand": "Détailler {{column}}",
+    "collapse": "Regrouper {{column}}",
+    "method": "Kills et primes de série sont lus tels que Riot les donne. Sbires, jungle, plaques, tours et autres objectifs sont estimés d'après ce que chacun a tué, puis ajustés pour que le total tombe sur l'or réel du joueur. Or cédé\u00a0: les primes données au tueur et aux assistants par ses morts, «\u00a0en série\u00a0» quand la mort a interrompu une série.",
+    "family": {
+      "passive": "Passif",
+      "peaceful": "Revenu pacifique",
+      "objectives": "Objectifs",
+      "players": "Revenu joueurs"
+    },
+    "part": {
+      "start": "Or de départ",
+      "passive": "Revenu passif",
+      "minions": "Sbires",
+      "allyJungle": "Notre jungle",
+      "enemyJungle": "Jungle adverse",
+      "riverJungle": "Rivière et crabes",
+      "supportItem": "Objet de support",
+      "roleQuest": "Quête du tireur",
+      "plates": "Plaques",
+      "towers": "Tours",
+      "other": "Autres",
+      "kills": "Kills",
+      "streaksTaken": "Primes de série prises",
+      "assists": "Assistances"
+    }
   }
 }

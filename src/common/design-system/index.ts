@@ -230,6 +230,14 @@ export type {
 export { ClockChart } from "./components/ClockChart";
 export type { ClockChartProps, ClockSector } from "./components/ClockChart";
 export { FaceOffTable } from "./components/FaceOffTable";
+export { BreakdownTable } from "./components/BreakdownTable";
+export type {
+  BreakdownColumn,
+  BreakdownPart,
+  BreakdownRow,
+  BreakdownSection,
+  BreakdownTableProps,
+} from "./components/BreakdownTable";
 export type { FaceOffRow, FaceOffTableProps } from "./components/FaceOffTable";
 export { PieChart } from "./components/PieChart";
 export { TimeField } from "./components/TimeField";

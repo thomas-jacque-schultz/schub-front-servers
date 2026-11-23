@@ -23,6 +23,7 @@ import type {
 import { GameVerdict } from "../../components/GameVerdict";
 import type { FindingDto } from "../../types/findings";
 import { EarlyGameView } from "./EarlyGameView";
+import { GoldView } from "./GoldView";
 import { PlayerGameDialog, PlayerGameStats } from "./PlayerGameDialog";
 import { useRankGap, useRankLabel } from "./rank";
 import { useStatsFormat } from "./statsFormat";
@@ -137,6 +138,12 @@ export function GameDetail({
               ),
             )}
           />
+        </>
+      )}
+      {detail && detail.gold.length > 0 && (
+        <>
+          <Divider />
+          <GoldView detail={detail} />
         </>
       )}
       {detail && detail.timelineAvailable && !detail.early && (

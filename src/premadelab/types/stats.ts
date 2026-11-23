@@ -115,3 +115,5 @@ export type RolesDto = Schemas["Roles"];
 export type HolderDto = Schemas["Holder"];
 
 export type TeamSynergyDto = Schemas["TeamSynergyDto"];
+
+export type GamePlayerGoldDto = Schemas["GamePlayerGoldDto"];

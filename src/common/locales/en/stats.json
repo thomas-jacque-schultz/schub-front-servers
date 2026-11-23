@@ -839,5 +839,44 @@
       "before": "Before 15 min",
       "after": "After 15 min"
     }
+  },
+  "gold": {
+    "title": "Where the gold came from",
+    "topCeded": "Most gold given away by dying: {{champion}}, {{gold}}, including {{streak}} in shutdown bounties.",
+    "caption": "Gold earned by each player over the game, by source, and gold given to the enemy by their deaths",
+    "player": "Player",
+    "total": "Total",
+    "ours": "Our side",
+    "theirs": "Enemy side",
+    "ceded": "Gold given",
+    "deaths_one": "{{count}} death",
+    "deaths_other": "{{count}} deaths",
+    "deathsStreak_one": "{{count}} death · {{streak}} shutdown",
+    "deathsStreak_other": "{{count}} deaths · {{streak}} shutdown",
+    "expand": "Break down {{column}}",
+    "collapse": "Group {{column}}",
+    "method": "Kills and shutdown bounties are read as Riot reports them. Minions, jungle, plates, towers and other objectives are estimated from what each player killed, then adjusted so the total matches the player's actual gold. Gold given: the bounties paid to the killer and assists by their deaths, \"shutdown\" when the death ended a streak.",
+    "family": {
+      "passive": "Passive",
+      "peaceful": "Peaceful income",
+      "objectives": "Objectives",
+      "players": "Player income"
+    },
+    "part": {
+      "start": "Starting gold",
+      "passive": "Passive income",
+      "minions": "Minions",
+      "allyJungle": "Our jungle",
+      "enemyJungle": "Enemy jungle",
+      "riverJungle": "River and scuttles",
+      "supportItem": "Support item",
+      "roleQuest": "Bot lane quest",
+      "plates": "Plates",
+      "towers": "Towers",
+      "other": "Other",
+      "kills": "Kills",
+      "streaksTaken": "Shutdowns taken",
+      "assists": "Assists"
+    }
   }
 }
