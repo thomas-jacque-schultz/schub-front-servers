@@ -230,7 +230,6 @@ export type {
 export { ClockChart } from "./components/ClockChart";
 export type { ClockChartProps, ClockSector } from "./components/ClockChart";
 export { FaceOffTable } from "./components/FaceOffTable";
-export { BreakdownSplitLegend } from "./components/BreakdownSplitLegend";
 export { BreakdownTable } from "./components/BreakdownTable";
 export type {
   BreakdownColumn,
@@ -239,8 +238,6 @@ export type {
   BreakdownSection,
   BreakdownTableProps,
 } from "./components/BreakdownTable";
-export { DotStrip } from "./components/DotStrip";
-export type { DotStripPoint, DotStripProps } from "./components/DotStrip";
 export type { FaceOffRow, FaceOffTableProps } from "./components/FaceOffTable";
 export { PieChart } from "./components/PieChart";
 export { TimeField } from "./components/TimeField";

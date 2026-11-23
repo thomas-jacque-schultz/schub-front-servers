@@ -1,8 +1,6 @@
 import { useTranslation } from "react-i18next";
 import {
-  BreakdownSplitLegend,
   BreakdownTable,
-  DotStrip,
   Stack,
   Text,
   useLocaleFormat,
@@ -20,24 +18,31 @@ export interface GoldViewProps {
   detail: TeamGameDetailDto;
 }
 
-type Part = Exclude<
-  keyof GamePlayerGoldDto,
-  | "side"
-  | "championId"
-  | "position"
-  | "earned"
+type Source =
   | "start"
   | "passive"
-  | "cededBase"
-  | "cededStreak"
-  | "deaths"
->;
+  | "minions"
+  | "allyJungle"
+  | "enemyJungle"
+  | "riverJungle"
+  | "supportItem"
+  | "roleQuest"
+  | "plates"
+  | "towers"
+  | "other"
+  | "kills"
+  | "streaksTaken"
+  | "assists";
 
-// Le socle (or de départ et revenu passif) est le même pour les dix : il est dit une fois, pas mis en colonne.
-const FAMILLES: { key: "farm" | "pressure" | "fight"; parts: Part[] }[] = [
+// Inhibiteurs, nexus et monstres épiques valent presque toujours quelques dizaines d'or : regroupés en « Autres ».
+const FAMILLES: {
+  key: "passive" | "peaceful" | "objectives" | "players";
+  sources: Source[];
+}[] = [
+  { key: "passive", sources: ["start", "passive"] },
   {
-    key: "farm",
-    parts: [
+    key: "peaceful",
+    sources: [
       "minions",
       "allyJungle",
       "enemyJungle",
@@ -46,12 +51,26 @@ const FAMILLES: { key: "farm" | "pressure" | "fight"; parts: Part[] }[] = [
       "roleQuest",
     ],
   },
-  { key: "pressure", parts: ["plates", "towers", "inhibitors", "objectives"] },
-  { key: "fight", parts: ["kills", "streaksTaken", "assists"] },
+  { key: "objectives", sources: ["plates", "towers", "other"] },
+  { key: "players", sources: ["kills", "streaksTaken", "assists"] },
 ];
 
-const mmss = (secondes: number) =>
-  `${Math.floor(secondes / 60)}:${String(secondes % 60).padStart(2, "0")}`;
+const valeurs = (ligne: GamePlayerGoldDto): Record<Source, number> => ({
+  start: ligne.start,
+  passive: ligne.passive,
+  minions: ligne.minions,
+  allyJungle: ligne.allyJungle,
+  enemyJungle: ligne.enemyJungle,
+  riverJungle: ligne.riverJungle,
+  supportItem: ligne.supportItem,
+  roleQuest: ligne.roleQuest,
+  plates: ligne.plates,
+  towers: ligne.towers,
+  other: ligne.inhibitors + ligne.objectives,
+  kills: ligne.kills,
+  streaksTaken: ligne.streaksTaken,
+  assists: ligne.assists,
+});
 
 // D'où vient l'or de chaque joueur, et ce que ses morts ont donné à l'adversaire (Schub#179).
 export function GoldView({ detail }: GoldViewProps) {
@@ -63,7 +82,6 @@ export function GoldView({ detail }: GoldViewProps) {
     ...detail.game.enemies,
   ];
   const notreCamp = detail.game.players[0]?.side ?? joueurs[0]?.side;
-  const duree = detail.game.durationSeconds;
   const lignes = detail.gold;
   if (lignes.length === 0) {
     return null;
@@ -78,74 +96,41 @@ export function GoldView({ detail }: GoldViewProps) {
     const index = POSTES.indexOf(poste as (typeof POSTES)[number]);
     return index < 0 ? POSTES.length : index;
   };
-  const plusGrosseMort = Math.max(
-    1,
-    ...lignes.flatMap((ligne) => ligne.deaths.map((mort) => mort.gold)),
-  );
+  const cede = (ligne: GamePlayerGoldDto) =>
+    ligne.cededBase + ligne.cededStreak;
 
   const colonnes: BreakdownColumn[] = FAMILLES.map((famille) => ({
     key: famille.key,
     label: t(`gold.family.${famille.key}`),
-    parts: famille.parts.map((part) => ({
-      key: part,
-      label: t(`gold.part.${part}`),
+    parts: famille.sources.map((source) => ({
+      key: source,
+      label: t(`gold.part.${source}`),
     })),
   }));
 
   const enLigne = (ligne: GamePlayerGoldDto): BreakdownRow => {
     const joueur = joueurDe(ligne);
-    const champion = joueur?.championName ?? String(ligne.championId);
-    const kda = joueur
-      ? `${joueur.kills}/${joueur.deaths}/${joueur.assists}`
-      : null;
-    const cede = ligne.cededBase + ligne.cededStreak;
     const morts = ligne.deaths.length;
     return {
       key: `${ligne.side}-${ligne.championId}`,
-      label: champion,
-      caption: [joueur?.displayName, kda].filter(Boolean).join(" · "),
+      label: joueur?.championName ?? String(ligne.championId),
+      caption: joueur
+        ? `${joueur.kills}/${joueur.deaths}/${joueur.assists}`
+        : undefined,
       iconUrl: joueur?.iconUrl,
       highlight: Boolean(joueur?.memberId),
-      values: Object.fromEntries(
-        FAMILLES.flatMap((famille) =>
-          famille.parts.map((part) => [part, ligne[part]]),
-        ),
-      ),
+      values: valeurs(ligne),
       total: ligne.earned,
-      split: [ligne.cededBase, ligne.cededStreak],
-      splitCaption:
-        morts === 0
-          ? t("gold.noDeath")
-          : t("gold.cededCaption", {
-              gold: formatNumber(cede),
-              count: morts,
-              perDeath: formatNumber(Math.round(cede / morts)),
-            }),
-      splitDetail:
-        morts === 0 ? undefined : (
-          <DotStrip
-            duration={duree}
-            maxValue={plusGrosseMort}
-            ariaLabel={t("gold.deathsAria", { champion })}
-            points={ligne.deaths.map((mort, index) => ({
-              key: String(index),
-              at: mort.second,
-              value: mort.gold,
-              emphasis: mort.streak > 0,
-              label:
-                mort.streak > 0
-                  ? t("gold.deathWithStreak", {
-                      time: mmss(mort.second),
-                      gold: formatNumber(mort.gold),
-                      streak: formatNumber(mort.streak),
-                    })
-                  : t("gold.death", {
-                      time: mmss(mort.second),
-                      gold: formatNumber(mort.gold),
-                    }),
-            }))}
-          />
-        ),
+      last: {
+        value: cede(ligne),
+        note:
+          ligne.cededStreak > 0
+            ? t("gold.deathsStreak", {
+                count: morts,
+                streak: formatNumber(ligne.cededStreak),
+              })
+            : t("gold.deaths", { count: morts }),
+      },
     };
   };
 
@@ -155,29 +140,18 @@ export function GoldView({ detail }: GoldViewProps) {
       .sort((a, b) => rang(a.position) - rang(b.position))
       .map(enLigne);
 
-  const donneur = [...lignes].sort(
-    (a, b) => b.cededBase + b.cededStreak - (a.cededBase + a.cededStreak),
-  )[0];
-  const socle = lignes[0].start + lignes[0].passive;
+  const donneur = [...lignes].sort((a, b) => cede(b) - cede(a))[0];
 
   return (
     <Stack spacing={1.5}>
       <Text variant="section">{t("gold.title")}</Text>
-      <Stack spacing={0.5}>
-        <Text variant="body">
-          {t("gold.topCeded", {
-            champion: joueurDe(donneur)?.championName ?? "",
-            gold: formatNumber(donneur.cededBase + donneur.cededStreak),
-            streak: formatNumber(donneur.cededStreak),
-          })}
-        </Text>
-        <Text variant="caption" tone="secondary">
-          {t("gold.socle", { gold: formatNumber(socle) })}
-        </Text>
-      </Stack>
-      <BreakdownSplitLegend
-        parts={[t("gold.cededBase"), t("gold.cededStreak")]}
-      />
+      <Text variant="body">
+        {t("gold.topCeded", {
+          champion: joueurDe(donneur)?.championName ?? "",
+          gold: formatNumber(cede(donneur)),
+          streak: formatNumber(donneur.cededStreak),
+        })}
+      </Text>
       <BreakdownTable
         caption={t("gold.caption")}
         rowHeader={t("gold.player")}
@@ -187,10 +161,7 @@ export function GoldView({ detail }: GoldViewProps) {
           { key: "nous", title: t("gold.ours"), rows: camp(true) },
           { key: "eux", title: t("gold.theirs"), rows: camp(false) },
         ]}
-        split={{
-          label: t("gold.ceded"),
-          parts: [t("gold.cededBase"), t("gold.cededStreak")],
-        }}
+        lastLabel={t("gold.ceded")}
         format={formatNumber}
         toggleLabel={(colonne, ouverte) =>
           t(ouverte ? "gold.collapse" : "gold.expand", { column: colonne })

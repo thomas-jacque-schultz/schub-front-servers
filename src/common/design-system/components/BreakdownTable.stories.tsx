@@ -5,7 +5,7 @@ const ligne = (
   key: string,
   label: string,
   valeurs: number[],
-  split: [number, number],
+  perdu: number,
   highlight = false,
 ) => ({
   key,
@@ -19,9 +19,8 @@ const ligne = (
     tours: valeurs[3],
     kills: valeurs[4],
   },
-  total: 500 + valeurs.reduce((a, b) => a + b, 0),
-  split,
-  splitCaption: `${split[0] + split[1]} · 3 morts`,
+  total: valeurs.reduce((a, b) => a + b, 0),
+  last: { value: perdu, note: "3 morts" },
 });
 
 const meta = {
@@ -54,22 +53,22 @@ const meta = {
         parts: [{ key: "kills", label: "Kills" }],
       },
     ],
-    split: { label: "Cédé", parts: ["Base", "Série"] },
+    lastLabel: "Perdu",
     sections: [
       {
         key: "a",
         title: "Camp A",
         rows: [
-          ligne("1", "Champion A", [4000, 200, 600, 300, 900], [1200, 0], true),
-          ligne("2", "Champion B", [500, 4200, 100, 250, 1400], [900, 300]),
+          ligne("1", "Champion A", [4000, 200, 600, 300, 900], 1200, true),
+          ligne("2", "Champion B", [500, 4200, 100, 250, 1400], 900),
         ],
       },
       {
         key: "b",
         title: "Camp B",
         rows: [
-          ligne("3", "Champion C", [3600, 0, 200, 250, 1800], [1500, 450]),
-          ligne("4", "Champion D", [800, 3900, 0, 0, 700], [600, 0]),
+          ligne("3", "Champion C", [3600, 0, 200, 250, 1800], 1500),
+          ligne("4", "Champion D", [800, 3900, 0, 0, 700], 600),
         ],
       },
     ],

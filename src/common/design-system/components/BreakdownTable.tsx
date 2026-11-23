@@ -21,6 +21,7 @@ export interface BreakdownColumn {
 export interface BreakdownRow {
   key: string;
   label: string;
+  /** À côté du nom, en chasse fixe (un K/D/A, par exemple). */
   caption?: string;
   iconUrl?: string | null;
   /** Le lecteur ou ses coéquipiers : la ligne est marquée. */
@@ -28,11 +29,8 @@ export interface BreakdownRow {
   /** Valeur de chaque part, par clé de part. */
   values: Record<string, number>;
   total: number;
-  /** Les deux parts de la dernière colonne : la seconde est mise en avant. */
-  split?: [number, number];
-  splitCaption?: string;
-  /** Sous la barre de la dernière colonne (une frise, par exemple). */
-  splitDetail?: ReactNode;
+  /** La dernière colonne : sa valeur, et ce qui l'accompagne en retrait. */
+  last?: { value: number; note?: ReactNode };
 }
 
 export interface BreakdownSection {
@@ -48,42 +46,35 @@ export interface BreakdownTableProps {
   totalLabel: string;
   columns: BreakdownColumn[];
   sections: BreakdownSection[];
-  /** La dernière colonne, à deux parts : son titre et le nom des deux parts. */
-  split?: { label: string; parts: [string, string] };
+  /** Titre de la dernière colonne, à part des sources (ce qui a été perdu, par exemple). */
+  lastLabel?: string;
   format: (value: number) => string;
   /** Libellé du bouton qui déplie ou replie une colonne. */
   toggleLabel: (column: string, open: boolean) => string;
 }
 
-const LARGEUR_JOUEUR = 168;
-
-// Un joueur par ligne, une source par colonne. Chaque colonne a sa propre échelle : on y compare les joueurs entre
-// eux, le chiffre écrit dit la grandeur. Une colonne se déplie en ses parts, pour tous les joueurs à la fois.
+// Un joueur par ligne, une source par colonne. Chaque colonne a sa propre échelle, en fond de cellule : on y compare
+// les joueurs entre eux, le chiffre écrit dit la grandeur. Une colonne se déplie en ses parts, pour tous à la fois.
 export function BreakdownTable({
   caption,
   rowHeader,
   totalLabel,
   columns,
   sections,
-  split,
+  lastLabel,
   format,
   toggleLabel,
 }: BreakdownTableProps) {
   const { chart } = useChartScheme();
   const [ouvertes, setOuvertes] = useState<Set<string>>(new Set());
   const lignes = sections.flatMap((section) => section.rows);
-  const somme = (ligne: BreakdownRow, colonne: BreakdownColumn) =>
-    colonne.parts.reduce(
-      (total, part) => total + (ligne.values[part.key] ?? 0),
-      0,
-    );
-  // Une part vide pour les dix joueurs n'a rien à montrer.
+  const valeur = (ligne: BreakdownRow, parts: BreakdownPart[]) =>
+    parts.reduce((total, part) => total + (ligne.values[part.key] ?? 0), 0);
+  // Une part vide pour tous les joueurs n'a rien à montrer.
   const partsVisibles = (colonne: BreakdownColumn) =>
     colonne.parts.filter((part) =>
       lignes.some((ligne) => (ligne.values[part.key] ?? 0) > 0),
     );
-  const max = (valeur: (ligne: BreakdownRow) => number) =>
-    Math.max(1, ...lignes.map(valeur));
   const basculer = (cle: string) =>
     setOuvertes((avant) => {
       const apres = new Set(avant);
@@ -95,37 +86,30 @@ export function BreakdownTable({
       return apres;
     });
 
-  // Les cellules de données, dans l'ordre des en-têtes.
-  const cellules: {
-    key: string;
-    value: (ligne: BreakdownRow) => number;
-    first: boolean;
-  }[] = columns.flatMap((colonne) =>
+  const cellules = columns.flatMap((colonne) =>
     ouvertes.has(colonne.key)
       ? partsVisibles(colonne).map((part, index) => ({
           key: part.key,
-          value: (ligne: BreakdownRow) => ligne.values[part.key] ?? 0,
+          parts: [part],
           first: index === 0,
         }))
-      : [
-          {
-            key: colonne.key,
-            value: (ligne: BreakdownRow) => somme(ligne, colonne),
-            first: true,
-          },
-        ],
+      : [{ key: colonne.key, parts: colonne.parts, first: true }],
   );
+  const plafond = (lire: (ligne: BreakdownRow) => number) =>
+    Math.max(1, ...lignes.map(lire));
   const maxima = Object.fromEntries(
-    cellules.map((cellule) => [cellule.key, max(cellule.value)]),
+    cellules.map((cellule) => [
+      cellule.key,
+      plafond((ligne) => valeur(ligne, cellule.parts)),
+    ]),
   );
-  const maxSplit = max((ligne) =>
-    ligne.split ? ligne.split[0] + ligne.split[1] : 0,
-  );
-  const nbColonnes = 2 + cellules.length + (split ? 1 : 0);
+  const maxDernier = plafond((ligne) => ligne.last?.value ?? 0);
+  const nbColonnes = 2 + cellules.length + (lastLabel ? 1 : 0);
+  const separation = { borderLeft: 1, borderColor: "divider" } as const;
 
   const enTete = {
     fontFamily: typographyTokens.monospaceFontFamily,
-    fontSize: "0.72rem",
+    fontSize: "0.7rem",
     fontWeight: 600,
     letterSpacing: "0.04em",
     textTransform: "uppercase" as const,
@@ -139,29 +123,11 @@ export function BreakdownTable({
   const chiffre = {
     fontFamily: typographyTokens.monospaceFontFamily,
     fontVariantNumeric: "tabular-nums",
-    fontSize: "0.85rem",
+    fontSize: "0.82rem",
   };
-
-  const barre = (valeur: number, plafond: number) => (
-    <Box
-      aria-hidden
-      sx={{
-        height: 4,
-        mt: 0.5,
-        borderRadius: `${radii.sm}px`,
-        backgroundColor: chart.track,
-        overflow: "hidden",
-      }}
-    >
-      <Box
-        sx={{
-          height: "100%",
-          width: `${(100 * valeur) / plafond}%`,
-          backgroundColor: chart.mark,
-        }}
-      />
-    </Box>
-  );
+  // La barre est le fond de la cellule : elle ne prend aucune hauteur et ne s'ajoute pas au chiffre.
+  const fond = (sens: "left" | "right", part: number, couleur: string) =>
+    `linear-gradient(to ${sens}, ${couleur} ${part}%, transparent ${part}%)`;
 
   return (
     <Box
@@ -176,7 +142,7 @@ export function BreakdownTable({
         component="table"
         sx={{
           width: "100%",
-          minWidth: 640,
+          minWidth: 620,
           borderCollapse: "separate",
           borderSpacing: 0,
         }}
@@ -190,18 +156,13 @@ export function BreakdownTable({
               component="th"
               scope="col"
               rowSpan={2}
-              sx={{
-                ...enTete,
-                textAlign: "left",
-                ...colonneFixe(LARGEUR_JOUEUR),
-              }}
+              sx={{ ...enTete, textAlign: "left", ...colonneFixe }}
             >
               {rowHeader}
             </Box>
             {columns.map((colonne) => {
               const ouverte = ouvertes.has(colonne.key);
               const visibles = partsVisibles(colonne);
-              const depliable = visibles.length > 1;
               return (
                 <Box
                   component="th"
@@ -211,12 +172,11 @@ export function BreakdownTable({
                   rowSpan={ouverte ? 1 : 2}
                   sx={{
                     ...enTete,
+                    ...separation,
                     textAlign: ouverte ? "center" : "right",
-                    borderLeft: 1,
-                    borderColor: "divider",
                   }}
                 >
-                  {depliable ? (
+                  {visibles.length > 1 ? (
                     <ButtonBase
                       onClick={() => basculer(colonne.key)}
                       aria-expanded={ouverte}
@@ -250,24 +210,18 @@ export function BreakdownTable({
               component="th"
               scope="col"
               rowSpan={2}
-              sx={{ ...enTete, borderLeft: 1, borderColor: "divider" }}
+              sx={{ ...enTete, ...separation }}
             >
               {totalLabel}
             </Box>
-            {split && (
+            {lastLabel && (
               <Box
                 component="th"
                 scope="col"
                 rowSpan={2}
-                sx={{
-                  ...enTete,
-                  textAlign: "left",
-                  borderLeft: 1,
-                  borderColor: "divider",
-                  minWidth: 180,
-                }}
+                sx={{ ...enTete, ...separation, textAlign: "left" }}
               >
-                {split.label}
+                {lastLabel}
               </Box>
             )}
           </Box>
@@ -282,13 +236,12 @@ export function BreakdownTable({
                     key={part.key}
                     sx={{
                       ...enTete,
+                      ...(index === 0 ? separation : {}),
                       textTransform: "none",
                       letterSpacing: 0,
                       fontWeight: 400,
                       whiteSpace: "normal",
                       minWidth: 72,
-                      borderLeft: index === 0 ? 1 : 0,
-                      borderColor: "divider",
                     }}
                   >
                     {part.label}
@@ -308,7 +261,8 @@ export function BreakdownTable({
                   sx={{
                     ...enTete,
                     textAlign: "left",
-                    pt: 1.5,
+                    pt: 1.25,
+                    pb: 0.5,
                     borderTop: 1,
                     borderColor: "divider",
                   }}
@@ -324,9 +278,9 @@ export function BreakdownTable({
                     sx={{
                       textAlign: "left",
                       px: 1,
-                      py: 0.75,
+                      py: 0.25,
                       fontWeight: 400,
-                      ...colonneFixe(LARGEUR_JOUEUR),
+                      ...colonneFixe,
                       boxShadow: ligne.highlight
                         ? `inset 3px 0 0 ${chart.mark}`
                         : "none",
@@ -345,112 +299,88 @@ export function BreakdownTable({
                         name={ligne.label}
                         size="small"
                       />
-                      <Box sx={{ minWidth: 0 }}>
+                      <Typography
+                        variant="body2"
+                        noWrap
+                        sx={{ fontWeight: ligne.highlight ? 700 : 500 }}
+                      >
+                        {ligne.label}
+                      </Typography>
+                      {ligne.caption && (
                         <Typography
-                          variant="body2"
+                          variant="caption"
+                          color="text.secondary"
                           noWrap
-                          sx={{ fontWeight: ligne.highlight ? 700 : 500 }}
+                          sx={chiffre}
                         >
-                          {ligne.label}
+                          {ligne.caption}
                         </Typography>
-                        {ligne.caption && (
-                          <Typography
-                            variant="caption"
-                            color="text.secondary"
-                            noWrap
-                            component="p"
-                            sx={chiffre}
-                          >
-                            {ligne.caption}
-                          </Typography>
-                        )}
-                      </Box>
+                      )}
                     </Box>
                   </Box>
                   {cellules.map((cellule) => {
-                    const valeur = cellule.value(ligne);
+                    const v = valeur(ligne, cellule.parts);
                     return (
                       <Box
                         component="td"
                         key={cellule.key}
                         sx={{
-                          px: 1,
-                          py: 0.75,
-                          textAlign: "right",
-                          borderLeft: cellule.first ? 1 : 0,
-                          borderColor: "divider",
-                          color: valeur > 0 ? "text.primary" : "text.disabled",
                           ...chiffre,
+                          ...(cellule.first ? separation : {}),
+                          px: 1,
+                          textAlign: "right",
+                          color: v > 0 ? "text.primary" : "text.disabled",
+                          backgroundImage: fond(
+                            "left",
+                            (100 * v) / maxima[cellule.key],
+                            chart.markSoft,
+                          ),
                         }}
                       >
-                        {format(valeur)}
-                        {barre(valeur, maxima[cellule.key])}
+                        {format(v)}
                       </Box>
                     );
                   })}
                   <Box
                     component="td"
                     sx={{
+                      ...chiffre,
+                      ...separation,
                       px: 1,
-                      py: 0.75,
                       textAlign: "right",
                       fontWeight: 700,
-                      borderLeft: 1,
-                      borderColor: "divider",
-                      ...chiffre,
                     }}
                   >
                     {format(ligne.total)}
                   </Box>
-                  {split && (
+                  {lastLabel && (
                     <Box
                       component="td"
                       sx={{
+                        ...chiffre,
+                        ...separation,
                         px: 1,
-                        py: 0.75,
-                        borderLeft: 1,
-                        borderColor: "divider",
+                        whiteSpace: "nowrap",
+                        backgroundImage: ligne.last
+                          ? fond(
+                              "right",
+                              (100 * ligne.last.value) / maxDernier,
+                              chart.track,
+                            )
+                          : "none",
                       }}
                     >
-                      {ligne.split && (
+                      {ligne.last && (
                         <>
-                          <Box
-                            aria-hidden
-                            sx={{
-                              display: "flex",
-                              gap: "2px",
-                              height: 8,
-                              borderRadius: `${radii.sm}px`,
-                              overflow: "hidden",
-                              backgroundColor: chart.track,
-                            }}
-                          >
+                          {format(ligne.last.value)}
+                          {ligne.last.note && (
                             <Box
-                              sx={{
-                                width: `${(100 * ligne.split[0]) / maxSplit}%`,
-                                backgroundColor: chart.markMuted,
-                              }}
-                            />
-                            {ligne.split[1] > 0 && (
-                              <Box
-                                sx={{
-                                  width: `${(100 * ligne.split[1]) / maxSplit}%`,
-                                  backgroundColor: chart.markSecondary,
-                                }}
-                              />
-                            )}
-                          </Box>
-                          {ligne.splitCaption && (
-                            <Typography
-                              variant="caption"
-                              color="text.secondary"
-                              component="p"
-                              sx={{ ...chiffre, fontSize: "0.75rem", mt: 0.25 }}
+                              component="span"
+                              sx={{ color: "text.secondary", ml: 1 }}
                             >
-                              {ligne.splitCaption}
-                            </Typography>
+                              {ligne.last.note}
+                            </Box>
                           )}
-                          {ligne.splitDetail}
                         </>
                       )}
                     </Box>
@@ -475,13 +405,10 @@ const visuallyHidden = {
 } as const;
 
 // La colonne des joueurs reste en place quand le tableau défile sur un écran étroit.
-const colonneFixe = (largeur: number) =>
-  ({
-    position: "sticky",
-    left: 0,
-    zIndex: 1,
-    width: largeur,
-    minWidth: largeur,
-    maxWidth: largeur,
-    backgroundColor: "background.paper",
-  }) as const;
+const colonneFixe = {
+  position: "sticky",
+  left: 0,
+  zIndex: 1,
+  height: 36,
+  backgroundColor: "background.paper",
+} as const;
