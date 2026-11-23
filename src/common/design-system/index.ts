@@ -230,7 +230,8 @@ export type {
 export { ClockChart } from "./components/ClockChart";
 export type { ClockChartProps, ClockSector } from "./components/ClockChart";
 export { FaceOffTable } from "./components/FaceOffTable";
-export { BreakdownSplitLegend, BreakdownTable } from "./components/BreakdownTable";
+export { BreakdownSplitLegend } from "./components/BreakdownSplitLegend";
+export { BreakdownTable } from "./components/BreakdownTable";
 export type {
   BreakdownColumn,
   BreakdownPart,
