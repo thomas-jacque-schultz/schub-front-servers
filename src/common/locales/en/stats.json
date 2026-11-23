@@ -839,5 +839,47 @@
       "before": "Before 15 min",
       "after": "After 15 min"
     }
+  },
+  "gold": {
+    "title": "Where the gold came from",
+    "topCeded": "Most gold given away by dying: {{champion}}, {{gold}}, including {{streak}} in shutdown bounties.",
+    "socle": "Baseline (starting gold and passive income): {{gold}} for every player, counted in the total only.",
+    "caption": "Gold earned by each player over the game, by source, and gold given to the enemy by their deaths",
+    "player": "Player",
+    "total": "Total",
+    "ours": "Our side",
+    "theirs": "Enemy side",
+    "ceded": "Gold given",
+    "cededBase": "Base bounty (killer and assists)",
+    "cededStreak": "Shutdown bounty (the interruption)",
+    "noDeath": "No death",
+    "cededCaption_one": "{{gold}} · {{count}} death",
+    "cededCaption_other": "{{gold}} · {{count}} deaths · {{perDeath}} per death",
+    "deathsAria": "Deaths of {{champion}} over the game",
+    "death": "{{time}} · {{gold}} given",
+    "deathWithStreak": "{{time}} · {{gold}} given, including {{streak}} shutdown bounty",
+    "expand": "Break down {{column}}",
+    "collapse": "Group {{column}}",
+    "method": "Kills and shutdown bounties are read as Riot reports them. Minions, jungle, plates, towers and objectives are estimated from what each player killed, then adjusted so the total matches the player's actual gold.",
+    "family": {
+      "farm": "Farm",
+      "pressure": "Pressure",
+      "fight": "Fights"
+    },
+    "part": {
+      "minions": "Minions",
+      "allyJungle": "Our jungle",
+      "enemyJungle": "Enemy jungle",
+      "riverJungle": "River and scuttles",
+      "supportItem": "Support item",
+      "roleQuest": "Bot lane quest",
+      "plates": "Plates",
+      "towers": "Towers",
+      "inhibitors": "Inhibitors and nexus",
+      "objectives": "Objectives",
+      "kills": "Kills",
+      "streaksTaken": "Shutdowns taken",
+      "assists": "Assists"
+    }
   }
 }

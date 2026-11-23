@@ -1898,6 +1898,15 @@ export interface components {
       /** Format: int64 */
       searchers: number;
     };
+    /** @description Une mort : seconde de jeu, or donnÃ© en tout, dont prime de sÃ©rie. */
+    DeathDto: {
+      /** Format: int32 */
+      gold: number;
+      /** Format: int32 */
+      second: number;
+      /** Format: int32 */
+      streak: number;
+    };
     DiscordIdentityDto: {
       avatarUrl: string | null;
       id: string;
@@ -2011,6 +2020,64 @@ export interface components {
       iconUrl: string;
       label: string;
       name: string;
+    };
+    /**
+     * @description D'oÃ¹ vient l'or d'un joueur sur toute la partie, et ce que ses morts ont donnÃ© (Schub#179). La somme des sources
+     *     vaut earned. Exactes : start, passive, roleQuest, kills, streaksTaken (primes de sÃ©rie prises). Les autres sont
+     *     estimÃ©es Ã  partir des unitÃ©s puis mises Ã  l'Ã©chelle pour que le total tombe juste.
+     */
+    GamePlayerGoldDto: {
+      /** Format: int32 */
+      allyJungle: number;
+      /** Format: int32 */
+      assists: number;
+      /**
+       * Format: int32
+       * @description Primes donnÃ©es au tueur et aux assistants par ses morts.
+       */
+      cededBase: number;
+      /**
+       * Format: int32
+       * @description Primes de sÃ©rie donnÃ©es en mourant : les interruptions.
+       */
+      cededStreak: number;
+      /** Format: int32 */
+      championId: number;
+      deaths: components["schemas"]["DeathDto"][];
+      /** Format: int32 */
+      earned: number;
+      /** Format: int32 */
+      enemyJungle: number;
+      /** Format: int32 */
+      inhibitors: number;
+      /** Format: int32 */
+      kills: number;
+      /** Format: int32 */
+      minions: number;
+      /** Format: int32 */
+      objectives: number;
+      /** Format: int32 */
+      passive: number;
+      /** Format: int32 */
+      plates: number;
+      position: string | null;
+      /** Format: int32 */
+      riverJungle: number;
+      /** Format: int32 */
+      roleQuest: number;
+      /**
+       * Format: int32
+       * @description Avec championId, dÃ©signe le joueur dans la partie.
+       */
+      side: number;
+      /** Format: int32 */
+      start: number;
+      /** Format: int32 */
+      streaksTaken: number;
+      /** Format: int32 */
+      supportItem: number;
+      /** Format: int32 */
+      towers: number;
     };
     /** @description Un joueur d'une partie : ses indicateurs sur la partie et sa moyenne au mÃªme poste. */
     GamePlayerMetricsDto: {
@@ -3231,6 +3298,8 @@ export interface components {
       days: number | null;
       early: components["schemas"]["EarlyGameDto"] | null;
       game: components["schemas"]["TeamGameDto"];
+      /** @description Un joueur par ligne, ceux dont l'or est calculÃ©. Vide : pas de timeline, ou pas encore analysÃ©e. */
+      gold: components["schemas"]["GamePlayerGoldDto"][];
       matchups: components["schemas"]["MatchupDto"][];
       metrics: components["schemas"]["GamePlayerMetricsDto"][];
       /** Format: date-time */

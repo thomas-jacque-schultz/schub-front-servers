@@ -5380,6 +5380,25 @@
           }
         }
       },
+      "DeathDto" : {
+        "required" : [ "gold", "second", "streak" ],
+        "type" : "object",
+        "properties" : {
+          "gold" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "second" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "streak" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        },
+        "description" : "Une mort : seconde de jeu, or donnÃ© en tout, dont prime de sÃ©rie."
+      },
       "DiscordIdentityDto" : {
         "required" : [ "avatarUrl", "id", "username" ],
         "type" : "object",
@@ -5727,6 +5746,106 @@
             "type" : "string"
           }
         }
+      },
+      "GamePlayerGoldDto" : {
+        "required" : [ "allyJungle", "assists", "cededBase", "cededStreak", "championId", "deaths", "earned", "enemyJungle", "inhibitors", "kills", "minions", "objectives", "passive", "plates", "position", "riverJungle", "roleQuest", "side", "start", "streaksTaken", "supportItem", "towers" ],
+        "type" : "object",
+        "properties" : {
+          "allyJungle" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "assists" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "cededBase" : {
+            "type" : "integer",
+            "description" : "Primes donnÃ©es au tueur et aux assistants par ses morts.",
+            "format" : "int32"
+          },
+          "cededStreak" : {
+            "type" : "integer",
+            "description" : "Primes de sÃ©rie donnÃ©es en mourant : les interruptions.",
+            "format" : "int32"
+          },
+          "championId" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "deaths" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/DeathDto"
+            }
+          },
+          "earned" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "enemyJungle" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "inhibitors" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "kills" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "minions" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "objectives" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "passive" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "plates" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "position" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "riverJungle" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "roleQuest" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "side" : {
+            "type" : "integer",
+            "description" : "Avec championId, dÃ©signe le joueur dans la partie.",
+            "format" : "int32"
+          },
+          "start" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "streaksTaken" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "supportItem" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "towers" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        },
+        "description" : "D'oÃ¹ vient l'or d'un joueur sur toute la partie, et ce que ses morts ont donnÃ© (Schub#179). La somme des sources\nvaut earned. Exactes : start, passive, roleQuest, kills, streaksTaken (primes de sÃ©rie prises). Les autres sont\nestimÃ©es Ã  partir des unitÃ©s puis mises Ã  l'Ã©chelle pour que le total tombe juste."
       },
       "GamePlayerMetricsDto" : {
         "required" : [ "average", "championId", "game", "position", "side", "tier", "tierEstimated" ],
@@ -8959,7 +9078,7 @@
         }
       },
       "TeamGameDetailDto" : {
-        "required" : [ "days", "early", "game", "matchups", "metrics", "ranksObservedAt", "teamId", "timelineAvailable", "viewerMemberId" ],
+        "required" : [ "days", "early", "game", "gold", "matchups", "metrics", "ranksObservedAt", "teamId", "timelineAvailable", "viewerMemberId" ],
         "type" : "object",
         "properties" : {
           "days" : {
@@ -8975,6 +9094,13 @@
           },
           "game" : {
             "$ref" : "#/components/schemas/TeamGameDto"
+          },
+          "gold" : {
+            "type" : "array",
+            "description" : "Un joueur par ligne, ceux dont l'or est calculÃ©. Vide : pas de timeline, ou pas encore analysÃ©e.",
+            "items" : {
+              "$ref" : "#/components/schemas/GamePlayerGoldDto"
+            }
           },
           "matchups" : {
             "type" : "array",
