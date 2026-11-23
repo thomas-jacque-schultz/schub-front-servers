@@ -86,6 +86,11 @@ export function BreakdownTable({
       return apres;
     });
 
+  // La barre est un trait au pied de la cellule : elle ne prend aucune hauteur. Une colonne où tous valent autant
+  // n'en a pas : elle ne départage personne.
+  const egales = (lire: (ligne: BreakdownRow) => number) =>
+    lignes.every((ligne) => lire(ligne) === lire(lignes[0]));
+
   const cellules = columns.flatMap((colonne) =>
     ouvertes.has(colonne.key)
       ? partsVisibles(colonne).map((part, index) => ({
@@ -125,10 +130,6 @@ export function BreakdownTable({
     fontVariantNumeric: "tabular-nums",
     fontSize: "0.82rem",
   };
-  // La barre est un trait au pied de la cellule : elle ne prend aucune hauteur. Une colonne où tous valent autant
-  // n'en a pas : elle ne départage personne.
-  const egales = (lire: (ligne: BreakdownRow) => number) =>
-    lignes.every((ligne) => lire(ligne) === lire(lignes[0]));
   const trait = (sens: "left" | "right", part: number, couleur: string) => ({
     backgroundImage: `linear-gradient(to ${sens}, ${couleur} ${part}%, transparent ${part}%)`,
     backgroundSize: "100% 3px",
